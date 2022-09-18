@@ -15,8 +15,4 @@ codegen / rootCodegenPath := corePath / "src" / "codegen"
 preGen := (codegen / preGen).evaluated
 runGen := (codegen / runGen).evaluated
 
-Test / test := ((Test / test) dependsOn (core / Test / test)).value
-Test / test := {
-  (core / Test / test).value
-  (Test / test).value
-}
+Test / test := (Test / test).dependsOn(core / Test / test).value

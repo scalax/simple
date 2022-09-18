@@ -8,12 +8,6 @@ name := "simple-nat"
 
 val simpleAdt = project in simpeAdtPath
 
-val preCodegen = inputKey[Unit]("Prepare to codegen.")
-val codegen    = inputKey[Unit]("Execute codegen.")
-
-preCodegen := {
-  (simpleAdt / preGen).evaluated
-}
-codegen := {
-  (simpleAdt / runGen).evaluated
-}
+addCommandAlias("preCodegen", s";++${scalaV.v213} simpleAdt/preGen")
+addCommandAlias("codegen", s";++${scalaV.v213} simpleAdt/runGen")
+addCommandAlias("executeTest", ";+simpleAdt/test")
