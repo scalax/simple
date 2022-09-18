@@ -1,8 +1,10 @@
+import Settings._
 import ProjectKeys._
+
+common.collect
 
 libraryDependencies += Dependencies.commonsIO
 
-CommonSettings.codegenProjectSettings
 enablePlugins(SbtTwirl)
 
 val commonScalaRunMainInputStr = settingKey[String]("commonScalaRunMainInputStr")
