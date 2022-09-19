@@ -8,8 +8,8 @@ object Settings {
     val v211    = "2.11.12"
     val v212    = "2.12.15"
     val v213    = "2.13.8"
-    val v320    = "3.2.0"
-    val collect = Seq(v211, v212, v213, v320)
+    val v3      = "3.2.0"
+    val collect = Seq(v211, v212, v213, v3)
   }
 
   private def scalacOptionsVersion(scalaVersion: String): Seq[String] = {
@@ -51,7 +51,7 @@ object Settings {
   object all {
     def deptsAdd(need: Boolean) = if (need) Seq(compilerPlugin(Dependencies.kindProjector)) else Seq.empty
     val kindProjector = libraryDependencies ++= {
-      val v = for (i <- CrossVersion.partialVersion(scalaVersion.value)) yield i._1 == 2
+      val v = for ((i, _) <- CrossVersion.partialVersion(scalaVersion.value)) yield i == 2
       deptsAdd(v.getOrElse(false))
     }
 
@@ -74,7 +74,7 @@ object Settings {
   }
 
   object scala3 {
-    val scalaVersionSetting = scalaVersion := scalaV.v320
+    val scalaVersionSetting = scalaVersion := scalaV.v3
     val collect             = scalaVersionSetting ++: all.collect
   }
 

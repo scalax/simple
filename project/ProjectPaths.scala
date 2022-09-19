@@ -1,11 +1,11 @@
 import sbt._
 
-object ProjectPaths {
+object rootProject {
   self =>
 
   val root = file(".").getAbsoluteFile
 
-  object projects {
+  object subs {
     object simpleAdt {
       val root = self.root / "simple-adt"
       object subs {

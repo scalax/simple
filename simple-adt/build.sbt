@@ -1,6 +1,6 @@
 import Settings._
 import ProjectKeys._
-import ProjectPaths.projects.simpleAdt.subs.{codegen => codegenPath, core => corePath}
+import rootProject.subs.simpleAdt.subs.{codegen => codegenPath, core => corePath}
 
 common.collect
 
@@ -15,4 +15,4 @@ codegen / rootCodegenPath := corePath / "src" / "codegen"
 preGen := (codegen / preGen).evaluated
 runGen := (codegen / runGen).evaluated
 
-Test / test := (Test / test).dependsOn(core / Test / test).value
+Test / test := ((Test / test).dependsOn(core / Test / test)).value
