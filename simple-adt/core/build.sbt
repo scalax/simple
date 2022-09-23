@@ -1,6 +1,6 @@
 import Settings._
-import ProjectKeys._
-import _root_.{Dependencies => depts}
+
+val depts = Dependencies
 
 common.collect
 
