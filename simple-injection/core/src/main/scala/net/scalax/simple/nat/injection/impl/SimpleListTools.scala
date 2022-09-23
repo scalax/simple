@@ -27,7 +27,7 @@ trait SimpleZeroImplObject extends SimpleZero[Nothing] {
   override def add[U >: Nothing](d: U): SimpleList[U] = tools.init(d)
 }
 
-abstract case class SimpleInner[+T](override val data: T, override val tail: SimpleList[T])
+abstract class SimpleInner[+T](override val data: T, override val tail: SimpleList[T])
     extends SimpleAdd[T](data, tail)
     with SimpleListAbs[T]
     with SimpleAddAbs[T]
@@ -49,9 +49,7 @@ abstract case class SimpleInner[+T](override val data: T, override val tail: Sim
   }
 }
 
-abstract case class SimpleOut[+T](override val data: T, override val tail: SimpleList[T])
-    extends SimpleAdd[T](data, tail)
-    with SimpleAddAbs[T] {
+abstract class SimpleOut[+T](override val data: T, override val tail: SimpleList[T]) extends SimpleAdd[T](data, tail) with SimpleAddAbs[T] {
   override def num1: SimpleListAbs[T]
   override def size: Int              = index
   override def get(i: Int): Option[T] = super.get(i)
