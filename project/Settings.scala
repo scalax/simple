@@ -48,6 +48,15 @@ object Settings {
     common +: compat
   }
 
+  object org {
+    val s1 = version              := "0.1.0"
+    val s2 = organization         := "net.scalax"
+    val s3 = organizationName     := "Scala Workers"
+    val s4 = organizationHomepage := Some(url("https://github.com/scala-workers"))
+
+    val collect = Seq(s1, s2, s3, s4)
+  }
+
   object all {
     def deptsAdd(need: Boolean) = if (need) Seq(compilerPlugin(Dependencies.kindProjector)) else Seq.empty
     val kindProjector = libraryDependencies ++= {
@@ -70,12 +79,12 @@ object Settings {
 
   object common {
     val scalaVersionSetting = scalaVersion := scalaV.v213
-    val collect             = scalaVersionSetting ++: all.collect
+    val collect             = scalaVersionSetting ++: org.collect ++: all.collect
   }
 
   object scala3 {
     val scalaVersionSetting = scalaVersion := scalaV.v3
-    val collect             = scalaVersionSetting ++: all.collect
+    val collect             = scalaVersionSetting ++: org.collect ++: all.collect
   }
 
 }

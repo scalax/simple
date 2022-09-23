@@ -1,6 +1,7 @@
 import Settings._
 import ProjectKeys._
-import _root_.{Dependencies => depts}
+
+val depts = Dependencies
 
 scala3.collect
 
@@ -18,7 +19,7 @@ commonScalaRunMainInputStr := {
 }
 
 val commonScalaRunMainClass = s"$codegenPackageName.CommonScalaCodegenExec"
-runGen := {
+codegenImpl := {
   (Compile / runMain).inputTaskValue
     .partialInput(s" $commonScalaRunMainClass")
     .partialInput(s" ${commonScalaRunMainInputStr.value}")
@@ -32,8 +33,8 @@ scala2RunMainInputStr := {
 }
 
 val scala2RunMainClass = s"$codegenPackageName.Scala2CodegenExec"
-runGen := {
-  runGen.evaluated
+codegenImpl := {
+  codegenImpl.evaluated
   (Compile / runMain).inputTaskValue.partialInput(s" $scala2RunMainClass").partialInput(s" ${scala2RunMainInputStr.value}").evaluated
 }
 
@@ -44,13 +45,13 @@ scala3RunMainInputStr := {
 }
 
 val scala3RunMainClass = s"$codegenPackageName.Scala3CodegenExec"
-runGen := {
-  runGen.evaluated
+codegenImpl := {
+  codegenImpl.evaluated
   (Compile / runMain).inputTaskValue.partialInput(s" $scala3RunMainClass").partialInput(s" ${scala3RunMainInputStr.value}").evaluated
 }
 
 val preGenMainClass = s"$codegenPackageName.PreCodegen"
-preGen := (Compile / runMain).inputTaskValue
+preCodegenImpl := (Compile / runMain).inputTaskValue
   .partialInput(s" $preGenMainClass")
   .partialInput(s" ${rootCodegenPath.value.getAbsoluteFile.toString}")
   .evaluated

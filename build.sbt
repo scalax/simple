@@ -1,13 +1,13 @@
 import Settings._
-import ProjectKeys._
-import rootProject.subs.simpleAdt.{root => simpeAdtPath}
 
 common.collect
 
 name := "simple-nat"
 
-val simpleAdt = project in simpeAdtPath
+val adt       = project in file(".") / "simple-adt"
+val injection = project in file(".") / "simple-injection"
 
-addCommandAlias("preCodegen", s";++${scalaV.v3} simpleAdt/preGen")
-addCommandAlias("codegen", s";++${scalaV.v3} simpleAdt/runGen")
-addCommandAlias("executeTest", ";+simpleAdt/test")
+addCommandAlias("preCodegen", s";++${scalaV.v3} adt/preCodegenImpl")
+addCommandAlias("codegen", s";++${scalaV.v3} adt/codegenImpl")
+addCommandAlias("executeTest", ";+adt/test;+injection/test")
+addCommandAlias("t", "executeTest")
