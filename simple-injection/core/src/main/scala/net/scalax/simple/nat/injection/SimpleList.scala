@@ -21,3 +21,10 @@ object SimpleAdd {
     case _: SimpleZero[_] => Option.empty
   }
 }
+
+trait SimpleListAbs[+T] extends SimpleListSImpl[T] with SimpleList[T] {
+  override def num2: SimpleAddAbs[T]
+}
+trait SimpleAddAbs[+T] extends SimpleListAddImpl[T] with SimpleList[T] {
+  override def num1: SimpleListAbs[T]
+}
