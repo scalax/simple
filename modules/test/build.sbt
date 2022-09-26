@@ -10,17 +10,18 @@ common.collect
 val testCommon = crossProject(JSPlatform, JVMPlatform).in(file(".") / "test-common")
 
 val currentPro = settingKey[Project]("Current Pro")
-currentPro:={
+/*currentPro:={
   val plat = (Test/currentPlatform).value
   projectToLocalProject(testCommon.projects(plat))
-}
+}*/
 
 def addToCoreProject(p: Project, platform: Platform) = {
-  val s1 = Test/currentPlatform := platform
+  /*val s1 = Test/currentPlatform := platform
   val s2 = Test / crossDepts := {
     Seq((currentPro.value/projectID).value)
   }
-  Seq(s1,s2)
+  Seq(s1,s2)*/
+  Seq.empty
 }
 
 testCommon.projects.to(List).flatMap{case(s,t)=>addToCoreProject(t,s)}
