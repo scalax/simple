@@ -9,6 +9,7 @@ object ProjectKeys {
   val codegenImpl     = inputKey[Unit]("Execute codegen action")
   val preCodegenImpl  = inputKey[Unit]("Execute prepare codegen action")
   val filesToCross    = settingKey[Seq[File]]("Files to cross")
-  val crossDepts      = settingKey[Seq[(Platform, ModuleID)]]("Cross dependencies.")
+  val copylibs        = settingKey[Seq[(Platform, ModuleID)]]("Copy lib.")
+  val copyManages     = settingKey[Seq[(Platform, File)]]("Copy paths.")
 
 }

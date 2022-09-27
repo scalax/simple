@@ -1,21 +1,24 @@
 import Settings._
 import ProjectKeys._
-import sbt.Project.projectToLocalProject
 
 import scala.collection.compat._
 
 forTest.collect
 
-val testCommon = crossProject(JSPlatform, JVMPlatform).in(file(".") / "test-common")
+name := "test-modules"
 
-val sumCrossDepts = testCommon.componentProjects.map(t => t / crossDepts)
-crossDepts ++= Def.uniform(sumCrossDepts)(_.flatten).value
+val testCommon = crossProject(JSPlatform, JVMPlatform) in file(".") / "test-common"
 
-val pushTasks = testCommon.componentProjects.map(t => t / publishLocal)
-publishLocal := publishLocal.dependsOn(pushTasks: _*).value
+val subProjects = testCommon.projects.values.to(List)
 
-testCommon.componentProjects.flatMap(p => (p / name := "test-common").seq)
+val classPaths = for (t <- subProjects) yield t: ClasspathDep[ProjectReference]
+dependsOn(classPaths: _*)
 
-enablePlugins(GitVersioning)
+val sumManages = for (p <- subProjects) yield p / copyManages
+copyManages := Def.uniform(sumManages)(_.flatten).value
 
-git.useGitDescribe := true
+val sumlibs = for (p <- subProjects) yield p / copylibs
+copylibs := Def.uniform(sumlibs)(_.flatten).value
+
+val sumTest = for (p <- subProjects) yield p / Test / test
+Test / test := (Test / test).dependsOn(sumTest: _*).value

@@ -1,16 +1,20 @@
 import Settings._
 import ProjectKeys._
+import scala.collection.compat._
 
 common.collect
 
 val injectionCore = crossProject(JSPlatform, JVMPlatform).in(file(".") / "core")
 
+val subProjects = injectionCore.projects.values.to(List)
+
 name := "simple-injection"
 
-def addToCoreProject(p: Project): Seq[Setting[_]] = ((p / name) := "simple-injection-core") +:
-  (Test / test := (Test / test).dependsOn(p / Test / test).value) +:
-  Seq((p / Test / libraryDependencies) ++= getProjectId(crossDepts.value, (p / crossProjectPlatform).value))
+val sumTest = for (p <- subProjects) yield p / Test / test
+Test / test := (Test / test).dependsOn(sumTest: _*).value
 
-injectionCore.componentProjects.flatMap(addToCoreProject)
+for (t <- subProjects; t1 <- addFilesToCross(t)) yield t1
 
-injectionCore.componentProjects.flatMap(addFilesToCross)
+for (t <- subProjects) yield t / copylibs    := copylibs.value
+for (t <- subProjects) yield t / copyManages := copyManages.value
+for (t <- subProjects) yield t / name        := "simple-injection-core"

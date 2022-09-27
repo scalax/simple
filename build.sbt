@@ -1,5 +1,6 @@
 import Settings._
 import ProjectKeys._
+import scala.collection.compat._
 
 common.collect
 
@@ -10,9 +11,8 @@ val modulePath = file(".") / "modules"
 val testProjects = project in modulePath / "test"
 val mainProjects = project in modulePath / "main"
 
-mainProjects / crossDepts ++= (testProjects / crossDepts).value
-
-(mainProjects / Test / test) := (mainProjects / Test / test).dependsOn(testProjects / publishLocal).value
+(mainProjects / copylibs)    := (testProjects / copylibs).value
+(mainProjects / copyManages) := (testProjects / copyManages).value
 
 val codegenScalaV = scalaV.v3RC
 addCommandAlias("preCodegen", s";++$codegenScalaV;mainProjects/preCodegenImpl")

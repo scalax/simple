@@ -7,17 +7,21 @@ common.collect
 val adtCodegen = project in file(".") / "codegen"
 val adtCore    = crossProject(JSPlatform, JVMPlatform).in(file(".") / "core")
 
+val subProjects = adtCore.projects.values.to(List)
+
 name              := "simple-adt"
 adtCodegen / name := "simple-adt-codegen"
 
-def addToCoreProject(p: Project) = (p / name := "simple-adt-core") +:
-  (Test / test := (Test / test).dependsOn(p / Test / test).value) +:
-  Seq((p / Test / libraryDependencies) ++= getProjectId(crossDepts.value, (p / crossProjectPlatform).value))
+val sumTest = for (p <- subProjects) yield p / Test / test
+Test / test := (Test / test).dependsOn(sumTest: _*).value
 
 adtCodegen / rootCodegenPath := (adtCore.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
 preCodegenImpl := (adtCodegen / preCodegenImpl).evaluated
 codegenImpl    := (adtCodegen / codegenImpl).evaluated
 
-adtCore.componentProjects.flatMap(addToCoreProject)
-adtCore.componentProjects.flatMap(addFilesToCross)
+for (t <- subProjects; t1 <- addFilesToCross(t)) yield t1
+
+for (t <- subProjects) yield t / copylibs    := copylibs.value
+for (t <- subProjects) yield t / copyManages := copyManages.value
+for (t <- subProjects) yield t / name        := "simple-adt-core"
