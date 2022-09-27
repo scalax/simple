@@ -1,13 +1,22 @@
 import Settings._
+import ProjectKeys._
+import scala.collection.compat._
 
 common.collect
+scalaVersion := scalaV.v213
 
 name := "simple-nat"
 
-val adt       = project in file(".") / "simple-adt"
-val injection = project in file(".") / "simple-injection"
+val modulePath = file(".") / "modules"
 
-addCommandAlias("preCodegen", s";++${scalaV.v3} adt/preCodegenImpl")
-addCommandAlias("codegen", s";++${scalaV.v3} adt/codegenImpl")
-addCommandAlias("executeTest", ";+adt/test;+injection/test")
-addCommandAlias("t", "executeTest")
+val testProjects = project in modulePath / "test"
+val mainProjects = project in modulePath / "main"
+
+(mainProjects / copylibs)    := (testProjects / copylibs).value
+(mainProjects / copyManages) := (testProjects / copyManages).value
+
+val codegenScalaV = scalaV.v3RC
+addCommandAlias("preCodegen", s";++$codegenScalaV;mainProjects/preCodegenImpl")
+addCommandAlias("codegen", s";++$codegenScalaV;mainProjects/codegenImpl")
+addCommandAlias("executeTest", s";+mainProjects/test")
+addCommandAlias("t", ";all scalafmtSbt;executeTest")
