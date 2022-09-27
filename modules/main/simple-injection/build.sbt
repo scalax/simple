@@ -7,10 +7,10 @@ val injectionCore = crossProject(JSPlatform, JVMPlatform).in(file(".") / "core")
 
 name := "simple-injection"
 
-def addToCoreProject(p: Project) = {
-  val s1 = p / name    := "simple-injection-core"
-  val s2 = Test / test := (Test / test).dependsOn(p / Test / test).value
-  Seq(s1, s2) ++: addFilesToCross(p)
-}
+def addToCoreProject(p: Project): Seq[Setting[_]] = ((p / name) := "simple-injection-core") +:
+  (Test / test := (Test / test).dependsOn(p / Test / test).value) +:
+  Seq((p / Test / libraryDependencies) ++= getProjectId(crossDepts.value, (p / crossProjectPlatform).value))
 
 injectionCore.componentProjects.flatMap(addToCoreProject)
+
+injectionCore.componentProjects.flatMap(addFilesToCross)

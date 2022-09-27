@@ -1,0 +1,3 @@
+package aa
+
+object ABC

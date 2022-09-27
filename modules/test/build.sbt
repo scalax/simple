@@ -1,27 +1,21 @@
 import Settings._
 import ProjectKeys._
 import sbt.Project.projectToLocalProject
-import sbtcrossproject.Platform
 
 import scala.collection.compat._
 
-common.collect
+forTest.collect
 
 val testCommon = crossProject(JSPlatform, JVMPlatform).in(file(".") / "test-common")
 
-val currentPro = settingKey[Project]("Current Pro")
-/*currentPro:={
-  val plat = (Test/currentPlatform).value
-  projectToLocalProject(testCommon.projects(plat))
-}*/
+val sumCrossDepts = testCommon.componentProjects.map(t => t / crossDepts)
+crossDepts ++= Def.uniform(sumCrossDepts)(_.flatten).value
 
-def addToCoreProject(p: Project, platform: Platform) = {
-  /*val s1 = Test/currentPlatform := platform
-  val s2 = Test / crossDepts := {
-    Seq((currentPro.value/projectID).value)
-  }
-  Seq(s1,s2)*/
-  Seq.empty
-}
+val pushTasks = testCommon.componentProjects.map(t => t / publishLocal)
+publishLocal := publishLocal.dependsOn(pushTasks: _*).value
 
-testCommon.projects.to(List).flatMap{case(s,t)=>addToCoreProject(t,s)}
+testCommon.componentProjects.flatMap(p => (p / name := "test-common").seq)
+
+enablePlugins(GitVersioning)
+
+git.useGitDescribe := true

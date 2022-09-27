@@ -1,5 +1,7 @@
 import sbt._
-import sbtcrossproject.{CrossClasspathDependency, CrossProject, Platform}
+import sbt.Keys._
+import Settings._
+import sbtcrossproject.Platform
 
 object ProjectKeys {
 
@@ -7,7 +9,6 @@ object ProjectKeys {
   val codegenImpl     = inputKey[Unit]("Execute codegen action")
   val preCodegenImpl  = inputKey[Unit]("Execute prepare codegen action")
   val filesToCross    = settingKey[Seq[File]]("Files to cross")
-  val currentPlatform      = settingKey[Platform]("Current platform")
-  val crossDepts      = settingKey[Seq[ModuleID]]("Cross dependencies.")
+  val crossDepts      = settingKey[Seq[(Platform, ModuleID)]]("Cross dependencies.")
 
 }

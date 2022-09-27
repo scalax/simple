@@ -2,7 +2,7 @@ import ProjectKeys.{crossDepts, filesToCross}
 import sbt._
 import sbt.Keys._
 import org.scalafmt.sbt.ScalafmtPlugin.autoImport.{scalafmtOnCompile, scalafmtSbt}
-import sbtcrossproject.CrossProject
+import sbtcrossproject.Platform
 
 object Settings {
 
@@ -24,7 +24,7 @@ object Settings {
       case Some((3, scalaMajor)) => Seq("-Ykind-projector")
       case _                     => Seq.empty
     }
-    common ++ compat
+    common ++: compat
   }
 
   private def genDirectory(sourceFile: File, parVersion: String, exists: Seq[File]): Seq[File] = {
@@ -49,67 +49,72 @@ object Settings {
   }
 
   object org {
-    val s1 = version              := "0.1.0"
-    val s2 = organization         := "net.scalax"
-    val s3 = organizationName     := "Scala Workers"
-    val s4 = organizationHomepage := Some(url("https://github.com/scala-workers"))
+    val common =
+      (organization       := "net.scalax") +:
+        (organizationName := "Scala Workers") +:
+        (organizationHomepage := Some(url("https://github.com/scala-workers"))).seq
 
-    val collect = Seq(s1, s2, s3, s4)
+    val collect = (version := "0.1.0") +:
+      common
+
+    val testCollect = common
   }
 
   object all {
-    val filesToCrossSetting = Seq(
-      filesToCross := Seq.empty,
-      filesToCross += baseDirectory.value / "src" / "codegen",
-      Compile / filesToCross += baseDirectory.value / "src" / "main",
-      Test / filesToCross += baseDirectory.value / "src" / "test"
-    )
+    val filesToCrossSetting = (filesToCross := Seq.empty) +:
+      (filesToCross += baseDirectory.value / "src" / "codegen") +:
+      (Compile / filesToCross += baseDirectory.value / "src" / "main") +:
+      (Test / filesToCross += baseDirectory.value / "src" / "test").seq
 
-    val crossSetting = crossDepts:=Seq.empty
-
-    val scalafmtSetting    = scalafmtOnCompile  := true
-    val scalafmtSbtSetting = Compile / compile  := ((Compile / compile) dependsOn (Compile / scalafmtSbt)).value
-    val scalaOptions       = scalacOptions ++= scalacOptionsVersion(scalaVersion.value)
-    val crossV             = crossScalaVersions := scalaV.collect
     val compileFolder =
       (Compile / unmanagedSourceDirectories) ++= (Compile / filesToCross).value
         .flatMap(genDirectory(_, scalaVersion.value, (Compile / unmanagedSourceDirectories).value))
     val testFolder = Test / unmanagedSourceDirectories ++= (Test / filesToCross).value
       .flatMap(genDirectory(_, scalaVersion.value, (Test / unmanagedSourceDirectories).value))
-    val collect =
-      Seq(
-        scalafmtSetting,
-        scalafmtSbtSetting,
-        scalaOptions,
-        crossV,
-        compileFolder,
-        testFolder,
-        depts.kindProjector,
-        crossSetting
-      ) ++: filesToCrossSetting
+
+    val collect = (Compile / compile := ((Compile / compile) dependsOn (Compile / scalafmtSbt)).value) +:
+      (scalafmtOnCompile := true) +:
+      (scalacOptions ++= scalacOptionsVersion(scalaVersion.value)) +:
+      (crossScalaVersions := scalaV.collect) +:
+      compileFolder +:
+      testFolder +:
+      depts.kindProjector +:
+      (crossDepts := Seq.empty) +:
+      filesToCrossSetting
   }
 
   object common {
-    val scalaVersionSetting = scalaVersion := scalaV.v213
-    val collect             = scalaVersionSetting +: org.collect ++: all.collect
+    val collect = (scalaVersion := scalaV.v213) +:
+      org.collect ++:
+      all.collect
   }
 
   object scala3 {
-    val scalaVersionSetting = scalaVersion := scalaV.v3
-    val collect             = scalaVersionSetting +: org.collect ++: all.collect
+    val collect = (scalaVersion := scalaV.v3) +:
+      org.collect ++:
+      all.collect
   }
 
   object scala3RC {
-    val scalaVersionSetting = scalaVersion := scalaV.v3RC
-    val crossAdd            = crossScalaVersions += scalaV.v3RC
-    val collect             = scalaVersionSetting +: crossAdd +: org.collect ++: all.collect
+    val collect = (scalaVersion := scalaV.v3RC) +:
+      (crossScalaVersions += scalaV.v3RC) +:
+      org.collect ++:
+      all.collect
   }
 
-  def addFilesToCross(p: Project) =
-    Seq(
-      (p / filesToCross) ++= Seq((p / baseDirectory).value / ".." / "shared" / "src" / "codegen"),
-      (p / Compile / filesToCross) ++= Seq((p / baseDirectory).value / ".." / "shared" / "src" / "main"),
-      (p / Test / filesToCross) ++= Seq((p / baseDirectory).value / ".." / "shared" / "src" / "test")
-    )
+  object forTest {
+    val collect = (scalaVersion := scalaV.v213) +:
+      org.testCollect ++:
+      all.collect
+  }
+
+  def addFilesToCross(p: Project) = ((p / filesToCross) ++= Seq((p / baseDirectory).value / ".." / "shared" / "src" / "codegen")) +:
+    ((p / Compile / filesToCross) ++= Seq((p / baseDirectory).value / ".." / "shared" / "src" / "main")) +:
+    ((p / Test / filesToCross) ++= Seq((p / baseDirectory).value / ".." / "shared" / "src" / "test")).seq
+
+  def getProjectId(map: Seq[(Platform, ModuleID)], platform: Platform) = {
+    println(map.filter(_._1 == platform).map(_._2.cross(CrossVersion.full)) + "236544562315 44563315")
+    map.filter(_._1 == platform).map(_._2)
+  }
 
 }
