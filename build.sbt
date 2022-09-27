@@ -3,6 +3,7 @@ import ProjectKeys._
 import scala.collection.compat._
 
 common.collect
+scalaVersion := scalaV.v213
 
 name := "simple-nat"
 

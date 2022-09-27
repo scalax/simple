@@ -24,6 +24,6 @@ object Dependencies {
     }
   }
 
-  val zio = libraryDependencies += "dev.zio" %%% "zio" % "2.0.2"
+  val zio = libraryDependencies += "dev.zio" %%% "zio" % versions.zio
 
 }

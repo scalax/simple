@@ -1,7 +1,6 @@
-package net.scalax.simple.nat.adt.impl
-
-import net.scalax.simple.nat.adt.TypeAdt
+package net.scalax.simple.nat.adt
+package impl
 
 trait TypeAdtImplicitOptsPolyHigher {
-  @inline def get[F[_] <: TypeAdt[_, _]]: FetchAdtApply[F] = FetchAdtApply.get
+  @inline def get[F[_] <: TypeAdt[_, _, ConfirmSucceed]]: FetchAdtApply[F] = FetchAdtApply.get
 }

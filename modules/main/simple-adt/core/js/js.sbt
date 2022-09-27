@@ -4,6 +4,7 @@ import ProjectKeys._
 val depts = Dependencies
 
 common.collect
+scalaVersion := scalaV.v213
 
 depts.scalaCollectionCompat
 

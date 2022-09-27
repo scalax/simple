@@ -4,6 +4,7 @@ import ProjectKeys._
 import scala.collection.compat._
 
 forTest.collect
+scalaVersion := scalaV.v213
 
 name := "test-modules"
 

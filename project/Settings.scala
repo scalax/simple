@@ -87,28 +87,11 @@ object Settings {
   }
 
   object common {
-    val collect = (scalaVersion := scalaV.v213) +:
-      org.collect ++:
-      all.collect
-  }
-
-  object scala3 {
-    val collect = (scalaVersion := scalaV.v3) +:
-      org.collect ++:
-      all.collect
-  }
-
-  object scala3RC {
-    val collect = (scalaVersion := scalaV.v3RC) +:
-      (crossScalaVersions += scalaV.v3RC) +:
-      org.collect ++:
-      all.collect
+    val collect = org.collect ++: all.collect
   }
 
   object forTest {
-    val collect = (scalaVersion := scalaV.v213) +:
-      org.testCollect ++:
-      all.collect
+    val collect = org.testCollect ++: all.collect
   }
 
   def addFilesToCross(p: Project) = Seq(

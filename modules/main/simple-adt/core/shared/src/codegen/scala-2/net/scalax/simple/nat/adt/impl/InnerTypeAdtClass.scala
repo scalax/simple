@@ -1,5 +1,5 @@
-package net.scalax.simple.nat.adt.impl
-import net.scalax.simple.nat.adt.HelperIO
+package net.scalax.simple.nat.adt
+package impl
 
 object InnerTypeAdtClass {
 

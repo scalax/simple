@@ -3,7 +3,9 @@ import ProjectKeys._
 
 val depts = Dependencies
 
-scala3.collect
+common.collect
+scalaVersion := scalaV.v3RC
+crossScalaVersions += scalaV.v3RC
 
 depts.commonsIO
 depts.scalaCollectionCompat
