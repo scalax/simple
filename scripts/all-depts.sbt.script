@@ -1,0 +1,8 @@
+libraryDependencies += "org.scala-lang.modules" %%% "scala-collection-compat" % "2.8.1"
+
+libraryDependencies ++= {
+  import scala.collection.compat._
+  val need    = CrossVersion.partialVersion(scalaVersion.value).filter(_._1 == 2L).to(Seq)
+  val dept = compilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
+  for (_ <- need) yield dept
+}
