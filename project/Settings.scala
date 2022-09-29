@@ -22,11 +22,11 @@ object CopyFilePlugin extends AutoPlugin {
 
     protected def extraFiles: Seq[File]
 
-    def instance: Unit = instance(baseFile)
+    def write: Unit = write(baseFile)
 
-    def instance(f1: File, f: File*): File = instance(f1 +: f)
+    def write(f1: File, f: File*): Unit = write(f1 +: f)
 
-    def instance(f: Seq[File]): File = {
+    def write(f: Seq[File]): Unit = {
       val arrs = extraFiles.map(t => Files.readAllBytes(t.toPath))
       for (extFile <- f) {
         val copyFile = extFile / "copyBuild.sbt"
@@ -42,10 +42,9 @@ object CopyFilePlugin extends AutoPlugin {
           }
         }
       }
-      baseFile
     }
 
-    def instance(f1: File => File, f: (File => File)*): File = instance((f1 +: f).map(t => t(self.baseFile)))
+    def write(f1: File => File, f: (File => File)*): Unit = write((f1 +: f).map(t => t(self.baseFile)))
 
     def withBuildFile(f: Seq[File]): WithFile = new WithFile {
       override def baseFile: File        = self.baseFile
