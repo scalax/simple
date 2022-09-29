@@ -1,0 +1,2 @@
+jsEnv := PhantomJSEnv().value
+scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) }

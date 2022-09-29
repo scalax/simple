@@ -18,11 +18,11 @@ object CopyFilePlugin extends AutoPlugin {
   trait WithFile {
     self =>
 
-    def baseFile: File
+    protected def baseFile: File
 
-    def extraFiles: Seq[File]
+    protected def extraFiles: Seq[File]
 
-    def instance: File = instance(baseFile)
+    def instance: Unit = instance(baseFile)
 
     def instance(f1: File, f: File*): File = instance(f1 +: f)
 
@@ -65,10 +65,16 @@ object CopyFilePlugin extends AutoPlugin {
   }
 
   object autoImport {
-    val `root-path`          = file(".").getAbsoluteFile
-    val `scripts-root`       = `root-path` / "scripts"
-    val globalScripts        = Seq(`scripts-root` / "all-depts.sbt.script", `scripts-root` / "settings-global.sbt.script")
-    val scalaJsGlobalScripts = Seq(`scripts-root` / "scalajs-common.sbt.script") ++: globalScripts
+    val toJsRoot: File => File  = f => f / "js"
+    val toJVMRoot: File => File = f => f / "jvm"
+
+    val `root-path`    = file(".").getAbsoluteFile
+    val `scripts-root` = `root-path` / "scripts"
+    val globalScripts  = Seq(`scripts-root` / "all-depts.sbt.script", `scripts-root` / "settings-global.sbt.script")
+
+    val scalaJsCommonScripts = Seq(`scripts-root` / "scalajs-common.sbt.script")
+    val scalaJsJvmScripts    = scalaJsCommonScripts
+    val scalaJsJsScripts     = Seq(`scripts-root` / "scalajs-js.sbt.script") ++: scalaJsCommonScripts
 
     implicit class fileExt(val file: File) extends AnyVal {
       def withBuildFile(f: Seq[File]): WithFile                         = WithFile(file).withBuildFile(f)
@@ -76,9 +82,5 @@ object CopyFilePlugin extends AutoPlugin {
       def withBuildFile(f1: File => File, f: (File => File)*): WithFile = WithFile(file).withBuildFile(f1, f: _*)
     }
   }
-
-  import autoImport._
-
-  `root-path`.withBuildFile(globalScripts).instance
 
 }

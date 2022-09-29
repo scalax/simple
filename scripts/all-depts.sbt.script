@@ -2,7 +2,21 @@ libraryDependencies += "org.scala-lang.modules" %%% "scala-collection-compat" % 
 
 libraryDependencies ++= {
   import scala.collection.compat._
-  val need    = CrossVersion.partialVersion(scalaVersion.value).filter(_._1 == 2L).to(Seq)
+  val need = CrossVersion.partialVersion(scalaVersion.value).filter(_._1 == 2L).to(Seq)
   val dept = compilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
   for (_ <- need) yield dept
 }
+
+libraryDependencies ++= Seq(
+  "dev.zio" %%% "zio-test",
+  "dev.zio" %%% "zio-test-sbt"
+).map(_ % "2.0.2" % Test)
+
+libraryDependencies ++= {
+  import scala.collection.compat._
+  val need = CrossVersion.partialVersion(scalaVersion.value).filter(s => s._1 == 2L && s._2 > 11L).to(Seq)
+  val dept = "dev.zio" %%% "zio-test-magnolia" % "2.0.2" % Test
+  for (_ <- need) yield dept
+}
+
+testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
