@@ -1,14 +1,7 @@
-import Settings._
-import ProjectKeys._
+name := "simple-adt-codegen"
 
-val depts = Dependencies
-
-common.collect
 scalaVersion := scalaV.v3RC
 crossScalaVersions += scalaV.v3RC
-
-depts.commonsIO
-depts.scalaCollectionCompat
 
 enablePlugins(SbtTwirl)
 

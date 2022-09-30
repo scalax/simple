@@ -1,0 +1,65 @@
+ProjectKeys.baseCrossFile := (f => Seq(f / "src" / "codegen"))
+
+Compile / ProjectKeys.baseCrossFile := {
+  val t = ProjectKeys.baseCrossFile.value
+  f => f / "src" / "main" +: t(f)
+}
+
+Test / ProjectKeys.baseCrossFile := {
+  val t = (Compile / ProjectKeys.baseCrossFile).value
+  f => (f / "src" / "test") +: (f / "src" / "test-codegen") +: t(f)
+}
+
+ProjectKeys.baseFilesToCross := {
+  val tryValue = ProjectKeys.baseFilesToCross.?.value
+  val newFile = baseDirectory.value
+  newFile +: tryValue.toList.flatten
+}
+
+Compile / unmanagedSourceDirectories := {
+  import inner.CommonUtils._
+  import scala.collection.compat._
+  val t1    = (Compile / ProjectKeys.baseFilesToCross).value
+  val t2    = (Compile / ProjectKeys.baseCrossFile).value
+  val base  = (Compile / unmanagedSourceDirectories).value
+  val sv    = scalaVersion.value
+  val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
+  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv)) yield f2
+  val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
+  all.to(Seq)
+}
+
+Test / unmanagedSourceDirectories ++= {
+  import inner.CommonUtils._
+  import scala.collection.compat._
+  val t1    = (Test / ProjectKeys.baseFilesToCross).value
+  val t2    = (Test / ProjectKeys.baseCrossFile).value
+  val base  = (Test / unmanagedSourceDirectories).value
+  val sv    = scalaVersion.value
+  val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
+  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv)) yield f2
+  val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
+  all.to(Seq)
+}
+
+scalacOptions ++= Seq("-feature", "-deprecation", "-encoding", "UTF-8")
+
+scalacOptions ++= {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, scalaMajor)) => Seq("-Ywarn-dead-code")
+    case Some((3, scalaMajor)) => Seq("-Ykind-projector")
+    case _                     => Seq.empty
+  }
+}
+
+{
+    import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtOnCompile
+    scalafmtOnCompile := true
+}
+
+{
+    import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtSbt
+    Compile / compile := ((Compile / compile) dependsOn (Compile / scalafmtSbt)).value
+}
+
+crossScalaVersions := scalaV.collect

@@ -1,0 +1,5 @@
+ProjectKeys.baseFilesToCross := {
+  val tryValue = ProjectKeys.baseFilesToCross.?.value
+  val newFile  = baseDirectory.value / ".." / "shared"
+  newFile +: tryValue.toList.flatten
+}
