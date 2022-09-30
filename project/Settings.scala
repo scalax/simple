@@ -30,6 +30,7 @@ object CopyFilePlugin extends AutoPlugin {
       val arrs = extraFiles.map(t => Files.readAllBytes(t.toPath))
       for (extFile <- f) {
         val copyFile = extFile / "copyBuild.sbt"
+        Files.createDirectories(extFile.toPath)
         Files.deleteIfExists(copyFile.toPath)
         Using.resource(new java.io.FileOutputStream(copyFile)) { p =>
           Using.resource(new PrintWriter(p)) { u =>
