@@ -3,8 +3,6 @@ name := "simple-adt-codegen"
 scalaVersion := scalaV.v3RC
 crossScalaVersions += scalaV.v3RC
 
-enablePlugins(`settings-global-plugin`, SbtTwirl)
-
 val codegenPackageName = "net.scalax.simple.nat.adt.codegen"
 
 val commonScalaRunMainInputStr = settingKey[String]("commonScalaRunMainInputStr")

@@ -14,8 +14,6 @@ val `injection-core-path` = `injection-path` / "core"
 
 val `test-common-path` = `test-path` / "test-common"
 
-enablePlugins(`settings-global-plugin`, CodegenPlugin)
-
 scalaVersion := scalaV.v213
 name         := "simple-nat"
 
