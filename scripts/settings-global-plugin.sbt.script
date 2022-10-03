@@ -85,3 +85,5 @@ scalacOptions ++= {
 // start setting
 crossScalaVersions := scalaV.collect
 // end setting
+
+override lazy val projectSettings: Seq[Setting[_]] = preSettings

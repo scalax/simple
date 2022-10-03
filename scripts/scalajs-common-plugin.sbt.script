@@ -5,3 +5,5 @@ ProjectKeys.baseFilesToCross := {
   newFile +: tryValue.toList.flatten
 }
 // end setting
+
+override lazy val projectSettings: Seq[Setting[_]] = preSettings

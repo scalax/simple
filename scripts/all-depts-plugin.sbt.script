@@ -1,3 +1,5 @@
+override def requires: Plugins = org.portablescala.sbtplatformdeps.PlatformDepsPlugin
+
 import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 
 // start setting
@@ -32,3 +34,5 @@ libraryDependencies ++= {
 // start setting
 testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
 // end setting
+
+override lazy val projectSettings: Seq[Setting[_]] = preSettings

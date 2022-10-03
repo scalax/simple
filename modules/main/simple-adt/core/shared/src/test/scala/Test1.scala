@@ -1,8 +1,7 @@
 package net.scalax.simple.nat
 package test
 
-import adt.TypeAdt.{alias => adtAlias, get => getAdtApply}
-import adtAlias._
+import adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
 import net.scalax.simple.nat.adt.impl.FetchAdtApply
 import scala.collection.compat._
 

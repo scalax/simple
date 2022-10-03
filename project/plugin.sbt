@@ -31,8 +31,6 @@ def genPluginString(str: String, pluginName: String): String = {
      |
      |  $settingStr
      |
-     |  override lazy val projectSettings: Seq[Setting[_]] = preSettings
-     |
      |}
      |""".stripMargin
 }
