@@ -1,15 +1,15 @@
-// scala code override def requires: Plugins = ProjectKeys
+// scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys
 
 // start setting
 {
-    import ProjectKeys.autoImport._
+    import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
     baseCrossFile := (f => Seq(f / "src" / "codegen"))
 }
 // end setting
 
 // start setting
 {
-    import ProjectKeys.autoImport._
+    import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
     Compile / baseCrossFile := {
       val t = baseCrossFile.value
       f => f / "src" / "main" +: t(f)
@@ -19,7 +19,7 @@
 
 // start setting
 {
-    import ProjectKeys.autoImport._
+    import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
     Test / baseCrossFile := {
       val t = (Compile / baseCrossFile).value
       f => (f / "src" / "test") +: (f / "src" / "test-codegen") +: t(f)
@@ -29,7 +29,7 @@
 
 // start setting
 {
-    import ProjectKeys.autoImport._
+    import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
     baseFilesToCross := {
       val tryValue = baseFilesToCross.?.value
       val newFile = baseDirectory.value
@@ -40,7 +40,7 @@
 
 // start setting
 Compile / unmanagedSourceDirectories := {
-  import ProjectKeys.autoImport._
+  import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
   import inner.CommonUtils._
   import scala.collection.compat._
   val t1    = (Compile / baseFilesToCross).value
@@ -56,7 +56,7 @@ Compile / unmanagedSourceDirectories := {
 
 // start setting
 Test / unmanagedSourceDirectories ++= {
-  import ProjectKeys.autoImport._
+  import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
   import inner.CommonUtils._
   import scala.collection.compat._
   val t1    = (Test / baseFilesToCross).value
@@ -100,7 +100,7 @@ scalacOptions ++= {
 
 // start setting
 {
-    import ProjectKeys.autoImport._
+    import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
     crossScalaVersions := scalaV.collect
 }
 // end setting

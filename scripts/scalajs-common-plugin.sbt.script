@@ -1,6 +1,6 @@
 // start setting
 {
-    import ProjectKeys.autoImport._
+    import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
     baseFilesToCross := {
       val tryValue = baseFilesToCross.?.value
       val newFile  = baseDirectory.value / ".." / "shared"

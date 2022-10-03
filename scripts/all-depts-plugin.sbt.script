@@ -1,4 +1,4 @@
-override def requires: Plugins = org.portablescala.sbtplatformdeps.PlatformDepsPlugin
+// scala code override def requires: Plugins = org.portablescala.sbtplatformdeps.PlatformDepsPlugin
 
 import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 
