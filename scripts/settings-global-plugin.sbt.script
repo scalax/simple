@@ -1,21 +1,30 @@
+// start setting
 ProjectKeys.baseCrossFile := (f => Seq(f / "src" / "codegen"))
+// end setting
 
+// start setting
 Compile / ProjectKeys.baseCrossFile := {
   val t = ProjectKeys.baseCrossFile.value
   f => f / "src" / "main" +: t(f)
 }
+// end setting
 
+// start setting
 Test / ProjectKeys.baseCrossFile := {
   val t = (Compile / ProjectKeys.baseCrossFile).value
   f => (f / "src" / "test") +: (f / "src" / "test-codegen") +: t(f)
 }
+// end setting
 
+// start setting
 ProjectKeys.baseFilesToCross := {
   val tryValue = ProjectKeys.baseFilesToCross.?.value
   val newFile = baseDirectory.value
   newFile +: tryValue.toList.flatten
 }
+// end setting
 
+// start setting
 Compile / unmanagedSourceDirectories := {
   import inner.CommonUtils._
   import scala.collection.compat._
@@ -28,7 +37,9 @@ Compile / unmanagedSourceDirectories := {
   val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
   all.to(Seq)
 }
+// end setting
 
+// start setting
 Test / unmanagedSourceDirectories ++= {
   import inner.CommonUtils._
   import scala.collection.compat._
@@ -41,9 +52,13 @@ Test / unmanagedSourceDirectories ++= {
   val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
   all.to(Seq)
 }
+// end setting
 
+// start setting
 scalacOptions ++= Seq("-feature", "-deprecation", "-encoding", "UTF-8")
+// end setting
 
+// start setting
 scalacOptions ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, scalaMajor)) => Seq("-Ywarn-dead-code")
@@ -51,15 +66,22 @@ scalacOptions ++= {
     case _                     => Seq.empty
   }
 }
+// end setting
 
+// start setting
 {
     import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtOnCompile
     scalafmtOnCompile := true
 }
+// end setting
 
+// start setting
 {
     import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtSbt
     Compile / compile := ((Compile / compile) dependsOn (Compile / scalafmtSbt)).value
 }
+// end setting
 
+// start setting
 crossScalaVersions := scalaV.collect
+// end setting

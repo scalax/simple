@@ -3,7 +3,7 @@ name := "simple-adt-codegen"
 scalaVersion := scalaV.v3RC
 crossScalaVersions += scalaV.v3RC
 
-enablePlugins(SbtTwirl)
+enablePlugins(`settings-global-plugin`, SbtTwirl)
 
 val codegenPackageName = "net.scalax.simple.nat.adt.codegen"
 

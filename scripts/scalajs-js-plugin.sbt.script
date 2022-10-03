@@ -1,0 +1,4 @@
+// start setting
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
+// end setting
