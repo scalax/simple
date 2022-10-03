@@ -22,7 +22,7 @@ lazy val mainProjects = project in `main-path`
 
 lazy val adt = project in `adt-path`
 
-lazy val `adt-codegen` = project in `adt-codegen-path` enablePlugins CodegenPlugin
+lazy val `adt-codegen` = project in `adt-codegen-path`
 lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core-path` dependsOn (`test-common` % Test)
 
 lazy val injection        = project in `injection-path`
