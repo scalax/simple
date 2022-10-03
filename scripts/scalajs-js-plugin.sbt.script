@@ -1,6 +1,8 @@
 // start setting
-import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
-jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
+{
+    import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+    jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
+}
 // end setting
 
-override lazy val projectSettings: Seq[Setting[_]] = preSettings
+// scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings
