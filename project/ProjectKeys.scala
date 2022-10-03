@@ -1,3 +1,5 @@
+package net.scalax.simple.nat.sbt
+
 import sbt._
 import sbt.Keys._
 
