@@ -1,4 +1,4 @@
-// scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys
+// scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys && org.scalafmt.sbt.ScalafmtPlugin
 
 // start setting
 {

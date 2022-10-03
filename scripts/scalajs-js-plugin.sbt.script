@@ -1,3 +1,5 @@
+// scala code override def requires: Plugins = org.scalajs.sbtplugin.ScalaJSPlugin
+
 // start setting
 {
     import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
