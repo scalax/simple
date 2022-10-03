@@ -1,9 +1,12 @@
 // start setting
-ProjectKeys.baseFilesToCross := {
-  val tryValue = ProjectKeys.baseFilesToCross.?.value
-  val newFile  = baseDirectory.value / ".." / "shared"
-  newFile +: tryValue.toList.flatten
+{
+    import ProjectKeys.autoImport._
+    baseFilesToCross := {
+      val tryValue = baseFilesToCross.?.value
+      val newFile  = baseDirectory.value / ".." / "shared"
+      newFile +: tryValue.toList.flatten
+    }
 }
 // end setting
 
-override lazy val projectSettings: Seq[Setting[_]] = preSettings
+// scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings

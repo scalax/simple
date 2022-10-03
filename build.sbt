@@ -1,4 +1,4 @@
-val `root-path` = file(".").getAbsoluteFile
+val `root-path` = file(".").getCanonicalFile
 
 val `module-path` = `root-path` / "modules"
 

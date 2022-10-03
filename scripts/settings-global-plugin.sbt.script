@@ -1,35 +1,50 @@
-// start setting
-ProjectKeys.baseCrossFile := (f => Seq(f / "src" / "codegen"))
-// end setting
+// scala code override def requires: Plugins = ProjectKeys
 
 // start setting
-Compile / ProjectKeys.baseCrossFile := {
-  val t = ProjectKeys.baseCrossFile.value
-  f => f / "src" / "main" +: t(f)
+{
+    import ProjectKeys.autoImport._
+    baseCrossFile := (f => Seq(f / "src" / "codegen"))
 }
 // end setting
 
 // start setting
-Test / ProjectKeys.baseCrossFile := {
-  val t = (Compile / ProjectKeys.baseCrossFile).value
-  f => (f / "src" / "test") +: (f / "src" / "test-codegen") +: t(f)
+{
+    import ProjectKeys.autoImport._
+    Compile / baseCrossFile := {
+      val t = baseCrossFile.value
+      f => f / "src" / "main" +: t(f)
+    }
 }
 // end setting
 
 // start setting
-ProjectKeys.baseFilesToCross := {
-  val tryValue = ProjectKeys.baseFilesToCross.?.value
-  val newFile = baseDirectory.value
-  newFile +: tryValue.toList.flatten
+{
+    import ProjectKeys.autoImport._
+    Test / baseCrossFile := {
+      val t = (Compile / baseCrossFile).value
+      f => (f / "src" / "test") +: (f / "src" / "test-codegen") +: t(f)
+    }
+}
+// end setting
+
+// start setting
+{
+    import ProjectKeys.autoImport._
+    baseFilesToCross := {
+      val tryValue = baseFilesToCross.?.value
+      val newFile = baseDirectory.value
+      newFile +: tryValue.toList.flatten
+    }
 }
 // end setting
 
 // start setting
 Compile / unmanagedSourceDirectories := {
+  import ProjectKeys.autoImport._
   import inner.CommonUtils._
   import scala.collection.compat._
-  val t1    = (Compile / ProjectKeys.baseFilesToCross).value
-  val t2    = (Compile / ProjectKeys.baseCrossFile).value
+  val t1    = (Compile / baseFilesToCross).value
+  val t2    = (Compile / baseCrossFile).value
   val base  = (Compile / unmanagedSourceDirectories).value
   val sv    = scalaVersion.value
   val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
@@ -41,10 +56,11 @@ Compile / unmanagedSourceDirectories := {
 
 // start setting
 Test / unmanagedSourceDirectories ++= {
+  import ProjectKeys.autoImport._
   import inner.CommonUtils._
   import scala.collection.compat._
-  val t1    = (Test / ProjectKeys.baseFilesToCross).value
-  val t2    = (Test / ProjectKeys.baseCrossFile).value
+  val t1    = (Test / baseFilesToCross).value
+  val t2    = (Test / baseCrossFile).value
   val base  = (Test / unmanagedSourceDirectories).value
   val sv    = scalaVersion.value
   val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
@@ -83,7 +99,10 @@ scalacOptions ++= {
 // end setting
 
 // start setting
-crossScalaVersions := scalaV.collect
+{
+    import ProjectKeys.autoImport._
+    crossScalaVersions := scalaV.collect
+}
 // end setting
 
-override lazy val projectSettings: Seq[Setting[_]] = preSettings
+// scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings

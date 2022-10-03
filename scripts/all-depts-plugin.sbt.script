@@ -35,4 +35,4 @@ libraryDependencies ++= {
 testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
 // end setting
 
-override lazy val projectSettings: Seq[Setting[_]] = preSettings
+// scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings

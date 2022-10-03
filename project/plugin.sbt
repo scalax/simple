@@ -1,10 +1,3 @@
-import java.io.PrintWriter
-import java.nio.file.{Files, Path}
-import java.util.stream.Collectors
-import scala.jdk.CollectionConverters._
-import scala.collection.compat._
-import scala.util.Using
-
 addSbtPlugin("org.scalameta"      % "sbt-scalafmt"             % "2.4.6")
 addSbtPlugin("io.spray"           % "sbt-revolver"             % "0.9.1")
 addSbtPlugin("com.typesafe.play"  % "sbt-twirl"                % "1.6.0-M6")
@@ -16,8 +9,16 @@ addSbtPlugin("com.github.sbt"     % "sbt-git"                  % "2.0.0")
 addSbtPlugin("org.scala-js" % "sbt-scalajs-env-phantomjs" % "1.0.0")
 addSbtPlugin("org.scala-js" % "sbt-scalajs"               % "1.11.0")
 
+import java.io.PrintWriter
+import java.nio.file.{Files, Path}
+import java.util.stream.Collectors
+import scala.jdk.CollectionConverters._
+import scala.collection.compat._
+import scala.util.Using
+
 def genPluginString(str: String, pluginName: String): String = {
-  val settingStr = str.replaceAllLiterally("""// start setting""", "addSetting {") replaceAllLiterally ("""// end setting""", "}")
+  val settingStr =
+    str replaceAllLiterally ("""// start setting""", "addSetting {") replaceAllLiterally ("""// end setting""", "}") replaceAllLiterally ("""// scala code""", "")
 
   s"""
      |object `$pluginName` extends _root_.sbt.AutoPlugin {
@@ -40,7 +41,7 @@ def genPluginFromFile(f: Path): String = genPluginString(Files.readString(f), f.
 Compile / sourceGenerators += Def.task {
   val sourceDir = (Compile / sourceManaged).value / "PluginCollection.scala"
 
-  val scriptFilesDir = file(".") / "scripts"
+  val scriptFilesDir = file(".").getCanonicalFile / "scripts"
   val scriptFiles    = Files.list(scriptFilesDir.toPath).collect(Collectors.toList[Path]).asScala.to(List)
 
   val str = scriptFiles.map(genPluginFromFile)
