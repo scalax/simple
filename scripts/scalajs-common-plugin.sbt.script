@@ -1,3 +1,5 @@
+// scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys
+
 // start setting
 {
     import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
