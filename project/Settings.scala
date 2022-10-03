@@ -13,7 +13,7 @@ object CodegenPlugin extends AutoPlugin {
   }
 }
 
-object CopyFilePlugin extends AutoPlugin {
+/*object CopyFilePlugin extends AutoPlugin {
 
   trait WithFile {
     self =>
@@ -70,7 +70,7 @@ object CopyFilePlugin extends AutoPlugin {
 
     val `root-path`    = file(".").getAbsoluteFile
     val `scripts-root` = `root-path` / "scripts"
-    val globalScripts  = Seq(`scripts-root` / "all-depts.sbt.script", `scripts-root` / "settings-global.sbt.script")
+    val globalScripts  = Seq( /*`scripts-root` / "all-depts.sbt.script",*/ `scripts-root` / "settings-global.sbt.script")
 
     val scalaJsCommonScripts = Seq(`scripts-root` / "scalajs-common.sbt.script")
     val scalaJsJvmScripts    = scalaJsCommonScripts
@@ -83,4 +83,4 @@ object CopyFilePlugin extends AutoPlugin {
     }
   }
 
-}
+}*/

@@ -1,3 +1,5 @@
+val `root-path` = file(".").getAbsoluteFile
+
 val `module-path` = `root-path` / "modules"
 
 val `test-path` = `module-path` / "test"
@@ -12,39 +14,15 @@ val `injection-core-path` = `injection-path` / "core"
 
 val `test-common-path` = `test-path` / "test-common"
 
-val initCopyFile = {
-  `adt-path`.withBuildFile(globalScripts).write
-  `adt-codegen-path`.withBuildFile(globalScripts).write
-  `injection-path`.withBuildFile(globalScripts).write
-  locally {
-    val filePath = `adt-core-path`.withBuildFile(globalScripts).withBuildFile(scalaJsJvmScripts).withBuildFile(_ / "build.sbt.script")
-    filePath.write(toJVMRoot)
-    filePath.withBuildFile(scalaJsJsScripts).write(toJsRoot)
-  }
-  locally {
-    val filePath = `injection-core-path`.withBuildFile(globalScripts).withBuildFile(scalaJsJvmScripts).withBuildFile(_ / "build.sbt.script")
-    filePath.write(toJVMRoot)
-    filePath.withBuildFile(scalaJsJsScripts).write(toJsRoot)
-  }
-  locally {
-    val filePath = `test-common-path`.withBuildFile(globalScripts).withBuildFile(scalaJsJvmScripts).withBuildFile(_ / "build.sbt.script")
-    filePath.write(toJVMRoot)
-    filePath.withBuildFile(scalaJsJsScripts).write(toJsRoot)
-  }
-}
-
-enablePlugins(CopyFilePlugin, CodegenPlugin)
-
-scalaVersion       := scalaV.v213
-name               := "simple-nat"
-crossScalaVersions := scalaV.collect
+scalaVersion := scalaV.v213
+name         := "simple-nat"
 
 lazy val testProjects = project in `test-path`
 lazy val mainProjects = project in `main-path`
 
 lazy val adt = project in `adt-path`
 
-lazy val `adt-codegen` = project in `adt-codegen-path` enablePlugins CodegenPlugin
+lazy val `adt-codegen` = project in `adt-codegen-path`
 lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core-path` dependsOn (`test-common` % Test)
 
 lazy val injection        = project in `injection-path`

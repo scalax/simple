@@ -7,5 +7,3 @@
 .bloop/
 target/
 metals.sbt
-**/copyBuild.sbt
-/firefixDriverFile/geckodriver.exe
