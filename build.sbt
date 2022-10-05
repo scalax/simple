@@ -32,9 +32,6 @@ lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common-p
 
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
-preCodegenImpl := (`adt-codegen` / preCodegenImpl).evaluated
-codegenImpl    := (`adt-codegen` / codegenImpl).evaluated
-
 val adtTestAll       = `adt-core`.componentProjects.map(t => t / Test / test)
 val injectionTestAll = `injection-core`.componentProjects.map(t => t / Test / test)
 
@@ -43,7 +40,7 @@ injection / Test / test    := (injection / Test / test).dependsOn(injectionTestA
 mainProjects / Test / test := (mainProjects / Test / test).dependsOn(adt / Test / test, injection / Test / test).value
 
 val codegenScalaV = scalaV.v3RC
-addCommandAlias("preCodegen", s";++$codegenScalaV;preCodegenImpl")
-addCommandAlias("codegen", s";++$codegenScalaV;codegenImpl")
+addCommandAlias("preCodegen", s";++$codegenScalaV!;adt-codegen/preCodegenImpl")
+addCommandAlias("codegen", s";++$codegenScalaV!;adt-codegen/codegenImpl")
 addCommandAlias("executeTest", "+mainProjects/test")
 addCommandAlias("t", ";all scalafmtSbt;executeTest")

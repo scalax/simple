@@ -1,7 +1,6 @@
 name := "simple-adt-codegen"
 
 scalaVersion := scalaV.v3RC
-crossScalaVersions += scalaV.v3RC
 
 val codegenPackageName = "net.scalax.simple.nat.adt.codegen"
 
