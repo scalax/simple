@@ -1,68 +1,90 @@
 package net.scalax.simple.nat.injection.impl
 
-import net.scalax.simple.nat.injection.{SimpleAdd, SimpleAddAbs, SimpleList, SimpleListAbs, SimpleListImpl, SimpleListZero, SimpleZero}
+import net.scalax.simple.nat.injection.{
+  SimpleList,
+  SimpleListCurrentImpl,
+  SimpleListNeedFuture,
+  SimpleListNeedFutureZero,
+  SimpleListNeedPass,
+  SimplePositive,
+  SimpleZero
+}
 
 private object tools {
   def init[T](data: T): SimpleList[T] = {
     lazy val simpleZero: SimpleZeroImpl[T] = new SimpleZeroImpl[T]() {
-      override def num2: SimpleAddAbs[T] = simpleOut
+      override def future: SimpleListNeedPass[T] = simpleOut
     }
     lazy val simpleOut: SimpleOut[T] = new SimpleOut[T](data) {
-      override def num1: SimpleListAbs[T] = simpleZero
+      override def pass: SimpleListNeedFuture[T] = simpleZero
     }
     simpleOut
   }
 }
 
-abstract class SimpleZeroImpl[+T]() extends SimpleZero[T] with SimpleListZero[T] with SimpleListAbs[T] {
-  override def num2: SimpleAddAbs[T]
-  override def get(i: Int): Option[T]                 = super.get(i)
-  override def add[U >: Nothing](d: U): SimpleList[U] = tools.init(d)
+abstract class SimpleZeroImpl[T]() extends SimpleZero[T] with SimpleListNeedFutureZero[T] with SimpleListNeedFuture[T] {
+  override def future: SimpleListNeedPass[T]
+  override def get(i: Int): Option[T]   = super.get(i)
+  override def add(d: T): SimpleList[T] = tools.init(d)
+
+  /*override val addNext: T => SimpleOut[T] = { t =>
+    lazy val out: SimpleOut[T] = new SimpleOut(t) {
+      override def pass: SimpleListNeedFuture[T] = in
+    }
+    lazy val in: SimpleListNeedFuture[T] = new SimpleZeroImpl[T] {
+      override def future: SimpleListNeedPass[T] = out
+    }
+    out
+  }*/
 }
 
-trait SimpleZeroImplObject extends SimpleZero[Nothing] {
-  override def get(i: Int): Option[Nothing]           = Option.empty
-  override val size: Int                              = 0
-  override def add[U >: Nothing](d: U): SimpleList[U] = tools.init(d)
+trait SimpleZeroImplObject[T] extends SimpleZero[T] {
+  override def get(i: Int): Option[Nothing] = Option.empty
+  override val size: Int                    = 0
+  override def add(d: T): SimpleList[T]     = tools.init(d)
 }
 
-abstract class SimpleInner[+T](override val data: T)
-    extends SimpleAdd[T](data)
-    with SimpleListAbs[T]
-    with SimpleAddAbs[T]
-    with SimpleListImpl[T] {
-  override def tail: SimpleList[T] = num1
-  override def num1: SimpleListAbs[T]
-  override def num2: SimpleAddAbs[T]
+abstract class SimpleInner[T](override val data: T)
+    extends SimplePositive[T](data)
+    with SimpleListNeedFuture[T]
+    with SimpleListNeedPass[T]
+    with SimpleListCurrentImpl[T] {
+  override def tail: SimpleList[T] = pass
+  override def pass: SimpleListNeedFuture[T]
+  override def future: SimpleListNeedPass[T]
   override def get(i: Int): Option[T] = super.get(i)
   override val size: Int              = super.size
-  override def add[U >: T](d: U): SimpleList[U] = {
-    val num1Impl = num1
-    lazy val listPre: SimpleInner[U] = new SimpleInner[U](data) {
-      override def num1: SimpleListAbs[U] = num1Impl
-      override def num2: SimpleAddAbs[U]  = listCurr
+  override def add(d: T): SimpleList[T] = {
+    val num1Impl = pass
+    lazy val listPre: SimpleInner[T] = new SimpleInner[T](data) {
+      override def pass: SimpleListNeedFuture[T] = num1Impl
+      override def future: SimpleListNeedPass[T] = listCurr
     }
-    lazy val listCurr: SimpleOut[U] = new SimpleOut[U](data) {
-      override def num1: SimpleListAbs[U] = listPre
+    lazy val listCurr: SimpleOut[T] = new SimpleOut[T](data) {
+      override def pass: SimpleListNeedFuture[T] = listPre
     }
     listCurr
   }
 }
 
-abstract class SimpleOut[+T](override val data: T) extends SimpleAdd[T](data) with SimpleAddAbs[T] {
-  override def tail: SimpleList[T] = num1
-  override def num1: SimpleListAbs[T]
+abstract class SimpleOut[T](override val data: T) extends SimplePositive[T](data) with SimpleListNeedPass[T] {
+  override def tail: SimpleList[T] = pass
+  override def pass: SimpleListNeedFuture[T]
   override val size: Int              = super.index + 1
   override def get(i: Int): Option[T] = super.get(i)
-  override def add[U >: T](d: U): SimpleList[U] = {
-    val num1Impl = num1
-    lazy val listPre: SimpleInner[U] = new SimpleInner[U](data) {
-      override def num1: SimpleListAbs[U] = num1Impl
-      override def num2: SimpleAddAbs[U]  = listCurr
+  override def add(d: T): SimpleList[T] = {
+    val num1Impl = pass
+    lazy val listPre: SimpleInner[T] = new SimpleInner[T](data) {
+      override def pass: SimpleListNeedFuture[T] = num1Impl
+      override def future: SimpleListNeedPass[T] = listCurr
     }
-    lazy val listCurr: SimpleOut[U] = new SimpleOut[U](data) {
-      override def num1: SimpleListAbs[U] = listPre
+    lazy val listCurr: SimpleOut[T] = new SimpleOut[T](data) {
+      override def pass: SimpleListNeedFuture[T] = listPre
     }
     listCurr
   }
+  /*override val addPre: T => SimpleListAbs[T] = {
+    11
+  }*/
+
 }

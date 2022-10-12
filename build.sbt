@@ -25,8 +25,14 @@ lazy val adt = project in `adt-path`
 lazy val `adt-codegen` = project in `adt-codegen-path`
 lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core-path` dependsOn (`test-common` % Test)
 
+lazy val `adt-coreJVM` = `adt-core`.jvm
+lazy val `adt-coreJS`  = `adt-core`.js
+
 lazy val injection        = project in `injection-path`
 lazy val `injection-core` = crossProject(JSPlatform, JVMPlatform) in `injection-core-path` dependsOn (`test-common` % Test)
+
+lazy val `injection-coreJVM` = `injection-core`.jvm
+lazy val `injection-coreJS`  = `injection-core`.js
 
 lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common-path`
 
@@ -43,4 +49,3 @@ val codegenScalaV = scalaV.v3RC
 addCommandAlias("preCodegen", s";++$codegenScalaV!;adt-codegen/preCodegenImpl")
 addCommandAlias("codegen", s";++$codegenScalaV!;adt-codegen/codegenImpl")
 addCommandAlias("executeTest", "+mainProjects/test")
-addCommandAlias("t", ";all scalafmtSbt;executeTest")

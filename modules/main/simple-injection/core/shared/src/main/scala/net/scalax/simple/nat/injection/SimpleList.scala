@@ -1,14 +1,14 @@
 package net.scalax.simple.nat.injection
 
-trait SimpleList[+T] {
+trait SimpleList[T] {
   def dataStruct: Option[(T, SimpleList[T])]
   def get(i: Int): Option[T]
   def size: Int
-  def add[U >: T](d: U): SimpleList[U]
+  def add(d: T): SimpleList[T]
 }
 object SimpleList {
   def apply[T](elems: T*): SimpleList[T] = {
-    var init: SimpleList[T] = SimpleZero
+    var init: SimpleList[T] = SimpleZero()
     for (e <- elems) init = init.add(e)
     init
   }
@@ -24,24 +24,32 @@ object SimpleList {
   }
 }
 
-abstract class SimpleZero[+T] extends SimpleList[T] {
+abstract class SimpleZero[T] extends SimpleList[T] {
   override val dataStruct: Option[(T, SimpleList[T])] = Option.empty
 }
-object SimpleZero extends SimpleZero[Nothing] with impl.SimpleZeroImplObject {
+class SimpleZeroSingleton[T] extends SimpleZero[T] with impl.SimpleZeroImplObject[T]
+object SimpleZero {
+  def apply[T](): SimpleList[T]                = new SimpleZeroSingleton
   def unapply(u: SimpleList[Nothing]): Boolean = u.dataStruct.isEmpty
 }
 
-abstract class SimpleAdd[+T](data: T) extends SimpleList[T] {
+abstract class SimplePositive[T](data: T) extends SimpleList[T] {
   def tail: SimpleList[T]
   override def dataStruct: Option[(T, SimpleList[T])] = Option((data, tail))
 }
-object SimpleAdd {
+object SimplePositive {
   def unapply[T](u: SimpleList[T]): Option[(T, SimpleList[T])] = u.dataStruct
 }
 
-trait SimpleListAbs[+T] extends SimpleListSImpl[T] with SimpleList[T] {
-  override def num2: SimpleAddAbs[T]
+trait SimpleListNeedFuture[T] extends SimpleListNeedFutureImpl[T] with SimpleList[T] {
+  override def future: SimpleListNeedPass[T]
+
+  // def addNext: T => SimpleListNeedFuture[T]
+
 }
-trait SimpleAddAbs[+T] extends SimpleListAddImpl[T] with SimpleList[T] {
-  override def num1: SimpleListAbs[T]
+trait SimpleListNeedPass[T] extends SimpleListNeedPassImpl[T] with SimpleList[T] {
+  override def pass: SimpleListNeedFuture[T]
+
+  // def addPre: T => SimpleNeedPass[T]
+
 }
