@@ -1,14 +1,5 @@
-package net.scalax.simple.nat.injection.impl
-
-import net.scalax.simple.nat.injection.{
-  SimpleList,
-  SimpleListCurrentImpl,
-  SimpleListNeedFuture,
-  SimpleListNeedFutureZero,
-  SimpleListNeedPass,
-  SimplePositive,
-  SimpleZero
-}
+package net.scalax.simple.nat.injection
+package impl
 
 private object tools {
   def init[T](data: T): SimpleList[T] = {
@@ -23,6 +14,7 @@ private object tools {
 }
 
 abstract class SimpleZeroImpl[T]() extends SimpleZero[T] with SimpleListNeedFutureZero[T] with SimpleListNeedFuture[T] {
+  1
   override def future: SimpleListNeedPass[T]
   override def get(i: Int): Option[T]   = super.get(i)
   override def add(d: T): SimpleList[T] = tools.init(d)
