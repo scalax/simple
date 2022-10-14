@@ -3,8 +3,8 @@ package impl
 
 trait TypeAdtAlias {
 
-  type TypeOptions1[A, I1]        = TypeAdt[A, (I1), ConfirmSucceed]
-  type TypeOptions1F[F[_], A, I1] = TypeAdt[F[A], (I1), ConfirmSucceed]
+  type TypeOptions1[A, I1]        = TypeAdt[A, I1 *: EmptyTuple, ConfirmSucceed]
+  type TypeOptions1F[F[_], A, I1] = TypeAdt[F[A], I1 *: EmptyTuple, ConfirmSucceed]
 
   type TypeOptions2[A, I1, I2]        = TypeAdt[A, (I1, I2), ConfirmSucceed]
   type TypeOptions2F[F[_], A, I1, I2] = TypeAdt[F[A], (I1, I2), ConfirmSucceed]

@@ -1,28 +1,28 @@
 package net.scalax.simple.nat.injection
 
-trait SimpleListSImpl[+T] extends LengthNumber1 {
-  override def num2: SimpleListAddImpl[T]
-  def get(i: Int): Option[T] = num2.get(i)
+trait SimpleListNeedFutureImpl[+T] extends LengthNeedFuture {
+  override def future: SimpleListNeedPassImpl[T]
+  def get(i: Int): Option[T] = future.get(i)
 }
 
-trait SimpleListZero[+T] extends LengthNumber1S with SimpleListSImpl[T] {
-  override def num2: SimpleListAddImpl[T]
-  override def get(i: Int): Option[T] = Option.empty
+trait SimpleListNeedFutureZero[+T] extends LengthNeedFutureS with SimpleListNeedFutureImpl[T] {
+  override def future: SimpleListNeedPassImpl[T]
+  override def get(i: Int): Option[T] = if (i < 0) Option.empty else future.get(i)
 }
 
-trait SimpleListAddImpl[+T] extends LengthNumber2 {
-  override def num1: SimpleListSImpl[T]
+trait SimpleListNeedPassImpl[+T] extends LengthNeedPass {
+  override def pass: SimpleListNeedFutureImpl[T]
   def data: T
-  def get(i: Int): Option[T] = if (i == index) Option(data) else Option.empty
+  def get(i: Int): Option[T]
 }
 
-trait SimpleListImpl[+T] extends SimpleListSImpl[T] with SimpleListAddImpl[T] with SimpleLengthNumber {
+trait SimpleListCurrentImpl[+T] extends SimpleListNeedFutureImpl[T] with SimpleListNeedPassImpl[T] with LengthCurrent {
   override def data: T
-  override def num1: SimpleListSImpl[T]
-  override def num2: SimpleListAddImpl[T]
+  override def pass: SimpleListNeedFutureImpl[T]
+  override def future: SimpleListNeedPassImpl[T]
   override def get(i: Int): Option[T] =
     if (i == index) Option(data)
     else if (i < index)
-      num1.get(i)
-    else num2.get(i)
+      pass.get(i)
+    else future.get(i)
 }

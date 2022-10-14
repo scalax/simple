@@ -13,6 +13,11 @@ final class FetchAdtApply[F[_] <: TypeAdt[_, _, ConfirmSucceed]]:
 end FetchAdtApply
 
 final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt[_, _, ConfirmSucceed]](value: Any) extends AnyVal:
-  inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt): U =
-    funcCol.productElement(adt.index - 1).asInstanceOf[Any => Any](value).asInstanceOf[U]
+  inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt, allSize: ValueOf[Tuple.Size[O[U]]]): U =
+    def needIndex = allSize.value - adt.index
+    if (funcCol eq EmptyTuple)
+      funcCol.productElement(needIndex).asInstanceOf[Any => Any](value).asInstanceOf[U]
+    else
+      funcCol.asInstanceOf[NonEmptyTuple](needIndex).asInstanceOf[Any => Any](value).asInstanceOf[U]
+  end fold
 end InnerApply

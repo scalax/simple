@@ -3,13 +3,12 @@ package impl
 import net.scalax.simple.nat.adt.TypeAdt
 
 trait TypeAdtImplicitOptsPolyHigher extends TypeAdtImplicitOptsPolyLower with AdtApply:
-  inline given [A, B <: A, T <: Tuple]: TypeAdt[B, A *: T, ConfirmSucceed] = TypeAdt(1)
+  inline given [A, B <: A, T <: Tuple](using inline v: ValueOf[Tuple.Size[A *: T]]): TypeAdt[B, A *: T, ConfirmSucceed] = TypeAdt(v.value)
 end TypeAdtImplicitOptsPolyHigher
 
 trait TypeAdtImplicitOptsPolyLower:
-  inline given [A, B, T <: Tuple](using inline adt: TypeAdt[B, T, ConfirmSucceed]): TypeAdt[B, A *: T, ConfirmSucceed] = TypeAdt(
-    adt.index + 1
-  )
+  inline given [A, B, T <: Tuple](using inline adt: TypeAdt[B, T, ConfirmSucceed]): TypeAdt[B, A *: T, ConfirmSucceed] =
+    adt.asInstanceOf[TypeAdt[B, A *: T, ConfirmSucceed]]
 end TypeAdtImplicitOptsPolyLower
 
 trait AdtApply:
