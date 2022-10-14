@@ -1,14 +1,25 @@
 package net.scalax.simple.nat.injection
 
-trait SimpleList[T] {
+trait SimpleList[+T] {
+  def getSelf: SimpleList[T]
   def dataStruct: Option[(T, SimpleList[T])]
   def get(i: Int): Option[T]
   def size: Int
-  def add(d: T): SimpleList[T]
+  def add[D >: T](d: D): SimpleList[D]
+  def allToString: String
+  def length: Int
+
+  @throws[IndexOutOfBoundsException]
+  def apply(n: Int): T = {
+    if (n < 0) throw new IndexOutOfBoundsException(n.toString)
+    val skipped = this.get(n)
+    if (skipped.isEmpty) throw new IndexOutOfBoundsException(n.toString)
+    skipped.get
+  }
 }
 object SimpleList {
   def apply[T](elems: T*): SimpleList[T] = {
-    var init: SimpleList[T] = SimpleZero()
+    var init: SimpleList[T] = SimpleZero
     for (e <- elems) init = init.add(e)
     init
   }
@@ -22,34 +33,51 @@ object SimpleList {
     }
     seq
   }
+  def allToList[T](s: SimpleList[T]): List[T] = {
+    var list: List[T] = List.empty
+    var t             = s
+    @annotation.tailrec
+    def loop: Unit = t match {
+      case SimpleZero =>
+      case SimplePositive(current, tail) =>
+        list = current +: list
+        t = tail
+        loop
+    }
+    loop
+    list
+  }
 }
 
-abstract class SimpleZero[T] extends SimpleList[T] {
+abstract class SimpleZero[+T] extends SimpleList[T] {
   override val dataStruct: Option[(T, SimpleList[T])] = Option.empty
 }
-class SimpleZeroSingleton[T] extends SimpleZero[T] with impl.SimpleZeroImplObject[T]
-object SimpleZero {
-  def apply[T](): SimpleList[T]                = new SimpleZeroSingleton
-  def unapply(u: SimpleList[Nothing]): Boolean = u.dataStruct.isEmpty
+
+case object SimpleZero extends SimpleZero[Nothing] with impl.SimpleZeroImplObject {
+  override def equals(obj: Any): Boolean = obj match {
+    case t: SimpleList[_] => t.dataStruct.isEmpty
+    case _                => false
+  }
+  override def allToString: String = SimpleList.allToList(this).toString()
+  override val length: Int         = 0
 }
 
-abstract class SimplePositive[T](data: T) extends SimpleList[T] {
+abstract class SimplePositive[+T](data: T) extends SimpleList[T] {
+  def index: Int
+
   def tail: SimpleList[T]
   override def dataStruct: Option[(T, SimpleList[T])] = Option((data, tail))
+  override def allToString: String                    = SimpleList.allToList(this).toString()
 }
 object SimplePositive {
   def unapply[T](u: SimpleList[T]): Option[(T, SimpleList[T])] = u.dataStruct
 }
 
-trait SimpleListNeedFuture[T] extends SimpleListNeedFutureImpl[T] with SimpleList[T] {
+trait SimpleListNeedFuture[+T] extends SimpleListNeedFutureImpl[T] with SimpleList[T] {
   override def future: SimpleListNeedPass[T]
-
-  // def addNext: T => SimpleListNeedFuture[T]
-
+  def resetPass[D >: T](t: SimpleListNeedPass[D]): SimpleListNeedFuture[D]
+  override def allToString: String = future.allToString
 }
-trait SimpleListNeedPass[T] extends SimpleListNeedPassImpl[T] with SimpleList[T] {
+trait SimpleListNeedPass[+T] extends SimpleListNeedPassImpl[T] with SimpleList[T] {
   override def pass: SimpleListNeedFuture[T]
-
-  // def addPre: T => SimpleNeedPass[T]
-
 }

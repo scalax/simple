@@ -7,16 +7,16 @@ trait SimpleListNeedFutureImpl[+T] extends LengthNeedFuture {
 
 trait SimpleListNeedFutureZero[+T] extends LengthNeedFutureS with SimpleListNeedFutureImpl[T] {
   override def future: SimpleListNeedPassImpl[T]
-  override def get(i: Int): Option[T] = Option.empty
+  override def get(i: Int): Option[T] = if (i < 0) Option.empty else future.get(i)
 }
 
 trait SimpleListNeedPassImpl[+T] extends LengthNeedPass {
   override def pass: SimpleListNeedFutureImpl[T]
   def data: T
-  def get(i: Int): Option[T] = if (i == index) Option(data) else Option.empty
+  def get(i: Int): Option[T]
 }
 
-trait SimpleListCurrentImpl[+T] extends SimpleListNeedFutureImpl[T] with SimpleListNeedPassImpl[T] with SimpleLengthCurrent {
+trait SimpleListCurrentImpl[+T] extends SimpleListNeedFutureImpl[T] with SimpleListNeedPassImpl[T] with LengthCurrent {
   override def data: T
   override def pass: SimpleListNeedFutureImpl[T]
   override def future: SimpleListNeedPassImpl[T]
