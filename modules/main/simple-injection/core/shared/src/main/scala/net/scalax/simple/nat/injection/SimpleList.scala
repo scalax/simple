@@ -59,11 +59,10 @@ case object SimpleZero extends SimpleZero[Nothing] with impl.SimpleZeroImplObjec
     case _                => false
   }
   override def allToString: String = SimpleList.allToList(this).toString()
-  override val length: Int         = 0
 }
 
 abstract class SimplePositive[+T](data: T) extends SimpleList[T] {
-  def index: Int
+  def index: Int = size - 1
 
   def tail: SimpleList[T]
   override def dataStruct: Option[(T, SimpleList[T])] = Option((data, tail))
