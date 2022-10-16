@@ -1,6 +1,7 @@
 package net.scalax.simple.nat.injection
 
 trait SimpleList[+T] {
+  def isEmpty: Boolean = dataStruct.isEmpty
   def getSelf: SimpleList[T]
   def dataStruct: Option[(T, SimpleList[T])]
   def get(i: Int): Option[T]
@@ -55,14 +56,14 @@ abstract class SimpleZero[+T] extends SimpleList[T] {
 
 case object SimpleZero extends SimpleZero[Nothing] with impl.SimpleZeroImplObject {
   override def equals(obj: Any): Boolean = obj match {
-    case t: SimpleList[_] => t.dataStruct.isEmpty
+    case t: SimpleList[_] => t.isEmpty
     case _                => false
   }
   override def allToString: String = SimpleList.allToList(this).toString()
 }
 
 abstract class SimplePositive[+T](data: T) extends SimpleList[T] {
-  def index: Int = size - 1
+  def index: Int
 
   def tail: SimpleList[T]
   override def dataStruct: Option[(T, SimpleList[T])] = Option((data, tail))
