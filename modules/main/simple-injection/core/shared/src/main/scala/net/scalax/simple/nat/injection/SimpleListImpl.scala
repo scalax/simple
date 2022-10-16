@@ -4,12 +4,13 @@ trait SimpleListNeedFutureImpl[+T] extends LengthNeedFuture {
   override def future: SimpleListNeedPassImpl[T]
 }
 
-trait SimpleListNeedFutureZero[+T] extends LengthNeedFutureS with SimpleListNeedFutureImpl[T] {
+trait SimpleListNeedFutureZero[+T] extends LengthNeedFuture with SimpleListNeedFutureImpl[T] {
   override def future: SimpleListNeedPassImpl[T]
 }
 
 trait SimpleListNeedPassImpl[+T] extends LengthNeedPass {
   override def pass: SimpleListNeedFutureImpl[T]
+
   def data: T
 }
 
@@ -17,4 +18,5 @@ trait SimpleListCurrentImpl[+T] extends SimpleListNeedFutureImpl[T] with SimpleL
   override def data: T
   override def pass: SimpleListNeedFutureImpl[T]
   override def future: SimpleListNeedPassImpl[T]
+
 }

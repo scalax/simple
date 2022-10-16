@@ -68,6 +68,7 @@ abstract class SimpleOut[+T](override val data: T) extends SimplePositive[T](dat
   override def pass: SimpleListNeedFuture[T]
   override lazy val size: Int         = pass.size + 1
   override lazy val length: Int       = size
+  override lazy val index: Int        = size - 1
   override def get(i: Int): Option[T] = if (i == index) Option(data) else if (i < index) pass.get(i) else Option.empty
 
   override def add[D >: T](d: D): SimpleList[D] = {
