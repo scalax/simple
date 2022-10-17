@@ -1,9 +1,9 @@
 package net.scalax.simple.nat.injection
 
-trait NeedFutureS extends NeedFuture {
-  def future: NeedPassS
+trait NeedFuture {
+  def future: NeedPass
 }
 
-trait NeedPassS extends NeedPass {
-  def pass: NeedFutureS
+trait NeedPass {
+  def pass: NeedFuture
 }
