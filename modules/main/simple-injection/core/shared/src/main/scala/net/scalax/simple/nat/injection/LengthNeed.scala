@@ -1,11 +1,11 @@
 package net.scalax.simple.nat.injection
 
-trait LengthNeedFuture extends NeedFutureS {
+trait LengthNeedFuture extends NeedFuture {
   override def future: LengthNeedPass
   def size: Int
 }
 
-trait LengthNeedPass extends NeedPassS {
+trait LengthNeedPass extends NeedPass {
   def length: Int
   def index: Int
 
