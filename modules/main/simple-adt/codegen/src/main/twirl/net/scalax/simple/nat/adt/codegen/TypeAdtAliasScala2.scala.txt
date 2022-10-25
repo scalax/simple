@@ -10,7 +10,7 @@ import shapeless._
 
 trait TypeAdtAlias {
     @for(i1 <- 1 to 22) {
-        type TypeOptions@{i1}[A, @for(i2 <- 1 to i1) { @if(i2 == 1) { I@{i2} } else { , I@{i2} } }] = TypeAdt[A, @buildHList(1, i1), ConfirmSucceed]
-        type TypeOptions@{i1}F[F[_], A, @for(i2 <- 1 to i1) { @if(i2 == 1) { I@{i2} } else { , I@{i2} } }] = TypeAdt[F[A], @buildHList(1, i1), ConfirmSucceed]
+        type TypeOptions@{i1}[A, @for(i2 <- 1 to i1) { @if(i2 == 1) { I@{i2} } else { , I@{i2} } }] = TypeAdt.Aux[A, @buildHList(1, i1), ConfirmSucceed]
+        type TypeOptions@{i1}F[F[_], A, @for(i2 <- 1 to i1) { @if(i2 == 1) { I@{i2} } else { , I@{i2} } }] = TypeAdt.Aux[F[A], @buildHList(1, i1), ConfirmSucceed]
     }
 }

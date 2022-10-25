@@ -1,24 +1,40 @@
 package net.scalax.simple.nat.injection
 
 trait Number1S
-class Number1T(tail: () => Number1S) extends Number1S
-
-trait Number2S {
-  def numt: Number2T
-}
-trait Number2T {
-  def nums: Number2S
+trait Number1T extends Number1S {
+  val tail: () => Number1S
 }
 
-trait Number3SS extends Number1S with Number2S {
-  override def numt: Number3TS
+trait NeedFuture {
+  val future: () => NeedPass
 }
-trait Number3TS extends Number1S with Number2T {
-  override def nums: Number3SS
+trait NeedPass {
+  val pass: () => NeedFuture
 }
-abstract class Number3ST(tail: () => Number3SS) extends Number1T(tail) with Number3SS {
-  override def numt: Number3TS
+
+trait Current extends NeedFuture with NeedPass {
+  override val future: () => NeedPass
+  override val pass: () => NeedFuture
+
 }
-abstract class Number3TT(tail: () => Number3TS) extends Number1T(tail) with Number3TS {
-  override def nums: Number3SS
+
+trait Number3SS extends Number1S with NeedFuture {
+  override val future: () => Number3TS
+}
+trait Number3TS extends Number1S with NeedPass {
+  override val pass: () => Number3SS
+}
+trait Number3ST extends Number1T with Number3SS {
+  override val tail: () => Number1S
+  override val future: () => Number3TS
+}
+trait Number3TT extends Number1T with Number3TS {
+  override val tail: () => Number1S
+  override val pass: () => Number3SS
+}
+
+trait Number3Current extends Number3ST with Number3TT {
+  override val tail: () => Number1S
+  override val future: () => Number3TT
+  override val pass: () => Number3SS
 }

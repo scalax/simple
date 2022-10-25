@@ -1,22 +1,17 @@
 package net.scalax.simple.nat.injection
 
 trait LengthNeedFuture extends NeedFuture {
-  override def future: LengthNeedPass
-  def size: Int
+  override val future: () => LengthNeedPass
 }
 
 trait LengthNeedPass extends NeedPass {
   def length: Int
-  def index: Int
 
-  override def pass: LengthNeedFuture
+  override val pass: () => LengthNeedFuture
 }
 
 trait LengthCurrent extends LengthNeedFuture with LengthNeedPass {
-  override def future: LengthNeedPass
-  override def pass: LengthNeedFuture
-  override def size: Int  = pass.size + 1
-  override def index: Int = size - 1
-
-  override def length: Int = future.length
+  override val future: () => LengthNeedPass
+  override val pass: () => LengthNeedFuture
+  override def length: Int = future().length
 }

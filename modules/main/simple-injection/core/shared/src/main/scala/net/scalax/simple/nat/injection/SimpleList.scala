@@ -1,14 +1,37 @@
 package net.scalax.simple.nat.injection
 
-trait SimpleList[+T] {
-  def isEmpty: Boolean = dataStruct.isEmpty
+import scala.collection.compat._
+
+trait SimpleList[+T] extends Number1S with ListData[T] {
+  override def isEmpty: Boolean = super.isEmpty
   def getSelf: SimpleList[T]
   def dataStruct: Option[(T, SimpleList[T])]
-  def get(i: Int): Option[T]
-  def size: Int
-  def add[D >: T](d: D): SimpleList[D]
-  def allToString: String
+  override def get(i: Int): Option[T]
+  override def size: Int
   def length: Int
+  def add[D >: T](d: D): SimpleList[D]
+  def cut: SimpleList[T]
+  def to[C1](factory: scala.collection.compat.Factory[T, C1]): C1 = factory.fromSpecific(iterator)
+  def iterator: IterableOnce[T] = {
+    val currentSelf = this
+    var curr: Int   = 0
+
+    def size1: Int = size
+
+    new Iterator[T] {
+      override def size: Int        = size1
+      override def hasNext: Boolean = curr < size1
+
+      override def next(): T = {
+        val dt = currentSelf.get(curr)
+        if (dt.isDefined) {
+          curr += 1
+          dt.get
+        } else
+          throw new NoSuchElementException
+      }
+    }
+  }
 
   @throws[IndexOutOfBoundsException]
   def apply(n: Int): T = {
@@ -18,66 +41,40 @@ trait SimpleList[+T] {
     skipped.get
   }
 }
+
 object SimpleList {
   def apply[T](elems: T*): SimpleList[T] = {
     var init: SimpleList[T] = SimpleZero
     for (e <- elems) init = init.add(e)
     init
   }
-  def unapplySeq[T](u: SimpleList[T]): Seq[T] = {
-    var seq: Seq[T]       = Seq.empty
-    var u1: SimpleList[T] = u
-    while (u1.dataStruct.isDefined) {
-      val current = u1.dataStruct.get
-      seq = current._1 +: seq
-      u1 = current._2
-    }
-    seq
-  }
-  def allToList[T](s: SimpleList[T]): List[T] = {
-    var list: List[T] = List.empty
-    var t             = s
-    @annotation.tailrec
-    def loop: Unit = t match {
-      case SimpleZero =>
-      case SimplePositive(current, tail) =>
-        list = current +: list
-        t = tail
-        loop
-    }
-    loop
-    list
-  }
+  def unapplySeq[T](u: SimpleList[T]): Seq[T] = u.to(Seq)
 }
 
-abstract class SimpleZero[+T] extends SimpleList[T] {
+abstract class SimpleZero[+T] extends SimpleList[T] with ListSizeZero {
   override val dataStruct: Option[(T, SimpleList[T])] = Option.empty
-}
-
-case object SimpleZero extends SimpleZero[Nothing] with impl.SimpleZeroImplObject {
+  override def cut: SimpleList[T]                     = SimpleZero
   override def equals(obj: Any): Boolean = obj match {
     case t: SimpleList[_] => t.isEmpty
     case _                => false
   }
-  override def allToString: String = SimpleList.allToList(this).toString()
 }
 
-abstract class SimplePositive[+T](data: T) extends SimpleList[T] {
-  def index: Int
+case object SimpleZero extends SimpleZero[Nothing] with impl.SimpleZeroImplObject
 
-  def tail: SimpleList[T]
-  override def dataStruct: Option[(T, SimpleList[T])] = Option((data, tail))
-  override def allToString: String                    = SimpleList.allToList(this).toString()
+abstract class SimplePositive[+T](override val data: T) extends SimpleList[T] with Number1T with ListDataPositive[T] {
+  override val tail: () => SimpleList[T]
+  override def dataStruct: Option[(T, SimpleList[T])] = Option((data, tail()))
 }
 object SimplePositive {
   def unapply[T](u: SimpleList[T]): Option[(T, SimpleList[T])] = u.dataStruct
 }
 
-trait SimpleListNeedFuture[+T] extends SimpleListNeedFutureImpl[T] with SimpleList[T] {
-  override def future: SimpleListNeedPass[T]
+trait SimpleListNeedFuture[+T] extends LengthNeedFuture with SimpleList[T] with Number3SS {
+  override val future: () => SimpleListNeedPass[T]
   def resetPass[D >: T](t: SimpleListNeedPass[D]): SimpleListNeedFuture[D]
-  override def allToString: String = future.allToString
 }
-trait SimpleListNeedPass[+T] extends SimpleListNeedPassImpl[T] with SimpleList[T] {
-  override def pass: SimpleListNeedFuture[T]
+abstract class SimpleListNeedPass[+T](data: T) extends SimplePositive[T](data) with LengthNeedPass with Number3TT {
+  override val pass: () => SimpleListNeedFuture[T]
+  override val tail: () => SimpleListNeedFuture[T] = () => pass()
 }
