@@ -8,7 +8,7 @@ import scala.collection.compat._
 
 object TypeConfirm {
 
-  {
+  locally {
     def assertTypeMethod1[T: TypeOptions2F[List, *, List[String], List[Int]]](t: T*): List[String] = {
       val b = getAdtApply[TypeOptions2[*, List[String], List[Int]]]
       locally {

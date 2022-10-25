@@ -9,19 +9,24 @@ import zio.test.Assertion._
 
 object HelloWorldSpec extends ZIOSpecDefault {
 
-  def spec = suite("HelloWorldSpec")(
+  def spec: Spec[TestEnvironment with Scope, Any] = suite("HelloWorldSpec")(
     test("sayHello correctly displays output") {
       val aa = List("11", "33", "22")
       val bb = SimpleZero.add("11").add("33").add("22")
 
-      val assert1 = assert(SimpleList.allToList(bb))(Assertion.equalTo(aa))
+      val assert1 = assert(bb.to(List))(Assertion.equalTo(aa))
       val assert2 = assert(bb.size)(Assertion.equalTo(aa.size))
       val assert3 = assert(bb.length)(Assertion.equalTo(aa.length))
-      val assert4 = assert(bb.allToString)(Assertion.equalTo(aa.toString()))
+      val assert4 = assert(bb.to(List).toString)(Assertion.equalTo(aa.toString))
       val assert5 = assert(bb(2))(Assertion.equalTo(aa(2)))
 
       val x =
-        bb.asInstanceOf[SimplePositive[String]].tail.asInstanceOf[SimplePositive[String]].tail.asInstanceOf[SimplePositive[String]].tail
+        bb.asInstanceOf[SimplePositive[String]]
+          .tail()
+          .asInstanceOf[SimplePositive[String]]
+          .tail()
+          .asInstanceOf[SimplePositive[String]]
+          .tail()
 
       val assert6 = assert(SimpleZero == x)(Assertion.equalTo(true))
       val assert7 = assert(x(2))(Assertion.equalTo(aa(2)))
@@ -34,14 +39,19 @@ object HelloWorldSpec extends ZIOSpecDefault {
       val aa = List("11", "33", "22")
       val bb = SimpleList(aa: _*)
 
-      val assert1 = assert(SimpleList.allToList(bb))(Assertion.equalTo(aa))
+      val assert1 = assert(bb.to(List))(Assertion.equalTo(aa))
       val assert2 = assert(bb.size)(Assertion.equalTo(aa.size))
       val assert3 = assert(bb.length)(Assertion.equalTo(aa.length))
-      val assert4 = assert(bb.allToString)(Assertion.equalTo(aa.toString()))
+      val assert4 = assert(bb.to(List).toString)(Assertion.equalTo(aa.toString))
       val assert5 = assert(bb(2))(Assertion.equalTo(aa(2)))
 
       val x =
-        bb.asInstanceOf[SimplePositive[String]].tail.asInstanceOf[SimplePositive[String]].tail.asInstanceOf[SimplePositive[String]].tail
+        bb.asInstanceOf[SimplePositive[String]]
+          .tail()
+          .asInstanceOf[SimplePositive[String]]
+          .tail()
+          .asInstanceOf[SimplePositive[String]]
+          .tail()
 
       val assert6 = assert(SimpleZero == x)(Assertion.equalTo(true))
       val assert7 = assert(x(2))(Assertion.equalTo(aa(2)))
