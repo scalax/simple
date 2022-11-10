@@ -32,6 +32,18 @@ trait ListData[+T] extends ListSize {
     }
   }
 }
+
+object ListData {
+  def apply[T](elems: T*): ListData[T] = {
+    var init: ListData[T] = ListDataZeroImpl
+    for (e <- elems) {
+      val curr = init
+      init = ListDataPositiveImpl(() => curr, e)
+    }
+    init
+  }
+  def unapplySeq[T](u: ListData[T]): Seq[T] = u.to(Seq)
+}
 trait ListDataPositive[+T] extends ListData[T] with ListSizePositive {
   override def toSimpleList: SimpleList[T] = {
     val tail1                                 = tail
