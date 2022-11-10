@@ -1,10 +1,10 @@
 package net.scalax.simple.nat.injection
 
-trait ListSize extends Number1S {
+trait ListSize extends NumberParent {
   def isEmpty: Boolean = size == 0
   def size: Int
 }
-trait ListSizePositive extends ListSize with Number1T {
+trait ListSizePositive extends ListSize with NumberChild {
   override val tail: () => ListSize
   override def size: Int = tail().size + 1
   def index: Int         = size - 1

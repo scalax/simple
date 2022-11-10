@@ -6,12 +6,11 @@ trait LengthNeedFuture extends NeedFuture {
 
 trait LengthNeedPass extends NeedPass {
   def length: Int
-
-  override val pass: () => LengthNeedFuture
+  override val tail: () => LengthNeedFuture
 }
 
-trait LengthCurrent extends LengthNeedFuture with LengthNeedPass {
+trait LengthCurrent extends Current with LengthNeedFuture with LengthNeedPass {
   override val future: () => LengthNeedPass
-  override val pass: () => LengthNeedFuture
+  override val tail: () => LengthNeedFuture
   override def length: Int = future().length
 }
