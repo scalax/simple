@@ -20,7 +20,7 @@ trait SimpleList[+T] extends NumberParent with ListData[T] {
 }
 
 object SimpleList {
-  def apply[T](elems: T*): SimpleList[T]      = ListData(elems: _*).toSimpleList
+  def apply[T](elems: T*): SimpleList[T]      = ListDataImpl(elems: _*).toSimpleList
   def unapplySeq[T](u: SimpleList[T]): Seq[T] = ListData.unapplySeq(u)
 }
 
