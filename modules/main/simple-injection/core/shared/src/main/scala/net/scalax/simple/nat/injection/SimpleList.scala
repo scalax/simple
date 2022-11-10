@@ -20,15 +20,8 @@ trait SimpleList[+T] extends NumberParent with ListData[T] {
 }
 
 object SimpleList {
-  def apply[T](elems: T*): SimpleList[T] = {
-    var init: ListData[T] = ListDataZeroImpl
-    for (e <- elems) {
-      val curr = init
-      init = ListDataPositiveImpl(() => curr, e)
-    }
-    init.toSimpleList
-  }
-  def unapplySeq[T](u: SimpleList[T]): Seq[T] = u.to(Seq)
+  def apply[T](elems: T*): SimpleList[T]      = ListDataImpl(elems: _*).toSimpleList
+  def unapplySeq[T](u: SimpleList[T]): Seq[T] = ListData.unapplySeq(u)
 }
 
 abstract class SimpleZero[+T] extends SimpleList[T] with ListSizeZero with ListDataZero[T] {
