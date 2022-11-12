@@ -1,6 +1,6 @@
 package net.scalax.simple.nat.injection
 
-trait SimpleList[+T] extends NumberParent with ListData[T] {
+trait SimpleList[+T] extends NumberParent with ListDataReset[T] with ListDataInit[T] {
   override def isEmpty: Boolean = super.isEmpty
   def getSelf: SimpleList[T]
   def dataStruct: Option[(T, SimpleList[T])]
@@ -21,10 +21,10 @@ trait SimpleList[+T] extends NumberParent with ListData[T] {
 
 object SimpleList {
   def apply[T](elems: T*): SimpleList[T]      = ListDataImpl(elems: _*).toSimpleList
-  def unapplySeq[T](u: SimpleList[T]): Seq[T] = ListData.unapplySeq(u)
+  def unapplySeq[T](u: SimpleList[T]): Seq[T] = ListDataInit.unapplySeq(u)
 }
 
-abstract class SimpleZero[+T] extends SimpleList[T] with ListSizeZero with ListDataZero[T] {
+abstract class SimpleZero[+T] extends SimpleList[T] with NumberParent with ListDataResetZero[T] with ListDataInitZero[T] {
   override val dataStruct: Option[(T, SimpleList[T])] = Option.empty
   override def cut: SimpleList[T]                     = SimpleZero
   override def equals(obj: Any): Boolean = obj match {
@@ -35,7 +35,11 @@ abstract class SimpleZero[+T] extends SimpleList[T] with ListSizeZero with ListD
 
 case object SimpleZero extends SimpleZero[Nothing] with impl.SimpleZeroImplObject
 
-abstract class SimplePositive[+T](override val data: T) extends SimpleList[T] with NumberChild with ListDataPositive[T] {
+abstract class SimplePositive[+T](override val data: T)
+    extends SimpleList[T]
+    with NumberChild
+    with ListDataResetPositive[T]
+    with ListDataInitPositive[T] {
   override val tail: () => SimpleList[T]
   override def dataStruct: Option[(T, SimpleList[T])] = Option((data, tail()))
 }
