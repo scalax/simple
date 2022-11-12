@@ -2,7 +2,7 @@ package net.scalax.simple.nat.injection
 
 import impl._
 
-trait ListDataImpl[+T] extends ListData[T] {
+trait ListDataImpl[+T] extends ListData[T] with ListDataReset[T] {
   def toSimpleList: SimpleList[T]
 }
 object ListDataImpl {
@@ -14,11 +14,11 @@ object ListDataImpl {
     }
     init
   }
-  def unapplySeq[T](u: ListDataImpl[T]): Seq[T] = ListData.unapplySeq(u)
 }
 
-case class ListDataPositiveImpl[+T](override val tail: () => ListData[T], override val data: T)
+case class ListDataPositiveImpl[+T](override val tail: () => ListDataImpl[T], override val data: T)
     extends ListDataPositive[T]
+    with ListDataResetPositive[T]
     with ListDataImpl[T] {
   override def toSimpleList: SimpleList[T] = {
     val tail1                                 = tail
@@ -29,6 +29,6 @@ case class ListDataPositiveImpl[+T](override val tail: () => ListData[T], overri
     listCurr
   }
 }
-case object ListDataZeroImpl extends ListDataZero[Nothing] with ListDataImpl[Nothing] {
+case object ListDataZeroImpl extends ListDataImpl[Nothing] with ListDataResetZero[Nothing] {
   override def toSimpleList: SimpleList[Nothing] = SimpleZero
 }
