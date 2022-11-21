@@ -1,4 +1,4 @@
 scalaVersion := scalaV.v213
-name         := "simple-adt-core"
+name         := "simple-nat-core"
 
 enableZIOTest := true

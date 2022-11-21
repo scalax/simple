@@ -12,15 +12,15 @@ trait SimpleList[+T] extends NumberParent with ListDataReset[T] with ListDataIni
 
   @throws[IndexOutOfBoundsException]
   def apply(n: Int): T = {
-    if (n < 0) throw new IndexOutOfBoundsException(n.toString)
+    if n < 0 then throw new IndexOutOfBoundsException(n.toString)
     val skipped = this.get(n)
-    if (skipped.isEmpty) throw new IndexOutOfBoundsException(n.toString)
+    if skipped.isEmpty then throw new IndexOutOfBoundsException(n.toString)
     skipped.get
   }
 }
 
 object SimpleList {
-  def apply[T](elems: T*): SimpleList[T]      = ListDataImpl(elems: _*).toSimpleList
+  def apply[T](elems: T*): SimpleList[T]      = ListDataImpl(elems*).toSimpleList
   def unapplySeq[T](u: SimpleList[T]): Seq[T] = ListDataInit.unapplySeq(u)
 }
 
@@ -28,7 +28,7 @@ abstract class SimpleZero[+T] extends SimpleList[T] with NumberParent with ListD
   override val dataStruct: Option[(T, SimpleList[T])] = Option.empty
   override def cut: SimpleList[T]                     = SimpleZero
   override def equals(obj: Any): Boolean = obj match {
-    case t: SimpleList[_] => t.isEmpty
+    case t: SimpleList[?] => t.isEmpty
     case _                => false
   }
 }

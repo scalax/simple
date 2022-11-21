@@ -1,0 +1,71 @@
+// scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys
+
+// start setting
+version := "0.0.1-M1"
+// end setting
+
+// start setting
+organization := "net.scalax"
+// end setting
+
+// start setting
+organizationName := "Scala Workers"
+// end setting
+
+// start setting
+organizationHomepage := Some(url("https://github.com/scala-workers"))
+// end setting
+
+// start setting
+scmInfo := Some(
+    ScmInfo(
+        url("https://github.com/scalax/simple-nat"),
+        "scm:git@github.com:scala-workers/commons-lang3-bridge.git"
+    )
+)
+// end setting
+
+// start setting
+developers := List(
+    Developer(
+        id = "Mars Liu",
+        name = "Liu Xin",
+        email = "mars.liu@outlook.com",
+        url = url("https://marchliu.github.io/")
+    ),
+    Developer(
+        id = "djx314",
+        name = "djx314",
+        email = "djx314@sina.cn",
+        url = url("https://github.com/djx314")
+    )
+)
+// end setting
+
+// start setting
+description := "Use nat to solve some scala problems."
+// end setting
+
+// start setting
+licenses := List("Apache" -> new URL("https://github.com/scalax/simple-nat/blob/main/LICENSE"))
+// end setting
+
+// start setting
+homepage := Some(url("https://github.com/scalax/simple-nat"))
+// end setting
+
+// start setting
+pomIncludeRepository := { _ => false }
+// end setting
+
+// start setting
+publishTo := {
+    val nexus = "https://s01.oss.sonatype.org/"
+    if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+    else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+// end setting
+
+// start setting
+publishMavenStyle := true
+// end setting

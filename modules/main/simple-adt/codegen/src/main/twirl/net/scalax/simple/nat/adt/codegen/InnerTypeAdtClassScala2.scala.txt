@@ -6,7 +6,7 @@ package impl
 @paramFunc(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } func@{i2}: I@{i2} => T } }
 @paramTypeAny(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } Any } }
 
-@forMatch(start: Int, i1: Int) = { @for(i2 <- start to i1) { case @{i1 - i2 + 1} => func@{i2}(value.asInstanceOf[I@{i2}]) } }
+@forMatch(start: Int, i1: Int) = { @for(i2 <- start to i1) { case @{i2} => func@{i2}(value.asInstanceOf[I@{i2}]) } }
 
 object InnerTypeAdtClass {
     @for(i1 <- 2 to 22) {
