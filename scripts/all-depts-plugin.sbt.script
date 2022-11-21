@@ -9,7 +9,6 @@ object versions {
     val kindProjector = "0.13.2"
     val zio = "2.0.2"
     val commonsIO = "1.3.2"
-    val shapeless2 = "2.3.3"
 }
 val scalaCollectionCompat = settingKey[ModuleID]("lib for scalaCollectionCompat.")
 val kindProjector = settingKey[Seq[ModuleID]]("lib for kindProjector.")
