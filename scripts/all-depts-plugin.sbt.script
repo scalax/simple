@@ -15,7 +15,6 @@ val scalaCollectionCompat = settingKey[ModuleID]("lib for scalaCollectionCompat.
 val kindProjector = settingKey[Seq[ModuleID]]("lib for kindProjector.")
 val zio = settingKey[Seq[ModuleID]]("lib for zio.")
 val commonsIO = settingKey[ModuleID]("lib for commonIO.")
-val shapeless2 = settingKey[Seq[ModuleID]]("lib for shapeless.")
 
 val enableZIOTest = settingKey[Boolean]("enable zio test.")
 // end autoImport
@@ -45,14 +44,6 @@ zio := Seq(
   "dev.zio" %%% "zio-test" % versions.zio,
   "dev.zio" %%% "zio-test-sbt" % versions.zio
 )
-// end setting
-
-// start setting
-shapeless2 := {
-    val need = CrossVersion.partialVersion(scalaVersion.value).filter(_._1 == 2L).to(Seq)
-    val dept = "com.chuusai" %%% "shapeless" % versions.shapeless2
-    for (_ <- need) yield dept
-}
 // end setting
 
 // start setting
