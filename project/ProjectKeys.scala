@@ -1,9 +1,9 @@
 package net.scalax.simple.nat.sbt
 
-import sbt._
-import sbt.Keys._
+import sbt.*
+import sbt.Keys.*
 
-import scala.collection.compat._
+import scala.collection.compat.*
 
 object ProjectKeys extends AutoPlugin {
 

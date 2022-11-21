@@ -12,8 +12,8 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs"               % "1.11.0")
 import java.io.PrintWriter
 import java.nio.file.{Files, Path}
 import java.util.stream.Collectors
-import scala.jdk.CollectionConverters._
-import scala.collection.compat._
+import scala.jdk.CollectionConverters.*
+import scala.collection.compat.*
 import scala.util.Using
 
 def genPluginString(str: String, pluginName: String): String = {

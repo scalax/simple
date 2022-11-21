@@ -1,7 +1,7 @@
 package inner
 
-import sbt._
-import sbt.Keys._
+import sbt.*
+import sbt.Keys.*
 
 object CommonUtils {
 

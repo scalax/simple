@@ -5,8 +5,8 @@ package impl
 import shapeless._
 
 @buildHList(start: Int, i1: Int) = { @if(start <= i1) {
-    I@start :: @buildHList(start + 1, i1)
-} else { HNil } }
+    NumberCountChild[I@start, @buildHList(start + 1, i1)]
+} else { NumberCountZero } }
 
 trait TypeAdtAlias {
     @for(i1 <- 1 to 22) {

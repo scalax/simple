@@ -25,13 +25,13 @@ object HelloWorldSpec extends ZIOSpecDefault {
       def assert1 = {
         val data     = None
         val foldData = inputOptDat(data)
-        assert(foldData)(Assertion.equalTo(TempForData(3, "None", data)))
+        assert(foldData)(Assertion.equalTo(TempForData(1, "None", data)))
       }
 
       def assert2 = {
         val data     = Option(2)
         val foldData = inputOptDat(data)
-        assert(foldData)(Assertion.equalTo(TempForData(1, "Option", Option(data.get + 2))))
+        assert(foldData)(Assertion.equalTo(TempForData(3, "Option", Option(data.get + 2))))
       }
 
       def assert3 = {
