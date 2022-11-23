@@ -1,8 +1,6 @@
 package net.scalax.simple.nat.adt
 package impl
 
-import shapeless._
-
 
 
 

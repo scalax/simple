@@ -8,10 +8,10 @@ trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositive {
 
 trait HListTypeAdtPositive extends HListTypeAdtPositiveLower {
   @inline implicit def hlistTypeAdtPositiveImplicit1[B <: A, A, Tail <: NumberCount]
-      : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt.lift(new TypeAdt(1))
+    : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt.lift(new TypeAdt(1))
 }
 trait HListTypeAdtPositiveLower extends LowerLevelPoly {
   @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: NumberCount](implicit
-      tailMapping: TypeAdt.Aux[B, Tail, ConfirmSucceed]
+    tailMapping: TypeAdt.Aux[B, Tail, ConfirmSucceed]
   ): TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt.lift(new TypeAdt(tailMapping.index + 1))
 }

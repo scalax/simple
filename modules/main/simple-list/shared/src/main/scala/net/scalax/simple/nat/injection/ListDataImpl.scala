@@ -1,6 +1,6 @@
 package net.scalax.simple.nat.injection
 
-import impl.*
+import impl._
 
 trait ListDataImpl[+T] extends ListData[T] with ListDataReset[T] {
   def toSimpleList: SimpleList[T]
@@ -8,7 +8,7 @@ trait ListDataImpl[+T] extends ListData[T] with ListDataReset[T] {
 object ListDataImpl {
   def apply[T](elems: T*): ListDataImpl[T] = {
     var init: ListDataImpl[T] = ListDataZeroImpl
-    for e <- elems do {
+    for (e <- elems) {
       val curr = init
       init = ListDataPositiveImpl(() => curr, e)
     }
