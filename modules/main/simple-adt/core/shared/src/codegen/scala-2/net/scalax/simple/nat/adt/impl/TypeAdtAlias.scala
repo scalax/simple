@@ -1,8 +1,6 @@
 package net.scalax.simple.nat.adt
 package impl
 
-import shapeless._
-
 trait TypeAdtAlias {
 
   type TypeOptions1[A, I1]        = TypeAdt.Aux[A, NumberCountChild[I1, NumberCountZero], ConfirmSucceed]

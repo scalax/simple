@@ -1,7 +1,7 @@
 package net.scalax.simple.nat.injection
 
-import impl.*
-import scala.collection.compat.*
+import impl._
+import scala.collection.compat._
 
 trait ListDataReset[+T] extends ListData[T] {
   def resetPass[D >: T](t: SimpleListNeedPass[D]): SimpleListNeedFuture[D]

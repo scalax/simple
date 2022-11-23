@@ -1,4 +1,4 @@
 scalaVersion := scalaV.v213
-name         := "simple-injection-core"
+name         := "simple-list"
 
 enableZIOTest := true

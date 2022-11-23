@@ -88,14 +88,14 @@ object InnerTypeAdtClass {
 
   class CusInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T
     ): T = index match {
       case 1 => func1(value.asInstanceOf[I1])
       case 2 => func2(value.asInstanceOf[I2])
@@ -115,15 +115,15 @@ object InnerTypeAdtClass {
 
   class CusInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T
     ): T = index match {
       case 1 => func1(value.asInstanceOf[I1])
       case 2 => func2(value.asInstanceOf[I2])
@@ -144,16 +144,16 @@ object InnerTypeAdtClass {
 
   class CusInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -175,17 +175,17 @@ object InnerTypeAdtClass {
 
   class CusInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -208,18 +208,18 @@ object InnerTypeAdtClass {
 
   class CusInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -243,19 +243,19 @@ object InnerTypeAdtClass {
 
   class CusInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -280,20 +280,20 @@ object InnerTypeAdtClass {
 
   class CusInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -314,28 +314,28 @@ object InnerTypeAdtClass {
   object HelperIOImpl14 extends HelperIO[Any] {
     override type Out = CusInnerApply14[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply14[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] = new CusInnerApply14(index, value)
   }
 
   class CusInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -357,29 +357,29 @@ object InnerTypeAdtClass {
   object HelperIOImpl15 extends HelperIO[Any] {
     override type Out = CusInnerApply15[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply15[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] = new CusInnerApply15(index, value)
   }
 
   class CusInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T,
-        func16: I16 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T,
+      func16: I16 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -402,30 +402,30 @@ object InnerTypeAdtClass {
   object HelperIOImpl16 extends HelperIO[Any] {
     override type Out = CusInnerApply16[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply16[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] = new CusInnerApply16(index, value)
   }
 
   class CusInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T,
-        func16: I16 => T,
-        func17: I17 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T,
+      func16: I16 => T,
+      func17: I17 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -449,32 +449,32 @@ object InnerTypeAdtClass {
   object HelperIOImpl17 extends HelperIO[Any] {
     override type Out = CusInnerApply17[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply17[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] =
       new CusInnerApply17(index, value)
   }
 
   class CusInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T,
-        func16: I16 => T,
-        func17: I17 => T,
-        func18: I18 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T,
+      func16: I16 => T,
+      func17: I17 => T,
+      func18: I18 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -499,33 +499,33 @@ object InnerTypeAdtClass {
   object HelperIOImpl18 extends HelperIO[Any] {
     override type Out = CusInnerApply18[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply18[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] =
       new CusInnerApply18(index, value)
   }
 
   class CusInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T,
-        func16: I16 => T,
-        func17: I17 => T,
-        func18: I18 => T,
-        func19: I19 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T,
+      func16: I16 => T,
+      func17: I17 => T,
+      func18: I18 => T,
+      func19: I19 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -551,34 +551,34 @@ object InnerTypeAdtClass {
   object HelperIOImpl19 extends HelperIO[Any] {
     override type Out = CusInnerApply19[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply19[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] =
       new CusInnerApply19(index, value)
   }
 
   class CusInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20](index: Int, value: Any) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T,
-        func16: I16 => T,
-        func17: I17 => T,
-        func18: I18 => T,
-        func19: I19 => T,
-        func20: I20 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T,
+      func16: I16 => T,
+      func17: I17 => T,
+      func18: I18 => T,
+      func19: I19 => T,
+      func20: I20 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -605,38 +605,38 @@ object InnerTypeAdtClass {
   object HelperIOImpl20 extends HelperIO[Any] {
     override type Out = CusInnerApply20[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply20[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] =
       new CusInnerApply20(index, value)
   }
 
   class CusInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21](
-      index: Int,
-      value: Any
+    index: Int,
+    value: Any
   ) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T,
-        func16: I16 => T,
-        func17: I17 => T,
-        func18: I18 => T,
-        func19: I19 => T,
-        func20: I20 => T,
-        func21: I21 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T,
+      func16: I16 => T,
+      func17: I17 => T,
+      func18: I18 => T,
+      func19: I19 => T,
+      func20: I20 => T,
+      func21: I21 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -665,39 +665,39 @@ object InnerTypeAdtClass {
     override type Out =
       CusInnerApply21[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply21[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] =
       new CusInnerApply21(index, value)
   }
 
   class CusInnerApply22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22](
-      index: Int,
-      value: Any
+    index: Int,
+    value: Any
   ) {
     @inline def fold[T](
-        func1: I1 => T,
-        func2: I2 => T,
-        func3: I3 => T,
-        func4: I4 => T,
-        func5: I5 => T,
-        func6: I6 => T,
-        func7: I7 => T,
-        func8: I8 => T,
-        func9: I9 => T,
-        func10: I10 => T,
-        func11: I11 => T,
-        func12: I12 => T,
-        func13: I13 => T,
-        func14: I14 => T,
-        func15: I15 => T,
-        func16: I16 => T,
-        func17: I17 => T,
-        func18: I18 => T,
-        func19: I19 => T,
-        func20: I20 => T,
-        func21: I21 => T,
-        func22: I22 => T
+      func1: I1 => T,
+      func2: I2 => T,
+      func3: I3 => T,
+      func4: I4 => T,
+      func5: I5 => T,
+      func6: I6 => T,
+      func7: I7 => T,
+      func8: I8 => T,
+      func9: I9 => T,
+      func10: I10 => T,
+      func11: I11 => T,
+      func12: I12 => T,
+      func13: I13 => T,
+      func14: I14 => T,
+      func15: I15 => T,
+      func16: I16 => T,
+      func17: I17 => T,
+      func18: I18 => T,
+      func19: I19 => T,
+      func20: I20 => T,
+      func21: I21 => T,
+      func22: I22 => T
     ): T = index match {
       case 1  => func1(value.asInstanceOf[I1])
       case 2  => func2(value.asInstanceOf[I2])
@@ -727,8 +727,8 @@ object InnerTypeAdtClass {
     override type Out =
       CusInnerApply22[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
     @inline override def helper(
-        index: Int,
-        value: Any
+      index: Int,
+      value: Any
     ): CusInnerApply22[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any] =
       new CusInnerApply22(index, value)
   }

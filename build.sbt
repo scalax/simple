@@ -10,8 +10,7 @@ val `adt-path`         = `main-path` / "simple-adt"
 val `adt-codegen-path` = `adt-path` / "codegen"
 val `adt-core-path`    = `adt-path` / "core"
 
-val `injection-path`      = `main-path` / "simple-injection"
-val `injection-core-path` = `injection-path` / "core"
+val `list-path` = `main-path` / "simple-list"
 
 val `test-common-path` = `test-path` / "test-common"
 
@@ -31,22 +30,24 @@ lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core-path
 lazy val `adt-coreJVM` = `adt-core`.jvm
 lazy val `adt-coreJS`  = `adt-core`.js
 
-lazy val injection        = project in `injection-path`
-lazy val `injection-core` = crossProject(JSPlatform, JVMPlatform) in `injection-core-path` dependsOn (`test-common` % Test)
+lazy val `list` = crossProject(JSPlatform, JVMPlatform) in `list-path` dependsOn (core, `test-common` % Test)
 
-lazy val `injection-coreJVM` = `injection-core`.jvm
-lazy val `injection-coreJS`  = `injection-core`.js
+lazy val `listJVM` = `list`.jvm
+lazy val `listJS`  = `list`.js
 
 lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common-path`
 
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
-val adtTestAll       = `adt-core`.componentProjects.map(t => t / Test / test)
-val injectionTestAll = `injection-core`.componentProjects.map(t => t / Test / test)
+val adtTestAll  = `adt-core`.componentProjects.map(t => t / Test / test)
+val listTestAll = `list`.componentProjects.map(t => t / Test / test)
 
-adt / Test / test          := (adt / Test / test).dependsOn(adtTestAll: _*).value
-injection / Test / test    := (injection / Test / test).dependsOn(injectionTestAll: _*).value
-mainProjects / Test / test := (mainProjects / Test / test).dependsOn(adt / Test / test, injection / Test / test).value
+adt / Test / test := (adt / Test / test).dependsOn(adtTestAll: _*).value
+
+val adtTestAction  = adt / Test / test
+val listTestAction = listTestAll
+
+mainProjects / Test / test := (mainProjects / Test / test).dependsOn(adtTestAction).dependsOn(listTestAction: _*).value
 
 val codegenScalaV = scalaV.v3RC
 addCommandAlias("preCodegen", s";++$codegenScalaV!;adt-codegen/preCodegenImpl")

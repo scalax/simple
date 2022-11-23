@@ -1,6 +1,6 @@
 package net.scalax.simple.nat.injection
 
-import scala.collection.compat.*
+import scala.collection.compat._
 
 trait ListDataInit[+T] extends ListData[T] with ListSize {
   def get(i: Int): Option[T]
@@ -18,7 +18,7 @@ trait ListDataInit[+T] extends ListData[T] with ListSize {
 
       override def next(): T = {
         val dt = currentSelf.get(curr)
-        if dt.isDefined then {
+        if (dt.isDefined) {
           curr += 1
           dt.get
         } else throw new NoSuchElementException
@@ -34,8 +34,8 @@ trait ListDataInitPositive[+T] extends ListDataInit[T] with ListDataPositive[T] 
   override def data: T
   override val tail: () => ListDataInit[T]
   override def get(i: Int): Option[T] = {
-    if i == index then Option(data)
-    else if i < index then tail().get(i)
+    if (i == index) Option(data)
+    else if (i < index) tail().get(i)
     else Option.empty
   }
 }

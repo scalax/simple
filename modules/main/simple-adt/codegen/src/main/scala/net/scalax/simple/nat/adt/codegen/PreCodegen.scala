@@ -6,10 +6,10 @@ import java.nio.file.Paths
 
 object PreCodegen:
 
-   def main(arr: Array[String]): Unit =
-      val List(rootString) = arr.to(List)
-      val rootPath         = Paths.get(rootString)
-      FileUtils.deleteDirectory(rootPath.toFile)
-   end main
+  def main(arr: Array[String]): Unit =
+    val List(rootString) = arr.to(List)
+    val rootPath         = Paths.get(rootString)
+    FileUtils.deleteDirectory(rootPath.toFile)
+  end main
 
 end PreCodegen
