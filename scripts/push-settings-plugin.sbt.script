@@ -25,21 +25,22 @@ scmInfo := Some(
 )
 // end setting
 
-// start setting
-developers := List(
-    Developer(
-        id = "Mars Liu",
-        name = "Liu Xin",
-        email = "mars.liu@outlook.com",
-        url = url("https://marchliu.github.io/")
-    ),
-    Developer(
-        id = "djx314",
-        name = "djx314",
-        email = "djx314@sina.cn",
-        url = url("https://github.com/djx314")
-    )
+val dev1 = Developer(
+  id = "Mars Liu",
+  name = "Liu Xin",
+  email = "mars.liu@outlook.com",
+  url = url("https://marchliu.github.io/")
 )
+
+val dev2 = Developer(
+  id = "djx314",
+  name = "djx314",
+  email = "djx314@sina.cn",
+  url = url("https://github.com/djx314")
+)
+
+// start setting
+developers := List(dev1, dev2)
 // end setting
 
 // start setting
@@ -69,3 +70,5 @@ publishTo := {
 // start setting
 publishMavenStyle := true
 // end setting
+
+// scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings
