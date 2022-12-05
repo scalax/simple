@@ -1,15 +1,26 @@
 package net.scalax.simple.nat.core
 
-trait NumberParent
-trait NumberChild extends NumberParent {
-  val tail: () => NumberParent
+trait NumberParent {
+  val child: () => NumberParent
 }
 
 trait NeedFuture {
   val future: () => NeedPass
 }
 trait NeedPass {
-  val tail: () => NeedFuture
+  val pass: () => NeedFuture
+}
+
+abstract class YYZero extends NumberChild with NeedFuture with NeedPass {
+  override val tail: () => YYZero
+  override val future: () => YYZero
+}
+
+object YYZero {
+  lazy val value: YYZero = new YYZero {
+    override val tail: () => YYZero   = () => value
+    override val future: () => YYZero = () => value
+  }
 }
 
 trait Current extends NeedFuture with NeedPass {
