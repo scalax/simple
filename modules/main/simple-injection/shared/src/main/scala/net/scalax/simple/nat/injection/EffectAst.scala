@@ -8,7 +8,7 @@ package injection {
     def exportInjection: Any
   }
 
-  trait NeedPassInjection extends NatInjection with NeedPass {
+  /*trait NeedPassInjection extends NatInjection with NeedPass {
     override val tail: () => NeedFutureInjection
   }
   trait NeedFutureInjection extends NatInjection with NeedFuture {
@@ -61,6 +61,6 @@ package injection {
 
       flatCurrent
     }
-  }
+  }*/
 
 }
