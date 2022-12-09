@@ -12,7 +12,7 @@ object HelloWorldSpec extends ZIOSpecDefault {
   def spec: Spec[TestEnvironment with Scope, Any] = suite("HelloWorldSpec")(
     test("sayHello correctly displays output") {
       val aa = List("11", "33", "22")
-      val bb = SimpleZero.add("11").add("33").add("22")
+      val bb = SimpleZero.value.add("11").add("33").add("22")
 
       val assert1 = assert(bb.to(List))(Assertion.equalTo(aa))
       val assert2 = assert(bb.size)(Assertion.equalTo(aa.size))
@@ -22,13 +22,13 @@ object HelloWorldSpec extends ZIOSpecDefault {
 
       val x =
         bb.asInstanceOf[SimplePositive[String]]
-          .tail()
+          .child()
           .asInstanceOf[SimplePositive[String]]
-          .tail()
+          .child()
           .asInstanceOf[SimplePositive[String]]
-          .tail()
+          .child()
 
-      val assert6 = assert(SimpleZero == x)(Assertion.equalTo(true))
+      val assert6 = assert(SimpleZero.value == x)(Assertion.equalTo(true))
       val assert7 = assert(x(2))(Assertion.equalTo(aa(2)))
       val assert8 = assert(x.size)(Assertion.equalTo(0))
       val assert9 = assert(x.length)(Assertion.equalTo(aa.size))
@@ -47,13 +47,13 @@ object HelloWorldSpec extends ZIOSpecDefault {
 
       val x =
         bb.asInstanceOf[SimplePositive[String]]
-          .tail()
+          .child()
           .asInstanceOf[SimplePositive[String]]
-          .tail()
+          .child()
           .asInstanceOf[SimplePositive[String]]
-          .tail()
+          .child()
 
-      val assert6 = assert(SimpleZero == x)(Assertion.equalTo(true))
+      val assert6 = assert(SimpleZero.value == x)(Assertion.equalTo(true))
       val assert7 = assert(x(2))(Assertion.equalTo(aa(2)))
       val assert8 = assert(x.size)(Assertion.equalTo(0))
       val assert9 = assert(x.length)(Assertion.equalTo(aa.size))

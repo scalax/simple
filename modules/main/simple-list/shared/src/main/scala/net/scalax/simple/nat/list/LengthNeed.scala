@@ -10,12 +10,12 @@ package injection {
 
   trait LengthNeedPass extends NeedPass {
     def length: Int
-    override val tail: () => LengthNeedFuture
+    override val pass: () => LengthNeedFuture
   }
 
   trait LengthCurrent extends Current with LengthNeedFuture with LengthNeedPass {
     override val future: () => LengthNeedPass
-    override val tail: () => LengthNeedFuture
+    override val pass: () => LengthNeedFuture
     override def length: Int = future().length
   }
 

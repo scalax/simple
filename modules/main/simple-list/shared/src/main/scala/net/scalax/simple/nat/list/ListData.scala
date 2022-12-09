@@ -4,11 +4,13 @@ import core._
 
 package injection {
 
-  trait ListData[+T] extends NumberParent
+  trait ListData[+T] extends NumberParent {
+    override val child: () => ListData[T]
+  }
 
-  trait ListDataPositive[+T] extends ListData[T] with NumberChild {
+  trait ListDataPositive[+T] extends ListData[T] {
     def data: T
-    override val tail: () => ListData[T]
+    override val child: () => ListData[T]
   }
 
 }
