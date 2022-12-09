@@ -3,6 +3,8 @@ package net.scalax.simple.nat.injection
 import scala.collection.compat._
 
 trait ListDataInit[+T] extends ListData[T] with ListSize {
+  override val child: () => ListDataInit[T]
+
   def get(i: Int): Option[T]
   def to[C1](factory: scala.collection.compat.Factory[T, C1]): C1 = factory.fromSpecific(iterator)
   def iterator: IterableOnce[T] = {
@@ -32,10 +34,10 @@ object ListDataInit {
 
 trait ListDataInitPositive[+T] extends ListDataInit[T] with ListDataPositive[T] with ListSizePositive {
   override def data: T
-  override val tail: () => ListDataInit[T]
+  override val child: () => ListDataInit[T]
   override def get(i: Int): Option[T] = {
     if (i == index) Option(data)
-    else if (i < index) tail().get(i)
+    else if (i < index) child().get(i)
     else Option.empty
   }
 }

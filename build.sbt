@@ -7,6 +7,7 @@ val `main-path` = `module-path` / "main"
 
 val `core-path`        = `main-path` / "simple-core"
 val `injection-path`   = `main-path` / "simple-injection"
+val `codec-path`       = `main-path` / "simple-codec"
 val `adt-path`         = `main-path` / "simple-adt"
 val `adt-codegen-path` = `adt-path` / "codegen"
 val `adt-core-path`    = `adt-path` / "core"
@@ -41,6 +42,11 @@ lazy val injection = crossProject(JSPlatform, JVMPlatform) in `injection-path` d
 lazy val injectionJVM = injection.jvm
 lazy val injectionJS  = injection.js
 
+lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec-path` dependsOn (core, `test-common` % Test)
+
+lazy val codecJVM = codec.jvm
+lazy val codecJS  = codec.js
+
 lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common-path`
 
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
@@ -48,17 +54,20 @@ lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common-p
 val adtTestAll       = `adt-core`.componentProjects.map(t => t / Test / test)
 val listTestAll      = list.componentProjects.map(t => t / Test / test)
 val injectionTestAll = injection.componentProjects.map(t => t / Test / test)
+val codecTestAll     = codec.componentProjects.map(t => t / Test / test)
 
 adt / Test / test := (adt / Test / test).dependsOn(adtTestAll: _*).value
 
 val adtTestAction       = adt / Test / test
 val listTestAction      = listTestAll
 val injectionTestAction = injectionTestAll
+val codecTestAction     = codecTestAll
 
 mainProjects / Test / test := (mainProjects / Test / test)
   .dependsOn(adtTestAction)
   .dependsOn(listTestAction: _*)
   .dependsOn(injectionTestAction: _*)
+  .dependsOn(codecTestAction: _*)
   .value
 
 val codegenScalaV = scalaV.v3RC
