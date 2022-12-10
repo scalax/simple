@@ -3,7 +3,7 @@ val `root/file` = file(".").getCanonicalFile
 val `module/file` = `root/file` / "modules"
 val `geshu/file`  = `root/file` / "geshu"
 
-val `counter/file` = `geshu/file` / "counter"
+val `counter/file` = `geshu/file` / "simple-counter"
 
 val `test/file` = `module/file` / "test"
 val `main/file` = `module/file` / "main"
@@ -50,7 +50,9 @@ lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn
 lazy val codecJVM = codec.jvm
 lazy val codecJS  = codec.js
 
-lazy val counter = crossProject(JSPlatform, JVMPlatform) in `counter/file` dependsOn (core, `test-common` % Test)
+lazy val counter    = crossProject(JSPlatform, JVMPlatform) in `counter/file` dependsOn (core, `test-common` % Test)
+lazy val counterJVM = counter.jvm
+lazy val counterJS  = counter.js
 
 lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
 
