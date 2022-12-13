@@ -5,21 +5,27 @@ import scala.collection.compat._
 
 // start autoImport
 object versions {
-    val scalaCollectionCompat = "2.8.1"
-    val kindProjector = "0.13.2"
+    val `scala-collection-compat` = "2.8.1"
+    val `kind-projector` = "0.13.2"
     val zio = "2.0.2"
-    val commonsIO = "1.3.2"
+    val `commons-io` = "1.3.2"
+    val http4s = "0.23.16"
+    val `cats-effect` = "3.4.2"
+    val cats = "2.9.0"
 }
-val scalaCollectionCompat = settingKey[ModuleID]("lib for scalaCollectionCompat.")
-val kindProjector = settingKey[Seq[ModuleID]]("lib for kindProjector.")
+val `scala-collection-compat` = settingKey[ModuleID]("lib for scala-collection-compat.")
+val `kind-projector` = settingKey[Seq[ModuleID]]("lib for kind-projector.")
+val http4s = settingKey[Seq[ModuleID]]("lib for http4s.")
+val `cats-effect` = settingKey[Seq[ModuleID]]("lib for cats-effect.")
+val cats = settingKey[Seq[ModuleID]]("lib for cats.")
 val zio = settingKey[Seq[ModuleID]]("lib for zio.")
-val commonsIO = settingKey[ModuleID]("lib for commonIO.")
+val `commons-io` = settingKey[ModuleID]("lib for commons-io.")
 
 val enableZIOTest = settingKey[Boolean]("enable zio test.")
 // end autoImport
 
 // start setting
-scalaCollectionCompat := "org.scala-lang.modules" %%% "scala-collection-compat" % versions.scalaCollectionCompat
+`scala-collection-compat` := "org.scala-lang.modules" %%% "scala-collection-compat" % versions.`scala-collection-compat`
 // end setting
 
 // start setting
@@ -27,15 +33,15 @@ enableZIOTest := false
 // end setting
 
 // start setting
-kindProjector := {
+`kind-projector` := {
   val need = CrossVersion.partialVersion(scalaVersion.value).filter(_._1 == 2L).to(Seq)
-  val dept = "org.typelevel" % "kind-projector" % versions.kindProjector cross CrossVersion.full
-  for (_ <- need) yield dept
+  val dept = "org.typelevel" % "kind-projector" % versions.`kind-projector` cross CrossVersion.full
+  for (_ <- need) yield compilerPlugin(dept)
 }
 // end setting
 
 // start setting
-commonsIO := "org.apache.commons" % "commons-io" % versions.commonsIO
+`commons-io` := "org.apache.commons" % "commons-io" % versions.`commons-io`
 // end setting
 
 // start setting
@@ -66,11 +72,19 @@ libraryDependencies ++= {
 // end setting
 
 // start setting
-libraryDependencies ++= kindProjector.value.map(compilerPlugin)
+http4s := Seq(
+  "org.http4s" %%% "http4s-dsl" % versions.http4s,
+  "org.http4s" %%% "http4s-ember-server" % versions.http4s,
+  "org.http4s" %%% "http4s-ember-client" % versions.http4s
+)
 // end setting
 
 // start setting
-libraryDependencies += scalaCollectionCompat.value
+`cats-effect` := Seq("org.typelevel" %%% "cats-effect" % versions.`cats-effect`)
+// end setting
+
+// start setting
+cats := Seq("org.typelevel" %%% "cats-core" % versions.cats)
 // end setting
 
 // scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings
