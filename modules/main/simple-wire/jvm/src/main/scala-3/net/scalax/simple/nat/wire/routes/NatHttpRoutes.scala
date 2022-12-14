@@ -16,4 +16,4 @@ trait NatHttpRoutes(serviceA: ServiceA, countService: CountService):
 end NatHttpRoutes
 
 class NatHttpRoutesImpl[Env1[_]: Getter, Env2[_]: Getter](using Env1[ServiceA], Env2[CountService])
-    extends NatHttpRoutes(serviceA = Getter.instance[Env1].get(summon), countService = Getter.instance[Env2].get(summon))
+    extends NatHttpRoutes(serviceA = Getter[Env1].get(summon), countService = Getter[Env2].get(summon))

@@ -7,7 +7,7 @@ end Getter
 
 object Getter:
 
-  def instance[M[_]: Getter]: Getter[M] = summon
+  def apply[M[_]: Getter]: Getter[M] = summon
 
   private val innerIdentityGetter: Getter[cats.Id] = new Getter[cats.Id]:
     override def get[T](model: T): T = model
