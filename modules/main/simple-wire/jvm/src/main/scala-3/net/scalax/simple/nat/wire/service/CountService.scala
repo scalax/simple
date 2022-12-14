@@ -15,4 +15,4 @@ trait CountService(countXA: Transactor.Aux[IO, Unit], dataXA: Transactor.Aux[IO,
 end CountService
 
 class CountServiceImpl[CountEnv[_]: Getter, DataEnv[_]: Getter](using CountEnv[Transactor.Aux[IO, Unit]], DataEnv[Transactor.Aux[IO, Unit]])
-    extends CountService(countXA = Getter.instance[CountEnv].get(summon), dataXA = Getter.instance[DataEnv].get(summon))
+    extends CountService(countXA = Getter[CountEnv].get(summon), dataXA = Getter[DataEnv].get(summon))

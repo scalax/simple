@@ -16,6 +16,6 @@ trait ServiceB(xa: Transactor.Aux[IO, Unit]):
 end ServiceB
 
 class ServiceBImpl[ServiceAEnv[_]: Getter, T[_]: Getter](sa: () => ServiceAEnv[ServiceA])(using T[Transactor.Aux[IO, Unit]])
-    extends ServiceB(Getter.instance[T].get(summon)):
-  override lazy val serviceA: ServiceA = Getter.instance[ServiceAEnv].get(sa())
+    extends ServiceB(Getter[T].get(summon)):
+  override lazy val serviceA: ServiceA = Getter[ServiceAEnv].get(sa())
 end ServiceBImpl
