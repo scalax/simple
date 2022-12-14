@@ -33,9 +33,11 @@ class AppWireImpl(using EnvA[Transactor.Aux[IO, Unit]], EnvB[Transactor.Aux[IO, 
 end AppWireImpl
 
 object AppWire:
-  val build: IO[HttpRoutes[IO]] = {
+
+  val build: IO[HttpRoutes[IO]] =
     val xa1 = for xaImpl <- (new EnvAH2Doobie).resource yield Getter.instance[EnvA].lift(xaImpl)
     val xa2 = for xaImpl <- (new EnvBH2Doobie).resource yield Getter.instance[EnvB].lift(xaImpl)
+
     for
       xaA <- xa1
       xaB <- xa2
@@ -43,6 +45,6 @@ object AppWire:
       given EnvA[Transactor.Aux[IO, Unit]] = xaA
       given EnvB[Transactor.Aux[IO, Unit]] = xaB
       (new AppWireImpl).routes
-  }
   end build
+
 end AppWire
