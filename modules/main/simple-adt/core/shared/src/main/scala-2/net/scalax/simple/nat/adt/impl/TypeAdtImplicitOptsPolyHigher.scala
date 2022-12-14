@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.adt
+package net.scalax.simple.adt
 package impl
 
 trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositive {
@@ -7,11 +7,11 @@ trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositive {
 }
 
 trait HListTypeAdtPositive extends HListTypeAdtPositiveLower {
-  @inline implicit def hlistTypeAdtPositiveImplicit1[B <: A, A, Tail <: NumberCount]
+  @inline implicit def hlistTypeAdtPositiveImplicit1[B <: A, A, Tail <: NumberCount[_]]
     : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt.lift(new TypeAdt(1))
 }
 trait HListTypeAdtPositiveLower extends LowerLevelPoly {
-  @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: NumberCount](implicit
+  @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: NumberCount[_]](implicit
     tailMapping: TypeAdt.Aux[B, Tail, ConfirmSucceed]
   ): TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt.lift(new TypeAdt(tailMapping.index + 1))
 }

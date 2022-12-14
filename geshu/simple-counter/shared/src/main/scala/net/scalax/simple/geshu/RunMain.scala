@@ -1,26 +1,29 @@
-package net.scalax.simple.nat.geshu
+package net.scalax.simple
+package geshu
+
+import core.Core2
 
 object RunMain {
 
-  def count(number: () => Number): Int = {
-    Number.重置状态
+  def count(number: () => Core2): Int = {
+    NumberImpl.重置状态
 
     try number()
     catch {
       case _: StackOverflowError =>
     }
 
-    val state = Number.当前状态
+    val state = NumberImpl.当前状态
     state
   }
 
-  lazy val number1v: Number = Number.V(() => number1v)
-  lazy val number1t: Number = Number.T(() => number1t)
-  lazy val number1u: Number = Number.U(() => number1u)
+  lazy val number1v: Core2 = NumberImpl.V(() => number1v)
+  lazy val number1t: Core2 = NumberImpl.T(() => number1t)
+  lazy val number1u: Core2 = NumberImpl.U(() => number1u)
 
-  def number1sGen(n: Int, zero: => Number): Number = if (n > 0) Number.S(() => number1sGen(n - 1, zero)) else zero
-  def number1vGen(n: Int, zero: => Number): Number = if (n > 0) Number.V(() => number1vGen(n - 1, zero)) else zero
-  def number1uGen(n: Int, zero: => Number): Number = if (n > 0) Number.U(() => number1uGen(n - 1, zero)) else zero
+  def number1sGen(n: Int, zero: => Core2): Core2 = if (n > 0) NumberImpl.S(() => number1sGen(n - 1, zero)) else zero
+  def number1vGen(n: Int, zero: => Core2): Core2 = if (n > 0) NumberImpl.V(() => number1vGen(n - 1, zero)) else zero
+  def number1uGen(n: Int, zero: => Core2): Core2 = if (n > 0) NumberImpl.U(() => number1uGen(n - 1, zero)) else zero
 
   def main(arr: Array[String]): Unit = {
     locally {
@@ -87,9 +90,9 @@ object RunMain {
         i1 <- 0 to 20
         i2 <- 0 to 20
       } {
-        val number1                      = number1vGen(i1, number1t)
-        lazy val number2Positive: Number = number1sGen(i2, number2Zero)
-        lazy val number2Zero: Number     = Number.V(() => number2Positive)
+        val number1                     = number1vGen(i1, number1t)
+        lazy val number2Positive: Core2 = number1sGen(i2, number2Zero)
+        lazy val number2Zero: Core2     = NumberImpl.V(() => number2Positive)
         locally {
           def number3 = number1.apply(() => number2Positive)
           val count1  = count(() => number3)
@@ -108,9 +111,9 @@ object RunMain {
         i2 <- 1 to 20
         i3 <- 0 to i2 - 1
       } {
-        val number1                      = number1vGen(i1 * i2 + i3, number1t)
-        lazy val number2Positive: Number = number1vGen(i2, number2Zero)
-        lazy val number2Zero: Number     = Number.S(() => number2Positive)
+        val number1                     = number1vGen(i1 * i2 + i3, number1t)
+        lazy val number2Positive: Core2 = number1vGen(i2, number2Zero)
+        lazy val number2Zero: Core2     = NumberImpl.S(() => number2Positive)
         locally {
           def number3 = number1.apply(() => number2Zero)
           val count1  = count(() => number3)

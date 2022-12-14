@@ -1,6 +1,5 @@
-package net.scalax.simple.nat.adt
+package net.scalax.simple.adt
 package impl
-import net.scalax.simple.nat.adt.TypeAdt
 
 trait TypeAdtImplicitOptsPolyHigher extends TypeAdtImplicitOptsPolyLower with AdtApply:
   inline given [A, B <: A, T <: Tuple]: TypeAdt.Aux[B, A *: T, ConfirmSucceed] = TypeAdt.lift(TypeAdt(1))

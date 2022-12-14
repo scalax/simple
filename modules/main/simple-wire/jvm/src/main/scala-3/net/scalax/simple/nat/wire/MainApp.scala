@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire
+package net.scalax.simple.wire
 
 import cats.effect._
 import org.http4s.HttpRoutes
@@ -17,6 +17,11 @@ object MainApp extends IOApp:
   private val serverIO                             = for given HttpApp[IO] <- httpAppIO yield new HttpAppToLocalServer[IO].server.build
   private val serverResource: Resource[IO, Server] = for i1 <- Resource.eval(serverIO); i2 <- i1 yield i2
 
-  override def run(args: List[String]): IO[ExitCode] = serverResource.use(_ => IO.never).as(ExitCode.Success)
+  override def run(args: List[String]): IO[ExitCode] = serverResource
+    .use(_ => IO.never)
+    .recover { case e: Throwable =>
+      e.printStackTrace()
+    }
+    .as(ExitCode.Success)
 
 end MainApp

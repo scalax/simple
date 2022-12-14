@@ -1,6 +1,6 @@
-package net.scalax.simple.nat.adt.impl
+package net.scalax.simple.adt.impl
 
-import net.scalax.simple.nat.adt.{ConfirmSucceed, HelperIO, TypeAdt}
+import net.scalax.simple.adt.{ConfirmSucceed, HelperIO, TypeAdt}
 
 final class TakeTuple[T <: TypeAdt.Aux[_, _, ConfirmSucceed]] {
   type Target

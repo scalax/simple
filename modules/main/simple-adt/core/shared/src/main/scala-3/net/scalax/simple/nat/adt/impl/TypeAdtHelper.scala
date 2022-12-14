@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.adt
+package net.scalax.simple.adt
 package impl
 
 final class FetchAdtApply[F[_] <: TypeAdt.Aux[_, _, ConfirmSucceed]]:

@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire
+package net.scalax.simple.wire
 package resource
 
 import doobie._
