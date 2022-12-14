@@ -12,6 +12,8 @@ object versions {
     val http4s = "0.23.16"
     val `cats-effect` = "3.4.2"
     val cats = "2.9.0"
+    val h2 = "2.1.214"
+    val doobie = "1.0.0-RC1"
 }
 val `scala-collection-compat` = settingKey[ModuleID]("lib for scala-collection-compat.")
 val `kind-projector` = settingKey[Seq[ModuleID]]("lib for kind-projector.")
@@ -20,6 +22,8 @@ val `cats-effect` = settingKey[Seq[ModuleID]]("lib for cats-effect.")
 val cats = settingKey[Seq[ModuleID]]("lib for cats.")
 val zio = settingKey[Seq[ModuleID]]("lib for zio.")
 val `commons-io` = settingKey[ModuleID]("lib for commons-io.")
+val h2 = settingKey[Seq[ModuleID]]("lib for h2.")
+val doobie = settingKey[Seq[ModuleID]]("lib for doobie.")
 
 val enableZIOTest = settingKey[Boolean]("enable zio test.")
 // end autoImport
@@ -85,6 +89,25 @@ http4s := Seq(
 
 // start setting
 cats := Seq("org.typelevel" %%% "cats-core" % versions.cats)
+// end setting
+
+// start setting
+h2 := Seq("com.h2database" % "h2" % versions.h2)
+// end setting
+
+// start setting
+doobie := Seq(
+
+  // Start with this one
+  "org.tpolecat" %% "doobie-core"      % versions.doobie,
+
+  // And add any of these as needed
+  // "org.tpolecat" %% "doobie-h2"     % versions.doobie,          // H2 driver 1.4.200 + type mappings.
+  "org.tpolecat" %% "doobie-hikari"    % versions.doobie,          // HikariCP transactor.
+  "org.tpolecat" %% "doobie-postgres"  % versions.doobie,          // Postgres driver 42.3.1 + type mappings.
+  "org.tpolecat" %% "doobie-scalatest" % versions.doobie % Test  // ScalaTest support for typechecking statements.
+
+)
 // end setting
 
 // scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings
