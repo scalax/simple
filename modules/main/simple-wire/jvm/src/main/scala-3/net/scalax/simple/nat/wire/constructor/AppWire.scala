@@ -15,10 +15,7 @@ class AppWire(using EnvA[Transactor.Aux[IO, Unit]], EnvB[Transactor.Aux[IO, Unit
   private given ServiceA              = new ServiceAImpl[Id, EnvA](() => serviceB)
   private lazy val serviceB: ServiceB = new ServiceBImpl[Id, EnvB](() => summon)
 
-  private given CountService = new CountServiceImpl[EnvA, EnvB]
-
-  type IdNatHttpRoutes[M[_]] = NatHttpRoutesImpl[M, M]
-  private lazy val natRoutesInstances: NatHttpRoutes = new IdNatHttpRoutes[Id]
+  private lazy val natRoutesInstances: NatHttpRoutes = new NatHttpRoutesImpl[Id]
 
   lazy val routes: HttpRoutes[IO] = natRoutesInstances.route
 

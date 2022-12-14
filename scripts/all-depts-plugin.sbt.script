@@ -77,6 +77,7 @@ libraryDependencies ++= {
 
 // start setting
 http4s := Seq(
+  "org.http4s" %% "http4s-twirl" % "0.24.0-M1",
   "org.http4s" %%% "http4s-dsl" % versions.http4s,
   "org.http4s" %%% "http4s-ember-server" % versions.http4s,
   "org.http4s" %%% "http4s-ember-client" % versions.http4s
