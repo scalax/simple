@@ -1,5 +1,5 @@
 package net.scalax.simple
-package geshu
+package nat
 
 import core.Core2
 
