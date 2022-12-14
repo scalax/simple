@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.injection
+package net.scalax.simple.nat.wire
 
 trait Getter[M[_], T] {
   def get(model: M[T]): T
