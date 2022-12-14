@@ -3,7 +3,7 @@ package resource
 
 import doobie._
 import doobie.implicits._
-import cats.effect.IO
+import cats.effect.{IO, Resource}
 
 trait H2Doobie(dbName: String):
   private val xa: Transactor.Aux[IO, Unit] = Transactor.fromDriverManager[IO](
@@ -11,7 +11,7 @@ trait H2Doobie(dbName: String):
     s"jdbc:h2:mem:$dbName;DB_CLOSE_DELAY=-1"
   )
 
-  val y = xa.yolo
+  private val y = xa.yolo
   import y._
 
   private val sql1 = sql"DROP TABLE IF EXISTS cats".update
@@ -22,7 +22,7 @@ trait H2Doobie(dbName: String):
     _: Int <- sql2.run
   yield xa
 
-  val resource: IO[Transactor.Aux[IO, Unit]] = initAction.transact(xa)
+  val resource: Resource[IO, Transactor.Aux[IO, Unit]] = Resource.eval(initAction.transact(xa))
 end H2Doobie
 
 class EnvAH2Doobie extends H2Doobie("EnvA")

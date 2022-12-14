@@ -11,7 +11,7 @@ import model._
 
 trait DBDao(xa: Transactor.Aux[IO, Unit]):
 
-  val y = xa.yolo
+  private val y = xa.yolo
   import y._
   def insertImpl(model: Cat): ConnectionIO[Cat] =
     val action = sql"insert into cats (name, age) values (${model.name}, ${model.age})".update.withUniqueGeneratedKeys[Int]("id")
