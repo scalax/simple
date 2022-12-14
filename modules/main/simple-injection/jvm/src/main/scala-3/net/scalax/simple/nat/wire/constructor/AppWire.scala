@@ -27,10 +27,9 @@ trait AppWire:
 
 end AppWire
 
-class AppWireImpl[T1[_]: Getter, T2[_]: Getter](using T1[EnvA[Transactor.Aux[IO, Unit]]], T2[EnvB[Transactor.Aux[IO, Unit]]])
-    extends AppWire:
-  override protected val `envA-db`: EnvA[Transactor.Aux[IO, Unit]] = Getter.instance[T1].get(summon)
-  override protected val `envB-db`: EnvB[Transactor.Aux[IO, Unit]] = Getter.instance[T2].get(summon)
+class AppWireImpl(using EnvA[Transactor.Aux[IO, Unit]], EnvB[Transactor.Aux[IO, Unit]]) extends AppWire:
+  override protected val `envA-db`: EnvA[Transactor.Aux[IO, Unit]] = summon
+  override protected val `envB-db`: EnvB[Transactor.Aux[IO, Unit]] = summon
 end AppWireImpl
 
 object AppWire:
@@ -43,7 +42,7 @@ object AppWire:
     yield
       given EnvA[Transactor.Aux[IO, Unit]] = xaA
       given EnvB[Transactor.Aux[IO, Unit]] = xaB
-      (new AppWireImpl[Id, Id]).routes
+      (new AppWireImpl).routes
   }
   end build
 end AppWire
