@@ -1,9 +1,9 @@
 val `root/file` = file(".").getCanonicalFile
 
-val `module/file` = `root/file` / "modules"
-val `geshu/file`  = `root/file` / "geshu"
+val `module/file`      = `root/file` / "modules"
+val `impractical/file` = `root/file` / "impractical"
 
-val `counter/file` = `geshu/file` / "simple-counter"
+val `nat/file` = `impractical/file` / "simple-nat"
 
 val `test/file` = `module/file` / "test"
 val `main/file` = `module/file` / "main"
@@ -50,9 +50,9 @@ lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn
 lazy val codecJVM = codec.jvm
 lazy val codecJS  = codec.js
 
-lazy val counter    = crossProject(JSPlatform, JVMPlatform) in `counter/file` dependsOn (core, `test-common` % Test)
-lazy val counterJVM = counter.jvm
-lazy val counterJS  = counter.js
+lazy val nat    = crossProject(JSPlatform, JVMPlatform) in `nat/file` dependsOn (core, `test-common` % Test)
+lazy val natJVM = nat.jvm
+lazy val natJS  = nat.js
 
 lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
 
