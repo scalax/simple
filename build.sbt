@@ -9,7 +9,7 @@ val `test/file` = `module/file` / "test"
 val `main/file` = `module/file` / "main"
 
 val `core/file`        = `main/file` / "simple-core"
-val `injection/file`   = `main/file` / "simple-injection"
+val `wire/file`        = `main/file` / "simple-wire"
 val `codec/file`       = `main/file` / "simple-codec"
 val `adt/file`         = `main/file` / "simple-adt"
 val `adt-codegen/file` = `adt/file` / "codegen"
@@ -40,10 +40,10 @@ lazy val list = crossProject(JSPlatform, JVMPlatform) in `list/file` dependsOn (
 lazy val listJVM = list.jvm
 lazy val listJS  = list.js
 
-lazy val injection = crossProject(JSPlatform, JVMPlatform) in `injection/file` dependsOn (core, `test-common` % Test)
+lazy val wire = crossProject(JSPlatform, JVMPlatform) in `wire/file` dependsOn (core, `test-common` % Test)
 
-lazy val injectionJVM = injection.jvm
-lazy val injectionJS  = injection.js
+lazy val wireJVM = wire.jvm
+lazy val wireJS  = wire.js
 
 lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn (core, `test-common` % Test)
 
@@ -58,22 +58,22 @@ lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/f
 
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
-val adtTestAll       = `adt-core`.componentProjects.map(t => t / Test / test)
-val listTestAll      = list.componentProjects.map(t => t / Test / test)
-val injectionTestAll = injection.componentProjects.map(t => t / Test / test)
-val codecTestAll     = codec.componentProjects.map(t => t / Test / test)
+val adtTestAll   = `adt-core`.componentProjects.map(t => t / Test / test)
+val listTestAll  = list.componentProjects.map(t => t / Test / test)
+val wireTestAll  = wire.componentProjects.map(t => t / Test / test)
+val codecTestAll = codec.componentProjects.map(t => t / Test / test)
 
 adt / Test / test := (adt / Test / test).dependsOn(adtTestAll: _*).value
 
-val adtTestAction       = adt / Test / test
-val listTestAction      = listTestAll
-val injectionTestAction = injectionTestAll
-val codecTestAction     = codecTestAll
+val adtTestAction   = adt / Test / test
+val listTestAction  = listTestAll
+val wireTestAction  = wireTestAll
+val codecTestAction = codecTestAll
 
 mainProjects / Test / test := (mainProjects / Test / test)
   .dependsOn(adtTestAction)
   .dependsOn(listTestAction: _*)
-  .dependsOn(injectionTestAction: _*)
+  .dependsOn(wireTestAction: _*)
   .dependsOn(codecTestAction: _*)
   .value
 
