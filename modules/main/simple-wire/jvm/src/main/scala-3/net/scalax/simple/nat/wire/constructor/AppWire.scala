@@ -27,8 +27,8 @@ end AppWire
 object AppWire:
 
   val build: IO[HttpRoutes[IO]] =
-    val xa1 = for xaImpl <- (new EnvAH2Doobie).resource yield Wire[EnvA].from(xaImpl)
-    val xa2 = for xaImpl <- (new EnvBH2Doobie).resource yield Wire[EnvB].from(xaImpl)
+    val xa1 = for xaImpl <- (new EnvAH2Doobie).resource yield Wire[EnvA].lift(xaImpl)
+    val xa2 = for xaImpl <- (new EnvBH2Doobie).resource yield Wire[EnvB].lift(xaImpl)
 
     for
       xaA <- xa1

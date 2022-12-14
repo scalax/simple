@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.injection
+package net.scalax.simple.injection
 
 import scala.collection.compat._
 

@@ -15,4 +15,4 @@ trait CountService(countXA: Transactor.Aux[IO, Unit], dataXA: Transactor.Aux[IO,
 end CountService
 
 class CountServiceImpl[CountEnv[_]: Wire, DataEnv[_]: Wire](using CountEnv[Transactor.Aux[IO, Unit]], DataEnv[Transactor.Aux[IO, Unit]])
-    extends CountService(countXA = Wire[CountEnv].to(summon), dataXA = Wire[DataEnv].to(summon))
+    extends CountService(countXA = Wire[CountEnv].unlift(summon), dataXA = Wire[DataEnv].unlift(summon))

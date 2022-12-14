@@ -10,11 +10,15 @@ trait Wire[M[_]] extends Core3[M] {
 
 object Wire {
 
-  def apply[M[_]: Wire]: Wire[M] = implicitly[Wire[M]]
+  def apply[M[_]: Wire]: WireImpl[M] = new WireImplInstance[M]
 
   trait WireImpl[M[_]] {
-    def wireInstance: Wire [M]
-    def lift[T](t: T):M[T]
+    def lift[T](t: T): M[T]
+    def unlift[T](mt: M[T]): T
+  }
+  private class WireImplInstance[M[_]](implicit wireInstance: Wire[M]) extends WireImpl[M] {
+    override def lift[T](t: T): M[T]    = wireInstance.from(t)
+    override def unlift[T](mt: M[T]): T = wireInstance.to(mt)
   }
 
   implicit val identityWireImplicit: Wire[cats.Id] = new Wire[cats.Id] {
