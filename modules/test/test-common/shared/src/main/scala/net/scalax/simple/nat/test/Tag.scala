@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.test
+package net.scalax.simple.test
 
 class Tag[T]
 object Tag {

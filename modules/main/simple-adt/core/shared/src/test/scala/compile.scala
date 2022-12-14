@@ -1,10 +1,10 @@
-package net.scalax.simple.nat
+package net.scalax.simple.adt
 package test
 
-import adt.TypeAdt.{alias => adtAlias, get => getAdtApply}
-import adtAlias._
-import net.scalax.simple.nat.adt.impl.FetchAdtApply
+import TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
+import impl.FetchAdtApply
 import scala.collection.compat._
+import net.scalax.simple.test._
 
 object TypeConfirm {
 

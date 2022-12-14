@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire
+package net.scalax.simple.wire
 package service
 
 import cats.effect._
@@ -14,5 +14,5 @@ trait CountService(countXA: Transactor.Aux[IO, Unit], dataXA: Transactor.Aux[IO,
 
 end CountService
 
-class CountServiceImpl[CountEnv[_]: Getter, DataEnv[_]: Getter](using CountEnv[Transactor.Aux[IO, Unit]], DataEnv[Transactor.Aux[IO, Unit]])
-    extends CountService(countXA = Getter[CountEnv].get(summon), dataXA = Getter[DataEnv].get(summon))
+class CountServiceImpl[CountEnv[_]: Wire, DataEnv[_]: Wire](using CountEnv[Transactor.Aux[IO, Unit]], DataEnv[Transactor.Aux[IO, Unit]])
+    extends CountService(countXA = Wire[CountEnv].to(summon), dataXA = Wire[DataEnv].to(summon))

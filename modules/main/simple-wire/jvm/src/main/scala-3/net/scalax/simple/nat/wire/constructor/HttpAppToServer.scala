@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire.constructor
+package net.scalax.simple.wire.constructor
 
 import cats.effect._
 import org.http4s.HttpApp

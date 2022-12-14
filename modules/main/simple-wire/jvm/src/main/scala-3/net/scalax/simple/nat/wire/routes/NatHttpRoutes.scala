@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire
+package net.scalax.simple.wire
 package routes
 
 import cats.effect._
@@ -15,5 +15,5 @@ trait NatHttpRoutes(serviceA: ServiceA, countService: CountService):
   }
 end NatHttpRoutes
 
-class NatHttpRoutesImpl[Env1[_]: Getter, Env2[_]: Getter](using Env1[ServiceA], Env2[CountService])
-    extends NatHttpRoutes(serviceA = Getter[Env1].get(summon), countService = Getter[Env2].get(summon))
+class NatHttpRoutesImpl[Env1[_]: Wire, Env2[_]: Wire](using Env1[ServiceA], Env2[CountService])
+    extends NatHttpRoutes(serviceA = Wire[Env1].to(summon), countService = Wire[Env2].to(summon))

@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire
+package net.scalax.simple.wire
 
 import cats.effect._
 import org.http4s.HttpRoutes

@@ -1,11 +1,8 @@
-package net.scalax.simple.nat
+package net.scalax.simple
+package adt
 
-import core.tpe._
+import core.Core1
 
-package adt {
-
-  trait NumberCount                                       extends NumberParent
-  final class NumberCountChild[Head, Tail <: NumberCount] extends NumberChild[Tail] with NumberCount
-  final class NumberCountZero                             extends NumberChild[NumberCountZero] with NumberCount
-
-}
+trait NumberCount[T <: NumberCount[_]]                     extends Core1[T]
+final class NumberCountChild[Head, Tail <: NumberCount[_]] extends NumberCount[Tail]
+final class NumberCountZero                                extends NumberCount[NumberCountZero]

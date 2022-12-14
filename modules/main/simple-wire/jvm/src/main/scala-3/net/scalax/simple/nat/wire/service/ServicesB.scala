@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire
+package net.scalax.simple.wire
 package service
 
 import cats.effect._
@@ -15,7 +15,8 @@ trait ServiceB(xa: Transactor.Aux[IO, Unit]):
 
 end ServiceB
 
-class ServiceBImpl[ServiceAEnv[_]: Getter, T[_]: Getter](sa: () => ServiceAEnv[ServiceA])(using T[Transactor.Aux[IO, Unit]])
-    extends ServiceB(Getter[T].get(summon)):
-  override lazy val serviceA: ServiceA = Getter[ServiceAEnv].get(sa())
+class ServiceBImpl[ServiceAEnv[_]: Wire, T[_]: Wire](sa: () => ServiceAEnv[ServiceA])(using T[Transactor.Aux[IO, Unit]])
+    extends ServiceB(Wire[T].to(summon)):
+
+  override lazy val serviceA: ServiceA = Wire[ServiceAEnv].to(sa())
 end ServiceBImpl

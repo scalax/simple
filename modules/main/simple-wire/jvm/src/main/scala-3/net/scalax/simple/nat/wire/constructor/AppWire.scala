@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.wire
+package net.scalax.simple.wire
 package constructor
 
 import service._
@@ -27,8 +27,8 @@ end AppWire
 object AppWire:
 
   val build: IO[HttpRoutes[IO]] =
-    val xa1 = for xaImpl <- (new EnvAH2Doobie).resource yield Getter[EnvA].lift(xaImpl)
-    val xa2 = for xaImpl <- (new EnvBH2Doobie).resource yield Getter[EnvB].lift(xaImpl)
+    val xa1 = for xaImpl <- (new EnvAH2Doobie).resource yield Wire[EnvA].from(xaImpl)
+    val xa2 = for xaImpl <- (new EnvBH2Doobie).resource yield Wire[EnvB].from(xaImpl)
 
     for
       xaA <- xa1

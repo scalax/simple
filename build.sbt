@@ -20,7 +20,7 @@ val `list/file` = `main/file` / "simple-list"
 val `test-common/file` = `test/file` / "test-common"
 
 scalaVersion := scalaV.v213
-name         := "simple-nat"
+name         := "simple"
 
 lazy val testProjects = project in `test/file`
 lazy val mainProjects = project in `main/file`
