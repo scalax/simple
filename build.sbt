@@ -1,53 +1,60 @@
-val `root-path` = file(".").getCanonicalFile
+val `root/file` = file(".").getCanonicalFile
 
-val `module-path` = `root-path` / "modules"
+val `module/file` = `root/file` / "modules"
+val `geshu/file`  = `root/file` / "geshu"
 
-val `test-path` = `module-path` / "test"
-val `main-path` = `module-path` / "main"
+val `counter/file` = `geshu/file` / "simple-counter"
 
-val `core-path`        = `main-path` / "simple-core"
-val `injection-path`   = `main-path` / "simple-injection"
-val `codec-path`       = `main-path` / "simple-codec"
-val `adt-path`         = `main-path` / "simple-adt"
-val `adt-codegen-path` = `adt-path` / "codegen"
-val `adt-core-path`    = `adt-path` / "core"
+val `test/file` = `module/file` / "test"
+val `main/file` = `module/file` / "main"
 
-val `list-path` = `main-path` / "simple-list"
+val `core/file`        = `main/file` / "simple-core"
+val `injection/file`   = `main/file` / "simple-injection"
+val `codec/file`       = `main/file` / "simple-codec"
+val `adt/file`         = `main/file` / "simple-adt"
+val `adt-codegen/file` = `adt/file` / "codegen"
+val `adt-core/file`    = `adt/file` / "core"
 
-val `test-common-path` = `test-path` / "test-common"
+val `list/file` = `main/file` / "simple-list"
+
+val `test-common/file` = `test/file` / "test-common"
 
 scalaVersion := scalaV.v213
 name         := "simple-nat"
 
-lazy val testProjects = project in `test-path`
-lazy val mainProjects = project in `main-path`
+lazy val testProjects = project in `test/file`
+lazy val mainProjects = project in `main/file`
 
-lazy val core = crossProject(JSPlatform, JVMPlatform) in `core-path`
+lazy val core = crossProject(JSPlatform, JVMPlatform) in `core/file`
 
-lazy val adt = project in `adt-path`
+lazy val adt = project in `adt/file`
 
-lazy val `adt-codegen` = project in `adt-codegen-path`
-lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core-path` dependsOn (core, `test-common` % Test)
+lazy val `adt-codegen` = project in `adt-codegen/file`
+lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core/file` dependsOn (core, `test-common` % Test)
 
 lazy val `adt-coreJVM` = `adt-core`.jvm
 lazy val `adt-coreJS`  = `adt-core`.js
 
-lazy val list = crossProject(JSPlatform, JVMPlatform) in `list-path` dependsOn (core, `test-common` % Test)
+lazy val list = crossProject(JSPlatform, JVMPlatform) in `list/file` dependsOn (core, `test-common` % Test)
 
 lazy val listJVM = list.jvm
 lazy val listJS  = list.js
 
-lazy val injection = crossProject(JSPlatform, JVMPlatform) in `injection-path` dependsOn (core, `test-common` % Test)
+lazy val injection = crossProject(JSPlatform, JVMPlatform) in `injection/file` dependsOn (core, `test-common` % Test)
 
 lazy val injectionJVM = injection.jvm
 lazy val injectionJS  = injection.js
 
-lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec-path` dependsOn (core, `test-common` % Test)
+lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn (core, `test-common` % Test)
 
 lazy val codecJVM = codec.jvm
 lazy val codecJS  = codec.js
 
-lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common-path`
+lazy val counter    = crossProject(JSPlatform, JVMPlatform) in `counter/file` dependsOn (core, `test-common` % Test)
+lazy val counterJVM = counter.jvm
+lazy val counterJS  = counter.js
+
+lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
 
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 

@@ -13,7 +13,7 @@ package injection {
     override val pass: () => LengthNeedFuture
   }
 
-  trait LengthCurrent extends Current with LengthNeedFuture with LengthNeedPass {
+  trait LengthCurrent extends LengthNeedFuture with LengthNeedPass {
     override val future: () => LengthNeedPass
     override val pass: () => LengthNeedFuture
     override def length: Int = future().length

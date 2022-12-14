@@ -1,1 +1,1 @@
-libraryDependencies += commonsIO.value
+libraryDependencies += `commons-io`.value

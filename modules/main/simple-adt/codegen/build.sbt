@@ -49,4 +49,4 @@ preCodegenImpl := (Compile / runMain).inputTaskValue
   .evaluated
 
 // Not support 3.2.0
-scalafmtOnCompile := false
+scalafmtOnCompile := true

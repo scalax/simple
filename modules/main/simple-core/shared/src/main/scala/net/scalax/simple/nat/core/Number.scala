@@ -15,13 +15,7 @@ trait NeedPass {
   val pass: () => NeedFuture
 }
 
-trait Current extends NeedFuture with NeedPass {
+/*trait Current extends NeedFuture with NeedPass {
   override val future: () => NeedPass
   override val pass: () => NeedFuture
-}
-
-/*trait Number3 extends Current with NumberParent {
-  override val future: () => NeedPass
-  override val pass: () => NeedFuture
-  override val child: () => Number3
 }*/
