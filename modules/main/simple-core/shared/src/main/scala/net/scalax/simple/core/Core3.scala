@@ -1,6 +1,9 @@
 package net.scalax.simple.core
 
-trait Core3[M[_]] {
-  def from[T](i2: T): M[T]
-  def to[T](i1: M[T]): T
+trait Core3_1[M[_], G[_]] {
+  def apply[T]: M[T] => G[T]
+}
+
+trait Core3_2[F[_]] {
+  def apply[A, B]: F[A] => F[B]
 }
