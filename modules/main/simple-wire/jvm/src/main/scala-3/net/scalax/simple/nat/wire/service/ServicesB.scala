@@ -23,8 +23,7 @@ trait ServiceB:
 
 end ServiceB
 
-class ServiceBImpl[ServiceAEnv[_]: Wire, DBEnv[_]: Wire](sa: () => ServiceAEnv[ServiceA])(using DBEnv[Transactor.Aux[IO, Unit]])
-    extends ServiceB:
+class ServiceBImpl[ServiceAEnv[_]: Wire, DBEnv[_]: Wire](sa: () => ServiceAEnv[ServiceA])(using DBEnv[Transactor[IO]]) extends ServiceB:
   override lazy val serviceA: ServiceA = Wire[ServiceAEnv].unlift(sa())
   override val dbDao: DBDao            = new DBDaoImpl[DBEnv]
 end ServiceBImpl

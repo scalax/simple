@@ -9,7 +9,7 @@ import doobie._
 import doobie.implicits._
 import model._
 
-trait DBDao(xa: Transactor.Aux[IO, Unit]):
+trait DBDao(xa: Transactor[IO]):
 
   private val y = xa.yolo
   import y._
@@ -24,4 +24,4 @@ trait DBDao(xa: Transactor.Aux[IO, Unit]):
 
 end DBDao
 
-class DBDaoImpl[XaEnv[_]: Wire](using XaEnv[Transactor.Aux[IO, Unit]]) extends DBDao(xa = Wire[XaEnv].unlift(summon))
+class DBDaoImpl[XaEnv[_]: Wire](using XaEnv[Transactor[IO]]) extends DBDao(xa = Wire[XaEnv].unlift(summon))
