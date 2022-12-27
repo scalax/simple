@@ -10,7 +10,7 @@ import env._
 import resource._
 import cats._
 
-class AppWire(using EnvA[Transactor.Aux[IO, Unit]], EnvB[Transactor.Aux[IO, Unit]]):
+class AppWire(using EnvA[Transactor[IO]], EnvB[Transactor[IO]]):
 
   private given ServiceA              = new ServiceAImpl[Id, EnvA](() => serviceB)
   private lazy val serviceB: ServiceB = new ServiceBImpl[Id, EnvB](() => summon)
@@ -24,12 +24,12 @@ end AppWire
 object AppWire:
 
   val build: Resource[IO, HttpRoutes[IO]] =
-    val xa1 = for xaImpl <- (new EnvAH2Doobie).resource yield Wire[EnvA].lift(xaImpl)
-    val xa2 = for xaImpl <- (new EnvBH2Doobie).resource yield Wire[EnvB].lift(xaImpl)
+    val xa1 = for xaImpl <- (new EnvAH2Doobie).resource yield EnvA(xaImpl)
+    val xa2 = for xaImpl <- (new EnvBH2Doobie).resource yield EnvB(xaImpl)
 
     for
-      given EnvA[Transactor.Aux[IO, Unit]] <- xa1
-      given EnvB[Transactor.Aux[IO, Unit]] <- xa2
+      given EnvA[Transactor[IO]] <- xa1
+      given EnvB[Transactor[IO]] <- xa2
     yield (new AppWire).routes
   end build
 
