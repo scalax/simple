@@ -1,2 +1,2 @@
 scalaVersion := scalaV.v213
-name         := "simple-nat-main"
+name         := "simple-main"
