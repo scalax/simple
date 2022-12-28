@@ -1,2 +1,3 @@
-# simple-nat
-Use nat to solve some scala problems.
+# simple
+Simple, and scalable.  
+Use it to do things that author can't imagine.
