@@ -1,0 +1,48 @@
+package net.scalax.simple.adt
+package test
+
+import TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
+import scala.collection.compat._
+
+import zio._
+import zio.test._
+import zio.test.Assertion._
+
+/** @author
+  *   djx314
+  */
+object TestCase1 extends ZIOSpecDefault {
+
+  case class TempForData(typeIndex: Int, typeName: String, value: Option[Int])
+  def inputOptDat[T: TypeOptions3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
+    type Tpe[T] = TypeOptions3[T, None.type, Some[Int], Option[Int]]
+    val applyM                       = getAdtApply[Tpe]
+    val typeIndex                    = implicitly[Tpe[T]].index
+    val value: (String, Option[Int]) = applyM.input(t).fold(n => ("None", n), n => ("Some", Some(n.get + 1)), n => ("Option", n.map(_ + 2)))
+    TempForData(typeIndex = typeIndex, typeName = value._1, value = value._2)
+  }
+
+  def spec = suite("Test case created by djx314")(
+    test("Simple adt fold in test data.") {
+      def assert1 = {
+        val data     = None
+        val foldData = inputOptDat(data)
+        assert(foldData)(Assertion.equalTo(TempForData(1, "None", data)))
+      }
+
+      def assert2 = {
+        val data     = Option(2)
+        val foldData = inputOptDat(data)
+        assert(foldData)(Assertion.equalTo(TempForData(3, "Option", Option(data.get + 2))))
+      }
+
+      def assert3 = {
+        val data     = Some(6)
+        val foldData = inputOptDat(data)
+        assert(foldData)(Assertion.equalTo(TempForData(2, "Some", Some(data.get + 1))))
+      }
+
+      assert1 && assert2 && assert3
+    }
+  )
+}

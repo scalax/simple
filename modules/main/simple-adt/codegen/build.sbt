@@ -2,7 +2,7 @@ name := "simple-adt-codegen"
 
 scalaVersion := scalaV.v3RC
 
-val codegenPackageName = "net.scalax.simple.nat.adt.codegen"
+val codegenPackageName = "net.scalax.simple.adt.codegen"
 
 val commonScalaRunMainInputStr = settingKey[String]("commonScalaRunMainInputStr")
 commonScalaRunMainInputStr := {
