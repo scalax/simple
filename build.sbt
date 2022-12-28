@@ -8,12 +8,14 @@ val `nat/file` = `impractical/file` / "simple-nat"
 val `test/file` = `module/file` / "test"
 val `main/file` = `module/file` / "main"
 
-val `core/file`        = `main/file` / "simple-core"
-val `wire/file`        = `main/file` / "simple-wire"
-val `codec/file`       = `main/file` / "simple-codec"
-val `adt/file`         = `main/file` / "simple-adt"
-val `adt-codegen/file` = `adt/file` / "codegen"
-val `adt-core/file`    = `adt/file` / "core"
+val `core/file`         = `main/file` / "simple-core"
+val `wire/file`         = `main/file` / "simple-wire"
+val `wire-core/file`    = `wire/file` / "core"
+val `wire-web-app/file` = `wire/file` / "webApp"
+val `codec/file`        = `main/file` / "simple-codec"
+val `adt/file`          = `main/file` / "simple-adt"
+val `adt-codegen/file`  = `adt/file` / "codegen"
+val `adt-core/file`     = `adt/file` / "core"
 
 val `list/file` = `main/file` / "simple-list"
 
@@ -44,6 +46,13 @@ lazy val wire = crossProject(JSPlatform, JVMPlatform) in `wire/file` dependsOn (
 
 lazy val wireJVM = wire.jvm
 lazy val wireJS  = wire.js
+
+lazy val `wire-core` = crossProject(JSPlatform, JVMPlatform) in `wire-core/file` dependsOn (core, `test-common` % Test)
+
+lazy val `wire-coreJVM` = `wire-core`.jvm
+lazy val `wire-coreJS`  = `wire-core`.js
+
+lazy val `wire-web-app` = (project in `wire-web-app/file`).dependsOn(`wire-coreJVM`)
 
 lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn (core, `test-common` % Test)
 
