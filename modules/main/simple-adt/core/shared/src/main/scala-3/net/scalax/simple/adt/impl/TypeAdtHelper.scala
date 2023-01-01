@@ -1,6 +1,8 @@
 package net.scalax.simple.adt
 package impl
 
+import core._
+
 final class FetchAdtApply[F[_] <: TypeAdt.Aux[_, _, ConfirmSucceed]]:
   type TakeTuple[T <: TypeAdt.Aux[_, _, ConfirmSucceed]] <: Tuple = T match
     case TypeAdt[a, b] =>
@@ -14,9 +16,10 @@ end FetchAdtApply
 
 final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]](value: Any) extends AnyVal:
   inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt): U =
-    if (funcCol eq EmptyTuple)
-      funcCol.productElement(adt.index - 1).asInstanceOf[Any => Any](value).asInstanceOf[U]
-    else
-      funcCol.asInstanceOf[NonEmptyTuple](adt.index - 1).asInstanceOf[Any => Any](value).asInstanceOf[U]
+    def tranToFoldList(t: Tuple): FoldList[U] = t.match
+      case head *: tail => new FoldListPositive(tranToFoldList(tail), head.asInstanceOf[Nothing => U])
+      case EmptyTuple   => FoldList.zero
+    end tranToFoldList
+    tranToFoldList(funcCol).method2(adt.input(value))
   end fold
 end InnerApply

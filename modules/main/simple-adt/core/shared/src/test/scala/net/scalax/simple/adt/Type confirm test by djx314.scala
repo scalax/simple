@@ -9,7 +9,8 @@ import net.scalax.simple.test._
 object `Type confirm test by djx314` {
 
   locally {
-    def assertTypeMethod1[T: TypeOptions2F[List, *, List[String], List[Int]]](t: T*): List[String] = {
+    type TypeOpt2[T] = TypeOptions2[List[T], List[String], List[Int]]
+    def assertTypeMethod1[T: TypeOpt2](t: T*): List[String] = {
       val b = getAdtApply[TypeOptions2[*, List[String], List[Int]]]
       locally {
         val t1 = Tag(b)

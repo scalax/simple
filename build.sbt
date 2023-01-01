@@ -1,7 +1,7 @@
 val `root/file` = file(".").getCanonicalFile
 
 val `module/file`      = `root/file` / "modules"
-val `impractical/file` = `root/file` / "impractical"
+val `impractical/file` = `module/file` / "impractical"
 
 val `nat/file` = `impractical/file` / "simple-nat"
 
@@ -29,6 +29,9 @@ lazy val mainProjects = project in `main/file`
 
 lazy val core = crossProject(JSPlatform, JVMPlatform) in `core/file`
 
+lazy val coreJVM = core.jvm
+lazy val coreJS  = core.js
+
 lazy val adt = project in `adt/file`
 
 lazy val `adt-codegen` = project in `adt-codegen/file`
@@ -42,10 +45,7 @@ lazy val list = crossProject(JSPlatform, JVMPlatform) in `list/file` dependsOn (
 lazy val listJVM = list.jvm
 lazy val listJS  = list.js
 
-lazy val wire = crossProject(JSPlatform, JVMPlatform) in `wire/file` dependsOn (core, `test-common` % Test)
-
-lazy val wireJVM = wire.jvm
-lazy val wireJS  = wire.js
+lazy val wire = project in `wire/file`
 
 lazy val `wire-core` = crossProject(JSPlatform, JVMPlatform) in `wire-core/file` dependsOn (core, `test-common` % Test)
 
@@ -69,7 +69,7 @@ lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/f
 
 val adtTestAll   = `adt-core`.componentProjects.map(t => t / Test / test)
 val listTestAll  = list.componentProjects.map(t => t / Test / test)
-val wireTestAll  = wire.componentProjects.map(t => t / Test / test)
+val wireTestAll  = `wire-core`.componentProjects.map(t => t / Test / test)
 val codecTestAll = codec.componentProjects.map(t => t / Test / test)
 
 adt / Test / test := (adt / Test / test).dependsOn(adtTestAll: _*).value

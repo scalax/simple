@@ -13,7 +13,8 @@ import zio.test.Assertion._
   */
 object TestCase2 extends ZIOSpecDefault {
 
-  def inputOptDat[T: TypeOptions3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]](t: T*): Seq[Option[Long]] = {
+  type TypeOpt3[T] = TypeOptions3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
+  def inputOptDat[T: TypeOpt3](t: T*): Seq[Option[Long]] = {
     type Tpe[T] = TypeOptions3[T, Seq[String], Seq[Int], Seq[Option[Long]]]
     val applyM = getAdtApply[Tpe]
     applyM

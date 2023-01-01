@@ -1,4 +1,4 @@
-scalaVersion := scalaV.v3
+scalaVersion := scalaV.v213
 name         := "simple-wire-web-app"
 
 crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)

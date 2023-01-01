@@ -1,5 +1,7 @@
 package net.scalax.simple.adt
 
+import core._
+
 /** TODO
   *
   * @author
@@ -8,7 +10,9 @@ package net.scalax.simple.adt
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdt[Input, Sum](val index: Int) extends AnyVal
+trait TypeAdt[Input, Sum] {
+  def input(value: Any): AdtList
+}
 
 object TypeAdt extends impl.TypeAdtImplicitOptsPolyHigher {
   type Aux[Input, Sum, S <: AdtStatus] = TypeAdt[Input, Sum] { type State = S }
@@ -16,6 +20,9 @@ object TypeAdt extends impl.TypeAdtImplicitOptsPolyHigher {
 }
 
 trait LowerLevelPoly {
-  private val failedValue: TypeAdt.Aux[Any, Any, ConfirmFailed]        = TypeAdt.lift(new TypeAdt[Any, Any](-1))
+  private val failedValue: TypeAdt.Aux[Any, Any, ConfirmFailed] = new TypeAdt[Any, Any] {
+    type State = ConfirmFailed
+    override def input(value: Any): AdtList = AdtList.exception
+  }
   implicit def adtFailedResult[I, S]: TypeAdt.Aux[I, S, ConfirmFailed] = failedValue.asInstanceOf[TypeAdt.Aux[I, S, ConfirmFailed]]
 }

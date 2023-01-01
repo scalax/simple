@@ -1,5 +1,7 @@
 package net.scalax.simple.adt
 
+import net.scalax.simple.adt.core.AdtList
+
 /** TODO
   *
   * @author
@@ -10,7 +12,7 @@ package net.scalax.simple.adt
   */
 abstract class HelperIO[Input] {
   type Out
-  def helper(index: Int, value: Any): Out
+  def helper(adtList: AdtList): Out
 }
 
 object HelperIO extends impl.HelperIOImplicit {
