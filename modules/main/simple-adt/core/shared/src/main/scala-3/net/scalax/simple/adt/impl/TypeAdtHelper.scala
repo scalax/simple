@@ -16,10 +16,13 @@ end FetchAdtApply
 
 final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]](value: Any) extends AnyVal:
   inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt): U =
-    def tranToFoldList(t: Tuple): FoldList[U] = t.match
-      case head *: tail => new FoldListPositive(tranToFoldList(tail), head.asInstanceOf[Nothing => U])
-      case EmptyTuple   => FoldList.zero
+    def tranToFoldList(t: Tuple): FoldList = t.match
+      case head *: tail =>
+        new FoldListPositive(tranToFoldList(tail)) with (Any => Any) {
+          override def apply(any: Any): Any = head.asInstanceOf[Any => Any](any)
+        }
+      case EmptyTuple => FoldList.zero
     end tranToFoldList
-    tranToFoldList(funcCol).method2(adt.input(value))
+    adt.input(value).method1(tranToFoldList(funcCol)).asInstanceOf[U]
   end fold
 end InnerApply

@@ -6,7 +6,9 @@ import core.*
 trait TypeAdtImplicitOptsPolyHigher extends TypeAdtImplicitOptsPolyLower with AdtApply:
   inline given [A, B <: A, Tail <: Tuple]: TypeAdt.Aux[B, A *: Tail, ConfirmSucceed] = new TypeAdt[B, A *: Tail] {
     type State = ConfirmSucceed
-    override def input(value: Any): AdtList = new AdtListZero(value)
+    override def input(value: Any): AdtList = new AdtListZero {
+      override def method1(m: FoldList): Any = m.asInstanceOf[Any => Any](value)
+    }
   }
 end TypeAdtImplicitOptsPolyHigher
 
