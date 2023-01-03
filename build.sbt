@@ -16,6 +16,7 @@ val `codec/file`        = `main/file` / "simple-codec"
 val `adt/file`          = `main/file` / "simple-adt"
 val `adt-codegen/file`  = `adt/file` / "codegen"
 val `adt-core/file`     = `adt/file` / "core"
+val `generic/file`      = `main/file` / "simple-generic"
 
 val `list/file` = `main/file` / "simple-list"
 
@@ -63,27 +64,34 @@ lazy val nat    = crossProject(JSPlatform, JVMPlatform) in `nat/file` dependsOn 
 lazy val natJVM = nat.jvm
 lazy val natJS  = nat.js
 
+lazy val generic    = crossProject(JSPlatform, JVMPlatform) in `generic/file` dependsOn (core, `test-common` % Test)
+lazy val genericJVM = generic.jvm
+lazy val genericJS  = generic.js
+
 lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
 
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
-val adtTestAll   = `adt-core`.componentProjects.map(t => t / Test / test)
-val listTestAll  = list.componentProjects.map(t => t / Test / test)
-val wireTestAll  = `wire-core`.componentProjects.map(t => t / Test / test)
-val codecTestAll = codec.componentProjects.map(t => t / Test / test)
+val adtTestAll     = `adt-core`.componentProjects.map(t => t / Test / test)
+val listTestAll    = list.componentProjects.map(t => t / Test / test)
+val wireTestAll    = `wire-core`.componentProjects.map(t => t / Test / test)
+val codecTestAll   = codec.componentProjects.map(t => t / Test / test)
+val genericTestAll = generic.componentProjects.map(t => t / Test / test)
 
 adt / Test / test := (adt / Test / test).dependsOn(adtTestAll: _*).value
 
-val adtTestAction   = adt / Test / test
-val listTestAction  = listTestAll
-val wireTestAction  = wireTestAll
-val codecTestAction = codecTestAll
+val adtTestAction     = adt / Test / test
+val listTestAction    = listTestAll
+val wireTestAction    = wireTestAll
+val codecTestAction   = codecTestAll
+val genericTestAction = genericTestAll
 
 mainProjects / Test / test := (mainProjects / Test / test)
   .dependsOn(adtTestAction)
   .dependsOn(listTestAction: _*)
   .dependsOn(wireTestAction: _*)
   .dependsOn(codecTestAction: _*)
+  .dependsOn(genericTestAction: _*)
   .value
 
 val codegenScalaV = scalaV.v3RC
