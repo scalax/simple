@@ -7,7 +7,7 @@ class AdtListPositive(tail: AdtList) extends AdtList {
   override def method1(m: FoldList): FoldList = m.method2(tail)
 }
 abstract class AdtListZero extends AdtList {
-  override def method1(m: FoldList): FoldList
+  override def method1(m: FoldList): FoldList = m
 }
 class AdtListException(tail: () => AdtList) extends AdtList {
   override def method1(m: FoldList): FoldList = m.method2(tail())

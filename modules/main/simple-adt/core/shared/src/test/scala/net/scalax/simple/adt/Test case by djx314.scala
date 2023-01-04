@@ -22,7 +22,7 @@ object TestCase1 extends ZIOSpecDefault {
     TempForData(typeName = value._1, value = value._2)
   }
 
-  def spec = suite("Test case created by djx314")(
+  override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314")(
     test("Simple adt fold in test data.") {
       def assert1 = {
         val data     = None
@@ -42,7 +42,10 @@ object TestCase1 extends ZIOSpecDefault {
         assert(foldData)(Assertion.equalTo(TempForData("Some", Some(data.get + 1))))
       }
 
-      assert1 && assert2 && assert3
+      try assert1 && assert2 && assert3
+      catch {
+        case _: StackOverflowError => assertNever("Not allow adt access.")
+      }
     }
   )
 }
