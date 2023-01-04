@@ -6,8 +6,11 @@ import core.*
 trait TypeAdtImplicitOptsPolyHigher extends TypeAdtImplicitOptsPolyLower with AdtApply:
   inline given [A, B <: A, Tail <: Tuple]: TypeAdt.Aux[B, A *: Tail, ConfirmSucceed] = new TypeAdt[B, A *: Tail] {
     type State = ConfirmSucceed
-    override def input(value: Any): AdtList = new AdtListZero {
-      override def method1(m: FoldList): Any = m.asInstanceOf[Any => Any](value)
+    override def input(typeAdtGetter: TypeAdtGetter, value: Any): AdtList = new AdtListZero {
+      override def method1(m: FoldList): FoldList = {
+        typeAdtGetter.value = m.asInstanceOf[Any => Any](value)
+        m
+      }
     }
   }
 end TypeAdtImplicitOptsPolyHigher
@@ -16,7 +19,7 @@ trait TypeAdtImplicitOptsPolyLower extends LowerLevelPoly:
   inline given [A, B, Tail <: Tuple](using inline adt: TypeAdt.Aux[B, Tail, ConfirmSucceed]): TypeAdt.Aux[B, A *: Tail, ConfirmSucceed] =
     new TypeAdt[B, A *: Tail] {
       type State = ConfirmSucceed
-      override def input(value: Any): AdtList = new AdtListPositive(adt.input(value))
+      override def input(typeAdtGetter: TypeAdtGetter, value: Any): AdtList = new AdtListPositive(adt.input(typeAdtGetter, value))
     }
 end TypeAdtImplicitOptsPolyLower
 

@@ -11,10 +11,11 @@ final class FetchAdtApply[F[_] <: TypeAdt.Aux[_, _, ConfirmSucceed]]:
         case EmptyTuple => EmptyTuple
   end TakeTuple
 
-  inline final def input[T](inline data: T): InnerApply[[t] =>> Tuple.Map[TakeTuple[F[T]], [x] =>> (x => t)], F[T]] = InnerApply(data)
+  inline final def input[T](inline data: T): InnerApply[[t] =>> Tuple.Map[TakeTuple[F[T]], [x] =>> (x => t)], F[T]] =
+    InnerApply(new TypeAdtGetter, data)
 end FetchAdtApply
 
-final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]](value: Any) extends AnyVal:
+final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]](adtGetter: TypeAdtGetter, value: Any):
   inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt): U =
     def tranToFoldList(t: Tuple): FoldList = t.match
       case head *: tail =>
@@ -23,6 +24,7 @@ final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]]
         }
       case EmptyTuple => FoldList.zero
     end tranToFoldList
-    adt.input(value).method1(tranToFoldList(funcCol)).asInstanceOf[U]
+    adt.input(adtGetter, value).method1(tranToFoldList(funcCol))
+    adtGetter.value.asInstanceOf[U]
   end fold
 end InnerApply
