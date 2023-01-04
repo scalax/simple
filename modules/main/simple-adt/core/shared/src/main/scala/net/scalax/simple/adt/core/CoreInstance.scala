@@ -1,12 +1,14 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 
-import net.scalax.simple.core.Core2
+import core.Core2
 
 object CoreInstance {
   private def Core2(func: (() => Core2) => Core2): Core2 = new Core2 {
     override def apply(v1: () => Core2): Core2 = func(v1)
   }
 
+  // ===
   type AdtList = Core2
   val AdtListPositive: Core2 = Core2(tail => Core2(foldList => foldList.apply().apply(() => tail())))
   class AdtListZero extends Core2 {
