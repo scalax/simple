@@ -1,7 +1,7 @@
 package net.scalax.simple.adt
 package impl
 
-import core._
+import CoreInstance._
 
 trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositive {
   @inline final def get[F[_] <: TypeAdt.Aux[_, _, ConfirmSucceed]]: FetchAdtApply[F] = FetchAdtApply.get
@@ -9,21 +9,16 @@ trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositive {
 
 trait HListTypeAdtPositive extends HListTypeAdtPositiveLower {
   @inline implicit def hlistTypeAdtPositiveImplicit1[B <: A, A, Tail <: NumberCount[_]]
-    : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = new TypeAdt[B, NumberCountChild[A, Tail]] {
-    type State = ConfirmSucceed
-    override def input(typeAdtGetter: TypeAdtGetter, value: Any): AdtList = new AdtListZero {
-      override def method1(m: FoldList): FoldList = {
-        typeAdtGetter.value = m.asInstanceOf[Any => Any](value)
-        m
-      }
+    : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt(new AdtListZero {
+    override def apply(m: () => FoldList): FoldList = {
+      val valueM: FoldList = super.apply(m)
+      valueM.asInstanceOf[TypeAdtGetter].runGetter
+      valueM
     }
-  }
+  })
 }
 trait HListTypeAdtPositiveLower extends LowerLevelPoly {
   @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: NumberCount[_]](implicit
     tailMapping: TypeAdt.Aux[B, Tail, ConfirmSucceed]
-  ): TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = new TypeAdt[B, NumberCountChild[A, Tail]] {
-    type State = ConfirmSucceed
-    override def input(typeAdtGetter: TypeAdtGetter, value: Any): AdtList = new AdtListPositive(tailMapping.input(typeAdtGetter, value))
-  }
+  ): TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt(AdtListPositive(() => tailMapping.value))
 }

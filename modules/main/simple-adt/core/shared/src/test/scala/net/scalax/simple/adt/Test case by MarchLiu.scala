@@ -26,7 +26,7 @@ object TestCase2 extends ZIOSpecDefault {
       )
   }
 
-  def spec = suite("Test case created by MarchLiu")(
+  override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by MarchLiu")(
     test("Simple adt fold in parameter list.") {
       def assert1 = {
         val r1 = inputOptDat("aa", "ofjhiwehr", "sdfweer")
@@ -49,7 +49,10 @@ object TestCase2 extends ZIOSpecDefault {
         assert(r1)(Assertion.equalTo(r2))
       }
 
-      assert1 && assert2 && assert3
+      try assert1 && assert2 && assert3
+      catch {
+        case _: StackOverflowError => assertNever("Not allow adt access.")
+      }
     }
   )
 }
