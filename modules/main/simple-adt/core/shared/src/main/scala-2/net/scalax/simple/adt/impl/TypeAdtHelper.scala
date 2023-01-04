@@ -1,4 +1,5 @@
-package net.scalax.simple.adt.impl
+package net.scalax.simple.adt
+package impl
 
 import net.scalax.simple.adt.{ConfirmSucceed, HelperIO, TypeAdt}
 
@@ -11,8 +12,10 @@ object TakeTuple {
 }
 
 final class FetchAdtApply[F[_] <: TypeAdt.Aux[_, _, ConfirmSucceed]] {
-  @inline def input[T, V, Out](data: T)(implicit mapping: F[T], t: TakeTuple.Aux[F[T], V], helperIO: HelperIO.Aux[V, Out]): Out =
-    helperIO.helper(mapping.input(data))
+  @inline def input[T, V, Out](data: T)(implicit mapping: F[T], t: TakeTuple.Aux[F[T], V], helperIO: HelperIO.Aux[V, Out]): Out = {
+    val adtGetter = new TypeAdtGetter
+    helperIO.helper(adtGetter, mapping.asInstanceOf[TypeAdt[Any, Any]], data)
+  }
 }
 object FetchAdtApply {
   @inline private val value: FetchAdtApply[TypeAdt.Aux[*, Any, ConfirmSucceed]] = new FetchAdtApply[TypeAdt.Aux[*, Any, ConfirmSucceed]]

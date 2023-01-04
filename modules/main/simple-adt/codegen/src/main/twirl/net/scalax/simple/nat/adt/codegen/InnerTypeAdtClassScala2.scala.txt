@@ -14,12 +14,15 @@ import core._
 
 object InnerTypeAdtClass {
     @for(i1 <- 1 to 22) {
-        class CusInnerApply@{i1}[@paramType(1, i1)](adtList: AdtList) {
-            @@inline def fold[T](@paramFunc(1, i1)): T = adtList.method1(@{forMatch(i1, 1)}).asInstanceOf[T]
+        class CusInnerApply@{i1}[@paramType(1, i1)](adtGetter: TypeAdtGetter, typeAdt: TypeAdt[Any, Any], data: Any) {
+            @@inline def fold[T](@paramFunc(1, i1)): T = {
+                typeAdt.input(adtGetter, data).method1(@{forMatch(i1, 1)})
+                adtGetter.value.asInstanceOf[T]
+            }
         }
         object HelperIOImpl@{i1} extends HelperIO[Any] {
             override type Out = CusInnerApply@{i1}[@paramTypeAny(1, i1)]
-            @@inline override def helper(adtList: AdtList): CusInnerApply@{i1}[@paramTypeAny(1, i1)] = new CusInnerApply@{i1}(adtList)
+            @@inline override def helper(adtGetter: TypeAdtGetter, typeAdt: TypeAdt[Any, Any], data: Any): CusInnerApply@{i1}[@paramTypeAny(1, i1)] = new CusInnerApply@{i1}(adtGetter, typeAdt, data)
         }
     }
 }

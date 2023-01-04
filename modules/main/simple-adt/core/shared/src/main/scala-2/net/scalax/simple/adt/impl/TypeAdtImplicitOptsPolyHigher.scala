@@ -11,8 +11,11 @@ trait HListTypeAdtPositive extends HListTypeAdtPositiveLower {
   @inline implicit def hlistTypeAdtPositiveImplicit1[B <: A, A, Tail <: NumberCount[_]]
     : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = new TypeAdt[B, NumberCountChild[A, Tail]] {
     type State = ConfirmSucceed
-    override def input(value: Any): AdtList = new AdtListZero {
-      override def method1(m: FoldList): Any = m.asInstanceOf[Any => Any](value)
+    override def input(typeAdtGetter: TypeAdtGetter, value: Any): AdtList = new AdtListZero {
+      override def method1(m: FoldList): FoldList = {
+        typeAdtGetter.value = m.asInstanceOf[Any => Any](value)
+        m
+      }
     }
   }
 }
@@ -21,6 +24,6 @@ trait HListTypeAdtPositiveLower extends LowerLevelPoly {
     tailMapping: TypeAdt.Aux[B, Tail, ConfirmSucceed]
   ): TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = new TypeAdt[B, NumberCountChild[A, Tail]] {
     type State = ConfirmSucceed
-    override def input(value: Any): AdtList = new AdtListPositive(tailMapping.input(value))
+    override def input(typeAdtGetter: TypeAdtGetter, value: Any): AdtList = new AdtListPositive(tailMapping.input(typeAdtGetter, value))
   }
 }

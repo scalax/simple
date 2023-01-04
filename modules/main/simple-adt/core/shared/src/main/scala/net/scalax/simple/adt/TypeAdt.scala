@@ -11,7 +11,7 @@ import core._
   *   02:48
   */
 trait TypeAdt[Input, Sum] {
-  def input(value: Any): AdtList
+  def input(typeAdtGetter: TypeAdtGetter, value: Any): AdtList
 }
 
 object TypeAdt extends impl.TypeAdtImplicitOptsPolyHigher {
@@ -22,7 +22,7 @@ object TypeAdt extends impl.TypeAdtImplicitOptsPolyHigher {
 trait LowerLevelPoly {
   private val failedValue: TypeAdt.Aux[Any, Any, ConfirmFailed] = new TypeAdt[Any, Any] {
     type State = ConfirmFailed
-    override def input(value: Any): AdtList = AdtList.exception
+    override def input(adtGetter: TypeAdtGetter, value: Any): AdtList = AdtList.exception
   }
   implicit def adtFailedResult[I, S]: TypeAdt.Aux[I, S, ConfirmFailed] = failedValue.asInstanceOf[TypeAdt.Aux[I, S, ConfirmFailed]]
 }

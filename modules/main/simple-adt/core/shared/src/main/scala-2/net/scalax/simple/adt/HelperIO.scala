@@ -12,7 +12,7 @@ import net.scalax.simple.adt.core.AdtList
   */
 abstract class HelperIO[Input] {
   type Out
-  def helper(adtList: AdtList): Out
+  def helper(adtGetter: TypeAdtGetter, typeAdt: TypeAdt[Any, Any], data: Any): Out
 }
 
 object HelperIO extends impl.HelperIOImplicit {
