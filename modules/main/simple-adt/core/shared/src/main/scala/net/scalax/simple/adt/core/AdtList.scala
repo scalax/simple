@@ -1,31 +1,33 @@
-package net.scalax.simple.adt.core
+package net.scalax.simple.adt
 
-trait AdtList {
-  def method1(m: FoldList): FoldList
-}
-class AdtListPositive(tail: AdtList) extends AdtList {
-  override def method1(m: FoldList): FoldList = m.method2(tail)
-}
-abstract class AdtListZero extends AdtList {
-  override def method1(m: FoldList): FoldList = m
-}
-class AdtListException(tail: () => AdtList) extends AdtList {
-  override def method1(m: FoldList): FoldList = m.method2(tail())
-}
-object AdtList {
-  lazy val exception: AdtList = new AdtListException(() => exception)
-}
+import net.scalax.simple.core.Core2
 
-// ====
-trait FoldList {
-  def method2(m: AdtList): FoldList
-}
-class FoldListPositive(tail: FoldList) extends FoldList {
-  override def method2(m: AdtList): FoldList = m.method1(tail)
-}
-class FoldListZero(tail: () => FoldList) extends FoldList {
-  override def method2(m: AdtList): FoldList = tail().method2(m)
-}
-object FoldList {
-  lazy val zero: FoldList = new FoldListZero(() => zero)
+object CoreInstance {
+  private def Core2(func: (() => Core2) => Core2): Core2 = new Core2 {
+    override def apply(v1: () => Core2): Core2 = func(v1)
+  }
+
+  type AdtList = Core2
+  val AdtListPositive: AdtList = Core2(tail => Core2(foldList => foldList.apply().apply(() => tail())))
+  class AdtListZero extends AdtList {
+    override def apply(otherFoldList: () => Core2): Core2 = otherFoldList()
+  }
+  object AdtList {
+    lazy val exception: Core2 = AdtListPositive(() => exception)
+  }
+
+  // ===
+  type FoldList = Core2
+  class FoldListPositive(tail: () => FoldList) extends FoldList {
+    override def apply(adtList: () => FoldList): FoldList = adtList.apply().apply(() => tail())
+  }
+  object FoldListPositive {
+    def apply(func: (() => Core2) => FoldListPositive): Core2 = Core2(func)
+  }
+
+  val FoldListZero: Core2 = Core2(tail => Core2(foldList => tail.apply().apply(() => foldList())))
+
+  object FoldList {
+    lazy val zero: Core2 = FoldListZero(() => zero)
+  }
 }

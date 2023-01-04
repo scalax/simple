@@ -1,7 +1,7 @@
 package net.scalax.simple.adt
 package impl
 
-import core._
+import CoreInstance._
 
 final class FetchAdtApply[F[_] <: TypeAdt.Aux[_, _, ConfirmSucceed]]:
   type TakeTuple[T <: TypeAdt.Aux[_, _, ConfirmSucceed]] <: Tuple = T match
@@ -18,16 +18,20 @@ final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]]
   inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt): U =
     var getValue: Any = null
 
-    def tranToFoldList(t: Tuple): FoldList = t.match
+    def tranToFoldList(t: Tuple): () => FoldList = t.match
       case head *: tail =>
-        new FoldListPositive(tranToFoldList(tail)) with TypeAdtGetter {
-          override def runGetter: Unit = getValue = head.asInstanceOf[Any => Any](data)
-        }
-      case EmptyTuple => FoldList.zero
+        () =>
+          FoldListPositive(t =>
+            (new FoldListPositive(t) with TypeAdtGetter:
+              override def runGetter: Unit = getValue = head.asInstanceOf[Any => Any](data)
+            )
+          )(tranToFoldList(tail))
+      case EmptyTuple => () => FoldList.zero
     end tranToFoldList
 
     val foldNumber = tranToFoldList(funcCol)
-    adt.value.method1(foldNumber)
+    adt.value.apply(() => foldNumber())
+
     getValue.asInstanceOf[U]
   end fold
 end InnerApply

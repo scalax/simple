@@ -3,7 +3,6 @@ package test
 
 import TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
 import scala.collection.compat._
-import core._
 
 import zio._
 import zio.test._
