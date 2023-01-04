@@ -8,26 +8,23 @@ object CoreInstance {
   }
 
   type AdtList = Core2
-  val AdtListPositive: AdtList = Core2(tail => Core2(foldList => foldList.apply().apply(() => tail())))
-  class AdtListZero extends AdtList {
+  val AdtListPositive: Core2 = Core2(tail => Core2(foldList => foldList.apply().apply(() => tail())))
+  class AdtListZero extends Core2 {
     override def apply(otherFoldList: () => Core2): Core2 = otherFoldList()
   }
-  object AdtList {
-    lazy val exception: Core2 = AdtListPositive(() => exception)
-  }
+  lazy val AdtListException: Core2 = AdtListPositive(() => AdtListException)
 
   // ===
   type FoldList = Core2
-  class FoldListPositive(tail: () => FoldList) extends FoldList {
-    override def apply(adtList: () => FoldList): FoldList = adtList.apply().apply(() => tail())
+  class FoldListPositive(tail: () => Core2) extends Core2 {
+    override def apply(adtList: () => Core2): Core2 = adtList.apply().apply(() => tail())
   }
   object FoldListPositive {
     def apply(func: (() => Core2) => FoldListPositive): Core2 = Core2(func)
   }
 
-  val FoldListZero: Core2 = Core2(tail => Core2(foldList => tail.apply().apply(() => foldList())))
+  private val FoldListZeroImpl: Core2 = Core2(tail => Core2(foldList => tail.apply().apply(() => foldList())))
 
-  object FoldList {
-    lazy val zero: Core2 = FoldListZero(() => zero)
-  }
+  lazy val FoldListZero: Core2 = FoldListZeroImpl(() => FoldListZero)
+
 }

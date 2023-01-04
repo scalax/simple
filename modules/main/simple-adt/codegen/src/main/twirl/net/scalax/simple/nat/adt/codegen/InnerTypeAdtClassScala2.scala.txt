@@ -8,7 +8,7 @@ import CoreInstance._
 @paramFunc(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } func@{i2}: I@{i2} => T } }
 @paramTypeAny(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } Any } }
 
-@forMatch(end: Int, i1: Int) = { @if(i1 > end) { FoldList.zero } else { FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+@forMatch(end: Int, i1: Int) = { @if(i1 > end) { FoldListZero } else { FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func@{i1}.asInstanceOf[Any => Any](data)
 }).apply(() => @forMatch(end, i1 + 1)) } }
 

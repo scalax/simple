@@ -20,6 +20,6 @@ object TypeAdt extends impl.TypeAdtImplicitOptsPolyHigher {
 }
 
 trait LowerLevelPoly {
-  private val failedValue: TypeAdt.Aux[Any, Any, ConfirmFailed]        = TypeAdt(AdtList.exception)
+  private val failedValue: TypeAdt.Aux[Any, Any, ConfirmFailed]        = TypeAdt(AdtListException)
   implicit def adtFailedResult[I, S]: TypeAdt.Aux[I, S, ConfirmFailed] = failedValue.asInstanceOf[TypeAdt.Aux[I, S, ConfirmFailed]]
 }

@@ -16,7 +16,7 @@ object InnerTypeAdtClass {
                 var getValue: Any = null
                 adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) )
+}).apply(() =>   FoldListZero ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -32,7 +32,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) )
+}).apply(() =>   FoldListZero ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -50,7 +50,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -70,7 +70,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -92,7 +92,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -116,7 +116,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -142,7 +142,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -170,7 +170,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -200,7 +200,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -232,7 +232,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -266,7 +266,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -302,7 +302,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -340,7 +340,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -380,7 +380,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -422,7 +422,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -466,7 +466,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -512,7 +512,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -560,7 +560,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func18.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -610,7 +610,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func18.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func19.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -662,7 +662,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func19.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func20.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -716,7 +716,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func20.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func21.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }
@@ -772,7 +772,7 @@ object InnerTypeAdtClass {
     override def runGetter: Unit = getValue = func21.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
     override def runGetter: Unit = getValue = func22.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldList.zero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
+}).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
             }
         }

@@ -26,7 +26,7 @@ final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]]
               override def runGetter: Unit = getValue = head.asInstanceOf[Any => Any](data)
             )
           )(tranToFoldList(tail))
-      case EmptyTuple => () => FoldList.zero
+      case EmptyTuple => () => FoldListZero
     end tranToFoldList
 
     val foldNumber = tranToFoldList(funcCol)
