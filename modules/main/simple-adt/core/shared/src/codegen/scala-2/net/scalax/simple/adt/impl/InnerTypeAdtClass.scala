@@ -14,7 +14,8 @@ object InnerTypeAdtClass {
         class CusInnerApply1[   I1  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) )
                 getValue.asInstanceOf[T]
@@ -28,9 +29,11 @@ object InnerTypeAdtClass {
         class CusInnerApply2[   I1   ,  I2  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) )
                 getValue.asInstanceOf[T]
@@ -44,11 +47,14 @@ object InnerTypeAdtClass {
         class CusInnerApply3[   I1   ,  I2   ,  I3  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) )
                 getValue.asInstanceOf[T]
@@ -62,13 +68,17 @@ object InnerTypeAdtClass {
         class CusInnerApply4[   I1   ,  I2   ,  I3   ,  I4  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -82,15 +92,20 @@ object InnerTypeAdtClass {
         class CusInnerApply5[   I1   ,  I2   ,  I3   ,  I4   ,  I5  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -104,17 +119,23 @@ object InnerTypeAdtClass {
         class CusInnerApply6[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -128,19 +149,26 @@ object InnerTypeAdtClass {
         class CusInnerApply7[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -154,21 +182,29 @@ object InnerTypeAdtClass {
         class CusInnerApply8[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -182,23 +218,32 @@ object InnerTypeAdtClass {
         class CusInnerApply9[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -212,25 +257,35 @@ object InnerTypeAdtClass {
         class CusInnerApply10[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -244,27 +299,38 @@ object InnerTypeAdtClass {
         class CusInnerApply11[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -278,29 +344,41 @@ object InnerTypeAdtClass {
         class CusInnerApply12[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -314,31 +392,44 @@ object InnerTypeAdtClass {
         class CusInnerApply13[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -352,33 +443,47 @@ object InnerTypeAdtClass {
         class CusInnerApply14[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -392,35 +497,50 @@ object InnerTypeAdtClass {
         class CusInnerApply15[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -434,37 +554,53 @@ object InnerTypeAdtClass {
         class CusInnerApply16[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -478,39 +614,56 @@ object InnerTypeAdtClass {
         class CusInnerApply17[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -524,41 +677,59 @@ object InnerTypeAdtClass {
         class CusInnerApply18[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func18.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -572,43 +743,62 @@ object InnerTypeAdtClass {
         class CusInnerApply19[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func18.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func19.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -622,45 +812,65 @@ object InnerTypeAdtClass {
         class CusInnerApply20[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T   ,  func20: I20 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func18.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func19.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func20.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -674,47 +884,68 @@ object InnerTypeAdtClass {
         class CusInnerApply21[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T   ,  func20: I20 => T   ,  func21: I21 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func18.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func19.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func20.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func21.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]
@@ -728,49 +959,71 @@ object InnerTypeAdtClass {
         class CusInnerApply22[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21   ,  I22  ](adtList: AdtList, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T   ,  func20: I20 => T   ,  func21: I21 => T   ,  func22: I22 => T  ): T = {
                 var getValue: Any = null
-                adtList.apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+                adtList.apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func1.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func2.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func3.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func4.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func5.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func6.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func7.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func8.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func9.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func10.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func11.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func12.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func13.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func14.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func15.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func16.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func17.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func18.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func19.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func20.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func21.asInstanceOf[Any => Any](data)
-}).apply(() =>   FoldListPositive(t => new FoldListPositive(t) with TypeAdtGetter {
+}).apply(() =>   Core2(t => new FoldListPositive with TypeAdtGetter {
+    override val tail: () => FoldList = t
     override def runGetter: Unit = getValue = func22.asInstanceOf[Any => Any](data)
 }).apply(() =>   FoldListZero ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )
                 getValue.asInstanceOf[T]

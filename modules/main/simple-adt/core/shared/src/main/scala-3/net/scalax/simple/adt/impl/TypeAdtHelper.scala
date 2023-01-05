@@ -21,10 +21,10 @@ final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]]
     def tranToFoldList(t: Tuple): () => FoldList = t.match
       case head *: tail =>
         () =>
-          FoldListPositive(t =>
-            (new FoldListPositive(t) with TypeAdtGetter:
-              override def runGetter: Unit = getValue = head.asInstanceOf[Any => Any](data)
-            )
+          Core2(t =>
+            new FoldListPositive with TypeAdtGetter:
+              override val tail: () => FoldList = t
+              override def runGetter: Unit      = getValue = head.asInstanceOf[Any => Any](data)
           )(tranToFoldList(tail))
       case EmptyTuple => () => FoldListZero
     end tranToFoldList
