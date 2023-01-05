@@ -23,6 +23,8 @@ object CoreInstance {
     override def apply(adtList: () => Core2): Core2 = adtList.apply().apply(() => tail())
   }
   object FoldListPositive {
+    // use: val instance: Core2 = FoldListPositive.apply(tail => new FoldListPositive(tail) {
+    // })
     def apply(func: (() => Core2) => Core2): Core2 = Core2(func)
   }
 
