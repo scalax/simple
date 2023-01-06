@@ -12,7 +12,7 @@ import CoreInstance._
   */
 abstract class HelperIO[Input] {
   type Out
-  def helper(adtList: AdtList, data: Any): Out
+  def helper(adtList: Core2, data: Any): Out
 }
 
 object HelperIO extends impl.HelperIOImplicit {

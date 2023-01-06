@@ -10,11 +10,11 @@ import CoreInstance._
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdt[Input, Sum](val value: AdtList) extends AnyVal
+class TypeAdt[Input, Sum](val value: Core2) extends AnyVal
 
 object TypeAdt extends impl.TypeAdtImplicitOptsPolyHigher {
   type Aux[Input, Sum, S <: AdtStatus] = TypeAdt[Input, Sum] { type State = S }
-  def apply[Input, Sum, S <: AdtStatus](input: AdtList): TypeAdt.Aux[Input, Sum, S] =
+  def apply[Input, Sum, S <: AdtStatus](input: Core2): TypeAdt.Aux[Input, Sum, S] =
     new TypeAdt[Any, Any](input).asInstanceOf[TypeAdt.Aux[Input, Sum, S]]
   object alias extends impl.TypeAdtAlias
 }

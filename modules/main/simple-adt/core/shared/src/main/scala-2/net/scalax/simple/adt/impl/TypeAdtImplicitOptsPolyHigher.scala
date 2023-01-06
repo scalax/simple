@@ -9,13 +9,7 @@ trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositive {
 
 trait HListTypeAdtPositive extends HListTypeAdtPositiveLower {
   @inline implicit def hlistTypeAdtPositiveImplicit1[B <: A, A, Tail <: NumberCount[_]]
-    : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt(new AdtListZero {
-    override def apply(m: () => FoldList): FoldList = {
-      val valueM: FoldList = super.apply(m)
-      valueM.asInstanceOf[TypeAdtGetter].runGetter
-      valueM
-    }
-  })
+    : TypeAdt.Aux[B, NumberCountChild[A, Tail], ConfirmSucceed] = TypeAdt(AdtListZero)
 }
 trait HListTypeAdtPositiveLower extends LowerLevelPoly {
   @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: NumberCount[_]](implicit
