@@ -16,22 +16,18 @@ end FetchAdtApply
 
 final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]](data: Any):
   inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt): U =
-    var getValue: Any = null
-
-    def tranToFoldList(t: Tuple): () => FoldList = t.match
+    def tranToFoldList(t: Tuple): () => Core2 = t.match
       case head *: tail =>
         () =>
-          Core2(t =>
-            new FoldListPositive with TypeAdtGetter:
-              override val tail: () => FoldList = t
-              override def runGetter: Unit      = getValue = head.asInstanceOf[Any => Any](data)
+          Core2(tail =>
+            new Core2 with TypeAdtGetter:
+              override def apply(adtList: () => Core2) = FoldListPositive(tail)(adtList)
+              override def runGetter: Any              = head.asInstanceOf[Any => Any](data)
           )(tranToFoldList(tail))
       case EmptyTuple => () => FoldListZero
     end tranToFoldList
 
     val foldNumber = tranToFoldList(funcCol)
-    adt.value.apply(() => foldNumber())
-
-    getValue.asInstanceOf[U]
+    adt.value(foldNumber).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[U]
   end fold
 end InnerApply

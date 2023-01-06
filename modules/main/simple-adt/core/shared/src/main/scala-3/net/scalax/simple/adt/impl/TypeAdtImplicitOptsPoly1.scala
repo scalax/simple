@@ -4,19 +4,7 @@ package impl
 import CoreInstance.*
 
 trait TypeAdtImplicitOptsPolyHigher extends TypeAdtImplicitOptsPolyLower with AdtApply:
-
-  inline given [A, B <: A, Tail <: Tuple]: TypeAdt.Aux[B, A *: Tail, ConfirmSucceed] =
-    val zeroAdt: AdtListZero = new AdtListZero:
-      override def apply(m: () => FoldList): FoldList =
-        val valueM = super.apply(m)
-        valueM.asInstanceOf[TypeAdtGetter].runGetter
-        valueM
-      end apply
-    end zeroAdt
-
-    TypeAdt(zeroAdt)
-  end given
-
+  inline given [A, B <: A, Tail <: Tuple]: TypeAdt.Aux[B, A *: Tail, ConfirmSucceed] = TypeAdt(AdtListZero)
 end TypeAdtImplicitOptsPolyHigher
 
 trait TypeAdtImplicitOptsPolyLower extends LowerLevelPoly:

@@ -8,23 +8,19 @@ import CoreInstance._
 @paramFunc(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } func@{i2}: I@{i2} => T } }
 @paramTypeAny(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } Any } }
 
-@forMatch(end: Int, i1: Int) = { @if(i1 > end) { FoldListZero } else { Core2(t => new FoldListPositive with TypeAdtGetter {
-    override val tail: () => FoldList = t
-    override def runGetter: Unit = getValue = func@{i1}.asInstanceOf[Any => Any](data)
+@forMatch(end: Int, i1: Int) = { @if(i1 > end) { FoldListZero } else { Core2(tail => new Core2 with TypeAdtGetter {
+    override def apply(adtList: () => Core2): Core2 = FoldListPositive(tail)(adtList)
+    override def runGetter: Any = func@{i1}.asInstanceOf[Any => Any](data)
 }).apply(() => @forMatch(end, i1 + 1)) } }
 
 object InnerTypeAdtClass {
     @for(i1 <- 1 to 22) {
-        class CusInnerApply@{i1}[@paramType(1, i1)](adtList: AdtList, data: Any) {
-            @@inline def fold[T](@paramFunc(1, i1)): T = {
-                var getValue: Any = null
-                adtList.apply(() => @{forMatch(i1, 1)})
-                getValue.asInstanceOf[T]
-            }
+        class CusInnerApply@{i1}[@paramType(1, i1)](adtList: Core2, data: Any) {
+            @@inline def fold[T](@paramFunc(1, i1)): T = adtList(() => @{forMatch(i1, 1)}).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
         object HelperIOImpl@{i1} extends HelperIO[Any] {
             override type Out = CusInnerApply@{i1}[@paramTypeAny(1, i1)]
-            @@inline override def helper(adtList: AdtList, data: Any): CusInnerApply@{i1}[@paramTypeAny(1, i1)] = new CusInnerApply@{i1}(adtList, data)
+            @@inline override def helper(adtList: Core2, data: Any): CusInnerApply@{i1}[@paramTypeAny(1, i1)] = new CusInnerApply@{i1}(adtList, data)
         }
     }
 }
