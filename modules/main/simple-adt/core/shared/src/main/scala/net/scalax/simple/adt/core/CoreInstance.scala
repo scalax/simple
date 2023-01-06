@@ -2,6 +2,7 @@ package net.scalax.simple
 package adt
 
 object CoreInstance {
+  // ===
   type Core2 = core.Core2
   def Core2(func: (() => Core2) => Core2): Core2 = new Core2 {
     override def apply(v1: () => Core2): Core2 = func(v1)
