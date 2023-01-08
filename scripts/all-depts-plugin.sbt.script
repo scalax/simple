@@ -15,6 +15,7 @@ object versions {
     val h2 = "2.1.214"
     val doobie = "1.0.0-RC1"
     val circe = "0.14.3"
+    val macwire = "2.5.8"
 }
 val `scala-collection-compat` = settingKey[ModuleID]("lib for scala-collection-compat.")
 val `kind-projector` = settingKey[Seq[ModuleID]]("lib for kind-projector.")
@@ -26,6 +27,7 @@ val `commons-io` = settingKey[ModuleID]("lib for commons-io.")
 val h2 = settingKey[Seq[ModuleID]]("lib for h2.")
 val doobie = settingKey[Seq[ModuleID]]("lib for doobie.")
 val circe = settingKey[Seq[ModuleID]]("lib for circe.")
+val macwire = settingKey[Seq[ModuleID]]("lib for macwire.")
 
 val enableZIOTest = settingKey[Boolean]("enable zio test.")
 // end autoImport
@@ -44,6 +46,10 @@ circe := Seq(
   "io.circe" %%% "circe-generic",
   "io.circe" %%% "circe-parser"
 ).map(_ % versions.circe)
+// end setting
+
+// start setting
+macwire := Seq("com.softwaremill.macwire" %% "macros" % versions.macwire % "provided")
 // end setting
 
 // start setting

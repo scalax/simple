@@ -10,12 +10,17 @@ import env._
 import resource._
 import cats._
 
-class AppWire(implicit txa: EnvA[Transactor[IO]], txb: EnvB[Transactor[IO]]) {
+import com.softwaremill.macwire._
 
-  private implicit val sa: ServiceA   = new ServiceAImpl[Id, EnvA](() => serviceB)
-  private lazy val serviceB: ServiceB = new ServiceBImpl[Id, EnvB](() => implicitly)
+class AppWire(txa: EnvA[Transactor[IO]], txb: EnvB[Transactor[IO]]) {
 
-  private lazy val natRoutesInstances: NatHttpRoutes = new NatHttpRoutesImpl[Id]
+  private lazy val serviceA: Id[ServiceA] = wire[ServiceAImpl[Id, EnvA]]
+  private lazy val serviceB: ServiceB     = wire[ServiceBImpl[Id, EnvB]]
+
+  private lazy val serviceAImpl: () => Id[ServiceA] = () => serviceA
+  private lazy val serviceBImpl: () => Id[ServiceB] = () => serviceB
+
+  private lazy val natRoutesInstances: NatHttpRoutes = wire[NatHttpRoutesImpl[Id]]
 
   lazy val routes: HttpRoutes[IO] = natRoutesInstances.route
 
@@ -30,11 +35,7 @@ object AppWire {
     for {
       evaXa <- xa1
       evbXa <- xa2
-    } yield {
-      implicit val i1 = evaXa
-      implicit val i2 = evbXa
-      (new AppWire).routes
-    }
+    } yield wire[AppWire].routes
   }
 
 }

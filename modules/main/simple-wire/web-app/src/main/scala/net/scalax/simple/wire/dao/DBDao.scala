@@ -24,5 +24,4 @@ abstract class DBDao(xa: Transactor[IO]) {
 
 }
 
-class DBDaoImpl[XaEnv[_]: Wire](implicit xaEnv: XaEnv[Transactor[IO]])
-    extends DBDao(xa = Wire[XaEnv].apply(implicitly[XaEnv[Transactor[IO]]]))
+class DBDaoImpl[XaEnv[_]: Wire](xaEnv: XaEnv[Transactor[IO]]) extends DBDao(xa = Wire[XaEnv].apply(xaEnv))

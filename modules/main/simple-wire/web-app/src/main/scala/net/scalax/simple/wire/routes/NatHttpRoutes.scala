@@ -27,5 +27,4 @@ abstract class NatHttpRoutes(serviceA: ServiceA) {
   }
 }
 
-class NatHttpRoutesImpl[Env1[_]: Wire](implicit env1: Env1[ServiceA])
-    extends NatHttpRoutes(serviceA = Wire[Env1].apply(implicitly[Env1[ServiceA]]))
+class NatHttpRoutesImpl[Env1[_]: Wire](env1: Env1[ServiceA]) extends NatHttpRoutes(serviceA = Wire[Env1].apply(env1))
