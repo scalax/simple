@@ -12,15 +12,15 @@ import cats._
 
 import com.softwaremill.macwire._
 
-class AppWire[WireA[_]: Wire, WireB[_]: Wire](txa: WireA[Transactor[IO]], txb: WireB[Transactor[IO]]) {
+class AppWire[WireEnvA[_]: Wire, WireEnvB[_]: Wire](txa: WireEnvA[Transactor[IO]], txb: WireEnvB[Transactor[IO]]) {
 
-  private lazy val serviceA: Id[ServiceA] = wire[ServiceAImpl[Id, WireA]]
-  private lazy val serviceB: Id[ServiceB] = wire[ServiceBImpl[Id, WireB]]
+  private lazy val serviceA: Id[ServiceA] = wire[ServiceAImpl[Id, WireEnvA]]
+  private lazy val serviceB: Id[ServiceB] = wire[ServiceBImpl[Id, WireEnvB]]
 
-  private def serviceAFunc(a: => Id[ServiceA]): () => Id[ServiceA] = () => a
-  private def serviceBFunc(b: => Id[ServiceB]): () => Id[ServiceB] = () => b
-  private lazy val serviceAImpl: () => Id[ServiceA]                = wireWith(serviceAFunc _)
-  private lazy val serviceBImpl: () => Id[ServiceB]                = wireWith(serviceBFunc _)
+  private def serviceFunc[T](a: => Id[T]): () => Id[T] = () => a
+
+  private lazy val serviceAImpl: () => Id[ServiceA] = wireWith(serviceFunc[ServiceA] _)
+  private lazy val serviceBImpl: () => Id[ServiceB] = wireWith(serviceFunc[ServiceB] _)
 
   private lazy val natRoutesInstances: NatHttpRoutes = wire[NatHttpRoutesImpl[Id]]
 
