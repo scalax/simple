@@ -12,13 +12,15 @@ import cats._
 
 import com.softwaremill.macwire._
 
-class AppWire(txa: EnvA[Transactor[IO]], txb: EnvB[Transactor[IO]]) {
+class AppWire[WireEnvA[_]: Wire, WireEnvB[_]: Wire](txa: WireEnvA[Transactor[IO]], txb: WireEnvB[Transactor[IO]]) {
 
-  private lazy val serviceA: Id[ServiceA] = wire[ServiceAImpl[Id, EnvA]]
-  private lazy val serviceB: ServiceB     = wire[ServiceBImpl[Id, EnvB]]
+  private lazy val serviceA: Id[ServiceA] = wire[ServiceAImpl[Id, WireEnvA]]
+  private lazy val serviceB: Id[ServiceB] = wire[ServiceBImpl[Id, WireEnvB]]
 
-  private lazy val serviceAImpl: () => Id[ServiceA] = () => serviceA
-  private lazy val serviceBImpl: () => Id[ServiceB] = () => serviceB
+  private def serviceFunc[T](a: => Id[T]): () => Id[T] = () => a
+
+  private lazy val serviceAImpl: () => Id[ServiceA] = wireWith(serviceFunc[ServiceA] _)
+  private lazy val serviceBImpl: () => Id[ServiceB] = wireWith(serviceFunc[ServiceB] _)
 
   private lazy val natRoutesInstances: NatHttpRoutes = wire[NatHttpRoutesImpl[Id]]
 
@@ -29,13 +31,13 @@ class AppWire(txa: EnvA[Transactor[IO]], txb: EnvB[Transactor[IO]]) {
 object AppWire {
 
   val build: Resource[IO, HttpRoutes[IO]] = {
-    val xa1 = for (xaImpl <- (new EnvAH2Doobie).resource) yield EnvA(xaImpl)
-    val xa2 = for (xaImpl <- (new EnvBH2Doobie).resource) yield EnvB(xaImpl)
+    val xa1 = wire[EnvAH2Doobie].resourceEnvA
+    val xa2 = wire[EnvBH2Doobie].resourceEnvB
 
     for {
       evaXa <- xa1
       evbXa <- xa2
-    } yield wire[AppWire].routes
+    } yield wire[AppWire[EnvA, EnvB]].routes
   }
 
 }
