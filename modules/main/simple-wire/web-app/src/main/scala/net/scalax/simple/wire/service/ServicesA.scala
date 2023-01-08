@@ -9,6 +9,8 @@ import org.http4s.HttpRoutes
 import doobie._
 import model._
 
+import com.softwaremill.macwire._
+
 trait ServiceA {
   serviceA: ServiceA =>
   def serviceB: ServiceB
@@ -29,8 +31,7 @@ trait ServiceA {
 
 }
 
-class ServiceAImpl[ServiceBEnv[_]: Wire, DBEnv[_]: Wire](sb: () => ServiceBEnv[ServiceB])(implicit dbenvxa: DBEnv[Transactor[IO]])
-    extends ServiceA {
+class ServiceAImpl[ServiceBEnv[_]: Wire, DBEnv[_]: Wire](sb: () => ServiceBEnv[ServiceB], dbenvxa: DBEnv[Transactor[IO]]) extends ServiceA {
   override lazy val serviceB: ServiceB = Wire[ServiceBEnv].apply(sb())
-  override val dbDao: DBDao            = new DBDaoImpl[DBEnv]
+  override val dbDao: DBDao            = wire[DBDaoImpl[DBEnv]]
 }
