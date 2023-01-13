@@ -17,14 +17,8 @@ end FetchAdtApply
 final class InnerApply[O[_] <: Tuple, TAdt <: TypeAdt.Aux[_, _, ConfirmSucceed]](data: Any):
   inline def fold[U](inline funcCol: O[U])(using inline adt: TAdt): U =
     def tranToFoldList(t: Tuple): () => Core2 = t.match
-      case head *: tail =>
-        () =>
-          Core2(tail =>
-            new Core2 with TypeAdtGetter:
-              override def apply(adtList: () => Core2) = FoldListPositive(tail)(adtList)
-              override def runGetter: Any              = head.asInstanceOf[Any => Any](data)
-          )(tranToFoldList(tail))
-      case EmptyTuple => () => FoldListZero
+      case head *: tail => () => FoldListAppender.append(data, head.asInstanceOf[Any => Any])(tranToFoldList(tail))
+      case EmptyTuple   => () => FoldListZero
     end tranToFoldList
 
     val foldNumber = tranToFoldList(funcCol)
