@@ -6,15 +6,15 @@ import core.Core2
 object RunMain {
 
   def count(number: () => Core2): Int = {
-    NumberImpl.重置状态
-
-    try number()
-    catch {
-      case _: StackOverflowError =>
+    val opt =
+      try Some(number())
+      catch {
+        case _: StackOverflowError => None
+      }
+    opt match {
+      case Some(NumberImpl.PosotiveCount(tail)) => count(tail) + 1
+      case _                                    => 0
     }
-
-    val state = NumberImpl.当前状态
-    state
   }
 
   lazy val number1v: Core2 = NumberImpl.V(() => number1v)
