@@ -2,11 +2,10 @@ package net.scalax.simple.wire
 package constructor
 
 import service._
-import routes.{NatHttpRoutes, NatHttpRoutesImpl}
+import routes.NatHttpRoutes
 import org.http4s.HttpRoutes
 import cats.effect._
 import doobie._
-import env._
 import resource._
 import cats._
 
@@ -16,8 +15,9 @@ class AppWire(doobieTransactorA: Transactor[IO], doobieTransactorB: Transactor[I
   implicit private lazy val dbDaoEnvB: DBDao         = DBDao.build(doobieTransactor = doobieTransactorB)
   implicit private lazy val initPrinter: InitPrinter = InitPrinter.build
 
-  implicit private lazy val serviceA: ServiceA = ServiceA.build(initPrinter = implicitly, serviceBFunc = () => serviceB, dbDao = dbDaoEnvA)
-  implicit private lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = () => serviceA, dbDao = dbDaoEnvB)
+  implicit private lazy val serviceA: ServiceA =
+    ServiceA.build(initPrinter = implicitly, serviceBFunc = () => implicitly, dbDao = dbDaoEnvA)
+  implicit private lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = () => implicitly, dbDao = dbDaoEnvB)
 
   implicit private lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
 
