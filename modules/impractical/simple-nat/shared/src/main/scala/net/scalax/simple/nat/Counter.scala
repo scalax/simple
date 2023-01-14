@@ -9,15 +9,13 @@ object NumberImpl {
     override def apply(v1: () => Core2): Core2 = t(v1)
   }
 
-  val S: Core2 = Core2(tail => Core2(number => Append(() => tail()(() => number()))))
+  val S: Core2 = Core2(tail => Core2(number => PosotiveCount(() => tail()(() => number()))))
   val T: Core2 = Core2(tail => Core2(number => tail()(() => number())))
-  val U: Core2 = Core2(tail => Core2(number => Append(() => number()(() => tail()))))
+  val U: Core2 = Core2(tail => Core2(number => PosotiveCount(() => number()(() => tail()))))
   val V: Core2 = Core2(tail => Core2(number => number()(() => tail())))
 
-  val PositiveFunc = Core2(v => v())
   case class PosotiveCount(tail: () => Core2) extends Core2 {
-    override def apply(t: () => Core2): Core2 = PositiveFunc(t)
+    override def apply(t: () => Core2): Core2 = throw new Exception
   }
-  val Append: Core2 = Core2(v => PosotiveCount(v))
 
 }
