@@ -10,32 +10,32 @@ import env._
 import resource._
 import cats._
 
-class AppWire(transactorEnvA: Transactor[IO], transactorEnvB: Transactor[IO]) {
+class AppWire(doobieTransactorA: Transactor[IO], doobieTransactorB: Transactor[IO]) {
 
-  private lazy val serviceA: Id[ServiceA] = wire[ServiceAImpl[Id, WireEnvA]]
-  private lazy val serviceB: Id[ServiceB] = wire[ServiceBImpl[Id, WireEnvB]]
+  implicit private lazy val dbDaoEnvA: DBDao         = DBDao.build(doobieTransactor = doobieTransactorA)
+  implicit private lazy val dbDaoEnvB: DBDao         = DBDao.build(doobieTransactor = doobieTransactorB)
+  implicit private lazy val initPrinter: InitPrinter = InitPrinter.build
 
-  private def serviceFunc[T](a: => Id[T]): () => Id[T] = () => a
+  implicit private lazy val serviceA: ServiceA = ServiceA.build(initPrinter = implicitly, serviceBFunc = () => serviceB, dbDao = dbDaoEnvA)
+  implicit private lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = () => serviceA, dbDao = dbDaoEnvB)
 
-  private lazy val serviceAImpl: () => Id[ServiceA] = wireWith(serviceFunc[ServiceA] _)
-  private lazy val serviceBImpl: () => Id[ServiceB] = wireWith(serviceFunc[ServiceB] _)
-
-  private lazy val natRoutesInstances: NatHttpRoutes = wire[NatHttpRoutesImpl[Id]]
+  implicit private lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
 
   lazy val routes: HttpRoutes[IO] = natRoutesInstances.route
 
 }
 
 object AppWire {
+  def build(implicit doobieTransactorA: Transactor[IO], doobieTransactorB: Transactor[IO]): AppWire =
+    new AppWire(doobieTransactorA = doobieTransactorA, doobieTransactorB = doobieTransactorB)
 
-  val build: Resource[IO, HttpRoutes[IO]] = {
-    val xa1 = wire[EnvAH2Doobie].resourceEnvA
-    val xa2 = wire[EnvBH2Doobie].resourceEnvB
-
+  val buildGlobal: Resource[IO, AppWire] = {
+    val resourceA = (new EnvAH2Doobie).resource
+    val resourceB = (new EnvBH2Doobie).resource
     for {
-      evaXa <- xa1
-      evbXa <- xa2
-    } yield wire[AppWire[EnvA, EnvB]].routes
+      rA <- resourceA
+      rB <- resourceB
+    } yield AppWire.build(doobieTransactorA = rA, doobieTransactorB = rB)
   }
 
 }

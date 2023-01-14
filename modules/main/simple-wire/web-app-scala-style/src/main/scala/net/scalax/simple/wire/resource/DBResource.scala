@@ -30,22 +30,11 @@ abstract class H2Doobie(dbName: String) {
     } yield (a: Int) + (b: Int)
   }
 
-  private val initAction = for {
-    xa <- transactor
-    updateAction = executeUpdate.transact(xa)
-    r <- Resource.eval(updateAction)
-  } yield {
-    r: Int
-    xa
-  }
+  private def initAction(xa: Transactor[IO]): Resource[IO, Int] = Resource.eval(executeUpdate.transact(xa))
 
-  protected val resource: Resource[IO, Transactor[IO]] = initAction
+  val resource: Resource[IO, Transactor[IO]] = for (xa <- transactor; _ <- initAction(xa)) yield xa
 }
 
-class EnvAH2Doobie extends H2Doobie("EnvA") {
-  val resourceEnvA: Resource[IO, EnvA[Transactor[IO]]] = for (r <- resource) yield EnvA(r)
-}
+class EnvAH2Doobie extends H2Doobie("EnvA")
 
-class EnvBH2Doobie extends H2Doobie("EnvB") {
-  val resourceEnvB: Resource[IO, EnvB[Transactor[IO]]] = for (r <- resource) yield EnvB(r)
-}
+class EnvBH2Doobie extends H2Doobie("EnvB")

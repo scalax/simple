@@ -14,8 +14,8 @@ import constructor.AppWire
 object MainApp extends IOApp {
 
   private val serverResource: Resource[IO, Server] = for {
-    app    <- AppWire.build
-    server <- EmberServerBuilder.default[IO].withHttpApp(app.orNotFound).withHost(ipv4"0.0.0.0").withPort(port"8080").build
+    app    <- AppWire.buildGlobal
+    server <- EmberServerBuilder.default[IO].withHttpApp(app.routes.orNotFound).withHost(ipv4"0.0.0.0").withPort(port"8080").build
   } yield server
 
   override def run(args: List[String]): IO[ExitCode] = serverResource.use(_ => IO.never).as(ExitCode.Success)
