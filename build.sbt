@@ -54,8 +54,8 @@ lazy val `wire-core` = crossProject(JSPlatform, JVMPlatform) in `wire-core/file`
 lazy val `wire-coreJVM` = `wire-core`.jvm
 lazy val `wire-coreJS`  = `wire-core`.js
 
-lazy val `wire-web-app` = (project in `wire-web-app/file`).dependsOn(`wire-coreJVM`)
-lazy val `wire-scala`   = project in `wire-web-app-scala-style/file`
+lazy val `wire-web-app`   = (project in `wire-web-app/file`).dependsOn(`wire-coreJVM`)
+lazy val `wire-web-scala` = project in `wire-web-app-scala-style/file`
 
 lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn (core, `test-common` % Test)
 
