@@ -3,7 +3,7 @@ package nat
 
 import core.Core2
 
-object NumberImpl {
+object Number {
 
   def Core2(t: (() => Core2) => Core2): Core2 = new Core2 {
     override def apply(v1: () => Core2): Core2 = t(v1)
