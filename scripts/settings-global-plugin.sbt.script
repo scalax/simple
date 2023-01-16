@@ -102,8 +102,8 @@ scalacOptions ++= {
 
 // start setting
 {
-    import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
-    crossScalaVersions := scalaV.collect
+    import djx.sbt.depts.output.Djx314DeptsPlugin.autoImport._
+    crossScalaVersions := List(scalaV.v211, scalaV.v212, scalaV.v213, scalaV.v3)
 }
 // end setting
 

@@ -1,7 +1,6 @@
 name := "simple-adt-codegen"
 
-scalaVersion := scalaV.v3RC
-
+scalaVersion := RCScalaVersion
 val codegenPackageName = "net.scalax.simple.adt.codegen"
 
 val commonScalaRunMainInputStr = settingKey[String]("commonScalaRunMainInputStr")
