@@ -1,5 +1,6 @@
 package net.scalax.simple
 package nat
+package number2
 
 import core.Core2
 
