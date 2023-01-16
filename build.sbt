@@ -96,7 +96,7 @@ mainProjects / Test / test := (mainProjects / Test / test)
   .dependsOn(genericTestAction: _*)
   .value
 
-val codegenScalaV = scalaV.v3RC
+val codegenScalaV = RCScalaVersion
 addCommandAlias("preCodegen", s";++$codegenScalaV!;adt-codegen/preCodegenImpl")
 addCommandAlias("codegen", s";++$codegenScalaV!;adt-codegen/codegenImpl")
 addCommandAlias("executeTest", "+mainProjects/test")

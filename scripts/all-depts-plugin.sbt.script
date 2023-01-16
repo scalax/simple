@@ -5,7 +5,6 @@ import scala.collection.compat._
 
 // start autoImport
 object versions {
-    val `scala-collection-compat` = "2.8.1"
     val `kind-projector` = "0.13.2"
     val zio = "2.0.5"
     val `commons-io` = "1.3.2"
@@ -17,7 +16,6 @@ object versions {
     val circe = "0.14.3"
     val macwire = "2.5.8"
 }
-val `scala-collection-compat` = settingKey[ModuleID]("lib for scala-collection-compat.")
 val `kind-projector` = settingKey[Seq[ModuleID]]("lib for kind-projector.")
 val http4s = settingKey[Seq[ModuleID]]("lib for http4s.")
 val `cats-effect` = settingKey[Seq[ModuleID]]("lib for cats-effect.")
@@ -31,10 +29,6 @@ val macwire = settingKey[Seq[ModuleID]]("lib for macwire.")
 
 val enableZIOTest = settingKey[Boolean]("enable zio test.")
 // end autoImport
-
-// start setting
-`scala-collection-compat` := "org.scala-lang.modules" %%% "scala-collection-compat" % versions.`scala-collection-compat`
-// end setting
 
 // start setting
 enableZIOTest := false

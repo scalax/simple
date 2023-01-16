@@ -5,6 +5,10 @@ import core.Core2
 
 object RunMain {
 
+  case class PosotiveCount(tail: () => Core2) extends Core2 {
+    override def apply(t: () => Core2): Core2 = throw new Exception
+  }
+
   def count(number: () => Core2): Int = {
     val opt =
       try Some(number())
@@ -12,18 +16,21 @@ object RunMain {
         case _: StackOverflowError => None
       }
     opt match {
-      case Some(NumberImpl.PosotiveCount(tail)) => count(tail) + 1
-      case _                                    => 0
+      case Some(PosotiveCount(tail)) => count(tail) + 1
+      case _                         => 0
     }
   }
 
-  lazy val number1v: Core2 = NumberImpl.V(() => number1v)
-  lazy val number1t: Core2 = NumberImpl.T(() => number1t)
-  lazy val number1u: Core2 = NumberImpl.U(() => number1u)
+  val SImpl = Number.Core2(tail => Number.Core2(number => PosotiveCount(() => Number.S(tail)(number))))
+  val TImpl = Number.Core2(tail => Number.Core2(number => PosotiveCount(() => Number.T(tail)(number))))
 
-  def number1sGen(n: Int, zero: => Core2): Core2 = if (n > 0) NumberImpl.S(() => number1sGen(n - 1, zero)) else zero
-  def number1vGen(n: Int, zero: => Core2): Core2 = if (n > 0) NumberImpl.V(() => number1vGen(n - 1, zero)) else zero
-  def number1uGen(n: Int, zero: => Core2): Core2 = if (n > 0) NumberImpl.U(() => number1uGen(n - 1, zero)) else zero
+  lazy val numbers: Core2     = Number.S(() => numbers)
+  lazy val numbert: Core2     = Number.T(() => numbert)
+  lazy val numbertImpl: Core2 = TImpl(() => numbertImpl)
+
+  def numbersGen(n: Int, zero: => Core2): Core2     = if (n > 0) SImpl(() => numbersGen(n - 1, zero)) else zero
+  def numbertGen(n: Int, zero: => Core2): Core2     = if (n > 0) Number.T(() => numbertGen(n - 1, zero)) else zero
+  def numbertImplGen(n: Int, zero: => Core2): Core2 = if (n > 0) TImpl(() => numbertImplGen(n - 1, zero)) else zero
 
   def main(arr: Array[String]): Unit = {
     locally {
@@ -31,41 +38,41 @@ object RunMain {
         i1 <- 0 to 20
         i2 <- 0 to 20
       } {
-        val number1 = number1sGen(i1, number1v)
+        val number1 = numbersGen(i1, numbert)
         locally {
-          val number2 = number1sGen(i2, number1v)
+          val number2 = numbersGen(i2, numbert)
           def number3 = number1.apply(() => number2)
           val count1  = count(() => number3)
           assert(count1 == i1 + i2)
         }
         locally {
-          val number2 = number1sGen(i2, number1t)
+          val number2 = numbersGen(i2, numbers)
           def number3 = number1.apply(() => number2)
           val count1  = count(() => number3)
           assert(count1 == i1 + i2)
         }
         locally {
-          val number2 = number1uGen(i2, number1t)
+          val number2 = numbertImplGen(i2, numbers)
           def number3 = number1.apply(() => number2)
           val count1  = count(() => number3)
           assert(count1 == i1 + i2)
         }
         locally {
-          val number2 = number1uGen(i2, number1v)
+          val number2 = numbertImplGen(i2, numbert)
           def number3 = number1.apply(() => number2)
           val count1  = count(() => number3)
           assert(count1 == i1 + i2)
         }
 
-        val number4 = number1uGen(i1, number1v)
+        val number4 = numbertImplGen(i1, numbert)
         locally {
-          val number5 = number1sGen(i2, number1v)
+          val number5 = numbersGen(i2, numbert)
           def number6 = number4.apply(() => number5)
           val count1  = count(() => number6)
           assert(count1 == i1 + i2)
         }
         locally {
-          val number5 = number1uGen(i2, number1v)
+          val number5 = numbertImplGen(i2, numbert)
           def number6 = number4.apply(() => number5)
           val count1  = count(() => number6)
           assert(count1 == i1 + i2)
@@ -77,8 +84,8 @@ object RunMain {
         i1 <- 0 to 20
         i2 <- 0 to 20
       } {
-        val number1 = number1vGen(i1, number1t)
-        val number2 = number1vGen(i2, number1u)
+        val number1 = numbertGen(i1, numbers)
+        val number2 = numbertGen(i2, numbertImpl)
         def number3 = number1.apply(() => number2)
         val count1  = count(() => number3)
         val count2  = if (i1 >= i2) i1 - i2 else 0
@@ -90,9 +97,9 @@ object RunMain {
         i1 <- 0 to 20
         i2 <- 0 to 20
       } {
-        val number1                     = number1vGen(i1, number1t)
-        lazy val number2Positive: Core2 = number1sGen(i2, number2Zero)
-        lazy val number2Zero: Core2     = NumberImpl.V(() => number2Positive)
+        val number1                     = numbertGen(i1, numbers)
+        lazy val number2Positive: Core2 = numbersGen(i2, number2Zero)
+        lazy val number2Zero: Core2     = Number.T(() => number2Positive)
         locally {
           def number3 = number1.apply(() => number2Positive)
           val count1  = count(() => number3)
@@ -111,9 +118,9 @@ object RunMain {
         i2 <- 1 to 20
         i3 <- 0 to i2 - 1
       } {
-        val number1                     = number1vGen(i1 * i2 + i3, number1t)
-        lazy val number2Positive: Core2 = number1vGen(i2, number2Zero)
-        lazy val number2Zero: Core2     = NumberImpl.S(() => number2Positive)
+        val number1                     = numbertGen(i1 * i2 + i3, numbers)
+        lazy val number2Positive: Core2 = numbertGen(i2, number2Zero)
+        lazy val number2Zero: Core2     = SImpl(() => number2Positive)
         locally {
           def number3 = number1.apply(() => number2Zero)
           val count1  = count(() => number3)
