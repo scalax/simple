@@ -28,5 +28,5 @@ class NatHttpRoutes(serviceA: ServiceA) {
 }
 
 object NatHttpRoutes {
-  def build(implicit serviceA: ServiceA): NatHttpRoutes = new NatHttpRoutes(serviceA)
+  def build(implicit serviceA: ServiceA): NatHttpRoutes = new NatHttpRoutes(implicitly)
 }

@@ -23,5 +23,6 @@ class ServiceB(serviceAFunc: () => ServiceA, dbDao: DBDao) {
 }
 
 object ServiceB {
-  def build(implicit serviceAFunc: () => ServiceA, dbDao: DBDao): ServiceB = new ServiceB(serviceAFunc = serviceAFunc, dbDao = dbDao)
+  def build(implicit serviceAFunc: => ServiceA, dbDao: DBDao): ServiceB =
+    new ServiceB(serviceAFunc = () => serviceAFunc, dbDao = implicitly)
 }
