@@ -100,3 +100,6 @@ val codegenScalaV = RCScalaVersion
 addCommandAlias("preCodegen", s";++$codegenScalaV!;adt-codegen/preCodegenImpl")
 addCommandAlias("codegen", s";++$codegenScalaV!;adt-codegen/codegenImpl")
 addCommandAlias("executeTest", "+mainProjects/test")
+
+ThisBuild / djxScalafmtFile := `root/file` / ".scalafmt_simple.conf"
+ThisBuild / djxBuildSbtFile := `root/file` / "project" / "build.properties"
