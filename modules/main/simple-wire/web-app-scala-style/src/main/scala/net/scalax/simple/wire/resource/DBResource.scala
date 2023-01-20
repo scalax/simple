@@ -5,6 +5,7 @@ import doobie._
 import doobie.implicits._
 import cats.effect._
 import doobie.hikari._
+import net.scalax.simple.wire.model.SimpleProjectConfig
 
 abstract class H2Doobie(dbName: String) {
 
@@ -34,13 +35,13 @@ abstract class H2Doobie(dbName: String) {
   def resource[F[_]: Async]: Resource[F, Transactor[F]] = for (xa <- transactor; _ <- initAction(xa)) yield xa
 }
 
-class EnvAH2Doobie extends H2Doobie("EnvA")
+class EnvAH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvA)
 object EnvAH2Doobie {
-  def build: EnvAH2Doobie = new EnvAH2Doobie
+  def build(implicit simpleConfig: SimpleProjectConfig): EnvAH2Doobie = new EnvAH2Doobie(implicitly)
 }
 
-class EnvBH2Doobie extends H2Doobie("EnvB")
+class EnvBH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvB)
 
 object EnvBH2Doobie {
-  def build: EnvBH2Doobie = new EnvBH2Doobie
+  def build(implicit simpleConfig: SimpleProjectConfig): EnvBH2Doobie = new EnvBH2Doobie(implicitly)
 }

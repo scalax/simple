@@ -8,3 +8,4 @@ libraryDependencies ++= `cats-effect`.value
 libraryDependencies ++= cats.value
 libraryDependencies ++= doobie.value
 libraryDependencies ++= h2.value
+libraryDependencies ++= libScalax.`zio-config`.value

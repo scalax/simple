@@ -10,18 +10,20 @@ import cats._
 
 object AppWire {
 
-  val golbalRoutes: Resource[IO, HttpRoutes[IO]] = EnvAH2Doobie.build.resource[IO].flatMap { rA =>
-    EnvBH2Doobie.build.resource[IO].flatMap { rB =>
-      InitPrinter.build[IO].map { implicit initPrinter =>
-        lazy val dbDaoEnvA: DBDao = DBDao.build(doobieTransactor = rA)
-        lazy val dbDaoEnvB: DBDao = DBDao.build(doobieTransactor = rB)
+  val golbalRoutes: Resource[IO, HttpRoutes[IO]] = WireConfig.build.getResource[IO].flatMap { implicit simpleConfig =>
+    EnvAH2Doobie.build.resource[IO].flatMap { rA =>
+      EnvBH2Doobie.build.resource[IO].flatMap { rB =>
+        InitPrinter.build[IO].map { implicit initPrinter =>
+          lazy val dbDaoEnvA: DBDao = DBDao.build(doobieTransactor = rA)
+          lazy val dbDaoEnvB: DBDao = DBDao.build(doobieTransactor = rB)
 
-        implicit lazy val serviceA: ServiceA = ServiceA.build(initPrinter = implicitly, serviceBFunc = implicitly, dbDao = dbDaoEnvA)
-        implicit lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = implicitly, dbDao = dbDaoEnvB)
+          implicit lazy val serviceA: ServiceA = ServiceA.build(initPrinter = implicitly, serviceBFunc = implicitly, dbDao = dbDaoEnvA)
+          implicit lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = implicitly, dbDao = dbDaoEnvB)
 
-        lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
+          lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
 
-        natRoutesInstances.route
+          natRoutesInstances.route
+        }
       }
     }
   }
