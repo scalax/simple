@@ -22,5 +22,5 @@ class DBDao(xa: Transactor[IO]) {
 }
 
 object DBDao {
-  def build(implicit doobieTransactor: Transactor[IO]): DBDao = new DBDao(xa = doobieTransactor)
+  def build(implicit doobieTransactor: Transactor[IO]): DBDao = new DBDao(xa = implicitly)
 }

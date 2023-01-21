@@ -3,14 +3,15 @@ package resource
 
 import doobie._
 import doobie.implicits._
-import cats.effect.{IO, Resource}
+import cats.effect._
 import doobie.hikari._
+import net.scalax.simple.wire.model.SimpleProjectConfig
 
 abstract class H2Doobie(dbName: String) {
 
-  private val transactor: Resource[IO, HikariTransactor[IO]] = for {
-    ce <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
-    xa <- HikariTransactor.newHikariTransactor[IO](
+  private def transactor[F[_]: Async]: Resource[F, HikariTransactor[F]] = for {
+    ce <- ExecutionContexts.fixedThreadPool[F](32) // our connect EC
+    xa <- HikariTransactor.newHikariTransactor[F](
       "org.h2.Driver",                          // driver classname
       s"jdbc:h2:mem:$dbName;DB_CLOSE_DELAY=-1", // connect URL
       "sa",                                     // username
@@ -29,11 +30,18 @@ abstract class H2Doobie(dbName: String) {
     } yield (a: Int) + (b: Int)
   }
 
-  private def initAction(xa: Transactor[IO]): Resource[IO, Int] = Resource.eval(executeUpdate.transact(xa))
+  private def initAction[F[_]: MonadCancelThrow](xa: Transactor[F]): Resource[F, Int] = Resource.eval(executeUpdate.transact(xa))
 
-  val resource: Resource[IO, Transactor[IO]] = for (xa <- transactor; _ <- initAction(xa)) yield xa
+  def resource[F[_]: Async]: Resource[F, Transactor[F]] = for (xa <- transactor; _ <- initAction(xa)) yield xa
 }
 
-class EnvAH2Doobie extends H2Doobie("EnvA")
+class EnvAH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvA)
+object EnvAH2Doobie {
+  def build(implicit simpleConfig: SimpleProjectConfig): EnvAH2Doobie = new EnvAH2Doobie(implicitly)
+}
 
-class EnvBH2Doobie extends H2Doobie("EnvB")
+class EnvBH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvB)
+
+object EnvBH2Doobie {
+  def build(implicit simpleConfig: SimpleProjectConfig): EnvBH2Doobie = new EnvBH2Doobie(implicitly)
+}

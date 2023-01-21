@@ -31,6 +31,6 @@ class ServiceA(initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DB
 }
 
 object ServiceA {
-  def build(implicit initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DBDao): ServiceA =
-    new ServiceA(initPrinter = initPrinter, serviceBFunc = serviceBFunc, dbDao = dbDao)
+  def build(implicit initPrinter: InitPrinter, serviceBFunc: => ServiceB, dbDao: DBDao): ServiceA =
+    new ServiceA(initPrinter = implicitly, serviceBFunc = () => serviceBFunc, dbDao = implicitly)
 }

@@ -5,37 +5,27 @@ import service._
 import routes.NatHttpRoutes
 import org.http4s.HttpRoutes
 import cats.effect._
-import doobie._
 import resource._
 import cats._
 
-class AppWire(doobieTransactorA: Transactor[IO], doobieTransactorB: Transactor[IO]) {
-
-  implicit private lazy val dbDaoEnvA: DBDao         = DBDao.build(doobieTransactor = doobieTransactorA)
-  implicit private lazy val dbDaoEnvB: DBDao         = DBDao.build(doobieTransactor = doobieTransactorB)
-  implicit private lazy val initPrinter: InitPrinter = InitPrinter.build
-
-  implicit private lazy val serviceA: ServiceA =
-    ServiceA.build(initPrinter = implicitly, serviceBFunc = () => implicitly, dbDao = dbDaoEnvA)
-  implicit private lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = () => implicitly, dbDao = dbDaoEnvB)
-
-  implicit private lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
-
-  lazy val routes: HttpRoutes[IO] = natRoutesInstances.route
-
-}
-
 object AppWire {
-  def build(implicit doobieTransactorA: Transactor[IO], doobieTransactorB: Transactor[IO]): AppWire =
-    new AppWire(doobieTransactorA = doobieTransactorA, doobieTransactorB = doobieTransactorB)
 
-  val buildGlobal: Resource[IO, AppWire] = {
-    val resourceA = (new EnvAH2Doobie).resource
-    val resourceB = (new EnvBH2Doobie).resource
-    for {
-      rA <- resourceA
-      rB <- resourceB
-    } yield AppWire.build(doobieTransactorA = rA, doobieTransactorB = rB)
+  val golbalRoutes: Resource[IO, HttpRoutes[IO]] = WireConfig.build.getResource[IO].flatMap { implicit simpleConfig =>
+    EnvAH2Doobie.build.resource[IO].flatMap { rA =>
+      EnvBH2Doobie.build.resource[IO].flatMap { rB =>
+        InitPrinter.build[IO].map { implicit initPrinter =>
+          lazy val dbDaoEnvA: DBDao = DBDao.build(doobieTransactor = rA)
+          lazy val dbDaoEnvB: DBDao = DBDao.build(doobieTransactor = rB)
+
+          implicit lazy val serviceA: ServiceA = ServiceA.build(initPrinter = implicitly, serviceBFunc = implicitly, dbDao = dbDaoEnvA)
+          implicit lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = implicitly, dbDao = dbDaoEnvB)
+
+          lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
+
+          natRoutesInstances.route
+        }
+      }
+    }
   }
 
 }

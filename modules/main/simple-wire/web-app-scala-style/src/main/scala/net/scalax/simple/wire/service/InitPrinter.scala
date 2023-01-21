@@ -7,6 +7,7 @@ import org.http4s.implicits._
 import org.http4s.HttpRoutes
 import doobie._
 import model._
+import cats._
 
 class InitPrinter {
 
@@ -19,5 +20,5 @@ class InitPrinter {
 }
 
 object InitPrinter {
-  def build: InitPrinter = new InitPrinter
+  def build[F[_]: Sync]: Resource[F, InitPrinter] = Resource.eval(Sync[F].delay(new InitPrinter))
 }
