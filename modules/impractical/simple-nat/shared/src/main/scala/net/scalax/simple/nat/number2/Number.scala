@@ -11,6 +11,5 @@ object Number {
   }
 
   val S: Core2 = Core2(tail => Core2(number => tail()(() => number())))
-  val T: Core2 = Core2(tail => Core2(number => number()(() => tail())))
 
 }
