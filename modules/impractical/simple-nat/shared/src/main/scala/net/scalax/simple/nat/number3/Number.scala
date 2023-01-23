@@ -10,13 +10,18 @@ object Number {
     override def apply(v1: () => Core2): Core2 = t(v1)
   }
 
-  val S: Core2      = Core2(tail1 => Core2(tail2 => Core2(tail3 => tail1()(() => tail2())(() => tail3()))))
-  val T: Core2      = Core2(tail1 => Core2(tail2 => Core2(tail3 => S(tail2)(tail1)(tail3))))
-  val U: Core2      = Core2(tail1 => Core2(tail2 => Core2(tail3 => S(tail3)(tail2)(tail1))))
-  val SCount: Core2 = Core2(tail1 => Core2(tail2 => Core2(tail3 => NumberPositive(() => S(tail1)(tail2)(tail3)))))
+  val S: Core2 = Core2(tail1 => Core2(tail2 => tail1()(() => tail2())))
+  val T: Core2 = Core2(tail1 => Core2(tail2 => S(tail2)(tail1)))
 
-  case class NumberPositive(tail: () => Core2) extends Core2 {
-    override def apply(f: () => Core2): Core2 = throw new Exception
+  val SImpl: Core2 = Number.Core2(tail => Number.Core2(number => PosotiveCount(() => S(tail)(number))))
+  val TImpl: Core2 = Number.Core2(tail => Number.Core2(number => PosotiveCount(() => S(number)(tail))))
+
+  val numbersZero: Core2     = Number.S(() => numbersZero)
+  val numbertZero: Core2     = Number.T(() => numbertZero)
+  val numbertZeroImpl: Core2 = TImpl(() => numbertZeroImpl)
+
+  case class PosotiveCount(tail: () => Core2) extends Core2 {
+    override def apply(t: () => Core2): Core2 = throw new Exception
   }
 
 }

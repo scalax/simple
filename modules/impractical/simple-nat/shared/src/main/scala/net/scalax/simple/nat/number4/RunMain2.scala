@@ -1,6 +1,6 @@
 package net.scalax.simple
 package nat
-package number3
+package number4
 
 object RunMain2 {
 
@@ -13,14 +13,13 @@ object RunMain2 {
       case _: StackOverflowError => Some(0)
     }).filter(_ < 5000)
 
-  lazy val number1Gen: Number.Core2                           = Number.S(() => number1Gen)
   def number2Gen(n: Int, zero: => Number.Core2): Number.Core2 = if (n > 0) Number.T(() => number2Gen(n - 1, zero)) else zero
   def number3Gen(n: Int, zero: => Number.Core2): Number.Core2 = if (n > 0) Number.U(() => number3Gen(n - 1, zero)) else zero
   def number4Gen(n: Int, zero: => Number.Core2): Number.Core2 = if (n > 0) Number.SCount(() => number4Gen(n - 1, zero)) else zero
 
   def confirm(type1: Int, type2: Int, type3: Int, num2TakePositive: Boolean, num3TakePositive: Boolean): (Int, Int, Int) => Option[Int] = {
     (i1, i2, i3) =>
-      val number1: Number.Core2              = number2Gen(i1, number1Gen)
+      val number1: Number.Core2              = number2Gen(i1, Number.numbersZero)
       lazy val number2Positive: Number.Core2 = number3Gen(i2, number2Zero)
       lazy val number2Zero: Number.Core2     = Number.T(() => number2Positive)
       lazy val number3Positive: Number.Core2 = number4Gen(i3, number3Zero)
@@ -47,7 +46,7 @@ object RunMain2 {
         i2 <- 0 to 15
         i3 <- 0 to 15
       } {
-        val number1: Number.Core2              = number2Gen(i1, number1Gen)
+        val number1: Number.Core2              = number2Gen(i1, Number.numbersZero)
         lazy val number2Positive: Number.Core2 = number3Gen(i2, number2Zero)
         lazy val number2Zero: Number.Core2     = Number.T(() => number2Positive)
         lazy val number3Positive: Number.Core2 = number4Gen(i3, number3Zero)
