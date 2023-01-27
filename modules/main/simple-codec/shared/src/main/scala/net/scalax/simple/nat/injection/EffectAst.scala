@@ -1,4 +1,5 @@
-package net.scalax.simple.nat
+package net.scalax.simple
+package nat
 
 import core._
 
