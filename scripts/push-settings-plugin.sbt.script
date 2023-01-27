@@ -19,8 +19,8 @@ organizationHomepage := Some(url("https://github.com/scala-workers"))
 // start setting
 scmInfo := Some(
     ScmInfo(
-        url("https://github.com/scalax/simple-nat"),
-        "scm:git@github.com:scala-workers/commons-lang3-bridge.git"
+        url("https://github.com/scalax/simple"),
+        "scm:git@github.com:scalax/simple.git"
     )
 )
 // end setting
@@ -44,15 +44,15 @@ developers := List(dev1, dev2)
 // end setting
 
 // start setting
-description := "Use nat to solve some scala problems."
+description := "Simple, and scalable. Use it to subvert the author's imagination."
 // end setting
 
 // start setting
-licenses := List("Apache" -> new URL("https://github.com/scalax/simple-nat/blob/main/LICENSE"))
+licenses := List("MIT License" -> new URL("https://github.com/scalax/simple/blob/main/LICENSE"))
 // end setting
 
 // start setting
-homepage := Some(url("https://github.com/scalax/simple-nat"))
+homepage := Some(url("https://github.com/scalax/simple"))
 // end setting
 
 // start setting
@@ -60,15 +60,26 @@ pomIncludeRepository := { _ => false }
 // end setting
 
 // start setting
-publishTo := {
-    val nexus = "https://s01.oss.sonatype.org/"
-    if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
-    else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+{
+    import xerial.sbt.Sonatype.autoImport._
+    publishTo := sonatypePublishTo.value
 }
 // end setting
 
 // start setting
+{
+    import xerial.sbt.Sonatype.autoImport._
+    sonatypeCredentialHost := "s01.oss.sonatype.org"
+}
+// end setting
+
+
+// start setting
 publishMavenStyle := true
+// end setting
+
+// start setting
+versionScheme := Some("early-semver")
 // end setting
 
 // scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings
