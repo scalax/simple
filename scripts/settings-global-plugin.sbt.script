@@ -88,14 +88,14 @@ scalacOptions ++= {
 
 // start setting
 {
-    import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtOnCompile
+    import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
     scalafmtOnCompile := true
 }
 // end setting
 
 // start setting
 {
-    import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtSbt
+    import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
     Compile / compile := ((Compile / compile) dependsOn (Compile / scalafmtSbt)).value
 }
 // end setting
