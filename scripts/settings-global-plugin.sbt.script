@@ -80,7 +80,7 @@ scalacOptions ++= {
     case Some((2, scalaMajor)) =>
         val opt1 = if (scalaMajor < 13L) Seq("-language:higherKinds") else Seq.empty
         opt1 ++: Seq("-Ywarn-dead-code")
-    case Some((3, scalaMajor)) => Seq("-Ykind-projector")
+    case Some((3, scalaMajor)) => Seq.empty
     case _                     => Seq.empty
   }
 }
@@ -88,14 +88,14 @@ scalacOptions ++= {
 
 // start setting
 {
-    import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtOnCompile
+    import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
     scalafmtOnCompile := true
 }
 // end setting
 
 // start setting
 {
-    import org.scalafmt.sbt.ScalafmtPlugin.autoImport.scalafmtSbt
+    import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
     Compile / compile := ((Compile / compile) dependsOn (Compile / scalafmtSbt)).value
 }
 // end setting
