@@ -14,7 +14,7 @@ import zio.test.Assertion._
 object TestCase2 extends ZIOSpecDefault {
 
   type TypeOpt[T] = TypeOptions3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
-  def inputOptDat[T: TypeOpt](t: T*): Seq[Option[Long]] = {
+  def inputOptData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
     type Tpe[T] = TypeOptions3[T, Seq[String], Seq[Int], Seq[Option[Long]]]
     val applyM = getAdtApply[Tpe]
     applyM
@@ -29,7 +29,7 @@ object TestCase2 extends ZIOSpecDefault {
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by MarchLiu")(
     test("Simple adt fold in parameter list.") {
       def assert1 = {
-        val r1 = inputOptDat("aa", "ofjhiwehr", "sdfweer")
+        val r1 = inputOptData("aa", "ofjhiwehr", "sdfweer")
         val r2 = List("aa".length, "ofjhiwehr".length, "sdfweer".length)
         val r3 = r2.map(t => Some(t.toLong))
         assert(r1)(Assertion.equalTo(r3))
@@ -37,14 +37,14 @@ object TestCase2 extends ZIOSpecDefault {
 
       def assert2 = {
         val l  = (1 to 100).to(List)
-        val r1 = inputOptDat(l: _*)
+        val r1 = inputOptData(l: _*)
         val r2 = l.map(t => Some(t.toLong))
         assert(r1)(Assertion.equalTo(r2))
       }
 
       def assert3 = {
         val l  = (1 to 100).to(List).map(t => Some(t.toLong))
-        val r1 = inputOptDat(l: _*)
+        val r1 = inputOptData(l: _*)
         val r2 = l
         assert(r1)(Assertion.equalTo(r2))
       }

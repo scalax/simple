@@ -18,8 +18,7 @@ Match type by `TypeOptionsX`(The type will be match first if it's declaring firs
 import net.scalax.simple.adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
 
 def inputOptData[T: TypeOptions3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
-  type Tpe[T] = TypeOptions3[T, None.type, Some[Int], Option[Int]]
-  val applyM = getAdtApply[Tpe]
+  val applyM = getAdtApply[TypeOptions3[*, None.type, Some[Int], Option[Int]]]
   applyM.input(t).fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
 }
 
@@ -35,7 +34,7 @@ import net.scalax.simple.adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, ad
 
 type TypeOpt[T] = TypeOptions3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
 def inputOptData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
-  type Tpe[T] = TypeOptions3[T, Seq[String], Seq[Int], Seq[Option[Long]]]
+  type Tpe[T] = TypeOptions3[T, Seq[String], Seq[Int], Seq[Option[Long]]] // Note Tpe[*] is different from TypeOpt[*]
   val applyM = getAdtApply[Tpe]
   applyM
     .input(t)

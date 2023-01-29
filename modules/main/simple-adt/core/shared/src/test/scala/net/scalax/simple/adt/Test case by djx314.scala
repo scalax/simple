@@ -14,9 +14,8 @@ import zio.test.Assertion._
 object TestCase1 extends ZIOSpecDefault {
 
   case class TempForData(typeName: String, value: Option[Int])
-  def inputOptDat[T: TypeOptions3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
-    type Tpe[T] = TypeOptions3[T, None.type, Some[Int], Option[Int]]
-    val applyM = getAdtApply[Tpe]
+  def inputOptData[T: TypeOptions3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
+    val applyM = getAdtApply[TypeOptions3[*, None.type, Some[Int], Option[Int]]]
     applyM.input(t).fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
   }
 
@@ -24,19 +23,19 @@ object TestCase1 extends ZIOSpecDefault {
     test("Simple adt fold in test data.") {
       def assert1 = {
         val data     = None
-        val foldData = inputOptDat(data)
+        val foldData = inputOptData(data)
         assert(foldData)(Assertion.equalTo(TempForData("None", data)))
       }
 
       def assert2 = {
         val data     = Option(2)
-        val foldData = inputOptDat(data)
+        val foldData = inputOptData(data)
         assert(foldData)(Assertion.equalTo(TempForData("Option", Option(data.get + 2))))
       }
 
       def assert3 = {
         val data     = Some(6)
-        val foldData = inputOptDat(data)
+        val foldData = inputOptData(data)
         assert(foldData)(Assertion.equalTo(TempForData("Some", Some(data.get + 1))))
       }
 
