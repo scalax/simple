@@ -31,7 +31,7 @@ def inputOptData[T: TypeOptions3[*, None.type, Some[Int], Option[Int]]](t: T): T
 
 assert(inputOptDat(None) == TempForData("None", None))
 assert(inputOptDat(Option(2)) == TempForData("Option", Some(4)))
-assert(inputOptDat(Some(6)) == TempForData("Some", Some(7)))
+assert(inputOptDat(Some(2)) == TempForData("Some", Some(3)))
 ```
 
 ## Usage of @[MarchLiu](https://marchliu.github.io/)
