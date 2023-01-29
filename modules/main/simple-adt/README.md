@@ -48,4 +48,5 @@ def inputOptData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
 }
 
 assert(inputOptData("abc", "aabbcc", "aabbbcc") == List("abc", "aabbcc", "aabbbcc").map(t => Some(t.length.toLong)))
+assert(inputOptData(2, 3, 4) == List(2, 3, 4).map(_.toLong))
 ```
