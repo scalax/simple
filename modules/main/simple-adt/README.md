@@ -28,6 +28,8 @@ assert(inputOptDat(Some(6)) == TempForData("Some", Some(7)))
 ```
 
 ## Usage of @[MarchLiu](https://marchliu.github.io/)
+Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-workers/commons-lang3-bridge)
+
 Match type for parameter list.
 ``` scala
 import net.scalax.simple.adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
