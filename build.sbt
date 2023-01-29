@@ -34,7 +34,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform) in `core/file`
 lazy val coreJVM = core.jvm
 lazy val coreJS  = core.js
 
-lazy val adt = project in `adt/file`
+lazy val adt = crossProject(JSPlatform, JVMPlatform) in `adt/file` dependsOn `adt-core`
 
 lazy val `adt-codegen` = project in `adt-codegen/file`
 lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core/file` dependsOn (core, `test-common` % Test)
@@ -74,22 +74,21 @@ lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/f
 
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
-val adtTestAll     = `adt-core`.componentProjects.map(t => t / Test / test)
+val adtTestAll     = adt.componentProjects.map(t => t / Test / test)
+val adtCoreTestAll = `adt-core`.componentProjects.map(t => t / Test / test)
 val listTestAll    = list.componentProjects.map(t => t / Test / test)
 val wireTestAll    = `wire-core`.componentProjects.map(t => t / Test / test)
 val codecTestAll   = codec.componentProjects.map(t => t / Test / test)
 val genericTestAll = generic.componentProjects.map(t => t / Test / test)
 
-adt / Test / test := (adt / Test / test).dependsOn(adtTestAll: _*).value
-
-val adtTestAction     = adt / Test / test
+val adtTestAction     = adtTestAll ++: adtCoreTestAll
 val listTestAction    = listTestAll
 val wireTestAction    = wireTestAll
 val codecTestAction   = codecTestAll
 val genericTestAction = genericTestAll
 
 mainProjects / Test / test := (mainProjects / Test / test)
-  .dependsOn(adtTestAction)
+  .dependsOn(adtTestAction: _*)
   .dependsOn(listTestAction: _*)
   .dependsOn(wireTestAction: _*)
   .dependsOn(codecTestAction: _*)

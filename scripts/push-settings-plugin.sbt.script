@@ -5,7 +5,7 @@ version := "0.0.1-M1"
 // end setting
 
 // start setting
-organization := "net.scalax"
+organization := "net.scalax.simple"
 // end setting
 
 // start setting
