@@ -3,4 +3,5 @@ Simple, and scalable.
 Use it to subvert the author's imagination.
 
 ## Modules
-1. [simple-adt](./modules/main/simple-adt/)
+### [simple-adt](./modules/main/simple-adt/)
+A simple abstraction of adt.

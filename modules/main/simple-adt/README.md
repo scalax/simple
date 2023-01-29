@@ -12,7 +12,7 @@ libraryDependencies += "net.scalax.simple" %%% "simple-adt" % "0.0.1-M1"
 ```
 
 
-## Usage of @djx314
+## Usage of @[djx314](https://github.com/djx314)
 Match type by `TypeOptionsX`(The type will be match first if it's declaring first).
 ``` scala
 import net.scalax.simple.adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
@@ -27,7 +27,9 @@ assert(inputOptDat(Option(2)) == TempForData("Option", Some(4)))
 assert(inputOptDat(Some(6)) == TempForData("Some", Some(7)))
 ```
 
-## Usage of @MarchLiu
+## Usage of @[MarchLiu](https://marchliu.github.io/)
+Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-workers/commons-lang3-bridge)
+
 Match type for parameter list.
 ``` scala
 import net.scalax.simple.adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
