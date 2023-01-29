@@ -75,12 +75,11 @@ lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/f
 `adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
 val adtTestAll     = adt.componentProjects.map(t => t / Test / test)
-val adtCoreTestAll     = `adt-core`.componentProjects.map(t => t / Test / test)
+val adtCoreTestAll = `adt-core`.componentProjects.map(t => t / Test / test)
 val listTestAll    = list.componentProjects.map(t => t / Test / test)
 val wireTestAll    = `wire-core`.componentProjects.map(t => t / Test / test)
 val codecTestAll   = codec.componentProjects.map(t => t / Test / test)
 val genericTestAll = generic.componentProjects.map(t => t / Test / test)
-
 
 val adtTestAction     = adtTestAll ++: adtCoreTestAll
 val listTestAction    = listTestAll
