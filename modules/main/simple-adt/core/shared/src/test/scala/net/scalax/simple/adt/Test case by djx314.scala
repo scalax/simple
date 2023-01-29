@@ -21,6 +21,8 @@ object TestCase1 extends ZIOSpecDefault {
 
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314")(
     test("Simple adt fold in test data.") {
+      val baseValue = 2
+
       def assert1 = {
         val data     = None
         val foldData = inputOptData(data)
@@ -28,15 +30,15 @@ object TestCase1 extends ZIOSpecDefault {
       }
 
       def assert2 = {
-        val data     = Option(2)
+        val data     = Option(baseValue)
         val foldData = inputOptData(data)
-        assert(foldData)(Assertion.equalTo(TempForData("Option", Option(data.get + 2))))
+        assert(foldData)(Assertion.equalTo(TempForData("Option", Option(baseValue + 2))))
       }
 
       def assert3 = {
-        val data     = Some(6)
+        val data     = Some(baseValue)
         val foldData = inputOptData(data)
-        assert(foldData)(Assertion.equalTo(TempForData("Some", Some(data.get + 1))))
+        assert(foldData)(Assertion.equalTo(TempForData("Some", Some(baseValue + 1))))
       }
 
       try assert1 && assert2 && assert3
