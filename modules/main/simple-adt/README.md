@@ -19,7 +19,7 @@ For scala3, you can add the scalac option.
 scalacOptions += "-Ykind-projector"
 ```
 
-## Usage of @[djx314](https://github.com/djx314)
+## Usage of [@djx314](https://github.com/djx314)
 Match type by `TypeOptionsX`(The type will be match first if it's declaring first).
 ``` scala
 import net.scalax.simple.adt.TypeAdt
@@ -35,7 +35,7 @@ assert(inputOptDat(Option(2)) == TempForData("Option", Some(4)))
 assert(inputOptDat(Some(2)) == TempForData("Some", Some(3)))
 ```
 
-## Usage of @[MarchLiu](https://marchliu.github.io/)
+## Usage of [@MarchLiu](https://marchliu.github.io/)
 Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-workers/commons-lang3-bridge)
 
 Match type for parameter list.
