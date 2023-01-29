@@ -10,7 +10,14 @@ libraryDependencies += "net.scalax.simple" %% "simple-adt" % "0.0.1-M1"
 // For Scala.js projects, or JS/JVM cross projects
 libraryDependencies += "net.scalax.simple" %%% "simple-adt" % "0.0.1-M1"
 ```
-
+For scala2, you can add the compiler plugin `kind-projector`.
+``` sbt
+addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
+```
+For scala3, you can add the scalac option.
+``` sbt
+scalacOptions += "-Ykind-projector"
+```
 
 ## Usage of @[djx314](https://github.com/djx314)
 Match type by `TypeOptionsX`(The type will be match first if it's declaring first).
