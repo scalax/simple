@@ -22,10 +22,11 @@ scalacOptions += "-Ykind-projector"
 ## Usage of @[djx314](https://github.com/djx314)
 Match type by `TypeOptionsX`(The type will be match first if it's declaring first).
 ``` scala
-import net.scalax.simple.adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
+import net.scalax.simple.adt.TypeAdt
+import TypeAdt.alias._
 
 def inputOptData[T: TypeOptions3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
-  val applyM = getAdtApply[TypeOptions3[*, None.type, Some[Int], Option[Int]]]
+  val applyM = TypeAdt[TypeOptions3[*, None.type, Some[Int], Option[Int]]]
   applyM.input(t).fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
 }
 
@@ -39,12 +40,13 @@ Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-w
 
 Match type for parameter list.
 ``` scala
-import net.scalax.simple.adt.TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
+import net.scalax.simple.adt.TypeAdt
+import TypeAdt.alias._
 
-type TypeOpt[T] = TypeOptions3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
-def inputOptData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
-  type Tpe[T] = TypeOptions3[T, Seq[String], Seq[Int], Seq[Option[Long]]] // Note Tpe[*] is different from TypeOpt[*]
-  val applyM = getAdtApply[Tpe]
+type SeqTpe[S] = TypeOptions3[Seq[S], Seq[String], Seq[Int], Seq[Option[Long]]]
+def inputOptData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
+  type Tpe[S] = TypeOptions3[S, Seq[String], Seq[Int], Seq[Option[Long]]] // Note: Tpe[*] is different from SeqTpe[*]
+  val applyM = TypeAdt[Tpe]
   applyM
     .input(t)
     .fold(
