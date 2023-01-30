@@ -4,8 +4,6 @@ package object adt {
 
   import impl._
 
-  object TypeAdt extends TypeAdtAlias {
-    @inline final def instance[F[_] <: TypeAdtApply.Aux[_, _, ConfirmSucceed]]: FetchAdtApply[F] = FetchAdtApply.get
-  }
+  object TypeAdt extends TypeAdtAlias with TypeAdtRuntimeApply
 
 }

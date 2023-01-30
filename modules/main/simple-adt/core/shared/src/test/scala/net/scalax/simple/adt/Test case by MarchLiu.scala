@@ -14,15 +14,12 @@ object TestCase2 extends ZIOSpecDefault {
 
   type TypeOpt[T] = Adt.Options3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
   def inputOptData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
-    type Tpe[T] = Adt.Options3[T, Seq[String], Seq[Int], Seq[Option[Long]]]
-    val applyM = Adt.instance[Tpe]
-    applyM
-      .input(t)
-      .fold(
-        t1 => t1.map(t => Some(t.length.toLong)),
-        t2 => t2.map(t => Some(t.toLong)),
-        t3 => t3
-      )
+    val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
+    applyM.fold(
+      t1 => t1.map(t => Some(t.length.toLong)),
+      t2 => t2.map(t => Some(t.toLong)),
+      t3 => t3
+    )
   }
 
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by MarchLiu")(
