@@ -20,7 +20,7 @@ scalacOptions += "-Ykind-projector"
 ```
 
 ## Usage of [@djx314](https://github.com/djx314)
-Match type by `TypeOptionsX`(The type will be match first if it's declaring first).
+Match type by `Adt.OptionsX`(The type will be match first if it's declaring first).
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
