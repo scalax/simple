@@ -22,7 +22,7 @@ scalacOptions += "-Ykind-projector"
 ## Usage of [@djx314](https://github.com/djx314)
 Match type by `TypeOptionsX`(The type will be match first if it's declaring first).
 ``` scala
-import net.scalax.simple.adt.{ TypeAdt => Adt }
+import net.scalax.simple.adt.{TypeAdt => Adt}
 
 def inputOptData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
   val applyM = Adt.instance[Adt.Options3[*, None.type, Some[Int], Option[Int]]]
@@ -39,8 +39,7 @@ Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-w
 
 Match type for parameter list.
 ``` scala
-import net.scalax.simple.adt.TypeAdt
-import TypeAdt.alias._
+import net.scalax.simple.adt.{TypeAdt => Adt}
 
 type SeqTpe[S] = Adt.Options3[Seq[S], Seq[String], Seq[Int], Seq[Option[Long]]]
 def inputOptData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
