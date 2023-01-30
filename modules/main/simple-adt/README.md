@@ -41,7 +41,7 @@ Match type for parameter list.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
-type SeqTpe[S] = Adt.Options3[Seq[S], Seq[String], Seq[Int], Seq[Option[Long]]]
+type SeqTpe[T] = Adt.Options3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
 def inputAdtData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
   val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
   applyM
