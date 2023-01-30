@@ -3,51 +3,51 @@ package impl
 
 trait TypeAdtAlias {
 
-  type TypeOptions1[A, I1] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountZero], ConfirmSucceed]
+  type Options1[A, I1] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountZero], ConfirmSucceed]
 
-  type TypeOptions2[A, I1, I2] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountZero]], ConfirmSucceed]
+  type Options2[A, I1, I2] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountZero]], ConfirmSucceed]
 
-  type TypeOptions3[A, I1, I2, I3] =
+  type Options3[A, I1, I2, I3] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[I3, NumberCountZero]]], ConfirmSucceed]
 
-  type TypeOptions4[A, I1, I2, I3, I4] = TypeAdtApply.Aux[A, NumberCountChild[
+  type Options4[A, I1, I2, I3, I4] = TypeAdtApply.Aux[A, NumberCountChild[
     I1,
     NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountZero]]]
   ], ConfirmSucceed]
 
-  type TypeOptions5[A, I1, I2, I3, I4, I5] = TypeAdtApply.Aux[A, NumberCountChild[
+  type Options5[A, I1, I2, I3, I4, I5] = TypeAdtApply.Aux[A, NumberCountChild[
     I1,
     NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountZero]]]]
   ], ConfirmSucceed]
 
-  type TypeOptions6[A, I1, I2, I3, I4, I5, I6] = TypeAdtApply.Aux[A, NumberCountChild[
+  type Options6[A, I1, I2, I3, I4, I5, I6] = TypeAdtApply.Aux[A, NumberCountChild[
     I1,
     NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountZero]]]]]
   ], ConfirmSucceed]
 
-  type TypeOptions7[A, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[
+  type Options7[A, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[
     I2,
     NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountZero]]]]]
   ]], ConfirmSucceed]
 
-  type TypeOptions8[A, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[
+  type Options8[A, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[
     I3,
     NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountZero]]]]]
   ]]], ConfirmSucceed]
 
-  type TypeOptions9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] =
+  type Options9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[
       I4,
       NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[I9, NumberCountZero]]]]]
     ]]]], ConfirmSucceed]
 
-  type TypeOptions10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] =
+  type Options10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[
       I5,
       NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[I9, NumberCountChild[I10, NumberCountZero]]]]]
     ]]]]], ConfirmSucceed]
 
-  type TypeOptions11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply.Aux[A, NumberCountChild[
+  type Options11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply.Aux[A, NumberCountChild[
     I1,
     NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[
       I6,
@@ -55,7 +55,7 @@ trait TypeAdtAlias {
     ]]]]]
   ], ConfirmSucceed]
 
-  type TypeOptions12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply.Aux[A, NumberCountChild[
+  type Options12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply.Aux[A, NumberCountChild[
     I1,
     NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[
       I7,
@@ -63,7 +63,7 @@ trait TypeAdtAlias {
     ]]]]]]
   ], ConfirmSucceed]
 
-  type TypeOptions13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[
+  type Options13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[
     I2,
     NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[
       I8,
@@ -71,7 +71,7 @@ trait TypeAdtAlias {
     ]]]]]]
   ]], ConfirmSucceed]
 
-  type TypeOptions14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] =
+  type Options14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[
       I3,
       NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[
@@ -80,7 +80,7 @@ trait TypeAdtAlias {
       ]]]]]]
     ]]], ConfirmSucceed]
 
-  type TypeOptions15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] =
+  type Options15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[
       I4,
       NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[I9, NumberCountChild[
@@ -89,7 +89,7 @@ trait TypeAdtAlias {
       ]]]]]]
     ]]]], ConfirmSucceed]
 
-  type TypeOptions16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] =
+  type Options16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[
       I5,
       NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[I9, NumberCountChild[I10, NumberCountChild[
@@ -98,7 +98,7 @@ trait TypeAdtAlias {
       ]]]]]]
     ]]]]], ConfirmSucceed]
 
-  type TypeOptions17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply.Aux[A, NumberCountChild[
+  type Options17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply.Aux[A, NumberCountChild[
     I1,
     NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[
       I6,
@@ -109,19 +109,18 @@ trait TypeAdtAlias {
     ]]]]]
   ], ConfirmSucceed]
 
-  type TypeOptions18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
-    TypeAdtApply.Aux[A, NumberCountChild[
-      I1,
-      NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[
-        I7,
-        NumberCountChild[I8, NumberCountChild[I9, NumberCountChild[I10, NumberCountChild[I11, NumberCountChild[I12, NumberCountChild[
-          I13,
-          NumberCountChild[I14, NumberCountChild[I15, NumberCountChild[I16, NumberCountChild[I17, NumberCountChild[I18, NumberCountZero]]]]]
-        ]]]]]]
+  type Options18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply.Aux[A, NumberCountChild[
+    I1,
+    NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[
+      I7,
+      NumberCountChild[I8, NumberCountChild[I9, NumberCountChild[I10, NumberCountChild[I11, NumberCountChild[I12, NumberCountChild[
+        I13,
+        NumberCountChild[I14, NumberCountChild[I15, NumberCountChild[I16, NumberCountChild[I17, NumberCountChild[I18, NumberCountZero]]]]]
       ]]]]]]
-    ], ConfirmSucceed]
+    ]]]]]]
+  ], ConfirmSucceed]
 
-  type TypeOptions19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
+  type Options19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[
       I2,
       NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[
@@ -133,7 +132,7 @@ trait TypeAdtAlias {
       ]]]]]]
     ]], ConfirmSucceed]
 
-  type TypeOptions20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
+  type Options20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[
       I3,
       NumberCountChild[I4, NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[
@@ -145,7 +144,7 @@ trait TypeAdtAlias {
       ]]]]]]
     ]]], ConfirmSucceed]
 
-  type TypeOptions21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
+  type Options21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[
       I4,
       NumberCountChild[I5, NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[I9, NumberCountChild[
@@ -157,7 +156,7 @@ trait TypeAdtAlias {
       ]]]]]]
     ]]]], ConfirmSucceed]
 
-  type TypeOptions22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
+  type Options22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
     TypeAdtApply.Aux[A, NumberCountChild[I1, NumberCountChild[I2, NumberCountChild[I3, NumberCountChild[I4, NumberCountChild[
       I5,
       NumberCountChild[I6, NumberCountChild[I7, NumberCountChild[I8, NumberCountChild[I9, NumberCountChild[I10, NumberCountChild[
@@ -170,5 +169,3 @@ trait TypeAdtAlias {
     ]]]]], ConfirmSucceed]
 
 }
-
-object TypeAdtAlias extends TypeAdtAlias
