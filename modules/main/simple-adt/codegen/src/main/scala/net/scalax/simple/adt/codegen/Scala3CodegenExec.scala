@@ -5,8 +5,6 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 import scala.util.Using
 
-import language.experimental.fewerBraces
-
 object Scala3CodegenExec:
 
   def main(arr: Array[String]): Unit =

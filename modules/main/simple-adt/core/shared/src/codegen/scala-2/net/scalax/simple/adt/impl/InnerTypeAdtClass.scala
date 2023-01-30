@@ -9,18 +9,29 @@ import CoreInstance._
 
 
 
+
 object InnerTypeAdtClass {
     
+        class PrepareInnerApply1[   I1  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,   NumberCountZero ]
+, ConfirmSucceed]): CusInnerApply1[   I1  ] = new CusInnerApply1(adtList = v.value, data = data)
+        }
+        object HelperIOImpl1 extends PrepareInnerApply1[   Any  ]
         class CusInnerApply1[   I1  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>   FoldListZero )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl1 extends HelperIO[Any] {
-            override type Out = CusInnerApply1[   Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply1[   Any  ] = new CusInnerApply1(adtList, data)
-        }
     
+        class PrepareInnerApply2[   I1   ,  I2  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,   NumberCountZero ]
+]
+, ConfirmSucceed]): CusInnerApply2[   I1   ,  I2  ] = new CusInnerApply2(adtList = v.value, data = data)
+        }
+        object HelperIOImpl2 extends PrepareInnerApply2[   Any   ,  Any  ]
         class CusInnerApply2[   I1   ,  I2  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -28,11 +39,17 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl2 extends HelperIO[Any] {
-            override type Out = CusInnerApply2[   Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply2[   Any   ,  Any  ] = new CusInnerApply2(adtList, data)
-        }
     
+        class PrepareInnerApply3[   I1   ,  I2   ,  I3  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,   NumberCountZero ]
+]
+]
+, ConfirmSucceed]): CusInnerApply3[   I1   ,  I2   ,  I3  ] = new CusInnerApply3(adtList = v.value, data = data)
+        }
+        object HelperIOImpl3 extends PrepareInnerApply3[   Any   ,  Any   ,  Any  ]
         class CusInnerApply3[   I1   ,  I2   ,  I3  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -42,11 +59,19 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl3 extends HelperIO[Any] {
-            override type Out = CusInnerApply3[   Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply3[   Any   ,  Any   ,  Any  ] = new CusInnerApply3(adtList, data)
-        }
     
+        class PrepareInnerApply4[   I1   ,  I2   ,  I3   ,  I4  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,   NumberCountZero ]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply4[   I1   ,  I2   ,  I3   ,  I4  ] = new CusInnerApply4(adtList = v.value, data = data)
+        }
+        object HelperIOImpl4 extends PrepareInnerApply4[   Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply4[   I1   ,  I2   ,  I3   ,  I4  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -58,11 +83,21 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl4 extends HelperIO[Any] {
-            override type Out = CusInnerApply4[   Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply4[   Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply4(adtList, data)
-        }
     
+        class PrepareInnerApply5[   I1   ,  I2   ,  I3   ,  I4   ,  I5  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,   NumberCountZero ]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply5[   I1   ,  I2   ,  I3   ,  I4   ,  I5  ] = new CusInnerApply5(adtList = v.value, data = data)
+        }
+        object HelperIOImpl5 extends PrepareInnerApply5[   Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply5[   I1   ,  I2   ,  I3   ,  I4   ,  I5  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -76,11 +111,23 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl5 extends HelperIO[Any] {
-            override type Out = CusInnerApply5[   Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply5[   Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply5(adtList, data)
-        }
     
+        class PrepareInnerApply6[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,   NumberCountZero ]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply6[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6  ] = new CusInnerApply6(adtList = v.value, data = data)
+        }
+        object HelperIOImpl6 extends PrepareInnerApply6[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply6[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -96,11 +143,25 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl6 extends HelperIO[Any] {
-            override type Out = CusInnerApply6[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply6[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply6(adtList, data)
-        }
     
+        class PrepareInnerApply7[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply7[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7  ] = new CusInnerApply7(adtList = v.value, data = data)
+        }
+        object HelperIOImpl7 extends PrepareInnerApply7[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply7[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -118,11 +179,27 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl7 extends HelperIO[Any] {
-            override type Out = CusInnerApply7[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply7[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply7(adtList, data)
-        }
     
+        class PrepareInnerApply8[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply8[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8  ] = new CusInnerApply8(adtList = v.value, data = data)
+        }
+        object HelperIOImpl8 extends PrepareInnerApply8[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply8[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -142,11 +219,29 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl8 extends HelperIO[Any] {
-            override type Out = CusInnerApply8[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply8[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply8(adtList, data)
-        }
     
+        class PrepareInnerApply9[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply9[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9  ] = new CusInnerApply9(adtList = v.value, data = data)
+        }
+        object HelperIOImpl9 extends PrepareInnerApply9[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply9[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -168,11 +263,31 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl9 extends HelperIO[Any] {
-            override type Out = CusInnerApply9[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply9[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply9(adtList, data)
-        }
     
+        class PrepareInnerApply10[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply10[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10  ] = new CusInnerApply10(adtList = v.value, data = data)
+        }
+        object HelperIOImpl10 extends PrepareInnerApply10[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply10[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -196,11 +311,33 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl10 extends HelperIO[Any] {
-            override type Out = CusInnerApply10[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply10[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply10(adtList, data)
-        }
     
+        class PrepareInnerApply11[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply11[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11  ] = new CusInnerApply11(adtList = v.value, data = data)
+        }
+        object HelperIOImpl11 extends PrepareInnerApply11[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply11[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -226,11 +363,35 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl11 extends HelperIO[Any] {
-            override type Out = CusInnerApply11[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply11[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply11(adtList, data)
-        }
     
+        class PrepareInnerApply12[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply12[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12  ] = new CusInnerApply12(adtList = v.value, data = data)
+        }
+        object HelperIOImpl12 extends PrepareInnerApply12[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply12[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -258,11 +419,37 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl12 extends HelperIO[Any] {
-            override type Out = CusInnerApply12[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply12[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply12(adtList, data)
-        }
     
+        class PrepareInnerApply13[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply13[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13  ] = new CusInnerApply13(adtList = v.value, data = data)
+        }
+        object HelperIOImpl13 extends PrepareInnerApply13[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply13[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -292,11 +479,39 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl13 extends HelperIO[Any] {
-            override type Out = CusInnerApply13[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply13[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply13(adtList, data)
-        }
     
+        class PrepareInnerApply14[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply14[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14  ] = new CusInnerApply14(adtList = v.value, data = data)
+        }
+        object HelperIOImpl14 extends PrepareInnerApply14[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply14[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -328,11 +543,41 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl14 extends HelperIO[Any] {
-            override type Out = CusInnerApply14[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply14[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply14(adtList, data)
-        }
     
+        class PrepareInnerApply15[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply15[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15  ] = new CusInnerApply15(adtList = v.value, data = data)
+        }
+        object HelperIOImpl15 extends PrepareInnerApply15[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply15[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -366,11 +611,43 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl15 extends HelperIO[Any] {
-            override type Out = CusInnerApply15[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply15[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply15(adtList, data)
-        }
     
+        class PrepareInnerApply16[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,  
+    NumberCountChild[I16,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply16[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16  ] = new CusInnerApply16(adtList = v.value, data = data)
+        }
+        object HelperIOImpl16 extends PrepareInnerApply16[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply16[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -406,11 +683,45 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl16 extends HelperIO[Any] {
-            override type Out = CusInnerApply16[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply16[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply16(adtList, data)
-        }
     
+        class PrepareInnerApply17[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,  
+    NumberCountChild[I16,  
+    NumberCountChild[I17,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply17[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17  ] = new CusInnerApply17(adtList = v.value, data = data)
+        }
+        object HelperIOImpl17 extends PrepareInnerApply17[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply17[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -448,11 +759,47 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl17 extends HelperIO[Any] {
-            override type Out = CusInnerApply17[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply17[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply17(adtList, data)
-        }
     
+        class PrepareInnerApply18[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,  
+    NumberCountChild[I16,  
+    NumberCountChild[I17,  
+    NumberCountChild[I18,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply18[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18  ] = new CusInnerApply18(adtList = v.value, data = data)
+        }
+        object HelperIOImpl18 extends PrepareInnerApply18[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply18[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -492,11 +839,49 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl18 extends HelperIO[Any] {
-            override type Out = CusInnerApply18[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply18[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply18(adtList, data)
-        }
     
+        class PrepareInnerApply19[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,  
+    NumberCountChild[I16,  
+    NumberCountChild[I17,  
+    NumberCountChild[I18,  
+    NumberCountChild[I19,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply19[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19  ] = new CusInnerApply19(adtList = v.value, data = data)
+        }
+        object HelperIOImpl19 extends PrepareInnerApply19[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply19[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -538,11 +923,51 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl19 extends HelperIO[Any] {
-            override type Out = CusInnerApply19[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply19[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply19(adtList, data)
-        }
     
+        class PrepareInnerApply20[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,  
+    NumberCountChild[I16,  
+    NumberCountChild[I17,  
+    NumberCountChild[I18,  
+    NumberCountChild[I19,  
+    NumberCountChild[I20,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply20[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20  ] = new CusInnerApply20(adtList = v.value, data = data)
+        }
+        object HelperIOImpl20 extends PrepareInnerApply20[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply20[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T   ,  func20: I20 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -586,11 +1011,53 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl20 extends HelperIO[Any] {
-            override type Out = CusInnerApply20[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply20[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply20(adtList, data)
-        }
     
+        class PrepareInnerApply21[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,  
+    NumberCountChild[I16,  
+    NumberCountChild[I17,  
+    NumberCountChild[I18,  
+    NumberCountChild[I19,  
+    NumberCountChild[I20,  
+    NumberCountChild[I21,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply21[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21  ] = new CusInnerApply21(adtList = v.value, data = data)
+        }
+        object HelperIOImpl21 extends PrepareInnerApply21[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply21[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T   ,  func20: I20 => T   ,  func21: I21 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -636,11 +1103,55 @@ object InnerTypeAdtClass {
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
         }
-        object HelperIOImpl21 extends HelperIO[Any] {
-            override type Out = CusInnerApply21[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply21[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply21(adtList, data)
-        }
     
+        class PrepareInnerApply22[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21   ,  I22  ] {
+            @inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T,  
+    NumberCountChild[I1,  
+    NumberCountChild[I2,  
+    NumberCountChild[I3,  
+    NumberCountChild[I4,  
+    NumberCountChild[I5,  
+    NumberCountChild[I6,  
+    NumberCountChild[I7,  
+    NumberCountChild[I8,  
+    NumberCountChild[I9,  
+    NumberCountChild[I10,  
+    NumberCountChild[I11,  
+    NumberCountChild[I12,  
+    NumberCountChild[I13,  
+    NumberCountChild[I14,  
+    NumberCountChild[I15,  
+    NumberCountChild[I16,  
+    NumberCountChild[I17,  
+    NumberCountChild[I18,  
+    NumberCountChild[I19,  
+    NumberCountChild[I20,  
+    NumberCountChild[I21,  
+    NumberCountChild[I22,   NumberCountZero ]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+]
+, ConfirmSucceed]): CusInnerApply22[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21   ,  I22  ] = new CusInnerApply22(adtList = v.value, data = data)
+        }
+        object HelperIOImpl22 extends PrepareInnerApply22[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
         class CusInnerApply22[   I1   ,  I2   ,  I3   ,  I4   ,  I5   ,  I6   ,  I7   ,  I8   ,  I9   ,  I10   ,  I11   ,  I12   ,  I13   ,  I14   ,  I15   ,  I16   ,  I17   ,  I18   ,  I19   ,  I20   ,  I21   ,  I22  ](adtList: Core2, data: Any) {
             @inline def fold[T](   func1: I1 => T   ,  func2: I2 => T   ,  func3: I3 => T   ,  func4: I4 => T   ,  func5: I5 => T   ,  func6: I6 => T   ,  func7: I7 => T   ,  func8: I8 => T   ,  func9: I9 => T   ,  func10: I10 => T   ,  func11: I11 => T   ,  func12: I12 => T   ,  func13: I13 => T   ,  func14: I14 => T   ,  func15: I15 => T   ,  func16: I16 => T   ,  func17: I17 => T   ,  func18: I18 => T   ,  func19: I19 => T   ,  func20: I20 => T   ,  func21: I21 => T   ,  func22: I22 => T  ): T = adtList(() =>  
     FoldListAppender.append(data, func1.asInstanceOf[Any => Any])(() =>  
@@ -687,10 +1198,6 @@ object InnerTypeAdtClass {
 )
 )
 ).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
-        }
-        object HelperIOImpl22 extends HelperIO[Any] {
-            override type Out = CusInnerApply22[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ]
-            @inline override def helper(adtList: Core2, data: Any): CusInnerApply22[   Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any   ,  Any  ] = new CusInnerApply22(adtList, data)
         }
     
 }

@@ -25,8 +25,8 @@ Match type by `Adt.OptionsX`(The type will be match first if it's declaring firs
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
 def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
-  val applyM = Adt.instance[Adt.Options3[*, None.type, Some[Int], Option[Int]]]
-  applyM.input(t).fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
+  val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
+  applyM.fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
 }
 
 assert(inputAdtData(None) == TempForData("None", None))
@@ -43,10 +43,8 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 
 type SeqTpe[S] = Adt.Options3[Seq[S], Seq[String], Seq[Int], Seq[Option[Long]]]
 def inputAdtData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
-  type Tpe[S] = Adt.Options3[S, Seq[String], Seq[Int], Seq[Option[Long]]] // Note: Tpe[*] is different from SeqTpe[*]
-  val applyM = Adt.instance[Tpe]
+  val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
   applyM
-    .input(t)
     .fold(
       t1 => t1.map(t => Some(t.length.toLong)),
       t2 => t2.map(t => Some(t.toLong)),

@@ -5,8 +5,6 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 import scala.util.Using
 
-import language.experimental.fewerBraces
-
 object Scala2CodegenExec:
 
   def main(arr: Array[String]): Unit =
@@ -31,7 +29,7 @@ object Scala2CodegenExec:
       }
     }
 
-    locally {
+    locally { () =>
       val filePath = writePath.resolve("HelperIOImplicit.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8)) { writer =>
         val linerContent = net.scalax.simple.nat.adt.codegen.txt.HelperIOImplicitScala2().body
