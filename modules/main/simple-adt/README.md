@@ -24,14 +24,14 @@ Match type by `Adt.OptionsX`(The type will be match first if it's declaring firs
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
-def inputOptData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
+def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
   val applyM = Adt.instance[Adt.Options3[*, None.type, Some[Int], Option[Int]]]
   applyM.input(t).fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
 }
 
-assert(inputOptDat(None) == TempForData("None", None))
-assert(inputOptDat(Option(2)) == TempForData("Option", Some(4)))
-assert(inputOptDat(Some(2)) == TempForData("Some", Some(3)))
+assert(inputAdtData(None) == TempForData("None", None))
+assert(inputAdtData(Option(2)) == TempForData("Option", Some(4)))
+assert(inputAdtData(Some(2)) == TempForData("Some", Some(3)))
 ```
 
 ## Usage of [@MarchLiu](https://marchliu.github.io/)
@@ -42,7 +42,7 @@ Match type for parameter list.
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
 type SeqTpe[S] = Adt.Options3[Seq[S], Seq[String], Seq[Int], Seq[Option[Long]]]
-def inputOptData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
+def inputAdtData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
   type Tpe[S] = Adt.Options3[S, Seq[String], Seq[Int], Seq[Option[Long]]] // Note: Tpe[*] is different from SeqTpe[*]
   val applyM = Adt.instance[Tpe]
   applyM
@@ -54,6 +54,6 @@ def inputOptData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
     )
 }
 
-assert(inputOptData("abc", "aabbcc", "aabbbcc") == List("abc", "aabbcc", "aabbbcc").map(t => Some(t.length.toLong)))
-assert(inputOptData(2, 3, 4) == List(2, 3, 4).map(_.toLong))
+assert(inputAdtData("abc", "aabbcc", "aabbbcc") == List("abc", "aabbcc", "aabbbcc").map(t => Some(t.length.toLong)))
+assert(inputAdtData(2, 3, 4) == List(2, 3, 4).map(_.toLong))
 ```
