@@ -1,7 +1,6 @@
-package net.scalax.simple.adt
-package test
+package net.scalax.simple.adt.test
 
-import TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
+import net.scalax.simple.adt.{TypeAdt => Adt}
 import scala.collection.compat._
 
 import zio._
@@ -13,10 +12,10 @@ import zio.test.Assertion._
   */
 object TestCase2 extends ZIOSpecDefault {
 
-  type TypeOpt[T] = TypeOptions3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
+  type TypeOpt[T] = Adt.Options3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
   def inputOptData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
-    type Tpe[T] = TypeOptions3[T, Seq[String], Seq[Int], Seq[Option[Long]]]
-    val applyM = getAdtApply[Tpe]
+    type Tpe[T] = Adt.Options3[T, Seq[String], Seq[Int], Seq[Option[Long]]]
+    val applyM = Adt.instance[Tpe]
     applyM
       .input(t)
       .fold(

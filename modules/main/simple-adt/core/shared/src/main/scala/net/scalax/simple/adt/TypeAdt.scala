@@ -10,16 +10,16 @@ import CoreInstance._
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdt[Input, Sum](val value: Core2) extends AnyVal
+class TypeAdtApply[Input, Sum](val value: Core2) extends AnyVal
 
-object TypeAdt extends impl.TypeAdtImplicitOptsPolyHigher {
-  type Aux[Input, Sum, S <: AdtStatus] = TypeAdt[Input, Sum] { type State = S }
-  def apply[Input, Sum, S <: AdtStatus](input: Core2): TypeAdt.Aux[Input, Sum, S] =
-    new TypeAdt[Any, Any](input).asInstanceOf[TypeAdt.Aux[Input, Sum, S]]
-  object alias extends impl.TypeAdtAlias
+object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
+  type Aux[Input, Sum, S <: AdtStatus] = TypeAdtApply[Input, Sum] { type State = S }
+  def apply[Input, Sum, S <: AdtStatus](input: Core2): TypeAdtApply.Aux[Input, Sum, S] =
+    new TypeAdtApply[Any, Any](input).asInstanceOf[TypeAdtApply.Aux[Input, Sum, S]]
 }
 
 trait LowerLevelPoly {
-  private val failedValue: TypeAdt.Aux[Any, Any, ConfirmFailed]        = TypeAdt(AdtListException)
-  implicit def adtFailedResult[I, S]: TypeAdt.Aux[I, S, ConfirmFailed] = failedValue.asInstanceOf[TypeAdt.Aux[I, S, ConfirmFailed]]
+  private val failedValue: TypeAdtApply.Aux[Any, Any, ConfirmFailed] = TypeAdtApply(AdtListException)
+  implicit def adtFailedResult[I, S]: TypeAdtApply.Aux[I, S, ConfirmFailed] =
+    failedValue.asInstanceOf[TypeAdtApply.Aux[I, S, ConfirmFailed]]
 }

@@ -1,7 +1,6 @@
-package net.scalax.simple.adt
-package test
+package net.scalax.simple.adt.test
 
-import TypeAdt.{alias => adtAlias, get => getAdtApply}, adtAlias._
+import net.scalax.simple.adt.{TypeAdt => Adt}
 import scala.collection.compat._
 
 import zio._
@@ -14,8 +13,8 @@ import zio.test.Assertion._
 object TestCase1 extends ZIOSpecDefault {
 
   case class TempForData(typeName: String, value: Option[Int])
-  def inputOptData[T: TypeOptions3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
-    val applyM = getAdtApply[TypeOptions3[*, None.type, Some[Int], Option[Int]]]
+  def inputOptData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
+    val applyM = Adt.instance[Adt.Options3[*, None.type, Some[Int], Option[Int]]]
     applyM.input(t).fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
   }
 
