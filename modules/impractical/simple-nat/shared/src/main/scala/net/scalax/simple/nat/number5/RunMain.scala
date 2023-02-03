@@ -56,6 +56,8 @@ object RunMain {
         println(i1, i2, result, compareResult_1, compareResult_2)
         assert((result - compareResult_1).abs < BigDecimal("0.0001"))
         assert((result - compareResult_2).abs < BigDecimal("0.0001"))
+        assert(countNumber3(number1.method1(number2Zero)) == ((i1 + i2 - 1) / i2))
+        assert(countNumber3(number2Positive.method2(number1)) == (i1 / i2))
       }
     }
   }
