@@ -4,23 +4,39 @@ package number2
 
 object RunMain {
 
-  def count(number: () => Number.Core2): Option[Int] =
-    (try
-      number() match {
-        case Number.PosotiveCount(tail) => for (nextInt <- count(tail)) yield nextInt + 1
-      }
-    catch {
-      case _: StackOverflowError => Some(0)
-    }).filter(_ < 500)
+  def run(num: () => Number.Core2): Unit = try
+    num()
+  catch {
+    case _: StackOverflowError =>
+  }
 
-  def numbersGen(n: Int): Number.Core2 = if (n > 0) Number.SCount(() => numbersGen(n - 1)) else Number.SZero
+  trait Count {
+    def up: Unit
+    def value: Int
+  }
+  object Count {
+    private class CountInstanceImpl extends Count {
+      private var num: Int    = 0
+      override def up: Unit   = num = num + 1
+      override def value: Int = num
+    }
+    def newInstance: Count = new CountInstanceImpl
+  }
+
+  def numbersGen(n: Int, count: Count): Number.Core2 = if (n > 0) Number.S { () =>
+    count.up
+    numbersGen(n - 1, count)
+  }
+  else Number.SZero
 
   def main(arr: Array[String]): Unit = {
     locally {
       for (i1 <- 0 to 200) {
-        def i1Value: Number.Core2 = numbersGen(i1)
-        val r1                    = count(() => i1Value)
-        assert(r1 == Some(i1))
+        val count: Count                = Count.newInstance
+        val i1Value: () => Number.Core2 = () => numbersGen(i1, count)
+        run(i1Value)
+        val result = count.value
+        assert(result == i1)
       }
     }
   }

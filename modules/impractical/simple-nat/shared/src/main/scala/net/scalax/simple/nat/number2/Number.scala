@@ -10,13 +10,7 @@ object Number {
     override def apply(v1: () => Core2): Core2 = t(v1)
   }
 
-  val S: Core2      = Core2(tail1 => tail1())
-  val SCount: Core2 = Core2(tail1 => PosotiveCount(tail1))
-
+  val S: Core2     = Core2(tail1 => tail1())
   def SZero: Core2 = S(() => SZero)
-
-  case class PosotiveCount(tail: () => Core2) extends Core2 {
-    override def apply(t: () => Core2): Core2 = throw new Exception
-  }
 
 }
