@@ -37,9 +37,9 @@ object RunMain1 {
 
         val result: BigDecimal = BigDecimal(i1) / BigDecimal(i2)
 
-        val loopCount: Int = 50000
+        val loopCount: Int = 100000
 
-        val compareResult_1: BigDecimal = {
+        val compareResult_1: (BigDecimal, Int) = {
           var currentNum: Number2 = number2Positive
           var list: List[Int]     = List.empty[Int]
           for (_ <- 0 to loopCount) {
@@ -47,10 +47,10 @@ object RunMain1 {
             list = currentCompareResult :: list
             currentNum = nextNumber2_1(currentNum)
           }
-          BigDecimal(list.sum) / BigDecimal(list.size)
+          (BigDecimal(list.sum) / BigDecimal(list.size), list.max)
         }
 
-        val compareResult_2: BigDecimal = {
+        val compareResult_2: (BigDecimal, Int) = {
           var currentNum: Number2 = number2Positive
           var list: List[Int]     = List.empty[Int]
           for (_ <- 0 to loopCount) {
@@ -58,12 +58,14 @@ object RunMain1 {
             list = currentCompareResult :: list
             currentNum = nextNumber2_2(currentNum)
           }
-          BigDecimal(list.sum) / BigDecimal(list.size)
+          (BigDecimal(list.sum) / BigDecimal(list.size), list.min)
         }
 
-        println(i1, i2, result, compareResult_1, compareResult_2)
-        assert((result - compareResult_1).abs < BigDecimal("0.0001"))
-        assert((result - compareResult_2).abs < BigDecimal("0.0001"))
+        println(i1, i2, result, compareResult_1._1, compareResult_2._1)
+        assert((result - compareResult_1._1).abs < BigDecimal("0.0001"))
+        assert((result - compareResult_2._1).abs < BigDecimal("0.0001"))
+        assert(compareResult_1._2 == ((i1 + i2 - 1) / i2))
+        assert(compareResult_2._2 == (i1 / i2))
         assert(countNumber3(number1.method1(number2Zero)) == ((i1 + i2 - 1) / i2))
         assert(countNumber3(number2Positive.method2(number1)) == (i1 / i2))
       }

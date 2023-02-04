@@ -37,7 +37,7 @@ object RunMain2 {
 
         val result: Int = i1 * i2
 
-        val loopCount: Int = 50000
+        val loopCount: Int = 100000
 
         val compareResult_1: Int = {
           var currentNum: Number2 = number2Positive
@@ -50,7 +50,7 @@ object RunMain2 {
           list.max
         }
 
-        val compareResult_2: BigDecimal = {
+        val compareResult_2: Int = {
           var currentNum: Number2 = number2Positive
           var list: List[Int]     = List.empty[Int]
           for (_ <- 0 to loopCount) {
