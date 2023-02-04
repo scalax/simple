@@ -3,10 +3,11 @@ package net.scalax.simple.adt
 import CoreInstance._
 
 object FoldListAppender {
-  @inline def append(data: Any, func: Any => Any): Core2 = Core2(tail =>
-    new Core2 with TypeAdtGetter {
-      override def runGetter: Any                   = func(data)
-      override def apply(other: () => Core2): Core2 = FoldListPositive(tail)(other)
-    }
-  )
+  @inline def append(data: Any, func: Any => Any, core2Tail: () => Core2): Core2 =
+    TypeGetterByCore2(data = data, func = func, core2Tail = core2Tail)
+}
+
+case class TypeGetterByCore2(data: Any, func: Any => Any, core2Tail: () => Core2) extends TypeAdtGetter with Core2 {
+  override def runGetter: Any                   = func(data)
+  override def apply(other: () => Core2): Core2 = FoldListPositive(core2Tail)(other)
 }

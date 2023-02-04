@@ -17,8 +17,8 @@ import CoreInstance._
 
 object InnerTypeAdtClass {
     @for(i1 <- 1 to 22) {
-        class PrepareInnerApply@{i1}[@paramType(1, i1)] {
-            @@inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T, @buildHList(1, i1), ConfirmSucceed]): CusInnerApply@{i1}[@paramType(1, i1)] = new CusInnerApply@{i1}(adtList = v.value, data = data)
+        class PrepareInnerApply@{i1}[@paramType(1, i1), Poly] {
+            @@inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T, @buildHList(1, i1), ConfirmSucceed, Poly]): CusInnerApply@{i1}[@paramType(1, i1)] = new CusInnerApply@{i1}(adtList = v.value, data = data)
         }
         object HelperIOImpl@{i1} extends PrepareInnerApply@{i1}[@paramTypeAny(1, i1)]
         class CusInnerApply@{i1}[@paramType(1, i1)](adtList: Core2, data: Any) {

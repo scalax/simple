@@ -17,8 +17,8 @@ sealed trait Number2 {
   def method2(num1: Number1): Number3
 }
 
-case class Number2S(tail: Number2) extends Number2 {
-  override def method2(num1: Number1): Number3 = num1.method1(tail)
+case class Number2S(tail: () => Number2) extends Number2 {
+  override def method2(num1: Number1): Number3 = num1.method1(tail())
 }
 case class Number2T(tail: () => Number2) extends Number2 {
   override def method2(num1: Number1): Number3 = Number3S(tail().method2(num1))
