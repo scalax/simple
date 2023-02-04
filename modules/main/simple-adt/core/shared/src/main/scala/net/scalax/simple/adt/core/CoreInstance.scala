@@ -9,8 +9,8 @@ object CoreInstance {
   }
 
   // ===
-  private val countNum        = Core2(tail => Core2(foldList => tail.apply().apply(() => foldList())))
-  private val countNumReverse = Core2(tail => Core2(foldList => countNum(foldList)(tail)))
+  private val countNum: Core2        = Core2(tail => Core2(foldList => tail.apply().apply(() => foldList())))
+  private val countNumReverse: Core2 = Core2(tail => Core2(foldList => countNum(foldList)(tail)))
 
   // ===
   val AdtListPositive: Core2  = countNumReverse
