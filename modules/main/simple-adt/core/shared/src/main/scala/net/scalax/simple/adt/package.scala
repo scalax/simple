@@ -2,8 +2,7 @@ package net.scalax.simple
 
 package object adt {
 
-  import impl._
-
-  object TypeAdt extends TypeAdtAlias with TypeAdtRuntimeApply
+  type TypeAdt = AdtAliasBuilder.ExceptSucceed.Context[AdtDefaultContext.type]
+  val TypeAdt: TypeAdt = AdtAliasBuilder.value
 
 }

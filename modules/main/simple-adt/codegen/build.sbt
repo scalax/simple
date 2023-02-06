@@ -1,6 +1,6 @@
 name := "simple-adt-codegen"
 
-scalaVersion := RCScalaVersion
+scalaVersion := scalaV.v3
 val codegenPackageName = "net.scalax.simple.adt.codegen"
 
 val commonScalaRunMainInputStr = settingKey[String]("commonScalaRunMainInputStr")
@@ -39,6 +39,18 @@ val scala3RunMainClass = s"$codegenPackageName.Scala3CodegenExec"
 codegenImpl := {
   codegenImpl.evaluated
   (Compile / runMain).inputTaskValue.partialInput(s" $scala3RunMainClass").partialInput(s" ${scala3RunMainInputStr.value}").evaluated
+}
+
+val scalaAllRunMainInputStr = settingKey[String]("scalaAllRunMainInputStr")
+scalaAllRunMainInputStr := {
+  val projectRoot = rootCodegenPath.value / "scala"
+  projectRoot.getAbsoluteFile.toString
+}
+
+val scalaAllRunMainClass = s"$codegenPackageName.ScalaAllCodegenExec"
+codegenImpl := {
+  codegenImpl.evaluated
+  (Compile / runMain).inputTaskValue.partialInput(s" $scalaAllRunMainClass").partialInput(s" ${scalaAllRunMainInputStr.value}").evaluated
 }
 
 val preGenMainClass = s"$codegenPackageName.PreCodegen"

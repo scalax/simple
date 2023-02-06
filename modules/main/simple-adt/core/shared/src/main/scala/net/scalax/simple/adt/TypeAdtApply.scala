@@ -18,8 +18,26 @@ object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
     new TypeAdtApply[Any, Any](input).asInstanceOf[TypeAdtApply.Aux[Input, Sum, S, P]]
 }
 
-trait LowerLevelPoly {
-  private val failedValue: TypeAdtApply.Aux[Any, Any, ConfirmFailed, Any] = TypeAdtApply(AdtListException)
-  implicit def adtFailedResult[I, S, Poly]: TypeAdtApply.Aux[I, S, ConfirmFailed, Poly] =
-    failedValue.asInstanceOf[TypeAdtApply.Aux[I, S, ConfirmFailed, Poly]]
+package impl {
+  trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower {
+    @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtAlias.AdtNat, AdtConvertPoly](implicit
+      adtConvert: AdtContext[A, B, AdtConvertPoly]
+    ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[B, Tail], ConfirmSucceed, AdtConvertPoly] = TypeAdtApply(new Core2 {
+      override def apply(c: () => Core2): Core2 =
+        AdtConvertWrapper(result = AdtListZero(c), convert = adtConvert.asInstanceOf[AdtContext[Any, Any, Any]])
+    })
+  }
+
+  trait HListTypeAdtPositiveLower extends LowerLevelPoly {
+    @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Status <: AdtStatus, AdtConvertPoly, Tail <: AdtAlias.AdtNat](implicit
+      tailMapping: TypeAdtApply.Aux[A, Tail, Status, AdtConvertPoly]
+    ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[B, Tail], Status, AdtConvertPoly] = TypeAdtApply(AdtListPositive(() => tailMapping.value))
+  }
+
+  trait LowerLevelPoly {
+    private val failedValue: TypeAdtApply.Aux[Any, Any, ConfirmFailed, Any] = TypeAdtApply(AdtListException)
+
+    implicit def adtFailedResult[I, Poly]: TypeAdtApply.Aux[I, AdtAlias.AdtZero, ConfirmFailed, Poly] =
+      failedValue.asInstanceOf[TypeAdtApply.Aux[I, AdtAlias.AdtZero, ConfirmFailed, Poly]]
+  }
 }
