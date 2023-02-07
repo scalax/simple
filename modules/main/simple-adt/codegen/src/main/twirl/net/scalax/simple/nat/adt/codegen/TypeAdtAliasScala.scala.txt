@@ -7,8 +7,8 @@ package impl
 } else { AdtAlias.AdtZero } }
 @paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
 
-trait TypeAdtAlias[ConfirmResult <: AdtStatus, Poly] {
+trait TypeAdtAlias[ConfirmResult <: AdtStatus] {
     @for(i1 <- 1 to 22) {
-        type Options@{i1}[A, @for(i2 <- 1 to i1) { @if(i2 == 1) { I@{i2} } else { , I@{i2} } }] = TypeAdtApply.Aux[A, @buildHList(1, i1), ConfirmResult, Poly]
+        type Options@{i1}[A, @for(i2 <- 1 to i1) { @if(i2 == 1) { I@{i2} } else { , I@{i2} } }] = TypeAdtApply.Aux[A, @buildHList(1, i1), ConfirmResult]
     }
 }

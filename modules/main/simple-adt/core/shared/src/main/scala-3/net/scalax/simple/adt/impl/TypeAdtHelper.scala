@@ -3,14 +3,14 @@ package impl
 
 import CoreInstance._
 
-final class FetchAdtApply[S <: Tuple, Poly]:
+final class FetchAdtApply[S <: Tuple]:
   inline final def apply[T](inline data: T)(using
-    inline v: TypeAdtApply.Aux[T, S, ConfirmSucceed, Poly]
+    inline v: TypeAdtApply.Aux[T, S, AdtStatus.Passed]
   ): InnerApply[[t] =>> Tuple.Map[S, [x] =>> (x => t)]] = InnerApply(adtList = v.value, data = data)
 end FetchAdtApply
 
 object FetchAdtApply:
-  inline final def get[S <: Tuple, Poly]: FetchAdtApply[S, Poly] = null
+  inline final def get[S <: Tuple]: FetchAdtApply[S] = null
 end FetchAdtApply
 
 final class InnerApply[O[_] <: Tuple](adtList: Core2, data: Any):

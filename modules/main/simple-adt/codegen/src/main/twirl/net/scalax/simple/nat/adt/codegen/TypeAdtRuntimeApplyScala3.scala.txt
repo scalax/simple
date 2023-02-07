@@ -4,8 +4,10 @@ package impl
 
 @paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
 
-trait TypeAdtRuntimeApply[Poly] {
+trait TypeAdtRuntimeApply {
     @for(i1 <- 1 to 22) {
-        def Options@{i1}[@paramType(1, i1)]: FetchAdtApply[Tuple@{i1}[@paramType(1, i1)], Poly] = FetchAdtApply.get
+        def Options@{i1}[@paramType(1, i1)]: FetchAdtApply[Tuple@{i1}[@paramType(1, i1)]] = FetchAdtApply.get
     }
 }
+
+object TypeAdtRuntimeApply extends TypeAdtRuntimeApply

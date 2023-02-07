@@ -11,3 +11,7 @@ case class TypeGetterByCore2(data: Any, func: Any => Any, core2Tail: () => Core2
   override def runGetter(adtConvert: AdtContext[Any, Any, Any]): Any = func(adtConvert.input(data))
   override def apply(other: () => Core2): Core2                      = FoldListPositive(core2Tail)(other)
 }
+
+case class AdtConvertWrapper(result: Core2, convert: AdtContext[Any, Any, Any]) extends Core2 {
+  override def apply(t: () => Core2): Core2 = throw new Exception
+}
