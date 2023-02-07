@@ -1,13 +1,15 @@
 package net.scalax.simple.adt
 package impl
 
-object Adt extends TypeAdtAlias[AdtStatus.Passed] with TypeAdtRuntimeApply with TempAlias {
-  val Passed: TypeAdtAlias[AdtStatus.Passed] with TempAlias with TypeAdtRuntimeApply = this
-  val Failed: TypeAdtAlias[AdtStatus.Failed] with TempAlias = this.asInstanceOf[TypeAdtAlias[AdtStatus.Failed] with TempAlias]
-}
+object Adt extends TypeAdtAlias[AdtStatus.Passed] with TypeAdtRuntimeApply {
+  val Passed: TypeAdtAlias[AdtStatus.Passed] with TypeAdtRuntimeApply = this
+  val Failed: TypeAdtAlias[AdtStatus.Failed]                          = this.asInstanceOf[TypeAdtAlias[AdtStatus.Failed]]
 
-trait TempAlias {
-  type WithContext[T, Poly] = AdtAdapter[T, Poly]
+  class Adapter[Target, Poly](val value: Target)
+
+  trait Context[In, Out, Poly] extends Any {
+    def input(t: In): Out
+  }
 }
 
 trait AdtAliasAbs {

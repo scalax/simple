@@ -10,7 +10,9 @@ import CoreInstance._
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdtApply[Input, Sum](val value: Core2)
+class TypeAdtApply[Input, Sum](val value: Core2) {
+  type State <: AdtStatus
+}
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
   type Aux[Input, Sum, S <: AdtStatus] = TypeAdtApply[Input, Sum] { type State = S }
@@ -20,20 +22,20 @@ object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
 
 package impl {
 
-  class AdapterContext[A, B, AdtConvertPoly](private val c: AdtContext[A, B, AdtConvertPoly])
+  class AdapterContext[A, B, AdtConvertPoly](private val c: TypeAdt.Context[A, B, AdtConvertPoly])
       extends AnyVal
-      with AdtContext[A, AdtAdapter[B, AdtConvertPoly], AdtConvertPoly] {
-    override def input(t: A): AdtAdapter[B, AdtConvertPoly] = new AdtAdapter[B, AdtConvertPoly](c.input(t))
+      with TypeAdt.Context[A, TypeAdt.Adapter[B, AdtConvertPoly], AdtConvertPoly] {
+    override def input(t: A): TypeAdt.Adapter[B, AdtConvertPoly] = new TypeAdt.Adapter[B, AdtConvertPoly](c.input(t))
   }
 
   trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtAlias.AdtNat, AdtConvertPoly](implicit
-      adtConvert: AdtContext[A, B, AdtConvertPoly]
-    ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[AdtAdapter[B, AdtConvertPoly], Tail], AdtStatus.Passed] = {
+      adtConvert: TypeAdt.Context[A, B, AdtConvertPoly]
+    ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[TypeAdt.Adapter[B, AdtConvertPoly], Tail], AdtStatus.Passed] = {
       val adtConvertImpl = new AdapterContext(adtConvert)
       val number = new Core2 {
         override def apply(c: () => Core2): Core2 =
-          AdtConvertWrapper(result = AdtListZero(c), convert = adtConvertImpl.asInstanceOf[AdtContext[Any, Any, Any]])
+          AdtConvertWrapper(result = AdtListZero(c), convert = adtConvertImpl.asInstanceOf[TypeAdt.Context[Any, Any, Any]])
       }
       TypeAdtApply(number)
     }
@@ -41,10 +43,10 @@ package impl {
 
   trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
     @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtAlias.AdtNat, AdtConvertPoly](implicit
-      adtConvert: AdtContext[A, B, DefaultAdtContext.type]
+      adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type]
     ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[B, Tail], AdtStatus.Passed] = TypeAdtApply(new Core2 {
       override def apply(c: () => Core2): Core2 =
-        AdtConvertWrapper(result = AdtListZero(c), convert = adtConvert.asInstanceOf[AdtContext[Any, Any, Any]])
+        AdtConvertWrapper(result = AdtListZero(c), convert = adtConvert.asInstanceOf[TypeAdt.Context[Any, Any, Any]])
     })
   }
 
@@ -60,4 +62,5 @@ package impl {
     implicit def adtFailedResult[I]: TypeAdtApply.Aux[I, AdtAlias.AdtZero, AdtStatus.Failed] =
       failedValue.asInstanceOf[TypeAdtApply.Aux[I, AdtAlias.AdtZero, AdtStatus.Failed]]
   }
+
 }

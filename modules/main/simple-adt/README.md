@@ -41,16 +41,16 @@ import io.circe._
 import io.circe.syntax._
 
 object JsonAdtPoly {
-  implicit def jsonAdtPolyImplicit[In: Encoder]: AdtContext[In, Json, JsonAdtPoly.type] = {
+  implicit def jsonAdtPolyImplicit[In: Encoder]: Adt.Context[In, Json, JsonAdtPoly.type] = {
     val encoder = Encoder[In]
-    new AdtContext[In, Json, JsonAdtPoly.type] {
+    new Adt.Context[In, Json, JsonAdtPoly.type] {
       override def input(t: In): Json = encoder(t)
     }
   }
 }
 
-def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.WithContext[Json, JsonAdtPoly.type]]](t: T): Json = {
-  val applyM = Adt.Options3[None.type, Option[Int], Adt.WithContext[Json, JsonAdtPoly.type]](t)
+def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
+  val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
   applyM.fold(n => Json.fromString("Null Tag"), n => n.map(_ + 1).asJson, n => n.value)
 }
 
