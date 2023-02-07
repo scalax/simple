@@ -9,15 +9,11 @@ object CoreInstance {
   }
 
   // ===
-  private val countNum: Core2        = Core2(tail => Core2(foldList => tail.apply().apply(() => foldList())))
-  private val countNumReverse: Core2 = Core2(tail => Core2(foldList => countNum(foldList)(tail)))
-
-  // ===
-  val AdtListPositive: Core2  = countNumReverse
+  val AdtListPositive: Core2  = Core2(tail => Core2(foldList => foldList()(tail)))
   val AdtListZero: Core2      = Core2(otherFoldList => otherFoldList())
-  val AdtListException: Core2 = countNumReverse(() => AdtListException)
+  val AdtListException: Core2 = Core2(foldList => foldList()(() => AdtListException)) // countNumReverse(() => AdtListException)
 
   // ===
-  val FoldListPositive: Core2 = countNumReverse
-  val FoldListZero: Core2     = countNum(() => FoldListZero)
+  val FoldListPositive: Core2 = AdtListPositive
+  val FoldListZero: Core2     = Core2(foldList => FoldListZero(foldList))
 }

@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 import scala.util.Using
 
-object Scala3CodegenExec:
+object ScalaAllCodegenExec:
 
   def main(arr: Array[String]): Unit =
 
@@ -15,13 +15,13 @@ object Scala3CodegenExec:
     Files.createDirectories(writePath)
 
     locally {
-      val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
+      val filePath = writePath.resolve("TypeAdtAlias.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8)) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtRuntimeApplyScala3().body
+        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasScala().body
         writer.println(linerContent)
       }
     }
 
   end main
 
-end Scala3CodegenExec
+end ScalaAllCodegenExec

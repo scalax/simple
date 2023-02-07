@@ -1,5 +1,5 @@
 package net.scalax.simple.adt
 
 trait TypeAdtGetter {
-  def runGetter: Any
+  def runGetter(adtConvert: AdtContext[Any, Any, Any]): Any
 }

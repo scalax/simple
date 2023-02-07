@@ -9,20 +9,23 @@ import CoreInstance._
 @paramTypeAny(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } Any } }
 
 @forMatch(end: Int, i1: Int) = { @if(i1 > end) { FoldListZero } else {
-    FoldListAppender.append(data, func@{i1}.asInstanceOf[Any => Any])(() => @forMatch(end, i1 + 1))
+    FoldListAppender.append(data, func@{i1}.asInstanceOf[Any => Any], () => @forMatch(end, i1 + 1))
 } }
 @buildHList(start: Int, i1: Int) = { @if(start <= i1) {
-    NumberCountChild[I@start, @buildHList(start + 1, i1)]
-} else { NumberCountZero } }
+    AdtAlias.AdtAppend[I@start, @buildHList(start + 1, i1)]
+} else { AdtAlias.AdtZero } }
 
 object InnerTypeAdtClass {
     @for(i1 <- 1 to 22) {
-        class PrepareInnerApply@{i1}[@paramType(1, i1), Poly] {
-            @@inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T, @buildHList(1, i1), ConfirmSucceed, Poly]): CusInnerApply@{i1}[@paramType(1, i1)] = new CusInnerApply@{i1}(adtList = v.value, data = data)
+        class PrepareInnerApply@{i1}[@paramType(1, i1)] {
+            @@inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T, @buildHList(1, i1), AdtStatus.Passed]): CusInnerApply@{i1}[@paramType(1, i1)] = new CusInnerApply@{i1}(adtList = v.value, data = data)
         }
         object HelperIOImpl@{i1} extends PrepareInnerApply@{i1}[@paramTypeAny(1, i1)]
         class CusInnerApply@{i1}[@paramType(1, i1)](adtList: Core2, data: Any) {
-            @@inline def fold[T](@paramFunc(1, i1)): T = adtList(() => @{forMatch(i1, 1)}).asInstanceOf[TypeAdtGetter].runGetter.asInstanceOf[T]
+            @@inline def fold[T](@paramFunc(1, i1)): T = {
+                val result = adtList(() => @{forMatch(i1, 1)}).asInstanceOf[AdtConvertWrapper]
+                result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+            }
         }
     }
 }

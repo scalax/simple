@@ -95,9 +95,8 @@ mainProjects / Test / test := (mainProjects / Test / test)
   .dependsOn(genericTestAction: _*)
   .value
 
-val codegenScalaV = RCScalaVersion
-addCommandAlias("preCodegen", s";++$codegenScalaV!;adt-codegen/preCodegenImpl")
-addCommandAlias("codegen", s";++$codegenScalaV!;adt-codegen/codegenImpl")
+addCommandAlias("preCodegen", s";++${scalaV.v3}!;adt-codegen/preCodegenImpl")
+addCommandAlias("codegen", s";++${scalaV.v3}!;adt-codegen/codegenImpl")
 addCommandAlias("executeTest", "+mainProjects/test")
 
 ThisBuild / djxScalafmtFile := `root/file` / ".scalafmt_simple.conf"
