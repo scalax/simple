@@ -18,7 +18,7 @@ object TestCase1 extends ZIOSpecDefault {
     applyM.fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
   }
 
-  override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314")(
+  override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314-1")(
     test("Simple adt fold in test data.") {
       val baseValue = 2
 

@@ -34,6 +34,31 @@ assert(inputAdtData(Option(2)) == TempForData("Option", Some(4)))
 assert(inputAdtData(Some(2)) == TempForData("Some", Some(3)))
 ```
 
+Match type with custom rules by `Adt.WithContext`.
+``` scala
+import net.scalax.simple.adt.{TypeAdt => Adt}
+import io.circe._
+import io.circe.syntax._
+
+object JsonAdtPoly {
+  implicit def jsonAdtPolyImplicit[In: Encoder]: Adt.Context[In, Json, JsonAdtPoly.type] = {
+    val encoder = Encoder[In]
+    new Adt.Context[In, Json, JsonAdtPoly.type] {
+      override def input(t: In): Json = encoder(t)
+    }
+  }
+}
+
+def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
+  val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
+  applyM.fold(n => Json.fromString("Null Tag"), n => n.map(_ + 1).asJson, n => n.value)
+}
+
+assert(inputAdtData(None) == "Null Tag".asJson)
+assert(inputAdtData(Some(2)) == 3.asJson)
+assert(inputAdtData("My Name") == "My Name".asJson)
+```
+
 ## Usage of [@MarchLiu](https://marchliu.github.io/)
 Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-workers/commons-lang3-bridge)
 
