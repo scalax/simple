@@ -13,7 +13,7 @@ import zio.test.Assertion._
 object TestCase1 extends ZIOSpecDefault {
 
   case class TempForData(typeName: String, value: Option[Int])
-  def inputOptData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
+  def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
     val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
     applyM.fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
   }
@@ -24,19 +24,19 @@ object TestCase1 extends ZIOSpecDefault {
 
       def assert1 = {
         val data     = None
-        val foldData = inputOptData(data)
+        val foldData = inputAdtData(data)
         assert(foldData)(Assertion.equalTo(TempForData("None", data)))
       }
 
       def assert2 = {
         val data     = Option(baseValue)
-        val foldData = inputOptData(data)
+        val foldData = inputAdtData(data)
         assert(foldData)(Assertion.equalTo(TempForData("Option", Option(baseValue + 2))))
       }
 
       def assert3 = {
         val data     = Some(baseValue)
-        val foldData = inputOptData(data)
+        val foldData = inputAdtData(data)
         assert(foldData)(Assertion.equalTo(TempForData("Some", Some(baseValue + 1))))
       }
 
