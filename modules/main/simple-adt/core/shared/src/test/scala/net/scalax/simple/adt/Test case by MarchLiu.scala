@@ -10,7 +10,7 @@ import zio.test.Assertion._
 /** @author
   *   MarchLiu
   */
-object TestCase2 extends ZIOSpecDefault {
+object TestCase3 extends ZIOSpecDefault {
 
   type TypeOpt[T] = Adt.Options3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
   def inputOptData[T: TypeOpt](t: T*): Seq[Option[Long]] = {

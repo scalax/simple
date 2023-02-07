@@ -19,15 +19,24 @@ object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
 }
 
 package impl {
+
+  class AdapterContext[A, B, AdtConvertPoly](private val c: AdtContext[A, B, AdtConvertPoly])
+      extends AnyVal
+      with AdtContext[A, AdtAdapter[B, AdtConvertPoly], AdtConvertPoly] {
+    override def input(t: A): AdtAdapter[B, AdtConvertPoly] = new AdtAdapter[B, AdtConvertPoly](c.input(t))
+  }
+
   trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtAlias.AdtNat, AdtConvertPoly](implicit
       adtConvert: AdtContext[A, B, AdtConvertPoly]
-    ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[AdtContext[A, B, AdtConvertPoly], Tail], AdtStatus.Passed] = TypeAdtApply(
-      new Core2 {
+    ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[AdtAdapter[B, AdtConvertPoly], Tail], AdtStatus.Passed] = {
+      val adtConvertImpl = new AdapterContext(adtConvert)
+      val number = new Core2 {
         override def apply(c: () => Core2): Core2 =
-          AdtConvertWrapper(result = AdtListZero(c), convert = adtConvert.asInstanceOf[AdtContext[Any, Any, Any]])
+          AdtConvertWrapper(result = AdtListZero(c), convert = adtConvertImpl.asInstanceOf[AdtContext[Any, Any, Any]])
       }
-    )
+      TypeAdtApply(number)
+    }
   }
 
   trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
