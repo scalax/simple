@@ -1,21 +1,21 @@
 package net.scalax.simple.adt
 
-import impl.AliasInstance.{target => Instance, AliasInstance => Alias, StatusBuilder => Status}
+import impl.AliasInstance.{target => Instance, FailedAlias, SucceedAlias}
 
 object AdtAliasBuilder {
-  val ExceptSucceed: Status[ConfirmSucceed] = Status[ConfirmSucceed]
-  val ExceptFailed: Status[ConfirmFailed]   = Status[ConfirmFailed]
-  def Status[S <: AdtStatus]: Status[S]     = null
+  val ExceptSucceed: { type Context[P] = SucceedAlias[P] } = null
+  val ExceptFailed: { type Context[P] = FailedAlias[P] }   = null
 
-  def value[S <: AdtStatus, Poly]: Alias[S, Poly] = Instance
+  def value[T]: T = Instance
 }
 
 package impl {
 
   object AliasInstance extends TypeAdtAlias[AdtStatus, Any] with TypeAdtRuntimeApply[Any] {
-    type StatusBuilder[S <: AdtStatus] = { type Context[P] = Alias[S, P] }
     def target[T]: T = AliasInstance.asInstanceOf[T]
-    type AliasInstance[S <: AdtStatus, P] = TypeAdtAlias[S, P] with TypeAdtRuntimeApply[P]
+
+    type SucceedAlias[P] = TypeAdtAlias[ConfirmSucceed, P] with TypeAdtRuntimeApply[P]
+    type FailedAlias[P]  = TypeAdtAlias[ConfirmFailed, P]
   }
 
   trait AdtAliasAbs {
