@@ -34,7 +34,7 @@ assert(inputAdtData(Option(2)) == TempForData("Option", Some(4)))
 assert(inputAdtData(Some(2)) == TempForData("Some", Some(3)))
 ```
 
-Match type with custom rules by `Adt.WithContext`.
+Match type with custom rules by `Adt.Adapter`.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 import io.circe._
