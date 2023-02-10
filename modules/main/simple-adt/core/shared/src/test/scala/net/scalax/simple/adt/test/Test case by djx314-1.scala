@@ -10,7 +10,7 @@ import zio.test.Assertion._
 /** @author
   *   djx314
   */
-object TestCase1 extends ZIOSpecDefault {
+object `Test case by djx314-1` extends ZIOSpecDefault {
 
   case class TempForData(typeName: String, value: Option[Int])
   def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
