@@ -2,27 +2,19 @@ package net.scalax.simple.wire
 package constructor
 
 import service._
-import routes.{NatHttpRoutes, NatHttpRoutesImpl}
+import routes.NatHttpRoutes
 import org.http4s.HttpRoutes
 import cats.effect._
 import doobie._
-import env._
 import resource._
 import cats._
 
-import com.softwaremill.macwire._
+class AppWire(xa1: Transactor[IO], xa2: Transactor[IO]) {
 
-class AppWire[WireEnvA[_]: Wire, WireEnvB[_]: Wire](txa: WireEnvA[Transactor[IO]], txb: WireEnvB[Transactor[IO]]) {
+  private implicit lazy val serviceA: ServiceA = ServiceA.build(serviceB)(xa = xa1)
+  private lazy val serviceB: ServiceB          = ServiceB.build(serviceA)(xa = xa2)
 
-  private lazy val serviceA: Id[ServiceA] = wire[ServiceAImpl[Id, WireEnvA]]
-  private lazy val serviceB: Id[ServiceB] = wire[ServiceBImpl[Id, WireEnvB]]
-
-  private def serviceFunc[T](a: => Id[T]): () => Id[T] = () => a
-
-  private lazy val serviceAImpl: () => Id[ServiceA] = wireWith(serviceFunc[ServiceA] _)
-  private lazy val serviceBImpl: () => Id[ServiceB] = wireWith(serviceFunc[ServiceB] _)
-
-  private lazy val natRoutesInstances: NatHttpRoutes = wire[NatHttpRoutesImpl[Id]]
+  private lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
 
   lazy val routes: HttpRoutes[IO] = natRoutesInstances.route
 
@@ -30,14 +22,11 @@ class AppWire[WireEnvA[_]: Wire, WireEnvB[_]: Wire](txa: WireEnvA[Transactor[IO]
 
 object AppWire {
 
-  val build: Resource[IO, HttpRoutes[IO]] = {
-    val xa1 = wire[EnvAH2Doobie].resourceEnvA
-    val xa2 = wire[EnvBH2Doobie].resourceEnvB
+  def build(implicit xa1: Transactor[IO], xa2: Transactor[IO]) = new AppWire(xa1 = xa1, xa2 = xa2)
 
-    for {
-      evaXa <- xa1
-      evbXa <- xa2
-    } yield wire[AppWire[EnvA, EnvB]].routes
-  }
+  val app: Resource[IO, HttpRoutes[IO]] = for {
+    xa1 <- H2Doobie.build("EnvA")
+    xa2 <- H2Doobie.build("EnvB")
+  } yield build(xa1 = xa1, xa2 = xa2).routes
 
 }

@@ -5,7 +5,7 @@ import CoreInstance._
 
 final class FetchAdtApply[S <: Tuple]:
   inline final def apply[T](inline data: T)(using
-    inline v: TypeAdtApply.Aux[T, S, AdtStatus.Passed]
+    inline v: TypeAdtApply.Aux[T, S, Adt.Status.Passed]
   ): InnerApply[[t] =>> Tuple.Map[S, [x] =>> (x => t)]] = InnerApply(adtList = v.value, data = data)
 end FetchAdtApply
 

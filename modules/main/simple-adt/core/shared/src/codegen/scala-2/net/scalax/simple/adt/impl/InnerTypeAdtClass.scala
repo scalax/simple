@@ -7,7 +7,7 @@ object InnerTypeAdtClass {
 
   class PrepareInnerApply1[I1] {
     @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtZero], AdtStatus.Passed]
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtZero], Adt.Status.Passed]
     ): CusInnerApply1[I1] = new CusInnerApply1(adtList = v.value, data = data)
   }
   object HelperIOImpl1 extends PrepareInnerApply1[Any]
@@ -21,7 +21,7 @@ object InnerTypeAdtClass {
 
   class PrepareInnerApply2[I1, I2] {
     @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtZero]], AdtStatus.Passed]
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtZero]], Adt.Status.Passed]
     ): CusInnerApply2[I1, I2] = new CusInnerApply2(adtList = v.value, data = data)
   }
   object HelperIOImpl2 extends PrepareInnerApply2[Any, Any]
@@ -43,7 +43,7 @@ object InnerTypeAdtClass {
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[
         I1,
         AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtZero]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply3[I1, I2, I3] = new CusInnerApply3(adtList = v.value, data = data)
   }
   object HelperIOImpl3 extends PrepareInnerApply3[Any, Any, Any]
@@ -70,7 +70,7 @@ object InnerTypeAdtClass {
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[
         I1,
         AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtZero]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply4[I1, I2, I3, I4] = new CusInnerApply4(adtList = v.value, data = data)
   }
   object HelperIOImpl4 extends PrepareInnerApply4[Any, Any, Any, Any]
@@ -102,7 +102,7 @@ object InnerTypeAdtClass {
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[
         I1,
         AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtZero]]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply5[I1, I2, I3, I4, I5] = new CusInnerApply5(adtList = v.value, data = data)
   }
   object HelperIOImpl5 extends PrepareInnerApply5[Any, Any, Any, Any, Any]
@@ -139,7 +139,7 @@ object InnerTypeAdtClass {
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[
         I2,
         AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtZero]]]]
-      ]], AdtStatus.Passed]
+      ]], Adt.Status.Passed]
     ): CusInnerApply6[I1, I2, I3, I4, I5, I6] = new CusInnerApply6(adtList = v.value, data = data)
   }
   object HelperIOImpl6 extends PrepareInnerApply6[Any, Any, Any, Any, Any, Any]
@@ -181,7 +181,7 @@ object InnerTypeAdtClass {
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[
         I3,
         AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtZero]]]]
-      ]]], AdtStatus.Passed]
+      ]]], Adt.Status.Passed]
     ): CusInnerApply7[I1, I2, I3, I4, I5, I6, I7] = new CusInnerApply7(adtList = v.value, data = data)
   }
   object HelperIOImpl7 extends PrepareInnerApply7[Any, Any, Any, Any, Any, Any, Any]
@@ -236,7 +236,7 @@ object InnerTypeAdtClass {
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[
         I4,
         AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtZero]]]]
-      ]]]], AdtStatus.Passed]
+      ]]]], Adt.Status.Passed]
     ): CusInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8] = new CusInnerApply8(adtList = v.value, data = data)
   }
   object HelperIOImpl8 extends PrepareInnerApply8[Any, Any, Any, Any, Any, Any, Any, Any]
@@ -300,7 +300,7 @@ object InnerTypeAdtClass {
           I5,
           AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtZero]]]]
         ]]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9] = new CusInnerApply9(adtList = v.value, data = data)
   }
   object HelperIOImpl9 extends PrepareInnerApply9[Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -370,7 +370,7 @@ object InnerTypeAdtClass {
           I6,
           AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtZero]]]]
         ]]]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = new CusInnerApply10(adtList = v.value, data = data)
   }
   object HelperIOImpl10 extends PrepareInnerApply10[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -446,7 +446,7 @@ object InnerTypeAdtClass {
           I7,
           AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtZero]]]]
         ]]]]]
-      ]], AdtStatus.Passed]
+      ]], Adt.Status.Passed]
     ): CusInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = new CusInnerApply11(adtList = v.value, data = data)
   }
   object HelperIOImpl11 extends PrepareInnerApply11[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -528,7 +528,7 @@ object InnerTypeAdtClass {
           I8,
           AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtZero]]]]
         ]]]]]
-      ]]], AdtStatus.Passed]
+      ]]], Adt.Status.Passed]
     ): CusInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = new CusInnerApply12(adtList = v.value, data = data)
   }
   object HelperIOImpl12 extends PrepareInnerApply12[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -616,7 +616,7 @@ object InnerTypeAdtClass {
           I9,
           AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtZero]]]]
         ]]]]]
-      ]]]], AdtStatus.Passed]
+      ]]]], Adt.Status.Passed]
     ): CusInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = new CusInnerApply13(adtList = v.value, data = data)
   }
   object HelperIOImpl13 extends PrepareInnerApply13[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -714,7 +714,7 @@ object InnerTypeAdtClass {
             AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtZero]]]]
           ]]]]]
         ]]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = new CusInnerApply14(adtList = v.value, data = data)
   }
   object HelperIOImpl14 extends PrepareInnerApply14[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -822,7 +822,7 @@ object InnerTypeAdtClass {
             AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtZero]]]]
           ]]]]]
         ]]]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] =
       new CusInnerApply15(adtList = v.value, data = data)
   }
@@ -937,7 +937,7 @@ object InnerTypeAdtClass {
             AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtZero]]]]
           ]]]]]
         ]]]]]
-      ]], AdtStatus.Passed]
+      ]], Adt.Status.Passed]
     ): CusInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] =
       new CusInnerApply16(adtList = v.value, data = data)
   }
@@ -1058,7 +1058,7 @@ object InnerTypeAdtClass {
             AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtZero]]]]
           ]]]]]
         ]]]]]
-      ]]], AdtStatus.Passed]
+      ]]], Adt.Status.Passed]
     ): CusInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] =
       new CusInnerApply17(adtList = v.value, data = data)
   }
@@ -1185,7 +1185,7 @@ object InnerTypeAdtClass {
             AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtZero]]]]
           ]]]]]
         ]]]]]
-      ]]]], AdtStatus.Passed]
+      ]]]], Adt.Status.Passed]
     ): CusInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
       new CusInnerApply18(adtList = v.value, data = data)
   }
@@ -1322,7 +1322,7 @@ object InnerTypeAdtClass {
             ]]]]]
           ]]]]]
         ]]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
       new CusInnerApply19(adtList = v.value, data = data)
   }
@@ -1465,7 +1465,7 @@ object InnerTypeAdtClass {
             ]]]]]
           ]]]]]
         ]]]]]
-      ], AdtStatus.Passed]
+      ], Adt.Status.Passed]
     ): CusInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
       new CusInnerApply20(adtList = v.value, data = data)
   }
@@ -1617,7 +1617,7 @@ object InnerTypeAdtClass {
             ]]]]]
           ]]]]]
         ]]]]]
-      ]], AdtStatus.Passed]
+      ]], Adt.Status.Passed]
     ): CusInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
       new CusInnerApply21(adtList = v.value, data = data)
   }
@@ -1775,7 +1775,7 @@ object InnerTypeAdtClass {
             ]]]]]
           ]]]]]
         ]]]]]
-      ]]], AdtStatus.Passed]
+      ]]], Adt.Status.Passed]
     ): CusInnerApply22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
       new CusInnerApply22(adtList = v.value, data = data)
   }

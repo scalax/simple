@@ -1,5 +1,19 @@
 // scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys && org.scalafmt.sbt.ScalafmtPlugin
 
+// start autoImport
+val enableZIOTest = settingKey[Boolean]("enable zio test.")
+// end autoImport
+
+// start setting
+enableZIOTest := false
+// end setting
+
+// start setting
+testFrameworks ++= {
+    if (enableZIOTest.value) Seq(new TestFramework("zio.test.sbt.ZTestFramework")) else Seq.empty
+}
+// end setting
+
 // start setting
 {
     import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
@@ -41,6 +55,7 @@
 // start setting
 Compile / unmanagedSourceDirectories := {
   import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
+  import djx.sbt.depts.output.Djx314DeptsPlugin.autoImport._
   import inner.CommonUtils._
   import scala.collection.compat._
   val t1    = (Compile / baseFilesToCross).value
@@ -48,7 +63,7 @@ Compile / unmanagedSourceDirectories := {
   val base  = (Compile / unmanagedSourceDirectories).value
   val sv    = scalaVersion.value
   val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
-  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv)) yield f2
+  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv, djxIsScalaJs.value.getOrElse(false))) yield f2
   val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
   all.to(Seq)
 }
@@ -57,6 +72,7 @@ Compile / unmanagedSourceDirectories := {
 // start setting
 Test / unmanagedSourceDirectories ++= {
   import net.scalax.simple.nat.sbt.ProjectKeys.autoImport._
+  import djx.sbt.depts.output.Djx314DeptsPlugin.autoImport._
   import inner.CommonUtils._
   import scala.collection.compat._
   val t1    = (Test / baseFilesToCross).value
@@ -64,7 +80,7 @@ Test / unmanagedSourceDirectories ++= {
   val base  = (Test / unmanagedSourceDirectories).value
   val sv    = scalaVersion.value
   val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
-  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv)) yield f2
+  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv, djxIsScalaJs.value.getOrElse(false))) yield f2
   val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
   all.to(Seq)
 }

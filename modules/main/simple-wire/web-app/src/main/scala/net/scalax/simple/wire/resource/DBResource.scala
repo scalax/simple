@@ -5,9 +5,8 @@ import doobie._
 import doobie.implicits._
 import cats.effect.{IO, Resource}
 import doobie.hikari._
-import constructor.env._
 
-abstract class H2Doobie(dbName: String) {
+class H2Doobie(dbName: String) {
 
   private val transactor: Resource[IO, HikariTransactor[IO]] = for {
     ce <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
@@ -40,12 +39,12 @@ abstract class H2Doobie(dbName: String) {
   }
 
   protected val resource: Resource[IO, Transactor[IO]] = initAction
+
 }
 
-class EnvAH2Doobie extends H2Doobie("EnvA") {
-  val resourceEnvA: Resource[IO, EnvA[Transactor[IO]]] = for (r <- resource) yield EnvA(r)
-}
-
-class EnvBH2Doobie extends H2Doobie("EnvB") {
-  val resourceEnvB: Resource[IO, EnvB[Transactor[IO]]] = for (r <- resource) yield EnvB(r)
+object H2Doobie {
+  def build(name: String): Resource[IO, Transactor[IO]] = {
+    val resourceContent = new H2Doobie(name)
+    resourceContent.resource
+  }
 }

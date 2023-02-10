@@ -9,7 +9,7 @@ import doobie._
 import doobie.implicits._
 import model._
 
-abstract class DBDao(xa: Transactor[IO]) {
+class DBDao(xa: Transactor[IO]) {
 
   private val y = xa.yolo
   import y._
@@ -24,4 +24,6 @@ abstract class DBDao(xa: Transactor[IO]) {
 
 }
 
-class DBDaoImpl[XaEnv[_]: Wire](xaEnv: XaEnv[Transactor[IO]]) extends DBDao(xa = Wire[XaEnv].apply(xaEnv))
+object DBDao {
+  def build(implicit xa: Transactor[IO]): DBDao = new DBDao(implicitly)
+}
