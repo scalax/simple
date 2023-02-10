@@ -102,13 +102,6 @@ scalacOptions ++= {
 
 // start setting
 {
-    import djx.sbt.depts.output.Djx314DeptsPlugin.autoImport._
-    crossScalaVersions := List(scalaV.v211, scalaV.v212, scalaV.v213, scalaV.v3)
-}
-// end setting
-
-// start setting
-{
     import sbtide.ConfigPlugin.autoImport._
     idePackagePrefix := Some("net.scalax.simple")
 }

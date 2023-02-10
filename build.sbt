@@ -101,3 +101,5 @@ addCommandAlias("executeTest", "+mainProjects/test")
 
 ThisBuild / djxScalafmtFile := `root/file` / ".scalafmt_simple.conf"
 ThisBuild / djxBuildSbtFile := `root/file` / "project" / "build.properties"
+
+Global / onChangedBuildSource := ReloadOnSourceChanges

@@ -59,5 +59,4 @@ preCodegenImpl := (Compile / runMain).inputTaskValue
   .partialInput(s" ${rootCodegenPath.value.getAbsoluteFile.toString}")
   .evaluated
 
-// Not support 3.2.0
 scalafmtOnCompile := true

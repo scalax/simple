@@ -1,7 +1,7 @@
 scalaVersion := scalaV.v213
 name         := "simple-adt-core"
 
-libraryDependencies ++= `kind-projector`.value
+libraryDependencies ++= libScalax.`kind-projector`.value
 libraryDependencies ++= libScalax.`scala-collection-compat`.value
 libraryDependencies ++= libScalax.circe.value.map(_ % Test)
 

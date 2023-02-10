@@ -5,57 +5,25 @@ import scala.collection.compat._
 
 // start autoImport
 object versions {
-    val `kind-projector` = "0.13.2"
     val zio = "2.0.5"
-    val `commons-io` = "1.3.2"
     val http4s = "0.23.16"
     val `cats-effect` = "3.4.2"
     val cats = "2.9.0"
     val h2 = "2.1.214"
     val doobie = "1.0.0-RC1"
-    val circe = "0.14.3"
-    val macwire = "2.5.8"
 }
-val `kind-projector` = settingKey[Seq[ModuleID]]("lib for kind-projector.")
 val http4s = settingKey[Seq[ModuleID]]("lib for http4s.")
 val `cats-effect` = settingKey[Seq[ModuleID]]("lib for cats-effect.")
 val cats = settingKey[Seq[ModuleID]]("lib for cats.")
 val zio = settingKey[Seq[ModuleID]]("lib for zio.")
-val `commons-io` = settingKey[ModuleID]("lib for commons-io.")
 val h2 = settingKey[Seq[ModuleID]]("lib for h2.")
 val doobie = settingKey[Seq[ModuleID]]("lib for doobie.")
-val circe = settingKey[Seq[ModuleID]]("lib for circe.")
-val macwire = settingKey[Seq[ModuleID]]("lib for macwire.")
 
 val enableZIOTest = settingKey[Boolean]("enable zio test.")
 // end autoImport
 
 // start setting
 enableZIOTest := false
-// end setting
-
-// start setting
-circe := Seq(
-  "io.circe" %%% "circe-core",
-  "io.circe" %%% "circe-generic",
-  "io.circe" %%% "circe-parser"
-).map(_ % versions.circe)
-// end setting
-
-// start setting
-macwire := Seq("com.softwaremill.macwire" %% "macros" % versions.macwire % "provided")
-// end setting
-
-// start setting
-`kind-projector` := {
-  val need = CrossVersion.partialVersion(scalaVersion.value).filter(_._1 == 2L).to(Seq)
-  val dept = "org.typelevel" % "kind-projector" % versions.`kind-projector` cross CrossVersion.full
-  for (_ <- need) yield compilerPlugin(dept)
-}
-// end setting
-
-// start setting
-`commons-io` := "org.apache.commons" % "commons-io" % versions.`commons-io`
 // end setting
 
 // start setting
