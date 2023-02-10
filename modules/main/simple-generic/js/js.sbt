@@ -3,8 +3,8 @@ name         := "simple-generic"
 
 crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
-libraryDependencies ++= cats.value
-libraryDependencies ++= circe.value
+libraryDependencies ++= libScalax.cats.value
+libraryDependencies ++= libScalax.circe.value
 
 scalaJSUseMainModuleInitializer := true
 

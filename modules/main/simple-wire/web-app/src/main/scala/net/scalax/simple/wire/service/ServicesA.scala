@@ -13,8 +13,8 @@ import com.softwaremill.macwire._
 
 trait ServiceA {
   serviceA: ServiceA =>
-  def serviceB: ServiceB
-  def dbDao: DBDao
+  protected def serviceB: ServiceB
+  protected def dbDao: DBDao
 
   def selectData: IO[List[Cat]] = dbDao.select
 
@@ -31,7 +31,9 @@ trait ServiceA {
 
 }
 
-class ServiceAImpl[ServiceBEnv[_]: Wire, DBEnv[_]: Wire](sb: () => ServiceBEnv[ServiceB], dbenvxa: DBEnv[Transactor[IO]]) extends ServiceA {
-  override lazy val serviceB: ServiceB = Wire[ServiceBEnv].apply(sb())
-  override val dbDao: DBDao            = wire[DBDaoImpl[DBEnv]]
+object ServiceA {
+  def build(sb: => ServiceB)(implicit xa: Transactor[IO]): ServiceA = new ServiceA {
+    override protected def serviceB: ServiceB = sb
+    override protected val dbDao: DBDao       = DBDao.build
+  }
 }

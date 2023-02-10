@@ -14,7 +14,7 @@ import constructor.AppWire
 object MainApp extends IOApp {
 
   private val serverResource: Resource[IO, Server] = for {
-    app    <- AppWire.build
+    app    <- AppWire.app
     server <- EmberServerBuilder.default[IO].withHttpApp(app.orNotFound).withHost(ipv4"0.0.0.0").withPort(port"8080").build
   } yield server
 

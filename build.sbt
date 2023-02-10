@@ -1,5 +1,3 @@
-val `root/file` = file(".").getCanonicalFile
-
 val `module/file`      = `root/file` / "modules"
 val `impractical/file` = `module/file` / "impractical"
 
@@ -49,12 +47,7 @@ lazy val listJS  = list.js
 
 lazy val wire = project in `wire/file`
 
-lazy val `wire-core` = crossProject(JSPlatform, JVMPlatform) in `wire-core/file` dependsOn (core, `test-common` % Test)
-
-lazy val `wire-coreJVM` = `wire-core`.jvm
-lazy val `wire-coreJS`  = `wire-core`.js
-
-lazy val `wire-web-app`   = (project in `wire-web-app/file`).dependsOn(`wire-coreJVM`)
+lazy val `wire-web-app`   = project in `wire-web-app/file`
 lazy val `wire-web-scala` = project in `wire-web-app-scala-style/file`
 
 lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn (core, `test-common` % Test)
@@ -77,7 +70,7 @@ lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/f
 val adtTestAll     = adt.componentProjects.map(t => t / Test / test)
 val adtCoreTestAll = `adt-core`.componentProjects.map(t => t / Test / test)
 val listTestAll    = list.componentProjects.map(t => t / Test / test)
-val wireTestAll    = `wire-core`.componentProjects.map(t => t / Test / test)
+val wireTestAll    = Seq.empty
 val codecTestAll   = codec.componentProjects.map(t => t / Test / test)
 val genericTestAll = generic.componentProjects.map(t => t / Test / test)
 
@@ -99,5 +92,4 @@ addCommandAlias("preCodegen", s";++${scalaV.v3}!;adt-codegen/preCodegenImpl")
 addCommandAlias("codegen", s";++${scalaV.v3}!;adt-codegen/codegenImpl")
 addCommandAlias("executeTest", "+mainProjects/test")
 
-ThisBuild / djxScalafmtFile := `root/file` / ".scalafmt_simple.conf"
-ThisBuild / djxBuildSbtFile := `root/file` / "project" / "build.properties"
+Global / onChangedBuildSource := ReloadOnSourceChanges

@@ -1,1 +1,1 @@
-libraryDependencies += `commons-io`.value
+libraryDependencies ++= libScalax.`commons-io`.value
