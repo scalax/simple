@@ -62,7 +62,7 @@ assert(inputAdtData("My Name") == "My Name".asJson)
 ```
 
 ### Point 3
-Exclue special type parameters.
+Exclue special types.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 import io.circe._
