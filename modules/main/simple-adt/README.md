@@ -77,7 +77,7 @@ inputAdtData(2) // Compiled Failed
 
 locally {
   val foldData = inputAdtData(2L)
-  assert(foldData === 2.asJson)
+  assert(foldData == 2.asJson)
 }
 
 locally {
