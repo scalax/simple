@@ -20,7 +20,7 @@ scalacOptions += "-Ykind-projector"
 ```
 
 ## Usage of [@djx314](https://github.com/djx314)
-### Point1
+### Point 1
 Match type by `Adt.OptionsX`(The type will be match first if it's declaring first).
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
@@ -35,7 +35,7 @@ assert(inputAdtData(Option(2)) == TempForData("Option", Some(4)))
 assert(inputAdtData(Some(2)) == TempForData("Some", Some(3)))
 ```
 
-### Point2
+### Point 2
 Match type with custom rules by `Adt.Adapter`.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
@@ -61,7 +61,7 @@ assert(inputAdtData(Some(2)) == 3.asJson)
 assert(inputAdtData("My Name") == "My Name".asJson)
 ```
 
-### Point3
+### Point 3
 Exclue special type parameters.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
@@ -89,7 +89,7 @@ locally {
 ## Usage of [@MarchLiu](https://marchliu.github.io/)
 Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-workers/commons-lang3-bridge)
 
-### Point1
+### Point 1
 Match type for parameter list.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
