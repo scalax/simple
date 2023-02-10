@@ -2,8 +2,6 @@ package net.scalax.simple.adt
 package impl
 
 object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
-  val Passed: TypeAdtAlias with TypeAdtRuntimeApply = this
-  val Failed: TypeAdtAlias                          = this.asInstanceOf[TypeAdtAlias]
 
   class Adapter[Target, Poly](val value: Target)
 
@@ -17,6 +15,7 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
     class Passed extends Status
     class Failed extends Status
   }
+
 }
 
 trait AdtAliasAbs {

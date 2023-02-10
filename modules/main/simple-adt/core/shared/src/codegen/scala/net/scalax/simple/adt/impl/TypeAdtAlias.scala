@@ -6,14 +6,14 @@ package impl
 
 trait TypeAdtAlias {
     
-        type Options1[A,   I1 ] = TypeAdtApply.Aux[A,  
+        type Options1[A  , I1 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,   AdtAlias.AdtZero ]
 , Adt.Status.Passed]
         type OptionsX1[A, Status <: Adt.Status,   I1 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,   AdtAlias.AdtZero ]
 , Status]
     
-        type Options2[A,   I1   , I2 ] = TypeAdtApply.Aux[A,  
+        type Options2[A  , I1  , I2 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,   AdtAlias.AdtZero ]
 ]
@@ -24,7 +24,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options3[A,   I1   , I2   , I3 ] = TypeAdtApply.Aux[A,  
+        type Options3[A  , I1  , I2  , I3 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,   AdtAlias.AdtZero ]
@@ -39,7 +39,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options4[A,   I1   , I2   , I3   , I4 ] = TypeAdtApply.Aux[A,  
+        type Options4[A  , I1  , I2  , I3  , I4 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -58,7 +58,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options5[A,   I1   , I2   , I3   , I4   , I5 ] = TypeAdtApply.Aux[A,  
+        type Options5[A  , I1  , I2  , I3  , I4  , I5 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -81,7 +81,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options6[A,   I1   , I2   , I3   , I4   , I5   , I6 ] = TypeAdtApply.Aux[A,  
+        type Options6[A  , I1  , I2  , I3  , I4  , I5  , I6 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -108,7 +108,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options7[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7 ] = TypeAdtApply.Aux[A,  
+        type Options7[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -139,7 +139,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options8[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8 ] = TypeAdtApply.Aux[A,  
+        type Options8[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -174,7 +174,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options9[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9 ] = TypeAdtApply.Aux[A,  
+        type Options9[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -213,7 +213,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options10[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10 ] = TypeAdtApply.Aux[A,  
+        type Options10[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -256,7 +256,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options11[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11 ] = TypeAdtApply.Aux[A,  
+        type Options11[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -303,7 +303,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options12[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12 ] = TypeAdtApply.Aux[A,  
+        type Options12[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -354,7 +354,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options13[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13 ] = TypeAdtApply.Aux[A,  
+        type Options13[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -409,7 +409,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options14[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14 ] = TypeAdtApply.Aux[A,  
+        type Options14[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -468,7 +468,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options15[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15 ] = TypeAdtApply.Aux[A,  
+        type Options15[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -531,7 +531,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options16[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15   , I16 ] = TypeAdtApply.Aux[A,  
+        type Options16[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15  , I16 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -598,7 +598,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options17[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15   , I16   , I17 ] = TypeAdtApply.Aux[A,  
+        type Options17[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15  , I16  , I17 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -669,7 +669,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options18[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15   , I16   , I17   , I18 ] = TypeAdtApply.Aux[A,  
+        type Options18[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15  , I16  , I17  , I18 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -744,7 +744,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options19[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15   , I16   , I17   , I18   , I19 ] = TypeAdtApply.Aux[A,  
+        type Options19[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15  , I16  , I17  , I18  , I19 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -823,7 +823,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options20[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15   , I16   , I17   , I18   , I19   , I20 ] = TypeAdtApply.Aux[A,  
+        type Options20[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15  , I16  , I17  , I18  , I19  , I20 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -906,7 +906,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options21[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15   , I16   , I17   , I18   , I19   , I20   , I21 ] = TypeAdtApply.Aux[A,  
+        type Options21[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15  , I16  , I17  , I18  , I19  , I20  , I21 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  
@@ -993,7 +993,7 @@ trait TypeAdtAlias {
 ]
 , Status]
     
-        type Options22[A,   I1   , I2   , I3   , I4   , I5   , I6   , I7   , I8   , I9   , I10   , I11   , I12   , I13   , I14   , I15   , I16   , I17   , I18   , I19   , I20   , I21   , I22 ] = TypeAdtApply.Aux[A,  
+        type Options22[A  , I1  , I2  , I3  , I4  , I5  , I6  , I7  , I8  , I9  , I10  , I11  , I12  , I13  , I14  , I15  , I16  , I17  , I18  , I19  , I20  , I21  , I22 ] = TypeAdtApply.Aux[A,  
     AdtAlias.AdtAppend[I1,  
     AdtAlias.AdtAppend[I2,  
     AdtAlias.AdtAppend[I3,  

@@ -22,25 +22,29 @@ object TestCase1 extends ZIOSpecDefault {
     test("Simple adt fold in test data.") {
       val baseValue = 2
 
-      def assert1 = {
-        val data     = None
-        val foldData = inputAdtData(data)
-        assert(foldData)(Assertion.equalTo(TempForData("None", data)))
-      }
+      def asserts = TestResult.all(
+        {
 
-      def assert2 = {
-        val data     = Option(baseValue)
-        val foldData = inputAdtData(data)
-        assert(foldData)(Assertion.equalTo(TempForData("Option", Option(baseValue + 2))))
-      }
+          val data     = None
+          val foldData = inputAdtData(data)
+          assert(foldData)(Assertion.equalTo(TempForData("None", data)))
 
-      def assert3 = {
-        val data     = Some(baseValue)
-        val foldData = inputAdtData(data)
-        assert(foldData)(Assertion.equalTo(TempForData("Some", Some(baseValue + 1))))
-      }
+        }, {
 
-      try assert1 && assert2 && assert3
+          val data     = Option(baseValue)
+          val foldData = inputAdtData(data)
+          assert(foldData)(Assertion.equalTo(TempForData("Option", Option(baseValue + 2))))
+
+        }, {
+
+          val data     = Some(baseValue)
+          val foldData = inputAdtData(data)
+          assert(foldData)(Assertion.equalTo(TempForData("Some", Some(baseValue + 1))))
+
+        }
+      )
+
+      try asserts
       catch {
         case _: StackOverflowError => assertNever("Not allow adt access.")
       }
