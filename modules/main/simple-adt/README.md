@@ -73,7 +73,7 @@ def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[In
 inputAdtData(None) // Compile Failed
 inputAdtData(???: Some[Int]) // Compile Failed
 inputAdtData(???: Option[Int]) // Compile Failed
-inputAdtData(2) // Compiled Failed
+inputAdtData(2) // Compile Failed
 
 locally {
   val foldData = inputAdtData(2L)
