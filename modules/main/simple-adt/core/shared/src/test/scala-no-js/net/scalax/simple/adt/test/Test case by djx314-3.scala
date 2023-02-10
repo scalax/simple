@@ -15,38 +15,59 @@ import zio.test.Assertion._
   */
 object TestCase3 extends ZIOSpecDefault {
 
-  def inputAdtData[T: Encoder: Adt.Failed.Options2[*, Int, Option[Int]]](t: T): Json = t.asJson
+  def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json =
+    t.asJson
 
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314-2")(
     test("Simple adt fold in test data.") {
-      val baseValue = 2
 
-      def assert1 = {
-        val data     = None
-        val foldData = inputAdtData(data)
-        assert(foldData)(Assertion.equalTo(data.asJson))
-      }
+      def asserts = TestResult.all(
+        {
 
-      def assert2 = {
-        val data     = Option(baseValue)
-        val foldData = inputAdtData(data)
-        assert(foldData)(Assertion.equalTo(baseValue.asJson))
-      }
+          val data = None
+          // Compile Failed
+          // inputAdtData(data)
+          assertTrue(true)
 
-      def assert3 = {
-        val data     = Some(baseValue)
-        val foldData = inputAdtData(data)
-        assert(foldData)(Assertion.equalTo(baseValue.asJson))
-      }
+        }, {
 
-      /*def assert4 = {
-        val baseValue = "joisrjweohrjiew hrio"
-        val data      = Some(baseValue)
-        val foldData  = inputAdtData(data)
-        assert(foldData)(Assertion.equalTo(baseValue.asJson))
-      }*/
+          val data = Option(2)
+          // Compile Failed
+          // inputAdtData(data)
+          assertTrue(true)
 
-      try assert1 && assert2 && assert3 // && assert4
+        }, {
+
+          val data = Some(2)
+          // Compile Failed
+          // inputAdtData(data)
+          assertTrue(true)
+
+        }, {
+
+          val data = 2
+          // Compile Failed
+          // inputAdtData(data)
+          assertTrue(true)
+
+        }, {
+
+          val data     = 2L
+          val foldData = inputAdtData(data)
+          assertTrue(true)
+          assert(foldData)(Assertion.equalTo(2L.asJson))
+
+        }, {
+
+          val baseValue = "joisrjweohrjiew hrio"
+          val data      = Some(baseValue)
+          val foldData  = inputAdtData(data)
+          assert(foldData)(Assertion.equalTo(baseValue.asJson))
+
+        }
+      )
+
+      try asserts
       catch {
         case _: StackOverflowError => assertNever("Not allow adt access.")
       }

@@ -12,7 +12,6 @@ import CoreInstance._
   */
 class TypeAdtApply[Input, Sum <: AdtAlias.AdtNat](val value: Core2) {
   type State <: TypeAdt.Status
-  type Next[T] = TypeAdtApply.Aux[Input, AdtAlias.AdtAppend[T, Sum], State]
 }
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {

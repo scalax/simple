@@ -20,6 +20,7 @@ scalacOptions += "-Ykind-projector"
 ```
 
 ## Usage of [@djx314](https://github.com/djx314)
+### Point1
 Match type by `Adt.OptionsX`(The type will be match first if it's declaring first).
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
@@ -34,6 +35,7 @@ assert(inputAdtData(Option(2)) == TempForData("Option", Some(4)))
 assert(inputAdtData(Some(2)) == TempForData("Some", Some(3)))
 ```
 
+### Point2
 Match type with custom rules by `Adt.Adapter`.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
@@ -59,9 +61,35 @@ assert(inputAdtData(Some(2)) == 3.asJson)
 assert(inputAdtData("My Name") == "My Name".asJson)
 ```
 
+### Point3
+Exclue special type parameters.
+``` scala
+import net.scalax.simple.adt.{TypeAdt => Adt}
+import io.circe._
+import io.circe.syntax._
+
+def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json = t.asJson
+
+inputAdtData(None) // Compile Failed
+inputAdtData(???: Some[Int]) // Compiled Failed
+inputAdtData(???: Option[Int]) // Compiled Failed
+inputAdtData(2) // Compiled Failed
+
+locally {
+  val foldData = inputAdtData(2L)
+  assert(foldData === 2L.asJson)
+}
+
+locally {
+  val foldData = inputAdtData(Some("Tom"))
+  assert(foldData == ”Tom”.asJson)
+}
+```
+
 ## Usage of [@MarchLiu](https://marchliu.github.io/)
 Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-workers/commons-lang3-bridge)
 
+### Point1
 Match type for parameter list.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
