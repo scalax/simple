@@ -1,7 +1,7 @@
 // scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys
 
 // start setting
-version := "0.0.1-M2"
+version := "0.0.1-M3"
 // end setting
 
 // start setting
@@ -61,8 +61,11 @@ pomIncludeRepository := { _ => false }
 
 // start setting
 {
-    import xerial.sbt.Sonatype.autoImport._
-    publishTo := sonatypePublishTo.value
+    publishTo := {
+        val nexus = "https://s01.oss.sonatype.org/"
+        if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+        else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    }
 }
 // end setting
 
