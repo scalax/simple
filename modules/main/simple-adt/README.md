@@ -71,8 +71,8 @@ import io.circe.syntax._
 def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json = t.asJson
 
 inputAdtData(None) // Compile Failed
-inputAdtData(???: Some[Int]) // Compiled Failed
-inputAdtData(???: Option[Int]) // Compiled Failed
+inputAdtData(???: Some[Int]) // Compile Failed
+inputAdtData(???: Option[Int]) // Compile Failed
 inputAdtData(2) // Compiled Failed
 
 locally {
