@@ -82,7 +82,7 @@ locally {
 
 locally {
   val foldData = inputAdtData(Some("Tom"))
-  assert(foldData == ”Tom”.asJson)
+  assert(foldData == "Tom".asJson)
 }
 ```
 
