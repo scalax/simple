@@ -46,9 +46,7 @@ import io.circe.syntax._
 object JsonAdtPoly {
   implicit def jsonAdtPolyImplicit[In: Encoder]: Adt.Context[In, Json, JsonAdtPoly.type] = {
     val encoder = Encoder[In]
-    new Adt.Context[In, Json, JsonAdtPoly.type] {
-      override def input(t: In): Json = encoder(t)
-    }
+    Adt.Context(t => encoder(t))
   }
 }
 
@@ -60,6 +58,8 @@ def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, Js
 assert(inputAdtData(None) == "Null Tag".asJson)
 assert(inputAdtData(Some(2)) == 3.asJson)
 assert(inputAdtData("My Name") == "My Name".asJson)
+// Bypass compiler judgment
+assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
 ```
 
 ### Point 3
