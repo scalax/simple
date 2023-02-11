@@ -57,6 +57,7 @@ def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, Js
 
 assert(inputAdtData(None) == "Null Tag".asJson)
 assert(inputAdtData(Some(2)) == 3.asJson)
+// Use Adt.Adapter that find the io.circe.Encoder for String.
 assert(inputAdtData("My Name") == "My Name".asJson)
 // Bypass compiler judgment
 assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
