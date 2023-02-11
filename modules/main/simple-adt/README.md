@@ -25,14 +25,14 @@ Match type by `Adt.OptionsX`(The type will be match first if it's declaring firs
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
-def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
+def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Option[Int]) = {
   val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
-  applyM.fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
+  applyM.fold(n => ("None", n), n => ("Some", Some(n.get + 1)), n => ("Option", n.map(_ + 2)))
 }
 
-assert(inputAdtData(None) == TempForData("None", None))
-assert(inputAdtData(Option(2)) == TempForData("Option", Some(4)))
-assert(inputAdtData(Some(2)) == TempForData("Some", Some(3)))
+assert(inputAdtData(None) == ("None", None))
+assert(inputAdtData(Option(2)) == ("Option", Some(4)))
+assert(inputAdtData(Some(2)) == ("Some", Some(3)))
 ```
 
 ### Point 2
@@ -70,10 +70,10 @@ import io.circe.syntax._
 
 def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json = t.asJson
 
-inputAdtData(None) // Compile Failed
-inputAdtData(???: Some[Int]) // Compile Failed
-inputAdtData(???: Option[Int]) // Compile Failed
-inputAdtData(2) // Compile Failed
+// inputAdtData(None)              // Compile Failed
+// inputAdtData(??? : Some[Int])   // Compile Failed
+// inputAdtData(??? : Option[Int]) // Compile Failed
+// inputAdtData(2)                 // Compile Failed
 
 locally {
   val foldData = inputAdtData(2L)
@@ -94,17 +94,18 @@ Match type for parameter list.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
-type SeqTpe[T] = Adt.Options3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
-def inputAdtData[T: SeqTpe](t: T*): Seq[Option[Long]] = {
+type Options3F[F[_], T, T1, T2, T3] = Adt.Options3[F[T], T1, T2, T3]
+
+def inputAdtData[T: Options3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]](t: T*): Seq[Option[Long]] = {
   val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
-  applyM
-    .fold(
-      t1 => t1.map(t => Some(t.length.toLong)),
-      t2 => t2.map(t => Some(t.toLong)),
-      t3 => t3
-    )
+  applyM.fold(
+    t1 => t1.map(t => Some(t.length.toLong)),
+    t2 => t2.map(t => Some(t.toLong)),
+    t3 => t3
+  )
 }
 
 assert(inputAdtData("abc", "aabbcc", "aabbbcc") == List("abc", "aabbcc", "aabbbcc").map(t => Some(t.length.toLong)))
-assert(inputAdtData(2, 3, 4) == List(2, 3, 4).map(_.toLong))
+assert(inputAdtData(2, 3, 4) == List(Some(2L), Some(3L), Some(4L)))
+assert(inputAdtData(Some(2L), Some(3L), Some(4L)) == List(Some(2L), Some(3L), Some(4L)))
 ```
