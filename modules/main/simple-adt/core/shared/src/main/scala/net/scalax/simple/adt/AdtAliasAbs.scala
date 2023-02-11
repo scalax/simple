@@ -3,10 +3,16 @@ package impl
 
 object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
 
-  class Adapter[Target, Poly](val value: Target)
+  case class Adapter[Target, Poly](value: Target)
 
   trait Context[In, Out, Poly] extends Any {
     def input(t: In): Out
+  }
+
+  object Context {
+    def apply[In, Out, Poly](func: In => Out): Context[In, Out, Poly] = new Context[In, Out, Poly] {
+      def input(t: In): Out = func(t)
+    }
   }
 
   sealed trait Status
