@@ -46,11 +46,18 @@ object `Test Cases copy from documention in README.md` {
 
     def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
       val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
-      applyM.fold(n => Json.fromString("Null Tag"), n => n.map(_ + 1).asJson, n => n.value)
+      applyM.fold(
+        n => "Null Tag".asJson,
+        n => n.map(_ + 1).asJson,
+        { (n: Adt.Adapter[Json, JsonAdtPoly.type]) =>
+          n.value: Json
+        }
+      )
     }
 
     assert(inputAdtData(None) == "Null Tag".asJson)
     assert(inputAdtData(Some(2)) == 3.asJson)
+    // Use Adt.Adapter that find the io.circe.Encoder for String.
     assert(inputAdtData("My Name") == "My Name".asJson)
     // Bypass compiler judgment
     assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
