@@ -19,6 +19,7 @@ For scala3, you can add the scalac option.
 scalacOptions += "-Ykind-projector"
 ```
 
+Usage in [Test Case](./core/shared/src/test/scala-no-js/net/scalax/simple/adt/test/TestCaseForDoc.scala)
 ## Usage of [@djx314](https://github.com/djx314)
 ### Point 1
 Match type by `Adt.OptionsX`(The type will be match first if it's declaring first).
