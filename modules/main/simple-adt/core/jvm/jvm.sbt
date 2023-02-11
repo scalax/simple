@@ -9,5 +9,3 @@ libraryDependencies ++= libScalax.`zio2`.value.map(_ % Test)
 enableZIOTest := true
 
 crossScalaVersions := Seq(scalaV.v211, scalaV.v212, scalaV.v213, scalaV.v3)
-
-scalacOptions ++= { if (djxIsScala3.value) Seq("-explain") else Seq.empty }
