@@ -4,11 +4,11 @@
 This module is available for both JVM and Scala.js. You could add it in your `build.sbt`.
 ``` sbt
 // For JVM projects
-libraryDependencies += "net.scalax.simple" %% "simple-adt" % "0.0.1-M2"
+libraryDependencies += "net.scalax.simple" %% "simple-adt" % "latest.version"
 ```
 ``` sbt
 // For Scala.js projects, or JS/JVM cross projects
-libraryDependencies += "net.scalax.simple" %%% "simple-adt" % "0.0.1-M2"
+libraryDependencies += "net.scalax.simple" %%% "simple-adt" % "latest.version"
 ```
 For scala2, you can add the compiler plugin `kind-projector`.
 ``` sbt
