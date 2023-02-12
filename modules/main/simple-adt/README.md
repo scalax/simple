@@ -63,7 +63,7 @@ def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, Js
 
 assert(inputAdtData(None) == "Null Tag".asJson)
 assert(inputAdtData(Some(2)) == 3.asJson)
-// Use Adt.Adapter that find the io.circe.Encoder for String.
+// Use Adt.Adapter that find the io.circe.Encoder for String
 assert(inputAdtData("My Name") == "My Name".asJson)
 // Bypass compiler judgment
 assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
@@ -76,22 +76,16 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 import io.circe._
 import io.circe.syntax._
 
-def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json = t.asJson
+def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json =
+  t.asJson
 
 // inputAdtData(None)              // Compile Failed
 // inputAdtData(??? : Some[Int])   // Compile Failed
 // inputAdtData(??? : Option[Int]) // Compile Failed
 // inputAdtData(2)                 // Compile Failed
 
-locally {
-  val foldData = inputAdtData(2L)
-  assert(foldData == 2.asJson)
-}
-
-locally {
-  val foldData = inputAdtData(Some("Tom"))
-  assert(foldData == "Tom".asJson)
-}
+assert(inputAdtData(2L) == 2.asJson)
+assert(inputAdtData(Some("Tom")) == "Tom".asJson)
 ```
 
 ## Usage of [@MarchLiu](https://marchliu.github.io/)
@@ -116,4 +110,34 @@ def inputAdtData[T: Options3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]]
 assert(inputAdtData("abc", "aabbcc", "aabbbcc") == List("abc", "aabbcc", "aabbbcc").map(t => Some(t.length.toLong)))
 assert(inputAdtData(2, 3, 4) == List(Some(2L), Some(3L), Some(4L)))
 assert(inputAdtData(Some(2L), Some(3L), Some(4L)) == List(Some(2L), Some(3L), Some(4L)))
+```
+
+### Point 2
+Match One type twice to do different things.
+``` scala
+import net.scalax.simple.adt.{TypeAdt => Adt}
+
+type Options2F[F[_], T, T1, T2] = Adt.Options2[F[T], T1, T2]
+
+def countAdtData[T: Options2F[Seq, *, Seq[Option[Int]], Seq[String]]: Adt.Options2[*, Option[Int], String]](t: T*): Int = {
+  def applyMSeq       = Adt.Options2[Seq[Option[Int]], Seq[String]](t)
+  def applyM(elem: T) = Adt.Options2[Option[Int], String](elem)
+
+  t.size match {
+    case 0 => -200
+    case 1 =>
+      val countValue: Int = applyM(t.head).fold(optInt => optInt.getOrElse(0), str => str.length)
+      countValue + 1
+    case _ => applyMSeq.fold(optIntSeq => optIntSeq.map(_.getOrElse(0)).sum, strSeq => strSeq.map(_.length).sum)
+  }
+}
+
+assert(countAdtData("abc", "aabbcc", "aabbbcc") == 16)
+assert(countAdtData(Some(2), Some(3), Option.empty) == 5)
+// Point what type you want to route to
+assert(countAdtData[Option[Int]]() == -200)
+assert(countAdtData(Some(2)) == (2 + 1))
+assert(countAdtData(Option.empty) == (0 + 1))
+assert(countAdtData("Option.empty") == (12 + 1))
+assert(countAdtData(Option.empty, Option.empty, Option.empty) == 0)
 ```
