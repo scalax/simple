@@ -28,7 +28,7 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 
 def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Option[Int]) = {
   val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
-  applyM.fold(n => ("None", n), n => ("Some", Some(n.get + 1)), n => ("Option", n.map(_ + 2)))
+  applyM.fold(noneValue => ("None", noneValue), intSome => ("Some", Some(intSome.get + 1)), intOpt => ("Option", intOpt.map(_ + 2)))
 }
 
 assert(inputAdtData(None) == ("None", None))
@@ -53,8 +53,8 @@ object JsonAdtPoly {
 def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
   val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
   applyM.fold(
-    n => "Null Tag".asJson,
-    n => n.map(_ + 1).asJson,
+    noneValue => "Null Tag".asJson,
+    intOpt => intOpt.map(_ + 1).asJson,
     { (n: Adt.Adapter[Json, JsonAdtPoly.type]) =>
       n.value: Json
     }
@@ -101,9 +101,9 @@ type Options3F[F[_], T, T1, T2, T3] = Adt.Options3[F[T], T1, T2, T3]
 def inputAdtData[T: Options3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]](t: T*): Seq[Option[Long]] = {
   val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
   applyM.fold(
-    t1 => t1.map(t => Some(t.length.toLong)),
-    t2 => t2.map(t => Some(t.toLong)),
-    t3 => t3
+    stringSeq => stringSeq.map(t => Some(t.length.toLong)),
+    intSeq => intSeq.map(t => Some(t.toLong)),
+    longOptSeq => longOptSeq
   )
 }
 
@@ -113,7 +113,7 @@ assert(inputAdtData(Some(2L), Some(3L), Some(4L)) == List(Some(2L), Some(3L), So
 ```
 
 ### Point 2
-Match One type twice to do different things.
+Match one type twice to do different things.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
@@ -124,7 +124,7 @@ def countAdtData[T: Options2F[Seq, *, Seq[Option[Int]], Seq[String]]: Adt.Option
   def applyM(elem: T) = Adt.Options2[Option[Int], String](elem)
 
   t.size match {
-    case 0 => -200
+    case 0 => applyMSeq.fold(emptyOptIntSeq => -100, emptyStringSeq => -500)
     case 1 =>
       val countValue: Int = applyM(t.head).fold(optInt => optInt.getOrElse(0), str => str.length)
       countValue + 1
@@ -134,8 +134,11 @@ def countAdtData[T: Options2F[Seq, *, Seq[Option[Int]], Seq[String]]: Adt.Option
 
 assert(countAdtData("abc", "aabbcc", "aabbbcc") == 16)
 assert(countAdtData(Some(2), Some(3), Option.empty) == 5)
+
 // Point what type you want to route to
-assert(countAdtData[Option[Int]]() == -200)
+assert(countAdtData[Option[Int]]() == -100)
+assert(countAdtData[String]() == -500)
+
 assert(countAdtData(Some(2)) == (2 + 1))
 assert(countAdtData(Option.empty) == (0 + 1))
 assert(countAdtData("Option.empty") == (12 + 1))
