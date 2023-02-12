@@ -22,7 +22,7 @@ object `Test Cases copy from documention in README.md` {
 
     def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Option[Int]) = {
       val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
-      applyM.fold(n => ("None", n), n => ("Some", Some(n.get + 1)), n => ("Option", n.map(_ + 2)))
+      applyM.fold(noneValue => ("None", noneValue), intSome => ("Some", Some(intSome.get + 1)), intOpt => ("Option", intOpt.map(_ + 2)))
     }
 
     assert(inputAdtData(None) == ("None", None))
@@ -47,8 +47,8 @@ object `Test Cases copy from documention in README.md` {
     def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
       val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
       applyM.fold(
-        n => "Null Tag".asJson,
-        n => n.map(_ + 1).asJson,
+        noneValue => "Null Tag".asJson,
+        intOpt => intOpt.map(_ + 1).asJson,
         { (n: Adt.Adapter[Json, JsonAdtPoly.type]) =>
           n.value: Json
         }
@@ -57,7 +57,7 @@ object `Test Cases copy from documention in README.md` {
 
     assert(inputAdtData(None) == "Null Tag".asJson)
     assert(inputAdtData(Some(2)) == 3.asJson)
-    // Use Adt.Adapter that find the io.circe.Encoder for String.
+    // Use Adt.Adapter that find the io.circe.Encoder for String
     assert(inputAdtData("My Name") == "My Name".asJson)
     // Bypass compiler judgment
     assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
@@ -78,15 +78,8 @@ object `Test Cases copy from documention in README.md` {
     // inputAdtData(??? : Option[Int]) // Compile Failed
     // inputAdtData(2)                 // Compile Failed
 
-    locally {
-      val foldData = inputAdtData(2L)
-      assert(foldData == 2.asJson)
-    }
-
-    locally {
-      val foldData = inputAdtData(Some("Tom"))
-      assert(foldData == "Tom".asJson)
-    }
+    assert(inputAdtData(2L) == 2.asJson)
+    assert(inputAdtData(Some("Tom")) == "Tom".asJson)
   }
 
   def `Usage of @MarchLiu Point 1`[T](body: => T): T = body
@@ -99,15 +92,48 @@ object `Test Cases copy from documention in README.md` {
     def inputAdtData[T: Options3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]](t: T*): Seq[Option[Long]] = {
       val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
       applyM.fold(
-        t1 => t1.map(t => Some(t.length.toLong)),
-        t2 => t2.map(t => Some(t.toLong)),
-        t3 => t3
+        stringSeq => stringSeq.map(t => Some(t.length.toLong)),
+        intSeq => intSeq.map(t => Some(t.toLong)),
+        longOptSeq => longOptSeq
       )
     }
 
     assert(inputAdtData("abc", "aabbcc", "aabbbcc") == List("abc", "aabbcc", "aabbbcc").map(t => Some(t.length.toLong)))
     assert(inputAdtData(2, 3, 4) == List(Some(2L), Some(3L), Some(4L)))
     assert(inputAdtData(Some(2L), Some(3L), Some(4L)) == List(Some(2L), Some(3L), Some(4L)))
+  }
+
+  def `Usage of @MarchLiu Point 2`[T](body: => T): T = body
+
+  `Usage of @MarchLiu Point 2` {
+    import net.scalax.simple.adt.{TypeAdt => Adt}
+
+    type Options2F[F[_], T, T1, T2] = Adt.Options2[F[T], T1, T2]
+
+    def countAdtData[T: Options2F[Seq, *, Seq[Option[Int]], Seq[String]]: Adt.Options2[*, Option[Int], String]](t: T*): Int = {
+      def applyMSeq       = Adt.Options2[Seq[Option[Int]], Seq[String]](t)
+      def applyM(elem: T) = Adt.Options2[Option[Int], String](elem)
+
+      t.size match {
+        case 0 => applyMSeq.fold(emptyOptIntSeq => -100, emptyStringSeq => -500)
+        case 1 =>
+          val countValue: Int = applyM(t.head).fold(optInt => optInt.getOrElse(0), str => str.length)
+          countValue + 1
+        case _ => applyMSeq.fold(optIntSeq => optIntSeq.map(_.getOrElse(0)).sum, strSeq => strSeq.map(_.length).sum)
+      }
+    }
+
+    assert(countAdtData("abc", "aabbcc", "aabbbcc") == 16)
+    assert(countAdtData(Some(2), Some(3), Option.empty) == 5)
+
+    // Point what type you want to route to
+    assert(countAdtData[Option[Int]]() == -100)
+    assert(countAdtData[String]() == -500)
+
+    assert(countAdtData(Some(2)) == (2 + 1))
+    assert(countAdtData(Option.empty) == (0 + 1))
+    assert(countAdtData("Option.empty") == (12 + 1))
+    assert(countAdtData(Option.empty, Option.empty, Option.empty) == 0)
   }
 
 }
