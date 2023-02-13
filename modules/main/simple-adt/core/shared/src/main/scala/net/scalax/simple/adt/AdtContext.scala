@@ -8,8 +8,8 @@ object DefaultAdtContext {
 }
 
 object TypeClassAdtContext {
-  implicit def adtTypeClassContextImplicit[In, F[_], Poly](implicit v: F[In]): TypeAdt.Context[In, (In, F[In]), Poly] =
-    new TypeAdt.Context[In, (In, F[In]), Poly] {
-      override def input(t: In): (In, F[In]) = (t, v)
+  implicit def adtTypeClassContextImplicit[In, F[_], Poly](implicit v: F[In]): TypeAdt.Context[In, F[In], Poly] =
+    new TypeAdt.Context[In, F[In], Poly] {
+      override def input(t: In): F[In] = v
     }
 }

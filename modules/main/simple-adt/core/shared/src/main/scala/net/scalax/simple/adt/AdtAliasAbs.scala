@@ -5,9 +5,10 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
 
   class Adapter[Target, Poly](val value: Target)
   object Adapter {
-    def apply[Target, Poly](t: Target): Adapter[Target, Poly] = new Adapter(t)
+    def apply[Target, Poly](t: Target): Adapter[Target, Poly]                 = new Adapter(t)
+    def unapply[Target, Poly](adapter: Adapter[Target, Poly]): Option[Target] = Some(adapter.value)
   }
-  type TypeClass[F[_], T] = Adapter[(T, F[T]), TypeClassAdtContext.type]
+  type TypeClass[T] = Adapter[T, TypeClassAdtContext.type]
 
   trait Context[In, Out, Poly] extends Any {
     def input(t: In): Out
