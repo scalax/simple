@@ -26,12 +26,10 @@ object `Test Cases copy from documention in README.md` {
     case class StringAdtData(strValue: String)     extends AdtData
     case class DoubleAdtData(decimalValue: Double) extends AdtData
 
-    def inputAdtDataSealedTrait(adtData: AdtData): Option[BigDecimal] = {
-      adtData match {
-        case IntAdtData(intValue)       => Some(BigDecimal(intValue))
-        case StringAdtData(strValue)    => Try(BigDecimal(strValue)).toOption
-        case DoubleAdtData(doubleValue) => Some(BigDecimal(doubleValue))
-      }
+    def inputAdtDataSealedTrait(adtData: AdtData): Option[BigDecimal] = adtData match {
+      case IntAdtData(intValue)       => Some(BigDecimal(intValue))
+      case StringAdtData(strValue)    => Try(BigDecimal(strValue)).toOption
+      case DoubleAdtData(doubleValue) => Some(BigDecimal(doubleValue))
     }
 
     assert(inputAdtDataSealedTrait(IntAdtData(2)).get == BigDecimal("2"))
@@ -41,7 +39,7 @@ object `Test Cases copy from documention in README.md` {
 
     // simple-adt style
     import net.scalax.simple.adt.{TypeAdt => Adt}
-    def inputAdtDataAdt[T: Adt.Options3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
+    def inputAdtDataSimple[T: Adt.Options3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
       val applyM = Adt.Options3[Int, String, Double](t)
       applyM.fold(
         intValue => Some(BigDecimal(intValue)),
@@ -50,10 +48,10 @@ object `Test Cases copy from documention in README.md` {
       )
     }
 
-    assert(inputAdtDataAdt(2).get == BigDecimal("2"))
-    assert(inputAdtDataAdt("6").get == BigDecimal("6"))
-    assert(inputAdtDataAdt(2.3620).get == BigDecimal("2.362"))
-    assert(inputAdtDataAdt("error number") == None)
+    assert(inputAdtDataSimple(2).get == BigDecimal("2"))
+    assert(inputAdtDataSimple("6").get == BigDecimal("6"))
+    assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
+    assert(inputAdtDataSimple("error number") == None)
   }
 
   def `Usage of @djx314 Point 1`[T](body: => T): T = body
