@@ -3,7 +3,11 @@ package impl
 
 object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
 
-  case class Adapter[Target, Poly](value: Target)
+  class Adapter[Target, Poly](val value: Target)
+  object Adapter {
+    def apply[Target, Poly](t: Target): Adapter[Target, Poly] = new Adapter(t)
+  }
+  type TypeClass[F[_], T] = Adapter[(T, F[T]), TypeClassAdtContext.type]
 
   trait Context[In, Out, Poly] extends Any {
     def input(t: In): Out

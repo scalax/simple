@@ -38,7 +38,7 @@ object `Test Cases copy from documention in README.md` {
     import io.circe.syntax._
 
     object JsonAdtPoly {
-      implicit def jsonAdtPolyImplicit[In: Encoder]: Adt.Context[In, Json, JsonAdtPoly.type] = {
+      implicit def jsonAdtPolyImplicit[In: Encoder, Poly]: Adt.Context[In, Json, Poly] = {
         val encoder = Encoder[In]
         Adt.Context(t => encoder(t))
       }
@@ -59,6 +59,8 @@ object `Test Cases copy from documention in README.md` {
     assert(inputAdtData(Some(2)) == 3.asJson)
     // Use Adt.Adapter that find the io.circe.Encoder for String
     assert(inputAdtData("My Name") == "My Name".asJson)
+    // Use Adt.Adapter that find the io.circe.Encoder for JsonObject
+    assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
     // Bypass compiler judgment
     assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
   }
@@ -80,6 +82,34 @@ object `Test Cases copy from documention in README.md` {
 
     assert(inputAdtData(2L) == 2.asJson)
     assert(inputAdtData(Some("Tom")) == "Tom".asJson)
+  }
+
+  def `Usage of @djx314 Point 4`[T](body: => T): T = body
+
+  `Usage of @djx314 Point 4` {
+    import net.scalax.simple.adt.{TypeAdt => Adt}
+    import io.circe._
+    import io.circe.syntax._
+
+    type TypeOpts3[T] = Adt.Options3[T, None.type, Option[Int], Adt.TypeClass[Encoder, T]]
+    def inputAdtData[T: TypeOpts3](t: T): Json = {
+      val applyM = Adt.Options3[None.type, Option[Int], Adt.TypeClass[Encoder, T]](t)
+      applyM.fold(
+        noneValue => "Null Tag".asJson,
+        intOpt => intOpt.map(_ + 1).asJson,
+        { (n: Adt.TypeClass[Encoder, T]) =>
+          val (value, encoder) = n.value: (T, Encoder[T])
+          encoder(value)
+        }
+      )
+    }
+
+    assert(inputAdtData(None) == "Null Tag".asJson)
+    assert(inputAdtData(Some(2)) == 3.asJson)
+    // Match Encoder[String] by Type Class matching.
+    assert(inputAdtData("My Name") == "My Name".asJson)
+    // Match Encoder[JsonObject] by Type Class matching.
+    assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
   }
 
   def `Usage of @MarchLiu Point 1`[T](body: => T): T = body

@@ -90,6 +90,34 @@ assert(inputAdtData(2L) == 2.asJson)
 assert(inputAdtData(Some("Tom")) == "Tom".asJson)
 ```
 
+### Point 4
+A alias of `Point 2` and just Point to Type Class.
+``` scala
+import net.scalax.simple.adt.{TypeAdt => Adt}
+import io.circe._
+import io.circe.syntax._
+
+type TypeOpts3[T] = Adt.Options3[T, None.type, Option[Int], Adt.TypeClass[Encoder, T]]
+def inputAdtData[T: TypeOpts3](t: T): Json = {
+  val applyM = Adt.Options3[None.type, Option[Int], Adt.TypeClass[Encoder, T]](t)
+  applyM.fold(
+    noneValue => "Null Tag".asJson,
+    intOpt => intOpt.map(_ + 1).asJson,
+    { (n: Adt.TypeClass[Encoder, T]) =>
+      val (value, encoder) = n.value: (T, Encoder[T])
+      encoder(value)
+    }
+  )
+}
+
+assert(inputAdtData(None) == "Null Tag".asJson)
+assert(inputAdtData(Some(2)) == 3.asJson)
+// Match Encoder[String] by Type Class matching.
+assert(inputAdtData("My Name") == "My Name".asJson)
+// Match Encoder[JsonObject] by Type Class matching.
+assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
+```
+
 ## Usage of [@MarchLiu](https://marchliu.github.io/)
 Related project: [scala-workers/commons-lang3-bridge](https://github.com/scala-workers/commons-lang3-bridge)
 

@@ -1,11 +1,15 @@
 package net.scalax.simple
 package adt
 
-import CoreInstance._
-
 object DefaultAdtContext {
-  implicit def adtDefaultConvertImplicit[In <: Out, Out]: TypeAdt.Context[In, Out, DefaultAdtContext.type] =
-    new TypeAdt.Context[In, Out, DefaultAdtContext.type] {
-      override def input(t: In): Out = t
+  implicit def adtDefaultContextImplicit[In <: Out, Out, Poly]: TypeAdt.Context[In, Out, Poly] = new TypeAdt.Context[In, Out, Poly] {
+    override def input(t: In): Out = t
+  }
+}
+
+object TypeClassAdtContext {
+  implicit def adtTypeClassContextImplicit[In, F[_], Poly](implicit v: F[In]): TypeAdt.Context[In, (In, F[In]), Poly] =
+    new TypeAdt.Context[In, (In, F[In]), Poly] {
+      override def input(t: In): (In, F[In]) = (t, v)
     }
 }
