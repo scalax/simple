@@ -65,6 +65,8 @@ assert(inputAdtData(None) == "Null Tag".asJson)
 assert(inputAdtData(Some(2)) == 3.asJson)
 // Use Adt.Adapter that find the io.circe.Encoder for String
 assert(inputAdtData("My Name") == "My Name".asJson)
+// Use Adt.Adapter that find the io.circe.Encoder for JsonObject
+assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
 // Bypass compiler judgment
 assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
 ```
