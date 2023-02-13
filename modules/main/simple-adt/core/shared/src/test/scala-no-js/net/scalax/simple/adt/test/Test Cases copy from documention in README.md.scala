@@ -15,24 +15,94 @@ object `Test Cases copy from documention in README.md` {
     if (!result) throw new Exception("Error Assert")
   }
 
+  def `Common usage - compare with Scala sealed trait`[T](body: => T): T = body
+
+  `Common usage - compare with Scala sealed trait` {
+    import scala.util.Try
+
+    // sealed trait style
+    sealed trait AdtData
+    case class IntAdtData(intValue: Int)           extends AdtData
+    case class StringAdtData(strValue: String)     extends AdtData
+    case class DoubleAdtData(decimalValue: Double) extends AdtData
+
+    def inputAdtDataSealedTrait(adtData: AdtData): Option[BigDecimal] = {
+      adtData match {
+        case IntAdtData(intValue)       => Some(BigDecimal(intValue))
+        case StringAdtData(strValue)    => Try(BigDecimal(strValue)).toOption
+        case DoubleAdtData(doubleValue) => Some(BigDecimal(doubleValue))
+      }
+    }
+
+    assert(inputAdtDataSealedTrait(IntAdtData(2)).get == BigDecimal("2"))
+    assert(inputAdtDataSealedTrait(StringAdtData("6")).get == BigDecimal("6"))
+    assert(inputAdtDataSealedTrait(DoubleAdtData(2.3620)).get == BigDecimal("2.362"))
+    assert(inputAdtDataSealedTrait(StringAdtData("error number")) == None)
+
+    // simple-adt style
+    import net.scalax.simple.adt.{TypeAdt => Adt}
+    def inputAdtDataAdt[T: Adt.Options3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
+      val applyM = Adt.Options3[Int, String, Double](t)
+      applyM.fold(
+        intValue => Some(BigDecimal(intValue)),
+        strValue => Try(BigDecimal(strValue)).toOption,
+        doubleValue => Some(BigDecimal(doubleValue))
+      )
+    }
+
+    assert(inputAdtDataAdt(2).get == BigDecimal("2"))
+    assert(inputAdtDataAdt("6").get == BigDecimal("6"))
+    assert(inputAdtDataAdt(2.3620).get == BigDecimal("2.362"))
+    assert(inputAdtDataAdt("error number") == None)
+  }
+
   def `Usage of @djx314 Point 1`[T](body: => T): T = body
 
   `Usage of @djx314 Point 1` {
     import net.scalax.simple.adt.{TypeAdt => Adt}
 
-    def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Option[Int]) = {
+    def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
       val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
-      applyM.fold(noneValue => ("None", noneValue), intSome => ("Some", Some(intSome.get + 1)), intOpt => ("Option", intOpt.map(_ + 2)))
+      applyM.fold(
+        noneValue => ("None", -100),
+        intSome => ("Some", intSome.get + 1),
+        intOpt => ("Option", intOpt.map(_ + 2).getOrElse(-500))
+      )
     }
 
-    assert(inputAdtData(None) == ("None", None))
-    assert(inputAdtData(Option(2)) == ("Option", Some(4)))
-    assert(inputAdtData(Some(2)) == ("Some", Some(3)))
+    assert(inputAdtData(None) == ("None", -100))
+    assert(inputAdtData(Option(2)) == ("Option", 2 + 2))
+    assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
+    assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
   }
 
   def `Usage of @djx314 Point 2`[T](body: => T): T = body
 
   `Usage of @djx314 Point 2` {
+    import net.scalax.simple.adt.{TypeAdt => Adt}
+    import io.circe._
+    import io.circe.syntax._
+
+    def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
+      val applyM = Adt.Options3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
+      applyM.fold(
+        noneValue => "Null Tag".asJson,
+        intOpt => intOpt.map(_ + 1).asJson,
+        { case Adt.Adapter(encoder) => encoder(t) }
+      )
+    }
+
+    assert(inputAdtData(None) == "Null Tag".asJson)
+    assert(inputAdtData(Some(2)) == (2 + 1).asJson)
+    // Match Encoder[String] by Type Class matching.
+    assert(inputAdtData("My Name") == "My Name".asJson)
+    // Match Encoder[JsonObject] by Type Class matching.
+    assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
+  }
+
+  def `Usage of @djx314 Point 3`[T](body: => T): T = body
+
+  `Usage of @djx314 Point 3` {
     import net.scalax.simple.adt.{TypeAdt => Adt}
     import io.circe._
     import io.circe.syntax._
@@ -54,7 +124,7 @@ object `Test Cases copy from documention in README.md` {
     }
 
     assert(inputAdtData(None) == "Null Tag".asJson)
-    assert(inputAdtData(Some(2)) == 3.asJson)
+    assert(inputAdtData(Some(2)) == (2 + 1).asJson)
     // Use Adt.Adapter that find the io.circe.Encoder for String
     assert(inputAdtData("My Name") == "My Name".asJson)
     // Use Adt.Adapter that find the io.circe.Encoder for JsonObject
@@ -63,9 +133,9 @@ object `Test Cases copy from documention in README.md` {
     assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
   }
 
-  def `Usage of @djx314 Point 3`[T](body: => T): T = body
+  def `Usage of @djx314 Point 4`[T](body: => T): T = body
 
-  `Usage of @djx314 Point 3` {
+  `Usage of @djx314 Point 4` {
     import net.scalax.simple.adt.{TypeAdt => Adt}
     import io.circe._
     import io.circe.syntax._
@@ -82,31 +152,6 @@ object `Test Cases copy from documention in README.md` {
     assert(inputAdtData(Some("Tom")) == "Tom".asJson)
   }
 
-  def `Usage of @djx314 Point 4`[T](body: => T): T = body
-
-  `Usage of @djx314 Point 4` {
-    import net.scalax.simple.adt.{TypeAdt => Adt}
-    import io.circe._
-    import io.circe.syntax._
-
-    type TypeOpts3[T] = Adt.Options3[T, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]
-    def inputAdtData[T: TypeOpts3](t: T): Json = {
-      val applyM = Adt.Options3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
-      applyM.fold(
-        noneValue => "Null Tag".asJson,
-        intOpt => intOpt.map(_ + 1).asJson,
-        { case Adt.Adapter(encoder) => encoder(t) }
-      )
-    }
-
-    assert(inputAdtData(None) == "Null Tag".asJson)
-    assert(inputAdtData(Some(2)) == 3.asJson)
-    // Match Encoder[String] by Type Class matching.
-    assert(inputAdtData("My Name") == "My Name".asJson)
-    // Match Encoder[JsonObject] by Type Class matching.
-    assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
-  }
-
   def `Usage of @MarchLiu Point 1`[T](body: => T): T = body
 
   `Usage of @MarchLiu Point 1` {
@@ -114,18 +159,18 @@ object `Test Cases copy from documention in README.md` {
 
     type Options3F[F[_], T, T1, T2, T3] = Adt.Options3[F[T], T1, T2, T3]
 
-    def inputAdtData[T: Options3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]](t: T*): Seq[Option[Long]] = {
+    def inputAdtData[T: Options3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]](t: T*): Seq[Long] = {
       val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
       applyM.fold(
-        stringSeq => stringSeq.map(t => Some(t.length.toLong)),
-        intSeq => intSeq.map(t => Some(t.toLong)),
-        longOptSeq => longOptSeq
+        stringSeq => stringSeq.map(t => t.length.toLong),
+        intSeq => intSeq.map(t => t.toLong),
+        longOptSeq => longOptSeq.collect { case Some(s) => s }
       )
     }
 
-    assert(inputAdtData("abc", "aabbcc", "aabbbcc") == List("abc", "aabbcc", "aabbbcc").map(t => Some(t.length.toLong)))
-    assert(inputAdtData(2, 3, 4) == List(Some(2L), Some(3L), Some(4L)))
-    assert(inputAdtData(Some(2L), Some(3L), Some(4L)) == List(Some(2L), Some(3L), Some(4L)))
+    assert(inputAdtData("abc", "aabbcc", "aabbbcc") == List("abc".length: Long, "aabbcc".length: Long, "aabbbcc".length: Long))
+    assert(inputAdtData(2, 3, 4) == List(2L, 3L, 4L))
+    assert(inputAdtData(Some(2L), Some(3L), Some(4L)) == List(2L, 3L, 4L))
   }
 
   def `Usage of @MarchLiu Point 2`[T](body: => T): T = body
@@ -148,8 +193,8 @@ object `Test Cases copy from documention in README.md` {
       }
     }
 
-    assert(countAdtData("abc", "aabbcc", "aabbbcc") == 16)
-    assert(countAdtData(Some(2), Some(3), Option.empty) == 5)
+    assert(countAdtData("abc", "aabbcc", "aabbbcc") == ("abc".length + "aabbcc".length + "aabbbcc".length))
+    assert(countAdtData(Some(2), Some(3), Option.empty) == (2 + 3 + 0))
 
     // Point what type you want to route to
     assert(countAdtData[Option[Int]]() == -100)
@@ -158,7 +203,7 @@ object `Test Cases copy from documention in README.md` {
     assert(countAdtData(Some(2)) == (2 + 1))
     assert(countAdtData(Option.empty) == (0 + 1))
     assert(countAdtData("Option.empty") == (12 + 1))
-    assert(countAdtData(Option.empty, Option.empty, Option.empty) == 0)
+    assert(countAdtData(Option.empty, Option.empty, Option.empty) == (0 + 0 + 0))
   }
 
 }
