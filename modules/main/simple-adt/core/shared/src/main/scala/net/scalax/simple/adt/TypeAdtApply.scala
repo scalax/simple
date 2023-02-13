@@ -42,7 +42,7 @@ package impl {
   }
 
   trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
-    @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtAlias.AdtNat, AdtConvertPoly](implicit
+    @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtAlias.AdtNat](implicit
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type]
     ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[B, Tail], TypeAdt.Status.Passed] = TypeAdtApply(new Core2 {
       override def apply(c: () => Core2): Core2 =
