@@ -20,7 +20,7 @@ scalacOptions += "-Ykind-projector"
 ```
 
 ## Usage
-[Source File](./core/shared/src/test/scala-no-js/net/scalax/simple/adt/test/Test Cases.scala)
+[Source File](./core/shared/src/test/scala-no-js/net/scalax/simple/adt/test/Test%20Cases%20copy%20from%20documention%20in%20README.md.scala)
 
 ### Common Usage
 ``` scala
