@@ -5,6 +5,6 @@
 Simple, and scalable.  
 Use it to subvert the author's imagination.
 
-## Modules
+## Modules with documentions
 ### [simple-adt](./modules/main/simple-adt/)
-A simple abstraction of adt.
+A simple abstraction of ADT(Abstract Data Type).
