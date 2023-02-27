@@ -1,3 +1,4 @@
+
 package net.scalax.simple.adt
 package impl
 

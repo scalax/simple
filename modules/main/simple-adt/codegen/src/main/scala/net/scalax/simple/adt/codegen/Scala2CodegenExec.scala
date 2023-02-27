@@ -16,7 +16,7 @@ object Scala2CodegenExec:
 
     locally {
       val filePath = writePath.resolve("InnerTypeAdtClass.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8)) { writer =>
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
         val linerContent = net.scalax.simple.nat.adt.codegen.txt.InnerTypeAdtClassScala2().body
         writer.println(linerContent)
       }
@@ -33,7 +33,7 @@ object Scala2CodegenExec:
 
     locally {
       val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8)) { writer =>
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
         val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtRuntimeApplyScala2().body
         writer.println(linerContent)
       }
