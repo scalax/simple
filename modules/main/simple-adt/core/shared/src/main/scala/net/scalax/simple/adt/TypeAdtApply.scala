@@ -1,6 +1,7 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 
-import CoreInstance._
+import core.Core2
 
 /** TODO
   *

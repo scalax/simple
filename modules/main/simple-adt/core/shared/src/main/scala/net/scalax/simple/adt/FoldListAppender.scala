@@ -1,6 +1,7 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 
-import CoreInstance._
+import core.Core2
 
 object FoldListAppender {
   def appendAll(data: Any, list: List[Any => Any]): Number1 = list match {

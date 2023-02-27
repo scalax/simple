@@ -1,7 +1,8 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
-import CoreInstance._
+import core.Core2
 
 final class FetchAdtApply[S <: Tuple]:
   inline final def apply[T](inline data: T)(using

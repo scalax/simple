@@ -1,8 +1,9 @@
 @()
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
-import CoreInstance._
+import core.Core2
 
 @paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
 @paramFunc(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } func@{i2}: I@{i2} => T } }

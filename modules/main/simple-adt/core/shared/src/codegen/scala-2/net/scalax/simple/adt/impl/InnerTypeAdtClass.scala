@@ -1,7 +1,8 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
-import CoreInstance._
+import core.Core2
 
 object InnerTypeAdtClass {
 
@@ -14,7 +15,7 @@ object InnerTypeAdtClass {
   class CusInnerApply1[I1](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T): T = {
       val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any]))).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -28,7 +29,7 @@ object InnerTypeAdtClass {
     @inline def fold[T](func1: I1 => T, func2: I2 => T): T = {
       val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any])))
         .asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -49,7 +50,7 @@ object InnerTypeAdtClass {
           List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any])
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -75,7 +76,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -102,7 +103,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -130,7 +131,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -167,7 +168,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -206,7 +207,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -250,7 +251,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -296,7 +297,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -344,7 +345,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -394,7 +395,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -446,7 +447,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -503,7 +504,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -563,7 +564,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -625,7 +626,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -689,7 +690,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -756,7 +757,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -828,7 +829,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -905,7 +906,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -984,7 +985,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
@@ -1088,7 +1089,7 @@ object InnerTypeAdtClass {
           )
         )
       ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      result.result.runGetter(result.convert).asInstanceOf[T]
     }
   }
 
