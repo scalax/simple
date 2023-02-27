@@ -4,6 +4,7 @@ import java.util.stream.Collectors
 import scala.jdk.CollectionConverters._
 import scala.collection.compat._
 import scala.util.Using
+import scala.io.Source
 
 def genPluginString(str: String, pluginName: String): String = {
   val settingStr =
@@ -30,7 +31,10 @@ def genPluginString(str: String, pluginName: String): String = {
        |""".stripMargin
 }
 
-def genPluginFromFile(f: Path): String = genPluginString(Files.readString(f), f.getFileName.toString.split('.')(0))
+def genPluginFromFile(f: Path): String = {
+  val str = Using.resource(Source.fromFile(f.toFile))(resource => resource.getLines().to(List)).mkString("\n")
+  genPluginString(str, f.getFileName.toString.split('.')(0))
+}
 
 Compile / sourceGenerators += Def.task {
   val sourceDir = (Compile / sourceManaged).value / "PluginCollection.scala"

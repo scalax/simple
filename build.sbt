@@ -35,7 +35,7 @@ lazy val coreJS  = core.js
 lazy val adt = crossProject(JSPlatform, JVMPlatform) in `adt/file` dependsOn `adt-core`
 
 lazy val `adt-codegen` = project in `adt-codegen/file`
-lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core/file` dependsOn (core, `test-common` % Test)
+lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core/file` dependsOn (nat, `test-common` % Test)
 
 lazy val `adt-coreJVM` = `adt-core`.jvm
 lazy val `adt-coreJS`  = `adt-core`.js

@@ -7,7 +7,7 @@ import core.Core2
 object Number {
 
   def Core2(t: (() => Core2) => Core2): Core2 = new Core2 {
-    override def apply(v1: () => Core2): Core2 = t(v1)
+    override def input(v1: => Core2): Core2 = t(() => v1)
   }
 
   val S: Core2 = Core2(tail => Core2(number => tail()(() => number())))
