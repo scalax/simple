@@ -34,8 +34,8 @@ package impl {
     ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[TypeAdt.Adapter[B, AdtConvertPoly], Tail], TypeAdt.Status.Passed] = {
       val adtConvertImpl = new AdapterContext(adtConvert)
       val number = new Core2 {
-        override def apply(c: () => Core2): Core2 =
-          AdtConvertWrapper(result = AdtListZero(c), convert = adtConvertImpl.asInstanceOf[TypeAdt.Context[Any, Any, Any]])
+        override def input(c: => Core2): Core2 =
+          AdtConvertWrapper(result = AdtListZero(() => c), convert = adtConvertImpl.asInstanceOf[TypeAdt.Context[Any, Any, Any]])
       }
       TypeAdtApply(number)
     }
@@ -45,8 +45,8 @@ package impl {
     @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtAlias.AdtNat](implicit
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type]
     ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[B, Tail], TypeAdt.Status.Passed] = TypeAdtApply(new Core2 {
-      override def apply(c: () => Core2): Core2 =
-        AdtConvertWrapper(result = AdtListZero(c), convert = adtConvert.asInstanceOf[TypeAdt.Context[Any, Any, Any]])
+      override def input(c: => Core2): Core2 =
+        AdtConvertWrapper(result = AdtListZero(() => c), convert = adtConvert.asInstanceOf[TypeAdt.Context[Any, Any, Any]])
     })
   }
 

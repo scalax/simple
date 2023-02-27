@@ -55,7 +55,7 @@ lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn
 lazy val codecJVM = codec.jvm
 lazy val codecJS  = codec.js
 
-lazy val nat    = crossProject(JSPlatform, JVMPlatform) in `nat/file` dependsOn (core, `test-common` % Test)
+lazy val nat    = crossProject(JSPlatform, JVMPlatform) in `nat/file` dependsOn core
 lazy val natJVM = nat.jvm
 lazy val natJS  = nat.js
 
