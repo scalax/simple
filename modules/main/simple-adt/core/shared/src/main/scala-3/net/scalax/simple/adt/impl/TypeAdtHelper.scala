@@ -17,7 +17,7 @@ end FetchAdtApply
 final class InnerApply[O[_] <: Tuple](adtList: Core2, data: Any):
   inline def fold[U](inline funcCol: O[U]): U =
     val foldNumber = () => FoldListAppender.appendAll(data, funcCol.productIterator.asInstanceOf[Iterator[Any => Any]].to(List))
-    val result     = adtList(foldNumber).asInstanceOf[AdtConvertWrapper]
-    result.result.runGetter(result.convert).asInstanceOf[U]
+    val result     = adtList(foldNumber).asInstanceOf[AdtValueGetter]
+    result.value.asInstanceOf[U]
   end fold
 end InnerApply

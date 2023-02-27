@@ -24,8 +24,8 @@ object InnerTypeAdtClass {
         object HelperIOImpl@{i1} extends PrepareInnerApply@{i1}[@paramTypeAny(1, i1)]
         class CusInnerApply@{i1}[@paramType(1, i1)](adtList: Core2, data: Any) {
             @@inline def fold[T](@paramFunc(1, i1)): T = {
-                val result = adtList(() => @{forMatch(i1, 1)}).asInstanceOf[AdtConvertWrapper]
-                result.result.runGetter(result.convert).asInstanceOf[T]
+                val result = adtList(() => @{forMatch(i1, 1)}).asInstanceOf[AdtValueGetter]
+                result.value.asInstanceOf[T]
             }
         }
     }

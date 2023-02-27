@@ -14,10 +14,10 @@ class TypeGetterByCore2(data: Any, func: Any => Any, core2Tail: Number1) extends
   override def runGetter(adtConvert: TypeAdt.Context[Any, Any, Any]): Any = func(adtConvert.input(data))
 }
 
-class AdtConvertWrapperImpl(val convert: TypeAdt.Context[Any, Any, Any]) extends Number2T {
-  override def input(t: => Core2): Number2 = new AdtConvertWrapper(result = t.asInstanceOf[TypeAdtGetter], convert = convert)
-}
+class AdtConvertWrapper(convert: TypeAdt.Context[Any, Any, Any]) extends Number2T {
+  override def input(t: => Core2): Number2 = new Number2T with AdtValueGetter { self: Number2T =>
+    override def input(num1: => Core2): Number2 = self
 
-class AdtConvertWrapper(val result: TypeAdtGetter, val convert: TypeAdt.Context[Any, Any, Any]) extends Number2T {
-  override def input(t: => Core2): Number2 = this
+    override def value: Any = t.asInstanceOf[TypeAdtGetter].runGetter(convert)
+  }
 }
