@@ -1,17 +1,23 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 
-import CoreInstance._
+import core.Core2
 
 object FoldListAppender {
-  @inline def append(data: Any, func: Any => Any, core2Tail: () => Core2): Core2 =
-    TypeGetterByCore2(data = data, func = func, core2Tail = core2Tail)
+  def appendAll(data: Any, list: List[Any => Any]): Number1 = list match {
+    case head :: tail => new TypeGetterByCore2(data = data, func = head, core2Tail = appendAll(data, tail))
+    case Nil          => Number1T
+  }
 }
 
-case class TypeGetterByCore2(data: Any, func: Any => Any, core2Tail: () => Core2) extends TypeAdtGetter with Core2 {
+class TypeGetterByCore2(data: Any, func: Any => Any, core2Tail: Number1) extends Number1S(core2Tail) with TypeAdtGetter {
   override def runGetter(adtConvert: TypeAdt.Context[Any, Any, Any]): Any = func(adtConvert.input(data))
-  override def apply(other: () => Core2): Core2                           = FoldListPositive(core2Tail)(other)
 }
 
-case class AdtConvertWrapper(result: Core2, convert: TypeAdt.Context[Any, Any, Any]) extends Core2 {
-  override def apply(t: () => Core2): Core2 = throw new Exception
+class AdtConvertWrapper(convert: TypeAdt.Context[Any, Any, Any]) extends Number2T {
+  override def input(t: => Core2): Number2 = new Number2T with AdtValueGetter { self: Number2T =>
+    override def input(num1: => Core2): Number2 = self
+
+    override def value: Any = t.asInstanceOf[TypeAdtGetter].runGetter(convert)
+  }
 }

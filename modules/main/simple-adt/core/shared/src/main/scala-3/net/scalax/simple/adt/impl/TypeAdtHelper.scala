@@ -1,7 +1,8 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
-import CoreInstance._
+import core.Core2
 
 final class FetchAdtApply[S <: Tuple]:
   inline final def apply[T](inline data: T)(using
@@ -15,13 +16,8 @@ end FetchAdtApply
 
 final class InnerApply[O[_] <: Tuple](adtList: Core2, data: Any):
   inline def fold[U](inline funcCol: O[U]): U =
-    def tranToFoldList(t: Tuple): () => Core2 = t.match
-      case head *: tail => () => FoldListAppender.append(data, head.asInstanceOf[Any => Any], tranToFoldList(tail))
-      case EmptyTuple   => () => FoldListZero
-    end tranToFoldList
-
-    val foldNumber = tranToFoldList(funcCol)
-    val result     = adtList(foldNumber).asInstanceOf[AdtConvertWrapper]
-    result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[U]
+    val foldNumber = () => FoldListAppender.appendAll(data, funcCol.productIterator.asInstanceOf[Iterator[Any => Any]].to(List))
+    val result     = adtList(foldNumber).asInstanceOf[AdtValueGetter]
+    result.value.asInstanceOf[U]
   end fold
 end InnerApply

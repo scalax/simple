@@ -16,7 +16,7 @@ object ScalaAllCodegenExec:
 
     locally {
       val filePath = writePath.resolve("TypeAdtAlias.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8)) { writer =>
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
         val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasScala().body
         writer.println(linerContent)
       }

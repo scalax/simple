@@ -1,7 +1,8 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
-import CoreInstance._
+import core.Core2
 
 object InnerTypeAdtClass {
 
@@ -13,9 +14,8 @@ object InnerTypeAdtClass {
   object HelperIOImpl1 extends PrepareInnerApply1[Any]
   class CusInnerApply1[I1](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T): T = {
-      val result =
-        adtList(() => FoldListAppender.append(data, func1.asInstanceOf[Any => Any], () => FoldListZero)).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any]))).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -27,14 +27,9 @@ object InnerTypeAdtClass {
   object HelperIOImpl2 extends PrepareInnerApply2[Any, Any]
   class CusInnerApply2[I1, I2](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T): T = {
-      val result = adtList(() =>
-        FoldListAppender.append(
-          data,
-          func1.asInstanceOf[Any => Any],
-          () => FoldListAppender.append(data, func2.asInstanceOf[Any => Any], () => FoldListZero)
-        )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any])))
+        .asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -50,18 +45,12 @@ object InnerTypeAdtClass {
   class CusInnerApply3[I1, I2, I3](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () => FoldListAppender.append(data, func3.asInstanceOf[Any => Any], () => FoldListZero)
-            )
+          List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any])
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -77,23 +66,17 @@ object InnerTypeAdtClass {
   class CusInnerApply4[I1, I2, I3, I4](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () => FoldListAppender.append(data, func4.asInstanceOf[Any => Any], () => FoldListZero)
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -109,28 +92,18 @@ object InnerTypeAdtClass {
   class CusInnerApply5[I1, I2, I3, I4, I5](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () => FoldListAppender.append(data, func5.asInstanceOf[Any => Any], () => FoldListZero)
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -146,33 +119,19 @@ object InnerTypeAdtClass {
   class CusInnerApply6[I1, I2, I3, I4, I5, I6](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T, func6: I6 => T): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () => FoldListAppender.append(data, func6.asInstanceOf[Any => Any], () => FoldListZero)
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -196,38 +155,20 @@ object InnerTypeAdtClass {
       func7: I7 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () => FoldListAppender.append(data, func7.asInstanceOf[Any => Any], () => FoldListZero)
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -252,43 +193,21 @@ object InnerTypeAdtClass {
       func8: I8 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () => FoldListAppender.append(data, func8.asInstanceOf[Any => Any], () => FoldListZero)
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -317,48 +236,22 @@ object InnerTypeAdtClass {
       func9: I9 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () => FoldListAppender.append(data, func9.asInstanceOf[Any => Any], () => FoldListZero)
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -388,53 +281,23 @@ object InnerTypeAdtClass {
       func10: I10 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () => FoldListAppender.append(data, func10.asInstanceOf[Any => Any], () => FoldListZero)
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -465,58 +328,24 @@ object InnerTypeAdtClass {
       func11: I11 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () => FoldListAppender.append(data, func11.asInstanceOf[Any => Any], () => FoldListZero)
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -548,63 +377,25 @@ object InnerTypeAdtClass {
       func12: I12 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () => FoldListAppender.append(data, func12.asInstanceOf[Any => Any], () => FoldListZero)
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -637,69 +428,26 @@ object InnerTypeAdtClass {
       func13: I13 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(data, func13.asInstanceOf[Any => Any], () => FoldListZero)
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -736,78 +484,27 @@ object InnerTypeAdtClass {
       func14: I14 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () => FoldListZero
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -846,83 +543,28 @@ object InnerTypeAdtClass {
       func15: I15 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () => FoldListZero
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -962,88 +604,29 @@ object InnerTypeAdtClass {
       func16: I16 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () =>
-                                                                    FoldListAppender.append(
-                                                                      data,
-                                                                      func16.asInstanceOf[Any => Any],
-                                                                      () => FoldListZero
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any],
+            func16.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -1084,93 +667,30 @@ object InnerTypeAdtClass {
       func17: I17 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () =>
-                                                                    FoldListAppender.append(
-                                                                      data,
-                                                                      func16.asInstanceOf[Any => Any],
-                                                                      () =>
-                                                                        FoldListAppender.append(
-                                                                          data,
-                                                                          func17.asInstanceOf[Any => Any],
-                                                                          () => FoldListZero
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any],
+            func16.asInstanceOf[Any => Any],
+            func17.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -1213,98 +733,31 @@ object InnerTypeAdtClass {
       func18: I18 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () =>
-                                                                    FoldListAppender.append(
-                                                                      data,
-                                                                      func16.asInstanceOf[Any => Any],
-                                                                      () =>
-                                                                        FoldListAppender.append(
-                                                                          data,
-                                                                          func17.asInstanceOf[Any => Any],
-                                                                          () =>
-                                                                            FoldListAppender.append(
-                                                                              data,
-                                                                              func18.asInstanceOf[Any => Any],
-                                                                              () => FoldListZero
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any],
+            func16.asInstanceOf[Any => Any],
+            func17.asInstanceOf[Any => Any],
+            func18.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -1351,103 +804,32 @@ object InnerTypeAdtClass {
       func19: I19 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () =>
-                                                                    FoldListAppender.append(
-                                                                      data,
-                                                                      func16.asInstanceOf[Any => Any],
-                                                                      () =>
-                                                                        FoldListAppender.append(
-                                                                          data,
-                                                                          func17.asInstanceOf[Any => Any],
-                                                                          () =>
-                                                                            FoldListAppender.append(
-                                                                              data,
-                                                                              func18.asInstanceOf[Any => Any],
-                                                                              () =>
-                                                                                FoldListAppender.append(
-                                                                                  data,
-                                                                                  func19.asInstanceOf[Any => Any],
-                                                                                  () => FoldListZero
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any],
+            func16.asInstanceOf[Any => Any],
+            func17.asInstanceOf[Any => Any],
+            func18.asInstanceOf[Any => Any],
+            func19.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -1498,108 +880,33 @@ object InnerTypeAdtClass {
       func20: I20 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () =>
-                                                                    FoldListAppender.append(
-                                                                      data,
-                                                                      func16.asInstanceOf[Any => Any],
-                                                                      () =>
-                                                                        FoldListAppender.append(
-                                                                          data,
-                                                                          func17.asInstanceOf[Any => Any],
-                                                                          () =>
-                                                                            FoldListAppender.append(
-                                                                              data,
-                                                                              func18.asInstanceOf[Any => Any],
-                                                                              () =>
-                                                                                FoldListAppender.append(
-                                                                                  data,
-                                                                                  func19.asInstanceOf[Any => Any],
-                                                                                  () =>
-                                                                                    FoldListAppender.append(
-                                                                                      data,
-                                                                                      func20.asInstanceOf[Any => Any],
-                                                                                      () => FoldListZero
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any],
+            func16.asInstanceOf[Any => Any],
+            func17.asInstanceOf[Any => Any],
+            func18.asInstanceOf[Any => Any],
+            func19.asInstanceOf[Any => Any],
+            func20.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -1651,113 +958,34 @@ object InnerTypeAdtClass {
       func21: I21 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () =>
-                                                                    FoldListAppender.append(
-                                                                      data,
-                                                                      func16.asInstanceOf[Any => Any],
-                                                                      () =>
-                                                                        FoldListAppender.append(
-                                                                          data,
-                                                                          func17.asInstanceOf[Any => Any],
-                                                                          () =>
-                                                                            FoldListAppender.append(
-                                                                              data,
-                                                                              func18.asInstanceOf[Any => Any],
-                                                                              () =>
-                                                                                FoldListAppender.append(
-                                                                                  data,
-                                                                                  func19.asInstanceOf[Any => Any],
-                                                                                  () =>
-                                                                                    FoldListAppender.append(
-                                                                                      data,
-                                                                                      func20.asInstanceOf[Any => Any],
-                                                                                      () =>
-                                                                                        FoldListAppender.append(
-                                                                                          data,
-                                                                                          func21.asInstanceOf[Any => Any],
-                                                                                          () => FoldListZero
-                                                                                        )
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any],
+            func16.asInstanceOf[Any => Any],
+            func17.asInstanceOf[Any => Any],
+            func18.asInstanceOf[Any => Any],
+            func19.asInstanceOf[Any => Any],
+            func20.asInstanceOf[Any => Any],
+            func21.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
@@ -1833,118 +1061,35 @@ object InnerTypeAdtClass {
       func22: I22 => T
     ): T = {
       val result = adtList(() =>
-        FoldListAppender.append(
+        FoldListAppender.appendAll(
           data,
-          func1.asInstanceOf[Any => Any],
-          () =>
-            FoldListAppender.append(
-              data,
-              func2.asInstanceOf[Any => Any],
-              () =>
-                FoldListAppender.append(
-                  data,
-                  func3.asInstanceOf[Any => Any],
-                  () =>
-                    FoldListAppender.append(
-                      data,
-                      func4.asInstanceOf[Any => Any],
-                      () =>
-                        FoldListAppender.append(
-                          data,
-                          func5.asInstanceOf[Any => Any],
-                          () =>
-                            FoldListAppender.append(
-                              data,
-                              func6.asInstanceOf[Any => Any],
-                              () =>
-                                FoldListAppender.append(
-                                  data,
-                                  func7.asInstanceOf[Any => Any],
-                                  () =>
-                                    FoldListAppender.append(
-                                      data,
-                                      func8.asInstanceOf[Any => Any],
-                                      () =>
-                                        FoldListAppender.append(
-                                          data,
-                                          func9.asInstanceOf[Any => Any],
-                                          () =>
-                                            FoldListAppender.append(
-                                              data,
-                                              func10.asInstanceOf[Any => Any],
-                                              () =>
-                                                FoldListAppender.append(
-                                                  data,
-                                                  func11.asInstanceOf[Any => Any],
-                                                  () =>
-                                                    FoldListAppender.append(
-                                                      data,
-                                                      func12.asInstanceOf[Any => Any],
-                                                      () =>
-                                                        FoldListAppender.append(
-                                                          data,
-                                                          func13.asInstanceOf[Any => Any],
-                                                          () =>
-                                                            FoldListAppender.append(
-                                                              data,
-                                                              func14.asInstanceOf[Any => Any],
-                                                              () =>
-                                                                FoldListAppender.append(
-                                                                  data,
-                                                                  func15.asInstanceOf[Any => Any],
-                                                                  () =>
-                                                                    FoldListAppender.append(
-                                                                      data,
-                                                                      func16.asInstanceOf[Any => Any],
-                                                                      () =>
-                                                                        FoldListAppender.append(
-                                                                          data,
-                                                                          func17.asInstanceOf[Any => Any],
-                                                                          () =>
-                                                                            FoldListAppender.append(
-                                                                              data,
-                                                                              func18.asInstanceOf[Any => Any],
-                                                                              () =>
-                                                                                FoldListAppender.append(
-                                                                                  data,
-                                                                                  func19.asInstanceOf[Any => Any],
-                                                                                  () =>
-                                                                                    FoldListAppender.append(
-                                                                                      data,
-                                                                                      func20.asInstanceOf[Any => Any],
-                                                                                      () =>
-                                                                                        FoldListAppender.append(
-                                                                                          data,
-                                                                                          func21.asInstanceOf[Any => Any],
-                                                                                          () =>
-                                                                                            FoldListAppender.append(
-                                                                                              data,
-                                                                                              func22.asInstanceOf[Any => Any],
-                                                                                              () => FoldListZero
-                                                                                            )
-                                                                                        )
-                                                                                    )
-                                                                                )
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+          List(
+            func1.asInstanceOf[Any => Any],
+            func2.asInstanceOf[Any => Any],
+            func3.asInstanceOf[Any => Any],
+            func4.asInstanceOf[Any => Any],
+            func5.asInstanceOf[Any => Any],
+            func6.asInstanceOf[Any => Any],
+            func7.asInstanceOf[Any => Any],
+            func8.asInstanceOf[Any => Any],
+            func9.asInstanceOf[Any => Any],
+            func10.asInstanceOf[Any => Any],
+            func11.asInstanceOf[Any => Any],
+            func12.asInstanceOf[Any => Any],
+            func13.asInstanceOf[Any => Any],
+            func14.asInstanceOf[Any => Any],
+            func15.asInstanceOf[Any => Any],
+            func16.asInstanceOf[Any => Any],
+            func17.asInstanceOf[Any => Any],
+            func18.asInstanceOf[Any => Any],
+            func19.asInstanceOf[Any => Any],
+            func20.asInstanceOf[Any => Any],
+            func21.asInstanceOf[Any => Any],
+            func22.asInstanceOf[Any => Any]
+          )
         )
-      ).asInstanceOf[AdtConvertWrapper]
-      result.result.asInstanceOf[TypeAdtGetter].runGetter(result.convert).asInstanceOf[T]
+      ).asInstanceOf[AdtValueGetter]
+      result.value.asInstanceOf[T]
     }
   }
 
