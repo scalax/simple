@@ -39,8 +39,8 @@ lazy val wire   = project in `wire/file`
 val `wire-web-app/file` = `wire/file` / "web-app"
 lazy val `wire-web-app` = project in `wire-web-app/file`
 
-val `wire-web-app-scala-style/file` = `wire/file` / "web-app-scala-style"
-lazy val `wire-web-scala`           = project in `wire-web-app-scala-style/file`
+val `wire-web-scala/file` = `wire/file` / "web-app-scala-style"
+lazy val `wire-web-scala` = project in `wire-web-scala/file`
 
 val `codec/file`  = `main/file` / "simple-codec"
 lazy val codec    = crossProject(JSPlatform, JVMPlatform) in `codec/file`
