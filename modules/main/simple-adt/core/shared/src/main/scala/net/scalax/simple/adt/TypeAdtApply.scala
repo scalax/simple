@@ -1,6 +1,7 @@
 package net.scalax.simple
 package adt
 
+import nat.number8._
 import core.Core2
 
 /** TODO
@@ -55,7 +56,7 @@ package impl {
   }
 
   trait LowerLevelPoly {
-    private val failedValue: TypeAdtApply.Aux[Any, AdtAlias.AdtNat, Adt.Status.Failed] = TypeAdtApply(new Number2T {
+    private val failedValue: TypeAdtApply.Aux[Any, AdtAlias.AdtNat, Adt.Status.Failed] = TypeAdtApply(new Number2U {
       override def input(num1: => Core2): Number2 = this.input(num1)
     })
 

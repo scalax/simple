@@ -1,6 +1,7 @@
 package net.scalax.simple
 package adt
 
+import nat.number8._
 import core.Core2
 
 object FoldListAppender {
@@ -14,8 +15,8 @@ class TypeGetterByCore2(data: Any, func: Any => Any, core2Tail: Number1) extends
   override def runGetter(adtConvert: TypeAdt.Context[Any, Any, Any]): Any = func(adtConvert.input(data))
 }
 
-class AdtConvertWrapper(convert: TypeAdt.Context[Any, Any, Any]) extends Number2T {
-  override def input(t: => Core2): Number2 = new Number2T with AdtValueGetter { self: Number2T =>
+class AdtConvertWrapper(convert: TypeAdt.Context[Any, Any, Any]) extends Number2U {
+  override def input(t: => Core2): Number2U = new Number2U with AdtValueGetter { self: Number2U =>
     override def input(num1: => Core2): Number2 = self
 
     override def value: Any = t.asInstanceOf[TypeAdtGetter].runGetter(convert)
