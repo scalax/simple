@@ -1,7 +1,10 @@
 scalaVersion := scalaV.v213
 name         := "simple"
 
+val `root/file` = file(".").getCanonicalFile
+
 val `module/file`      = `root/file` / "modules"
+
 val `test/file`        = `module/file` / "test"
 val `impractical/file` = `module/file` / "impractical"
 val `main/file`        = `module/file` / "main"
@@ -30,7 +33,6 @@ lazy val listJVM = list.jvm dependsOn (coreJVM, `test-commonJVM` % Test) aggrega
 lazy val listJS  = list.js dependsOn (coreJS, `test-commonJS`    % Test) aggregate coreJS
 
 val `wire/file` = `main/file` / "simple-wire"
-lazy val wire   = project in `wire/file`
 
 val `wire-web-app/file` = `wire/file` / "web-app"
 lazy val `wire-web-app` = project in `wire-web-app/file`
@@ -64,7 +66,4 @@ addCommandAlias("codegen", s"; ++${scalaV.v3}!; adt-codegen/preCodegenImpl; adt-
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-addCommandAlias(
-  "releaseSimple",
-  "; +coreJVM/publishSigned; +coreJS/publishSigned; +adt-coreJVM/publishSigned; +adt-coreJS/publishSigned; +adtJVM/publishSigned; +adtJS/publishSigned;"
-)
+addCommandAlias("releaseSimple", "; +adtJVM/publishSigned; +adtJS/publishSigned;")
