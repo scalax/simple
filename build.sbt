@@ -8,7 +8,6 @@ val `main/file` = `module/file` / "main"
 
 val `core/file`                     = `main/file` / "simple-core"
 val `wire/file`                     = `main/file` / "simple-wire"
-val `wire-core/file`                = `wire/file` / "core"
 val `wire-web-app/file`             = `wire/file` / "web-app"
 val `wire-web-app-scala-style/file` = `wire/file` / "web-app-scala-style"
 val `codec/file`                    = `main/file` / "simple-codec"
@@ -27,66 +26,45 @@ name         := "simple"
 lazy val testProjects = project in `test/file`
 lazy val mainProjects = project in `main/file`
 
-lazy val core = crossProject(JSPlatform, JVMPlatform) in `core/file`
-
+lazy val core    = crossProject(JSPlatform, JVMPlatform) in `core/file`
 lazy val coreJVM = core.jvm
 lazy val coreJS  = core.js
 
-lazy val adt = crossProject(JSPlatform, JVMPlatform) in `adt/file` dependsOn `adt-core`
+lazy val adt    = crossProject(JSPlatform, JVMPlatform) in `adt/file`
+lazy val adtJVM = adt.jvm dependsOn `adt-coreJVM` aggregate `adt-coreJVM`
+lazy val adtJS  = adt.js dependsOn `adt-coreJS` aggregate `adt-coreJS`
 
 lazy val `adt-codegen` = project in `adt-codegen/file`
-lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core/file` dependsOn  (core,`test-common` % Test)
 
-lazy val `adt-coreJVM` = `adt-core`.jvm
-lazy val `adt-coreJS`  = `adt-core`.js
+lazy val `adt-core`    = crossProject(JSPlatform, JVMPlatform) in `adt-core/file`
+lazy val `adt-coreJVM` = `adt-core`.jvm dependsOn (coreJVM, `test-commonJVM` % Test) aggregate coreJVM
+lazy val `adt-coreJS`  = `adt-core`.js dependsOn (coreJS, `test-commonJS`    % Test) aggregate coreJS
 
-lazy val list = crossProject(JSPlatform, JVMPlatform) in `list/file` dependsOn (core, `test-common` % Test)
+lazy val list    = crossProject(JSPlatform, JVMPlatform) in `list/file`
+lazy val listJVM = list.jvm dependsOn (coreJVM, `test-commonJVM` % Test) aggregate coreJVM
+lazy val listJS  = list.js dependsOn (coreJS, `test-commonJS`    % Test) aggregate coreJS
 
-lazy val listJVM = list.jvm
-lazy val listJS  = list.js
-
-lazy val wire = project in `wire/file`
-
+lazy val wire             = project in `wire/file`
 lazy val `wire-web-app`   = project in `wire-web-app/file`
 lazy val `wire-web-scala` = project in `wire-web-app-scala-style/file`
 
-lazy val codec = crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn (core, `test-common` % Test)
+lazy val codec    = crossProject(JSPlatform, JVMPlatform) in `codec/file`
+lazy val codecJVM = codec.jvm dependsOn (coreJVM, `test-commonJVM` % Test) aggregate coreJVM
+lazy val codecJS  = codec.js dependsOn (coreJS, `test-commonJS`    % Test) aggregate coreJS
 
-lazy val codecJVM = codec.jvm
-lazy val codecJS  = codec.js
+lazy val nat    = crossProject(JSPlatform, JVMPlatform) in `nat/file`
+lazy val natJVM = nat.jvm dependsOn coreJVM aggregate coreJVM
+lazy val natJS  = nat.js dependsOn coreJS aggregate coreJS
 
-lazy val nat    = crossProject(JSPlatform, JVMPlatform) in `nat/file` dependsOn core
-lazy val natJVM = nat.jvm
-lazy val natJS  = nat.js
+lazy val generic    = crossProject(JSPlatform, JVMPlatform) in `generic/file`
+lazy val genericJVM = generic.jvm dependsOn (coreJVM, `test-commonJVM` % Test) aggregate coreJVM
+lazy val genericJS  = generic.js dependsOn (coreJS, `test-commonJS`    % Test) aggregate coreJS
 
-lazy val generic    = crossProject(JSPlatform, JVMPlatform) in `generic/file` dependsOn (core, `test-common` % Test)
-lazy val genericJVM = generic.jvm
-lazy val genericJS  = generic.js
+lazy val `test-common`    = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
+lazy val `test-commonJVM` = `test-common`.jvm
+lazy val `test-commonJS`  = `test-common`.js
 
-lazy val `test-common` = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
-
-`adt-codegen` / rootCodegenPath := (`adt-core`.jvm / baseDirectory).value / ".." / "shared" / "src" / "codegen"
-
-val adtTestAll     = adt.componentProjects.map(t => t / Test / test)
-val adtCoreTestAll = `adt-core`.componentProjects.map(t => t / Test / test)
-val listTestAll    = list.componentProjects.map(t => t / Test / test)
-val wireTestAll    = Seq.empty
-val codecTestAll   = codec.componentProjects.map(t => t / Test / test)
-val genericTestAll = generic.componentProjects.map(t => t / Test / test)
-
-val adtTestAction     = adtTestAll ++: adtCoreTestAll
-val listTestAction    = listTestAll
-val wireTestAction    = wireTestAll
-val codecTestAction   = codecTestAll
-val genericTestAction = genericTestAll
-
-mainProjects / Test / test := (mainProjects / Test / test)
-  .dependsOn(adtTestAction: _*)
-  .dependsOn(listTestAction: _*)
-  .dependsOn(wireTestAction: _*)
-  .dependsOn(codecTestAction: _*)
-  .dependsOn(genericTestAction: _*)
-  .value
+`adt-codegen` / rootCodegenPath := (`adt-coreJVM` / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
 addCommandAlias("preCodegen", s";++${scalaV.v3}!;adt-codegen/preCodegenImpl")
 addCommandAlias("codegen", s";++${scalaV.v3}!;adt-codegen/codegenImpl")
