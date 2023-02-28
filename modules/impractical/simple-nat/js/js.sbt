@@ -1,5 +1,5 @@
 scalaVersion := scalaV.v213
-name         := "simple-counter"
+name         := "simple-nat"
 
 enableZIOTest := true
 

@@ -64,7 +64,4 @@ addCommandAlias("codegen", s"; ++${scalaV.v3}!; adt-codegen/preCodegenImpl; adt-
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-addCommandAlias(
-  "releaseSimple",
-  "; +coreJVM/publishSigned; +coreJS/publishSigned; +adt-coreJVM/publishSigned; +adt-coreJS/publishSigned; +adtJVM/publishSigned; +adtJS/publishSigned;"
-)
+addCommandAlias("releaseSimple", "; +adtJVM/publishSigned; +adtJS/publishSigned;")
