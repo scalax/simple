@@ -2,7 +2,6 @@ scalaVersion := scalaV.v213
 name         := "simple"
 
 val `root/file` = file(".").getCanonicalFile
-
 val `module/file`      = `root/file` / "modules"
 
 val `test/file`        = `module/file` / "test"
