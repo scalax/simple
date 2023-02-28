@@ -116,11 +116,4 @@ scalacOptions ++= {
 }
 // end setting
 
-// start setting
-{
-    import sbtide.ConfigPlugin.autoImport._
-    idePackagePrefix := Some("net.scalax.simple")
-}
-// end setting
-
 // scala code override lazy val projectSettings: Seq[Setting[_]] = preSettings

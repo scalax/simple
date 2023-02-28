@@ -61,7 +61,7 @@ object RunMain2 {
           list.min
         }
 
-        println(i1, i2, result, compareResult_1, compareResult_2)
+        println((i1, i2, result, compareResult_1, compareResult_2))
         assert(result == compareResult_1)
         assert(result == compareResult_2)
         assert(countNumber3(number1.method1(number2Positive)) == i1 * i2)
