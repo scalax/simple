@@ -14,8 +14,8 @@ object InnerTypeAdtClass {
   object HelperIOImpl1 extends PrepareInnerApply1[Any]
   class CusInnerApply1[I1](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T): T = {
-      val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any]))).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any])))
+      FoldListAppender.result(result)
     }
   }
 
@@ -28,8 +28,7 @@ object InnerTypeAdtClass {
   class CusInnerApply2[I1, I2](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T): T = {
       val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any])))
-        .asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      FoldListAppender.result(result)
     }
   }
 
@@ -45,12 +44,10 @@ object InnerTypeAdtClass {
   class CusInnerApply3[I1, I2, I3](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T): T = {
       val result = adtList(() =>
-        FoldListAppender.appendAll(
-          data,
-          List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any])
-        )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+        FoldListAppender
+          .appendAll(data, List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any]))
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -75,8 +72,8 @@ object InnerTypeAdtClass {
             func4.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -106,8 +103,8 @@ object InnerTypeAdtClass {
             func5.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -138,8 +135,8 @@ object InnerTypeAdtClass {
             func6.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -182,8 +179,8 @@ object InnerTypeAdtClass {
             func7.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -231,8 +228,8 @@ object InnerTypeAdtClass {
             func8.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -285,8 +282,8 @@ object InnerTypeAdtClass {
             func9.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -344,8 +341,8 @@ object InnerTypeAdtClass {
             func10.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -408,8 +405,8 @@ object InnerTypeAdtClass {
             func11.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -477,8 +474,8 @@ object InnerTypeAdtClass {
             func12.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -551,8 +548,8 @@ object InnerTypeAdtClass {
             func13.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -630,8 +627,8 @@ object InnerTypeAdtClass {
             func14.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -715,8 +712,8 @@ object InnerTypeAdtClass {
             func15.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -805,8 +802,8 @@ object InnerTypeAdtClass {
             func16.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -900,8 +897,8 @@ object InnerTypeAdtClass {
             func17.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -1001,8 +998,8 @@ object InnerTypeAdtClass {
             func18.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -1107,8 +1104,8 @@ object InnerTypeAdtClass {
             func19.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -1221,8 +1218,8 @@ object InnerTypeAdtClass {
             func20.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -1340,8 +1337,8 @@ object InnerTypeAdtClass {
             func21.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
@@ -1487,8 +1484,8 @@ object InnerTypeAdtClass {
             func22.asInstanceOf[Any => Any]
           )
         )
-      ).asInstanceOf[AdtValueGetter]
-      result.value.asInstanceOf[T]
+      )
+      FoldListAppender.result(result)
     }
   }
 
