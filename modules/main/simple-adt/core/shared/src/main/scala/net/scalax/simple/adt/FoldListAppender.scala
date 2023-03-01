@@ -1,24 +1,25 @@
 package net.scalax.simple
 package adt
 
-import nat.number8._
+import nat.number9._
 import core.Core2
 
 object FoldListAppender {
-  def appendAll(data: Any, list: List[Any => Any]): Number1 = list match {
-    case head :: tail => new TypeGetterByCore2(data = data, func = head, core2Tail = appendAll(data, tail))
-    case Nil          => Number1T
+  def appendAll(data: Any, list: List[Any => Any]): Number2 = list match {
+    case head :: hTail =>
+      new Number2S(tail = appendAll(data, hTail)) with TypeAdtGetter {
+        override def runGetter(adtConvert: TypeAdt.Context[Any, Any, Any]): Any = head(adtConvert.input(data))
+      }
+    case Nil => Number2T
   }
-}
 
-class TypeGetterByCore2(data: Any, func: Any => Any, core2Tail: Number1) extends Number1S(core2Tail) with TypeAdtGetter {
-  override def runGetter(adtConvert: TypeAdt.Context[Any, Any, Any]): Any = func(adtConvert.input(data))
-}
-
-class AdtConvertWrapper(convert: TypeAdt.Context[Any, Any, Any]) extends Number2U {
-  override def input(t: => Core2): Number2U = new Number2U with AdtValueGetter { self: Number2U =>
-    override def input(num1: => Core2): Number2 = self
-
-    override def value: Any = t.asInstanceOf[TypeAdtGetter].runGetter(convert)
+  def result[T](core2: Core2): T = {
+    val convert: TypeAdt.Context[Any, Any, Any] = core2 match {
+      case t: TypeAdt.Context[Any, Any, Any] => t
+    }
+    val getter: TypeAdtGetter = core2 match {
+      case Number2S(u: TypeAdtGetter) => u
+    }
+    getter.runGetter(convert).asInstanceOf[T]
   }
 }
