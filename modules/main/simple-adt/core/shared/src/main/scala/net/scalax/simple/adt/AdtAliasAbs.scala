@@ -1,4 +1,5 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
 object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
@@ -13,7 +14,6 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
   trait Context[In, Out, Poly] extends Any {
     def input(t: In): Out
   }
-
   object Context {
     def apply[In, Out, Poly](func: In => Out): Context[In, Out, Poly] = new Context[In, Out, Poly] {
       def input(t: In): Out = func(t)
@@ -21,7 +21,6 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
   }
 
   sealed trait Status
-
   object Status {
     class Passed extends Status
     class Failed extends Status
