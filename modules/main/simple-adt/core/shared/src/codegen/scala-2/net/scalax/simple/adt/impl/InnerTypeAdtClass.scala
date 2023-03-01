@@ -14,8 +14,8 @@ object InnerTypeAdtClass {
   object HelperIOImpl1 extends PrepareInnerApply1[Any]
   class CusInnerApply1[I1](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T): T = {
-      val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any])))
-      FoldListAppender.result(result)
+      val number = adtList(() => FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any])))
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -27,8 +27,8 @@ object InnerTypeAdtClass {
   object HelperIOImpl2 extends PrepareInnerApply2[Any, Any]
   class CusInnerApply2[I1, I2](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T): T = {
-      val result = adtList(() => FoldListAppender.appendAll(data, List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any])))
-      FoldListAppender.result(result)
+      val number = adtList(() => FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any])))
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -43,11 +43,10 @@ object InnerTypeAdtClass {
   object HelperIOImpl3 extends PrepareInnerApply3[Any, Any, Any]
   class CusInnerApply3[I1, I2, I3](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T): T = {
-      val result = adtList(() =>
-        FoldListAppender
-          .appendAll(data, List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any]))
+      val number = adtList(() =>
+        FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any]))
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -62,9 +61,8 @@ object InnerTypeAdtClass {
   object HelperIOImpl4 extends PrepareInnerApply4[Any, Any, Any, Any]
   class CusInnerApply4[I1, I2, I3, I4](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -73,7 +71,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -92,9 +90,8 @@ object InnerTypeAdtClass {
   object HelperIOImpl5 extends PrepareInnerApply5[Any, Any, Any, Any, Any]
   class CusInnerApply5[I1, I2, I3, I4, I5](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -104,7 +101,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -123,9 +120,8 @@ object InnerTypeAdtClass {
   object HelperIOImpl6 extends PrepareInnerApply6[Any, Any, Any, Any, Any, Any]
   class CusInnerApply6[I1, I2, I3, I4, I5, I6](adtList: Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T, func6: I6 => T): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -136,7 +132,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -166,9 +162,8 @@ object InnerTypeAdtClass {
       func6: I6 => T,
       func7: I7 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -180,7 +175,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -214,9 +209,8 @@ object InnerTypeAdtClass {
       func7: I7 => T,
       func8: I8 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -229,7 +223,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -267,9 +261,8 @@ object InnerTypeAdtClass {
       func8: I8 => T,
       func9: I9 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -283,7 +276,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -325,9 +318,8 @@ object InnerTypeAdtClass {
       func9: I9 => T,
       func10: I10 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -342,7 +334,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -388,9 +380,8 @@ object InnerTypeAdtClass {
       func10: I10 => T,
       func11: I11 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -406,7 +397,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -456,9 +447,8 @@ object InnerTypeAdtClass {
       func11: I11 => T,
       func12: I12 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -475,7 +465,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -529,9 +519,8 @@ object InnerTypeAdtClass {
       func12: I12 => T,
       func13: I13 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -549,7 +538,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -607,9 +596,8 @@ object InnerTypeAdtClass {
       func13: I13 => T,
       func14: I14 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -628,7 +616,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -691,9 +679,8 @@ object InnerTypeAdtClass {
       func14: I14 => T,
       func15: I15 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -713,7 +700,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -780,9 +767,8 @@ object InnerTypeAdtClass {
       func15: I15 => T,
       func16: I16 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -803,7 +789,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -874,9 +860,8 @@ object InnerTypeAdtClass {
       func16: I16 => T,
       func17: I17 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -898,7 +883,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -974,9 +959,8 @@ object InnerTypeAdtClass {
       func17: I17 => T,
       func18: I18 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -999,7 +983,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -1079,9 +1063,8 @@ object InnerTypeAdtClass {
       func18: I18 => T,
       func19: I19 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -1105,7 +1088,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -1192,9 +1175,8 @@ object InnerTypeAdtClass {
       func19: I19 => T,
       func20: I20 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -1219,7 +1201,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -1310,9 +1292,8 @@ object InnerTypeAdtClass {
       func20: I20 => T,
       func21: I21 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -1338,7 +1319,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 
@@ -1456,9 +1437,8 @@ object InnerTypeAdtClass {
       func21: I21 => T,
       func22: I22 => T
     ): T = {
-      val result = adtList(() =>
+      val number = adtList(() =>
         FoldListAppender.appendAll(
-          data,
           List(
             func1.asInstanceOf[Any => Any],
             func2.asInstanceOf[Any => Any],
@@ -1485,7 +1465,7 @@ object InnerTypeAdtClass {
           )
         )
       )
-      FoldListAppender.result(result)
+      FoldListAppender.result(number = number, data = data)
     }
   }
 

@@ -5,21 +5,21 @@ import nat.number9._
 import core.Core2
 
 object FoldListAppender {
-  def appendAll(data: Any, list: List[Any => Any]): Number2 = list match {
+  def appendAll(list: List[Any => Any]): Number2 = list match {
     case head :: hTail =>
-      new Number2S(tail = appendAll(data, hTail)) with TypeAdtGetter {
-        override def runGetter(adtConvert: TypeAdt.Context[Any, Any, Any]): Any = head(adtConvert.input(data))
+      new Number2S(tail = appendAll(list = hTail)) with TypeAdtGetter {
+        override def executeFunction: Any => Any = head
       }
     case Nil => Number2T
   }
 
-  def result[T](core2: Core2): T = {
-    val convert: TypeAdt.Context[Any, Any, Any] = core2 match {
+  def result[T](number: Core2, data: Any): T = {
+    val convert: TypeAdt.Context[Any, Any, Any] = number match {
       case t: TypeAdt.Context[Any, Any, Any] => t
     }
-    val getter: TypeAdtGetter = core2 match {
+    val getter: TypeAdtGetter = number match {
       case Number2S(u: TypeAdtGetter) => u
     }
-    getter.runGetter(convert).asInstanceOf[T]
+    getter.executeFunction(convert.input(data)).asInstanceOf[T]
   }
 }
