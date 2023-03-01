@@ -10,7 +10,7 @@ import core.Core2
 @paramTypeAny(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } Any } }
 
 @forMatch(end: Int, i1: Int) = { @if(i1 > end) { FoldListZero } else {
-    FoldListAppender.appendAll(data, List(@for(n <- i1 to end - 1) { func@{n}.asInstanceOf[Any => Any], } func@{end}.asInstanceOf[Any => Any]))
+    FoldListAppender.appendAll(List(@for(n <- i1 to end - 1) { func@{n}.asInstanceOf[Any => Any], } func@{end}.asInstanceOf[Any => Any]))
 } }
 @buildHList(start: Int, i1: Int) = { @if(start <= i1) {
     AdtAlias.AdtAppend[I@start, @buildHList(start + 1, i1)]
@@ -24,8 +24,8 @@ object InnerTypeAdtClass {
         object HelperIOImpl@{i1} extends PrepareInnerApply@{i1}[@paramTypeAny(1, i1)]
         class CusInnerApply@{i1}[@paramType(1, i1)](adtList: Core2, data: Any) {
             @@inline def fold[T](@paramFunc(1, i1)): T = {
-                val result = adtList(() => @{forMatch(i1, 1)})
-                FoldListAppender.result(result)
+                val number = adtList(() => @{forMatch(i1, 1)})
+                FoldListAppender.result(number = number, data = data)
             }
         }
     }
