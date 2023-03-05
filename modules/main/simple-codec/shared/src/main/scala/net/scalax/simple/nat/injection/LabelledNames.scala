@@ -1,7 +1,7 @@
 package net.scalax.simple
 package codec
 
-import shapeless._
+// import shapeless._
 
 trait LabelledNames[F[_[_]]] {
   def names: List[String]
@@ -11,12 +11,12 @@ object LabelledNames {
     override val length: Int = i
   }
 
-  def init[F[_[_]]](implicit u: impl.LabelledNamesImpl[ContextO[F]#NoneF]): LabelledNames[F] = new LabelledNames[F] {
+  /*def init[F[_[_]]](implicit u: impl.LabelledNamesImpl[ContextO[F]#NoneF]): LabelledNames[F] = new LabelledNames[F] {
     override def names: List[String] = u.names
-  }
+  }*/
 }
 
-package impl {
+/*package impl {
 
   import shapeless.labelled.FieldType
 
@@ -45,4 +45,4 @@ package impl {
     }
 
   }
-}
+}*/

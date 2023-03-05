@@ -8,5 +8,5 @@ object ModelLength {
   def apply[F[_[_]]](i: Int): ModelLength[F] = new ModelLength[F] {
     override val length: Int = i
   }
-  def size[F[_[_]] <: Product](n: NoneModelFiller[F]): ModelLength[F] = ModelLength(n.instance.productArity)
+  def fill[F[_[_]]](implicit n: NoneModelFiller[F], u: ContextO[F]#NoneF <:< Product): ModelLength[F] = ModelLength(n.instance.productArity)
 }

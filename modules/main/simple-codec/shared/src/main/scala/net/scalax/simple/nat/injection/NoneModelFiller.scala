@@ -8,7 +8,7 @@ trait NoneModelFiller[F[_[_]]] {
 }
 
 object NoneModelFiller {
-  def fill[F[_[_]]](n: Filler[F]): NoneModelFiller[F] = {
+  def fill[F[_[_]]](implicit n: Filler[F]): NoneModelFiller[F] = {
     var tryInstance: Try[ContextO[F]#NoneF] = Try {
       n.input[ContextI#NoneF](impl.DefaultListGetter.get)
     }
