@@ -19,7 +19,7 @@ object NoneModelFiller {
     }
     val model = tryInstance.get
     new NoneModelFiller[F] {
-      override val instance: F[({ type X[_] = None.type })#X] = model
+      override val instance: ContextO[F]#NoneF = model
     }
   }
 }
