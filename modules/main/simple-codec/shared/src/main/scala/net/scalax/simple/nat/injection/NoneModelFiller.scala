@@ -1,5 +1,5 @@
 package net.scalax.simple
-package nat
+package codec
 
 import scala.util.Try
 

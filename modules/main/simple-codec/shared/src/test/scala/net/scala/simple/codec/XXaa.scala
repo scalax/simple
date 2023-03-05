@@ -1,8 +1,5 @@
 package net.scalax.simple
-package nat
-
-import core._
-import net.scalax.simple.nat.injection.ModelLength
+package codec
 
 object xxbb {
 

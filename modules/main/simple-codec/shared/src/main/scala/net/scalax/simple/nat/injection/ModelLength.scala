@@ -1,6 +1,5 @@
 package net.scalax.simple
-package nat
-package injection
+package codec
 
 object ModelLength {
 
