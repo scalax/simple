@@ -4,17 +4,17 @@ package codec
 import scala.util.Try
 
 trait NoneModelFiller[F[_[_]]] {
-  def instance: F[({ type X[_] = None.type })#X]
+  def instance: ContextO[F]#NoneF
 }
 
 object NoneModelFiller {
   def fill[F[_[_]]](n: Filler[F]): NoneModelFiller[F] = {
-    var tryInstance: Try[F[({ type X[_] = None.type })#X]] = Try {
-      n.input[({ type X[_] = None.type })#X](impl.DefaultListGetter.get)
+    var tryInstance: Try[ContextO[F]#NoneF] = Try {
+      n.input[ContextI#NoneF](impl.DefaultListGetter.get)
     }
     while (tryInstance.isFailure) {
       tryInstance = Try {
-        n.input[({ type X[_] = None.type })#X](impl.DefaultListGetter.getUpdate)
+        n.input[ContextI#NoneF](impl.DefaultListGetter.getUpdate)
       }
     }
     val model = tryInstance.get

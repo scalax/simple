@@ -1,17 +1,12 @@
 package net.scalax.simple
 package codec
 
+trait ModelLength[F[_[_]]] {
+  def length: Int
+}
 object ModelLength {
-
-  trait Length[F[_[_]]] {
-    def length: Int
+  def apply[F[_[_]]](i: Int): ModelLength[F] = new ModelLength[F] {
+    override val length: Int = i
   }
-  object Length {
-    def apply[F[_[_]]](i: Int): Length[F] = new Length[F] {
-      override val length: Int = i
-    }
-  }
-
-  def size[F[_[_]] <: Product](n: NoneModelFiller[F]): Length[F] = Length(n.instance.productArity)
-
+  def size[F[_[_]] <: Product](n: NoneModelFiller[F]): ModelLength[F] = ModelLength(n.instance.productArity)
 }

@@ -1,24 +1,26 @@
 package net.scalax.simple
 package codec
 
+import shapeless.LabelledGeneric
+
 object xxbb {
 
-  class XXBB[F[_]] {
-    case class Model(name: F[Int], str: F[Option[String]], uClass: F[Class[_]], name11: F[String])
-  }
+  case class Model[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Class[_]], name11: F[String])
 
-  type UModel[T[_]] = XXBB[T]#Model
+  case class BB(xx: Int, werwe: Int)
+
+  type UModel[T[_]] = Model[T]
 
   type AnyF[_] = Any
   type Id[T]   = T
 
-  val anyXXBB: XXBB[AnyF] = new XXBB
-
   def main(arr: Array[String]): Unit = {
-    val filler: Filler[UModel]              = Filler.from(Filler.fill[anyXXBB.Model])
+    val filler: Filler[UModel]              = Filler.from[UModel]
     val noneFiller: NoneModelFiller[UModel] = NoneModelFiller.fill(filler)
-    val length: ModelLength.Length[UModel]  = ModelLength.size(noneFiller)
-    val value: XXBB[Id]#Model               = filler.input[Id](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
+    val length: ModelLength[UModel]         = ModelLength.size(noneFiller)
+    val value: UModel[Id]                   = filler.input[Id](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
+    // val aa: LabelledNames[UModel]           = LabelledNames.init[UModel](impl.LabelledNamesImpl.get)
+    val xx = LabelledGeneric[BB]
     println(length.length)
     println(length.length)
     println(length.length)

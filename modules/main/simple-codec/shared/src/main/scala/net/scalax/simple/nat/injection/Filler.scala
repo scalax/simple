@@ -6,9 +6,7 @@ trait Filler[F[_[_]]] {
 }
 
 object Filler {
-  def from[F[_[_]]](lFunc: GenericFiller[_]): Filler[F] = new Filler[F] {
+  def from[F[_[_]]](implicit lFunc: GenericFiller[ContextO[F]#AnyF]): Filler[F] = new Filler[F] {
     override def input[H[_]](list: Seq[Any]): F[H] = lFunc.funcInput(list).asInstanceOf[F[H]]
   }
-
-  def fill[T](implicit fillerImpl: GenericFiller[T]): GenericFiller[T] = fillerImpl
 }
