@@ -11,16 +11,21 @@ object xxbb {
   type Id[T]   = T
 
   def main(arr: Array[String]): Unit = {
-    implicit val filler: Filler[UModel]              = Filler.from
+    implicit val setter: Setter[UModel]              = Setter.from
     implicit val noneFiller: NoneModelFiller[UModel] = NoneModelFiller.fill
     implicit val length: ModelLength[UModel]         = ModelLength.fill
-    val value: UModel[Id] = filler.input[Id](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
-    // val aa: LabelledNames[UModel]           = LabelledNames.init[UModel](impl.LabelledNamesImpl.get)
+    val value: UModel[Id] = setter.input[Id](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
+    implicit val namesImplicit: LabelledNames[UModel] = LabelledNames.fill
+    implicit val namedModel: LabelledInstance[UModel] = LabelledInstance.fill
     println(length.length)
     println(length.length)
-    println(length.length)
-    println(length.length)
-    println(length.length)
+    println(namesImplicit.names)
+    println(namesImplicit.names)
+    println(namedModel.model)
+    println(namedModel.model.name: String)
+    println(namedModel.model.uClass: String)
+    println(namedModel.model.str: String)
+    println(namedModel.model.name11: String)
     println(value)
     println(value)
     println(value)

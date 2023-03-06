@@ -8,18 +8,21 @@ trait NoneModelFiller[F[_[_]]] {
 }
 
 object NoneModelFiller {
-  def fill[F[_[_]]](implicit n: Filler[F]): NoneModelFiller[F] = {
-    var tryInstance: Try[ContextO[F]#NoneF] = Try {
+  def fill[F[_[_]]](implicit n: Setter[F]): NoneModelFiller[F] = {
+    def tryInstanceUpdate: ContextO[F]#NoneF = try {
       n.input[ContextI#NoneF](impl.DefaultListGetter.get)
+    } catch {
+      case e: ClassCastException => tryInstanceUpdate
     }
-    while (tryInstance.isFailure) {
-      tryInstance = Try {
-        n.input[ContextI#NoneF](impl.DefaultListGetter.getUpdate)
+    val tryInstance =
+      try {
+        n.input[ContextI#NoneF](impl.DefaultListGetter.get)
+      } catch {
+        case e: ClassCastException => tryInstanceUpdate
       }
-    }
-    val model = tryInstance.get
+
     new NoneModelFiller[F] {
-      override val instance: ContextO[F]#NoneF = model
+      override val instance: ContextO[F]#NoneF = tryInstance
     }
   }
 }
