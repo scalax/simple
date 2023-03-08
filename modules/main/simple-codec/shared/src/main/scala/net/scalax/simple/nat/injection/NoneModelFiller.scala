@@ -10,15 +10,15 @@ trait NoneModelFiller[F[_[_]]] {
 object NoneModelFiller {
   def fill[F[_[_]]](implicit n: Setter[F]): NoneModelFiller[F] = {
     def tryInstanceUpdate: ContextO[F]#NoneF = try {
-      n.input[ContextI#NoneF](impl.DefaultListGetter.get)
+      n.input[ContextI#NoneF](impl.DefaultListGetter.getUpdate)
     } catch {
-      case e: ClassCastException => tryInstanceUpdate
+      case e: Throwable => tryInstanceUpdate
     }
     val tryInstance =
       try {
         n.input[ContextI#NoneF](impl.DefaultListGetter.get)
       } catch {
-        case e: ClassCastException => tryInstanceUpdate
+        case e: Throwable => tryInstanceUpdate
       }
 
     new NoneModelFiller[F] {
