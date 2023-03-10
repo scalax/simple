@@ -7,14 +7,11 @@ object xxbb {
 
   type UModel[T[_]] = Model[T]
 
-  type AnyF[_] = Any
-  type Id[T]   = T
-
   def main(arr: Array[String]): Unit = {
     implicit val setter: Setter[UModel]              = Setter.from
     implicit val noneFiller: NoneModelFiller[UModel] = NoneModelFiller.fill
     implicit val length: ModelLength[UModel]         = ModelLength.fill
-    val value: UModel[Id] = setter.input[Id](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
+    val value: ContextO[UModel]#IdF = setter.input[ContextI#IdF](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
     implicit val namesImplicit: LabelledNames[UModel] = LabelledNames.fill
     implicit val namedModel: LabelledInstance[UModel] = LabelledInstance.fill
     println(length.length)

@@ -1,7 +1,7 @@
 package net.scalax.simple
 package codec
 
-import scala.util.Try
+import fill.error.FillErrorCompat
 
 trait NoneModelFiller[F[_[_]]] {
   def instance: ContextO[F]#NoneF
@@ -9,17 +9,21 @@ trait NoneModelFiller[F[_[_]]] {
 
 object NoneModelFiller {
   def fill[F[_[_]]](implicit n: Setter[F]): NoneModelFiller[F] = {
-    def tryInstanceUpdate: ContextO[F]#NoneF = try {
+    def tryInstanceUpdate: ContextO[F]#NoneF = FillErrorCompat.fillerWithError {
       n.input[ContextI#NoneF](impl.DefaultListGetter.getUpdate)
-    } catch {
-      case e: Throwable => tryInstanceUpdate
+    } match {
+      case Left(e)            => throw e
+      case Right(Some(model)) => model
+      case Right(None)        => tryInstanceUpdate
     }
-    val tryInstance =
-      try {
-        n.input[ContextI#NoneF](impl.DefaultListGetter.get)
-      } catch {
-        case e: Throwable => tryInstanceUpdate
-      }
+
+    val tryInstance: ContextO[F]#NoneF = FillErrorCompat.fillerWithError {
+      n.input[ContextI#NoneF](impl.DefaultListGetter.get)
+    } match {
+      case Left(e)            => throw e
+      case Right(Some(model)) => model
+      case Right(None)        => tryInstanceUpdate
+    }
 
     new NoneModelFiller[F] {
       override val instance: ContextO[F]#NoneF = tryInstance
