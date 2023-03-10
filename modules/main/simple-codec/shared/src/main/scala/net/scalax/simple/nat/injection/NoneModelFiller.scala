@@ -1,25 +1,32 @@
 package net.scalax.simple
 package codec
 
-import scala.util.Try
+import fill.error.FillErrorCompat
 
 trait NoneModelFiller[F[_[_]]] {
   def instance: ContextO[F]#NoneF
 }
 
 object NoneModelFiller {
-  def fill[F[_[_]]](implicit n: Filler[F]): NoneModelFiller[F] = {
-    var tryInstance: Try[ContextO[F]#NoneF] = Try {
+  def fill[F[_[_]]](implicit n: Setter[F]): NoneModelFiller[F] = {
+    def tryInstanceUpdate: ContextO[F]#NoneF = FillErrorCompat.fillerWithError {
+      n.input[ContextI#NoneF](impl.DefaultListGetter.getUpdate)
+    } match {
+      case Left(e)            => throw e
+      case Right(Some(model)) => model
+      case Right(None)        => tryInstanceUpdate
+    }
+
+    val tryInstance: ContextO[F]#NoneF = FillErrorCompat.fillerWithError {
       n.input[ContextI#NoneF](impl.DefaultListGetter.get)
+    } match {
+      case Left(e)            => throw e
+      case Right(Some(model)) => model
+      case Right(None)        => tryInstanceUpdate
     }
-    while (tryInstance.isFailure) {
-      tryInstance = Try {
-        n.input[ContextI#NoneF](impl.DefaultListGetter.getUpdate)
-      }
-    }
-    val model = tryInstance.get
+
     new NoneModelFiller[F] {
-      override val instance: F[({ type X[_] = None.type })#X] = model
+      override val instance: ContextO[F]#NoneF = tryInstance
     }
   }
 }
