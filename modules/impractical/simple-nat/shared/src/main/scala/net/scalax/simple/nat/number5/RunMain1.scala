@@ -61,9 +61,31 @@ object RunMain1 {
           (BigDecimal(list.sum) / BigDecimal(list.size), list.min)
         }
 
-        println((i1, i2, result, compareResult_1._1, compareResult_2._1))
+        val compareResult_3: (BigDecimal, Int) = {
+          var list: List[Int] = List.empty[Int]
+          locally {
+            var currentNum: Number2 = number2Positive
+            for (_ <- 0 to loopCount) {
+              val currentCompareResult = countNumber3(currentNum.method2(number1))
+              list = currentCompareResult :: list
+              currentNum = nextNumber2_1(currentNum)
+            }
+          }
+          locally {
+            var currentNum: Number2 = number2Positive
+            for (_ <- 0 to loopCount) {
+              val currentCompareResult = countNumber3(number1.method1(currentNum))
+              list = currentCompareResult :: list
+              currentNum = nextNumber2_2(currentNum)
+            }
+          }
+          (BigDecimal(list.sum) / BigDecimal(list.size), list.max)
+        }
+
+        println((i1, i2, result, compareResult_1._1, compareResult_2._1, compareResult_3._1))
         assert((result - compareResult_1._1).abs < BigDecimal("0.0001"))
         assert((result - compareResult_2._1).abs < BigDecimal("0.0001"))
+        assert((result - compareResult_3._1).abs < BigDecimal("0.0001"))
         assert(compareResult_1._2 == ((i1 + i2 - 1) / i2))
         assert(compareResult_2._2 == (i1 / i2))
         assert(countNumber3(number1.method1(number2Zero)) == ((i1 + i2 - 1) / i2))
