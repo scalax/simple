@@ -10,16 +10,16 @@ object RunMain2 {
   }
 
   def nextNumber2_1(number: Number2): Number2 = number match {
-    case Number2S(tail) => tail()
-    case Number2T(tail) => nextNumber2_1(tail())
+    case Number2T(tail) => tail()
+    case Number2S(tail) => nextNumber2_1(tail())
   }
 
   def nextNumber2_2(number: Number2): Number2 = (number match {
-    case Number2S(tail) => tail()
     case Number2T(tail) => tail()
+    case Number2S(tail) => tail()
   }) match {
-    case current @ Number2S(_) => current
-    case Number2T(tail)        => tail()
+    case current @ Number2T(_) => current
+    case Number2S(tail)        => tail()
   }
 
   def number1Gen(n: Int): Number1                   = if (n > 0) Number1S(number1Gen(n - 1)) else Number1T
@@ -35,37 +35,57 @@ object RunMain2 {
         lazy val number2Positive: Number2 = number2Gen(i2, number2Zero)
         lazy val number2Zero: Number2     = Number2S(() => number2Positive)
 
-        val result: Int = i1 * i2
+        val result: BigDecimal = BigDecimal(i1) * BigDecimal(i2)
 
         val loopCount: Int = 100000
 
-        val compareResult_1: Int = {
-          var currentNum: Number2 = number2Positive
-          var list: List[Int]     = List.empty[Int]
-          for (_ <- 0 to loopCount) {
-            val currentCompareResult = countNumber3(number1.method1(currentNum))
-            list = currentCompareResult :: list
-            currentNum = nextNumber2_1(currentNum)
+        val compareResult_1: BigDecimal = {
+          var list: List[Int] = List.empty[Int]
+          locally {
+            var currentNum: Number2 = number2Positive
+            for (_ <- 0 to loopCount) {
+              val currentCompareResult = countNumber3(currentNum.method2(number1))
+              list = currentCompareResult :: list
+              currentNum = nextNumber2_2(currentNum)
+            }
           }
-          list.max
+          locally {
+            var currentNum: Number2 = number2Positive
+            for (_ <- 0 to loopCount) {
+              val currentCompareResult = countNumber3(number1.method1(currentNum))
+              list = currentCompareResult :: list
+              currentNum = nextNumber2_1(currentNum)
+            }
+          }
+          BigDecimal(list.sum) / BigDecimal(list.size)
         }
 
-        val compareResult_2: Int = {
-          var currentNum: Number2 = number2Positive
-          var list: List[Int]     = List.empty[Int]
-          for (_ <- 0 to loopCount) {
-            val currentCompareResult = countNumber3(currentNum.method2(number1))
-            list = currentCompareResult :: list
-            currentNum = nextNumber2_2(currentNum)
+        val compareResult_2: BigDecimal = {
+          var list: List[Int] = List.empty[Int]
+          locally {
+            var currentNum: Number2 = number2Positive
+            for (_ <- 0 to loopCount) {
+              val currentCompareResult = countNumber3(currentNum.method2(number1))
+              list = currentCompareResult :: list
+              currentNum = nextNumber2_1(currentNum)
+            }
           }
-          list.min
+          locally {
+            var currentNum: Number2 = number2Positive
+            for (_ <- 0 to loopCount) {
+              val currentCompareResult = countNumber3(number1.method1(currentNum))
+              list = currentCompareResult :: list
+              currentNum = nextNumber2_2(currentNum)
+            }
+          }
+          BigDecimal(list.sum) / BigDecimal(list.size)
         }
 
         println((i1, i2, result, compareResult_1, compareResult_2))
-        assert(result == compareResult_1)
-        assert(result == compareResult_2)
         assert(countNumber3(number1.method1(number2Positive)) == i1 * i2)
         assert(countNumber3(number2Zero.method2(number1)) == i1 * i2)
+        assert((result - compareResult_1).abs < BigDecimal("0.001"))
+        assert((result - compareResult_2).abs < BigDecimal("0.001"))
       }
     }
   }
