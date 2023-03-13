@@ -38,11 +38,6 @@ package impl {
       adtConvert: TypeAdt.Context[A, B, AdtConvertPoly]
     ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[TypeAdt.Adapter[B, AdtConvertPoly], Tail], TypeAdt.Status.Passed] = {
       val adtConvertImpl = new AdapterContext(adtConvert)
-      /*val num1 = new Number1T {
-        override def input(num2: => Core2): Number2 = new Number2S(num2.asInstanceOf[Number2]) with Adt.Context[Any, Any, Any] {
-          def input(t: Any): Any = adtConvertImpl.input(t.asInstanceOf[A])
-        }
-      }*/
       TypeAdtApply(setting =>
         new Number1T {
           override def input(num2: => Core2): Number2 = {
@@ -58,11 +53,6 @@ package impl {
     @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtAlias.AdtNat](implicit
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type]
     ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[B, Tail], TypeAdt.Status.Passed] = {
-      /*val num1 = new Number1T {
-        override def input(num2: => Core2): Number2 = new Number2S(num2.asInstanceOf[Number2]) with Adt.Context[Any, Any, Any] {
-          def input(t: Any): Any = adtConvert.input(t.asInstanceOf[A])
-        }
-      }*/
       TypeAdtApply(setting =>
         new Number1T {
           override def input(num2: => Core2): Number2 = {
@@ -71,7 +61,6 @@ package impl {
           }
         }
       )
-      // TypeAdtApply(num1)
     }
   }
 
