@@ -3,7 +3,9 @@ package adt
 
 import nat.number9._
 import core.Core2
+import com.thoughtworks.binding._
 import com.thoughtworks.binding.Binding
+import Binding._
 
 object FoldListAppender {
   def appendAll(list: List[Any => Any]): Binding.Var[TypeAdtGetter] => Number2 = getterBinding =>
@@ -22,18 +24,21 @@ object FoldListAppender {
     foldList: Binding.Var[TypeAdtGetter] => Core2,
     adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
     data: Any
-  ): T = {
+  ): Binding.F[T] = {
     val adtContextVar: Binding.Var[TypeAdt.Context[Any, Any, Any]] = Binding.Var(null)
     val typeGetterVar: Binding.Var[TypeAdtGetter]                  = Binding.Var(null)
 
     val adtNumber  = adtList(adtContextVar)
     val foldNumber = foldList(typeGetterVar)
 
+    val resultCompute = Binding {
+      val convert: TypeAdt.Context[Any, Any, Any] = adtContextVar.bind
+      val getter: TypeAdtGetter                   = typeGetterVar.bind
+      getter.executeFunction(convert.input(data)).asInstanceOf[T]
+    }
+
     foldNumber.input(adtNumber)
 
-    val convert: TypeAdt.Context[Any, Any, Any] = adtContextVar.value
-    val getter: TypeAdtGetter                   = typeGetterVar.value
-
-    getter.executeFunction(convert.input(data)).asInstanceOf[T]
+    resultCompute
   }
 }
