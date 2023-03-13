@@ -71,7 +71,7 @@ object FillErrorCompat {
   assert(equalsList(simpleException3, simpleException4))
 
   def fillerWithError[T](exec: => T): Either[Throwable, Option[T]] = try {
-    Right(Option(exec))
+    Right(Some(exec))
   } catch {
     case t: Throwable if asssertExceptionEquals(t) => Right(Option.empty)
     case t: Throwable                              => Left(t)

@@ -4,6 +4,7 @@ package adt
 package impl
 
 import core.Core2
+import com.thoughtworks.binding.Binding
 
 @paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
 @paramFunc(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } func@{i2}: I@{i2} => T } }
@@ -22,10 +23,10 @@ object InnerTypeAdtClass {
             @@inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T, @buildHList(1, i1), Adt.Status.Passed]): CusInnerApply@{i1}[@paramType(1, i1)] = new CusInnerApply@{i1}(adtList = v.value, data = data)
         }
         object HelperIOImpl@{i1} extends PrepareInnerApply@{i1}[@paramTypeAny(1, i1)]
-        class CusInnerApply@{i1}[@paramType(1, i1)](adtList: Core2, data: Any) {
+        class CusInnerApply@{i1}[@paramType(1, i1)](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
             @@inline def fold[T](@paramFunc(1, i1)): T = {
-                val number = adtList(() => @{forMatch(i1, 1)})
-                FoldListAppender.result(number = number, data = data)
+                val foldList = @{forMatch(i1, 1)}
+                FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
             }
         }
     }

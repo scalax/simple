@@ -3,6 +3,7 @@ package adt
 package impl
 
 import core.Core2
+import com.thoughtworks.binding.Binding
 
 object InnerTypeAdtClass {
 
@@ -12,10 +13,12 @@ object InnerTypeAdtClass {
     ): CusInnerApply1[I1] = new CusInnerApply1(adtList = v.value, data = data)
   }
   object HelperIOImpl1 extends PrepareInnerApply1[Any]
-  class CusInnerApply1[I1](adtList: Core2, data: Any) {
+  class CusInnerApply1[I1](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](func1: I1 => T): T = {
-      val number = adtList(() => FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any])))
-      FoldListAppender.result(number = number, data = data)
+      val foldList =
+        FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any]))
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -25,10 +28,12 @@ object InnerTypeAdtClass {
     ): CusInnerApply2[I1, I2] = new CusInnerApply2(adtList = v.value, data = data)
   }
   object HelperIOImpl2 extends PrepareInnerApply2[Any, Any]
-  class CusInnerApply2[I1, I2](adtList: Core2, data: Any) {
+  class CusInnerApply2[I1, I2](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T): T = {
-      val number = adtList(() => FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any])))
-      FoldListAppender.result(number = number, data = data)
+      val foldList =
+        FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any]))
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -41,12 +46,12 @@ object InnerTypeAdtClass {
     ): CusInnerApply3[I1, I2, I3] = new CusInnerApply3(adtList = v.value, data = data)
   }
   object HelperIOImpl3 extends PrepareInnerApply3[Any, Any, Any]
-  class CusInnerApply3[I1, I2, I3](adtList: Core2, data: Any) {
+  class CusInnerApply3[I1, I2, I3](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any]))
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -59,9 +64,9 @@ object InnerTypeAdtClass {
     ): CusInnerApply4[I1, I2, I3, I4] = new CusInnerApply4(adtList = v.value, data = data)
   }
   object HelperIOImpl4 extends PrepareInnerApply4[Any, Any, Any, Any]
-  class CusInnerApply4[I1, I2, I3, I4](adtList: Core2, data: Any) {
+  class CusInnerApply4[I1, I2, I3, I4](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -70,8 +75,8 @@ object InnerTypeAdtClass {
             func4.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -88,9 +93,9 @@ object InnerTypeAdtClass {
     ): CusInnerApply5[I1, I2, I3, I4, I5] = new CusInnerApply5(adtList = v.value, data = data)
   }
   object HelperIOImpl5 extends PrepareInnerApply5[Any, Any, Any, Any, Any]
-  class CusInnerApply5[I1, I2, I3, I4, I5](adtList: Core2, data: Any) {
+  class CusInnerApply5[I1, I2, I3, I4, I5](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -100,8 +105,8 @@ object InnerTypeAdtClass {
             func5.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -118,9 +123,9 @@ object InnerTypeAdtClass {
     ): CusInnerApply6[I1, I2, I3, I4, I5, I6] = new CusInnerApply6(adtList = v.value, data = data)
   }
   object HelperIOImpl6 extends PrepareInnerApply6[Any, Any, Any, Any, Any, Any]
-  class CusInnerApply6[I1, I2, I3, I4, I5, I6](adtList: Core2, data: Any) {
+  class CusInnerApply6[I1, I2, I3, I4, I5, I6](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T, func6: I6 => T): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -131,8 +136,8 @@ object InnerTypeAdtClass {
             func6.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -152,7 +157,7 @@ object InnerTypeAdtClass {
     ): CusInnerApply7[I1, I2, I3, I4, I5, I6, I7] = new CusInnerApply7(adtList = v.value, data = data)
   }
   object HelperIOImpl7 extends PrepareInnerApply7[Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply7[I1, I2, I3, I4, I5, I6, I7](adtList: Core2, data: Any) {
+  class CusInnerApply7[I1, I2, I3, I4, I5, I6, I7](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -162,7 +167,7 @@ object InnerTypeAdtClass {
       func6: I6 => T,
       func7: I7 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -174,8 +179,8 @@ object InnerTypeAdtClass {
             func7.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -198,7 +203,7 @@ object InnerTypeAdtClass {
     ): CusInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8] = new CusInnerApply8(adtList = v.value, data = data)
   }
   object HelperIOImpl8 extends PrepareInnerApply8[Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8](adtList: Core2, data: Any) {
+  class CusInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -209,7 +214,7 @@ object InnerTypeAdtClass {
       func7: I7 => T,
       func8: I8 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -222,8 +227,8 @@ object InnerTypeAdtClass {
             func8.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -249,7 +254,7 @@ object InnerTypeAdtClass {
     ): CusInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9] = new CusInnerApply9(adtList = v.value, data = data)
   }
   object HelperIOImpl9 extends PrepareInnerApply9[Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9](adtList: Core2, data: Any) {
+  class CusInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -261,7 +266,7 @@ object InnerTypeAdtClass {
       func8: I8 => T,
       func9: I9 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -275,8 +280,8 @@ object InnerTypeAdtClass {
             func9.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -305,7 +310,7 @@ object InnerTypeAdtClass {
     ): CusInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = new CusInnerApply10(adtList = v.value, data = data)
   }
   object HelperIOImpl10 extends PrepareInnerApply10[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10](adtList: Core2, data: Any) {
+  class CusInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10](adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2, data: Any) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -318,7 +323,7 @@ object InnerTypeAdtClass {
       func9: I9 => T,
       func10: I10 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -333,8 +338,8 @@ object InnerTypeAdtClass {
             func10.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -366,7 +371,10 @@ object InnerTypeAdtClass {
     ): CusInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = new CusInnerApply11(adtList = v.value, data = data)
   }
   object HelperIOImpl11 extends PrepareInnerApply11[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11](adtList: Core2, data: Any) {
+  class CusInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -380,7 +388,7 @@ object InnerTypeAdtClass {
       func10: I10 => T,
       func11: I11 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -396,8 +404,8 @@ object InnerTypeAdtClass {
             func11.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -432,7 +440,10 @@ object InnerTypeAdtClass {
     ): CusInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = new CusInnerApply12(adtList = v.value, data = data)
   }
   object HelperIOImpl12 extends PrepareInnerApply12[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12](adtList: Core2, data: Any) {
+  class CusInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -447,7 +458,7 @@ object InnerTypeAdtClass {
       func11: I11 => T,
       func12: I12 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -464,8 +475,8 @@ object InnerTypeAdtClass {
             func12.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -503,7 +514,10 @@ object InnerTypeAdtClass {
     ): CusInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = new CusInnerApply13(adtList = v.value, data = data)
   }
   object HelperIOImpl13 extends PrepareInnerApply13[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13](adtList: Core2, data: Any) {
+  class CusInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -519,7 +533,7 @@ object InnerTypeAdtClass {
       func12: I12 => T,
       func13: I13 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -537,8 +551,8 @@ object InnerTypeAdtClass {
             func13.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -579,7 +593,10 @@ object InnerTypeAdtClass {
     ): CusInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = new CusInnerApply14(adtList = v.value, data = data)
   }
   object HelperIOImpl14 extends PrepareInnerApply14[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14](adtList: Core2, data: Any) {
+  class CusInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -596,7 +613,7 @@ object InnerTypeAdtClass {
       func13: I13 => T,
       func14: I14 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -615,8 +632,8 @@ object InnerTypeAdtClass {
             func14.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -661,7 +678,10 @@ object InnerTypeAdtClass {
       new CusInnerApply15(adtList = v.value, data = data)
   }
   object HelperIOImpl15 extends PrepareInnerApply15[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15](adtList: Core2, data: Any) {
+  class CusInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -679,7 +699,7 @@ object InnerTypeAdtClass {
       func14: I14 => T,
       func15: I15 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -699,8 +719,8 @@ object InnerTypeAdtClass {
             func15.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -748,7 +768,10 @@ object InnerTypeAdtClass {
       new CusInnerApply16(adtList = v.value, data = data)
   }
   object HelperIOImpl16 extends PrepareInnerApply16[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16](adtList: Core2, data: Any) {
+  class CusInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -767,7 +790,7 @@ object InnerTypeAdtClass {
       func15: I15 => T,
       func16: I16 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -788,8 +811,8 @@ object InnerTypeAdtClass {
             func16.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -840,7 +863,10 @@ object InnerTypeAdtClass {
       new CusInnerApply17(adtList = v.value, data = data)
   }
   object HelperIOImpl17 extends PrepareInnerApply17[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17](adtList: Core2, data: Any) {
+  class CusInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -860,7 +886,7 @@ object InnerTypeAdtClass {
       func16: I16 => T,
       func17: I17 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -882,8 +908,8 @@ object InnerTypeAdtClass {
             func17.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -938,7 +964,10 @@ object InnerTypeAdtClass {
   }
   object HelperIOImpl18
       extends PrepareInnerApply18[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18](adtList: Core2, data: Any) {
+  class CusInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -959,7 +988,7 @@ object InnerTypeAdtClass {
       func17: I17 => T,
       func18: I18 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -982,8 +1011,8 @@ object InnerTypeAdtClass {
             func18.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -1041,7 +1070,10 @@ object InnerTypeAdtClass {
   }
   object HelperIOImpl19
       extends PrepareInnerApply19[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19](adtList: Core2, data: Any) {
+  class CusInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19](
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    data: Any
+  ) {
     @inline def fold[T](
       func1: I1 => T,
       func2: I2 => T,
@@ -1063,7 +1095,7 @@ object InnerTypeAdtClass {
       func18: I18 => T,
       func19: I19 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -1087,8 +1119,8 @@ object InnerTypeAdtClass {
             func19.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -1150,7 +1182,7 @@ object InnerTypeAdtClass {
   object HelperIOImpl20
       extends PrepareInnerApply20[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
   class CusInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20](
-    adtList: Core2,
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
     data: Any
   ) {
     @inline def fold[T](
@@ -1175,7 +1207,7 @@ object InnerTypeAdtClass {
       func19: I19 => T,
       func20: I20 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -1200,8 +1232,8 @@ object InnerTypeAdtClass {
             func20.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -1266,7 +1298,7 @@ object InnerTypeAdtClass {
   object HelperIOImpl21
       extends PrepareInnerApply21[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
   class CusInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21](
-    adtList: Core2,
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
     data: Any
   ) {
     @inline def fold[T](
@@ -1292,7 +1324,7 @@ object InnerTypeAdtClass {
       func20: I20 => T,
       func21: I21 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -1318,8 +1350,8 @@ object InnerTypeAdtClass {
             func21.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 
@@ -1410,7 +1442,7 @@ object InnerTypeAdtClass {
         Any
       ]
   class CusInnerApply22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22](
-    adtList: Core2,
+    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
     data: Any
   ) {
     @inline def fold[T](
@@ -1437,7 +1469,7 @@ object InnerTypeAdtClass {
       func21: I21 => T,
       func22: I22 => T
     ): T = {
-      val number = adtList(() =>
+      val foldList =
         FoldListAppender.appendAll(
           List(
             func1.asInstanceOf[Any => Any],
@@ -1464,8 +1496,8 @@ object InnerTypeAdtClass {
             func22.asInstanceOf[Any => Any]
           )
         )
-      )
-      FoldListAppender.result(number = number, data = data)
+
+      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
     }
   }
 

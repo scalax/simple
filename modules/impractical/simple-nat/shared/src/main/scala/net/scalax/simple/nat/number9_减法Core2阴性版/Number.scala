@@ -11,7 +11,7 @@ case class Number1S(tail: Number1) extends Number1 {
   override def input(num2: => Core2): Number2 = num2.asInstanceOf[Number2].input(tail)
 }
 class Number1T extends Number1 {
-  override def input(num2: => Core2): Number2 = Number2S(num2.asInstanceOf[Number2])
+  override def input(num2: => Core2): Number2 = num2.asInstanceOf[Number2]
 }
 
 sealed trait Number2 extends Core2 {
