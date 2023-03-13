@@ -1,4 +1,5 @@
-package net.scalax.simple.codec
+package net.scalax.simple
+package codec
 
 object KBCS {
 
@@ -62,8 +63,10 @@ object KBCS {
     setting.str.value = Option("22" * 20)
     val newModelA = to(setting)
 
-    println(modelA)
-    println(newModelA)
+    println(modelA) // ModelA(2,None,class net.scalax.simple.codec.KBCS$,xxuu,ModelB(xxuuw,2,scalax,ModelC(xxuuw,5ua,.txt,7)))
+    println(
+      newModelA
+    ) // ModelA(2,Some(2222222222222222222222222222222222222222),class net.scalax.simple.codec.KBCS$,xxuu,ModelB(xxuuw,115415,scalax,ModelC(Now File Value,5ua,.txt,7)))
   }
 
 }
