@@ -3,12 +3,9 @@ package adt
 
 import nat.number9._
 import core.Core2
-import com.thoughtworks.binding._
-import com.thoughtworks.binding.Binding
-import Binding._
 
 object FoldListAppender {
-  def appendAll(list: List[Any => Any]): Binding.Var[TypeAdtGetter] => Number2 = getterBinding =>
+  def appendAll(list: List[Any => Any]): VarSetting[TypeAdtGetter] => Number2 = getterBinding =>
     list match {
       case head :: hTail =>
         new Number2S(tail = appendAll(list = hTail)(getterBinding)) {
@@ -21,24 +18,22 @@ object FoldListAppender {
     }
 
   def result[T](
-    foldList: Binding.Var[TypeAdtGetter] => Core2,
-    adtList: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2,
+    foldList: VarSetting[TypeAdtGetter] => Core2,
+    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => Core2,
     data: Any
-  ): Binding.F[T] = {
-    val adtContextVar: Binding.Var[TypeAdt.Context[Any, Any, Any]] = Binding.Var(null)
-    val typeGetterVar: Binding.Var[TypeAdtGetter]                  = Binding.Var(null)
+  ): T = {
+    val adtContextVar: VarSetting[TypeAdt.Context[Any, Any, Any]] = VarSetting.init
+    val typeGetterVar: VarSetting[TypeAdtGetter]                  = VarSetting.init
 
     val adtNumber  = adtList(adtContextVar)
     val foldNumber = foldList(typeGetterVar)
 
-    val resultCompute = Binding {
-      val convert: TypeAdt.Context[Any, Any, Any] = adtContextVar.bind
-      val getter: TypeAdtGetter                   = typeGetterVar.bind
-      getter.executeFunction(convert.input(data)).asInstanceOf[T]
-    }
-
     foldNumber.input(adtNumber)
 
-    resultCompute
+    val convert: TypeAdt.Context[Any, Any, Any] = adtContextVar.value
+    val getter: TypeAdtGetter                   = typeGetterVar.value
+
+    getter.executeFunction(convert.input(data)).asInstanceOf[T]
   }
+
 }

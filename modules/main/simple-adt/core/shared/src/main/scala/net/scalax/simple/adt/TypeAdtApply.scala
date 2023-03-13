@@ -3,7 +3,6 @@ package adt
 
 import nat.number9._
 import core.Core2
-import com.thoughtworks.binding.Binding
 
 /** TODO
   *
@@ -13,14 +12,14 @@ import com.thoughtworks.binding.Binding
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdtApply[Input, Sum <: AdtAlias.AdtNat](val value: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2) {
+class TypeAdtApply[Input, Sum <: AdtAlias.AdtNat](val value: VarSetting[TypeAdt.Context[Any, Any, Any]] => Core2) {
   type State <: TypeAdt.Status
 }
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
   type Aux[Input, Sum <: AdtAlias.AdtNat, S <: TypeAdt.Status] = TypeAdtApply[Input, Sum] { type State = S }
   def apply[Input, Sum <: AdtAlias.AdtNat, S <: TypeAdt.Status](
-    input: Binding.Var[TypeAdt.Context[Any, Any, Any]] => Core2
+    input: VarSetting[TypeAdt.Context[Any, Any, Any]] => Core2
   ): TypeAdtApply.Aux[Input, Sum, S] =
     new TypeAdtApply[Any, AdtAlias.AdtNat](input).asInstanceOf[TypeAdtApply.Aux[Input, Sum, S]]
 }
