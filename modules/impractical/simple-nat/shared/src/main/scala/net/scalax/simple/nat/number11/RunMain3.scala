@@ -18,8 +18,8 @@ object RunMain3 {
   def main(arr: Array[String]): Unit = {
     locally {
       for {
-        i1 <- 86 to 86
-        i2 <- 59 to 59
+        i1 <- 49 to 49
+        i2 <- 44 to 44
       } {
         val number1: Number1              = number1Gen(i1)
         lazy val number2Positive: Number2 = number2Gen(i2, number2Zero)
@@ -48,38 +48,37 @@ object RunMain3 {
           var temp: BigDecimal = null
 
           for {
-            u1 <- 1 to 200
-            u2 <- 1 to u1
+            u1 <- 1 to i2 + 1
           } {
             locally {
               val newList: List[Int] =
-                list1.grouped(u1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u2 - 1).map(_._1)).flatten.to(List)
+                list1.grouped(i2 + 1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u1 - 1).map(_._1)).flatten.to(List)
               val tempResult = if (newList.size == 0) BigDecimal(0) else BigDecimal(newList.sum) / BigDecimal(newList.size)
               if (tempResult != null && (tempResult - result).abs < BigDecimal("0.001")) {
-                println("aa", (i1, i2), (u1, u2), (tempResult, result))
+                println("aa", (i1, i2), (i2 + 1, u1), (tempResult, result))
                 temp = tempResult
               }
             }
             locally {
               val newList: List[Int] =
-                list2.grouped(u1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u2 - 1).map(_._1)).flatten.to(List)
+                list2.grouped(i2 + 1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u1 - 1).map(_._1)).flatten.to(List)
               val tempResult = if (newList.size == 0) BigDecimal(0) else BigDecimal(newList.sum) / BigDecimal(newList.size)
               if (tempResult != null && (tempResult - result).abs < BigDecimal("0.001")) {
-                println("bb", (i1, i2), (u1, u2), (tempResult, result))
+                println("bb", (i1, i2), (i2 + 1, u1), (tempResult, result))
                 temp = tempResult
               }
             }
             locally {
-              for (u3 <- 1 to u2) {
+              for (u2 <- 1 to u1) {
                 val newList1: List[Int] =
-                  list2.grouped(u1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u2 - 1).map(_._1)).flatten.to(List)
+                  list2.grouped(i2 + 1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u1 - 1).map(_._1)).flatten.to(List)
                 val newList2: List[Int] =
-                  list2.grouped(u1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u3 - 1).map(_._1)).flatten.to(List)
+                  list2.grouped(i2 + 1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u2 - 1).map(_._1)).flatten.to(List)
                 val tempResult =
                   if (newList1.size + newList2.size == 0) BigDecimal(0)
                   else BigDecimal(newList1.sum + newList2.sum) / BigDecimal(newList1.size + newList2.size)
                 if (tempResult != null && (tempResult - result).abs < BigDecimal("0.001")) {
-                  println("cc", (i1, i2), (u1, u2, u3), (tempResult, result))
+                  println("cc", (i1, i2), (i2 + 1, u1, u2), (tempResult, result))
                   temp = tempResult
                 }
               }
