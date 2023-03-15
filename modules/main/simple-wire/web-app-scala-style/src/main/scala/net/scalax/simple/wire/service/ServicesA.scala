@@ -9,7 +9,7 @@ import org.http4s.HttpRoutes
 import doobie._
 import model._
 
-class ServiceA(initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DBDao) {
+case class ServiceA(initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DBDao) {
   serviceA: ServiceA =>
 
   initPrinter.printAction()
@@ -28,9 +28,4 @@ class ServiceA(initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DB
 
   def getByName(name: String): IO[String] = IO(println(serviceB.toString)) *> IO(s"Hello, $name.")
 
-}
-
-object ServiceA {
-  def build(implicit initPrinter: InitPrinter, serviceBFunc: => ServiceB, dbDao: DBDao): ServiceA =
-    new ServiceA(initPrinter = implicitly, serviceBFunc = () => serviceBFunc, dbDao = implicitly)
 }

@@ -11,7 +11,7 @@ import service._
 import org.http4s.twirl._
 import scala.collection.compat._
 
-class NatHttpRoutes(serviceA: ServiceA) {
+case class NatHttpRoutes(serviceA: ServiceA) {
   def route: HttpRoutes[IO] = HttpRoutes.of[IO] { case GET -> Root / "api" / name =>
     val action = serviceA.insertName(for (i <- (1 to 20).to(List)) yield (s"$name$i", i + 2))
 
@@ -25,8 +25,4 @@ class NatHttpRoutes(serviceA: ServiceA) {
 
     Ok(view)
   }
-}
-
-object NatHttpRoutes {
-  def build(implicit serviceA: ServiceA): NatHttpRoutes = new NatHttpRoutes(implicitly)
 }

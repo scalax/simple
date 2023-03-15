@@ -9,7 +9,7 @@ import doobie._
 import model._
 import cats._
 
-class InitPrinter {
+case class InitPrinter() {
 
   def printAction(): Unit = {
     for (_ <- 1 to 10) {
@@ -17,8 +17,4 @@ class InitPrinter {
     }
   }
 
-}
-
-object InitPrinter {
-  def build[F[_]: Sync]: Resource[F, InitPrinter] = Resource.eval(Sync[F].delay(new InitPrinter))
 }
