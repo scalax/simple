@@ -8,7 +8,7 @@ import org.http4s.HttpRoutes
 import doobie._
 import model._
 
-class ServiceB(serviceAFunc: () => ServiceA, dbDao: DBDao) {
+case class ServiceB(serviceAFunc: () => ServiceA, dbDao: DBDao) {
 
   def serviceA: ServiceA        = serviceAFunc()
   def selectData: IO[List[Cat]] = dbDao.select
@@ -20,9 +20,4 @@ class ServiceB(serviceAFunc: () => ServiceA, dbDao: DBDao) {
     case Nil => IO(List.empty)
   }
 
-}
-
-object ServiceB {
-  def build(implicit serviceAFunc: => ServiceA, dbDao: DBDao): ServiceB =
-    new ServiceB(serviceAFunc = () => serviceAFunc, dbDao = implicitly)
 }

@@ -7,23 +7,23 @@ import org.http4s.HttpRoutes
 import cats.effect._
 import resource._
 import cats._
+import com.softwaremill.macwire._
 
 object AppWire {
 
-  val golbalRoutes: Resource[IO, HttpRoutes[IO]] = WireConfig.build.getResource[IO].flatMap { implicit simpleConfig =>
-    EnvAH2Doobie.build.resource[IO].flatMap { rA =>
-      EnvBH2Doobie.build.resource[IO].flatMap { rB =>
-        InitPrinter.build[IO].map { implicit initPrinter =>
-          lazy val dbDaoEnvA: DBDao = DBDao.build(doobieTransactor = rA)
-          lazy val dbDaoEnvB: DBDao = DBDao.build(doobieTransactor = rB)
+  val golbalRoutes: Resource[IO, HttpRoutes[IO]] = wire[WireConfig].getResource[IO].flatMap { simpleConfig =>
+    wire[EnvAH2Doobie].resource[IO].flatMap { rA =>
+      wire[EnvBH2Doobie].resource[IO].map { rB =>
+        implicit lazy val initPrinter = wire[InitPrinter]
+        lazy val dbDaoEnvA: DBDao     = DBDao(xa = rA)
+        lazy val dbDaoEnvB: DBDao     = DBDao(xa = rB)
 
-          implicit lazy val serviceA: ServiceA = ServiceA.build(initPrinter = implicitly, serviceBFunc = implicitly, dbDao = dbDaoEnvA)
-          implicit lazy val serviceB: ServiceB = ServiceB.build(serviceAFunc = implicitly, dbDao = dbDaoEnvB)
+        implicit lazy val serviceA: ServiceA = ServiceA(initPrinter = implicitly, serviceBFunc = () => implicitly, dbDao = dbDaoEnvA)
+        implicit lazy val serviceB: ServiceB = ServiceB(serviceAFunc = () => implicitly, dbDao = dbDaoEnvB)
 
-          lazy val natRoutesInstances: NatHttpRoutes = NatHttpRoutes.build
+        lazy val natRoutesInstances: NatHttpRoutes = wire[NatHttpRoutes]
 
-          natRoutesInstances.route
-        }
+        natRoutesInstances.route
       }
     }
   }

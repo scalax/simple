@@ -7,7 +7,7 @@ import cats.effect._
 import doobie.hikari._
 import model._
 
-class WireConfig {
+case class WireConfig() {
 
   import zio.config.magnolia.descriptor
   import zio.config.typesafe.TypesafeConfig
@@ -21,8 +21,4 @@ class WireConfig {
     Async[F].fromFuture(Sync[F].delay(Unsafe.unsafe(implicit unsafe => Runtime.default.unsafe.runToFuture(desuConfigZIO))))
 
   def getResource[F[_]: Async]: Resource[F, SimpleProjectConfig] = Resource.eval(getEffect)
-}
-
-object WireConfig {
-  def build: WireConfig = new WireConfig
 }

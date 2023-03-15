@@ -35,13 +35,6 @@ abstract class H2Doobie(dbName: String) {
   def resource[F[_]: Async]: Resource[F, Transactor[F]] = for (xa <- transactor; _ <- initAction(xa)) yield xa
 }
 
-class EnvAH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvA)
-object EnvAH2Doobie {
-  def build(implicit simpleConfig: SimpleProjectConfig): EnvAH2Doobie = new EnvAH2Doobie(implicitly)
-}
+case class EnvAH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvA)
 
-class EnvBH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvB)
-
-object EnvBH2Doobie {
-  def build(implicit simpleConfig: SimpleProjectConfig): EnvBH2Doobie = new EnvBH2Doobie(implicitly)
-}
+case class EnvBH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvB)

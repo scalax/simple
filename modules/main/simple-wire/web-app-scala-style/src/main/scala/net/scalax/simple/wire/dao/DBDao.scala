@@ -9,7 +9,7 @@ import doobie._
 import doobie.implicits._
 import model._
 
-class DBDao(xa: Transactor[IO]) {
+case class DBDao(xa: Transactor[IO]) {
   private val y = xa.yolo
   import y._
   def insertImpl(model: Cat): ConnectionIO[Cat] = {
@@ -19,8 +19,4 @@ class DBDao(xa: Transactor[IO]) {
   def insert(model: Cat): IO[Cat]         = insertImpl(model).transact(xa)
   def selectImpl: ConnectionIO[List[Cat]] = sql"select id, name, age from cats".query[Cat].to[List]
   def select: IO[List[Cat]]               = selectImpl.transact(xa)
-}
-
-object DBDao {
-  def build(implicit doobieTransactor: Transactor[IO]): DBDao = new DBDao(xa = implicitly)
 }
