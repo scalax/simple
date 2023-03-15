@@ -1,5 +1,8 @@
 package net.scalax.simple.nat.number11
 
+import java.io.{FileOutputStream, PrintWriter}
+import scala.util.Using
+
 object RunMain3 {
 
   def countNumber3(number: Number3): Int = number match {
@@ -16,10 +19,12 @@ object RunMain3 {
   def number2Gen(n: Int, zero: => Number2): Number2 = if (n > 0) Number2S(() => number2Gen(n - 1, zero)) else zero
 
   def main(arr: Array[String]): Unit = {
+    var strPrintln: List[String] = List.empty
+
     locally {
       for {
-        i1 <- 49 to 49
-        i2 <- 44 to 44
+        i1 <- 15 to 25
+        i2 <- 1 to 20
       } {
         val number1: Number1              = number1Gen(i1)
         lazy val number2Positive: Number2 = number2Gen(i2, number2Zero)
@@ -55,7 +60,7 @@ object RunMain3 {
                 list1.grouped(i2 + 1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u1 - 1).map(_._1)).flatten.to(List)
               val tempResult = if (newList.size == 0) BigDecimal(0) else BigDecimal(newList.sum) / BigDecimal(newList.size)
               if (tempResult != null && (tempResult - result).abs < BigDecimal("0.001")) {
-                println("aa", (i1, i2), (i2 + 1, u1), (tempResult, result))
+                // println("aa", (i1, i2), (i2 + 1, u1), (tempResult, result))
                 temp = tempResult
               }
             }
@@ -64,7 +69,7 @@ object RunMain3 {
                 list2.grouped(i2 + 1).map(u => u.to(Vector).zipWithIndex.filterNot(u => u._2 == u1 - 1).map(_._1)).flatten.to(List)
               val tempResult = if (newList.size == 0) BigDecimal(0) else BigDecimal(newList.sum) / BigDecimal(newList.size)
               if (tempResult != null && (tempResult - result).abs < BigDecimal("0.001")) {
-                println("bb", (i1, i2), (i2 + 1, u1), (tempResult, result))
+                // println("bb", (i1, i2), (i2 + 1, u1), (tempResult, result))
                 temp = tempResult
               }
             }
@@ -78,8 +83,9 @@ object RunMain3 {
                   if (newList1.size + newList2.size == 0) BigDecimal(0)
                   else BigDecimal(newList1.sum + newList2.sum) / BigDecimal(newList1.size + newList2.size)
                 if (tempResult != null && (tempResult - result).abs < BigDecimal("0.001")) {
-                  println("cc", (i1, i2), (i2 + 1, u1, u2), (tempResult, result))
+                  // println("cc", (i1, i2), (i2 + 1, u1, u2), (tempResult, result))
                   temp = tempResult
+                  strPrintln = strPrintln.appended(s"$i1,$i2,u,${i2 + 1},$u1,$u2,x,$tempResult,$result")
                 }
               }
             }
@@ -107,11 +113,20 @@ object RunMain3 {
           BigDecimal(list.sum) / BigDecimal(list.size)
         }
 
-        println(("aa", i1, i2, result, compareResult_1, compareResult_2))
+        // println(("aa", i1, i2, result, compareResult_1, compareResult_2))
         assert((result - compareResult_1).abs < BigDecimal("0.001"))
         assert((result - compareResult_2).abs < BigDecimal("0.001"))
         assert(countNumber3(number1.method1(number2Zero)) == ((i1 + i2 - 1) / i2))
         assert(countNumber3(number2Positive.method2(number1)) == (i1 / i2))
+      }
+    }
+
+    println("ii" * 100)
+    Using.resource(new FileOutputStream("./aa.txt")) { out =>
+      Using.resource(new PrintWriter(out)) { writer =>
+        for (str <- strPrintln) {
+          writer.println(str)
+        }
       }
     }
   }
