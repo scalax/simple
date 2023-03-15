@@ -22,11 +22,11 @@ object CommonUtils {
     val dir7  = Some(sourceFile / "scala-2.12-2.13").filter(_ => is212 || is213)
     val dir8  = Some(sourceFile / "scala-2.13-3").filter(_ => is213 || is3)
     val dir9  = Some(sourceFile / "scala-2.11-2.12-2.13").filter(_ => is211 || is212 || is213)
-    val dir10  = Some(sourceFile / "scala-2.12-2.13-3").filter(_ => is212 || is213 || is3)
+    val dir10 = Some(sourceFile / "scala-2.12-2.13-3").filter(_ => is212 || is213 || is3)
     val dir11 = Some(sourceFile / "scala-3").filter(_ => is3)
     val dir12 = Some(sourceFile / "scala-no-js").filterNot(_ => is211 && isScalaJs)
 
-    Seq(Some(dir1), dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10, dir11,dir12).collect { case Some(s) => s }
+    Seq(Some(dir1), dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10, dir11, dir12).collect { case Some(s) => s }
   }
 
 }
