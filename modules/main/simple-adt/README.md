@@ -201,15 +201,15 @@ def countAdtData[T: Options2F[Seq, *, Seq[Option[Int]], Seq[String]]: Adt.Option
   }
 }
 
-    assert(countAdtData("abc", "aabbcc", "aabbbcc") == ("abc".length + "aabbcc".length + "aabbbcc".length))
-    assert(countAdtData(Some(2), Some(3), Option.empty) == (2 + 3 + 0))
+assert(countAdtData("abc", "aabbcc", "aabbbcc") == ("abc".length + "aabbcc".length + "aabbbcc".length))
+assert(countAdtData(Some(2), Some(3), Option.empty) == (2 + 3 + 0))
 
-    // Point what type you want to route to
-    assert(countAdtData[Option[Int]]() == -100)
-    assert(countAdtData[String]() == -500)
+// Point what type you want to route to
+assert(countAdtData[Option[Int]]() == -100)
+assert(countAdtData[String]() == -500)
 
-    assert(countAdtData(Some(2)) == (2 + 1))
-    assert(countAdtData(Option.empty) == (0 + 1))
-    assert(countAdtData("Option.empty") == (12 + 1))
-    assert(countAdtData(Option.empty, Option.empty, Option.empty) == (0 + 0 + 0))
+assert(countAdtData(Some(2)) == (2 + 1))
+assert(countAdtData(Option.empty) == (0 + 1))
+assert(countAdtData("Option.empty") == (12 + 1))
+assert(countAdtData(Option.empty, Option.empty, Option.empty) == (0 + 0 + 0))
 ```
