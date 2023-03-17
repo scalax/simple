@@ -22,9 +22,9 @@ object AppWire {
   val golbalRoutes: Resource[IO, HttpRoutes[IO]] = wire[WireConfig].getResource[IO].flatMap { simpleConfig =>
     wire[EnvAH2Doobie].resource[IO].flatMap { rA =>
       wire[EnvBH2Doobie].resource[IO].map { rB =>
-        lazy val initPrinter      = wire[InitPrinter]
-        lazy val dbDaoEnvA: DBDao = DBDao(xa = rA)
-        lazy val dbDaoEnvB: DBDao = DBDao(xa = rB)
+        lazy val initPrinter: InitPrinter = wire[InitPrinter]
+        lazy val dbDaoEnvA: DBDao         = DBDao(xa = rA)
+        lazy val dbDaoEnvB: DBDao         = DBDao(xa = rB)
 
         lazy val serviceB: () => ServiceB   = () => serviceBImplB
         lazy val serviceAImpl: ServiceAImpl = wire[ServiceAImpl]
