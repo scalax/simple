@@ -7,33 +7,32 @@ import org.http4s.HttpRoutes
 import cats.effect._
 import resource._
 import cats._
-import com.softwaremill.macwire._
 
 object AppWire {
 
-  private case class ServiceAImpl(initPrinter: InitPrinter, serviceBFunc: () => ServiceB) {
-    def build(dbDao: DBDao): ServiceA = ServiceA(initPrinter = initPrinter, serviceBFunc = serviceBFunc, dbDao = dbDao)
+  private class ServiceAImpl(implicit initPrinter: InitPrinter, serviceBFunc: () => ServiceB) {
+    def build(dbDao: DBDao): ServiceA = new ServiceA()(initPrinter = implicitly, serviceBFunc = implicitly, dbDao = dbDao)
   }
 
-  private case class ServiceBImpl(serviceAFunc: () => ServiceA) {
-    def build(dbDao: DBDao): ServiceB = ServiceB(serviceAFunc = serviceAFunc, dbDao = dbDao)
+  private class ServiceBImpl(implicit serviceAFunc: () => ServiceA) {
+    def build(dbDao: DBDao): ServiceB = new ServiceB()(serviceAFunc = implicitly, dbDao = dbDao)
   }
 
-  val golbalRoutes: Resource[IO, HttpRoutes[IO]] = wire[WireConfig].getResource[IO].flatMap { simpleConfig =>
-    wire[EnvAH2Doobie].resource[IO].flatMap { rA =>
-      wire[EnvBH2Doobie].resource[IO].map { rB =>
-        lazy val initPrinter: InitPrinter = wire[InitPrinter]
-        lazy val dbDaoEnvA: DBDao         = DBDao(xa = rA)
-        lazy val dbDaoEnvB: DBDao         = DBDao(xa = rB)
+  val golbalRoutes: Resource[IO, HttpRoutes[IO]] = (new WireConfig).getResource[IO].flatMap { implicit simpleConfig =>
+    (new EnvAH2Doobie).resource[IO].flatMap { rA =>
+      (new EnvBH2Doobie).resource[IO].map { rB =>
+        implicit lazy val initPrinter: InitPrinter = new InitPrinter
+        lazy val dbDaoEnvA: DBDao                  = DBDao(xa = rA)
+        lazy val dbDaoEnvB: DBDao                  = DBDao(xa = rB)
 
-        lazy val serviceB: () => ServiceB   = () => serviceBImplB
-        lazy val serviceAImpl: ServiceAImpl = wire[ServiceAImpl]
-        lazy val serviceAImplA: ServiceA    = serviceAImpl.build(dbDao = dbDaoEnvA)
-        lazy val serviceA: () => ServiceA   = () => serviceAImplA
-        lazy val serviceBImpl: ServiceBImpl = wire[ServiceBImpl]
-        lazy val serviceBImplB: ServiceB    = serviceBImpl.build(dbDao = dbDaoEnvB)
+        implicit lazy val serviceB: () => ServiceB = () => serviceBImplB
+        lazy val serviceAImpl: ServiceAImpl        = new ServiceAImpl
+        implicit lazy val serviceAImplA: ServiceA  = serviceAImpl.build(dbDao = dbDaoEnvA)
+        implicit lazy val serviceA: () => ServiceA = () => implicitly
+        lazy val serviceBImpl: ServiceBImpl        = new ServiceBImpl
+        lazy val serviceBImplB: ServiceB           = serviceBImpl.build(dbDao = dbDaoEnvB)
 
-        lazy val natRoutesInstances: NatHttpRoutes = wire[NatHttpRoutes]
+        lazy val natRoutesInstances: NatHttpRoutes = new NatHttpRoutes
 
         natRoutesInstances.route
       }
