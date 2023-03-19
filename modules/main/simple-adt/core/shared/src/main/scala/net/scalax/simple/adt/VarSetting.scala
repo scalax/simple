@@ -1,9 +1,13 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
+package core
 
-class VarSetting[T] {
-  var value: T = null.asInstanceOf[T]
-}
+import net.scalax.simple.core.Core2
 
-object VarSetting {
-  def init[T]: VarSetting[T] = new VarSetting
+object AdtCoreFactory {
+
+  val Number1: Core2      = Core2(tail => Core2(other => other()(tail)))
+  val Number2: Core2      = Core2(tail => tail())
+  lazy val Number3: Core2 = Core2(tail => Number3)
+
 }

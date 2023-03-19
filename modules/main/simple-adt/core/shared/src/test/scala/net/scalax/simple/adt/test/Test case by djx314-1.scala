@@ -1,52 +1,141 @@
-package net.scalax.simple.adt.test
+package net.scalax.simple.adt.core
+package test
 
-import net.scalax.simple.adt.{TypeAdt => Adt}
 import scala.collection.compat._
 
 import zio._
 import zio.test._
 import zio.test.Assertion._
 
-/** @author
-  *   djx314
-  */
-object TestCase1 extends ZIOSpecDefault {
+import net.scalax.simple.core.Core2
 
-  case class TempForData(typeName: String, value: Option[Int])
-  def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
-    val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
-    applyM.fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
+object SimpleAdtCoreBuilder {
+
+  def build1(i1: Int, i2: Int): Int = {
+    var i3: Int = 0
+    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
+      Core2 { other =>
+        i3 = i3 + 1
+        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number3
+
+    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
+      Core2 { other =>
+        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number2
+
+    val number1 = i1InitNumber(i1)
+    val number2 = i2InitNumber(i2)
+
+    number1(() => number2)
+
+    i3
   }
 
-  override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314-1")(
-    test("Simple adt fold in test data.") {
-      val baseValue = 2
+  def build2(i1: Int, i2: Int): Int = {
+    var i3: Int = 0
 
-      def asserts = TestResult.all(
-        {
+    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
+      Core2 { other =>
+        i3 = i3 + 1
+        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number3
 
-          val data     = None
-          val foldData = inputAdtData(data)
-          assert(foldData)(Assertion.equalTo(TempForData("None", data)))
+    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
+      Core2 { other =>
+        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number2
 
-        }, {
+    val number1 = i1InitNumber(i1)
+    val number2 = i2InitNumber(i2)
 
-          val data     = Option(baseValue)
-          val foldData = inputAdtData(data)
-          assert(foldData)(Assertion.equalTo(TempForData("Option", Option(baseValue + 2))))
+    number2(() => number1)
 
-        }, {
+    i3
+  }
 
-          val data     = Some(baseValue)
-          val foldData = inputAdtData(data)
-          assert(foldData)(Assertion.equalTo(TempForData("Some", Some(baseValue + 1))))
+  def build3(i1: Int, i2: Int): Int = {
+    var i3: Int = 0
 
-        }
-      )
+    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
+      Core2 { other =>
+        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number3
 
-      try asserts
-      catch {
-        case _: StackOverflowError => assertNever("Not allow adt access.")
+    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
+      Core2 { other =>
+        i3 = i3 + 1
+        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number2
+
+    val number1 = i1InitNumber(i1)
+    val number2 = i2InitNumber(i2)
+
+    number1(() => number2)
+
+    i3
+  }
+
+  def build4(i1: Int, i2: Int): Int = {
+    var i3: Int = 0
+
+    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
+      Core2 { other =>
+        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number3
+
+    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
+      Core2 { other =>
+        i3 = i3 + 1
+        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+      }
+    else AdtCoreFactory.Number2
+
+    val number1 = i1InitNumber(i1)
+    val number2 = i2InitNumber(i2)
+
+    number2(() => number1)
+
+    i3
+  }
+
+}
+
+object TestCaseFoeSimpleAdtCore extends ZIOSpecDefault {
+  override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case for simple-adt-core")(
+    test("test1.") {
+      check(Gen.int(0, 100), Gen.int(0, 100)) { (a, b) =>
+        val result1 = SimpleAdtCoreBuilder.build1(a, b)
+        val result2 = math.min(a, b + 1)
+        assert(result1)(Assertion.equalTo(result2))
+      }
+    },
+    test("test2.") {
+      check(Gen.int(0, 100), Gen.int(0, 100)) { (a, b) =>
+        val result1 = SimpleAdtCoreBuilder.build2(a, b)
+        val result2 = math.min(a, b)
+        assert(result1)(Assertion.equalTo(result2))
+      }
+    },
+    test("test3.") {
+      check(Gen.int(0, 100), Gen.int(0, 100)) { (a, b) =>
+        val result1 = SimpleAdtCoreBuilder.build3(a, b)
+        val result2 = math.min(a, b)
+        assert(result1)(Assertion.equalTo(result2))
+      }
+    },
+    test("test4.") {
+      check(Gen.int(0, 100), Gen.int(0, 100)) { (a, b) =>
+        val result1 = SimpleAdtCoreBuilder.build4(a, b)
+        val result2 = math.min(a + 1, b)
+        assert(result1)(Assertion.equalTo(result2))
       }
     }
   )

@@ -23,8 +23,8 @@ val `adt-codegen`      = project in `adt-codegen/file`
 
 val `adt-core/file`    = `adt/file` / "core"
 val `adt-core`         = crossProject(JSPlatform, JVMPlatform) in `adt-core/file`
-lazy val `adt-coreJVM` = `adt-core`.jvm dependsOn (natJVM, `test-commonJVM` % Test) aggregate natJVM
-lazy val `adt-coreJS`  = `adt-core`.js dependsOn (natJS, `test-commonJS`    % Test) aggregate natJS
+lazy val `adt-coreJVM` = `adt-core`.jvm dependsOn (coreJVM, `test-commonJVM` % Test) aggregate coreJVM
+lazy val `adt-coreJS`  = `adt-core`.js dependsOn (coreJS, `test-commonJS`    % Test) aggregate coreJS
 
 val `list/file`  = `main/file` / "simple-list"
 val list         = crossProject(JSPlatform, JVMPlatform) in `list/file`
