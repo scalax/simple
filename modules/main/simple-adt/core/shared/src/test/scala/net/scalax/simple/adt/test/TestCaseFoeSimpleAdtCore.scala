@@ -17,15 +17,15 @@ object SimpleAdtCoreBuilder {
     def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
       Core2 { other =>
         i3 = i3 + 1
-        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
       }
-    else AdtCoreFactory.Number3
+    else AdtCoreFactory.Number1
 
     def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
       Core2 { other =>
-        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
       }
-    else AdtCoreFactory.Number2
+    else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)
     val number2 = i2InitNumber(i2)
@@ -41,15 +41,15 @@ object SimpleAdtCoreBuilder {
     def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
       Core2 { other =>
         i3 = i3 + 1
-        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
       }
-    else AdtCoreFactory.Number3
+    else AdtCoreFactory.Number1
 
     def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
       Core2 { other =>
-        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
       }
-    else AdtCoreFactory.Number2
+    else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)
     val number2 = i2InitNumber(i2)
@@ -64,16 +64,16 @@ object SimpleAdtCoreBuilder {
 
     def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
       Core2 { other =>
-        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
       }
-    else AdtCoreFactory.Number3
+    else AdtCoreFactory.Number1
 
     def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
       Core2 { other =>
         i3 = i3 + 1
-        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
       }
-    else AdtCoreFactory.Number2
+    else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)
     val number2 = i2InitNumber(i2)
@@ -88,16 +88,16 @@ object SimpleAdtCoreBuilder {
 
     def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
       Core2 { other =>
-        AdtCoreFactory.Number1(() => i1InitNumber(i1Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
       }
-    else AdtCoreFactory.Number3
+    else AdtCoreFactory.Number1
 
     def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
       Core2 { other =>
         i3 = i3 + 1
-        AdtCoreFactory.Number1(() => i2InitNumber(i2Impl - 1))(other)
+        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
       }
-    else AdtCoreFactory.Number2
+    else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)
     val number2 = i2InitNumber(i2)
