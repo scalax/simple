@@ -2,7 +2,7 @@ package net.scalax.simple
 package adt
 package impl
 
-import core.Core2
+import net.scalax.simple.core.Core2
 
 object InnerTypeAdtClass {
 

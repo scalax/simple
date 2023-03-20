@@ -9,7 +9,7 @@ import org.http4s.HttpRoutes
 import doobie._
 import model._
 
-case class ServiceA(initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DBDao) {
+class ServiceA(implicit initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DBDao) {
   serviceA: ServiceA =>
 
   initPrinter.printAction()

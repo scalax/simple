@@ -7,7 +7,7 @@ import cats.effect._
 import doobie.hikari._
 import model._
 
-case class WireConfig() {
+class WireConfig {
 
   import zio.config.magnolia.descriptor
   import zio.config.typesafe.TypesafeConfig

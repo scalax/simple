@@ -1,21 +1,19 @@
 package net.scalax.simple
 package adt
 
-import nat.number9._
-import core.Core2
+import implemention.AdtNumber
+import net.scalax.simple.core.Core2
 
 object FoldListAppender {
-  def appendAll(list: List[Any => Any]): VarSetting[TypeAdtGetter] => Number2 = getterBinding =>
-    list match {
+  def appendAll(list: List[Any => Any]): VarSetting[TypeAdtGetter] => Core2 = { getterBinding =>
+    def appendAllInnerList(innerList: List[Any => Any]): Core2 = innerList match {
       case head :: hTail =>
-        new Number2S(tail = appendAll(list = hTail)(getterBinding)) {
-          override def input(core2: => Core2): Number2 = {
-            getterBinding.value = TypeAdtGetter(head)
-            super.input(core2)
-          }
-        }
-      case Nil => Number2T
+        val tailNext = appendAllInnerList(hTail)
+        AdtNumber.NumberB.setPositive(() => getterBinding.value = TypeAdtGetter(head), tailNext)
+      case Nil => AdtNumber.NumberB.setZero
     }
+    appendAllInnerList(list)
+  }
 
   def result[T](
     foldList: VarSetting[TypeAdtGetter] => Core2,
@@ -28,7 +26,7 @@ object FoldListAppender {
     val adtNumber  = adtList(adtContextVar)
     val foldNumber = foldList(typeGetterVar)
 
-    foldNumber.input(adtNumber)
+    foldNumber(() => adtNumber)
 
     val convert: TypeAdt.Context[Any, Any, Any] = adtContextVar.value
     val getter: TypeAdtGetter                   = typeGetterVar.value

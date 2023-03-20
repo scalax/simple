@@ -9,7 +9,7 @@ import doobie._
 import model._
 import cats._
 
-case class InitPrinter() {
+class InitPrinter {
 
   def printAction(): Unit = {
     for (_ <- 1 to 10) {

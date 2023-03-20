@@ -1,5 +1,5 @@
 scalaVersion := scalaV.v213
-name         := "simple-adt-core"
+name         := "simple-adt-implemention"
 
 libraryDependencies ++= libScalax.`kind-projector`.value
 libraryDependencies ++= libScalax.`scala-collection-compat`.value
