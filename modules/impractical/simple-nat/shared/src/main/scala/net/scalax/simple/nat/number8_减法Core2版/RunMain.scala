@@ -22,7 +22,7 @@ object RunMain {
           val number1: Number1 = number1Gen(i1)
           val number2: Number2 = number2Gen(i2)
 
-          val result1 = countNumber2(number1.input(number2))
+          val result1 = countNumber2(number1(() => number2))
           val result2 = math.max(i2 - i1, 0)
 
           assert(result1 == result2)
@@ -31,7 +31,7 @@ object RunMain {
           val number1: Number1 = number1Gen(i1)
           val number2: Number2 = number2Gen(i2)
 
-          val result1 = countNumber2(number2.input(number1))
+          val result1 = countNumber2(number2(() => number1))
           val result2 = math.max(i2 - i1 - 1, 0)
 
           assert(result1 == result2)

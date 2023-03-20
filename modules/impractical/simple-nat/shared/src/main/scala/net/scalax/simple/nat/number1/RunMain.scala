@@ -7,7 +7,7 @@ import core.Core2
 object RunMain {
 
   case class PosotiveCount(tail: () => Core2) extends Core2 {
-    override def input(t: => Core2): Core2 = throw new Exception
+    override def apply(t: () => Core2): Core2 = throw new Exception
   }
 
   def count(number: () => Core2): Int = {
