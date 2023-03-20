@@ -32,6 +32,7 @@ object RunMain4 {
 
         val loopCount: Int = 100000
 
+        // 有理数1
         val compareResult_1: BigDecimal = {
           var listResult: List[Int] = List.empty
           var currentNum: Number2   = number2Zero
@@ -57,6 +58,7 @@ object RunMain4 {
           BigDecimal(listResult.sum) / BigDecimal(listResult.size)
         }
 
+        // 有理数2-与（有理数1对称）
         val compareResult_2: BigDecimal = {
           var listResult: List[Int] = List.empty
           var currentNum: Number2   = number2Zero
