@@ -13,6 +13,7 @@ object SimpleAdtCoreBuilder {
 
   def build1(i1: Int, i2: Int): Int = {
     var i3: Int = 0
+
     def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
       Core2 { other =>
         i3 = i3 + 1

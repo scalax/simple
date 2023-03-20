@@ -15,8 +15,8 @@ val coreJS      = core.js
 
 val `adt/file`  = `main/file` / "simple-adt"
 val adt         = crossProject(JSPlatform, JVMPlatform) in `adt/file`
-lazy val adtJVM = adt.jvm dependsOn `adt-coreJVM` aggregate `adt-coreJVM`
-lazy val adtJS  = adt.js dependsOn `adt-coreJS` aggregate `adt-coreJS`
+lazy val adtJVM = adt.jvm dependsOn (`adt-implementionJVM`, `test-commonJVM` % Test) aggregate `adt-implementionJVM`
+lazy val adtJS  = adt.js dependsOn (`adt-implementionJS`, `test-commonJS`    % Test) aggregate `adt-implementionJS`
 
 val `adt-codegen/file` = `adt/file` / "codegen"
 val `adt-codegen`      = project in `adt-codegen/file`
@@ -25,6 +25,11 @@ val `adt-core/file`    = `adt/file` / "core"
 val `adt-core`         = crossProject(JSPlatform, JVMPlatform) in `adt-core/file`
 lazy val `adt-coreJVM` = `adt-core`.jvm dependsOn (coreJVM, `test-commonJVM` % Test) aggregate coreJVM
 lazy val `adt-coreJS`  = `adt-core`.js dependsOn (coreJS, `test-commonJS`    % Test) aggregate coreJS
+
+val `adt-implemention/file`    = `adt/file` / "implemention"
+val `adt-implemention`         = crossProject(JSPlatform, JVMPlatform) in `adt-implemention/file`
+lazy val `adt-implementionJVM` = `adt-implemention`.jvm dependsOn (`adt-coreJVM`, `test-commonJVM` % Test) aggregate `adt-coreJVM`
+lazy val `adt-implementionJS`  = `adt-implemention`.js dependsOn (`adt-coreJS`, `test-commonJS`    % Test) aggregate `adt-coreJS`
 
 val `list/file`  = `main/file` / "simple-list"
 val list         = crossProject(JSPlatform, JVMPlatform) in `list/file`
