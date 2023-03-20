@@ -28,8 +28,6 @@ object RunMain4 {
         lazy val number2Positive: Number2 = number2Gen(i2, number2Zero)
         lazy val number2Zero: Number2     = Number2T(() => number2Positive)
 
-        val result: BigDecimal = BigDecimal(i1) / BigDecimal(i2)
-
         val loopCount: Int = 100000
 
         // 有理数1
@@ -57,6 +55,8 @@ object RunMain4 {
           }
           BigDecimal(listResult.sum) / BigDecimal(listResult.size)
         }
+        // 验证
+        assert(((BigDecimal(i1) / BigDecimal(i2)) - compareResult_1).abs < BigDecimal("0.001"))
 
         // 有理数2-与（有理数1对称）
         val compareResult_2: BigDecimal = {
@@ -83,17 +83,33 @@ object RunMain4 {
           }
           BigDecimal(listResult.sum) / BigDecimal(listResult.size)
         }
+        // 验证
+        assert(((BigDecimal(i1) / BigDecimal(i2)) - compareResult_2).abs < BigDecimal("0.001"))
 
         // 上舍法
         val compareResult_3: Int = countNumber3(number1.method1(number2Zero))
+        // 验证
+        assert(compareResult_3 == ((i1 + i2 - 1) / i2))
+
         // 下舍法
         val compareResult_4: Int = countNumber3(number2Positive.method2(number1))
-
-        println(("aa", i1, i2, result, compareResult_1, compareResult_2))
-        assert((result - compareResult_1).abs < BigDecimal("0.001"))
-        assert((result - compareResult_2).abs < BigDecimal("0.001"))
-        assert(compareResult_3 == ((i1 + i2 - 1) / i2))
+        // 验证
         assert(compareResult_4 == (i1 / i2))
+
+        println(
+          (
+            "i1 ->",
+            i1,
+            "i2 ->",
+            i2,
+            "i1 / i2 ->",
+            BigDecimal(i1) / BigDecimal(i2),
+            compareResult_1,
+            compareResult_2,
+            i1 / i2,
+            (i1 + i2 - 1) / i2
+          )
+        )
       }
     }
 
