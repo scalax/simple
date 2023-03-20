@@ -35,52 +35,63 @@ object RunMain4 {
         val compareResult_1: BigDecimal = {
           var listResult: List[Int] = List.empty
           var currentNum: Number2   = number2Zero
-          var i: Int                = 0
           for (_ <- 0 to loopCount) {
             currentNum = nextNumber2(currentNum)
-            i = i + 1
 
             locally {
-              if (i % (i2 + 1) != 0 % (i2 + 1)) {
+              if (currentNum != number2Positive) {
+                locally {
+                  val currentCompareResult = countNumber3(currentNum.method2(number1))
+                  listResult = currentCompareResult :: listResult
+                }
+              }
+              if (currentNum != number2Zero) {
                 locally {
                   val currentCompareResult = countNumber3(number1.method1(currentNum))
                   listResult = currentCompareResult :: listResult
                 }
+              }
+            }
+
+          }
+          BigDecimal(listResult.sum) / BigDecimal(listResult.size)
+        }
+
+        val compareResult_2: BigDecimal = {
+          var listResult: List[Int] = List.empty
+          var currentNum: Number2   = number2Zero
+          for (_ <- 0 to loopCount) {
+            currentNum = nextNumber2(currentNum)
+
+            locally {
+              if (currentNum != number2Positive) {
                 locally {
-                  val currentCompareResult = countNumber3(nextNumber2(currentNum).method2(number1))
+                  val currentCompareResult = countNumber3(number1.method1(currentNum))
+                  listResult = currentCompareResult :: listResult
+                }
+              }
+              if (currentNum != number2Zero) {
+                locally {
+                  val currentCompareResult = countNumber3(currentNum.method2(number1))
                   listResult = currentCompareResult :: listResult
                 }
               }
             }
 
-            /*locally {
-              i = i + 1
-              if (i % (i2 + 1) == 1 % (i2 + 1)) {
-                val currentCompareResult = countNumber3(nextNumber2(currentNum).method2(number1))
-                listResult = currentCompareResult :: listResult
-              }
-            }*/
-            /*locally {
-              if (i % (i2 + 1) == 2 % (i2 + 1)) {
-                val currentCompareResult = countNumber3(number1.method1(nextNumber2(nextNumber2(currentNum))))
-                listResult = currentCompareResult :: listResult
-              }
-            }
-            locally {
-              if (i % (i2 + 1) == 3 % (i2 + 1)) {
-                val currentCompareResult = countNumber3(nextNumber2(nextNumber2(nextNumber2(currentNum))).method2(number1))
-                listResult = currentCompareResult :: listResult
-              }
-            }*/
           }
-          println(listResult.size)
           BigDecimal(listResult.sum) / BigDecimal(listResult.size)
         }
 
-        println(("aa", i1, i2, result, compareResult_1))
+        // 上舍法
+        val compareResult_3: Int = countNumber3(number1.method1(number2Zero))
+        // 下舍法
+        val compareResult_4: Int = countNumber3(number2Positive.method2(number1))
+
+        println(("aa", i1, i2, result, compareResult_1, compareResult_2))
         assert((result - compareResult_1).abs < BigDecimal("0.001"))
-        assert(countNumber3(number1.method1(number2Zero)) == ((i1 + i2 - 1) / i2))
-        assert(countNumber3(number2Positive.method2(number1)) == (i1 / i2))
+        assert((result - compareResult_2).abs < BigDecimal("0.001"))
+        assert(compareResult_3 == ((i1 + i2 - 1) / i2))
+        assert(compareResult_4 == (i1 / i2))
       }
     }
 
