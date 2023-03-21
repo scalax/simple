@@ -9,8 +9,8 @@ object FoldListAppender {
     def appendAllInnerList(innerList: List[Any => Any]): Core2 = innerList match {
       case head :: hTail =>
         val tailNext = appendAllInnerList(hTail)
-        AdtNumber.NumberB.setPositive(() => getterBinding.value = TypeAdtGetter(head), tailNext)
-      case Nil => AdtNumber.NumberB.setZero
+        AdtNumber.NumberB.setPositive(() => getterBinding.value = TypeAdtGetter(head))(() => tailNext)
+      case Nil => AdtNumber.NumberB.Zero
     }
     appendAllInnerList(list)
   }

@@ -8,19 +8,22 @@ import net.scalax.simple.adt.core.AdtCoreFactory
 object AdtNumber {
 
   object NumberA {
-    def setPositive(tail: Core2): Core2 = Core2(other => AdtCoreFactory.Number2(() => tail)(other))
+    val Positive: Core2 = AdtCoreFactory.Number2
     def setZero(doSomething: () => Unit): Core2 = Core2 { other =>
       doSomething()
-      AdtCoreFactory.Number2(other)
+      AdtCoreFactory.Number1(other)
     }
+    val Zero: Core2 = AdtCoreFactory.Number1
   }
 
   object NumberB {
-    def setPositive(doSomething: () => Unit, tail: Core2): Core2 = Core2 { other =>
-      doSomething()
-      AdtCoreFactory.Number2(() => tail)(other)
-    }
-    val setZero: Core2 = AdtCoreFactory.Number1
+    def setPositive(doSomething: () => Unit): Core2 = Core2(tail =>
+      Core2 { other =>
+        doSomething()
+        AdtCoreFactory.Number2(tail)(other)
+      }
+    )
+    val Zero: Core2 = AdtCoreFactory.Number1
   }
 
 }
