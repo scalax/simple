@@ -52,12 +52,12 @@ package impl {
     @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Status <: TypeAdt.Status, Tail <: AdtAlias.AdtNat](implicit
       tailMapping: TypeAdtApply.Aux[A, Tail, Status]
     ): TypeAdtApply.Aux[A, AdtAlias.AdtAppend[B, Tail], Status] =
-      TypeAdtApply(setting => AdtNumber.NumberA.setPositive(tailMapping.value(setting)))
+      TypeAdtApply(setting => AdtNumber.NumberA.Positive(() => tailMapping.value(setting)))
   }
 
   trait LowerLevelPoly {
     private val failedValue: TypeAdtApply.Aux[Any, AdtAlias.AdtNat, Adt.Status.Failed] =
-      TypeAdtApply(setting => AdtNumber.NumberA.setZero(() => ()))
+      TypeAdtApply(setting => AdtNumber.NumberA.Zero)
 
     implicit def adtFailedResult[I]: TypeAdtApply.Aux[I, AdtAlias.AdtZero, Adt.Status.Failed] =
       failedValue.asInstanceOf[TypeAdtApply.Aux[I, AdtAlias.AdtZero, Adt.Status.Failed]]
