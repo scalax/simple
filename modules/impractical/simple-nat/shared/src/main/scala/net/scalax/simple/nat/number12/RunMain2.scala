@@ -1,6 +1,6 @@
 package net.scalax.simple.nat.number12
 
-import net.scalax.simple.core.Core2
+import net.scalax.simple.core.ghdmzsk
 
 object RunMain2 extends App {
 
@@ -11,32 +11,30 @@ object RunMain2 extends App {
     var tag1: Long = 0
     var tag2: Long = 0
 
-    def num1(n1: Int, zero: Core2): Core2 = if (n1 > 0) {
-      val tail = num1(n1 - 1, zero)
-      Core2(other => other()(() => tail))
-    } else zero
+    def num1(n1: Int, zero: ghdmzsk): ghdmzsk = if (n1 > 0)
+      Number.number2(() => num1(n1 - 1, zero))
+    else zero
 
-    def num2(n1: Int, func: () => Unit, zero: Core2): Core2 = if (n1 > 0) {
-      val tail = num2(n1 - 1, func, zero)
-      Core2 { other =>
-        func()
-        tail(other)
+    def num2(n1: Int, zero: ghdmzsk): ghdmzsk = if (n1 > 0)
+      Number.number1 { () =>
+        tag2 = tag2 + 1
+        num2(n1 - 1, zero)
       }
-    } else zero
+    else zero
 
-    lazy val numPositive1: Core2 = num1(i1, numZero1)
-    lazy val numZero1: Core2 = Core2 { other =>
+    lazy val numPositive1: ghdmzsk = num1(i1, numZero1)
+    lazy val numZero1: ghdmzsk = Number.number1 { () =>
       tag1 = tag1 + 1
-      numPositive1(other)
+      numPositive1
     }
 
-    lazy val numPositive2: Core2 = num2(i2, () => tag2 = tag2 + 1, numZero2)
-    lazy val numZero2: Core2     = Core2(other => other()(() => numPositive2))
+    lazy val numPositive2: ghdmzsk = num2(i2, numZero2)
+    lazy val numZero2: ghdmzsk     = Number.number2(() => numPositive2)
 
     val result0: BigDecimal = BigDecimal(i1 * i2)
     val cha: BigDecimal     = BigDecimal("0.08")
 
-    def count(c: () => Core2): BigDecimal = {
+    def count(c: () => ghdmzsk): BigDecimal = {
       tag1 = 0
       tag2 = 0
       try

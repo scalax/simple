@@ -2,7 +2,7 @@ package net.scalax.simple.nat.number12
 
 import net.scalax.simple.core.ghdmzsk
 
-object RunMain1 extends App {
+object RunMain3 extends App {
 
   for {
     i1 <- 1 to 20
@@ -12,23 +12,23 @@ object RunMain1 extends App {
     var tag2: Long = 0
 
     def num1(n1: Int, zero: ghdmzsk): ghdmzsk = if (n1 > 0)
-      Number.number2(() => num1(n1 - 1, zero))
+      Number.number1 { () =>
+        tag2 = tag2 + 1
+        num1(n1 - 1, zero)
+      }
     else zero
 
     lazy val numPositive1: ghdmzsk = num1(i1, numZero1)
-    lazy val numZero1: ghdmzsk = Number.number1 { () =>
+    lazy val numZero1: ghdmzsk = Number.number2 { () =>
       tag1 = tag1 + 1
       numPositive1
     }
 
     lazy val numPositive2: ghdmzsk = num1(i2, numZero2)
-    lazy val numZero2: ghdmzsk = Number.number1 { () =>
-      tag2 = tag2 + 1
-      numPositive2
-    }
+    lazy val numZero2: ghdmzsk     = Number.number2(() => numPositive2)
 
-    val result0: BigDecimal = BigDecimal(i1) / BigDecimal(i2)
-    val cha: BigDecimal     = BigDecimal("0.008")
+    val result0: BigDecimal = BigDecimal(i1 + i2)
+    val cha: BigDecimal     = BigDecimal("0.02")
 
     def count(c: () => ghdmzsk): BigDecimal = {
       tag1 = 0
