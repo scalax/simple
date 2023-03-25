@@ -2,7 +2,7 @@ package net.scalax.simple
 package adt
 
 import implemention.AdtNumber
-import net.scalax.simple.core.Core2
+import net.scalax.simple.ghdmzsk.ghdmzsk
 
 /** TODO
   *
@@ -12,14 +12,14 @@ import net.scalax.simple.core.Core2
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdtApply[Input, Sum <: AdtAlias.AdtNat](val value: VarSetting[TypeAdt.Context[Any, Any, Any]] => Core2) {
+class TypeAdtApply[Input, Sum <: AdtAlias.AdtNat](val value: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk) {
   type State <: TypeAdt.Status
 }
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
   type Aux[Input, Sum <: AdtAlias.AdtNat, S <: TypeAdt.Status] = TypeAdtApply[Input, Sum] { type State = S }
   def apply[Input, Sum <: AdtAlias.AdtNat, S <: TypeAdt.Status](
-    input: VarSetting[TypeAdt.Context[Any, Any, Any]] => Core2
+    input: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk
   ): TypeAdtApply.Aux[Input, Sum, S] =
     new TypeAdtApply[Any, AdtAlias.AdtNat](input).asInstanceOf[TypeAdtApply.Aux[Input, Sum, S]]
 }

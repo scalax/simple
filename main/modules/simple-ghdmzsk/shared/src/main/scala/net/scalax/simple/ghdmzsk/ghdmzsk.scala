@@ -1,4 +1,5 @@
-package net.scalax.simple.core
+package net.scalax.simple
+package ghdmzsk
 
 trait ghdmzsk extends ((() => ghdmzsk) => ghdmzsk) {
   override def apply(t: () => ghdmzsk): ghdmzsk

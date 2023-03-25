@@ -1,4 +1,4 @@
-package net.scalax.simple.adt.core
+package net.scalax.simple.adt
 package test
 
 import scala.collection.compat._
@@ -7,25 +7,22 @@ import zio._
 import zio.test._
 import zio.test.Assertion._
 
-import net.scalax.simple.core.Core2
+import net.scalax.simple.ghdmzsk.ghdmzsk
+import net.scalax.simple.adt.factory.AdtCoreFactory
 
 object SimpleAdtCoreBuilder {
 
   def build1(i1: Int, i2: Int): Int = {
     var i3: Int = 0
 
-    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
-      Core2 { other =>
-        i3 = i3 + 1
-        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
-      }
+    def i1InitNumber(i1Impl: Int): ghdmzsk = if (i1Impl > 0) AdtCoreFactory.Number2 { () =>
+      i3 = i3 + 1
+      i1InitNumber(i1Impl - 1)
+    }
     else AdtCoreFactory.Number1
 
-    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
-      Core2 { other =>
-        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
-      }
-    else AdtCoreFactory.Number1
+    def i2InitNumber(i2Impl: Int): ghdmzsk =
+      if (i2Impl > 0) AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1)) else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)
     val number2 = i2InitNumber(i2)
@@ -38,18 +35,14 @@ object SimpleAdtCoreBuilder {
   def build2(i1: Int, i2: Int): Int = {
     var i3: Int = 0
 
-    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
-      Core2 { other =>
-        i3 = i3 + 1
-        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
-      }
+    def i1InitNumber(i1Impl: Int): ghdmzsk = if (i1Impl > 0) AdtCoreFactory.Number2 { () =>
+      i3 = i3 + 1
+      i1InitNumber(i1Impl - 1)
+    }
     else AdtCoreFactory.Number1
 
-    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
-      Core2 { other =>
-        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
-      }
-    else AdtCoreFactory.Number1
+    def i2InitNumber(i2Impl: Int): ghdmzsk =
+      if (i2Impl > 0) AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1)) else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)
     val number2 = i2InitNumber(i2)
@@ -62,17 +55,13 @@ object SimpleAdtCoreBuilder {
   def build3(i1: Int, i2: Int): Int = {
     var i3: Int = 0
 
-    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
-      Core2 { other =>
-        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
-      }
-    else AdtCoreFactory.Number1
+    def i1InitNumber(i1Impl: Int): ghdmzsk =
+      if (i1Impl > 0) AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1)) else AdtCoreFactory.Number1
 
-    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
-      Core2 { other =>
-        i3 = i3 + 1
-        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
-      }
+    def i2InitNumber(i2Impl: Int): ghdmzsk = if (i2Impl > 0) AdtCoreFactory.Number2 { () =>
+      i3 = i3 + 1
+      i2InitNumber(i2Impl - 1)
+    }
     else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)
@@ -86,17 +75,13 @@ object SimpleAdtCoreBuilder {
   def build4(i1: Int, i2: Int): Int = {
     var i3: Int = 0
 
-    def i1InitNumber(i1Impl: Int): Core2 = if (i1Impl > 0)
-      Core2 { other =>
-        AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1))(other)
-      }
-    else AdtCoreFactory.Number1
+    def i1InitNumber(i1Impl: Int): ghdmzsk =
+      if (i1Impl > 0) AdtCoreFactory.Number2(() => i1InitNumber(i1Impl - 1)) else AdtCoreFactory.Number1
 
-    def i2InitNumber(i2Impl: Int): Core2 = if (i2Impl > 0)
-      Core2 { other =>
-        i3 = i3 + 1
-        AdtCoreFactory.Number2(() => i2InitNumber(i2Impl - 1))(other)
-      }
+    def i2InitNumber(i2Impl: Int): ghdmzsk = if (i2Impl > 0) AdtCoreFactory.Number2 { () =>
+      i3 = i3 + 1
+      i2InitNumber(i2Impl - 1)
+    }
     else AdtCoreFactory.Number1
 
     val number1 = i1InitNumber(i1)

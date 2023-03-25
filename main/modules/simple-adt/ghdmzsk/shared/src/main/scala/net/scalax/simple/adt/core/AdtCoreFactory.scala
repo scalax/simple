@@ -1,12 +1,12 @@
 package net.scalax.simple
 package adt
-package core
+package factory
 
-import net.scalax.simple.core.Core2
+import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object AdtCoreFactory {
 
-  val Number1: Core2 = Core2(other => other())
-  val Number2: Core2 = Core2(tail => Core2(other => other()(tail)))
+  val Number1: ghdmzsk = ghdmzsk(other => other())
+  val Number2: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => other()(tail)))
 
 }
