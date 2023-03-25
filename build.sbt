@@ -4,10 +4,11 @@ name         := "simple"
 val `root/file`        = file(".").getCanonicalFile
 val `main/file`        = `root/file` / "main"
 val `impractical/file` = `root/file` / "impractical"
+val `wip/file` = `root/file` / "wip"
 
 val `modules/file` = `main/file` / "modules"
 val `test/file`    = `main/file` / "test"
-val `wip/file` = `root/file` / "wip"
+val `doc-only/file` = `main/file` / "doc-only"
 
 val `ghdmzsk/file` = `modules/file` / "simple-ghdmzsk"
 val ghdmzsk        = crossProject(JSPlatform, JVMPlatform) in `ghdmzsk/file`
@@ -37,7 +38,7 @@ val list         = crossProject(JSPlatform, JVMPlatform) in `list/file`
 lazy val listJVM = list.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
 lazy val listJS  = list.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
 
-val `wire/file` = `wip/file` / "simple-wire"
+val `wire/file` = `doc-only/file` / "simple-wire"
 
 val `wire-web-app/file` = `wire/file` / "web-app"
 lazy val `wire-web-app` = project in `wire-web-app/file`
