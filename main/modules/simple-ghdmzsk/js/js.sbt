@@ -1,5 +1,5 @@
 scalaVersion := scalaV.v213
-name         := "simple-core"
+name         := "simple-ghdmzsk"
 
 enableZIOTest := true
 
