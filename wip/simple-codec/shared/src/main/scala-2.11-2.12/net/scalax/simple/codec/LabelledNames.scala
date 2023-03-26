@@ -11,7 +11,11 @@ trait LabelledNamesImplExtra {
     case HNil         => List.empty
   }
 
-  def fill[F[_[_]]](implicit u: DefaultSymbolicLabelling.Aux[ContextO[F]#NoneF, _ <: HList]): LabelledNames[F] = new LabelledNames[F] {
-    override val names: List[String] = symbolHListToList(u.apply())
+  class LabelledNamesImpl[F[_[_]]] extends LabelledNamesImplImpl[F, F[ContextI#NoneF]]
+
+  trait LabelledNamesImplImpl[F[_[_]], Model] {
+    def generic[H <: HList](implicit u: DefaultSymbolicLabelling.Aux[Model, H]): LabelledNames[F] = new LabelledNames[F] {
+      override val names: List[String] = symbolHListToList(u.apply())
+    }
   }
 }

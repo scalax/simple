@@ -3,7 +3,9 @@ package codec
 package impl
 
 trait LabelledNamesImplExtra {
-  def fill[F[_[_]]](implicit u: NoneModelFiller[F], cv: ContextO[F]#NoneF <:< Product): LabelledNames[F] = new LabelledNames[F] {
-    override val names: List[String] = u.instance.productElementNames.to(List)
+  class LabelledNamesImpl[F[_[_]]] {
+    def generic(implicit u: NoneModelFiller[F], cv: F[ContextI#Tag] <:< Product): LabelledNames[F] = new LabelledNames[F] {
+      override val names: List[String] = u.instance.productElementNames.to(List)
+    }
   }
 }

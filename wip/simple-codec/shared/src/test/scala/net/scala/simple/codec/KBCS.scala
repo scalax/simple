@@ -51,7 +51,7 @@ object KBCS {
     )
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val modelC: ModelC[ContextI#IdF] = ModelC[ContextI#IdF](fileName = "xxuuw", folderName = "5ua", extName = ".txt", size = 7)
     val modelB: ModelB[ContextI#IdF] = ModelB[ContextI#IdF](repo = "xxuuw", commits = 2, orgName = "scalax", folder = modelC)
     val modelA: ModelA[ContextI#IdF] =

@@ -8,7 +8,11 @@ trait GetToMap[F[_[_]]] {
 }
 
 object GetToMap {
-  def get[F[_[_]]](implicit getter: Getter[F], labelledNames: LabelledNames[F]): GetToMap[F] = new GetToMap[F] {
-    override def output[H[_]](model: F[H]): Map[String, Any] = Map.from(labelledNames.names.zip(getter.output(model)))
+  def apply[F[_[_]]]: GetToMapImpl[F] = new GetToMapImpl[F]
+
+  class GetToMapImpl[F[_[_]]] {
+    def generic(implicit getter: Getter[F], labelledNames: LabelledNames[F]): GetToMap[F] = new GetToMap[F] {
+      override def output[H[_]](model: F[H]): Map[String, Any] = Map.from(labelledNames.names.zip(getter.output(model)))
+    }
   }
 }

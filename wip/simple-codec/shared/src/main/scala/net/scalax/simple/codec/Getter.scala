@@ -8,7 +8,11 @@ trait Getter[F[_[_]]] {
 }
 
 object Getter {
-  def get[F[_[_]] <: Product]: Getter[F] = new Getter[F] {
-    override def output[H[_]](model: F[H]): List[Any] = model.productIterator.to(List)
+  def apply[F[_[_]]]: GetterImpl[F] = new GetterImpl[F]
+
+  class GetterImpl[F[_[_]]] {
+    def generic(implicit cv: F[ContextI#AnyF] <:< Product): Getter[F] = new Getter[F] {
+      override def output[H[_]](model: F[H]): List[Any] = model.asInstanceOf[F[ContextI#AnyF]].productIterator.to(List)
+    }
   }
 }

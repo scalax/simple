@@ -7,6 +7,8 @@ trait ContextO[Model[_[_]]] {
   type IdF        = Model[ContextI#IdF]
   type StringF    = Model[ContextI#StringF]
   type SimpleVarF = Model[ContextI#SimpleVarF]
+  type OptF       = Model[ContextI#OptF]
+  type Tag        = Model[ContextI#Tag]
 }
 
 trait ContextI {
@@ -15,4 +17,6 @@ trait ContextI {
   type IdF[T]        = T
   type StringF[T]    = String
   type SimpleVarF[T] = SimpleVar[T]
+  type OptF[T]       = Option[T]
+  type Tag[T]        = EmptyTag[T]
 }
