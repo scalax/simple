@@ -8,7 +8,7 @@ object xxbb {
   type UModel[T[_]] = Model[T]
 
   def main(arr: Array[String]): Unit = {
-    implicit val noneFiller: NoneModelFiller[UModel]       = NoneModelFiller[UModel].generic
+    implicit val noneFiller: EmptyTagModelFiller[UModel]   = EmptyTagModelFiller[UModel].generic
     implicit val length: ModelLength[UModel]               = ModelLength[UModel].generic
     implicit val setter: Setter[UModel]                    = Setter[UModel].generic
     implicit val namesImplicit: LabelledNames[UModel]      = LabelledNames[UModel].generic
@@ -16,6 +16,7 @@ object xxbb {
     implicit val modelListGetter: Getter[UModel]           = Getter[UModel].generic
     implicit val modelGetToMap: GetToMap[UModel]           = GetToMap[UModel].generic
     implicit val modelSetterFromMap: SetterFromMap[UModel] = SetterFromMap[UModel].generic
+    implicit val zeroBasedIndex: ZeroBasedIndex[UModel]    = ZeroBasedIndex[UModel].generic
 
     val value: ContextO[UModel]#IdF = setter.input[ContextI#IdF](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
 
@@ -34,6 +35,7 @@ object xxbb {
     println(modelListGetter.output[ContextI#IdF](value))
     println(modelListGetter.output[ContextI#Tag](noneFiller.instance))
     println(modelListGetter.output[ContextI#StringF](namedModel.model))
+    println(zeroBasedIndex.instance)
 
     val map1 = modelGetToMap.output[ContextI#IdF](value)
     val map2 = modelGetToMap.output[ContextI#Tag](noneFiller.instance)

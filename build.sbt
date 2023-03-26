@@ -68,7 +68,7 @@ lazy val `test-commonJS`  = `test-common`.js
 
 `adt-codegen` / rootCodegenPath := (adtJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
-addCommandAlias("codegen", s"; ++${scalaV.v3}!; adt-codegen/preCodegenImpl; adt-codegen/codegenImpl")
+addCommandAlias("codegen", s"; ++${scalaV.v3}; adt-codegen/preCodegenImpl; adt-codegen/codegenImpl")
 addCommandAlias("releaseSimple", "; +adtJVM/publishSigned; +adtJS/publishSigned;")
 
 Global / onChangedBuildSource := ReloadOnSourceChanges

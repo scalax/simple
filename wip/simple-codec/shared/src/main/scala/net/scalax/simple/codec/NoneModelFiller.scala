@@ -1,20 +1,20 @@
 package net.scalax.simple
 package codec
 
-import shapeless._
+import net.scalax.simple.codec.impl.GenericBuilder
 
-trait NoneModelFiller[F[_[_]]] {
-  def instance: ContextO[F]#Tag
+trait EmptyTagModelFiller[F[_[_]]] {
+  def instance: ContextO[F]#TagF
 }
 
-object NoneModelFiller {
-  def apply[F[_[_]]]: ModelLengthImpl[F] = new ModelLengthImpl[F]
+object EmptyTagModelFiller {
+  def apply[F[_[_]]]: EmptyTagModelFillerImpl[F] = new EmptyTagModelFillerImpl[F]
 
-  class ModelLengthImpl[F[_[_]]] extends ModelLengthImplImpl[F, F[ContextI#Tag]]
+  class EmptyTagModelFillerImpl[F[_[_]]] extends EmptyTagModelFillerImplImpl[F, F[ContextI#Tag]]
 
-  trait ModelLengthImplImpl[F[_[_]], Model] {
-    def generic[H <: HList](implicit g: Generic.Aux[Model, H], v: ValueW[H]): NoneModelFiller[F] = new NoneModelFiller[F] {
-      override val instance: F[ContextI#Tag] = g.asInstanceOf[Generic.Aux[F[ContextI#Tag], H]].from(v.value)
+  trait EmptyTagModelFillerImplImpl[F[_[_]], Model] {
+    def generic(implicit g: GenericBuilder[Model]): EmptyTagModelFiller[F] = new EmptyTagModelFiller[F] {
+      override val instance: F[ContextI#Tag] = g.asInstanceOf[GenericBuilder[F[ContextI#Tag]]].value
     }
   }
 }
