@@ -16,6 +16,7 @@ object xxbb {
     implicit val modelListGetter: Getter[UModel]           = Getter[UModel].generic
     implicit val modelGetToMap: GetToMap[UModel]           = GetToMap[UModel].generic
     implicit val modelSetterFromMap: SetterFromMap[UModel] = SetterFromMap[UModel].generic
+    implicit val zeroBasedIndex: ZeroBasedIndex[UModel]    = ZeroBasedIndex[UModel].generic
 
     val value: ContextO[UModel]#IdF = setter.input[ContextI#IdF](List(2, Option("nnuu"), classOf[String], "sdfjowiejrowehreiowjhrtf"))
 
@@ -34,6 +35,7 @@ object xxbb {
     println(modelListGetter.output[ContextI#IdF](value))
     println(modelListGetter.output[ContextI#Tag](noneFiller.instance))
     println(modelListGetter.output[ContextI#StringF](namedModel.model))
+    println(zeroBasedIndex.instance)
 
     val map1 = modelGetToMap.output[ContextI#IdF](value)
     val map2 = modelGetToMap.output[ContextI#Tag](noneFiller.instance)

@@ -4,7 +4,7 @@ package codec
 import shapeless._
 
 trait NoneModelFiller[F[_[_]]] {
-  def instance: ContextO[F]#Tag
+  def instance: ContextO[F]#TagF
 }
 
 object NoneModelFiller {
