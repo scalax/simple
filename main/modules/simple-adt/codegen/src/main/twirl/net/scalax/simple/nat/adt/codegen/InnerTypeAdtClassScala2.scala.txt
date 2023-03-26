@@ -1,0 +1,32 @@
+@()
+package net.scalax.simple
+package adt
+package impl
+
+import net.scalax.simple.ghdmzsk.ghdmzsk
+
+@paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
+@paramFunc(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } func@{i2}: I@{i2} => T } }
+@paramTypeAny(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } Any } }
+
+@forMatch(end: Int, i1: Int) = { @if(i1 > end) { FoldListZero } else {
+    FoldListAppender.appendAll(List(@for(n <- i1 to end - 1) { func@{n}.asInstanceOf[Any => Any], } func@{end}.asInstanceOf[Any => Any]))
+} }
+@buildHList(start: Int, i1: Int) = { @if(start <= i1) {
+    AdtAlias.AdtAppend[I@start, @buildHList(start + 1, i1)]
+} else { AdtAlias.AdtZero } }
+
+object InnerTypeAdtClass {
+    @for(i1 <- 1 to 22) {
+        class PrepareInnerApply@{i1}[@paramType(1, i1)] {
+            @@inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T, @buildHList(1, i1), Adt.Status.Passed]): CusInnerApply@{i1}[@paramType(1, i1)] = new CusInnerApply@{i1}(adtList = v.value, data = data)
+        }
+        object HelperIOImpl@{i1} extends PrepareInnerApply@{i1}[@paramTypeAny(1, i1)]
+        class CusInnerApply@{i1}[@paramType(1, i1)](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
+            @@inline def fold[T](@paramFunc(1, i1)): T = {
+                val foldList = @{forMatch(i1, 1)}
+                FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+            }
+        }
+    }
+}
