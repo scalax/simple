@@ -3,7 +3,7 @@ package codec
 
 object SlickTest {
 
-  case class Model[F[_]](name: F[Int], str: F[Option[String]],  name11: F[String])
+  case class Model[F[_]](name: F[Int], str: F[Option[String]], name11: F[String])
 
   type UModel[T[_]] = Model[T]
 
