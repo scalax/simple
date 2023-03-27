@@ -8,11 +8,16 @@ trait EmptyTagModelFiller[F[_[_]]] {
 }
 
 object EmptyTagModelFiller {
-  def apply[F[_[_]]]: EmptyTagModelFillerImpl[F] = new EmptyTagModelFillerImpl[F]
+  def apply[F[_[_]]]: EmptyTagModelFillerImpl[F] = new EmptyTagModelFillerImpl[F](implicitly)
 
-  class EmptyTagModelFillerImpl[F[_[_]]] extends EmptyTagModelFillerImplImpl[F, F[ContextI#Tag]]
+  class EmptyTagModelFillerImpl[F[_[_]]](protected val cvImpl: F[ContextI#Tag] <:< F[ContextI#Tag])
+      extends EmptyTagModelFillerImplImpl[F, F[ContextI#Tag]]
 
   trait EmptyTagModelFillerImplImpl[F[_[_]], Model] {
+    protected implicit def cvImpl: Model <:< F[ContextI#Tag]
+    def build(m: Model): EmptyTagModelFiller[F] = new EmptyTagModelFiller[F] {
+      override val instance: F[ContextI#Tag] = m
+    }
     def generic(implicit g: GenericBuilder[Model]): EmptyTagModelFiller[F] = new EmptyTagModelFiller[F] {
       override val instance: F[ContextI#Tag] = g.asInstanceOf[GenericBuilder[F[ContextI#Tag]]].value
     }
