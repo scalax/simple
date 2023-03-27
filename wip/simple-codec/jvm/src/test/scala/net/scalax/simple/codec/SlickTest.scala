@@ -34,8 +34,8 @@ object SlickTest {
     println(namedModel2)
     val namedModel3 = namedModel2.map(t => fr"$tableName.$t")
     val namedModel4 = namedModel3.intercalate(fr",")
-    val sql5        = sql"""select $namedModel4 from tableA as a"""
-    println(sql5.toString())
+    val sql5        = sql"""select $namedModel4 from tableA as $tableName"""
+    println(sql5.toString()) // Fragment("select a .name  , a .str  , a .name11   from tableA as a ")
     val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].build[Read].generic
     // 因为用了Generic这个Reader直接免了，拼接字符串就完事了
     val modelRead2: Read[ContextO[UModel]#IdF] =
