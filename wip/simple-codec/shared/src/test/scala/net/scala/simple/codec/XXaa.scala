@@ -7,7 +7,7 @@ object xxbb {
 
   type UModel[T[_]] = Model[T]
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val tModel: ContextO[UModel]#TagF                      = TypeParameterBuilder[UModel].build[ContextI#Tag].generic
     implicit val noneFiller: EmptyTagModelFiller[UModel]   = EmptyTagModelFiller[UModel].build(tModel)
     implicit val length: ModelLength[UModel]               = ModelLength[UModel].generic
