@@ -37,10 +37,12 @@ object SlickTest {
     val sql5        = sql"""select $namedModel4 from tableA as a"""
     println(sql5.toString())
     val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].build[Read].generic
+    // 因为用了Generic这个Reader直接免了，拼接字符串就完事了
     val modelRead2: Read[ContextO[UModel]#IdF] =
       Traverse[List].sequence(modelListGetter.output(modelRead1).asInstanceOf[List[Read[Any]]]).map(u => setter.input[ContextI#IdF](u))
     println(modelRead1)
     println(modelRead2)
+    val action: ConnectionIO[List[UModel[ContextI#IdF]]] = sql5.query[UModel[ContextI#IdF]].to[List]
 
   }
 
