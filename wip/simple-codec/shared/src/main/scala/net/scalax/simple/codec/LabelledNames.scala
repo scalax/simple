@@ -6,4 +6,10 @@ trait LabelledNames[F[_[_]]] {
 }
 object LabelledNames extends impl.LabelledNamesImplExtra {
   def apply[F[_[_]]]: LabelledNamesImpl[F] = new LabelledNamesImpl[F]
+
+  class LabelledNamesImpl[F[_[_]]] extends LabelledNamesImplImpl[F] {
+    def build(model: LabelledInstance[F])(implicit cv: ContextO[F]#StringF <:< Product): LabelledNames[F] = new LabelledNames[F] {
+      override val names: List[String] = model.model.productIterator.asInstanceOf[Iterator[String]].to(List)
+    }
+  }
 }

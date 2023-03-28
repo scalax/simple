@@ -26,24 +26,30 @@ object SlickTest {
     import cats.data._
     import cats.effect._
     import cats.implicits._
-    println(namedModel.model)
-    val tableName = Fragment.const("a")
-    println(namedModel.model)
-    val namedModel1 = modelListGetter.output(namedModel.model).asInstanceOf[List[String]]
-    val namedModel2 = namedModel1.map(t => Fragment.const(t))
-    println(namedModel2)
-    val namedModel3 = namedModel2.map(t => fr"$tableName.$t")
-    val namedModel4 = namedModel3.intercalate(fr",")
-    val sql5        = sql"""select $namedModel4 from tableA as $tableName"""
-    println(sql5.toString()) // Fragment("select a .name  , a .str  , a .name11   from tableA as a ")
+    println(namedModel.model) // Model(name,str,name11)
+    val tableName     = "a"
+    val tableFragment = Fragment.const(tableName)
+    val namedModel1   = namedModel.map(_ => tableName + ".")
+    println(namedModel1.model) // Model(a.,a.,a.)
+    val namedModel2 = namedModel.map(_ => " as ")
+    println(namedModel2.model) // Model( as , as , as )
+    val namedModel3 = namedModel.map(t => s"r_$t")
+    println(namedModel3.model) // Model(r_name,r_str,r_name11)
+    val namedModel4 = namedModel1.concat(namedModel.model).concat(namedModel2.model).concat(namedModel3.model)
+    println(namedModel4.model) // Model(a.name as r_name,a.str as r_str,a.name11 as r_name11)
+    val namedModel5: LabelledNames[UModel] = LabelledNames[UModel].build(namedModel4)
+    println(namedModel5.names: List[String]) // List(a.name as r_name, a.str as r_str, a.name11 as r_name11)
+    val str6: String = namedModel5.names.intercalate(", ")
+    println(str6) // a.name as r_name, a.str as r_str, a.name11 as r_name11
+    val namedModel6 = Fragment.const(str6)
+    val sql5        = sql"""select $namedModel6 from tableA as $tableFragment"""
+    println(sql5.toString())          // Fragment("select a.name as r_name, a.str as r_str, a.name11 as r_name11  from tableA as a ")
+    println(namedModel3.model.name11) // r_name11
     val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].build[Read].generic
     // 因为用了Generic这个Reader直接免了，拼接字符串就完事了
-    val modelRead2: Read[ContextO[UModel]#IdF] =
+    implicit val modelRead2: Read[ContextO[UModel]#IdF] =
       Traverse[List].sequence(modelListGetter.output(modelRead1).asInstanceOf[List[Read[Any]]]).map(u => setter.input[ContextI#IdF](u))
-    println(modelRead1)
-    println(modelRead2)
     val action: ConnectionIO[List[UModel[ContextI#IdF]]] = sql5.query[UModel[ContextI#IdF]].to[List]
-
   }
 
 }
