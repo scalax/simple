@@ -4,10 +4,10 @@ name         := "simple"
 val `root/file`        = file(".").getCanonicalFile
 val `main/file`        = `root/file` / "main"
 val `impractical/file` = `root/file` / "impractical"
-val `wip/file` = `root/file` / "wip"
+val `wip/file`         = `root/file` / "wip"
 
-val `modules/file` = `main/file` / "modules"
-val `test/file`    = `main/file` / "test"
+val `modules/file`  = `main/file` / "modules"
+val `test/file`     = `main/file` / "test"
 val `doc-only/file` = `main/file` / "doc-only"
 
 val `ghdmzsk/file` = `modules/file` / "simple-ghdmzsk"
@@ -23,8 +23,8 @@ lazy val adtJS  = adt.js dependsOn (`adt-implementionJS`, `test-commonJS`    % T
 val `adt-codegen/file` = `adt/file` / "codegen"
 val `adt-codegen`      = project in `adt-codegen/file`
 
-val `adt-ghdmzsk/file`       = `adt/file` / "ghdmzsk"
-val `adt-ghdmzsk`            = crossProject(JSPlatform, JVMPlatform) in `adt-ghdmzsk/file`
+val `adt-ghdmzsk/file`    = `adt/file` / "ghdmzsk"
+val `adt-ghdmzsk`         = crossProject(JSPlatform, JVMPlatform) in `adt-ghdmzsk/file`
 lazy val `adt-ghdmzskJVM` = `adt-ghdmzsk`.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
 lazy val `adt-ghdmzskJS`  = `adt-ghdmzsk`.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
 
