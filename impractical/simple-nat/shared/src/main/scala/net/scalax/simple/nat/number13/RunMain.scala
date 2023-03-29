@@ -4,11 +4,11 @@ import scala.annotation.tailrec
 
 object RunMain extends App {
 
-  def count(numberA: Number1, numberB: Number1, except: BigDecimal): Boolean = {
+  def count(numberA: Number1, numberB: Number1, except: BigDecimal): BigDecimal = {
     var tag1: Long = 0
     var tag2: Long = 0
     @tailrec
-    def countImpl(c: () => Number2): Boolean = {
+    def countImpl(c: () => Number2, initCount: Long): BigDecimal = {
       val next: () => Number2 = c() match {
         case Number2A(tail) =>
           tag1 = tag1 + 1
@@ -17,18 +17,18 @@ object RunMain extends App {
           tag2 = tag2 + 1
           tail
       }
-      if (tag1 + tag2 < 10000)
-        countImpl(next)
+      if (tag1 + tag2 < initCount)
+        countImpl(next, initCount)
       else {
         val resultBigDecimal: BigDecimal = BigDecimal(tag1) / BigDecimal(tag2)
         val canOut: Boolean              = (resultBigDecimal - except).abs < BigDecimal("0.0001")
         if (canOut)
-          true
+          resultBigDecimal
         else
-          countImpl(next)
+          countImpl(next, initCount + 100000)
       }
     }
-    countImpl(() => numberA.method(numberB))
+    countImpl(() => numberA.method(numberB), 10000)
   }
 
   def numT(i: Int, zero: => Number1): Number1 = {
@@ -58,11 +58,12 @@ object RunMain extends App {
     lazy val num2CountZero: Number1 = Number1S(() => num2Count)
 
     val except: BigDecimal = BigDecimal(i1) + BigDecimal(i2)
-    count(num1Count, num2CountZero, except)
-    count(num1Count, num2Count, except)
-    count(num1CountZero, num2CountZero, except)
-    count(num1CountZero, num2Count, except)
-    println(i1, i2, except)
+
+    val r1 = count(num1Count, num2CountZero, except)
+    val r2 = count(num1Count, num2Count, except)
+    val r3 = count(num1CountZero, num2CountZero, except)
+    val r4 = count(num1CountZero, num2Count, except)
+    println(i1, '+', i2, '=', except, r1, r2, r3, r4)
   }
 
   for {
@@ -76,11 +77,12 @@ object RunMain extends App {
     lazy val num2CountZero: Number1 = Number1U(() => num2Count)
 
     val except: BigDecimal = BigDecimal(i1) * BigDecimal(i2)
-    count(num1Count, num2CountZero, except)
-    count(num1Count, num2Count, except)
-    count(num1CountZero, num2CountZero, except)
-    count(num1CountZero, num2Count, except)
-    println(i1, i2, except)
+
+    val r1 = count(num1Count, num2CountZero, except)
+    val r2 = count(num1Count, num2Count, except)
+    val r3 = count(num1CountZero, num2CountZero, except)
+    val r4 = count(num1CountZero, num2Count, except)
+    println(i1, '×', i2, '=', except, r1, r2, r3, r4)
   }
 
   for {
@@ -94,11 +96,12 @@ object RunMain extends App {
     lazy val num2CountZero: Number1 = Number1T(() => num2Count)
 
     val except: BigDecimal = BigDecimal(i1) / BigDecimal(i2)
-    count(num1Count, num2CountZero, except)
-    count(num1Count, num2Count, except)
-    count(num1CountZero, num2CountZero, except)
-    count(num1CountZero, num2Count, except)
-    println(i1, i2, except)
+
+    val r1 = count(num1Count, num2CountZero, except)
+    val r2 = count(num1Count, num2Count, except)
+    val r3 = count(num1CountZero, num2CountZero, except)
+    val r4 = count(num1CountZero, num2Count, except)
+    println(i1, '÷', i2, '=', except, r1, r2, r3, r4)
   }
 
 }
