@@ -5,12 +5,11 @@ object `Test Cases copy from documention in README.md` {
   println("Test cases for doc started.")
 
   def assert(value: => Boolean): Unit = {
-    val result = {
+    val result =
       try value
       catch {
         case _: Throwable => false
       }
-    }
 
     if (!result) throw new Exception("Error Assert")
   }
@@ -105,30 +104,22 @@ object `Test Cases copy from documention in README.md` {
     import io.circe._
     import io.circe.syntax._
 
-    object JsonAdtPoly {
-      implicit def jsonAdtPolyImplicit[In: Encoder, Poly]: Adt.Context[In, Json, Poly] = {
-        val encoder = Encoder[In]
-        Adt.Context(t => encoder(t))
-      }
-    }
-
-    def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
-      val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
+    // TODO
+    def inputAdtData[T: Adt.Options4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], Json]](t: T): Json = {
+      val applyM = Adt.Options4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], Json](t)
       applyM.fold(
         noneValue => "Null Tag".asJson,
         intOpt => intOpt.map(_ + 1).asJson,
-        { case Adt.Adapter(jsonValue) => jsonValue }
+        { case Adt.Adapter(encoder) => encoder(t) },
+        jsonValue => jsonValue
       )
     }
 
     assert(inputAdtData(None) == "Null Tag".asJson)
     assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-    // Use Adt.Adapter that find the io.circe.Encoder for String
-    assert(inputAdtData("My Name") == "My Name".asJson)
-    // Use Adt.Adapter that find the io.circe.Encoder for JsonObject
-    assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
     // Bypass compiler judgment
-    assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
+    assert(inputAdtData("My Name".asJson) == "My Name".asJson)
+    assert(inputAdtData(JsonObject.empty.asJson) == Map.empty[String, String].asJson)
   }
 
   def `Usage of @djx314 Point 4`[T](body: => T): T = body
