@@ -2,7 +2,7 @@ package net.scalax.simple.nat.number13
 
 import scala.annotation.tailrec
 
-object RunMain1 extends App {
+object RunMain extends App {
 
   def count(numberA: Number1, numberB: Number1, except: BigDecimal): Boolean = {
     var tag1: Long = 0
