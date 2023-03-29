@@ -1,6 +1,6 @@
 package net.scalax.simple.nat.number12
 
-import net.scalax.simple.core.ghdmzsk
+import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object RunMain3 extends App {
 
