@@ -9,3 +9,4 @@ libraryDependencies ++= libScalax.shapeless.value
 libraryDependencies ++= libScalax.`scala-collection-compat`.value
 libraryDependencies ++= libScalax.`doobie`.value
 libraryDependencies ++= libScalax.`cats-effect`.value
+libraryDependencies ++= libScalax.`fs2`.value

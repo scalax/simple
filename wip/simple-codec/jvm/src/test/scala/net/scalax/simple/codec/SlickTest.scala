@@ -1,6 +1,8 @@
 package net.scalax.simple
 package codec
 
+import net.scalax.simple.codec.utils._
+
 object SlickTest {
 
   case class Model[F[_]](name: F[Int], str: F[Option[String]], name11: F[String])
@@ -41,10 +43,12 @@ object SlickTest {
     println(namedModel5.names: List[String]) // List(a.name as r_name, a.str as r_str, a.name11 as r_name11)
     val str6: String = namedModel5.names.intercalate(", ")
     println(str6) // a.name as r_name, a.str as r_str, a.name11 as r_name11
-    val namedModel6 = Fragment.const(str6)
-    val sql5        = sql"""select $namedModel6 from tableA as $tableFragment"""
-    println(sql5.toString())          // Fragment("select a.name as r_name, a.str as r_str, a.name11 as r_name11  from tableA as a ")
-    println(namedModel3.model.name11) // r_name11
+    val namedModel6    = Fragment.const(str6)
+    val sql5: Fragment = fr"select" ++ namedModel6 ++ fr"from tableA as" ++ tableFragment
+    println(sql5.toString())                  // Fragment("select a.name as r_name, a.str as r_str, a.name11 as r_name11 from tableA as a ")
+    println(namedModel3.model.name: String)   // r_name
+    println(namedModel3.model.str: String)    // r_str
+    println(namedModel3.model.name11: String) // r_name11
     val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].build[Read].generic
     // 因为用了Generic这个Reader直接免了，拼接字符串就完事了
     implicit val modelRead2: Read[ContextO[UModel]#IdF] =

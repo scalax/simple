@@ -1,6 +1,8 @@
 package net.scalax.simple
 package codec
 
+import scala.collection.compat._
+
 trait LabelledNames[F[_[_]]] {
   def names: List[String]
 }
