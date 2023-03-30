@@ -5,7 +5,6 @@ package number13
 sealed trait Number1 {
   def method(other: Number1): Number2
 }
-
 case class Number1S(tail: () => Number1) extends Number1 {
   override def method(other: Number1): Number2 = other.method(tail())
 }

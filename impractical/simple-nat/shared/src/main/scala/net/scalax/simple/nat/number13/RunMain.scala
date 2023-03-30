@@ -21,7 +21,7 @@ object RunMain extends App {
         countImpl(next, initCount)
       else {
         val resultBigDecimal: BigDecimal = BigDecimal(tag1) / BigDecimal(tag2)
-        val canOut: Boolean              = (resultBigDecimal - except).abs < BigDecimal("0.0001")
+        val canOut: Boolean              = (resultBigDecimal - except).abs < BigDecimal("0.00001")
         if (canOut)
           resultBigDecimal
         else
