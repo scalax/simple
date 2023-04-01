@@ -8,12 +8,12 @@ object RunMain extends App {
     var tag1: Long = 0
     var tag2: Long = 0
     @tailrec
-    def countImpl(c: () => Number2, initCount: Long): BigDecimal = {
-      val next: () => Number2 = c() match {
-        case Number2A(tail) =>
+    def countImpl(c: () => Number3, initCount: Long): BigDecimal = {
+      val next: () => Number3 = c() match {
+        case Number3A(tail) =>
           tag1 = tag1 + 1
           tail
-        case Number2B(tail) =>
+        case Number3B(tail) =>
           tag2 = tag2 + 1
           tail
       }
