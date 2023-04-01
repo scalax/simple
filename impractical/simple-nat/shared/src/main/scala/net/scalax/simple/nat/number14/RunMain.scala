@@ -4,7 +4,15 @@ import scala.annotation.tailrec
 
 object RunMain extends App {
 
-  def count(numberA: Number1, numberB: Number1, except: BigDecimal): BigDecimal = {
+  try {
+    Number.num1Builder(() => Number.num2Builder)(() => Number.num3Builder)(() => Number.num4Builder)
+  } catch {
+    case _: StackOverflowError =>
+  }
+
+  println(BigDecimal(Number.tag1), BigDecimal(Number.tag2))
+
+  /*def count(numberA: Number1, numberB: Number1, except: BigDecimal): BigDecimal = {
     var tag1: Long = 0
     var tag2: Long = 0
     @tailrec
@@ -37,6 +45,6 @@ object RunMain extends App {
       override def method(other: Number1 => Number1): Number2 = Cut
     }
 
-  }
+  }*/
 
 }
