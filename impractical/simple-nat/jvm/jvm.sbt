@@ -4,7 +4,7 @@ name         := "simple-nat"
 enableZIOTest := true
 
 run / fork := true
-run / javaOptions += "-Xss15M"
+run / javaOptions += "-Xss155M"
 
 crossScalaVersions := Seq(scalaV.v211, scalaV.v212, scalaV.v213, scalaV.v3)
 

@@ -18,71 +18,31 @@ object Number {
   var tag1: Int = 0
   var tag2: Int = 0
 
-  val num1Builder: ghdmzsk =
-    ghdmzsk { num2 =>
-      ghdmzsk { num3 =>
-        ghdmzsk { num4 =>
-          val tailPos  = ghdmzsk(num1Tail => number1S(num1Tail)(num2)(num3)(num4))
-          val tailZero = ghdmzsk(num1Tail => number1T(num1Tail)(num2)(num3)(num4))
-          lazy val nPos: ghdmzsk = tailPos { () =>
-            tag1 = tag1 + 1
-            tailPos { () =>
-              tag1 = tag1 + 1
-              tailPos { () =>
-                tag1 = tag1 + 1
-                tailPos(() => nZero)
-              }
-            }
-          }
-          lazy val nZero: ghdmzsk = tailZero(() => nPos)
-          nPos
+  lazy val n1Pos: ghdmzsk = number1S { () =>
+    tag1 = tag1 + 1
+    number1S { () =>
+      tag1 = tag1 + 1
+      number1S { () =>
+        tag1 = tag1 + 1
+        number1S { () =>
+          tag1 = tag1 + 1
+          n1Zero
         }
       }
     }
+  }
+  lazy val n1Zero: ghdmzsk = number1T(() => n1Pos)
 
-  val num2Builder: ghdmzsk =
-    ghdmzsk { num3 =>
-      ghdmzsk { num4 =>
-        ghdmzsk { num1 =>
-          val tailPos             = ghdmzsk(num2Tail => number2S(num2Tail)(num3)(num4)(num1))
-          val tailZero            = ghdmzsk(num2Tail => number2T(num2Tail)(num3)(num4)(num1))
-          lazy val nPos: ghdmzsk  = tailPos(() => tailPos(() => tailPos)(() => tailPos(() => nZero)))
-          lazy val nZero: ghdmzsk = tailZero(() => nPos)
-          nPos
-        }
-      }
-    }
+  lazy val n2Pos: ghdmzsk  = number2S(() => number2S(() => number2S(() => number2S(() => number2S(() => n2Zero)))))
+  lazy val n2Zero: ghdmzsk = number2T(() => n2Pos)
 
-  val num3Builder: ghdmzsk =
-    ghdmzsk { num4 =>
-      ghdmzsk { num1 =>
-        ghdmzsk { num2 =>
-          val tailPos             = ghdmzsk(num3Tail => number3S(num3Tail)(num4)(num1)(num2))
-          val tailZero            = ghdmzsk(num3Tail => number3T(num3Tail)(num4)(num1)(num2))
-          lazy val nPos: ghdmzsk  = tailPos(() => tailPos(() => tailPos)(() => tailPos(() => nZero)))
-          lazy val nZero: ghdmzsk = tailZero(() => nPos)
-          nPos
-        }
-      }
-    }
+  lazy val n3Pos: ghdmzsk  = number3S(() => number3S(() => number3S(() => number3S(() => number3S(() => n3Zero)))))
+  lazy val n3Zero: ghdmzsk = number3T(() => n3Pos)
 
-  val num4Builder: ghdmzsk =
-    ghdmzsk { num1 =>
-      ghdmzsk { num2 =>
-        ghdmzsk { num3 =>
-          val tailPos  = ghdmzsk(num4Tail => number4S(num4Tail)(num1)(num2)(num3))
-          val tailZero = ghdmzsk(num4Tail => number4T(num4Tail)(num1)(num2)(num3))
-          lazy val nPos: ghdmzsk = tailPos { () =>
-            println("11" * 100)
-            tailPos(() => tailPos)(() => tailPos(() => nZero))
-          }
-          lazy val nZero: ghdmzsk = tailZero { () =>
-            tag2 = tag2 + 1
-            nPos
-          }
-          nPos
-        }
-      }
-    }
+  lazy val n4Pos: ghdmzsk = number4S(() => number4S(() => number4S(() => number4S(() => number4S(() => n4Zero)))))
+  lazy val n4Zero: ghdmzsk = number4T { () =>
+    tag2 = tag2 + 1
+    n4Pos
+  }
 
 }
