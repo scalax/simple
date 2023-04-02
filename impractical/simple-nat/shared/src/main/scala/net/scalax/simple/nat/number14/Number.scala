@@ -3,17 +3,17 @@ package net.scalax.simple.nat.number14
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object Number {
-  val number1S: ghdmzsk = ghdmzsk(num1Tail => ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num4 => num1Tail()(num2)(num3)(num4)))))
-  val number1T: ghdmzsk = ghdmzsk(num1Tail => ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num4 => num2()(num3)(num4)(num1Tail)))))
+  val number1S: ghdmzsk = ghdmzsk(num1Tail => ghdmzsk(num2 => ghdmzsk(num4 => ghdmzsk(num3 => num1Tail()(num2)(num4)(num3)))))
+  val number1T: ghdmzsk = ghdmzsk(num1Tail => ghdmzsk(num2 => ghdmzsk(num4 => ghdmzsk(num3 => num2()(num3)(num1Tail)(num4)))))
 
-  val number2S: ghdmzsk = ghdmzsk(num2Tail => ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num1 => num1()(num2Tail)(num3)(num4)))))
-  val number2T: ghdmzsk = ghdmzsk(num2Tail => ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num1 => num3()(num4)(num1)(num2Tail)))))
+  val number2S: ghdmzsk = ghdmzsk(num2Tail => ghdmzsk(num3 => ghdmzsk(num1 => ghdmzsk(num4 => num1()(num2Tail)(num4)(num3)))))
+  val number2T: ghdmzsk = ghdmzsk(num2Tail => ghdmzsk(num3 => ghdmzsk(num1 => ghdmzsk(num4 => num3()(num4)(num2Tail)(num1)))))
 
-  val number3S: ghdmzsk = ghdmzsk(num3Tail => ghdmzsk(num4 => ghdmzsk(num1 => ghdmzsk(num2 => num2()(num3Tail)(num4)(num1)))))
-  val number3T: ghdmzsk = ghdmzsk(num3Tail => ghdmzsk(num4 => ghdmzsk(num1 => ghdmzsk(num2 => num4()(num1)(num2)(num3Tail)))))
+  val number3S: ghdmzsk = ghdmzsk(num3Tail => ghdmzsk(num4 => ghdmzsk(num2 => ghdmzsk(num1 => num2()(num3Tail)(num1)(num4)))))
+  val number3T: ghdmzsk = ghdmzsk(num3Tail => ghdmzsk(num4 => ghdmzsk(num2 => ghdmzsk(num1 => num4()(num1)(num3Tail)(num2)))))
 
-  val number4S: ghdmzsk = ghdmzsk(num4Tail => ghdmzsk(num1 => ghdmzsk(num2 => ghdmzsk(num3 => num3()(num4Tail)(num1)(num2)))))
-  val number4T: ghdmzsk = ghdmzsk(num4Tail => ghdmzsk(num1 => ghdmzsk(num2 => ghdmzsk(num3 => num1()(num2)(num3)(num4Tail)))))
+  val number4S: ghdmzsk = ghdmzsk(num4Tail => ghdmzsk(num1 => ghdmzsk(num3 => ghdmzsk(num2 => num3()(num4Tail)(num2)(num1)))))
+  val number4T: ghdmzsk = ghdmzsk(num4Tail => ghdmzsk(num1 => ghdmzsk(num3 => ghdmzsk(num2 => num1()(num2)(num4Tail)(num3)))))
 
   var tag1: Int = 0
   var tag2: Int = 0
