@@ -3,7 +3,7 @@ package net.scalax.simple.nat.number14
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object Number {
-  val number1S: ghdmzsk = ghdmzsk(tail0 => ghdmzsk(tail1 => ghdmzsk(tail2 => ghdmzsk(tail3 => tail0()(tail1)(tail2)(tail3)))))
+  val number1S: ghdmzsk = ghdmzsk(tail0 => ghdmzsk(tail1 => ghdmzsk(tail2 => ghdmzsk(tail3 => tail0()(tail1)(tail3)(tail2)))))
 
   val number2S: ghdmzsk = ghdmzsk(tail0 => ghdmzsk(tail1 => ghdmzsk(tail2 => ghdmzsk(tail3 => tail2()(tail0)(tail3)(tail1)))))
   val number2T: ghdmzsk = ghdmzsk(tail0 => ghdmzsk(tail1 => ghdmzsk(tail2 => ghdmzsk(tail3 => tail1()(tail3)(tail0)(tail2)))))
@@ -11,7 +11,8 @@ object Number {
   var tag1: Int = 0
   var tag2: Int = 0
 
-  val numberPosImpl: ghdmzsk  = ghdmzsk(zero => number2S(() => number2S(() => number2S(() => number2S(() => number2S(zero))))))
+  val numberPosImpl: ghdmzsk =
+    ghdmzsk(zero => number2S(() => number2S(() => number2S(() => number2S(() => number2S(() => number2S(zero)))))))
   val numberZeroImpl: ghdmzsk = ghdmzsk(zero => number2T(zero))
 
   lazy val n1Pos: ghdmzsk = number1S { () =>
@@ -22,7 +23,10 @@ object Number {
         tag1 = tag1 + 1
         number1S { () =>
           tag1 = tag1 + 1
-          n1Zero
+          number1S { () =>
+            tag1 = tag1 + 1
+            n1Zero
+          }
         }
       }
     }
