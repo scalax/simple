@@ -22,7 +22,7 @@ object RunMain extends App {
     countImpl(num, 0, 0)
   }
 
-  val (g1, g2) = count(() => Number.n1Pos(() => Number.n2Pos)(() => Number.n4Pos)(() => Number.n3Pos))
+  val (g1, g2) = count(() => Number.n1Pos(() => Number.n2Pos)(() => Number.n4Pos)(() => Number.n2Pos))
 
   println(g1, g2)
   println(BigDecimal(g1) / BigDecimal(g2))
