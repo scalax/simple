@@ -4,7 +4,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `轮状有理数(加/乘/除)法栈安全实现ghdmzsk版` {
+object RunMain {
 
   def count(number: () => ghdmzsk, except: BigDecimal): BigDecimal = {
     @tailrec
