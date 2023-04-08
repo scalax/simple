@@ -5,6 +5,6 @@
 /.vscode/
 /.bsp/
 .bloop/
-target/
-metals.sbt
+**/target/
+**/metals.sbt
 /developAlias.sbt
