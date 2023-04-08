@@ -4,29 +4,31 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object RunMain {
+object `这次要Run这个` {
 
-  def count(number: () => ghdmzsk, except: BigDecimal): BigDecimal = {
+  println("喵呜呜" * 100)
+  println("58795-" * 100)
+
+  val anythingNumber = ghdmzsk(t => t())
+
+  def count(number: => ghdmzsk, except: BigDecimal): BigDecimal = {
+    Number1.count1 = 0
+    Number1.count2 = 0
     @tailrec
-    def countImpl(c: () => ghdmzsk, tag1Impl: Long, tag2Impl: Long, initCount: Long): BigDecimal = {
-      val (nextTail, tag1Next, tag2Next) = c() match {
-        case Number1.AA(tail) =>
-          (tail, tag1Impl + 1, tag2Impl)
-        case Number1.BB(tail) =>
-          (tail, tag1Impl, tag2Impl + 1)
-      }
-      if (tag1Next + tag2Next < initCount || tag2Next == 0)
-        countImpl(nextTail, tag1Next, tag2Next, initCount)
+    def countImpl(c: => ghdmzsk, initCount: Long): BigDecimal = {
+      val nextTail = c(() => anythingNumber)
+      if (Number1.count1 + Number1.count2 < initCount || Number1.count2 == 0)
+        countImpl(nextTail, initCount)
       else {
-        val resultBigDecimal: BigDecimal = BigDecimal(tag1Next) / BigDecimal(tag2Next)
+        val resultBigDecimal: BigDecimal = BigDecimal(Number1.count1) / BigDecimal(Number1.count2)
         val canOut: Boolean              = (resultBigDecimal - except).abs < BigDecimal("0.00001")
         if (canOut)
           resultBigDecimal
         else
-          countImpl(nextTail, tag1Next, tag2Next, initCount + 100000)
+          countImpl(nextTail, initCount + 100000)
       }
     }
-    countImpl(number, 0, 0, 10000)
+    countImpl(number, initCount = 10000)
   }
 
   def numT(i: Int, zero: => ghdmzsk): ghdmzsk = {
@@ -58,10 +60,10 @@ object RunMain {
 
       val except: BigDecimal = BigDecimal(i1) + BigDecimal(i2)
 
-      val r1 = count(() => num1Count(() => num2CountZero), except)
-      val r2 = count(() => num1Count(() => num2Count), except)
-      val r3 = count(() => num1CountZero(() => num2CountZero), except)
-      val r4 = count(() => num1CountZero(() => num2Count), except)
+      val r1 = count(num1Count(() => num2CountZero), except)
+      val r2 = count(num1Count(() => num2Count), except)
+      val r3 = count(num1CountZero(() => num2CountZero), except)
+      val r4 = count(num1CountZero(() => num2Count), except)
 
       println(i1, '+', i2, '=', except, r1, r2, r3, r4)
     }
@@ -78,10 +80,10 @@ object RunMain {
 
       val except: BigDecimal = BigDecimal(i1) * BigDecimal(i2)
 
-      val r1 = count(() => num1Count(() => num2CountZero), except)
-      val r2 = count(() => num1Count(() => num2Count), except)
-      val r3 = count(() => num1CountZero(() => num2CountZero), except)
-      val r4 = count(() => num1CountZero(() => num2Count), except)
+      val r1 = count(num1Count(() => num2CountZero), except)
+      val r2 = count(num1Count(() => num2Count), except)
+      val r3 = count(num1CountZero(() => num2CountZero), except)
+      val r4 = count(num1CountZero(() => num2Count), except)
 
       println(i1, '×', i2, '=', except, r1, r2, r3, r4)
     }
@@ -98,10 +100,10 @@ object RunMain {
 
       val except: BigDecimal = BigDecimal(i1) / BigDecimal(i2)
 
-      val r1 = count(() => num1Count(() => num2CountZero), except)
-      val r2 = count(() => num1Count(() => num2Count), except)
-      val r3 = count(() => num1CountZero(() => num2CountZero), except)
-      val r4 = count(() => num1CountZero(() => num2Count), except)
+      val r1 = count(num1Count(() => num2CountZero), except)
+      val r2 = count(num1Count(() => num2Count), except)
+      val r3 = count(num1CountZero(() => num2CountZero), except)
+      val r4 = count(num1CountZero(() => num2Count), except)
 
       println(i1, '÷', i2, '=', except, r1, r2, r3, r4)
     }
