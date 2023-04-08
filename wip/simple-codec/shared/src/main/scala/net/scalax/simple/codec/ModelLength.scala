@@ -11,8 +11,8 @@ object ModelLength {
   def apply[F[_[_]]]: ModelLengthImpl[F] = new ModelLengthImpl[F]
 
   class ModelLengthImpl[F[_[_]]] {
-    def generic(implicit n: EmptyTagModelFiller[F], cv: F[ContextI#EmptyTagF] <:< Product): ModelLength[F] = new ModelLength[F] {
-      override val length: Int = n.instance.productIterator.to(List).size
+    def generic(implicit n: EmptyTagModelFiller[F], getter: Getter[F]): ModelLength[F] = new ModelLength[F] {
+      override val length: Int = getter.output[ContextI#EmptyTagF](n.instance).size
     }
   }
 }

@@ -4,7 +4,7 @@ package codec
 import doobie._
 import cats._
 
-object utils {
+object doobieUtils {
 
   implicit def apCusDoobieRead(implicit apImplicit: Apply[Read]): Applicative[Read] = new Applicative[Read] {
     override def pure[A](x: A): Read[A]                           = new Read(Nil, (_, _) => x)

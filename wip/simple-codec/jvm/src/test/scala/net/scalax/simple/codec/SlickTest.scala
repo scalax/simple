@@ -1,8 +1,6 @@
 package net.scalax.simple
 package codec
 
-import net.scalax.simple.codec.utils._
-
 object SlickTest {
 
   case class Model[F[_]](name: F[Int], str: F[Option[String]], name11: F[String])
@@ -10,11 +8,10 @@ object SlickTest {
   type UModel[T[_]] = Model[T]
 
   def main(arr: Array[String]): Unit = {
-    val tModel: ContextO[UModel]#EmptyTagF                 = TypeParameterBuilder[UModel].build[ContextI#EmptyTagF].generic
-    implicit val noneFiller: EmptyTagModelFiller[UModel]   = EmptyTagModelFiller[UModel].build(tModel)
-    implicit val length: ModelLength[UModel]               = ModelLength[UModel].generic
-    implicit val setter: Setter[UModel]                    = Setter[UModel].generic
     implicit val modelListGetter: Getter[UModel]           = Getter[UModel].generic
+    implicit val noneFiller: EmptyTagModelFiller[UModel]   = EmptyTagModelFiller[UModel].generic
+    implicit val length: ModelLength[UModel]               = ModelLength[UModel].generic
+    implicit val setter: Setter[UModel]                    = Setter[UModel].build(implicit e => e.generic)
     implicit val namesImplicit: LabelledNames[UModel]      = LabelledNames[UModel].generic
     implicit val namedModel: LabelledInstance[UModel]      = LabelledInstance[UModel].generic
     implicit val modelGetToMap: GetToMap[UModel]           = GetToMap[UModel].generic
@@ -28,6 +25,7 @@ object SlickTest {
     import cats.data._
     import cats.effect._
     import cats.implicits._
+    import doobieUtils._
     println(namedModel.model) // Model(name,str,name11)
     val tableName     = "a"
     val tableFragment = Fragment.const(tableName)
@@ -49,7 +47,7 @@ object SlickTest {
     println(namedModel3.model.name: String)   // r_name
     println(namedModel3.model.str: String)    // r_str
     println(namedModel3.model.name11: String) // r_name11
-    val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].build[Read].generic
+    val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].default.build[Read].generic
     // 因为用了Generic这个Reader直接免了，拼接字符串就完事了
     implicit val modelRead2: Read[ContextO[UModel]#IdF] =
       Traverse[List].sequence(modelListGetter.output(modelRead1).asInstanceOf[List[Read[Any]]]).map(u => setter.input[ContextI#IdF](u))
