@@ -7,7 +7,7 @@ object SlickTest {
 
   type UModel[T[_]] = Model[T]
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     implicit val modelListGetter: Getter[UModel]           = Getter[UModel].generic
     implicit val noneFiller: EmptyTagModelFiller[UModel]   = EmptyTagModelFiller[UModel].generic
     implicit val length: ModelLength[UModel]               = ModelLength[UModel].generic
