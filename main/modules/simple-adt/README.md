@@ -112,30 +112,36 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 import io.circe._
 import io.circe.syntax._
 
-object JsonAdtPoly {
-  implicit def jsonAdtPolyImplicit[In: Encoder, Poly]: Adt.Context[In, Json, Poly] = {
-    val encoder = Encoder[In]
-    Adt.Context(t => encoder(t))
+trait WithEncoder {
+  type T
+  def model: T
+  def encode: Encoder[T]
+}
+
+object WithEncoder {
+  def apply[U](t: U)(en: Encoder[U]): WithEncoder = new WithEncoder {
+    override type T = U
+    override def model: U           = t
+    override def encode: Encoder[U] = en
   }
 }
 
-def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
-  val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
+// TODO
+def inputAdtData[T: Adt.Options4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder]](t: T): Json = {
+  val applyM = Adt.Options4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder](t)
   applyM.fold(
     noneValue => "Null Tag".asJson,
     intOpt => intOpt.map(_ + 1).asJson,
-    { case Adt.Adapter(jsonValue) => jsonValue }
+    { case Adt.Adapter(encoder) => encoder(t) },
+    withEncoder => withEncoder.encode(withEncoder.model)
   )
 }
 
 assert(inputAdtData(None) == "Null Tag".asJson)
 assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-// Use Adt.Adapter that find the io.circe.Encoder for String
-assert(inputAdtData("My Name") == "My Name".asJson)
-// Use Adt.Adapter that find the io.circe.Encoder for JsonObject
-assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
+assert(inputAdtData(JsonObject.empty.asJson) == Map.empty[String, String].asJson)
 // Bypass compiler judgment
-assert(inputAdtData(Adt.Adapter[Json, JsonAdtPoly.type]("Test Adapter".asJson)) == "Test Adapter".asJson)
+assert(inputAdtData(WithEncoder("My Name")(Encoder[String].contramap(t => t + " appended"))) == "My Name appended".asJson)
 ```
 
 #### Point 4
