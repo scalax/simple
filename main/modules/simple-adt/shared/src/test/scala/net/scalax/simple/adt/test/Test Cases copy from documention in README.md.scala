@@ -118,7 +118,6 @@ object `Test Cases copy from documention in README.md` {
       }
     }
 
-    // TODO
     def inputAdtData[T: Adt.Options4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder]](t: T): Json = {
       val applyM = Adt.Options4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder](t)
       applyM.fold(

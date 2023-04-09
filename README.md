@@ -6,4 +6,4 @@ Simple, and scalable.
 Use it to subvert the author's imagination.
 
 ## Modules with documentions
-### [simple-adt](./modules/main/simple-adt/)
+### [simple-adt](./main/modules/simple-adt/)
