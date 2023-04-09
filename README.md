@@ -9,6 +9,9 @@ Use it to subvert the author's imagination.
 ### [simple-adt](./modules/main/simple-adt/)
 A simple abstraction of ADT(Abstract Data Type).
 
+
+
+
 todo
 乘除的计数可以直接用”来自哪个数搞掂。。。”
 
