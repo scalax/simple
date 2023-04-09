@@ -104,22 +104,36 @@ object `Test Cases copy from documention in README.md` {
     import io.circe._
     import io.circe.syntax._
 
+    trait WithEncoder {
+      type T
+      def model: T
+      def encode: Encoder[T]
+    }
+
+    object WithEncoder {
+      def apply[U](t: U)(en: Encoder[U]): WithEncoder = new WithEncoder {
+        override type T = U
+        override def model: U           = t
+        override def encode: Encoder[U] = en
+      }
+    }
+
     // TODO
-    def inputAdtData[T: Adt.Options4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], Json]](t: T): Json = {
-      val applyM = Adt.Options4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], Json](t)
+    def inputAdtData[T: Adt.Options4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder]](t: T): Json = {
+      val applyM = Adt.Options4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder](t)
       applyM.fold(
         noneValue => "Null Tag".asJson,
         intOpt => intOpt.map(_ + 1).asJson,
         { case Adt.Adapter(encoder) => encoder(t) },
-        jsonValue => jsonValue
+        withEncoder => withEncoder.encode(withEncoder.model)
       )
     }
 
     assert(inputAdtData(None) == "Null Tag".asJson)
     assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-    // Bypass compiler judgment
-    assert(inputAdtData("My Name".asJson) == "My Name".asJson)
     assert(inputAdtData(JsonObject.empty.asJson) == Map.empty[String, String].asJson)
+    // Bypass compiler judgment
+    assert(inputAdtData(WithEncoder("My Name")(Encoder[String].contramap(t => t + " appended"))) == "My Name appended".asJson)
   }
 
   def `Usage of @djx314 Point 4`[T](body: => T): T = body
