@@ -13,15 +13,21 @@ trait GenericBuilderImpl {
     override def value: T = gen.from(builder.value)
   }
 
-  private val any: GenericBuilder[HNil, Any] = new GenericBuilder[HNil, Any] {
-    override val value: HNil = HNil
-  }
-  implicit def genericBuilderZero[PInstance]: GenericBuilder[HNil, PInstance] = any.asInstanceOf[GenericBuilder[HNil, PInstance]]
+  implicit def genericBuilderZero[PInstance]: GenericBuilder[HNil, PInstance] =
+    impl2.BuilderImpl.any.asInstanceOf[GenericBuilder[HNil, PInstance]]
 
   implicit def genericBuilderPositive[Head, Tail <: HList, PInstance](implicit
     headInstance: Lazy[ModelImplement[PInstance, Head]],
     genericBuilder: GenericBuilder[Tail, PInstance]
   ): GenericBuilder[Head :: Tail, PInstance] = new GenericBuilder[Head :: Tail, PInstance] {
     override def value: Head :: Tail = headInstance.value.value :: genericBuilder.value
+  }
+}
+
+package impl2 {
+  object BuilderImpl {
+    val any: GenericBuilder[HNil, Any] = new GenericBuilder[HNil, Any] {
+      override val value: HNil = HNil
+    }
   }
 }

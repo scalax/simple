@@ -3,7 +3,7 @@ package codec
 package utils
 
 trait AnyItemInstalller[F[_[_]]] {
-  def generic(implicit v: GenericBuilder[F[ContextI#AnyF], AnyItemInstalller.type]): F[ContextI#AnyF] =
+  def generic(implicit v: GenericBuilder.Aux[F[ContextI#AnyF], AnyItemInstalller.type]): F[ContextI#AnyF] =
     TypeParameterBuilder[F].poly[AnyItemInstalller.type].build[ContextI#AnyF].generic
 }
 

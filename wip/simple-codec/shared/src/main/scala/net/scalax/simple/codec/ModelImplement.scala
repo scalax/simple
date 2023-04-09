@@ -1,3 +1,3 @@
 package net.scalax.simple.codec
 
-class ModelImplement[Poly, T](val value: T) extends AnyVal
+class ModelImplement[PolyInstance, T](val value: T) extends AnyVal

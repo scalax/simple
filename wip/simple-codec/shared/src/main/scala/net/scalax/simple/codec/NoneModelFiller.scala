@@ -1,7 +1,7 @@
 package net.scalax.simple
 package codec
 
-import net.scalax.simple.codec.utils.GenericBuilder
+import net.scalax.simple.codec.utils.{DefaultGenericBuilder, GenericBuilder}
 
 trait EmptyTagModelFiller[F[_[_]]] {
   def instance: ContextO[F]#EmptyTagF
@@ -16,9 +16,9 @@ object EmptyTagModelFiller {
 
     private val uuInstance: TypeParameterBuilder.GenericBuilderInstanceImpl[F, ContextI#EmptyTagF, EmptyTagModelFiller.type] =
       TypeParameterBuilder[F].poly[EmptyTagModelFiller.type].build[ContextI#EmptyTagF]
-    def generic(implicit g: GenericBuilder[Model, EmptyTagModelFiller.type]): EmptyTagModelFiller[F] = {
-      implicit val e: GenericBuilder[F[ContextI#EmptyTagF], EmptyTagModelFiller.type] =
-        g.asInstanceOf[GenericBuilder[F[ContextI#EmptyTagF], EmptyTagModelFiller.type]]
+    def generic(implicit g: GenericBuilder.Aux[Model, EmptyTagModelFiller.type]): EmptyTagModelFiller[F] = {
+      implicit val e: GenericBuilder.Aux[F[ContextI#EmptyTagF], EmptyTagModelFiller.type] =
+        g.asInstanceOf[GenericBuilder.Aux[F[ContextI#EmptyTagF], EmptyTagModelFiller.type]]
       new EmptyTagModelFiller[F] {
         override val instance: F[ContextI#EmptyTagF] = uuInstance.generic
       }

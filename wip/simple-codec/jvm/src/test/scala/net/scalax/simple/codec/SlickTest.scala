@@ -47,7 +47,7 @@ object SlickTest {
     println(namedModel3.model.name: String)   // r_name
     println(namedModel3.model.str: String)    // r_str
     println(namedModel3.model.name11: String) // r_name11
-    val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].default.build[Read].generic
+    val modelRead1: UModel[Read] = TypeParameterBuilder[UModel].build[Read].generic
     // 因为用了Generic这个Reader直接免了，拼接字符串就完事了
     implicit val modelRead2: Read[ContextO[UModel]#IdF] =
       Traverse[List].sequence(modelListGetter.output(modelRead1).asInstanceOf[List[Read[Any]]]).map(u => setter.input[ContextI#IdF](u))
