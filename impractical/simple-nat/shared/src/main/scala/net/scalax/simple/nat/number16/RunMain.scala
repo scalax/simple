@@ -4,7 +4,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `这次要Run这个` {
+object RunMain {
 
   println("aabbcc" * 100)
   println("58795-" * 100)
