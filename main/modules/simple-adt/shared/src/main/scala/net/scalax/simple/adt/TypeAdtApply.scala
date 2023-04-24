@@ -56,11 +56,11 @@ package impl {
   }
 
   trait LowerLevelPoly {
-    private val failedValue: TypeAdtApply.Aux[Any, AdtAlias.AdtNat, Adt.Status.Failed] =
-      TypeAdtApply(setting => AdtNumber.NumberA.Zero)
+    private val failedValue: TypeAdtApply.Aux[Any, AdtAlias.AdtZero, Adt.Status.Failed] = TypeAdtApply(setting => AdtNumber.NumberA.Zero)
+    private def failedValueImpl[T]: TypeAdtApply.Aux[T, AdtAlias.AdtZero, Adt.Status.Failed] =
+      failedValue.asInstanceOf[TypeAdtApply.Aux[T, AdtAlias.AdtZero, Adt.Status.Failed]]
 
-    implicit def adtFailedResult[I]: TypeAdtApply.Aux[I, AdtAlias.AdtZero, Adt.Status.Failed] =
-      failedValue.asInstanceOf[TypeAdtApply.Aux[I, AdtAlias.AdtZero, Adt.Status.Failed]]
+    implicit def adtFailedResult[I]: TypeAdtApply.Aux[I, AdtAlias.AdtZero, Adt.Status.Failed] = failedValueImpl
   }
 
 }

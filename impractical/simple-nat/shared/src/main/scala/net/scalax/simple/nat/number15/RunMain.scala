@@ -4,12 +4,12 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `这次要Run这个` {
+object RunMain {
 
   println("喵呜呜" * 100)
   println("58795-" * 100)
 
-  val anythingNumber = ghdmzsk(t => t())
+  val anythingNumber: ghdmzsk = ghdmzsk(t => t())
 
   def count(number: => ghdmzsk, except: BigDecimal): BigDecimal = {
     Number1.count1 = 0
