@@ -20,7 +20,7 @@ object `MeMeMe我我我` extends App {
     var length2: Long   = 0
 
     val (n1, n2, n3) = genNumber(except)
-    val gen          = () => n1(() => n2)(() => n3)(() => n2)
+    val gen          = () => n1(() => n2)(() => n2)(() => n3)
 
     @tailrec
     def countImpl(num: () => ghdmzsk, needConitie: Long): Unit = {
