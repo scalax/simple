@@ -22,18 +22,20 @@ package impl2:
 
   object FillerId:
 
-    private val unitId = new FillerId[Unit, Any]:
+    private object unitId extends FillerId[Unit, Any]:
       override val value: Unit = ()
     end unitId
 
-    given [A, PolyInstance](using a: => ModelImplement[PolyInstance, A]): FillerId[A, PolyInstance] with
+    given [A, PolyInstance](using a: => ModelImplement[PolyInstance, A]): FillerId[A, PolyInstance] with {
       override def value: A = a.value
+    }
 
     given [PolyInstance]: FillerId[Unit, PolyInstance] = unitId.asInstanceOf[FillerId[Unit, PolyInstance]]
 
     given fillerIdGen[A, PolyInstance](using inst: K0.ProductInstances[[x] =>> FillerId[x, PolyInstance], A]): FillerId[A, PolyInstance]
-    with
+    with {
       override def value: A = inst.construct([t] => (ma: FillerId[t, PolyInstance]) => ma.value)
+    }
 
   end FillerId
 
