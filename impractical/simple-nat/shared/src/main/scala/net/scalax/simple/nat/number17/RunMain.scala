@@ -13,9 +13,8 @@ object `MeMeMe我我我` extends App {
     (n1Pos, n2Pos, n3Pos)
   }
 
-  def count(except: Int): (Long, Long) = {
-    val ex: Long        = except * except * except * except
-    val cGl: BigDecimal = BigDecimal(ex - 1)
+  def count(except: Int, i1: Long): (Long, Long) = {
+    val cGl: BigDecimal = BigDecimal(i1 - 1)
     var length1: Long   = 0
     var length2: Long   = 0
 
@@ -47,8 +46,8 @@ object `MeMeMe我我我` extends App {
   }
 
   for (i <- 1 to 10) {
-    val (g1, g2)       = count(except = i)
-    val i1: Int        = i * i * i * i
+    val i1: Long       = i * i * i * i
+    val (g1, g2)       = count(except = i, i1 = i1)
     val i2: BigDecimal = BigDecimal(i1 - 1)
     val r: BigDecimal  = BigDecimal(g1) / BigDecimal(g2)
     println(g1, g2)
