@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.number18
+package net.scalax.simple.nat.group01.number_02
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 

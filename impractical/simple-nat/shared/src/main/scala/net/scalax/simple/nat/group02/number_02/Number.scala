@@ -1,13 +1,13 @@
-package net.scalax.simple.nat.number19
+package net.scalax.simple.nat.group02.number_02
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object Number {
 
-  val number1S: ghdmzsk = ghdmzsk(num1Tail => ghdmzsk(num2 => AA(() => num1Tail()(num2))))
-  val number1T: ghdmzsk = ghdmzsk(num1Tail => ghdmzsk(num2 => num2()(num1Tail)))
-  val number3S: ghdmzsk = ghdmzsk(num3Tail => ghdmzsk(num2 => num2()(num3Tail)))
-  val number3T: ghdmzsk = ghdmzsk(num3Tail => ghdmzsk(num1 => BB(() => num1()(num3Tail))))
+  val number1S: ghdmzsk = ghdmzsk(head => ghdmzsk(num1 => ghdmzsk(tail => AA(() => head()(num1)(tail)))))
+  val number1T: ghdmzsk = ghdmzsk(head => ghdmzsk(num1 => ghdmzsk(tail => num1()(tail)(head))))
+  val number3S: ghdmzsk = ghdmzsk(head => ghdmzsk(num1 => ghdmzsk(tail => tail()(head)(num1))))
+  val number3T: ghdmzsk = ghdmzsk(head => ghdmzsk(num1 => ghdmzsk(tail => BB(() => num1()(tail)(head)))))
 
   case class AA(cc: () => ghdmzsk) extends ghdmzsk {
     override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception

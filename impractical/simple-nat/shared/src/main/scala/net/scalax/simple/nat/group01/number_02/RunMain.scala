@@ -1,10 +1,10 @@
-package net.scalax.simple.nat.number21
+package net.scalax.simple.nat.group01.number_02
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `Click我` extends App {
+object `喵_Number_02` extends App {
 
   def genNumber(c: Int): (ghdmzsk, ghdmzsk, ghdmzsk) = {
     lazy val (n1Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number1S, zero = Number.number1T, count = c - 1)
@@ -20,7 +20,7 @@ object `Click我` extends App {
     var length2: Long   = 0
 
     val (n1, n2, n3) = genNumber(except)
-    val gen          = () => n1(() => n2)(() => n2)(() => n2)(() => n2)(() => n3)
+    val gen          = () => n1(() => n2)(() => n3)
 
     @tailrec
     def countImpl(num: () => ghdmzsk, needConitie: Long): Unit = {
@@ -48,13 +48,13 @@ object `Click我` extends App {
     (length1, length2)
   }
 
-  for (i <- 1 to 6) {
-    val i1: Long       = i * i * i * i * i * i
+  for (i <- 1 to 10) {
+    val i1: Long       = i * i * i
     val (g1, g2)       = count(except = i, i1 = i1)
     val i2: BigDecimal = BigDecimal(i1 - 1)
     val r: BigDecimal  = BigDecimal(g1) / BigDecimal(g2)
     println(g1, g2)
-    println(i, s"$i ^ 6 - 1", r)
+    println(i, s"$i ^ 3 - 1", r)
     assert((i2 - r).abs < BigDecimal("0.001"))
   }
 
