@@ -15,41 +15,38 @@ trait CoProductContext[Result] {
     def input(r: Result): T
   }
   case class InputPositive[Data, T <: NatFunc](tail: InputFunc[T]) extends InputFunc[NatFuncPositive[Data, T]] {
-    override def input(r: Result): NatFuncPositive[Data, T] = new EndFunc(r, tail)
+    override def input(r: Result): NatFuncPositive[Data, T] = utils.EndFunc(r, tail)
   }
   case object InputZero extends InputFunc[NatFuncZero] {
-    override def input(r: Result): NatFuncZero = zeroSuccessed(r)
-  }
-
-  private class ZeroSuccessed(resultData: Result) extends NatFuncZero {
-    override def default(d: => Result): Result = resultData
-    override val option: Some[Result]          = Some(resultData)
-  }
-
-  private def zeroSuccessed(r: Result): ZeroSuccessed = new ZeroSuccessed(r)
-
-  case object ZeroFailed extends NatFuncZero {
-    override def default(d: => Result): Result = d
-    override val option: None.type             = None
+    override def input(r: Result): ZeroSuccessed = ZeroSuccessed(r)
   }
 
   case class LeftFunc[Data, T <: NatFunc](val tail: T) extends NatFuncPositive[Data, T] {
     override def foldImpl(d: Data => Result): T = tail
   }
-
   case class RightFunc[Data, T <: NatFunc](data: Data, tail: InputFunc[T]) extends NatFuncPositive[Data, T] {
     override def foldImpl(d: Data => Result): T = tail.input(d(data))
   }
+  case object ZeroFailed extends NatFuncZero {
+    override def default(d: => Result): Result = d
+    override val option: None.type             = None
+  }
+  case class ZeroSuccessed(resultData: Result) extends NatFuncZero {
+    override def default(d: => Result): Result = resultData
+    override val option: Some[Result]          = Some(resultData)
+  }
 
-  private class EndFunc[Data, T <: NatFunc](val result: Result, tail: InputFunc[T]) extends NatFuncPositive[Data, T] {
-    override def foldImpl(d: Data => Result): T = tail.input(result)
+  private object utils {
+    case class EndFunc[Data, T <: NatFunc](result: Result, tail: InputFunc[T]) extends NatFuncPositive[Data, T] {
+      override def foldImpl(d: Data => Result): T = tail.input(result)
+    }
   }
 
 }
 
 object CoProductContext {
-  private object CoProductContext extends CoProductContext[Any]
-  def build[T]: CoProductContext[T] = CoProductContext.asInstanceOf[CoProductContext[T]]
+  class Co[T] extends CoProductContext[T]
+  def build[T]: CoProductContext[T] = new Co[T]
 }
 
 object Test extends App {
