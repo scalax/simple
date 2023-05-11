@@ -16,11 +16,10 @@ object TypeParameterBuilder {
   def apply[F[_[_]]]: TypeParameterBuilder[F] = anyInstance.asInstanceOf[TypeParameterBuilder[F]]
 
   private object anyInstance extends TypeParameterBuilder[({ type E[_[_]] = Any })#E] {
-    override def poly[PolyInstance]: BB[PolyInstance] =
-      new BB[PolyInstance] {
-        override def build[H[_]]: TypeParameterBuilder.GenericBuilderInstanceImpl[({ type E[_[_]] = Any })#E, H, PolyInstance] =
-          new TypeParameterBuilder.GenericBuilderInstanceImpl[({ type E[_[_]] = Any })#E, H, PolyInstance]
-      }
+    override def poly[PolyInstance]: BB[PolyInstance] = new BB[PolyInstance] {
+      override def build[H[_]]: TypeParameterBuilder.GenericBuilderInstanceImpl[({ type E[_[_]] = Any })#E, H, PolyInstance] =
+        new TypeParameterBuilder.GenericBuilderInstanceImpl[({ type E[_[_]] = Any })#E, H, PolyInstance]
+    }
   }
 
   class GenericBuilderInstanceImpl[F[_[_]], H[_], Poly] extends GenericBuilderInstanceImpl1[F, H, Poly]

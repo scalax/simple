@@ -4,6 +4,5 @@ package codec
 import shapeless.Lazy
 
 object DefaultModelImplement {
-  implicit def aaI[T](implicit v: Lazy[T]): ModelImplement[DefaultModelImplement.type, T] =
-    new ModelImplement[DefaultModelImplement.type, T](v.value)
+  implicit def aaII[P, T](implicit v: Lazy[T]): ModelImplement[P, T] = new ModelImplement[P, T](v.value)
 }

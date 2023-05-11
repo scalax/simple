@@ -4,7 +4,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object RunMain extends App {
+object `Run我Run我Run我` extends App {
 
   def count(num: () => ghdmzsk): (Long, Long) = {
     @tailrec
