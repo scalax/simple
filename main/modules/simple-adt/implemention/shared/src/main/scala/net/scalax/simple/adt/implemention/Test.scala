@@ -1,5 +1,7 @@
 package net.scalax.simple.adt.implemention
 
+import scala.collection.compat._
+
 trait CoProductContext[Result] {
 
   trait NatFunc
