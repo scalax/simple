@@ -45,7 +45,7 @@ trait CoProductContext[Result] {
 }
 
 object CoProductContext {
-  class Co[T] extends CoProductContext[T]
+  private class Co[T] extends CoProductContext[T]
   def build[T]: CoProductContext[T] = new Co[T]
 }
 
@@ -66,6 +66,7 @@ object Test extends App {
   val p2: Ux2 = c.LeftFunc(c.LeftFunc(c.RightFunc(List(2L, 3L, 5L, 8L), c.InputPositive(c.InputZero))))
   val p3: Ux3 = c.LeftFunc(c.LeftFunc(c.RightFunc(List(2L, 3L, 5L, 8L), c.InputZero)))
   val p4: Ux2 = c.LeftFunc(c.LeftFunc(c.LeftFunc(c.LeftFunc(c.ZeroFailed))))
+  val p5: Ux2 = c.LeftFunc(c.RightFunc(List("abc", "abcdefghij", "abcdefghijklmn"), c.InputPositive(c.InputPositive(c.InputZero))))
 
   val t1 =
     p1.foldImpl(t => List(t))
@@ -79,10 +80,13 @@ object Test extends App {
   val t3 = p3.foldImpl(t => List(t)).foldImpl(t => t.map(_.size + 1)).foldImpl(t => t.map(_.toInt * 2)).option
   val t4 =
     p4.foldImpl(t => List(t)).foldImpl(t => t.map(_.size + 1)).foldImpl(t => t.map(_.toInt * 2)).foldImpl(t => t.map(_.size * 5)).option
+  val t5 =
+    p5.foldImpl(t => List(t)).foldImpl(t => t.map(_.size + 1)).foldImpl(t => t.map(_.toInt * 2)).foldImpl(t => t.map(_.size * 5)).option
 
   println(t1) // Some(List(4, 6, 10, 16))
   println(t2) // Some(List(4, 6, 10, 16))
   println(t3) // Some(List(4, 6, 10, 16))
   println(t4) // None
+  println(t5) // Some(List(4, 11, 15))
 
 }
