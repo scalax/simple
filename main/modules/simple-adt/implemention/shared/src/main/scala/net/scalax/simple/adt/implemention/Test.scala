@@ -2,47 +2,47 @@ package net.scalax.simple.adt.implemention
 
 import scala.collection.compat._
 
-trait FoldContext[Result] {
-  def default(d: => Result): Result
+trait FoldContext[+Result] {
   def option: Option[Result]
-  def overrideOnce(d: => Result): FoldContext[Result]
-}
-object FoldContext {
-  def init[Result]: FoldContext[Result] = new EmptyFoldContext
+  def overrideOnce[U >: Result](d: => Option[U]): FoldContext[U]
 }
 
-class EmptyFoldContext[Result] extends FoldContext[Result] {
-  override def default(d: => Result): Result                   = d
-  override def option: None.type                               = None
-  override def overrideOnce(d: => Result): FoldContext[Result] = new FinishedFoldContext(d)
+object EmptyFoldContext extends FoldContext[Nothing] {
+  override val option: None.type = None
+  override def overrideOnce[U >: Nothing](d: => Option[U]): FoldContext[U] = {
+    val v = for (dValue <- d) yield new FinishedFoldContext(dValue)
+    v.getOrElse(this)
+  }
 }
-class FinishedFoldContext[Result](val value: Result) extends FoldContext[Result] {
-  override def default(d: => Result): Result                   = value
-  override def option: Some[Result]                            = Some(value)
-  override def overrideOnce(d: => Result): FoldContext[Result] = this
+class FinishedFoldContext[+Result](val value: Result) extends FoldContext[Result] {
+  override def option: Some[Result]                                       = Some(value)
+  override def overrideOnce[U >: Result](d: => Option[U]): FoldContext[U] = this
 }
 
 trait NatFunc
 trait NatFuncPositive[Data, T <: NatFunc] extends NatFunc {
-  def foldImpl[Result](d: Data => Result, fc: FoldContext[Result]): (T, FoldContext[Result])
+  def tail: T
+  def foldImpl[Result](d: Data => Result): Option[Result]
 }
 
 class IsFinishAndNothing {
-  lazy val isFinishAndNothing: IsFinishAndNothing = this
+  lazy val isFinishAndNothing: IsFinishAndNothing = IsFinishAndNothing
 }
 object IsFinishAndNothing extends IsFinishAndNothing
 
-case class LeftFunc[Data, T <: NatFunc](tail: T) extends NatFuncPositive[Data, T] {
-  override def foldImpl[Result](d: Data => Result, fc: FoldContext[Result]): (T, FoldContext[Result]) = (tail, fc)
+case class LeftFunc[Data, T <: NatFunc](override val tail: T) extends NatFuncPositive[Data, T] {
+  override def foldImpl[Result](d: Data => Result): None.type = None
 }
-case class RightFunc[Data, T <: NatFunc](data: Data, tail: T) extends NatFuncPositive[Data, T] {
-  override def foldImpl[Result](d: Data => Result, fc: FoldContext[Result]): (T, FoldContext[Result]) = (tail, fc.overrideOnce(d(data)))
+case class RightFunc[Data, T <: NatFunc](data: Data, override val tail: T) extends NatFuncPositive[Data, T] {
+  override def foldImpl[Result](d: Data => Result): Some[Result] = Some(d(data))
 }
-class NatFuncZero extends NatFuncPositive[IsFinishAndNothing.type, NatFuncZero] {
-  def foldImpl[Result](d: IsFinishAndNothing.type => Result, fc: FoldContext[Result]): (NatFuncZero, FoldContext[Result]) =
-    (this, fc.overrideOnce(d(IsFinishAndNothing)))
+trait NatFuncZero extends NatFuncPositive[IsFinishAndNothing.type, NatFuncZero] {
+  override def tail: NatFuncZero
+  def foldImpl[Result](d: IsFinishAndNothing.type => Result): Some[Result] = Some(d(IsFinishAndNothing))
 }
-object NatFuncZero extends NatFuncZero
+object NatFuncZero extends NatFuncZero {
+  override lazy val tail: NatFuncZero = NatFuncZero
+}
 
 object Test extends App {
 
@@ -60,62 +60,64 @@ object Test extends App {
   val p5: Ux2 = LeftFunc(RightFunc(List("abc", "abcdefghij", "abcdefghijklmn"), LeftFunc(LeftFunc(NatFuncZero))))
 
   val t1 = {
-    val (p1_1, p1_2) = (p1, FoldContext.init[List[Int]])
-    val (p2_1, p2_2) = p1_1.foldImpl(t => List(t), p1_2)
-    val (p3_1, p3_2) = p2_1.foldImpl(t => t.map(_.size + 1), p2_2)
-    val (p4_1, p4_2) = p3_1.foldImpl(t => t.map(_.toInt * 2), p3_2)
-    val (p5_1, p5_2) = p4_1.foldImpl(t => t.map(_.size * 5), p4_2)
-    val (p6_1, p6_2) = p5_1.foldImpl(t => t.to(List).map(_.toInt * 2), p5_2)
-    val (p7_1, p7_2) = p6_1.foldImpl(
-      { t =>
-        t.isFinishAndNothing
-        List.empty
-      },
-      p6_2
+    val p1_1 = EmptyFoldContext
+    val p2_1 = p1_1.overrideOnce(p1.foldImpl(t => List(t)))
+    val p3_1 = p2_1.overrideOnce(p1.tail.foldImpl(t => t.map(_.size + 1)))
+    val p4_1 = p3_1.overrideOnce(p1.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
+    val p5_1 = p4_1.overrideOnce(p1.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
+    val p6_1 = p5_1.overrideOnce(p1.tail.tail.tail.tail.foldImpl(t => t.to(List).map(_.toInt * 2)))
+    val p7_1 = p6_1.overrideOnce(
+      p1.tail.tail.tail.tail.tail.foldImpl(
+        { t =>
+          t.isFinishAndNothing
+          List.empty
+        }
+      )
     )
-    val (p8_1, p8_2) = p7_1.foldImpl(
-      { t =>
-        t.isFinishAndNothing
-        List.empty
-      },
-      p7_2
+    val p8_1 = p7_1.overrideOnce(
+      p1.tail.tail.tail.tail.tail.tail.foldImpl(
+        { t =>
+          t.isFinishAndNothing
+          List.empty
+        }
+      )
     )
-    p8_2.option
+    p8_1.option
   }
 
   val t2 = {
-    val (p1_1, p1_2) = (p2, FoldContext.init[List[Int]])
-    val (p2_1, p2_2) = p1_1.foldImpl(t => List(t), p1_2)
-    val (p3_1, p3_2) = p2_1.foldImpl(t => t.map(_.size + 1), p2_2)
-    val (p4_1, p4_2) = p3_1.foldImpl(t => t.map(_.toInt * 2), p3_2)
-    val (p5_1, p5_2) = p4_1.foldImpl(t => t.map(_.size * 5), p4_2)
-    p5_2.option
+    val p1_1 = EmptyFoldContext
+    val p2_1 = p1_1.overrideOnce(p2.foldImpl(t => List(t)))
+    val p3_1 = p2_1.overrideOnce(p2.tail.foldImpl(t => t.map(_.size + 1)))
+    val p4_1 = p3_1.overrideOnce(p2.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
+    val p5_1 = p4_1.overrideOnce(p2.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
+    p5_1.option
   }
 
   val t3 = {
-    val (p1_1, p1_2) = (p3, FoldContext.init[List[Int]])
-    val (p2_1, p2_2) = p1_1.foldImpl(t => List(t), p1_2)
-    val (p3_1, p3_2) = p2_1.foldImpl(t => t.map(_.size + 1), p2_2)
-    val (p4_1, p4_2) = p3_1.foldImpl(t => t.map(_.toInt * 2), p3_2)
-    p4_2.option
+    val p1_1 = EmptyFoldContext
+    val p2_1 = p1_1.overrideOnce(p3.foldImpl(t => List(t)))
+    val p3_1 = p2_1.overrideOnce(p3.tail.foldImpl(t => t.map(_.size + 1)))
+    val p4_1 = p3_1.overrideOnce(p3.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
+    p4_1.option
   }
 
   val t4 = {
-    val (p1_1, p1_2) = (p4, FoldContext.init[List[Int]])
-    val (p2_1, p2_2) = p1_1.foldImpl(t => List(t), p1_2)
-    val (p3_1, p3_2) = p2_1.foldImpl(t => t.map(_.size + 1), p2_2)
-    val (p4_1, p4_2) = p3_1.foldImpl(t => t.map(_.toInt * 2), p3_2)
-    val (p5_1, p5_2) = p4_1.foldImpl(t => t.map(_.size * 5), p4_2)
-    p5_2.option
+    val p1_1 = EmptyFoldContext
+    val p2_1 = p1_1.overrideOnce(p4.foldImpl(t => List(t)))
+    val p3_1 = p2_1.overrideOnce(p4.tail.foldImpl(t => t.map(_.size + 1)))
+    val p4_1 = p3_1.overrideOnce(p4.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
+    val p5_1 = p4_1.overrideOnce(p4.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
+    p5_1.option
   }
 
   val t5 = {
-    val (p1_1, p1_2) = (p5, FoldContext.init[List[Int]])
-    val (p2_1, p2_2) = p1_1.foldImpl(t => List(t), p1_2)
-    val (p3_1, p3_2) = p2_1.foldImpl(t => t.map(_.size + 1), p2_2)
-    val (p4_1, p4_2) = p3_1.foldImpl(t => t.map(_.toInt * 2), p3_2)
-    val (p5_1, p5_2) = p4_1.foldImpl(t => t.map(_.size * 5), p4_2)
-    p5_2.option
+    val p1_1 = EmptyFoldContext
+    val p2_1 = p1_1.overrideOnce(p5.foldImpl(t => List(t)))
+    val p3_1 = p2_1.overrideOnce(p5.tail.foldImpl(t => t.map(_.size + 1)))
+    val p4_1 = p3_1.overrideOnce(p5.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
+    val p5_1 = p4_1.overrideOnce(p5.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
+    p5_1.option
   }
 
   println(t1) // Some(List(4, 6, 10, 16))
