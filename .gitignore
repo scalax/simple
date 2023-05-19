@@ -1,5 +1,6 @@
 /.idea/
 /sbt.bat
+/sbt
 /sbt-launch.jar
 /.metals/
 /.vscode/
