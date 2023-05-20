@@ -23,7 +23,7 @@ object FoldContext {
 }
 
 trait NatFunc
-trait NatFuncPositive[Data, T <: NatFunc] extends NatFunc {
+trait NatFuncPositive[Data, +T <: NatFunc] extends NatFunc {
   def tail: T
   def foldImpl[Result](d: Data => Result): Option[Result]
 }
@@ -35,10 +35,10 @@ object IsFinishAndNothing {
   lazy val value: IsFinishAndNothing = new IsFinishAndNothing(() => value)
 }
 
-case class LeftFunc[Data, T <: NatFunc](override val tail: T) extends NatFuncPositive[Data, T] {
+case class LeftFunc[Data, +T <: NatFunc](override val tail: T) extends NatFuncPositive[Data, T] {
   override def foldImpl[Result](d: Data => Result): None.type = None
 }
-case class RightFunc[Data, T <: NatFunc](data: Data, override val tail: T) extends NatFuncPositive[Data, T] {
+case class RightFunc[Data, +T <: NatFunc](data: Data, override val tail: T) extends NatFuncPositive[Data, T] {
   override def foldImpl[Result](d: Data => Result): Some[Result] = Some(d(data))
 }
 
