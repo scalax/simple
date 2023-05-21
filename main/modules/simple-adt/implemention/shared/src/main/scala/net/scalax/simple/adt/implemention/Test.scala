@@ -4,28 +4,48 @@ import scala.collection.compat._
 
 trait FoldContext[+Result] {
   def option: Option[Result]
-  def overrideOnce[U >: Result](d: => Option[U]): FoldContext[U]
+  def overrideOnce[D, U >: Result](d: DataInstance[D])(func: D => U): FoldContext[U]
 }
 object FoldContext {
   val empty: FoldContext[Nothing] = EmptyFoldContext
 
   private object EmptyFoldContext extends FoldContext[Nothing] {
     override val option: None.type = None
-    override def overrideOnce[U](d: => Option[U]): FoldContext[U] = {
-      val v = for (dValue <- d) yield new FinishedFoldContext(dValue)
+    override def overrideOnce[D, U](d: DataInstance[D])(func: D => U): FoldContext[U] = {
+      val v = for (dValue <- d.dataInstance) yield new FinishedFoldContext(func(dValue))
       v.getOrElse(this)
     }
   }
   private class FinishedFoldContext[+Result](val value: Result) extends FoldContext[Result] {
-    override def option: Some[Result]                                       = Some(value)
-    override def overrideOnce[U >: Result](d: => Option[U]): FoldContext[U] = this
+    override def option: Some[Result]                                                           = Some(value)
+    override def overrideOnce[D, U >: Result](d: DataInstance[D])(func: D => U): FoldContext[U] = this
   }
 }
 
+trait DataInstance[Data] {
+  def dataInstance: Option[Data]
+  def isDefined: Boolean
+}
+
 trait NatFunc
-trait NatFuncPositive[Data, +T <: NatFunc] extends NatFunc {
+abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstance: Option[Data]) extends NatFunc with DataInstance[Data] {
+  override val isDefined: Boolean = dataInstance.isDefined
   def tail: T
-  def foldImpl[Result](d: Data => Result): Option[Result]
+}
+
+object NatFunc {
+  def success[D, T <: NatFunc](t: D, tail: T): NatFuncPositive[D, T] = new NatFuncPositiveSuccess(data = t, tail = tail)
+  def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T]         = new NatFuncPositiveEmpty(tail = tail)
+  val zero: NatFuncZero                                              = NatFuncZero.zero
+
+  private class NatFuncPositiveSuccess[Data, T <: NatFunc](data: Data, override val tail: T)
+      extends NatFuncPositive[Data, T](dataInstance = Some(data)) {
+    override val isDefined: Boolean = true
+  }
+  private class NatFuncPositiveEmpty[Data, T <: NatFunc](override val tail: T)
+      extends NatFuncPositive[Data, T](dataInstance = Option.empty) {
+    override val isDefined: Boolean = true
+  }
 }
 
 final class IsFinishAndNothing private (tail: () => IsFinishAndNothing) {
@@ -35,19 +55,12 @@ object IsFinishAndNothing {
   lazy val value: IsFinishAndNothing = new IsFinishAndNothing(() => value)
 }
 
-case class LeftFunc[Data, +T <: NatFunc](override val tail: T) extends NatFuncPositive[Data, T] {
-  override def foldImpl[Result](d: Data => Result): None.type = None
-}
-case class RightFunc[Data, +T <: NatFunc](data: Data, override val tail: T) extends NatFuncPositive[Data, T] {
-  override def foldImpl[Result](d: Data => Result): Some[Result] = Some(d(data))
-}
-
-final class NatFuncZero private (tailValue: () => NatFuncZero) extends NatFuncPositive[IsFinishAndNothing, NatFuncZero] {
-  override lazy val tail: NatFuncZero                                          = tailValue()
-  override def foldImpl[Result](d: IsFinishAndNothing => Result): Some[Result] = Some(d(IsFinishAndNothing.value))
+final class NatFuncZero private (tailValue: () => NatFuncZero)
+    extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
+  override lazy val tail: NatFuncZero = tailValue()
 }
 object NatFuncZero {
-  lazy val value: NatFuncZero = new NatFuncZero(() => value)
+  lazy val zero: NatFuncZero = new NatFuncZero(() => zero)
 }
 
 object Test extends App {
@@ -59,61 +72,53 @@ object Test extends App {
   type Ux2 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncPositive[List[String], NatFuncZero]]]]
   type Ux3 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncZero]]]
 
-  val p1: Ux1 = LeftFunc(LeftFunc(RightFunc(List(2L, 3L, 5L, 8L), LeftFunc(LeftFunc(NatFuncZero.value)))))
-  val p2: Ux2 = LeftFunc(LeftFunc(RightFunc(List(2L, 3L, 5L, 8L), LeftFunc(NatFuncZero.value))))
-  val p3: Ux3 = LeftFunc(LeftFunc(RightFunc(List(2L, 3L, 5L, 8L), NatFuncZero.value)))
-  val p4: Ux2 = LeftFunc(LeftFunc(LeftFunc(LeftFunc(NatFuncZero.value))))
-  val p5: Ux2 = LeftFunc(RightFunc(List("abc", "abcdefghij", "abcdefghijklmn"), LeftFunc(LeftFunc(NatFuncZero.value))))
+  val p1: Ux1 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.empty(NatFunc.zero)))))
+  val p2: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.zero))))
+  val p3: Ux3 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.zero)))
+  val p4: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.zero))))
+  val p5: Ux2 = NatFunc.empty(NatFunc.success(List("abc", "abcdefghij", "abcdefghijklmn"), NatFunc.empty(NatFunc.empty(NatFunc.zero))))
 
   val t1 = FoldContext.empty
-    .overrideOnce(p1.foldImpl(t => List(t)))
-    .overrideOnce(p1.tail.foldImpl(t => t.map(_.size + 1)))
-    .overrideOnce(p1.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
-    .overrideOnce(p1.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
-    .overrideOnce(p1.tail.tail.tail.tail.foldImpl(t => t.to(List).map(_.toInt * 2)))
-    .overrideOnce(
-      p1.tail.tail.tail.tail.tail.foldImpl(
-        { t =>
-          t.isFinishAndNothing
-          List.empty
-        }
-      )
-    )
-    .overrideOnce(
-      p1.tail.tail.tail.tail.tail.tail.foldImpl(
-        { t =>
-          t.isFinishAndNothing
-          List.empty
-        }
-      )
-    )
+    .overrideOnce(p1)(t => List(t))
+    .overrideOnce(p1.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p1.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p1.tail.tail.tail)(t => t.map(_.size * 5))
+    .overrideOnce(p1.tail.tail.tail.tail)(t => t.to(List).map(_.toInt * 2))
+    .overrideOnce(p1.tail.tail.tail.tail.tail) { t =>
+      t.isFinishAndNothing
+      List.empty
+    }
+    .overrideOnce(p1.tail.tail.tail.tail.tail.tail) { t =>
+      t.isFinishAndNothing
+      List.empty
+    }
     .option
 
   val t2 = FoldContext.empty
-    .overrideOnce(p2.foldImpl(t => List(t)))
-    .overrideOnce(p2.tail.foldImpl(t => t.map(_.size + 1)))
-    .overrideOnce(p2.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
-    .overrideOnce(p2.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
+    .overrideOnce(p2)(t => List(t))
+    .overrideOnce(p2.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p2.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p2.tail.tail.tail)(t => t.map(_.size * 5))
     .option
 
   val t3 = FoldContext.empty
-    .overrideOnce(p3.foldImpl(t => List(t)))
-    .overrideOnce(p3.tail.foldImpl(t => t.map(_.size + 1)))
-    .overrideOnce(p3.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
+    .overrideOnce(p3)(t => List(t))
+    .overrideOnce(p3.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p3.tail.tail)(t => t.map(_.toInt * 2))
     .option
 
   val t4 = FoldContext.empty
-    .overrideOnce(p4.foldImpl(t => List(t)))
-    .overrideOnce(p4.tail.foldImpl(t => t.map(_.size + 1)))
-    .overrideOnce(p4.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
-    .overrideOnce(p4.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
+    .overrideOnce(p4)(t => List(t))
+    .overrideOnce(p4.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p4.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p4.tail.tail.tail)(t => t.map(_.size * 5))
     .option
 
   val t5 = FoldContext.empty
-    .overrideOnce(p5.foldImpl(t => List(t)))
-    .overrideOnce(p5.tail.foldImpl(t => t.map(_.size + 1)))
-    .overrideOnce(p5.tail.tail.foldImpl(t => t.map(_.toInt * 2)))
-    .overrideOnce(p5.tail.tail.tail.foldImpl(t => t.map(_.size * 5)))
+    .overrideOnce(p5)(t => List(t))
+    .overrideOnce(p5.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p5.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p5.tail.tail.tail)(t => t.map(_.size * 5))
     .option
 
   println(t1) // Some(List(4, 6, 10, 16))
