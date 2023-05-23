@@ -4,30 +4,27 @@ package impl
 import implemention._
 
 trait FoldNatPositiveHelper {
-  class FoldNatPositiveHelperWrap0 extends NatFuncZero {
-    override lazy val tail: FoldNatPositiveHelperWrap0 = this
-  }
-  object FoldNatPositiveHelperWrap0 extends FoldNatPositiveHelperWrap0
 
-  class FoldNatPositiveHelperWrap1[T1](override val dataInstance: Option[T1])
-      extends NatFuncPositive[T1, FoldNatPositiveHelperWrap0](dataInstance) {
+  class FoldNatPositiveHelperWrap1[T1](override val dataInstance: Option[T1], override val tail: NatFuncZero)
+      extends NatFuncPositive[T1, NatFuncZero](dataInstance) {
     def foldOpt[U](func1: T1 => U): Option[U] = {
       FoldContext.empty.overrideOnce(this)(func1).option
     }
-    def fold[U](func1: T1 => U): U                = foldOpt(func1).get
-    override def tail: FoldNatPositiveHelperWrap0 = FoldNatPositiveHelperWrap0
+    def fold[U](func1: T1 => U): U = foldOpt(func1).get
   }
 
-  class FoldNatPositiveHelperWrap2[T1, T2](override val dataInstance: Option[T1], override val tail: FoldNatPositiveHelperWrap1[T2])
-      extends NatFuncPositive[T1, FoldNatPositiveHelperWrap1[T2]](dataInstance) {
+  class FoldNatPositiveHelperWrap2[T1, T2](override val dataInstance: Option[T1], override val tail: NatFuncPositive[T2, NatFuncZero])
+      extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncZero]](dataInstance) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U): Option[U] = {
       FoldContext.empty.overrideOnce(this)(func1).overrideOnce(this.tail)(func2).option
     }
     def fold[U](func1: T1 => U, func2: T2 => U): U = foldOpt(func1, func2).get
   }
 
-  class FoldNatPositiveHelperWrap3[T1, T2, T3](override val dataInstance: Option[T1], override val tail: FoldNatPositiveHelperWrap2[T2, T3])
-      extends NatFuncPositive[T1, FoldNatPositiveHelperWrap2[T2, T3]](dataInstance) {
+  class FoldNatPositiveHelperWrap3[T1, T2, T3](
+    override val dataInstance: Option[T1],
+    override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncZero]]
+  ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncZero]]](dataInstance) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U): Option[U] = {
       FoldContext.empty.overrideOnce(this)(func1).overrideOnce(this.tail)(func2).overrideOnce(this.tail.tail)(func3).option
     }
@@ -36,8 +33,8 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap4[T1, T2, T3, T4](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap3[T2, T3, T4]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap3[T2, T3, T4]](dataInstance) {
+    override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncZero]]]
+  ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncZero]]]](dataInstance) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U): Option[U] = {
       FoldContext.empty
         .overrideOnce(this)(func1)
@@ -51,8 +48,10 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap5[T1, T2, T3, T4, T5](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap4[T2, T3, T4, T5]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap4[T2, T3, T4, T5]](dataInstance) {
+    override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncZero]]]]
+  ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncZero]]]]](
+        dataInstance
+      ) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U): Option[U] = {
       FoldContext.empty
         .overrideOnce(this)(func1)
@@ -68,8 +67,11 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap6[T1, T2, T3, T4, T5, T6](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap5[T2, T3, T4, T5, T6]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap5[T2, T3, T4, T5, T6]](dataInstance) {
+    override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncZero]]]]]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncZero]]]]]
+      ](dataInstance) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U, func6: T6 => U): Option[U] = {
       FoldContext.empty
         .overrideOnce(this)(func1)
@@ -86,8 +88,14 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap7[T1, T2, T3, T4, T5, T6, T7](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap6[T2, T3, T4, T5, T6, T7]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap6[T2, T3, T4, T5, T6, T7]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncZero]]]]]
+    ]
+  ) extends NatFuncPositive[T1, NatFuncPositive[
+        T2,
+        NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncZero]]]]]
+      ]](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -113,8 +121,17 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap8[T1, T2, T3, T4, T5, T6, T7, T8](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap7[T2, T3, T4, T5, T6, T7, T8]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap7[T2, T3, T4, T5, T6, T7, T8]](dataInstance) {
+    override val tail: NatFuncPositive[T2, NatFuncPositive[
+      T3,
+      NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncPositive[T8, NatFuncZero]]]]]
+    ]]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[T2, NatFuncPositive[
+          T3,
+          NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncPositive[T8, NatFuncZero]]]]]
+        ]]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -150,8 +167,23 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap9[T1, T2, T3, T4, T5, T6, T7, T8, T9](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap8[T2, T3, T4, T5, T6, T7, T8, T9]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap8[T2, T3, T4, T5, T6, T7, T8, T9]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[T3, NatFuncPositive[
+        T4,
+        NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncPositive[T8, NatFuncPositive[T9, NatFuncZero]]]]]
+      ]]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[T3, NatFuncPositive[
+            T4,
+            NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncPositive[T8, NatFuncPositive[T9, NatFuncZero]]]]]
+          ]]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -190,8 +222,29 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap9[T2, T3, T4, T5, T6, T7, T8, T9, T10]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap9[T2, T3, T4, T5, T6, T7, T8, T9, T10]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[T4, NatFuncPositive[
+          T5,
+          NatFuncPositive[T6, NatFuncPositive[T7, NatFuncPositive[T8, NatFuncPositive[T9, NatFuncPositive[T10, NatFuncZero]]]]]
+        ]]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[T4, NatFuncPositive[
+              T5,
+              NatFuncPositive[T6, NatFuncPositive[T7, NatFuncPositive[T8, NatFuncPositive[T9, NatFuncPositive[T10, NatFuncZero]]]]]
+            ]]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -233,8 +286,35 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap10[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap10[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[T5, NatFuncPositive[
+            T6,
+            NatFuncPositive[T7, NatFuncPositive[T8, NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[T11, NatFuncZero]]]]]
+          ]]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[T5, NatFuncPositive[
+                T6,
+                NatFuncPositive[T7, NatFuncPositive[T8, NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[T11, NatFuncZero]]]]]
+              ]]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -279,8 +359,41 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap11[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap11[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[T6, NatFuncPositive[
+              T7,
+              NatFuncPositive[T8, NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[T11, NatFuncPositive[T12, NatFuncZero]]]]]
+            ]]
+          ]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[T6, NatFuncPositive[
+                  T7,
+                  NatFuncPositive[T8, NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[T11, NatFuncPositive[T12, NatFuncZero]]]]]
+                ]]
+              ]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -328,8 +441,47 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap12[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap12[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[T7, NatFuncPositive[
+                T8,
+                NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[T11, NatFuncPositive[T12, NatFuncPositive[T13, NatFuncZero]]]]]
+              ]]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[T7, NatFuncPositive[
+                    T8,
+                    NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[T11, NatFuncPositive[T12, NatFuncPositive[T13, NatFuncZero]]]]]
+                  ]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -380,8 +532,53 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap13[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap13[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[T8, NatFuncPositive[
+                  T9,
+                  NatFuncPositive[T10, NatFuncPositive[T11, NatFuncPositive[T12, NatFuncPositive[T13, NatFuncPositive[T14, NatFuncZero]]]]]
+                ]]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[T8, NatFuncPositive[T9, NatFuncPositive[
+                      T10,
+                      NatFuncPositive[T11, NatFuncPositive[T12, NatFuncPositive[T13, NatFuncPositive[T14, NatFuncZero]]]]
+                    ]]]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -435,8 +632,59 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap14[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap14[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]](dataInstance) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[
+                    T11,
+                    NatFuncPositive[T12, NatFuncPositive[T13, NatFuncPositive[T14, NatFuncPositive[T15, NatFuncZero]]]]
+                  ]]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[T9, NatFuncPositive[T10, NatFuncPositive[
+                        T11,
+                        NatFuncPositive[T12, NatFuncPositive[T13, NatFuncPositive[T14, NatFuncPositive[T15, NatFuncZero]]]]
+                      ]]]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -493,10 +741,65 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap15[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap15[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]](
-        dataInstance
-      ) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[
+                    T9,
+                    NatFuncPositive[T10, NatFuncPositive[T11, NatFuncPositive[
+                      T12,
+                      NatFuncPositive[T13, NatFuncPositive[T14, NatFuncPositive[T15, NatFuncPositive[T16, NatFuncZero]]]]
+                    ]]]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[
+                        T9,
+                        NatFuncPositive[T10, NatFuncPositive[T11, NatFuncPositive[
+                          T12,
+                          NatFuncPositive[T13, NatFuncPositive[T14, NatFuncPositive[T15, NatFuncPositive[T16, NatFuncZero]]]]
+                        ]]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -557,10 +860,71 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap16[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap16[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]](
-        dataInstance
-      ) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[
+                    T9,
+                    NatFuncPositive[
+                      T10,
+                      NatFuncPositive[T11, NatFuncPositive[T12, NatFuncPositive[
+                        T13,
+                        NatFuncPositive[T14, NatFuncPositive[T15, NatFuncPositive[T16, NatFuncPositive[T17, NatFuncZero]]]]
+                      ]]]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[
+                        T9,
+                        NatFuncPositive[
+                          T10,
+                          NatFuncPositive[T11, NatFuncPositive[T12, NatFuncPositive[
+                            T13,
+                            NatFuncPositive[T14, NatFuncPositive[T15, NatFuncPositive[T16, NatFuncPositive[T17, NatFuncZero]]]]
+                          ]]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -641,10 +1005,77 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap17[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]
-  ) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap17[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]](
-        dataInstance
-      ) {
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[
+                    T9,
+                    NatFuncPositive[
+                      T10,
+                      NatFuncPositive[
+                        T11,
+                        NatFuncPositive[T12, NatFuncPositive[T13, NatFuncPositive[
+                          T14,
+                          NatFuncPositive[T15, NatFuncPositive[T16, NatFuncPositive[T17, NatFuncPositive[T18, NatFuncZero]]]]
+                        ]]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ) extends NatFuncPositive[
+        T1,
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[
+                        T9,
+                        NatFuncPositive[
+                          T10,
+                          NatFuncPositive[
+                            T11,
+                            NatFuncPositive[T12, NatFuncPositive[T13, NatFuncPositive[
+                              T14,
+                              NatFuncPositive[T15, NatFuncPositive[T16, NatFuncPositive[T17, NatFuncPositive[T18, NatFuncZero]]]]
+                            ]]]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -729,10 +1160,82 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap18[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[
+                    T9,
+                    NatFuncPositive[
+                      T10,
+                      NatFuncPositive[
+                        T11,
+                        NatFuncPositive[
+                          T12,
+                          NatFuncPositive[T13, NatFuncPositive[T14, NatFuncPositive[
+                            T15,
+                            NatFuncPositive[T16, NatFuncPositive[T17, NatFuncPositive[T18, NatFuncPositive[T19, NatFuncZero]]]]
+                          ]]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
   ) extends NatFuncPositive[
         T1,
-        FoldNatPositiveHelperWrap18[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[
+                        T9,
+                        NatFuncPositive[
+                          T10,
+                          NatFuncPositive[
+                            T11,
+                            NatFuncPositive[
+                              T12,
+                              NatFuncPositive[T13, NatFuncPositive[T14, NatFuncPositive[
+                                T15,
+                                NatFuncPositive[T16, NatFuncPositive[T17, NatFuncPositive[T18, NatFuncPositive[T19, NatFuncZero]]]]
+                              ]]]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
@@ -822,10 +1325,88 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap19[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]
+    override val tail: NatFuncPositive[
+      T2,
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[
+                    T9,
+                    NatFuncPositive[
+                      T10,
+                      NatFuncPositive[
+                        T11,
+                        NatFuncPositive[
+                          T12,
+                          NatFuncPositive[
+                            T13,
+                            NatFuncPositive[T14, NatFuncPositive[T15, NatFuncPositive[
+                              T16,
+                              NatFuncPositive[T17, NatFuncPositive[T18, NatFuncPositive[T19, NatFuncPositive[T20, NatFuncZero]]]]
+                            ]]]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
   ) extends NatFuncPositive[
         T1,
-        FoldNatPositiveHelperWrap19[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20]
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[
+                        T9,
+                        NatFuncPositive[
+                          T10,
+                          NatFuncPositive[
+                            T11,
+                            NatFuncPositive[
+                              T12,
+                              NatFuncPositive[
+                                T13,
+                                NatFuncPositive[T14, NatFuncPositive[T15, NatFuncPositive[
+                                  T16,
+                                  NatFuncPositive[T17, NatFuncPositive[T18, NatFuncPositive[T19, NatFuncPositive[T20, NatFuncZero]]]]
+                                ]]]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
@@ -919,31 +1500,94 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap20[
+    override val tail: NatFuncPositive[
       T2,
-      T3,
-      T4,
-      T5,
-      T6,
-      T7,
-      T8,
-      T9,
-      T10,
-      T11,
-      T12,
-      T13,
-      T14,
-      T15,
-      T16,
-      T17,
-      T18,
-      T19,
-      T20,
-      T21
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[
+                    T9,
+                    NatFuncPositive[
+                      T10,
+                      NatFuncPositive[
+                        T11,
+                        NatFuncPositive[
+                          T12,
+                          NatFuncPositive[
+                            T13,
+                            NatFuncPositive[
+                              T14,
+                              NatFuncPositive[T15, NatFuncPositive[T16, NatFuncPositive[
+                                T17,
+                                NatFuncPositive[T18, NatFuncPositive[T19, NatFuncPositive[T20, NatFuncPositive[T21, NatFuncZero]]]]
+                              ]]]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
     ]
   ) extends NatFuncPositive[
         T1,
-        FoldNatPositiveHelperWrap20[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[
+                        T9,
+                        NatFuncPositive[
+                          T10,
+                          NatFuncPositive[
+                            T11,
+                            NatFuncPositive[
+                              T12,
+                              NatFuncPositive[
+                                T13,
+                                NatFuncPositive[
+                                  T14,
+                                  NatFuncPositive[T15, NatFuncPositive[T16, NatFuncPositive[
+                                    T17,
+                                    NatFuncPositive[T18, NatFuncPositive[T19, NatFuncPositive[T20, NatFuncPositive[T21, NatFuncZero]]]]
+                                  ]]]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,
@@ -1041,32 +1685,100 @@ trait FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22](
     override val dataInstance: Option[T1],
-    override val tail: FoldNatPositiveHelperWrap21[
+    override val tail: NatFuncPositive[
       T2,
-      T3,
-      T4,
-      T5,
-      T6,
-      T7,
-      T8,
-      T9,
-      T10,
-      T11,
-      T12,
-      T13,
-      T14,
-      T15,
-      T16,
-      T17,
-      T18,
-      T19,
-      T20,
-      T21,
-      T22
+      NatFuncPositive[
+        T3,
+        NatFuncPositive[
+          T4,
+          NatFuncPositive[
+            T5,
+            NatFuncPositive[
+              T6,
+              NatFuncPositive[
+                T7,
+                NatFuncPositive[
+                  T8,
+                  NatFuncPositive[
+                    T9,
+                    NatFuncPositive[
+                      T10,
+                      NatFuncPositive[
+                        T11,
+                        NatFuncPositive[
+                          T12,
+                          NatFuncPositive[
+                            T13,
+                            NatFuncPositive[
+                              T14,
+                              NatFuncPositive[
+                                T15,
+                                NatFuncPositive[T16, NatFuncPositive[T17, NatFuncPositive[
+                                  T18,
+                                  NatFuncPositive[T19, NatFuncPositive[T20, NatFuncPositive[T21, NatFuncPositive[T22, NatFuncZero]]]]
+                                ]]]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
     ]
   ) extends NatFuncPositive[
         T1,
-        FoldNatPositiveHelperWrap21[T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22]
+        NatFuncPositive[
+          T2,
+          NatFuncPositive[
+            T3,
+            NatFuncPositive[
+              T4,
+              NatFuncPositive[
+                T5,
+                NatFuncPositive[
+                  T6,
+                  NatFuncPositive[
+                    T7,
+                    NatFuncPositive[
+                      T8,
+                      NatFuncPositive[
+                        T9,
+                        NatFuncPositive[
+                          T10,
+                          NatFuncPositive[
+                            T11,
+                            NatFuncPositive[
+                              T12,
+                              NatFuncPositive[
+                                T13,
+                                NatFuncPositive[
+                                  T14,
+                                  NatFuncPositive[
+                                    T15,
+                                    NatFuncPositive[T16, NatFuncPositive[T17, NatFuncPositive[
+                                      T18,
+                                      NatFuncPositive[T19, NatFuncPositive[T20, NatFuncPositive[T21, NatFuncPositive[T22, NatFuncZero]]]]
+                                    ]]]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ](dataInstance) {
     def foldOpt[U](
       func1: T1 => U,

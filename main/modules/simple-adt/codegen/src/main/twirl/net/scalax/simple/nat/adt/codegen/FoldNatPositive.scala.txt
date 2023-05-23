@@ -5,8 +5,7 @@ package impl
 import implemention._
 
 @paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
-@paramType2(start: Int, i1: Int) = {  }
-@classNameForPositive(i1: Int) = { FoldNatPositiveHelperWrap@{i1 - 1}[@for(i2 <- 2 to i1) { @if(i2 > 2) { , } T@{i2} }] }
+@classNameForPositive(i1: Int, sum: Int) = { @if(i1 <= sum) { NatFuncPositive[T@{i1}, @classNameForPositive(i1 + 1, sum)] } else { NatFuncZero } }
 @foldPararmeters(count: Int) = { @for(c <- 1 to count) { @if(c > 1) { , } func@{c}: T@{c} => U } }
 @foldBody(count: Int) = {
     @if(count > 1) { @foldBody(count - 1) }
@@ -15,20 +14,10 @@ import implemention._
 }
 
 trait FoldNatPositiveHelper {
-    class FoldNatPositiveHelperWrap0 extends NatFuncZero {
-        override lazy val tail: FoldNatPositiveHelperWrap0 = this
-    }
-    object FoldNatPositiveHelperWrap0 extends FoldNatPositiveHelperWrap0
 
-    class FoldNatPositiveHelperWrap1[T1](override val dataInstance: Option[T1]) extends NatFuncPositive[T1, FoldNatPositiveHelperWrap0](dataInstance) {
-        def foldOpt[U](func1: T1 => U): Option[U] = {
-            FoldContext.empty.overrideOnce(this)(func1).option
-        }
-        def fold[U](func1: T1 => U): U = foldOpt(func1).get
-        override def tail: FoldNatPositiveHelperWrap0 = FoldNatPositiveHelperWrap0
-    }
-    @for(i1 <- 2 to 22) {
-        class FoldNatPositiveHelperWrap@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }](override val dataInstance: Option[T1], override val tail: @classNameForPositive(i1)) extends NatFuncPositive[T1, @classNameForPositive(i1)](dataInstance) {
+
+    @for(i1 <- 1 to 22) {
+        class FoldNatPositiveHelperWrap@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }](override val dataInstance: Option[T1], override val tail: @classNameForPositive(2, i1)) extends @classNameForPositive(1, i1) (dataInstance) {
             def foldOpt[U](@foldPararmeters(i1)): Option[U] = {
                 FoldContext.empty
                 @foldBody(i1)

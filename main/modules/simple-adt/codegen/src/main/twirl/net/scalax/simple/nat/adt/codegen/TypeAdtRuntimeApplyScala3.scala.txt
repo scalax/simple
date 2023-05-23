@@ -2,11 +2,16 @@
 package net.scalax.simple.adt
 package impl
 
+import implemention._
+
+@buildHList(start: Int, i1: Int) = { @if(start <= i1) {
+    NatFuncPositive[I@start, @buildHList(start + 1, i1)]
+} else { NatFuncZero } }
 @paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
 
 trait TypeAdtRuntimeApply {
     @for(i1 <- 1 to 22) {
-        def Options@{i1}[@paramType(1, i1)]: FetchAdtApply[Tuple@{i1}[@paramType(1, i1)]] = FetchAdtApply.get
+        def Options@{i1}[@paramType(1, i1)]: FetchAdtApply[@buildHList(1, i1)] = FetchAdtApply.get
     }
 }
 

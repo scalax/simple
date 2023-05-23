@@ -35,16 +35,27 @@ abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstanc
 
 object NatFunc {
   def success[D, T <: NatFunc](t: D, tail: T): NatFuncPositive[D, T] = new NatFuncPositiveSuccess(data = t, tail = tail)
+  def successValue[D, T <: NatFunc](t: D): NatFuncPositive[D, T]     = new NatFuncPositiveSuccessImpl(data = t)
   def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T]         = new NatFuncPositiveEmpty(tail = tail)
-  val zero: NatFuncZero                                              = new NatFuncZero
+  private def emptyInstance[T <: NatFunc]: T                         = emptyNone.asInstanceOf[T]
+  val zero: NatFuncZero                                              = NatFuncZero.value
 
   private class NatFuncPositiveSuccess[Data, T <: NatFunc](data: Data, override val tail: T)
       extends NatFuncPositive[Data, T](dataInstance = Some(data)) {
     override val isDefined: Boolean = true
   }
+  private class NatFuncPositiveSuccessImpl[Data, T <: NatFunc](data: Data)
+      extends NatFuncPositiveSuccess[Data, T](data = data, tail = emptyNone.asInstanceOf[T]) {
+    override val isDefined: Boolean = true
+  }
   private class NatFuncPositiveEmpty[Data, T <: NatFunc](override val tail: T)
       extends NatFuncPositive[Data, T](dataInstance = Option.empty) {
-    override val isDefined: Boolean = true
+    override val isDefined: Boolean = false
+  }
+
+  private lazy val emptyNone: NatFuncPositive[Any, NatFunc] = new NatFuncPositive[Any, NatFunc](dataInstance = None) {
+    override lazy val tail: NatFunc = emptyNone
+    override val isDefined: Boolean = false
   }
 }
 
@@ -55,8 +66,12 @@ object IsFinishAndNothing {
   lazy val value: IsFinishAndNothing = new IsFinishAndNothing(() => value)
 }
 
-class NatFuncZero extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
-  override def tail: NatFuncZero = this
+class NatFuncZero private (tailValue: () => NatFuncZero)
+    extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
+  override lazy val tail: NatFuncZero = tailValue()
+}
+object NatFuncZero {
+  lazy val value: NatFuncZero = new NatFuncZero(() => value)
 }
 
 object Test extends App {
