@@ -36,7 +36,7 @@ abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstanc
 object NatFunc {
   def success[D, T <: NatFunc](t: D, tail: T): NatFuncPositive[D, T] = new NatFuncPositiveSuccess(data = t, tail = tail)
   def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T]         = new NatFuncPositiveEmpty(tail = tail)
-  val zero: NatFuncZero                                              = NatFuncZero.zero
+  val zero: NatFuncZero                                              = new NatFuncZero
 
   private class NatFuncPositiveSuccess[Data, T <: NatFunc](data: Data, override val tail: T)
       extends NatFuncPositive[Data, T](dataInstance = Some(data)) {
@@ -55,12 +55,8 @@ object IsFinishAndNothing {
   lazy val value: IsFinishAndNothing = new IsFinishAndNothing(() => value)
 }
 
-final class NatFuncZero private (tailValue: () => NatFuncZero)
-    extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
-  override lazy val tail: NatFuncZero = tailValue()
-}
-object NatFuncZero {
-  lazy val zero: NatFuncZero = new NatFuncZero(() => zero)
+class NatFuncZero extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
+  override def tail: NatFuncZero = this
 }
 
 object Test extends App {

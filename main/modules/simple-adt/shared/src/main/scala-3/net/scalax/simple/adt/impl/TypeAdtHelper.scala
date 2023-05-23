@@ -3,8 +3,9 @@ package adt
 package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
+import implemention._
 
-final class FetchAdtApply[S <: Tuple]:
+final class FetchAdtApply[S <: NatFunc]:
   inline final def apply[T](inline data: T)(using
     inline v: TypeAdtApply.Aux[T, S, Adt.Status.Passed]
   ): InnerApply[[t] =>> Tuple.Map[S, [x] =>> (x => t)]] = InnerApply(adtList = v.value, data = data)
