@@ -1,5 +1,6 @@
 @()
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
 import implemention._
@@ -16,4 +17,4 @@ trait TypeAdtAlias {
     }
 }
 
-object TypeAdtAlias extends TypeAdtAlias
+object TypeAdtAlias extends TypeAdtAlias with TypeAdtAliasModel with TypeAdtAliasModelUnapply

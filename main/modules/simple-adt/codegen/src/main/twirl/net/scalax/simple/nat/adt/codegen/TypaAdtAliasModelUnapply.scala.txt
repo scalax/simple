@@ -1,0 +1,18 @@
+@()
+package net.scalax.simple
+package adt
+package impl
+
+import implemention._
+
+@buildHList(start: Int, i1: Int) = { @if(start <= i1) {
+    NatFuncPositive[I@start, @buildHList(start + 1, i1)]
+} else { Tail } }
+
+trait TypeAdtAliasModelUnapply {
+    @for(i1 <- 1 to 22) {
+        object Option@{i1} {
+            def unapply[@for(i2 <- 1 to i1) { I@{i2} , } Tail <: NatFunc](i: @buildHList(1, i1)): Option[I@{i1}] = i @for(i <- 1 to i1 - 1) { .tail } .dataInstance
+        }
+    }
+}

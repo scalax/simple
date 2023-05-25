@@ -22,14 +22,13 @@ object Scala2CodegenExec:
       }
     }
 
-    // disabled
-    /*locally { () =>
-      val filePath = writePath.resolve("HelperIOImplicit.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8)) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.HelperIOImplicitScala2().body
+    locally {
+      val filePath = writePath.resolve("TypaAdtAliasModel.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasScala2().body
         writer.println(linerContent)
       }
-    }*/
+    }
 
     locally {
       val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
