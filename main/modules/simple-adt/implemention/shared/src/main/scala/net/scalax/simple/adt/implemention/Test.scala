@@ -1,65 +1,141 @@
 package net.scalax.simple.adt.implemention
 
-import net.scalax.simple.adt.factory.AdtCoreFactory
-import net.scalax.simple.ghdmzsk.ghdmzsk
+import scala.collection.compat._
 
-sealed trait CoProductFunc[Result]
+trait FoldContext[+Result] {
+  def option: Option[Result]
+  def overrideOnce[D, U >: Result](d: DataInstance[D])(func: D => U): FoldContext[U]
+}
+object FoldContext {
+  val empty: FoldContext[Nothing] = EmptyFoldContext
 
-object CoProductFunc {
-  class BuildContext[U] {
-    def appendSuccess[Data, T <: CoProductFunc[U]](data: Data): CoProductFuncPositive[Data, T, U] = new RightFunc[Data, T, U](data)
-    def appendFailed[Data, T <: CoProductFunc[U]](tail: T): CoProductFuncPositive[Data, T, U]     = new LeftFunc[Data, T, U](tail)
-    def end: CoProductFunc[U]                                                                     = new EmptyEnd[U]
+  private object EmptyFoldContext extends FoldContext[Nothing] {
+    override val option: None.type = None
+    override def overrideOnce[D, U](d: DataInstance[D])(func: D => U): FoldContext[U] = {
+      val v = for (dValue <- d.dataInstance) yield new FinishedFoldContext(func(dValue))
+      v.getOrElse(this)
+    }
+  }
+  private class FinishedFoldContext[+Result](val value: Result) extends FoldContext[Result] {
+    override def option: Some[Result]                                                           = Some(value)
+    override def overrideOnce[D, U >: Result](d: DataInstance[D])(func: D => U): FoldContext[U] = this
+  }
+}
+
+trait DataInstance[Data] {
+  def dataInstance: Option[Data]
+  def isDefined: Boolean
+}
+
+trait NatFunc
+abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstance: Option[Data]) extends NatFunc with DataInstance[Data] {
+  override val isDefined: Boolean = dataInstance.isDefined
+  def tail: T
+}
+
+object NatFunc {
+  def success[D, T <: NatFunc](t: D, tail: T): NatFuncPositive[D, T] = new NatFuncPositiveSuccess(data = t, tail = tail)
+  def successValue[D, T <: NatFunc](t: D): NatFuncPositive[D, T]     = new NatFuncPositiveSuccessImpl(data = t)
+  def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T]         = new NatFuncPositiveEmpty(tail = tail)
+  private def emptyInstance[T <: NatFunc]: T                         = emptyNone.asInstanceOf[T]
+  val zero: NatFuncZero                                              = NatFuncZero.value
+
+  private class NatFuncPositiveSuccess[Data, T <: NatFunc](data: Data, override val tail: T)
+      extends NatFuncPositive[Data, T](dataInstance = Some(data)) {
+    override val isDefined: Boolean = true
+  }
+  private class NatFuncPositiveSuccessImpl[Data, T <: NatFunc](data: Data)
+      extends NatFuncPositiveSuccess[Data, T](data = data, tail = emptyNone.asInstanceOf[T]) {
+    override val isDefined: Boolean = true
+  }
+  private class NatFuncPositiveEmpty[Data, T <: NatFunc](override val tail: T)
+      extends NatFuncPositive[Data, T](dataInstance = Option.empty) {
+    override val isDefined: Boolean = false
   }
 
-  def context[T]: BuildContext[T] = new BuildContext[T]
+  private lazy val emptyNone: NatFuncPositive[Any, NatFunc] = new NatFuncPositive[Any, NatFunc](dataInstance = None) {
+    override lazy val tail: NatFunc = emptyNone
+    override val isDefined: Boolean = false
+  }
 }
 
-sealed trait CoProductFuncPositive[Data, T <: CoProductFunc[Result], Result] extends CoProductFunc[Result] {
-  def foldImpl(d: Data => Result): T
+final class IsFinishAndNothing private (tail: () => IsFinishAndNothing) {
+  lazy val isFinishAndNothing: IsFinishAndNothing = tail()
 }
-sealed trait CoProductFuncZero[Result] extends CoProductFunc[Result] {
-  def default(d: => Result): Result
-  def option: Option[Result]
+object IsFinishAndNothing {
+  lazy val value: IsFinishAndNothing = new IsFinishAndNothing(() => value)
 }
 
-class LeftFunc[Data, T <: CoProductFunc[Result], Result](val tail: T) extends CoProductFuncPositive[Data, T, Result] {
-  override def foldImpl(d: Data => Result): T = tail
+class NatFuncZero private (tailValue: () => NatFuncZero)
+    extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
+  override lazy val tail: NatFuncZero = tailValue()
 }
-class RightFunc[Data, T <: CoProductFunc[Result], Result](val data: Data) extends CoProductFuncPositive[Data, T, Result] {
-  override def foldImpl(d: Data => Result): T = new EndFunc[Data, T, Result](d(data)).asInstanceOf[T]
-}
-class EndFunc[Data, T <: CoProductFunc[Result], Result](val result: Result)
-    extends CoProductFuncPositive[Data, T, Result]
-    with CoProductFuncZero[Result] {
-  override def foldImpl(d: Data => Result): T = this.asInstanceOf[T]
-  override def default(d: => Result): Result  = result
-  override def option: Some[Result]           = Some(result)
-}
-class EmptyEnd[Result] extends CoProductFuncZero[Result] {
-  override def default(d: => Result): Result = d
-  override def option: None.type             = None
+object NatFuncZero {
+  lazy val value: NatFuncZero = new NatFuncZero(() => value)
 }
 
 object Test extends App {
 
-  type Ux1 = CoProductFuncPositive[
+  type Ux1 = NatFuncPositive[
     Int,
-    CoProductFuncPositive[
-      List[String],
-      CoProductFuncPositive[List[Long], CoProductFuncPositive[List[String], CoProductFuncZero[List[Int]], List[Int]], List[Int]],
-      List[Int]
-    ],
-    List[Int]
+    NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncPositive[List[String], NatFuncPositive[String, NatFuncZero]]]]
   ]
+  type Ux2 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncPositive[List[String], NatFuncZero]]]]
+  type Ux3 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncZero]]]
 
-  val bContext = CoProductFunc.context[List[Int]]
+  val p1: Ux1 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.empty(NatFunc.zero)))))
+  val p2: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.zero))))
+  val p3: Ux3 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.zero)))
+  val p4: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.zero))))
+  val p5: Ux2 = NatFunc.empty(NatFunc.success(List("abc", "abcdefghij", "abcdefghijklmn"), NatFunc.empty(NatFunc.empty(NatFunc.zero))))
 
-  val p: Ux1 = bContext.appendFailed(bContext.appendFailed(bContext.appendSuccess(List(2L, 3L, 5L, 8L))))
+  val t1 = FoldContext.empty
+    .overrideOnce(p1)(t => List(t))
+    .overrideOnce(p1.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p1.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p1.tail.tail.tail)(t => t.map(_.size * 5))
+    .overrideOnce(p1.tail.tail.tail.tail)(t => t.to(List).map(_.toInt * 2))
+    .overrideOnce(p1.tail.tail.tail.tail.tail) { t =>
+      t.isFinishAndNothing
+      List.empty
+    }
+    .overrideOnce(p1.tail.tail.tail.tail.tail.tail) { t =>
+      t.isFinishAndNothing
+      List.empty
+    }
+    .option
 
-  val t =
-    p.foldImpl(t => List(t)).foldImpl(t => t.map(_.size + 1)).foldImpl(t => t.map(_.toInt * 2)).foldImpl(t => t.map(_.size * 5)).option
+  val t2 = FoldContext.empty
+    .overrideOnce(p2)(t => List(t))
+    .overrideOnce(p2.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p2.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p2.tail.tail.tail)(t => t.map(_.size * 5))
+    .option
 
-  println(t)
+  val t3 = FoldContext.empty
+    .overrideOnce(p3)(t => List(t))
+    .overrideOnce(p3.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p3.tail.tail)(t => t.map(_.toInt * 2))
+    .option
+
+  val t4 = FoldContext.empty
+    .overrideOnce(p4)(t => List(t))
+    .overrideOnce(p4.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p4.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p4.tail.tail.tail)(t => t.map(_.size * 5))
+    .option
+
+  val t5 = FoldContext.empty
+    .overrideOnce(p5)(t => List(t))
+    .overrideOnce(p5.tail)(t => t.map(_.size + 1))
+    .overrideOnce(p5.tail.tail)(t => t.map(_.toInt * 2))
+    .overrideOnce(p5.tail.tail.tail)(t => t.map(_.size * 5))
+    .option
+
+  println(t1) // Some(List(4, 6, 10, 16))
+  println(t2) // Some(List(4, 6, 10, 16))
+  println(t3) // Some(List(4, 6, 10, 16))
+  println(t4) // None
+  println(t5) // Some(List(4, 11, 15))
 
 }

@@ -1,7 +1,7 @@
 package net.scalax.simple.adt.test
 
 import net.scalax.simple.adt.{TypeAdt => Adt}
-import net.scalax.simple.adt.impl.InnerTypeAdtClass
+import net.scalax.simple.adt.impl.FoldNatPositiveHelper
 import scala.collection.compat._
 import net.scalax.simple.test._
 
@@ -13,7 +13,7 @@ object `Type confirm test by djx314` {
       val b = Adt.Options2[List[String], List[Int]](t.to(List))
       locally {
         val t1 = Tag(b)
-        val t2 = Tag[InnerTypeAdtClass.CusInnerApply2[List[String], List[Int]]]
+        val t2 = Tag[FoldNatPositiveHelper.FoldNatPositiveHelperWrap2[List[String], List[Int]]]
         Tag.assertType(t1, t2)
       }
 

@@ -3,302 +3,187 @@ package adt
 package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
+import implemention._
 
 object InnerTypeAdtClass {
 
   class PrepareInnerApply1[I1] {
     @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtZero], Adt.Status.Passed]
-    ): CusInnerApply1[I1] = new CusInnerApply1(adtList = v.value, data = data)
-  }
-  object HelperIOImpl1 extends PrepareInnerApply1[Any]
-  class CusInnerApply1[I1](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](func1: I1 => T): T = {
-      val foldList =
-        FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any]))
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, NatFuncPositive[I1, NatFuncZero], Adt.Status.Passed]
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap1[I1] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap1(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl1 extends PrepareInnerApply1[Any]
 
   class PrepareInnerApply2[I1, I2] {
     @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtZero]], Adt.Status.Passed]
-    ): CusInnerApply2[I1, I2] = new CusInnerApply2(adtList = v.value, data = data)
-  }
-  object HelperIOImpl2 extends PrepareInnerApply2[Any, Any]
-  class CusInnerApply2[I1, I2](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](func1: I1 => T, func2: I2 => T): T = {
-      val foldList =
-        FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any]))
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncZero]], Adt.Status.Passed]
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap2[I1, I2] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap2(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl2 extends PrepareInnerApply2[Any, Any]
 
   class PrepareInnerApply3[I1, I2, I3] {
     @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, NatFuncPositive[
         I1,
-        AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtZero]]
+        NatFuncPositive[I2, NatFuncPositive[I3, NatFuncZero]]
       ], Adt.Status.Passed]
-    ): CusInnerApply3[I1, I2, I3] = new CusInnerApply3(adtList = v.value, data = data)
-  }
-  object HelperIOImpl3 extends PrepareInnerApply3[Any, Any, Any]
-  class CusInnerApply3[I1, I2, I3](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T): T = {
-      val foldList =
-        FoldListAppender.appendAll(List(func1.asInstanceOf[Any => Any], func2.asInstanceOf[Any => Any], func3.asInstanceOf[Any => Any]))
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap3[I1, I2, I3] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap3(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl3 extends PrepareInnerApply3[Any, Any, Any]
 
   class PrepareInnerApply4[I1, I2, I3, I4] {
     @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, AdtAlias.AdtAppend[
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, NatFuncPositive[
         I1,
-        AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtZero]]]
+        NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncZero]]]
       ], Adt.Status.Passed]
-    ): CusInnerApply4[I1, I2, I3, I4] = new CusInnerApply4(adtList = v.value, data = data)
-  }
-  object HelperIOImpl4 extends PrepareInnerApply4[Any, Any, Any, Any]
-  class CusInnerApply4[I1, I2, I3, I4](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap4[I1, I2, I3, I4] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap4(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl4 extends PrepareInnerApply4[Any, Any, Any, Any]
 
   class PrepareInnerApply5[I1, I2, I3, I4, I5] {
     @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[
-        T,
-        AdtAlias.AdtAppend[
-          I1,
-          AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtZero]]]]
-        ],
-        Adt.Status.Passed
-      ]
-    ): CusInnerApply5[I1, I2, I3, I4, I5] = new CusInnerApply5(adtList = v.value, data = data)
-  }
-  object HelperIOImpl5 extends PrepareInnerApply5[Any, Any, Any, Any, Any]
-  class CusInnerApply5[I1, I2, I3, I4, I5](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[T, NatFuncPositive[
+        I1,
+        NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncZero]]]]
+      ], Adt.Status.Passed]
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap5[I1, I2, I3, I4, I5] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap5(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl5 extends PrepareInnerApply5[Any, Any, Any, Any, Any]
 
   class PrepareInnerApply6[I1, I2, I3, I4, I5, I6] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[
-          I2,
-          AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtZero]]]]
-        ]],
+        NatFuncPositive[
+          I1,
+          NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncZero]]]]]
+        ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply6[I1, I2, I3, I4, I5, I6] = new CusInnerApply6(adtList = v.value, data = data)
-  }
-  object HelperIOImpl6 extends PrepareInnerApply6[Any, Any, Any, Any, Any, Any]
-  class CusInnerApply6[I1, I2, I3, I4, I5, I6](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](func1: I1 => T, func2: I2 => T, func3: I3 => T, func4: I4 => T, func5: I5 => T, func6: I6 => T): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap6[I1, I2, I3, I4, I5, I6] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap6(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl6 extends PrepareInnerApply6[Any, Any, Any, Any, Any, Any]
 
   class PrepareInnerApply7[I1, I2, I3, I4, I5, I6, I7] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
-          I1,
-          AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[
-            I3,
-            AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtZero]]]]
-          ]]
-        ],
+        NatFuncPositive[I1, NatFuncPositive[
+          I2,
+          NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncZero]]]]]
+        ]],
         Adt.Status.Passed
       ]
-    ): CusInnerApply7[I1, I2, I3, I4, I5, I6, I7] = new CusInnerApply7(adtList = v.value, data = data)
-  }
-  object HelperIOImpl7 extends PrepareInnerApply7[Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply7[I1, I2, I3, I4, I5, I6, I7](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap7[I1, I2, I3, I4, I5, I6, I7] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap7(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl7 extends PrepareInnerApply7[Any, Any, Any, Any, Any, Any, Any]
 
   class PrepareInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
-            I2,
-            AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[
-              I4,
-              AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtZero]]]]
-            ]]
-          ]
+          NatFuncPositive[I2, NatFuncPositive[
+            I3,
+            NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncZero]]]]]
+          ]]
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8] = new CusInnerApply8(adtList = v.value, data = data)
-  }
-  object HelperIOImpl8 extends PrepareInnerApply8[Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap8[I1, I2, I3, I4, I5, I6, I7, I8] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap8(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl8 extends PrepareInnerApply8[Any, Any, Any, Any, Any, Any, Any, Any]
 
   class PrepareInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[I3, NatFuncPositive[
+              I4,
+              NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncZero]]]]]
+            ]]
+          ]
+        ],
+        Adt.Status.Passed
+      ]
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap9[I1, I2, I3, I4, I5, I6, I7, I8, I9] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap9(dataInstance.dataInstance, dataInstance.tail)
+    }
+  }
+  object HelperIOImpl9 extends PrepareInnerApply9[Any, Any, Any, Any, Any, Any, Any, Any, Any]
+
+  class PrepareInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] {
+    @inline def apply[T](data: T)(implicit
+      v: net.scalax.simple.adt.TypeAdtApply.Aux[
+        T,
+        NatFuncPositive[
+          I1,
+          NatFuncPositive[
+            I2,
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[
+              NatFuncPositive[I4, NatFuncPositive[
                 I5,
-                AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtZero]]]]
+                NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncZero]]]]]
               ]]
             ]
           ]
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9] = new CusInnerApply9(adtList = v.value, data = data)
-  }
-  object HelperIOImpl9 extends PrepareInnerApply9[Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9](adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk, data: Any) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap10(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl10 extends PrepareInnerApply10[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] {
+  class PrepareInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[
+                NatFuncPositive[I5, NatFuncPositive[
                   I6,
-                  AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtZero]]]]
+                  NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncZero]]]]]
                 ]]
               ]
             ]
@@ -306,62 +191,30 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = new CusInnerApply10(adtList = v.value, data = data)
-  }
-  object HelperIOImpl10 extends PrepareInnerApply10[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap11(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl11 extends PrepareInnerApply11[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] {
+  class PrepareInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[
+                  NatFuncPositive[I6, NatFuncPositive[
                     I7,
-                    AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtZero]]]]
+                    NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[I12, NatFuncZero]]]]]
                   ]]
                 ]
               ]
@@ -370,67 +223,33 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = new CusInnerApply11(adtList = v.value, data = data)
-  }
-  object HelperIOImpl11 extends PrepareInnerApply11[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap12(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl12 extends PrepareInnerApply12[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] {
+  class PrepareInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[
-                      I8,
-                      AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtZero]]]]
-                    ]]
+                    NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[
+                      I9,
+                      NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[I13, NatFuncZero]]]]
+                    ]]]
                   ]
                 ]
               ]
@@ -439,71 +258,35 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = new CusInnerApply12(adtList = v.value, data = data)
-  }
-  object HelperIOImpl12 extends PrepareInnerApply12[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap13(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl13 extends PrepareInnerApply13[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] {
+  class PrepareInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[
-                        I9,
-                        AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtZero]]]]
-                      ]]
+                      NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[
+                        I10,
+                        NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[I14, NatFuncZero]]]]
+                      ]]]
                     ]
                   ]
                 ]
@@ -513,74 +296,36 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = new CusInnerApply13(adtList = v.value, data = data)
-  }
-  object HelperIOImpl13 extends PrepareInnerApply13[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap14(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl14 extends PrepareInnerApply14[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] {
+  class PrepareInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[
+                        NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[
                           I11,
-                          AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtZero]]]
+                          NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[I15, NatFuncZero]]]]
                         ]]]
                       ]
                     ]
@@ -592,78 +337,38 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = new CusInnerApply14(adtList = v.value, data = data)
-  }
-  object HelperIOImpl14 extends PrepareInnerApply14[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap15(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl15 extends PrepareInnerApply15[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] {
+  class PrepareInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[
+                        NatFuncPositive[
                           I9,
-                          AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[
+                          NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[
                             I12,
-                            AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtZero]]]
+                            NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[I16, NatFuncZero]]]]
                           ]]]
                         ]
                       ]
@@ -676,83 +381,40 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] =
-      new CusInnerApply15(adtList = v.value, data = data)
-  }
-  object HelperIOImpl15 extends PrepareInnerApply15[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap16(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl16 extends PrepareInnerApply16[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] {
+  class PrepareInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[
+                        NatFuncPositive[
                           I9,
-                          AdtAlias.AdtAppend[
+                          NatFuncPositive[
                             I10,
-                            AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[
+                            NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[
                               I13,
-                              AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtZero]]]
+                              NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[I17, NatFuncZero]]]]
                             ]]]
                           ]
                         ]
@@ -766,87 +428,42 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] =
-      new CusInnerApply16(adtList = v.value, data = data)
-  }
-  object HelperIOImpl16 extends PrepareInnerApply16[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T,
-      func16: I16 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any],
-            func16.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap17(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl17 extends PrepareInnerApply17[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] {
+  class PrepareInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[
+                        NatFuncPositive[
                           I9,
-                          AdtAlias.AdtAppend[
+                          NatFuncPositive[
                             I10,
-                            AdtAlias.AdtAppend[
+                            NatFuncPositive[
                               I11,
-                              AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[
+                              NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[
                                 I14,
-                                AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtZero]]]
+                                NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[I18, NatFuncZero]]]]
                               ]]]
                             ]
                           ]
@@ -861,91 +478,64 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] =
-      new CusInnerApply17(adtList = v.value, data = data)
-  }
-  object HelperIOImpl17 extends PrepareInnerApply17[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T,
-      func16: I16 => T,
-      func17: I17 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any],
-            func16.asInstanceOf[Any => Any],
-            func17.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap18[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18
+    ] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap18(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl18
+      extends PrepareInnerApply18[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] {
+  class PrepareInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[
+                        NatFuncPositive[
                           I9,
-                          AdtAlias.AdtAppend[
+                          NatFuncPositive[
                             I10,
-                            AdtAlias.AdtAppend[
+                            NatFuncPositive[
                               I11,
-                              AdtAlias.AdtAppend[
+                              NatFuncPositive[
                                 I12,
-                                AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[
+                                NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[
                                   I15,
-                                  AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtZero]]]
+                                  NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[I18, NatFuncPositive[I19, NatFuncZero]]]]
                                 ]]]
                               ]
                             ]
@@ -961,96 +551,67 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
-      new CusInnerApply18(adtList = v.value, data = data)
-  }
-  object HelperIOImpl18
-      extends PrepareInnerApply18[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T,
-      func16: I16 => T,
-      func17: I17 => T,
-      func18: I18 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any],
-            func16.asInstanceOf[Any => Any],
-            func17.asInstanceOf[Any => Any],
-            func18.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap19[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18,
+      I19
+    ] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap19(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl19
+      extends PrepareInnerApply19[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] {
+  class PrepareInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[
+                        NatFuncPositive[
                           I9,
-                          AdtAlias.AdtAppend[
+                          NatFuncPositive[
                             I10,
-                            AdtAlias.AdtAppend[
+                            NatFuncPositive[
                               I11,
-                              AdtAlias.AdtAppend[
+                              NatFuncPositive[
                                 I12,
-                                AdtAlias.AdtAppend[
+                                NatFuncPositive[
                                   I13,
-                                  AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[
+                                  NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[
                                     I16,
-                                    AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[I19, AdtAlias.AdtZero]]]
+                                    NatFuncPositive[I17, NatFuncPositive[I18, NatFuncPositive[I19, NatFuncPositive[I20, NatFuncZero]]]]
                                   ]]]
                                 ]
                               ]
@@ -1067,100 +628,70 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
-      new CusInnerApply19(adtList = v.value, data = data)
-  }
-  object HelperIOImpl19
-      extends PrepareInnerApply19[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T,
-      func16: I16 => T,
-      func17: I17 => T,
-      func18: I18 => T,
-      func19: I19 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any],
-            func16.asInstanceOf[Any => Any],
-            func17.asInstanceOf[Any => Any],
-            func18.asInstanceOf[Any => Any],
-            func19.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap20[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18,
+      I19,
+      I20
+    ] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap20(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl20
+      extends PrepareInnerApply20[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] {
+  class PrepareInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[
+                        NatFuncPositive[
                           I9,
-                          AdtAlias.AdtAppend[
+                          NatFuncPositive[
                             I10,
-                            AdtAlias.AdtAppend[
+                            NatFuncPositive[
                               I11,
-                              AdtAlias.AdtAppend[
+                              NatFuncPositive[
                                 I12,
-                                AdtAlias.AdtAppend[
+                                NatFuncPositive[
                                   I13,
-                                  AdtAlias.AdtAppend[
+                                  NatFuncPositive[
                                     I14,
-                                    AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[
+                                    NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[
                                       I17,
-                                      AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[I19, AdtAlias.AdtAppend[I20, AdtAlias.AdtZero]]]
+                                      NatFuncPositive[I18, NatFuncPositive[I19, NatFuncPositive[I20, NatFuncPositive[I21, NatFuncZero]]]]
                                     ]]]
                                   ]
                                 ]
@@ -1178,104 +709,73 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
-      new CusInnerApply20(adtList = v.value, data = data)
-  }
-  object HelperIOImpl20
-      extends PrepareInnerApply20[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T,
-      func16: I16 => T,
-      func17: I17 => T,
-      func18: I18 => T,
-      func19: I19 => T,
-      func20: I20 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any],
-            func16.asInstanceOf[Any => Any],
-            func17.asInstanceOf[Any => Any],
-            func18.asInstanceOf[Any => Any],
-            func19.asInstanceOf[Any => Any],
-            func20.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap21[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18,
+      I19,
+      I20,
+      I21
+    ] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap21(dataInstance.dataInstance, dataInstance.tail)
     }
   }
+  object HelperIOImpl21
+      extends PrepareInnerApply21[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
 
-  class PrepareInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] {
+  class PrepareInnerApply22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[
         T,
-        AdtAlias.AdtAppend[
+        NatFuncPositive[
           I1,
-          AdtAlias.AdtAppend[
+          NatFuncPositive[
             I2,
-            AdtAlias.AdtAppend[
+            NatFuncPositive[
               I3,
-              AdtAlias.AdtAppend[
+              NatFuncPositive[
                 I4,
-                AdtAlias.AdtAppend[
+                NatFuncPositive[
                   I5,
-                  AdtAlias.AdtAppend[
+                  NatFuncPositive[
                     I6,
-                    AdtAlias.AdtAppend[
+                    NatFuncPositive[
                       I7,
-                      AdtAlias.AdtAppend[
+                      NatFuncPositive[
                         I8,
-                        AdtAlias.AdtAppend[
+                        NatFuncPositive[
                           I9,
-                          AdtAlias.AdtAppend[
+                          NatFuncPositive[
                             I10,
-                            AdtAlias.AdtAppend[
+                            NatFuncPositive[
                               I11,
-                              AdtAlias.AdtAppend[
+                              NatFuncPositive[
                                 I12,
-                                AdtAlias.AdtAppend[
+                                NatFuncPositive[
                                   I13,
-                                  AdtAlias.AdtAppend[
+                                  NatFuncPositive[
                                     I14,
-                                    AdtAlias.AdtAppend[
+                                    NatFuncPositive[
                                       I15,
-                                      AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[
+                                      NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[
                                         I18,
-                                        AdtAlias.AdtAppend[I19, AdtAlias.AdtAppend[I20, AdtAlias.AdtAppend[I21, AdtAlias.AdtZero]]]
+                                        NatFuncPositive[I19, NatFuncPositive[I20, NatFuncPositive[I21, NatFuncPositive[I22, NatFuncZero]]]]
                                       ]]]
                                     ]
                                   ]
@@ -1294,129 +794,33 @@ object InnerTypeAdtClass {
         ],
         Adt.Status.Passed
       ]
-    ): CusInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
-      new CusInnerApply21(adtList = v.value, data = data)
-  }
-  object HelperIOImpl21
-      extends PrepareInnerApply21[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
-  class CusInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T,
-      func16: I16 => T,
-      func17: I17 => T,
-      func18: I18 => T,
-      func19: I19 => T,
-      func20: I20 => T,
-      func21: I21 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any],
-            func16.asInstanceOf[Any => Any],
-            func17.asInstanceOf[Any => Any],
-            func18.asInstanceOf[Any => Any],
-            func19.asInstanceOf[Any => Any],
-            func20.asInstanceOf[Any => Any],
-            func21.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
+    ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap22[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18,
+      I19,
+      I20,
+      I21,
+      I22
+    ] = {
+      val dataInstance = v.value(data)
+      new FoldNatPositiveHelper.FoldNatPositiveHelperWrap22(dataInstance.dataInstance, dataInstance.tail)
     }
-  }
-
-  class PrepareInnerApply22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] {
-    @inline def apply[T](data: T)(implicit
-      v: net.scalax.simple.adt.TypeAdtApply.Aux[
-        T,
-        AdtAlias.AdtAppend[
-          I1,
-          AdtAlias.AdtAppend[
-            I2,
-            AdtAlias.AdtAppend[
-              I3,
-              AdtAlias.AdtAppend[
-                I4,
-                AdtAlias.AdtAppend[
-                  I5,
-                  AdtAlias.AdtAppend[
-                    I6,
-                    AdtAlias.AdtAppend[
-                      I7,
-                      AdtAlias.AdtAppend[
-                        I8,
-                        AdtAlias.AdtAppend[
-                          I9,
-                          AdtAlias.AdtAppend[
-                            I10,
-                            AdtAlias.AdtAppend[
-                              I11,
-                              AdtAlias.AdtAppend[
-                                I12,
-                                AdtAlias.AdtAppend[
-                                  I13,
-                                  AdtAlias.AdtAppend[
-                                    I14,
-                                    AdtAlias.AdtAppend[
-                                      I15,
-                                      AdtAlias.AdtAppend[
-                                        I16,
-                                        AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[
-                                          I19,
-                                          AdtAlias.AdtAppend[I20, AdtAlias.AdtAppend[I21, AdtAlias.AdtAppend[I22, AdtAlias.AdtZero]]]
-                                        ]]]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        Adt.Status.Passed
-      ]
-    ): CusInnerApply22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
-      new CusInnerApply22(adtList = v.value, data = data)
   }
   object HelperIOImpl22
       extends PrepareInnerApply22[
@@ -1443,64 +847,5 @@ object InnerTypeAdtClass {
         Any,
         Any
       ]
-  class CusInnerApply22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22](
-    adtList: VarSetting[TypeAdt.Context[Any, Any, Any]] => ghdmzsk,
-    data: Any
-  ) {
-    @inline def fold[T](
-      func1: I1 => T,
-      func2: I2 => T,
-      func3: I3 => T,
-      func4: I4 => T,
-      func5: I5 => T,
-      func6: I6 => T,
-      func7: I7 => T,
-      func8: I8 => T,
-      func9: I9 => T,
-      func10: I10 => T,
-      func11: I11 => T,
-      func12: I12 => T,
-      func13: I13 => T,
-      func14: I14 => T,
-      func15: I15 => T,
-      func16: I16 => T,
-      func17: I17 => T,
-      func18: I18 => T,
-      func19: I19 => T,
-      func20: I20 => T,
-      func21: I21 => T,
-      func22: I22 => T
-    ): T = {
-      val foldList =
-        FoldListAppender.appendAll(
-          List(
-            func1.asInstanceOf[Any => Any],
-            func2.asInstanceOf[Any => Any],
-            func3.asInstanceOf[Any => Any],
-            func4.asInstanceOf[Any => Any],
-            func5.asInstanceOf[Any => Any],
-            func6.asInstanceOf[Any => Any],
-            func7.asInstanceOf[Any => Any],
-            func8.asInstanceOf[Any => Any],
-            func9.asInstanceOf[Any => Any],
-            func10.asInstanceOf[Any => Any],
-            func11.asInstanceOf[Any => Any],
-            func12.asInstanceOf[Any => Any],
-            func13.asInstanceOf[Any => Any],
-            func14.asInstanceOf[Any => Any],
-            func15.asInstanceOf[Any => Any],
-            func16.asInstanceOf[Any => Any],
-            func17.asInstanceOf[Any => Any],
-            func18.asInstanceOf[Any => Any],
-            func19.asInstanceOf[Any => Any],
-            func20.asInstanceOf[Any => Any],
-            func21.asInstanceOf[Any => Any],
-            func22.asInstanceOf[Any => Any]
-          )
-        )
-
-      FoldListAppender.result(foldList = foldList, adtList = adtList, data = data)
-    }
-  }
 
 }
