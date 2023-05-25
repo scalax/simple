@@ -13,6 +13,7 @@ import zio.test.Assertion._
 object TestCase4 extends ZIOSpecDefault {
 
   type TypeOpt[T] = Adt.Options3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
+
   def inputAdtData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
     val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
     applyM.fold(
