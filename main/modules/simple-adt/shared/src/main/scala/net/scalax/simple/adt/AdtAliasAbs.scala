@@ -2,7 +2,7 @@ package net.scalax.simple
 package adt
 package impl
 
-object Adt extends TypeAdtAlias with TypeAdtRuntimeApply {
+object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel with TypeAdtAliasModelUnapply {
 
   class Adapter[Target, Poly](val value: Target)
   object Adapter {

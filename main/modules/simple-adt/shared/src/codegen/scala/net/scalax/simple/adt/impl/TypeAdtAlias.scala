@@ -1,4 +1,5 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
 
 import implemention._

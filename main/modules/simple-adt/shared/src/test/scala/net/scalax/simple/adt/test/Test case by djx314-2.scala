@@ -14,7 +14,6 @@ import zio.test.Assertion._
   *   djx314
   */
 object TestCase2 extends ZIOSpecDefault {
-
   object JsonAdtPoly {
     implicit def jsonAdtPolyImplicit[In: Encoder]: Adt.Context[In, Json, JsonAdtPoly.type] = {
       val encoder = Encoder[In]
@@ -25,8 +24,10 @@ object TestCase2 extends ZIOSpecDefault {
   }
 
   def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
-    val applyM = Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
-    applyM.fold(
+    val applyM: Adt.Option3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]] =
+      Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
+
+    val ra: Json = applyM.fold(
       { n =>
         scalaAssert(n.isEmpty)
         "Null Tag".asJson
@@ -34,6 +35,20 @@ object TestCase2 extends ZIOSpecDefault {
       n => n.map(_ + 1).asJson,
       n => n.value
     )
+
+    val rb = applyM match {
+      case Adt.Option1(n) =>
+        scalaAssert(n.isEmpty)
+        "Null Tag".asJson
+      case Adt.Option2(n) => n.map(_ + 1).asJson
+      case Adt.Option3(n) => n.value
+    }
+
+    if (ra != rb) {
+      throw new Exception("M")
+    }
+
+    ra
   }
 
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314-2")(

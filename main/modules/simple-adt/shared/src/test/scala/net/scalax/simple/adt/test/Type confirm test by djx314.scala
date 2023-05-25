@@ -13,11 +13,12 @@ object `Type confirm test by djx314` {
       val b = Adt.Options2[List[String], List[Int]](t.to(List))
       locally {
         val t1 = Tag(b)
-        val t2 = Tag[FoldNatPositiveHelper.FoldNatPositiveHelperWrap2[List[String], List[Int]]]
+        val t2 = Tag[Adt.Option2[List[String], List[Int]]]
         Tag.assertType(t1, t2)
       }
 
-      val r = b.fold(identity, _.map(_.toString))
+      val r: List[String] = b.fold(identity, _.map(_.toString))
+
       locally {
         val t1 = Tag(r)
         val t2 = Tag[List[String]]
