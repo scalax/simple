@@ -1,10 +1,10 @@
-package net.scalax.simple.nat.group02.number_02
+package net.scalax.simple.nat.group02.inner.number_02
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `喵_Number_02` extends App {
+object `Inner跑跑跑` extends App {
 
   def genNumber(c: Int): (ghdmzsk, ghdmzsk, ghdmzsk) = {
     lazy val (n1Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number1S, zero = Number.number1T, count = c - 1)

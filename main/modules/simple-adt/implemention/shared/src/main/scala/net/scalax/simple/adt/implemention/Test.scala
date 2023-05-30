@@ -28,7 +28,7 @@ trait DataInstance[Data] {
 }
 
 trait NatFunc
-abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstance: Option[Data]) extends NatFunc with DataInstance[Data] {
+abstract case class NatFuncPositive[Data, +T <: NatFunc](override val dataInstance: Option[Data]) extends NatFunc with DataInstance[Data] {
   override val isDefined: Boolean = dataInstance.isDefined
   def tail: T
 }
@@ -40,15 +40,15 @@ object NatFunc {
   private def emptyInstance[T <: NatFunc]: T                         = emptyNone.asInstanceOf[T]
   val zero: NatFuncZero                                              = NatFuncZero.value
 
-  private class NatFuncPositiveSuccess[Data, T <: NatFunc](data: Data, override val tail: T)
+  private class NatFuncPositiveSuccess[Data, +T <: NatFunc](data: Data, override val tail: T)
       extends NatFuncPositive[Data, T](dataInstance = Some(data)) {
     override val isDefined: Boolean = true
   }
-  private class NatFuncPositiveSuccessImpl[Data, T <: NatFunc](data: Data)
+  private class NatFuncPositiveSuccessImpl[Data, +T <: NatFunc](data: Data)
       extends NatFuncPositiveSuccess[Data, T](data = data, tail = emptyNone.asInstanceOf[T]) {
     override val isDefined: Boolean = true
   }
-  private class NatFuncPositiveEmpty[Data, T <: NatFunc](override val tail: T)
+  private class NatFuncPositiveEmpty[Data, +T <: NatFunc](override val tail: T)
       extends NatFuncPositive[Data, T](dataInstance = Option.empty) {
     override val isDefined: Boolean = false
   }
@@ -59,11 +59,11 @@ object NatFunc {
   }
 }
 
-final class IsFinishAndNothing private (tail: () => IsFinishAndNothing) {
-  lazy val isFinishAndNothing: IsFinishAndNothing = tail()
+final class IsFinishAndNothing {
+  def matchErrorAndNothing: Nothing = throw new Exception("match error.")
 }
 object IsFinishAndNothing {
-  lazy val value: IsFinishAndNothing = new IsFinishAndNothing(() => value)
+  lazy val value: IsFinishAndNothing = new IsFinishAndNothing
 }
 
 class NatFuncZero private (tailValue: () => NatFuncZero)
@@ -96,11 +96,11 @@ object Test extends App {
     .overrideOnce(p1.tail.tail.tail)(t => t.map(_.size * 5))
     .overrideOnce(p1.tail.tail.tail.tail)(t => t.to(List).map(_.toInt * 2))
     .overrideOnce(p1.tail.tail.tail.tail.tail) { t =>
-      t.isFinishAndNothing
+      t.matchErrorAndNothing
       List.empty
     }
     .overrideOnce(p1.tail.tail.tail.tail.tail.tail) { t =>
-      t.isFinishAndNothing
+      t.matchErrorAndNothing
       List.empty
     }
     .option
