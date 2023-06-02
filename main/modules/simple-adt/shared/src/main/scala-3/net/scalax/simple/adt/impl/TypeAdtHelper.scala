@@ -39,25 +39,49 @@ object FetchAdtApply:
 
 end FetchAdtApply
 
+abstract class FoldOptApplyInstance[O[_] <: Tuple]:
+  protected def natFuncData: NatFunc
+
+  def apply[U](funcCol: O[U]): Option[U] =
+    val funcList = funcCol.productIterator.asInstanceOf[Iterator[Any => Any]].to(List)
+
+    def findDeep(funcList: List[Any => Any], d: NatFunc): Option[Any] =
+
+      inline def aliasD = d.asInstanceOf[NatFuncPositive[Any, NatFunc]]
+
+      funcList.match
+        case headFunc :: tailFunc =>
+          val headDataOpt = aliasD.dataInstance
+          if (headDataOpt.isDefined)
+            Some(headFunc(headDataOpt.get))
+          else
+            findDeep(tailFunc, aliasD.tail)
+          end if
+
+        case Nil =>
+          Option.empty
+      end match
+
+    end findDeep
+
+    findDeep(funcList, natFuncData).asInstanceOf[Option[U]]
+  end apply
+
+end FoldOptApplyInstance
+
 abstract class FoldApplyInstance[O[_] <: Tuple]:
   protected def natFuncData: NatFunc
 
   def apply[U](funcCol: O[U]): U =
-    val funcList = funcCol.productIterator.asInstanceOf[Iterator[Any => Any]].to(List)
+    inline def aliasNatFuncData = natFuncData
 
-    def findDeep(deep: Int, d: NatFunc): NatFuncPositive[Any, NatFunc] =
-      if (deep == 0)
-        d.asInstanceOf[NatFuncPositive[Any, NatFunc]]
-      else
-        findDeep(deep - 1, d).asInstanceOf[NatFuncPositive[Any, NatFunc]].tail.asInstanceOf[NatFuncPositive[Any, NatFunc]]
-      end if
-    end findDeep
+    val instance =
+      new FoldOptApplyInstance[O]:
+        override protected def natFuncData: NatFunc = aliasNatFuncData
+      end new
+    end instance
 
-    val result = funcList.zipWithIndex
-      .foldLeft(FoldContext.empty: FoldContext[Any])((b, func) => b.overrideOnce(findDeep(func._2, natFuncData))(func._1))
-      .asInstanceOf[FoldContext[U]]
-
-    result.option.get
+    instance(funcCol).get
   end apply
 
 end FoldApplyInstance
@@ -65,6 +89,12 @@ end FoldApplyInstance
 final class InnerApply[Data, T <: NatFunc](override val dataInstance: Option[Data], override val tail: T)
     extends NatFuncPositive[Data, T](dataInstance = dataInstance):
   self: InnerApply[Data, T] =>
+
+  inline def foldOpt: FoldOptApplyInstance[[x] =>> FetchAdtApply.HListFix[NatFuncPositive[Data, T], x]] =
+    new FoldOptApplyInstance[[x] =>> FetchAdtApply.HListFix[NatFuncPositive[Data, T], x]]:
+      protected def natFuncData: NatFunc = self
+    end new
+  end foldOpt
 
   inline def fold: FoldApplyInstance[[x] =>> FetchAdtApply.HListFix[NatFuncPositive[Data, T], x]] =
     new FoldApplyInstance[[x] =>> FetchAdtApply.HListFix[NatFuncPositive[Data, T], x]]:

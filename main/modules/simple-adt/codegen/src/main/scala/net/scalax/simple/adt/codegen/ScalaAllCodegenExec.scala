@@ -23,14 +23,6 @@ object ScalaAllCodegenExec:
     }
 
     locally {
-      val filePath = writePath.resolve("FoldNatPositiveHelper.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.FoldNatPositive().body
-        writer.println(linerContent)
-      }
-    }
-
-    locally {
       val filePath = writePath.resolve("TypaAdtAliasModelUnapply.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
         val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypaAdtAliasModelUnapply().body
