@@ -96,11 +96,11 @@ object Test extends App {
     .overrideOnce(p1.tail.tail.tail)(t => t.map(_.size * 5))
     .overrideOnce(p1.tail.tail.tail.tail)(t => t.to(List).map(_.toInt * 2))
     .overrideOnce(p1.tail.tail.tail.tail.tail) { t =>
-      t.matchErrorAndNothing
+      def doneSomething: Nothing = t.matchErrorAndNothing
       List.empty
     }
     .overrideOnce(p1.tail.tail.tail.tail.tail.tail) { t =>
-      t.matchErrorAndNothing
+      def doneSomething: Nothing = t.matchErrorAndNothing
       List.empty
     }
     .option
