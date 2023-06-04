@@ -6,12 +6,11 @@ import scala.annotation.tailrec
 
 object `喵_Number_01` extends App {
 
-  def genNumber(c: Int): (ghdmzsk, ghdmzsk, ghdmzsk) = {
+  def genNumber(c: Int): (ghdmzsk, ghdmzsk) = {
     lazy val (n1Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number1S, zero = Number.number1T, count = c - 1)
-    lazy val (n2Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number3S, zero = Number.number1T, count = c)
-    lazy val (n3Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number3S, zero = Number.number3T, count = c)
+    lazy val (n3Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number1T, zero = Number.number2S, count = c)
 
-    (n1Pos, n2Pos, n3Pos)
+    (n1Pos, n3Pos)
   }
 
   def count(except: Int, i1: Long): (Long, Long) = {
@@ -19,8 +18,8 @@ object `喵_Number_01` extends App {
     var length1: Long   = 0
     var length2: Long   = 0
 
-    val (n1, n2, n3) = genNumber(except)
-    val gen          = () => n1(() => n3)
+    val (n1, n3) = genNumber(except)
+    val gen      = () => n1(() => n3)
 
     @tailrec
     def countImpl(num: () => ghdmzsk, needConitie: Long): Unit = {

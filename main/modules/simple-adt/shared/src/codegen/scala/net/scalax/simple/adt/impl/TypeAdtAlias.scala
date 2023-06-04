@@ -1067,4 +1067,4 @@ trait TypeAdtAlias {
 
 }
 
-object TypeAdtAlias extends TypeAdtAlias
+object TypeAdtAlias extends TypeAdtAlias with TypeAdtAliasModel with TypeAdtAliasModelUnapply

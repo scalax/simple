@@ -1,7 +1,6 @@
 package net.scalax.simple.adt.test
 
 import net.scalax.simple.adt.{TypeAdt => Adt}
-import net.scalax.simple.adt.impl.FoldNatPositiveHelper
 import scala.collection.compat._
 import net.scalax.simple.test._
 

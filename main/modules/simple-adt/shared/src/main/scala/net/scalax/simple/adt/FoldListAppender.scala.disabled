@@ -1,7 +1,6 @@
 package net.scalax.simple
 package adt
 
-import implemention.AdtNumber
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object FoldListAppender {

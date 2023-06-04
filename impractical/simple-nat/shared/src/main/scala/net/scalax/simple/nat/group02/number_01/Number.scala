@@ -4,10 +4,9 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object Number {
 
-  val number1S: ghdmzsk = ghdmzsk(head => ghdmzsk(tail => AA(() => head()(tail))))
-  val number1T: ghdmzsk = ghdmzsk(head => ghdmzsk(tail => tail()(head)))
-  val number3S: ghdmzsk = ghdmzsk(head => ghdmzsk(tail => tail()(head)))
-  val number3T: ghdmzsk = ghdmzsk(head => ghdmzsk(tail => BB(() => tail()(head))))
+  val number1S: ghdmzsk = ghdmzsk(num1 => ghdmzsk(num2 => AA(() => num1()(num2))))
+  val number1T: ghdmzsk = ghdmzsk(num1 => ghdmzsk(num2 => num2()(num1)))
+  val number2S: ghdmzsk = ghdmzsk(num1 => ghdmzsk(num2 => BB(() => num2()(num1))))
 
   case class AA(cc: () => ghdmzsk) extends ghdmzsk {
     override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception
