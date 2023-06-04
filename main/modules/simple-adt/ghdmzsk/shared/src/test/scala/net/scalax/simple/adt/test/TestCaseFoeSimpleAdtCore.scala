@@ -8,7 +8,6 @@ import zio.test._
 import zio.test.Assertion._
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import net.scalax.simple.adt.factory.AdtCoreFactory
 
 object SimpleAdtCoreBuilder {
 

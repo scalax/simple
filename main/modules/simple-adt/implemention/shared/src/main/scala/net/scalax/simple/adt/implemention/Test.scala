@@ -5,10 +5,10 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import scala.collection.compat._
 
 trait ghdmzsk1 extends ghdmzsk {
-  override def apply(other: () => ghdmzsk): ghdmzsk = ghdmzsk(tail => other()(tail))
+  override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = ghdmzsk(tail => other.inputGHDMZSK(tail()))
 }
 trait ghdmzskZero extends ghdmzsk {
-  override def apply(g: () => ghdmzsk): ghdmzsk = g()
+  override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = g
 }
 
 object UnapplyInstance {
@@ -35,7 +35,7 @@ object UnapplyInstance {
 
   sealed trait TypeCounter extends ghdmzsk
   case class PositiveTypeCounter[T <: TypeCounter](tail: T) extends TypeCounter with ghdmzsk1 {
-    override def apply(g: () => ghdmzsk): ghdmzsk = super.apply(g)(() => tail)
+    override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = super.inputGHDMZSK(g).inputGHDMZSK(tail)
   }
   class PositiveTypeCounterZero extends TypeCounter with ghdmzskZero
   object PositiveTypeCounterZero {
@@ -44,7 +44,7 @@ object UnapplyInstance {
 
   class UnapplyFunc[T <: TypeCounter](tNumber: T) {
     def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[T, U, Data]): Option[Data] =
-      tNumber(() => u).asInstanceOf[NatFuncPositive[Data, NatFunc]].dataInstance
+      tNumber.inputGHDMZSK(u).asInstanceOf[NatFuncPositive[Data, NatFunc]].dataInstance
     def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[T, U, Data]): Option[Data] = apply(u)
   }
   def UnapplyFunc[T <: TypeCounter](t: T): UnapplyFunc[T] = new UnapplyFunc(t)
@@ -61,8 +61,8 @@ abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstanc
     extends NatFunc
     with DataInstance[Data]
     with ghdmzsk1 {
-  override def apply(g: () => ghdmzsk): ghdmzsk = super.apply(g)(() => tail)
-  override val isDefined: Boolean               = dataInstance.isDefined
+  override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = super.inputGHDMZSK(g).inputGHDMZSK(tail)
+  override val isDefined: Boolean                   = dataInstance.isDefined
   def tail: T
 }
 
