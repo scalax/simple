@@ -28,7 +28,7 @@ object UnapplyInstance {
   }
   trait CountNatPositiveImplicitRaw1 {
     implicit def positiveGetTail[T1Tail <: TypeCounter, T2Tail <: NatFunc, Data, TempData](implicit
-      t: CountNatPositive.Aux[T1Tail, T2Tail, Data]
+      somethig_not_used: CountNatPositive.Aux[T1Tail, T2Tail, Data]
     ): CountNatPositive.Aux[PositiveTypeCounter[T1Tail], NatFuncPositive[TempData, T2Tail], Data] =
       new CountNatPositive[PositiveTypeCounter[T1Tail], NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
@@ -45,8 +45,9 @@ object UnapplyInstance {
   }
 
   class UnapplyFunc[T <: TypeCounter](tNumber: T) {
-    def unapply[U <: NatFunc, Data](u: U)(implicit t_not_use: CountNatPositive.Aux[T, U, Data]): Option[Data] =
+    def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[T, U, Data]): Option[Data] =
       tNumber(() => u).asInstanceOf[NatFuncPositive[Data, NatFunc]].dataInstance
+    def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[T, U, Data]): Option[Data] = apply(u)
   }
   def UnapplyFunc[T <: TypeCounter](t: T): UnapplyFunc[T] = new UnapplyFunc(t)
 
