@@ -1,11 +1,19 @@
 package net.scalax.simple.adt.implemention
 
+import net.scalax.simple.ghdmzsk.ghdmzsk
+
 import scala.collection.compat._
+
+trait ghdmzsk1 extends ghdmzsk {
+  override def apply(other: () => ghdmzsk): ghdmzsk = ghdmzsk(tail => other()(tail))
+}
+trait ghdmzskZero extends ghdmzsk {
+  override def apply(g: () => ghdmzsk): ghdmzsk = g()
+}
 
 object UnapplyInstance {
 
   trait CountNatPositive[T1 <: TypeCounter, -T2 <: NatFunc] {
-    def input(n: T2): Option[DataType]
     type DataType
   }
   object CountNatPositive extends CountNatPositiveImplicitRaw1 {
@@ -15,7 +23,6 @@ object UnapplyInstance {
 
     implicit def zeroGetTail[T2Tail <: NatFunc, Data]: CountNatPositive.Aux[PositiveTypeCounterZero, NatFuncPositive[Data, T2Tail], Data] =
       new CountNatPositive[PositiveTypeCounterZero, NatFuncPositive[Data, T2Tail]] {
-        override def input(n: NatFuncPositive[Data, T2Tail]): Option[Data] = n.dataInstance
         override type DataType = Data
       }
   }
@@ -24,18 +31,22 @@ object UnapplyInstance {
       t: CountNatPositive.Aux[T1Tail, T2Tail, Data]
     ): CountNatPositive.Aux[PositiveTypeCounter[T1Tail], NatFuncPositive[TempData, T2Tail], Data] =
       new CountNatPositive[PositiveTypeCounter[T1Tail], NatFuncPositive[TempData, T2Tail]] {
-        override def input(n: NatFuncPositive[TempData, T2Tail]): Option[Data] = t.input(n.tail)
-
         override type DataType = Data
       }
   }
 
-  sealed trait TypeCounter
-  class PositiveTypeCounter[T <: TypeCounter] extends TypeCounter
-  class PositiveTypeCounterZero               extends PositiveTypeCounter[PositiveTypeCounterZero]
+  sealed trait TypeCounter extends ghdmzsk
+  case class PositiveTypeCounter[T <: TypeCounter](tail: T) extends TypeCounter with ghdmzsk1 {
+    override def apply(g: () => ghdmzsk): ghdmzsk = super.apply(g)(() => tail)
+  }
+  class PositiveTypeCounterZero extends TypeCounter with ghdmzskZero
+  object PositiveTypeCounterZero {
+    val value: PositiveTypeCounterZero = new PositiveTypeCounterZero
+  }
 
-  class UnapplyFunc[T <: TypeCounter](t: T) {
-    def unapply[U <: NatFunc, Data](u: U)(implicit t: CountNatPositive.Aux[T, U, Data]): Option[Data] = t.input(u)
+  class UnapplyFunc[T <: TypeCounter](tNumber: T) {
+    def unapply[U <: NatFunc, Data](u: U)(implicit t_not_use: CountNatPositive.Aux[T, U, Data]): Option[Data] =
+      tNumber(() => u).asInstanceOf[NatFuncPositive[Data, NatFunc]].dataInstance
   }
   def UnapplyFunc[T <: TypeCounter](t: T): UnapplyFunc[T] = new UnapplyFunc(t)
 
@@ -46,24 +57,31 @@ trait DataInstance[Data] {
   def isDefined: Boolean
 }
 
-trait NatFunc
-abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstance: Option[Data]) extends NatFunc with DataInstance[Data] {
-  override val isDefined: Boolean = dataInstance.isDefined
+trait NatFunc extends ghdmzsk
+abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstance: Option[Data])
+    extends NatFunc
+    with DataInstance[Data]
+    with ghdmzsk1 {
+  override def apply(g: () => ghdmzsk): ghdmzsk = super.apply(g)(() => tail)
+  override val isDefined: Boolean               = dataInstance.isDefined
   def tail: T
 }
 
 object NatFunc {
-  def success[D, T <: NatFunc](t: D, tail: T): NatFuncPositive[D, T] = new NatFuncPositiveSuccess(data = t, tail = tail)
-  def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T]         = new NatFuncPositiveEmpty(tail = tail)
-  val zero: NatFuncZero                                              = NatFuncZero.value
-
-  private class NatFuncPositiveSuccess[Data, T <: NatFunc](data: Data, override val tail: T)
-      extends NatFuncPositive[Data, T](dataInstance = Some(data))
-  private class NatFuncPositiveEmpty[Data, T <: NatFunc](override val tail: T) extends NatFuncPositive[Data, T](dataInstance = Option.empty)
-
-  private lazy val emptyNone: NatFuncPositive[Any, NatFunc] = new NatFuncPositive[Any, NatFunc](dataInstance = None) {
-    override lazy val tail: NatFunc = emptyNone
+  def success[D, T <: NatFunc](t: D, tail: T): NatFuncPositive[D, T] = {
+    def tail1 = tail
+    new NatFuncPositive[D, T](dataInstance = Some(t)) {
+      override val tail: T = tail1
+    }
   }
+  def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T] = {
+    def tail1 = tail
+    new NatFuncPositive[D, T](dataInstance = Option.empty) {
+      override val tail: T = tail1
+    }
+  }
+
+  val zero: NatFuncZero = NatFuncZero.value
 }
 
 final class IsFinishAndNothing {
@@ -98,32 +116,42 @@ object Test extends App {
   val p4: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.zero))))
   val p5: Ux2 = NatFunc.empty(NatFunc.success(List("abc", "abcdefghij", "abcdefghijklmn"), NatFunc.empty(NatFunc.empty(NatFunc.zero))))
 
-  val Options1 = UnapplyInstance.UnapplyFunc(new UnapplyInstance.PositiveTypeCounterZero)
-  val Options2 = UnapplyInstance.UnapplyFunc(new UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounterZero])
+  val Options1 = UnapplyInstance.UnapplyFunc(UnapplyInstance.PositiveTypeCounterZero.value)
+  val Options2 = UnapplyInstance.UnapplyFunc(UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounterZero.value))
   val Options3 = UnapplyInstance.UnapplyFunc(
-    new UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounterZero]]
+    UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounterZero.value))
   )
   val Options4 = UnapplyInstance.UnapplyFunc(
-    new UnapplyInstance.PositiveTypeCounter[
-      UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounterZero]]
-    ]
+    UnapplyInstance.PositiveTypeCounter(
+      UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounterZero.value))
+    )
   )
   val Options5 = UnapplyInstance.UnapplyFunc(
-    new UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[
-      UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounterZero]]
-    ]]
+    UnapplyInstance.PositiveTypeCounter(
+      UnapplyInstance.PositiveTypeCounter(
+        UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounterZero.value))
+      )
+    )
   )
   val Options6 = UnapplyInstance.UnapplyFunc(
-    new UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[
-      UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounterZero]]
-    ]]]
+    UnapplyInstance.PositiveTypeCounter(
+      UnapplyInstance.PositiveTypeCounter(
+        UnapplyInstance.PositiveTypeCounter(
+          UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounterZero.value))
+        )
+      )
+    )
   )
   val Options7 = UnapplyInstance.UnapplyFunc(
-    new UnapplyInstance.PositiveTypeCounter[
-      UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[
-        UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounter[UnapplyInstance.PositiveTypeCounterZero]]
-      ]]]
-    ]
+    UnapplyInstance.PositiveTypeCounter(
+      UnapplyInstance.PositiveTypeCounter(
+        UnapplyInstance.PositiveTypeCounter(
+          UnapplyInstance.PositiveTypeCounter(
+            UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounter(UnapplyInstance.PositiveTypeCounterZero.value))
+          )
+        )
+      )
+    )
   )
 
   val preT1 = p1 match {
