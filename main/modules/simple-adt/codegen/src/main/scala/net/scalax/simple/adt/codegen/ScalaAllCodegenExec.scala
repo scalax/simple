@@ -23,7 +23,7 @@ object ScalaAllCodegenExec:
     }
 
     locally {
-      val filePath = writePath.resolve("TypaAdtAliasModelUnapply.scala")
+      val filePath = writePath.resolve("TypeAdtAliasModelUnapply.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
         val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypaAdtAliasModelUnapply().body
         writer.println(linerContent)

@@ -73,6 +73,7 @@ object NatFunc {
       override val tail: T = tail1
     }
   }
+  // def successValue[D, T <: NatFunc](t: D): NatFuncPositive[D, T] = success(t, tail = 11)
   def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T] = {
     def tail1 = tail
     new NatFuncPositive[D, T](dataInstance = Option.empty) {
