@@ -16,21 +16,19 @@ object UnapplyInstance {
   trait CountNatPositive[T1 <: TypeCounter, -T2 <: NatFunc] {
     type DataType
   }
-  object CountNatPositive extends CountNatPositiveImplicitRaw1 {
+  object CountNatPositive {
     type Aux[T1 <: TypeCounter, -T2 <: NatFunc, DType] = CountNatPositive[T1, T2] {
       type DataType = DType
     }
 
-    implicit def zeroGetTail[T2Tail <: NatFunc, Data]: CountNatPositive.Aux[PositiveTypeCounterZero, NatFuncPositive[Data, T2Tail], Data] =
-      new CountNatPositive[PositiveTypeCounterZero, NatFuncPositive[Data, T2Tail]] {
-        override type DataType = Data
-      }
-  }
-  trait CountNatPositiveImplicitRaw1 {
     implicit def positiveGetTail[T1Tail <: TypeCounter, T2Tail <: NatFunc, Data, TempData](implicit
       somethig_not_used: CountNatPositive.Aux[T1Tail, T2Tail, Data]
     ): CountNatPositive.Aux[PositiveTypeCounter[T1Tail], NatFuncPositive[TempData, T2Tail], Data] =
       new CountNatPositive[PositiveTypeCounter[T1Tail], NatFuncPositive[TempData, T2Tail]] {
+        override type DataType = Data
+      }
+    implicit def zeroGetTail[T2Tail <: NatFunc, Data]: CountNatPositive.Aux[PositiveTypeCounterZero, NatFuncPositive[Data, T2Tail], Data] =
+      new CountNatPositive[PositiveTypeCounterZero, NatFuncPositive[Data, T2Tail]] {
         override type DataType = Data
       }
   }
