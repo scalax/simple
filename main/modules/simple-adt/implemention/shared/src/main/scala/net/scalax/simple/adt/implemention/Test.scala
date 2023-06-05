@@ -40,22 +40,29 @@ object UnapplyInstance {
   }
   trait PositiveTypeCounterZero extends TypeCounter with ghdmzskZero
 
-  trait UnapplyFunc[ThisType <: UnapplyFunc[_]] extends TypeCounter {
+  sealed trait UnapplyFunc[ThisType <: UnapplyFunc[_]] extends TypeCounter {
     def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] =
       inputGHDMZSK(u).asInstanceOf[NatFuncPositive[Data, NatFunc]].dataInstance
     def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] = apply(u)
   }
 
-  class UnapplyFuncPositive[Tail <: UnapplyFunc[_]](override val tail: Tail)
-      extends PositiveTypeCounter[Tail]
-      with UnapplyFunc[UnapplyFuncPositive[Tail]]
+  trait UnapplyFuncPositive[Tail <: UnapplyFunc[_]] extends PositiveTypeCounter[Tail] with UnapplyFunc[UnapplyFuncPositive[Tail]] {
+    override def tail: Tail
+  }
   object UnapplyFuncPositive {
-    def apply[Tail <: UnapplyFunc[_]](tail: Tail): UnapplyFuncPositive[Tail] = new UnapplyFuncPositive[Tail](tail)
+    def apply[Tail <: UnapplyFunc[_]](tail: Tail): UnapplyFuncPositive[Tail] = {
+      val tail1 = tail
+      new UnapplyFuncPositive[Tail] {
+        override val tail: Tail = tail1
+      }
+    }
   }
 
-  class UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFunc[UnapplyFuncZero]
+  trait UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFunc[UnapplyFuncZero]
   object UnapplyFuncZero {
-    val value: UnapplyFuncZero = new UnapplyFuncZero
+    private object UnapplyFuncZeroObject extends UnapplyFuncZero
+
+    val value: UnapplyFuncZero = UnapplyFuncZeroObject
   }
 
 }
