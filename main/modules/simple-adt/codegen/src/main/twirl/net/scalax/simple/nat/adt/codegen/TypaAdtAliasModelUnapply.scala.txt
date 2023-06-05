@@ -15,27 +15,26 @@ import implemention._
 
 @buildHListString(i1: Int) = {
     @if(i1 > 0) {
-        net.scalax.simple.adt.implemention.UnapplyInstance.PositiveTypeCounter[@buildHListString(i1 - 1)]
+        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncPositive[@buildHListString(i1 - 1)]
     } else {
-        net.scalax.simple.adt.implemention.UnapplyInstance.PositiveTypeCounterZero
+        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncZero
     }
 }
 @buildHListInstance(i1: Int) = {
     @if(i1 > 0) {
-        net.scalax.simple.adt.implemention.UnapplyInstance.PositiveTypeCounter(@buildHListInstance(i1 - 1))
+        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncPositive(@buildHListInstance(i1 - 1))
     } else {
-        net.scalax.simple.adt.implemention.UnapplyInstance.PositiveTypeCounterZero.value
+        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncZero.value
     }
 }
 
 trait TypeAdtAliasModelUnapply {
     @for(i1 <- 1 to 30) {
         type OptionNat@{i1} = @buildHListString(i1 - 1)
-        val OptionNat@{i1} = @buildHListInstance(i1 - 1)
+        val OptionNat@{i1}: OptionNat@{i1} = net.scalax.simple.adt.implemention.DefaultUnapplyFuncGetter.get[OptionNat@{i1}](@{i1 - 1})
     }
 
-
     @for(i1 <- 1 to 30) {
-        val Option@{i1}: net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFunc[OptionNat@{i1}] = net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFunc(OptionNat@{i1})
+        val Option@{i1}: OptionNat@{i1} = OptionNat@{i1}
     }
 }
