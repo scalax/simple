@@ -6,30 +6,33 @@ import net.scalax.simple.adt.{TypeAdt => InnerAdt}
 
 object FoldNatPositiveHelper {
 
-  class FoldNatPositiveHelperWrap1[T1](override val dataInstance: Option[T1], override val tail: NatFuncZero)
-      extends NatFuncPositive[T1, NatFuncZero](dataInstance) {
+  class FoldNatPositiveHelperWrap1[T1](
+    override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
+    override val tail: NatFuncZero
+  ) extends NatFuncPositive[T1, NatFuncZero](dataInstance) {
     def foldOpt[U](func1: T1 => U): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) =>
+        case InnerAdt.Option2.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option3(data) =>
+        case InnerAdt.Option3.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option4(data) =>
+        case InnerAdt.Option4.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option5(data) =>
+        case InnerAdt.Option5.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option6(data) =>
+        case InnerAdt.Option6.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -39,32 +42,35 @@ object FoldNatPositiveHelper {
     def fold[U](func1: T1 => U): U = foldOpt(func1).get
   }
 
-  class FoldNatPositiveHelperWrap2[T1, T2](override val dataInstance: Option[T1], override val tail: NatFuncPositive[T2, NatFuncZero])
-      extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncZero]](dataInstance) {
+  class FoldNatPositiveHelperWrap2[T1, T2](
+    override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
+    override val tail: NatFuncPositive[T2, NatFuncZero]
+  ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncZero]](dataInstance) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) =>
+        case InnerAdt.Option3.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option4(data) =>
+        case InnerAdt.Option4.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option5(data) =>
+        case InnerAdt.Option5.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option6(data) =>
+        case InnerAdt.Option6.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option7(data) =>
+        case InnerAdt.Option7.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -76,34 +82,35 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap3[T1, T2, T3](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncZero]]
   ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncZero]]](dataInstance) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) =>
+        case InnerAdt.Option4.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option5(data) =>
+        case InnerAdt.Option5.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option6(data) =>
+        case InnerAdt.Option6.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option7(data) =>
+        case InnerAdt.Option7.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option8(data) =>
+        case InnerAdt.Option8.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -115,36 +122,37 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap4[T1, T2, T3, T4](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncZero]]]
   ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncZero]]]](dataInstance) {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) =>
+        case InnerAdt.Option5.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option6(data) =>
+        case InnerAdt.Option6.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option7(data) =>
+        case InnerAdt.Option7.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option8(data) =>
+        case InnerAdt.Option8.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option9(data) =>
+        case InnerAdt.Option9.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -156,6 +164,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap5[T1, T2, T3, T4, T5](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncZero]]]]
   ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncZero]]]]](
         dataInstance
@@ -163,33 +172,33 @@ object FoldNatPositiveHelper {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) =>
+        case InnerAdt.Option6.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option7(data) =>
+        case InnerAdt.Option7.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option8(data) =>
+        case InnerAdt.Option8.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option9(data) =>
+        case InnerAdt.Option9.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option10(data) =>
+        case InnerAdt.Option10.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -202,6 +211,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap6[T1, T2, T3, T4, T5, T6](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncZero]]]]]
   ) extends NatFuncPositive[
         T1,
@@ -210,35 +220,35 @@ object FoldNatPositiveHelper {
     def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U, func6: T6 => U): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) =>
+        case InnerAdt.Option7.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option8(data) =>
+        case InnerAdt.Option8.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option9(data) =>
+        case InnerAdt.Option9.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option10(data) =>
+        case InnerAdt.Option10.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option11(data) =>
+        case InnerAdt.Option11.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -251,6 +261,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap7[T1, T2, T3, T4, T5, T6, T7](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncZero]]]]]
@@ -270,37 +281,37 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) =>
+        case InnerAdt.Option8.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option9(data) =>
+        case InnerAdt.Option9.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option10(data) =>
+        case InnerAdt.Option10.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option11(data) =>
+        case InnerAdt.Option11.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option12(data) =>
+        case InnerAdt.Option12.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -313,6 +324,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap8[T1, T2, T3, T4, T5, T6, T7, T8](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[T2, NatFuncPositive[
       T3,
       NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncPositive[T8, NatFuncZero]]]]]
@@ -336,39 +348,39 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) =>
+        case InnerAdt.Option9.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option10(data) =>
+        case InnerAdt.Option10.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option11(data) =>
+        case InnerAdt.Option11.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option12(data) =>
+        case InnerAdt.Option12.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option13(data) =>
+        case InnerAdt.Option13.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -389,6 +401,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap9[T1, T2, T3, T4, T5, T6, T7, T8, T9](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[T3, NatFuncPositive[
@@ -419,41 +432,41 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) =>
+        case InnerAdt.Option10.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option11(data) =>
+        case InnerAdt.Option11.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option12(data) =>
+        case InnerAdt.Option12.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option13(data) =>
+        case InnerAdt.Option13.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option14(data) =>
+        case InnerAdt.Option14.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -475,6 +488,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -512,43 +526,43 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) =>
+        case InnerAdt.Option11.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option12(data) =>
+        case InnerAdt.Option12.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option13(data) =>
+        case InnerAdt.Option13.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option14(data) =>
+        case InnerAdt.Option14.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option15(data) =>
+        case InnerAdt.Option15.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -571,6 +585,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -615,45 +630,45 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) =>
+        case InnerAdt.Option12.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option13(data) =>
+        case InnerAdt.Option13.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option14(data) =>
+        case InnerAdt.Option14.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option15(data) =>
+        case InnerAdt.Option15.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option16(data) =>
+        case InnerAdt.Option16.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -677,6 +692,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -728,47 +744,47 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) =>
+        case InnerAdt.Option13.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option14(data) =>
+        case InnerAdt.Option14.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option15(data) =>
+        case InnerAdt.Option15.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option16(data) =>
+        case InnerAdt.Option16.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option17(data) =>
+        case InnerAdt.Option17.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -793,6 +809,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -851,49 +868,49 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) =>
+        case InnerAdt.Option14.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option15(data) =>
+        case InnerAdt.Option15.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option16(data) =>
+        case InnerAdt.Option16.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option17(data) =>
+        case InnerAdt.Option17.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option18(data) =>
+        case InnerAdt.Option18.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -919,6 +936,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -984,51 +1002,51 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) =>
+        case InnerAdt.Option15.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option16(data) =>
+        case InnerAdt.Option16.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option17(data) =>
+        case InnerAdt.Option17.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option18(data) =>
+        case InnerAdt.Option18.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option19(data) =>
+        case InnerAdt.Option19.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -1055,6 +1073,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -1127,53 +1146,53 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) =>
+        case InnerAdt.Option16.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option17(data) =>
+        case InnerAdt.Option17.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option18(data) =>
+        case InnerAdt.Option18.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option19(data) =>
+        case InnerAdt.Option19.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option20(data) =>
+        case InnerAdt.Option20.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -1201,6 +1220,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -1280,55 +1300,55 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) => Some(func16(data))
+        case InnerAdt.Option16.CaseFirst(data) => Some(func16(data))
 
-        case InnerAdt.Option17(data) =>
+        case InnerAdt.Option17.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option18(data) =>
+        case InnerAdt.Option18.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option19(data) =>
+        case InnerAdt.Option19.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option20(data) =>
+        case InnerAdt.Option20.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option21(data) =>
+        case InnerAdt.Option21.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -1358,6 +1378,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -1444,57 +1465,57 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) => Some(func16(data))
+        case InnerAdt.Option16.CaseFirst(data) => Some(func16(data))
 
-        case InnerAdt.Option17(data) => Some(func17(data))
+        case InnerAdt.Option17.CaseFirst(data) => Some(func17(data))
 
-        case InnerAdt.Option18(data) =>
+        case InnerAdt.Option18.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option19(data) =>
+        case InnerAdt.Option19.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option20(data) =>
+        case InnerAdt.Option20.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option21(data) =>
+        case InnerAdt.Option21.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option22(data) =>
+        case InnerAdt.Option22.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -1542,6 +1563,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -1635,59 +1657,59 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) => Some(func16(data))
+        case InnerAdt.Option16.CaseFirst(data) => Some(func16(data))
 
-        case InnerAdt.Option17(data) => Some(func17(data))
+        case InnerAdt.Option17.CaseFirst(data) => Some(func17(data))
 
-        case InnerAdt.Option18(data) => Some(func18(data))
+        case InnerAdt.Option18.CaseFirst(data) => Some(func18(data))
 
-        case InnerAdt.Option19(data) =>
+        case InnerAdt.Option19.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option20(data) =>
+        case InnerAdt.Option20.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option21(data) =>
+        case InnerAdt.Option21.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option22(data) =>
+        case InnerAdt.Option22.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option23(data) =>
+        case InnerAdt.Option23.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -1737,6 +1759,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -1837,61 +1860,61 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) => Some(func16(data))
+        case InnerAdt.Option16.CaseFirst(data) => Some(func16(data))
 
-        case InnerAdt.Option17(data) => Some(func17(data))
+        case InnerAdt.Option17.CaseFirst(data) => Some(func17(data))
 
-        case InnerAdt.Option18(data) => Some(func18(data))
+        case InnerAdt.Option18.CaseFirst(data) => Some(func18(data))
 
-        case InnerAdt.Option19(data) => Some(func19(data))
+        case InnerAdt.Option19.CaseFirst(data) => Some(func19(data))
 
-        case InnerAdt.Option20(data) =>
+        case InnerAdt.Option20.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option21(data) =>
+        case InnerAdt.Option21.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option22(data) =>
+        case InnerAdt.Option22.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option23(data) =>
+        case InnerAdt.Option23.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option24(data) =>
+        case InnerAdt.Option24.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -1943,6 +1966,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -2050,63 +2074,63 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) => Some(func16(data))
+        case InnerAdt.Option16.CaseFirst(data) => Some(func16(data))
 
-        case InnerAdt.Option17(data) => Some(func17(data))
+        case InnerAdt.Option17.CaseFirst(data) => Some(func17(data))
 
-        case InnerAdt.Option18(data) => Some(func18(data))
+        case InnerAdt.Option18.CaseFirst(data) => Some(func18(data))
 
-        case InnerAdt.Option19(data) => Some(func19(data))
+        case InnerAdt.Option19.CaseFirst(data) => Some(func19(data))
 
-        case InnerAdt.Option20(data) => Some(func20(data))
+        case InnerAdt.Option20.CaseFirst(data) => Some(func20(data))
 
-        case InnerAdt.Option21(data) =>
+        case InnerAdt.Option21.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option22(data) =>
+        case InnerAdt.Option22.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option23(data) =>
+        case InnerAdt.Option23.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option24(data) =>
+        case InnerAdt.Option24.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option25(data) =>
+        case InnerAdt.Option25.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -2160,6 +2184,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -2274,65 +2299,65 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) => Some(func16(data))
+        case InnerAdt.Option16.CaseFirst(data) => Some(func16(data))
 
-        case InnerAdt.Option17(data) => Some(func17(data))
+        case InnerAdt.Option17.CaseFirst(data) => Some(func17(data))
 
-        case InnerAdt.Option18(data) => Some(func18(data))
+        case InnerAdt.Option18.CaseFirst(data) => Some(func18(data))
 
-        case InnerAdt.Option19(data) => Some(func19(data))
+        case InnerAdt.Option19.CaseFirst(data) => Some(func19(data))
 
-        case InnerAdt.Option20(data) => Some(func20(data))
+        case InnerAdt.Option20.CaseFirst(data) => Some(func20(data))
 
-        case InnerAdt.Option21(data) => Some(func21(data))
+        case InnerAdt.Option21.CaseFirst(data) => Some(func21(data))
 
-        case InnerAdt.Option22(data) =>
+        case InnerAdt.Option22.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option23(data) =>
+        case InnerAdt.Option23.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option24(data) =>
+        case InnerAdt.Option24.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option25(data) =>
+        case InnerAdt.Option25.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option26(data) =>
+        case InnerAdt.Option26.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
@@ -2388,6 +2413,7 @@ object FoldNatPositiveHelper {
 
   class FoldNatPositiveHelperWrap22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22](
     override val dataInstance: Option[T1],
+    override val isAlreadyOk: Boolean,
     override val tail: NatFuncPositive[
       T2,
       NatFuncPositive[
@@ -2509,67 +2535,67 @@ object FoldNatPositiveHelper {
     ): Option[U] = {
       this match {
 
-        case InnerAdt.Option1(data) => Some(func1(data))
+        case InnerAdt.Option1.CaseFirst(data) => Some(func1(data))
 
-        case InnerAdt.Option2(data) => Some(func2(data))
+        case InnerAdt.Option2.CaseFirst(data) => Some(func2(data))
 
-        case InnerAdt.Option3(data) => Some(func3(data))
+        case InnerAdt.Option3.CaseFirst(data) => Some(func3(data))
 
-        case InnerAdt.Option4(data) => Some(func4(data))
+        case InnerAdt.Option4.CaseFirst(data) => Some(func4(data))
 
-        case InnerAdt.Option5(data) => Some(func5(data))
+        case InnerAdt.Option5.CaseFirst(data) => Some(func5(data))
 
-        case InnerAdt.Option6(data) => Some(func6(data))
+        case InnerAdt.Option6.CaseFirst(data) => Some(func6(data))
 
-        case InnerAdt.Option7(data) => Some(func7(data))
+        case InnerAdt.Option7.CaseFirst(data) => Some(func7(data))
 
-        case InnerAdt.Option8(data) => Some(func8(data))
+        case InnerAdt.Option8.CaseFirst(data) => Some(func8(data))
 
-        case InnerAdt.Option9(data) => Some(func9(data))
+        case InnerAdt.Option9.CaseFirst(data) => Some(func9(data))
 
-        case InnerAdt.Option10(data) => Some(func10(data))
+        case InnerAdt.Option10.CaseFirst(data) => Some(func10(data))
 
-        case InnerAdt.Option11(data) => Some(func11(data))
+        case InnerAdt.Option11.CaseFirst(data) => Some(func11(data))
 
-        case InnerAdt.Option12(data) => Some(func12(data))
+        case InnerAdt.Option12.CaseFirst(data) => Some(func12(data))
 
-        case InnerAdt.Option13(data) => Some(func13(data))
+        case InnerAdt.Option13.CaseFirst(data) => Some(func13(data))
 
-        case InnerAdt.Option14(data) => Some(func14(data))
+        case InnerAdt.Option14.CaseFirst(data) => Some(func14(data))
 
-        case InnerAdt.Option15(data) => Some(func15(data))
+        case InnerAdt.Option15.CaseFirst(data) => Some(func15(data))
 
-        case InnerAdt.Option16(data) => Some(func16(data))
+        case InnerAdt.Option16.CaseFirst(data) => Some(func16(data))
 
-        case InnerAdt.Option17(data) => Some(func17(data))
+        case InnerAdt.Option17.CaseFirst(data) => Some(func17(data))
 
-        case InnerAdt.Option18(data) => Some(func18(data))
+        case InnerAdt.Option18.CaseFirst(data) => Some(func18(data))
 
-        case InnerAdt.Option19(data) => Some(func19(data))
+        case InnerAdt.Option19.CaseFirst(data) => Some(func19(data))
 
-        case InnerAdt.Option20(data) => Some(func20(data))
+        case InnerAdt.Option20.CaseFirst(data) => Some(func20(data))
 
-        case InnerAdt.Option21(data) => Some(func21(data))
+        case InnerAdt.Option21.CaseFirst(data) => Some(func21(data))
 
-        case InnerAdt.Option22(data) => Some(func22(data))
+        case InnerAdt.Option22.CaseFirst(data) => Some(func22(data))
 
-        case InnerAdt.Option23(data) =>
+        case InnerAdt.Option23.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option24(data) =>
+        case InnerAdt.Option24.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option25(data) =>
+        case InnerAdt.Option25.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option26(data) =>
+        case InnerAdt.Option26.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 
-        case InnerAdt.Option27(data) =>
+        case InnerAdt.Option27.CaseFirst(data) =>
           def execTag: Nothing = data.matchErrorAndNothing
           Option.empty
 

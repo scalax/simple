@@ -12,14 +12,14 @@ import net.scalax.simple.adt.{ TypeAdt => InnerAdt }
 object FoldNatPositiveHelper {
 
     @for(i1 <- 1 to 22) {
-        class FoldNatPositiveHelperWrap@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }](override val dataInstance: Option[T1], override val tail: @classNameForPositive(2, i1)) extends @classNameForPositive(1, i1) (dataInstance) {
+        class FoldNatPositiveHelperWrap@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }](override val dataInstance: Option[T1], override val isAlreadyOk: Boolean, override val tail: @classNameForPositive(2, i1)) extends @classNameForPositive(1, i1) (dataInstance) {
             def foldOpt[U](@foldPararmeters(i1)): Option[U] = {
                 this match {
                     @for(i2 <- 1 to i1) {
-                        case InnerAdt.Option@{i2}(data) => Some(func@{i2}(data))
+                        case InnerAdt.Option@{i2}.CaseFirst(data) => Some(func@{i2}(data))
                     }
                     @for(i2 <- (i1 + 1) to (i1 + 5)) {
-                        case InnerAdt.Option@{i2}(data) =>
+                        case InnerAdt.Option@{i2}.CaseFirst(data) =>
                             def execTag: Nothing = data.matchErrorAndNothing
                             Option.empty
                     }

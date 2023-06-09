@@ -12,13 +12,13 @@ import implemention._
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdtApply[Input, Sum <: NatFunc](val value: Input => Sum) {
+class TypeAdtApply[Input, Sum <: NatFunc](val value: Boolean => Input => Sum) {
   type State <: TypeAdt.Status
 }
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
   type Aux[Input, Sum <: NatFunc, S <: TypeAdt.Status] = TypeAdtApply[Input, Sum] { type State = S }
-  def apply[Input, Sum <: NatFunc, S <: TypeAdt.Status](value: Input => Sum): Aux[Input, Sum, S] =
+  def apply[Input, Sum <: NatFunc, S <: TypeAdt.Status](value: Boolean => Input => Sum): Aux[Input, Sum, S] =
     new TypeAdtApply[Input, Sum](value) {
       override type State = S
     }
@@ -38,7 +38,7 @@ package impl {
       tailMapping: TypeAdtApply.Aux[A, Tail, Status]
     ): TypeAdtApply.Aux[A, NatFuncPositive[TypeAdt.Adapter[B, AdtConvertPoly], Tail], TypeAdt.Status.Passed] = {
       val adtConvertImpl = new AdapterContext(adtConvert)
-      TypeAdtApply(i => NatFunc.success(adtConvertImpl.input(i), tailMapping.value(i)))
+      TypeAdtApply(isOk => i => NatFunc.success(adtConvertImpl.input(i), isAlreadyOk = isOk, tailMapping.value(true)(i)))
     }
   }
 
@@ -47,18 +47,18 @@ package impl {
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type],
       tailMapping: TypeAdtApply.Aux[A, Tail, Status]
     ): TypeAdtApply.Aux[A, NatFuncPositive[B, Tail], TypeAdt.Status.Passed] =
-      TypeAdtApply(i => NatFunc.success(adtConvert.input(i), tailMapping.value(i)))
+      TypeAdtApply(isOk => i => NatFunc.success(adtConvert.input(i), isAlreadyOk = isOk, tailMapping.value(true)(i)))
   }
 
   trait HListTypeAdtPositiveLower2 extends LowerLevelPoly {
     @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Status <: TypeAdt.Status, Tail <: NatFunc](implicit
       tailMapping: TypeAdtApply.Aux[A, Tail, Status]
     ): TypeAdtApply.Aux[A, NatFuncPositive[B, Tail], Status] =
-      TypeAdtApply(i => NatFunc.empty(tailMapping.value(i)))
+      TypeAdtApply(isOk => i => NatFunc.empty(isAlreadyOk = false, tailMapping.value(isOk)(i)))
   }
 
   trait LowerLevelPoly {
-    private object failedValue extends TypeAdtApply[Any, NatFuncZero](value = i => NatFunc.zero) {
+    private object failedValue extends TypeAdtApply[Any, NatFuncZero](value = isOk => i => NatFunc.zeroFromIsOk(isOk = isOk)) {
       override type State = Adt.Status.Failed
     }
     private def failedValueImpl[T]: TypeAdtApply.Aux[T, NatFuncZero, Adt.Status.Failed] =

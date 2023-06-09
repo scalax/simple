@@ -41,28 +41,54 @@ object UnapplyInstance {
   trait PositiveTypeCounterZero extends TypeCounter with ghdmzskZero
 
   sealed trait UnapplyFunc[ThisType <: UnapplyFunc[_]] extends TypeCounter {
-    def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] =
-      inputGHDMZSK(u).asInstanceOf[NatFuncPositive[Data, NatFunc]].dataInstance
+    self =>
+    def extraPositive[Data](u: NatFunc): NatFuncPositive[Data, NatFunc] = inputGHDMZSK(u).asInstanceOf[NatFuncPositive[Data, NatFunc]]
+    def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] = {
+      val positive: NatFuncPositive[Data, NatFunc] = extraPositive(u)
+      positive.dataInstance
+    }
     def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] = apply(u)
+
+    def CaseFirst: UnapplyFunc[ThisType] = new UnapplyFunc[ThisType] {
+      subSelf =>
+      override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk                              = self.inputGHDMZSK(g)
+      override def extraPositive[Data1](u: NatFunc): NatFuncPositive[Data1, NatFunc] = self.extraPositive(u)
+      override def apply[U1 <: NatFunc, Data1](
+        u: U1
+      )(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U1, Data1]): Option[Data1] = {
+        val positive: NatFuncPositive[Data1, NatFunc] = extraPositive(u)
+        positive.dataInstance.filterNot(_ => positive.isAlreadyOk)
+      }
+      override def unapply[U1 <: NatFunc, Data1](u: U1)(implicit
+        somethig_not_used: CountNatPositive.Aux[ThisType, U1, Data1]
+      ): Option[Data1] = subSelf.apply(u)
+    }
   }
 
   trait UnapplyFuncPositive[Tail <: UnapplyFunc[_]] extends PositiveTypeCounter[Tail] with UnapplyFunc[UnapplyFuncPositive[Tail]] {
     override def tail: Tail
+    override def CaseFirst: UnapplyFunc[UnapplyFuncPositive[Tail]] = super.CaseFirst
   }
   object UnapplyFuncPositive {
     def apply[Tail <: UnapplyFunc[_]](tail: Tail): UnapplyFuncPositive[Tail] = {
       val tail1 = tail
       new UnapplyFuncPositive[Tail] {
-        override val tail: Tail = tail1
+        override val tail: Tail                                             = tail1
+        override lazy val CaseFirst: UnapplyFunc[UnapplyFuncPositive[Tail]] = super.CaseFirst
       }
     }
   }
 
   trait UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFunc[UnapplyFuncZero]
   object UnapplyFuncZero {
-    private object UnapplyFuncZeroObject extends UnapplyFuncZero
+    private object UnapplyFuncZeroObject extends UnapplyFuncZero {
+      override lazy val CaseFirst: UnapplyFunc[UnapplyFuncZero] = super.CaseFirst
+    }
 
-    val value: UnapplyFuncZero = UnapplyFuncZeroObject
+    val value: UnapplyFuncZero = {
+      UnapplyFuncZeroObject.CaseFirst
+      UnapplyFuncZeroObject
+    }
   }
 
 }
@@ -72,31 +98,38 @@ trait DataInstance[Data] {
   def isDefined: Boolean
 }
 
-trait NatFunc extends ghdmzsk
+trait NatFunc extends ghdmzsk {
+  def isAlreadyOk: Boolean
+}
 abstract case class NatFuncPositive[Data, T <: NatFunc](override val dataInstance: Option[Data])
     extends NatFunc
     with DataInstance[Data]
     with ghdmzsk1 {
   override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = super.inputGHDMZSK(g).inputGHDMZSK(tail)
   override val isDefined: Boolean                   = dataInstance.isDefined
+  override def isAlreadyOk: Boolean
   def tail: T
 }
 
 object NatFunc {
-  def success[D, T <: NatFunc](t: D, tail: T): NatFuncPositive[D, T] = {
-    def tail1 = tail
+  def success[D, T <: NatFunc](t: D, isAlreadyOk: Boolean, tail: T): NatFuncPositive[D, T] = {
+    val tail1        = tail
+    val isAlreadyOk1 = isAlreadyOk
     new NatFuncPositive[D, T](dataInstance = Some(t)) {
-      override val tail: T = tail1
+      override val tail: T              = tail1
+      override val isAlreadyOk: Boolean = isAlreadyOk1
     }
   }
-  def empty[D, T <: NatFunc](tail: T): NatFuncPositive[D, T] = {
-    def tail1 = tail
+  def empty[D, T <: NatFunc](isAlreadyOk: Boolean, tail: T): NatFuncPositive[D, T] = {
+    val tail1        = tail
+    val isAlreadyOk1 = isAlreadyOk
     new NatFuncPositive[D, T](dataInstance = Option.empty) {
-      override val tail: T = tail1
+      override val tail: T              = tail1
+      override val isAlreadyOk: Boolean = isAlreadyOk1
     }
   }
 
-  val zero: NatFuncZero = NatFuncZero.value
+  def zeroFromIsOk(isOk: Boolean): NatFuncZero = if (isOk) NatFuncZero.valueIsAlreadyOk else NatFuncZero.valueIsNotOk
 }
 
 final class IsFinishAndNothing {
@@ -108,12 +141,13 @@ object IsFinishAndNothing {
   lazy val value: IsFinishAndNothing = new IsFinishAndNothing
 }
 
-class NatFuncZero private (tailValue: () => NatFuncZero)
+class NatFuncZero private (tailValue: () => NatFuncZero, override val isAlreadyOk: Boolean)
     extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
   override lazy val tail: NatFuncZero = tailValue()
 }
 object NatFuncZero {
-  lazy val value: NatFuncZero = new NatFuncZero(() => value)
+  lazy val valueIsAlreadyOk: NatFuncZero = new NatFuncZero(() => valueIsAlreadyOk, isAlreadyOk = true)
+  lazy val valueIsNotOk: NatFuncZero     = new NatFuncZero(() => valueIsAlreadyOk, isAlreadyOk = false) // 这里的Tail一定已经被取值了，因为到了Zero就已经是“取值了”
 }
 
 object Test extends App {
@@ -125,6 +159,7 @@ object Test extends App {
   type Ux2 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncPositive[List[String], NatFuncZero]]]]
   type Ux3 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncZero]]]
 
+  /*
   val p1: Ux1 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.empty(NatFunc.zero)))))
   val p2: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.zero))))
   val p3: Ux3 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.zero)))
@@ -223,5 +258,6 @@ object Test extends App {
   println(t3) // Some(List(4, 6, 10, 16))
   println(t4) // None
   println(t5) // Some(List(4, 11, 15))
+   */
 
 }

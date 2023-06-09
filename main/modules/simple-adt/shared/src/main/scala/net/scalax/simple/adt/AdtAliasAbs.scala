@@ -27,9 +27,3 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel 
   }
 
 }
-
-trait AdtAliasAbs {
-  type AdtZero
-  type AdtNat
-  type AdtAppend[A, Tail <: AdtNat] <: AdtNat
-}
