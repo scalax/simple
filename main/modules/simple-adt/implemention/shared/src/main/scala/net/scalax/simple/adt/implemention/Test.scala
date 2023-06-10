@@ -72,22 +72,23 @@ object UnapplyInstance {
   object UnapplyFuncPositive {
     def apply[Tail <: UnapplyFunc[_]](tail: Tail): UnapplyFuncPositive[Tail] = {
       val tail1 = tail
-      new UnapplyFuncPositive[Tail] {
+      val positiveObj = new UnapplyFuncPositive[Tail] {
         override val tail: Tail                                             = tail1
         override lazy val CaseFirst: UnapplyFunc[UnapplyFuncPositive[Tail]] = super.CaseFirst
       }
+      positiveObj.CaseFirst
+      positiveObj
     }
   }
 
   trait UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFunc[UnapplyFuncZero]
   object UnapplyFuncZero {
-    private object UnapplyFuncZeroObject extends UnapplyFuncZero {
-      override lazy val CaseFirst: UnapplyFunc[UnapplyFuncZero] = super.CaseFirst
-    }
-
     val value: UnapplyFuncZero = {
-      UnapplyFuncZeroObject.CaseFirst
-      UnapplyFuncZeroObject
+      val zeroObj: UnapplyFuncZero = new UnapplyFuncZero {
+        override lazy val CaseFirst: UnapplyFunc[UnapplyFuncZero] = super.CaseFirst
+      }
+      zeroObj.CaseFirst
+      zeroObj
     }
   }
 

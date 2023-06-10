@@ -13,17 +13,12 @@ object UnapplyFuncGetter {
 
 object DefaultUnapplyFuncGetter extends UnapplyFuncGetter {
 
-  private var inner: Array[UnapplyFuncGetter.UnapplyType] = {
-    val v = UnapplyInstance.UnapplyFuncZero.value
-    v.CaseFirst
-    Array(v)
-  }
+  private var inner: Array[UnapplyFuncGetter.UnapplyType] = Array(UnapplyInstance.UnapplyFuncZero.value)
 
   private def update100(): Unit = {
     var tempList: List[UnapplyFuncGetter.UnapplyType] = inner.to(List)
     for (_ <- 1 to 100) {
       val newLast: UnapplyFuncGetter.UnapplyType = UnapplyInstance.UnapplyFuncPositive(tempList.last)
-      newLast.CaseFirst
       tempList = tempList ::: newLast :: Nil
     }
     inner = tempList.to(Array)
