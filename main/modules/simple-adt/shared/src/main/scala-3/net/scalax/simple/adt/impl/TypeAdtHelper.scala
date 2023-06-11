@@ -11,9 +11,9 @@ final class FetchAdtApply[S <: NatFunc]:
     inline v: TypeAdtApply.Aux[T, S, Adt.Status.Passed]
   ): InnerApply[FetchAdtApply.TakeHead[S], FetchAdtApply.TakeTail[S]] =
 
-    val list = v.value(data).asInstanceOf[NatFuncPositive[Any, NatFunc]]
+    val list = v.value(false)(data).asInstanceOf[NatFuncPositive[Any, NatFunc]]
 
-    InnerApply(dataInstance = list.dataInstance, tail = list.tail)
+    InnerApply(dataInstance = list.dataInstance, isAlreadyOk = list.isAlreadyOk, tail = list.tail)
       .asInstanceOf[InnerApply[FetchAdtApply.TakeHead[S], FetchAdtApply.TakeTail[S]]]
 
   end apply
@@ -51,15 +51,16 @@ abstract class FoldOptApplyInstance[O[_] <: Tuple]:
 
       funcList.match
         case headFunc :: tailFunc =>
-          val headDataOpt = aliasD.dataInstance
-          if (headDataOpt.isDefined)
-            Some(headFunc(headDataOpt.get))
-          else
-            findDeep(tailFunc, aliasD.tail)
-          end if
+          aliasD.match
+            case TypeAdt.Option1.CaseFirst(data) =>
+              Some(headFunc(data))
+            case _ =>
+              findDeep(tailFunc, aliasD.tail)
+          end match
 
         case Nil =>
           Option.empty
+
       end match
 
     end findDeep
@@ -86,7 +87,7 @@ abstract class FoldApplyInstance[O[_] <: Tuple]:
 
 end FoldApplyInstance
 
-final class InnerApply[Data, T <: NatFunc](override val dataInstance: Option[Data], override val tail: T)
+final class InnerApply[Data, T <: NatFunc](override val dataInstance: Option[Data], override val isAlreadyOk: Boolean, override val tail: T)
     extends NatFuncPositive[Data, T](dataInstance = dataInstance):
   self: InnerApply[Data, T] =>
 
