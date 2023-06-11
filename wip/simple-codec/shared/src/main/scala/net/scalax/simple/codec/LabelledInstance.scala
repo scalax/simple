@@ -15,6 +15,11 @@ object LabelledInstance {
       val model = u.input[ContextI#StringF](l.names)
       new LabelledInstanceImpl[F](u, g, model)
     }
+
+    def distage(u: Setter[F], g: Getter[F])(implicit l: LabelledNames[F]): LabelledInstance[F] = {
+      val model = u.input[ContextI#StringF](l.names)
+      new LabelledInstanceImpl[F](u, g, model)
+    }
   }
 
   class LabelledInstanceImpl[F[_[_]]](u: Setter[F], g: Getter[F], override val model: ContextO[F]#StringF) extends LabelledInstance[F] {
