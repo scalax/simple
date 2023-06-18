@@ -12,17 +12,17 @@ object RunMain1 extends App {
     var tag2: Long = 0
 
     def num1(n1: Int, zero: ghdmzsk): ghdmzsk = if (n1 > 0)
-      Number.number2(() => num1(n1 - 1, zero))
+      Number.number2.inputGHDMZSK(num1(n1 - 1, zero))
     else zero
 
     lazy val numPositive1: ghdmzsk = num1(i1, numZero1)
-    lazy val numZero1: ghdmzsk = Number.number1 { () =>
+    lazy val numZero1: ghdmzsk = Number.number1.inputGHDMZSK {
       tag1 = tag1 + 1
       numPositive1
     }
 
     lazy val numPositive2: ghdmzsk = num1(i2, numZero2)
-    lazy val numZero2: ghdmzsk = Number.number1 { () =>
+    lazy val numZero2: ghdmzsk = Number.number1.inputGHDMZSK {
       tag2 = tag2 + 1
       numPositive2
     }
@@ -41,14 +41,14 @@ object RunMain1 extends App {
       BigDecimal(tag2) / BigDecimal(tag1)
     }
 
-    val result1: BigDecimal = count(() => numPositive1(() => numPositive2))
-    val result2: BigDecimal = count(() => numPositive2(() => numPositive1))
-    val result3: BigDecimal = count(() => numPositive1(() => numZero2))
-    val result4: BigDecimal = count(() => numZero2(() => numPositive1))
-    val result5: BigDecimal = count(() => numZero1(() => numPositive2))
-    val result6: BigDecimal = count(() => numPositive2(() => numZero1))
-    val result7: BigDecimal = count(() => numZero1(() => numZero2))
-    val result8: BigDecimal = count(() => numZero2(() => numZero1))
+    val result1: BigDecimal = count(() => numPositive1.inputGHDMZSK(numPositive2))
+    val result2: BigDecimal = count(() => numPositive2.inputGHDMZSK(numPositive1))
+    val result3: BigDecimal = count(() => numPositive1.inputGHDMZSK(numZero2))
+    val result4: BigDecimal = count(() => numZero2.inputGHDMZSK(numPositive1))
+    val result5: BigDecimal = count(() => numZero1.inputGHDMZSK(numPositive2))
+    val result6: BigDecimal = count(() => numPositive2.inputGHDMZSK(numZero1))
+    val result7: BigDecimal = count(() => numZero1.inputGHDMZSK(numZero2))
+    val result8: BigDecimal = count(() => numZero2.inputGHDMZSK(numZero1))
 
     println(i1, i2, result0, result1, result2, result3, result4, result5, result6, result7, result8)
 

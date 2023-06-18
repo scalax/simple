@@ -48,18 +48,23 @@ object xxbb1 extends IOApp.Simple {
         encoderFromModel(modelEn, g, lNames)
       }*/
       make[PropertyTag[Any]].fromValue(PropertyTag.value[Any])
+      make[Model[PropertyTag]].from { u: Model[AnyFunc] => u.asInstanceOf[Model[PropertyTag]] }
       make[Model[AnyFunc]]
+      make[ModelLength[Model]].from { implicit u: Model[PropertyTag] =>
+        ModelLength.generic[Model]
+      }
     }
 
     import cats.effect.unsafe.implicits.global
 
     val objectGraphResource = {
-      Injector[IO]().produce(HelloByeModule, Roots.target[Model[AnyFunc]])
+      Injector[IO]().produce(HelloByeModule, Roots.target[Model[AnyFunc]] ++ Roots.target[ModelLength[Model]])
     }
 
     objectGraphResource.toCats.use { t =>
-      val e = t.get[Model[AnyFunc]]
-      IO(e)
+      val e1 = t.get[Model[AnyFunc]]
+      val e2 = t.get[ModelLength[Model]]
+      IO((e1, e2))
     }
   }
 
@@ -74,9 +79,11 @@ object xxbb1 extends IOApp.Simple {
 
   override val run: IO[Unit] = {
     for {
-      en <- ecec
-      _  <- IO(println(en))
-      _  <- IO(println(en.name11))
+      eu <- ecec
+      (e1, e2) = eu
+      _ <- IO(println(e1))
+      _ <- IO(println(e1.name11))
+      _ <- IO(println(e2.size))
     } yield {
       //
     }

@@ -6,7 +6,7 @@ import ghdmzsk.ghdmzsk
 
 object Number {
 
-  val number1: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => tail()(other)))
-  val number2: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => other()(tail)))
+  val number1: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => tail().inputGHDMZSK(other())))
+  val number2: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => other().inputGHDMZSK(tail())))
 
 }
