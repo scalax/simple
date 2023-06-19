@@ -1,49 +1,36 @@
-trait ghdmzsk extends ((() => ghdmzsk) => ghdmzsk) {
-  override def apply(t: () => ghdmzsk): ghdmzsk
+trait ghdmzsk {
+  def inputGHDMZSK(t: => ghdmzsk): ghdmzsk
 }
 
 object ghdmzsk {
+  implicit class Extra(private val ghd: ghdmzsk) {
+    def apply(t: () => ghdmzsk): ghdmzsk = ghd.inputGHDMZSK(t())
+  }
+
   def apply(func: (() => ghdmzsk) => ghdmzsk): ghdmzsk = new ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = func(t)
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = func(() => t)
   }
 }
 
 object Number1 {
 
-  case class Number1Count(tail: () => ghdmzsk) extends ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception(
-      "Nothing"
-    )
+  class Number1Count(tail: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = tail()
   }
-  case class Number2Count(tail: () => ghdmzsk) extends ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception(
-      "Nothing"
-    )
+  class Number2Count(tail: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = tail()
   }
-  case class Number3Count(tail: () => ghdmzsk) extends ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception(
-      "Nothing"
-    )
+  class Number3Count(tail: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = tail()
   }
-  case class Number4Count(tail: () => ghdmzsk) extends ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception(
-      "Nothing"
-    )
+  class Number4Count(tail: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = tail()
   }
-  case class Number5Count(tail: () => ghdmzsk) extends ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception(
-      "Nothing"
-    )
+  class Number5Count(tail: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = tail()
   }
-  case class Number6Count(tail: () => ghdmzsk) extends ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception(
-      "Nothing"
-    )
-  }
-  case object NumberZeroCount extends ghdmzsk {
-    override def apply(t: () => ghdmzsk): ghdmzsk = throw new Exception(
-      "Nothing"
-    )
+  class Number6Count(tail: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = tail()
   }
 
   val Number1S: ghdmzsk = ghdmzsk(tail1 =>
@@ -51,7 +38,7 @@ object Number1 {
   )
   val Number1T: ghdmzsk = ghdmzsk(tail1 =>
     ghdmzsk(num2 =>
-      ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num5 => ghdmzsk(num6 => Number1Count(() => tail1()(num2)(num3)(num4)(num5)(num6))))))
+      ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num5 => ghdmzsk(num6 => new Number1Count(() => tail1()(num2)(num3)(num4)(num5)(num6))))))
     )
   )
 
@@ -60,7 +47,7 @@ object Number1 {
   )
   val Number2T: ghdmzsk = ghdmzsk(tail2 =>
     ghdmzsk(num1 =>
-      ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num5 => ghdmzsk(num6 => Number2Count(() => tail2()(num1)(num3)(num4)(num5)(num6))))))
+      ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num5 => ghdmzsk(num6 => new Number2Count(() => tail2()(num1)(num3)(num4)(num5)(num6))))))
     )
   )
 
@@ -69,7 +56,7 @@ object Number1 {
   )
   val Number3T: ghdmzsk = ghdmzsk(tail3 =>
     ghdmzsk(num1 =>
-      ghdmzsk(num2 => ghdmzsk(num4 => ghdmzsk(num5 => ghdmzsk(num6 => Number3Count(() => tail3()(num1)(num2)(num4)(num5)(num6))))))
+      ghdmzsk(num2 => ghdmzsk(num4 => ghdmzsk(num5 => ghdmzsk(num6 => new Number3Count(() => tail3()(num1)(num2)(num4)(num5)(num6))))))
     )
   )
 
@@ -78,7 +65,7 @@ object Number1 {
   )
   val Number4T: ghdmzsk = ghdmzsk(tail4 =>
     ghdmzsk(num1 =>
-      ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num5 => ghdmzsk(num6 => Number4Count(() => tail4()(num1)(num2)(num3)(num5)(num6))))))
+      ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num5 => ghdmzsk(num6 => new Number4Count(() => tail4()(num1)(num2)(num3)(num5)(num6))))))
     )
   )
 
@@ -87,7 +74,7 @@ object Number1 {
   )
   val Number5T: ghdmzsk = ghdmzsk(tail5 =>
     ghdmzsk(num1 =>
-      ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num6 => Number5Count(() => tail5()(num1)(num2)(num3)(num4)(num6))))))
+      ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num6 => new Number5Count(() => tail5()(num1)(num2)(num3)(num4)(num6))))))
     )
   )
 
@@ -96,7 +83,7 @@ object Number1 {
   )
   val Number6T: ghdmzsk = ghdmzsk(tail6 =>
     ghdmzsk(num1 =>
-      ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num5 => Number6Count(() => tail6()(num1)(num2)(num3)(num4)(num5))))))
+      ghdmzsk(num2 => ghdmzsk(num3 => ghdmzsk(num4 => ghdmzsk(num5 => new Number6Count(() => tail6()(num1)(num2)(num3)(num4)(num5))))))
     )
   )
 
@@ -164,6 +151,8 @@ object Number1 {
 
 object MainApp {
 
+  lazy val emptyGHDMZSK: ghdmzsk = ghdmzsk(t => emptyGHDMZSK(t))
+
   import Number1._
 
   def count(number: => ghdmzsk, p: BigDecimal): Boolean = {
@@ -190,24 +179,24 @@ object MainApp {
     @scala.annotation.tailrec
     def countImpl(numImpl: () => ghdmzsk): Boolean = {
       numImpl() match {
-        case Number1Count(tail) =>
+        case n: Number1Count =>
           long1 += 1
-          if (canStop) true else countImpl(tail)
-        case Number2Count(tail) =>
+          if (canStop) true else countImpl(() => n(() => emptyGHDMZSK))
+        case n: Number2Count =>
           long2 += 1
-          if (canStop) true else countImpl(tail)
-        case Number3Count(tail) =>
+          if (canStop) true else countImpl(() => n(() => emptyGHDMZSK))
+        case n: Number3Count =>
           long3 += 1
-          if (canStop) true else countImpl(tail)
-        case Number4Count(tail) =>
+          if (canStop) true else countImpl(() => n(() => emptyGHDMZSK))
+        case n: Number4Count =>
           long4 += 1
-          if (canStop) true else countImpl(tail)
-        case Number5Count(tail) =>
+          if (canStop) true else countImpl(() => n(() => emptyGHDMZSK))
+        case n: Number5Count =>
           long5 += 1
-          if (canStop) true else countImpl(tail)
-        case Number6Count(tail) =>
+          if (canStop) true else countImpl(() => n(() => emptyGHDMZSK))
+        case n: Number6Count =>
           long6 += 1
-          if (canStop) true else countImpl(tail)
+          if (canStop) true else countImpl(() => n(() => emptyGHDMZSK))
       }
     }
 
@@ -217,10 +206,10 @@ object MainApp {
   def main(arr: Array[String]): Unit = {
 
     for {
-      avg <- 8 to 10
-      i1  <- 8 to 10
-      i2  <- 8 to 10
-      i3  <- 8 to 10
+      avg <- 8 to 8
+      i1  <- 8 to 8
+      i2  <- 8 to 8
+      i3  <- 9 to 9
     } {
       val avgNum = i1 + i2 + i3
       val avgSum = avg + avg + avg
@@ -236,11 +225,11 @@ object MainApp {
         number1S(() => number2S)(() => number3S)(() => number4S)(() => number5S)(() => number6S)
 
       val isAvg = avgNum == avgSum
-      if (isAvg) {
-        val isAvgGhdmzsk = count(r, BigDecimal("0.01"))
-        println((avg, i1, i2, i3))
-        assert(isAvg == isAvgGhdmzsk)
-      }
+      // if (isAvg) {
+      val isAvgGhdmzsk = count(r, BigDecimal("0.01"))
+      println((avg, i1, i2, i3))
+      assert(isAvg == isAvgGhdmzsk)
+      // }
 
     }
 
