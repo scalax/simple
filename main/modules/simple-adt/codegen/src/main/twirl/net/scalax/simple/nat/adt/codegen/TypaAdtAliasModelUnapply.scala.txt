@@ -3,22 +3,22 @@ package net.scalax.simple
 package adt
 package impl
 
-import implemention._
+import net.scalax.simple.adt.implemention.{ UnapplyInstance => UI, NatFuncPositive, NatFunc }
+import UI.{ UnapplyFuncPositive => UFP, CountNatPositive => CP, PositiveTypeCounter => PC }
 
 trait TypeAdtAliasModelUnapply {
     import TypeAdtAliasModelUnapplyImpl._
-    @for(i1 <- 1 to 30) {
+    val Option1: UI.UnapplyFuncZero = OptionNatImpl1.value
+    @for(i1 <- 2 to 30) {
         val Option@{i1}: OptionNatImpl@{i1} = OptionNatImpl@{i1}.value
     }
 }
 
 object TypeAdtAliasModelUnapplyImpl {
-    import net.scalax.simple.adt.implemention.{ UnapplyInstance => UI }
-    import UI.{ UnapplyFuncPositive => UFP, CountNatPositive => CP, PositiveTypeCounter => PC }
 
     type OptionNatImpl1 = UI.UnapplyFuncZero
     object OptionNatImpl1 {
-        val value: UI.UnapplyFuncZero = UI.UnapplyFuncZero.value
+        val value: OptionNatImpl1 = UI.UnapplyFuncZero.value
     }
 
     @for(i1 <- 2 to 30) {
@@ -27,6 +27,7 @@ object TypeAdtAliasModelUnapplyImpl {
             override type ThisType = OptionNatImpl@{i1}
             override val tail: OptionNatImpl@{i1 - 1} = OptionNatImpl@{i1 - 1}.value
             override val needAlreadyOk: Boolean = false
+            override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl@{i1}, U, Data]): Option[Data] = super.apply(u)
             override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl@{i1}, U, Data]): Option[Data] = super.unapply(u)
             override lazy val CaseFirst: OptionNatImpl@{i1} = new OptionNatImpl@{i1} {
                 override val tail: OptionNatImpl@{i1 - 1} = self.tail
@@ -36,7 +37,7 @@ object TypeAdtAliasModelUnapplyImpl {
         }
         object OptionNatImpl@{i1} {
             val value: OptionNatImpl@{i1} = {
-                val xa = new OptionNatImpl@{i1}
+                val xa: OptionNatImpl@{i1} = new OptionNatImpl@{i1}
                 xa.CaseFirst
                 xa
             }

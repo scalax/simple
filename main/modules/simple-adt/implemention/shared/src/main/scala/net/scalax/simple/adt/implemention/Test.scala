@@ -68,7 +68,7 @@ object UnapplyInstance {
       override lazy val CaseFirst: UnapplyFuncZero = aImpl
     }
 
-    lazy val tempValue: UnapplyFuncZero = new UnapplyFuncZero {
+    private lazy val tempValue: UnapplyFuncZero = new UnapplyFuncZero {
       override val needAlreadyOk: Boolean = false
       override lazy val CaseFirst: UnapplyFuncZero = {
         aImpl.CaseFirst

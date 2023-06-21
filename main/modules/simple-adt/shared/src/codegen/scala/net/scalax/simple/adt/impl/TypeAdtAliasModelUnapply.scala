@@ -2,12 +2,12 @@ package net.scalax.simple
 package adt
 package impl
 
-import implemention._
+import net.scalax.simple.adt.implemention.{NatFunc, NatFuncPositive, UnapplyInstance => UI}
+import UI.{CountNatPositive => CP, PositiveTypeCounter => PC, UnapplyFuncPositive => UFP}
 
 trait TypeAdtAliasModelUnapply {
   import TypeAdtAliasModelUnapplyImpl._
-
-  val Option1: OptionNatImpl1 = OptionNatImpl1.value
+  val Option1: UI.UnapplyFuncZero = OptionNatImpl1.value
 
   val Option2: OptionNatImpl2 = OptionNatImpl2.value
 
@@ -70,12 +70,10 @@ trait TypeAdtAliasModelUnapply {
 }
 
 object TypeAdtAliasModelUnapplyImpl {
-  import net.scalax.simple.adt.implemention.{UnapplyInstance => UI}
-  import UI.{CountNatPositive => CP, PositiveTypeCounter => PC, UnapplyFuncPositive => UFP}
 
   type OptionNatImpl1 = UI.UnapplyFuncZero
   object OptionNatImpl1 {
-    val value: UI.UnapplyFuncZero = UI.UnapplyFuncZero.value
+    val value: OptionNatImpl1 = UI.UnapplyFuncZero.value
   }
 
   class OptionNatImpl2 extends UFP[OptionNatImpl1] with PC[OptionNatImpl1] {
@@ -83,6 +81,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl2
     override val tail: OptionNatImpl1   = OptionNatImpl1.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl2, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl2, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl2 = new OptionNatImpl2 {
@@ -93,7 +92,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl2 {
     val value: OptionNatImpl2 = {
-      val xa = new OptionNatImpl2
+      val xa: OptionNatImpl2 = new OptionNatImpl2
       xa.CaseFirst
       xa
     }
@@ -111,6 +110,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl3
     override val tail: OptionNatImpl2   = OptionNatImpl2.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl3, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl3, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl3 = new OptionNatImpl3 {
@@ -121,7 +121,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl3 {
     val value: OptionNatImpl3 = {
-      val xa = new OptionNatImpl3
+      val xa: OptionNatImpl3 = new OptionNatImpl3
       xa.CaseFirst
       xa
     }
@@ -139,6 +139,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl4
     override val tail: OptionNatImpl3   = OptionNatImpl3.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl4, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl4, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl4 = new OptionNatImpl4 {
@@ -149,7 +150,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl4 {
     val value: OptionNatImpl4 = {
-      val xa = new OptionNatImpl4
+      val xa: OptionNatImpl4 = new OptionNatImpl4
       xa.CaseFirst
       xa
     }
@@ -167,6 +168,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl5
     override val tail: OptionNatImpl4   = OptionNatImpl4.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl5, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl5, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl5 = new OptionNatImpl5 {
@@ -177,7 +179,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl5 {
     val value: OptionNatImpl5 = {
-      val xa = new OptionNatImpl5
+      val xa: OptionNatImpl5 = new OptionNatImpl5
       xa.CaseFirst
       xa
     }
@@ -195,6 +197,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl6
     override val tail: OptionNatImpl5   = OptionNatImpl5.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl6, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl6, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl6 = new OptionNatImpl6 {
@@ -205,7 +208,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl6 {
     val value: OptionNatImpl6 = {
-      val xa = new OptionNatImpl6
+      val xa: OptionNatImpl6 = new OptionNatImpl6
       xa.CaseFirst
       xa
     }
@@ -223,6 +226,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl7
     override val tail: OptionNatImpl6   = OptionNatImpl6.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl7, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl7, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl7 = new OptionNatImpl7 {
@@ -233,7 +237,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl7 {
     val value: OptionNatImpl7 = {
-      val xa = new OptionNatImpl7
+      val xa: OptionNatImpl7 = new OptionNatImpl7
       xa.CaseFirst
       xa
     }
@@ -251,6 +255,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl8
     override val tail: OptionNatImpl7   = OptionNatImpl7.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl8, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl8, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl8 = new OptionNatImpl8 {
@@ -261,7 +266,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl8 {
     val value: OptionNatImpl8 = {
-      val xa = new OptionNatImpl8
+      val xa: OptionNatImpl8 = new OptionNatImpl8
       xa.CaseFirst
       xa
     }
@@ -279,6 +284,7 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl9
     override val tail: OptionNatImpl8   = OptionNatImpl8.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl9, U, Data]): Option[Data] = super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl9, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl9 = new OptionNatImpl9 {
@@ -289,7 +295,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl9 {
     val value: OptionNatImpl9 = {
-      val xa = new OptionNatImpl9
+      val xa: OptionNatImpl9 = new OptionNatImpl9
       xa.CaseFirst
       xa
     }
@@ -307,6 +313,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl10
     override val tail: OptionNatImpl9   = OptionNatImpl9.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl10, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl10, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl10 = new OptionNatImpl10 {
@@ -317,7 +325,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl10 {
     val value: OptionNatImpl10 = {
-      val xa = new OptionNatImpl10
+      val xa: OptionNatImpl10 = new OptionNatImpl10
       xa.CaseFirst
       xa
     }
@@ -335,6 +343,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl11
     override val tail: OptionNatImpl10  = OptionNatImpl10.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl11, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl11, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl11 = new OptionNatImpl11 {
@@ -345,7 +355,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl11 {
     val value: OptionNatImpl11 = {
-      val xa = new OptionNatImpl11
+      val xa: OptionNatImpl11 = new OptionNatImpl11
       xa.CaseFirst
       xa
     }
@@ -363,6 +373,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl12
     override val tail: OptionNatImpl11  = OptionNatImpl11.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl12, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl12, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl12 = new OptionNatImpl12 {
@@ -373,7 +385,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl12 {
     val value: OptionNatImpl12 = {
-      val xa = new OptionNatImpl12
+      val xa: OptionNatImpl12 = new OptionNatImpl12
       xa.CaseFirst
       xa
     }
@@ -391,6 +403,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl13
     override val tail: OptionNatImpl12  = OptionNatImpl12.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl13, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl13, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl13 = new OptionNatImpl13 {
@@ -401,7 +415,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl13 {
     val value: OptionNatImpl13 = {
-      val xa = new OptionNatImpl13
+      val xa: OptionNatImpl13 = new OptionNatImpl13
       xa.CaseFirst
       xa
     }
@@ -419,6 +433,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl14
     override val tail: OptionNatImpl13  = OptionNatImpl13.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl14, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl14, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl14 = new OptionNatImpl14 {
@@ -429,7 +445,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl14 {
     val value: OptionNatImpl14 = {
-      val xa = new OptionNatImpl14
+      val xa: OptionNatImpl14 = new OptionNatImpl14
       xa.CaseFirst
       xa
     }
@@ -447,6 +463,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl15
     override val tail: OptionNatImpl14  = OptionNatImpl14.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl15, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl15, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl15 = new OptionNatImpl15 {
@@ -457,7 +475,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl15 {
     val value: OptionNatImpl15 = {
-      val xa = new OptionNatImpl15
+      val xa: OptionNatImpl15 = new OptionNatImpl15
       xa.CaseFirst
       xa
     }
@@ -475,6 +493,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl16
     override val tail: OptionNatImpl15  = OptionNatImpl15.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl16, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl16, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl16 = new OptionNatImpl16 {
@@ -485,7 +505,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl16 {
     val value: OptionNatImpl16 = {
-      val xa = new OptionNatImpl16
+      val xa: OptionNatImpl16 = new OptionNatImpl16
       xa.CaseFirst
       xa
     }
@@ -503,6 +523,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl17
     override val tail: OptionNatImpl16  = OptionNatImpl16.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl17, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl17, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl17 = new OptionNatImpl17 {
@@ -513,7 +535,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl17 {
     val value: OptionNatImpl17 = {
-      val xa = new OptionNatImpl17
+      val xa: OptionNatImpl17 = new OptionNatImpl17
       xa.CaseFirst
       xa
     }
@@ -531,6 +553,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl18
     override val tail: OptionNatImpl17  = OptionNatImpl17.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl18, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl18, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl18 = new OptionNatImpl18 {
@@ -541,7 +565,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl18 {
     val value: OptionNatImpl18 = {
-      val xa = new OptionNatImpl18
+      val xa: OptionNatImpl18 = new OptionNatImpl18
       xa.CaseFirst
       xa
     }
@@ -559,6 +583,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl19
     override val tail: OptionNatImpl18  = OptionNatImpl18.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl19, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl19, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl19 = new OptionNatImpl19 {
@@ -569,7 +595,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl19 {
     val value: OptionNatImpl19 = {
-      val xa = new OptionNatImpl19
+      val xa: OptionNatImpl19 = new OptionNatImpl19
       xa.CaseFirst
       xa
     }
@@ -587,6 +613,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl20
     override val tail: OptionNatImpl19  = OptionNatImpl19.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl20, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl20, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl20 = new OptionNatImpl20 {
@@ -597,7 +625,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl20 {
     val value: OptionNatImpl20 = {
-      val xa = new OptionNatImpl20
+      val xa: OptionNatImpl20 = new OptionNatImpl20
       xa.CaseFirst
       xa
     }
@@ -615,6 +643,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl21
     override val tail: OptionNatImpl20  = OptionNatImpl20.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl21, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl21, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl21 = new OptionNatImpl21 {
@@ -625,7 +655,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl21 {
     val value: OptionNatImpl21 = {
-      val xa = new OptionNatImpl21
+      val xa: OptionNatImpl21 = new OptionNatImpl21
       xa.CaseFirst
       xa
     }
@@ -643,6 +673,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl22
     override val tail: OptionNatImpl21  = OptionNatImpl21.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl22, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl22, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl22 = new OptionNatImpl22 {
@@ -653,7 +685,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl22 {
     val value: OptionNatImpl22 = {
-      val xa = new OptionNatImpl22
+      val xa: OptionNatImpl22 = new OptionNatImpl22
       xa.CaseFirst
       xa
     }
@@ -671,6 +703,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl23
     override val tail: OptionNatImpl22  = OptionNatImpl22.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl23, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl23, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl23 = new OptionNatImpl23 {
@@ -681,7 +715,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl23 {
     val value: OptionNatImpl23 = {
-      val xa = new OptionNatImpl23
+      val xa: OptionNatImpl23 = new OptionNatImpl23
       xa.CaseFirst
       xa
     }
@@ -699,6 +733,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl24
     override val tail: OptionNatImpl23  = OptionNatImpl23.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl24, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl24, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl24 = new OptionNatImpl24 {
@@ -709,7 +745,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl24 {
     val value: OptionNatImpl24 = {
-      val xa = new OptionNatImpl24
+      val xa: OptionNatImpl24 = new OptionNatImpl24
       xa.CaseFirst
       xa
     }
@@ -727,6 +763,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl25
     override val tail: OptionNatImpl24  = OptionNatImpl24.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl25, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl25, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl25 = new OptionNatImpl25 {
@@ -737,7 +775,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl25 {
     val value: OptionNatImpl25 = {
-      val xa = new OptionNatImpl25
+      val xa: OptionNatImpl25 = new OptionNatImpl25
       xa.CaseFirst
       xa
     }
@@ -755,6 +793,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl26
     override val tail: OptionNatImpl25  = OptionNatImpl25.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl26, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl26, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl26 = new OptionNatImpl26 {
@@ -765,7 +805,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl26 {
     val value: OptionNatImpl26 = {
-      val xa = new OptionNatImpl26
+      val xa: OptionNatImpl26 = new OptionNatImpl26
       xa.CaseFirst
       xa
     }
@@ -783,6 +823,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl27
     override val tail: OptionNatImpl26  = OptionNatImpl26.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl27, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl27, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl27 = new OptionNatImpl27 {
@@ -793,7 +835,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl27 {
     val value: OptionNatImpl27 = {
-      val xa = new OptionNatImpl27
+      val xa: OptionNatImpl27 = new OptionNatImpl27
       xa.CaseFirst
       xa
     }
@@ -811,6 +853,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl28
     override val tail: OptionNatImpl27  = OptionNatImpl27.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl28, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl28, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl28 = new OptionNatImpl28 {
@@ -821,7 +865,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl28 {
     val value: OptionNatImpl28 = {
-      val xa = new OptionNatImpl28
+      val xa: OptionNatImpl28 = new OptionNatImpl28
       xa.CaseFirst
       xa
     }
@@ -839,6 +883,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl29
     override val tail: OptionNatImpl28  = OptionNatImpl28.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl29, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl29, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl29 = new OptionNatImpl29 {
@@ -849,7 +895,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl29 {
     val value: OptionNatImpl29 = {
-      val xa = new OptionNatImpl29
+      val xa: OptionNatImpl29 = new OptionNatImpl29
       xa.CaseFirst
       xa
     }
@@ -867,6 +913,8 @@ object TypeAdtAliasModelUnapplyImpl {
     override type ThisType = OptionNatImpl30
     override val tail: OptionNatImpl29  = OptionNatImpl29.value
     override val needAlreadyOk: Boolean = false
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl30, U, Data]): Option[Data] =
+      super.apply(u)
     override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl30, U, Data]): Option[Data] =
       super.unapply(u)
     override lazy val CaseFirst: OptionNatImpl30 = new OptionNatImpl30 {
@@ -877,7 +925,7 @@ object TypeAdtAliasModelUnapplyImpl {
   }
   object OptionNatImpl30 {
     val value: OptionNatImpl30 = {
-      val xa = new OptionNatImpl30
+      val xa: OptionNatImpl30 = new OptionNatImpl30
       xa.CaseFirst
       xa
     }
