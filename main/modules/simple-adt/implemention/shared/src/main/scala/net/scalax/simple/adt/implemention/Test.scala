@@ -58,6 +58,9 @@ object UnapplyInstance {
   trait UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFuncPositive[UnapplyFuncZero] {
     override type ThisType = UnapplyFuncZero
     override def CaseFirst: UnapplyFuncZero
+    override def unapply[U <: NatFunc, Data](u: U)(implicit
+      somethig_not_used: CountNatPositive.Aux[UnapplyFuncZero, U, Data]
+    ): Option[Data] = apply(u)
   }
   object UnapplyFuncZero {
     private lazy val aImpl: UnapplyFuncZero = new UnapplyFuncZero {
@@ -65,16 +68,17 @@ object UnapplyInstance {
       override lazy val CaseFirst: UnapplyFuncZero = aImpl
     }
 
-    val value: UnapplyFuncZero = {
-      val a: UnapplyFuncZero = new UnapplyFuncZero {
-        override val needAlreadyOk: Boolean = false
-        override lazy val CaseFirst: UnapplyFuncZero = {
-          aImpl.CaseFirst
-          aImpl
-        }
+    lazy val tempValue: UnapplyFuncZero = new UnapplyFuncZero {
+      override val needAlreadyOk: Boolean = false
+      override lazy val CaseFirst: UnapplyFuncZero = {
+        aImpl.CaseFirst
+        aImpl
       }
-      a.CaseFirst
-      a
+    }
+
+    val value: UnapplyFuncZero = {
+      tempValue.CaseFirst
+      tempValue
     }
 
     implicit def zeroGetTail[T2Tail <: NatFunc, Data]: CountNatPositive.Aux[UnapplyFuncZero, NatFuncPositive[Data, T2Tail], Data] =
