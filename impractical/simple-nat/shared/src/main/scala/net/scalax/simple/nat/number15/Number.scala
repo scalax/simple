@@ -20,9 +20,9 @@ object Number1 {
     }
   )
 
-  val number1S: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => other()(tail)))
-  val number1T: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => AA(() => tail()(other))))
-  val number1U: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => BB(() => tail()(other))))
-  val number1V: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => BB(() => other()(tail))))
+  val number1S: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => other().inputGHDMZSK(tail())))
+  val number1T: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => AA.inputGHDMZSK(tail().inputGHDMZSK(other()))))
+  val number1U: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => BB.inputGHDMZSK(tail().inputGHDMZSK(other()))))
+  val number1V: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => BB.inputGHDMZSK(other().inputGHDMZSK(tail()))))
 
 }

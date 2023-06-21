@@ -11,7 +11,7 @@ trait EmptySetter
 
 object xxbb1 extends IOApp.Simple {
 
-  def encoderFromModel(modelEn: Model[Encoder], g: Getter[Model], lNames: LabelledNames[Model]): Encoder[Model[cats.Id]] = {
+  /*def encoderFromModel(modelEn: Model[Encoder], g: Getter[Model], lNames: LabelledNames[Model]): Encoder[Model[cats.Id]] = {
     val encoders = g.output(modelEn).asInstanceOf[List[Encoder[Any]]]
     Encoder[Model[cats.Id]] { m =>
       val dataList = g.output(m)
@@ -21,11 +21,13 @@ object xxbb1 extends IOApp.Simple {
       val jsonObject = JsonObject.fromIterable(jsonList)
       Json.fromJsonObject(jsonObject)
     }
-  }
+  }*/
+
+  type AnyFunc[T] = PropertyTag[Any]
 
   val ecec = {
     def HelloByeModule = new ModuleDef {
-      make[Encoder[Int]].from(Encoder[Int])
+      /*make[Encoder[Int]].from(Encoder[Int])
       make[Encoder[String]].from(Encoder[String])
       make[Encoder[Long]].from(Encoder[Long])
       make[Encoder[Option[Long]]].from { (e: Encoder[Long]) =>
@@ -44,19 +46,28 @@ object xxbb1 extends IOApp.Simple {
       }
       make[Encoder[Model[cats.Id]]].from { (modelEn: Model[Encoder], g: Getter[Model], lNames: LabelledNames[Model]) =>
         encoderFromModel(modelEn, g, lNames)
+      }*/
+      make[PropertyTag[Any]].fromValue(PropertyTag.value[Any])
+      make[Model[PropertyTag]].from { u: Model[AnyFunc] => u.asInstanceOf[Model[PropertyTag]] }
+      make[Model[AnyFunc]]
+      make[ModelLength[Model]].from { implicit u: Model[PropertyTag] =>
+        ModelLength.generic[Model]
       }
+      make[ModelGetter[Model]].fromValue(ModelGetter.generic[Model])
     }
 
     import cats.effect.unsafe.implicits.global
 
     val objectGraphResource = {
-      Injector[IO]().produce(HelloByeModule, Roots.target[Encoder[Model[cats.Id]]])
+      Injector[IO]()
+        .produce(HelloByeModule, Roots.target[Model[AnyFunc]] ++ Roots.target[ModelLength[Model]] ++ Roots.target[ModelGetter[Model]])
     }
 
     objectGraphResource.toCats.use { t =>
-      val e = t.get[Encoder[Model[cats.Id]]]
-      IO(e)
-
+      val e1 = t.get[Model[AnyFunc]]
+      val e2 = t.get[ModelLength[Model]]
+      val e3 = t.get[ModelGetter[Model]]
+      IO((e1, e2, e3))
     }
   }
 
@@ -71,8 +82,12 @@ object xxbb1 extends IOApp.Simple {
 
   override val run: IO[Unit] = {
     for {
-      en <- ecec
-      _  <- IO(println(en(modelInstance)))
+      eu <- ecec
+      (e1, e2, e3) = eu
+      _ <- IO(println(e1))
+      _ <- IO(println(e1.name11))
+      _ <- IO(println(e2.size))
+      _ <- IO(println(e3.data(modelInstance)))
     } yield {
       //
     }

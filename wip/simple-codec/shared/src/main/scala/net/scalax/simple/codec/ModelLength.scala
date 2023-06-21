@@ -1,18 +1,16 @@
-package net.scalax.simple
-package codec
+package net.scalax.simple.codec
 
 import scala.collection.compat._
 
 trait ModelLength[F[_[_]]] {
-  def length: Int
+  def size: Int
 }
 
 object ModelLength {
-  def apply[F[_[_]]]: ModelLengthImpl[F] = new ModelLengthImpl[F]
-
-  class ModelLengthImpl[F[_[_]]] {
-    def generic(implicit n: EmptyTagModelFiller[F], getter: Getter[F]): ModelLength[F] = new ModelLength[F] {
-      override val length: Int = getter.output[ContextI#EmptyTagF](n.instance).size
+  def generic[F[_[_]] <: Product](implicit p: F[PropertyTag]): ModelLength[F] = {
+    val sizeImpl = p.productIterator.to(List)
+    new ModelLength[F] {
+      override val size: Int = sizeImpl.size
     }
   }
 }

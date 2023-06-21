@@ -16,7 +16,7 @@ object RunMain {
     Number1.count2 = 0
     @tailrec
     def countImpl(c: => ghdmzsk, initCount: Long): BigDecimal = {
-      val nextTail = c(() => anythingNumber)
+      val nextTail = c.inputGHDMZSK(anythingNumber)
       if (Number1.count1 + Number1.count2 < initCount || Number1.count2 == 0)
         countImpl(nextTail, initCount)
       else {
@@ -34,7 +34,7 @@ object RunMain {
   def numT(i: Int, zero: => ghdmzsk): ghdmzsk = {
     if (i > 0) {
       val num1Result: ghdmzsk = numT(i - 1, zero)
-      Number1.number1T(() => num1Result)
+      Number1.number1T.inputGHDMZSK(num1Result)
     } else
       zero
   }
@@ -42,7 +42,7 @@ object RunMain {
   def numS(i: Int, zero: => ghdmzsk): ghdmzsk = {
     if (i > 0) {
       val num1Result: ghdmzsk = numS(i - 1, zero)
-      Number1.number1S(() => num1Result)
+      Number1.number1S.inputGHDMZSK(num1Result)
     } else
       zero
   }
@@ -53,17 +53,17 @@ object RunMain {
       i2 <- 0 to 20
     } yield {
       lazy val num1Count: ghdmzsk     = numT(i1, num1CountZero)
-      lazy val num1CountZero: ghdmzsk = Number1.number1V(() => num1Count)
+      lazy val num1CountZero: ghdmzsk = Number1.number1V.inputGHDMZSK(num1Count)
 
       lazy val num2Count: ghdmzsk     = numT(i2, num2CountZero)
-      lazy val num2CountZero: ghdmzsk = Number1.number1S(() => num2Count)
+      lazy val num2CountZero: ghdmzsk = Number1.number1S.inputGHDMZSK(num2Count)
 
       val except: BigDecimal = BigDecimal(i1) + BigDecimal(i2)
 
-      val r1 = count(num1Count(() => num2CountZero), except)
-      val r2 = count(num1Count(() => num2Count), except)
-      val r3 = count(num1CountZero(() => num2CountZero), except)
-      val r4 = count(num1CountZero(() => num2Count), except)
+      val r1 = count(num1Count.inputGHDMZSK(num2CountZero), except)
+      val r2 = count(num1Count.inputGHDMZSK(num2Count), except)
+      val r3 = count(num1CountZero.inputGHDMZSK(num2CountZero), except)
+      val r4 = count(num1CountZero.inputGHDMZSK(num2Count), except)
 
       println(i1, '+', i2, '=', except, r1, r2, r3, r4)
     }
@@ -73,17 +73,17 @@ object RunMain {
       i2 <- 0 to 20
     } yield {
       lazy val num1Count: ghdmzsk     = numT(i1, num1CountZero)
-      lazy val num1CountZero: ghdmzsk = Number1.number1S(() => num1Count)
+      lazy val num1CountZero: ghdmzsk = Number1.number1S.inputGHDMZSK(num1Count)
 
       lazy val num2Count: ghdmzsk     = numS(i2, num2CountZero)
-      lazy val num2CountZero: ghdmzsk = Number1.number1U(() => num2Count)
+      lazy val num2CountZero: ghdmzsk = Number1.number1U.inputGHDMZSK(num2Count)
 
       val except: BigDecimal = BigDecimal(i1) * BigDecimal(i2)
 
-      val r1 = count(num1Count(() => num2CountZero), except)
-      val r2 = count(num1Count(() => num2Count), except)
-      val r3 = count(num1CountZero(() => num2CountZero), except)
-      val r4 = count(num1CountZero(() => num2Count), except)
+      val r1 = count(num1Count.inputGHDMZSK(num2CountZero), except)
+      val r2 = count(num1Count.inputGHDMZSK(num2Count), except)
+      val r3 = count(num1CountZero.inputGHDMZSK(num2CountZero), except)
+      val r4 = count(num1CountZero.inputGHDMZSK(num2Count), except)
 
       println(i1, '×', i2, '=', except, r1, r2, r3, r4)
     }
@@ -93,17 +93,17 @@ object RunMain {
       i2 <- 1 to 20
     } yield {
       lazy val num1Count: ghdmzsk     = numS(i1, num1CountZero)
-      lazy val num1CountZero: ghdmzsk = Number1.number1U(() => num1Count)
+      lazy val num1CountZero: ghdmzsk = Number1.number1U.inputGHDMZSK(num1Count)
 
       lazy val num2Count: ghdmzsk     = numS(i2, num2CountZero)
-      lazy val num2CountZero: ghdmzsk = Number1.number1T(() => num2Count)
+      lazy val num2CountZero: ghdmzsk = Number1.number1T.inputGHDMZSK(num2Count)
 
       val except: BigDecimal = BigDecimal(i1) / BigDecimal(i2)
 
-      val r1 = count(num1Count(() => num2CountZero), except)
-      val r2 = count(num1Count(() => num2Count), except)
-      val r3 = count(num1CountZero(() => num2CountZero), except)
-      val r4 = count(num1CountZero(() => num2Count), except)
+      val r1 = count(num1Count.inputGHDMZSK(num2CountZero), except)
+      val r2 = count(num1Count.inputGHDMZSK(num2Count), except)
+      val r3 = count(num1CountZero.inputGHDMZSK(num2CountZero), except)
+      val r4 = count(num1CountZero.inputGHDMZSK(num2Count), except)
 
       println(i1, '÷', i2, '=', except, r1, r2, r3, r4)
     }

@@ -16,7 +16,7 @@ object RunMain {
     Number1.count2 = 0
     @tailrec
     def countImpl(c: => ghdmzsk): Long = {
-      val nextTail = c(() => anythingNumber)
+      val nextTail = c.inputGHDMZSK(anythingNumber)
       countImpl(nextTail)
     }
     try countImpl(number)
@@ -26,12 +26,12 @@ object RunMain {
     Number1.count1 + Number1.count2
   }
 
-  lazy val zeroGhdmzsk: ghdmzsk = Number1.number1S(() => zeroGhdmzsk)
+  lazy val zeroGhdmzsk: ghdmzsk = Number1.number1S.inputGHDMZSK(zeroGhdmzsk)
 
   def numT(i: Int): ghdmzsk = {
     if (i > 0) {
       val num1Result: ghdmzsk = numT(i - 1)
-      Number1.number1T(() => num1Result)
+      Number1.number1T.inputGHDMZSK(num1Result)
     } else
       zeroGhdmzsk
   }
@@ -45,7 +45,7 @@ object RunMain {
       lazy val num2Count: ghdmzsk = numT(i2)
 
       val except: BigDecimal = BigDecimal(i1) + BigDecimal(i2)
-      val r1                 = count(num1Count(() => num2Count))
+      val r1                 = count(num1Count.inputGHDMZSK(num2Count))
 
       println(i1, '+', i2, '=', except, r1)
       assert(r1 == i1 + i2)

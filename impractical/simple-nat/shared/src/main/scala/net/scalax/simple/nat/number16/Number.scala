@@ -14,7 +14,7 @@ object Number1 {
     }
   )
 
-  val number1S: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => other()(tail)))
-  val number1T: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => AA(() => other()(tail))))
+  val number1S: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => other().inputGHDMZSK(tail())))
+  val number1T: ghdmzsk = ghdmzsk(tail => ghdmzsk(other => AA.inputGHDMZSK(other().inputGHDMZSK(tail()))))
 
 }

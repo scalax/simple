@@ -19,7 +19,7 @@ object `喵_Number_03` extends App {
     var length2: Long   = 0
 
     val (n1, n2, n3) = genNumber(except)
-    val gen          = () => n1(() => n2)(() => n2)(() => n3)
+    val gen          = () => n1.inputGHDMZSK(n2).inputGHDMZSK(n2).inputGHDMZSK(n3)
 
     @tailrec
     def countImpl(num: () => ghdmzsk, needConitie: Long): Unit = {
