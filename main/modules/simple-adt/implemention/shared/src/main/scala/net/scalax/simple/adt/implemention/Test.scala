@@ -17,20 +17,9 @@ object UnapplyInstance {
     type DataType
   }
   object CountNatPositive {
-    type Aux[T1 <: UnapplyFunc[_], -T2 <: NatFunc, DType] = CountNatPositive[T1, T2] {
+    type Aux[T1 <: UnapplyFunc, -T2 <: NatFunc, DType] = CountNatPositive[T1, T2] {
       type DataType = DType
     }
-
-    implicit def positiveGetTail[T1Tail <: UnapplyFunc[_], T2Tail <: NatFunc, Data, TempData](implicit
-      somethig_not_used: CountNatPositive.Aux[T1Tail, T2Tail, Data]
-    ): CountNatPositive.Aux[UnapplyFuncPositive[T1Tail], NatFuncPositive[TempData, T2Tail], Data] =
-      new CountNatPositive[UnapplyFuncPositive[T1Tail], NatFuncPositive[TempData, T2Tail]] {
-        override type DataType = Data
-      }
-    implicit def zeroGetTail[T2Tail <: NatFunc, Data]: CountNatPositive.Aux[UnapplyFuncZero, NatFuncPositive[Data, T2Tail], Data] =
-      new CountNatPositive[UnapplyFuncZero, NatFuncPositive[Data, T2Tail]] {
-        override type DataType = Data
-      }
   }
 
   sealed trait TypeCounter extends ghdmzsk
@@ -40,56 +29,58 @@ object UnapplyInstance {
   }
   trait PositiveTypeCounterZero extends TypeCounter with ghdmzskZero
 
-  sealed trait UnapplyFunc[ThisType <: UnapplyFunc[_]] extends TypeCounter {
+  sealed trait UnapplyFunc extends TypeCounter {
     self =>
+    type ThisType <: UnapplyFunc
+    def needAlreadyOk: Boolean
     def extraPositive[Data](u: NatFunc): NatFuncPositive[Data, NatFunc] = inputGHDMZSK(u).asInstanceOf[NatFuncPositive[Data, NatFunc]]
     def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] = {
       val positive: NatFuncPositive[Data, NatFunc] = extraPositive(u)
-      positive.dataInstance
+      if (needAlreadyOk) positive.dataInstance.filterNot(_ => positive.isAlreadyOk) else positive.dataInstance
     }
     def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] = apply(u)
-
-    def CaseFirst: UnapplyFunc[ThisType] = new UnapplyFunc[ThisType] {
-      subSelf =>
-      override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk                              = self.inputGHDMZSK(g)
-      override def extraPositive[Data1](u: NatFunc): NatFuncPositive[Data1, NatFunc] = self.extraPositive(u)
-      override def apply[U1 <: NatFunc, Data1](
-        u: U1
-      )(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U1, Data1]): Option[Data1] = {
-        val positive: NatFuncPositive[Data1, NatFunc] = extraPositive(u)
-        positive.dataInstance.filterNot(_ => positive.isAlreadyOk)
-      }
-      override def unapply[U1 <: NatFunc, Data1](u: U1)(implicit
-        somethig_not_used: CountNatPositive.Aux[ThisType, U1, Data1]
-      ): Option[Data1] = subSelf.apply(u)
-    }
+    def CaseFirst: UnapplyFunc.Aux[ThisType]
+  }
+  object UnapplyFunc {
+    type Aux[T <: UnapplyFunc] = UnapplyFunc { type ThisType = T }
   }
 
-  trait UnapplyFuncPositive[Tail <: UnapplyFunc[_]] extends PositiveTypeCounter[Tail] with UnapplyFunc[UnapplyFuncPositive[Tail]] {
-    override def tail: Tail
-    override def CaseFirst: UnapplyFunc[UnapplyFuncPositive[Tail]] = super.CaseFirst
+  trait UnapplyFuncPositive[Tail <: UnapplyFunc] extends UnapplyFunc {
+    self =>
+    override type ThisType <: UnapplyFuncPositive[Tail]
+    // override def tail: Tail
+    override def CaseFirst: UnapplyFuncPositive.Aux[Tail, ThisType]
   }
   object UnapplyFuncPositive {
-    def apply[Tail <: UnapplyFunc[_]](tail: Tail): UnapplyFuncPositive[Tail] = {
-      val tail1 = tail
-      val positiveObj = new UnapplyFuncPositive[Tail] {
-        override val tail: Tail                                             = tail1
-        override lazy val CaseFirst: UnapplyFunc[UnapplyFuncPositive[Tail]] = super.CaseFirst
-      }
-      positiveObj.CaseFirst
-      positiveObj
-    }
+    type Aux[Tail <: UnapplyFunc, T <: UnapplyFunc] = UnapplyFuncPositive[Tail] { type ThisType = T }
   }
 
-  trait UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFunc[UnapplyFuncZero]
+  trait UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFuncPositive[UnapplyFuncZero] {
+    override type ThisType = UnapplyFuncZero
+    override def CaseFirst: UnapplyFuncZero
+  }
   object UnapplyFuncZero {
-    val value: UnapplyFuncZero = {
-      val zeroObj: UnapplyFuncZero = new UnapplyFuncZero {
-        override lazy val CaseFirst: UnapplyFunc[UnapplyFuncZero] = super.CaseFirst
-      }
-      zeroObj.CaseFirst
-      zeroObj
+    private lazy val aImpl: UnapplyFuncZero = new UnapplyFuncZero {
+      override val needAlreadyOk: Boolean          = true
+      override lazy val CaseFirst: UnapplyFuncZero = aImpl
     }
+
+    val value: UnapplyFuncZero = {
+      val a: UnapplyFuncZero = new UnapplyFuncZero {
+        override val needAlreadyOk: Boolean = false
+        override lazy val CaseFirst: UnapplyFuncZero = {
+          aImpl.CaseFirst
+          aImpl
+        }
+      }
+      a.CaseFirst
+      a
+    }
+
+    implicit def zeroGetTail[T2Tail <: NatFunc, Data]: CountNatPositive.Aux[UnapplyFuncZero, NatFuncPositive[Data, T2Tail], Data] =
+      new CountNatPositive[UnapplyFuncZero, NatFuncPositive[Data, T2Tail]] {
+        override type DataType = Data
+      }
   }
 
 }

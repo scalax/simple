@@ -5,36 +5,47 @@ package impl
 
 import implemention._
 
-@buildHList(start: Int, i1: Int) = {
-    @if(start <= i1) {
-        NatFuncPositive[I@start, @buildHList(start + 1, i1)]
-    } else {
-        Tail
-    }
-}
-
-@buildHListString(i1: Int) = {
-    @if(i1 > 0) {
-        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncPositive[@buildHListString(i1 - 1)]
-    } else {
-        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncZero
-    }
-}
-@buildHListInstance(i1: Int) = {
-    @if(i1 > 0) {
-        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncPositive(@buildHListInstance(i1 - 1))
-    } else {
-        net.scalax.simple.adt.implemention.UnapplyInstance.UnapplyFuncZero.value
-    }
-}
-
 trait TypeAdtAliasModelUnapply {
+    import TypeAdtAliasModelUnapplyImpl._
     @for(i1 <- 1 to 30) {
-        type OptionNat@{i1} = @buildHListString(i1 - 1)
-        val OptionNat@{i1}: OptionNat@{i1} = net.scalax.simple.adt.implemention.DefaultUnapplyFuncGetter.get[OptionNat@{i1}](@{i1 - 1})
+        val Option@{i1}: OptionNatImpl@{i1} = OptionNatImpl@{i1}.value
+    }
+}
+
+object TypeAdtAliasModelUnapplyImpl {
+    import net.scalax.simple.adt.implemention.{ UnapplyInstance => UI }
+    import UI.{ UnapplyFuncPositive => UFP, CountNatPositive => CP, PositiveTypeCounter => PC }
+
+    type OptionNatImpl1 = UI.UnapplyFuncZero
+    object OptionNatImpl1 {
+        val value: UI.UnapplyFuncZero = UI.UnapplyFuncZero.value
     }
 
-    @for(i1 <- 1 to 30) {
-        val Option@{i1}: OptionNat@{i1} = OptionNat@{i1}
+    @for(i1 <- 2 to 30) {
+        class OptionNatImpl@{i1} extends UFP[OptionNatImpl@{i1 - 1}] with PC[OptionNatImpl@{i1 - 1}] {
+            self =>
+            override type ThisType = OptionNatImpl@{i1}
+            override val tail: OptionNatImpl@{i1 - 1} = OptionNatImpl@{i1 - 1}.value
+            override val needAlreadyOk: Boolean = false
+            override lazy val CaseFirst: OptionNatImpl@{i1} = new OptionNatImpl@{i1} {
+                override val tail: OptionNatImpl@{i1 - 1} = self.tail
+                override lazy val CaseFirst: OptionNatImpl@{i1} = self.CaseFirst
+                override val needAlreadyOk: Boolean = true
+            }
+        }
+        object OptionNatImpl@{i1} {
+            val value: OptionNatImpl@{i1} = {
+                val xa = new OptionNatImpl@{i1}
+                xa.CaseFirst
+                xa
+            }
+
+            implicit def positiveGetTail[T2Tail <: NatFunc, Data, TempData](implicit
+                somethig_not_used: CP.Aux[OptionNatImpl@{i1 - 1}, T2Tail, Data]
+            ): CP.Aux[OptionNatImpl@{i1}, NatFuncPositive[TempData, T2Tail], Data] =
+                new CP[OptionNatImpl@{i1}, NatFuncPositive[TempData, T2Tail]] {
+                    override type DataType = Data
+                }
+        }
     }
 }

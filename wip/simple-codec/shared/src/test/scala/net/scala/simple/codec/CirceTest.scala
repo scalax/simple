@@ -53,18 +53,21 @@ object xxbb1 extends IOApp.Simple {
       make[ModelLength[Model]].from { implicit u: Model[PropertyTag] =>
         ModelLength.generic[Model]
       }
+      make[ModelGetter[Model]].fromValue(ModelGetter.generic[Model])
     }
 
     import cats.effect.unsafe.implicits.global
 
     val objectGraphResource = {
-      Injector[IO]().produce(HelloByeModule, Roots.target[Model[AnyFunc]] ++ Roots.target[ModelLength[Model]])
+      Injector[IO]()
+        .produce(HelloByeModule, Roots.target[Model[AnyFunc]] ++ Roots.target[ModelLength[Model]] ++ Roots.target[ModelGetter[Model]])
     }
 
     objectGraphResource.toCats.use { t =>
       val e1 = t.get[Model[AnyFunc]]
       val e2 = t.get[ModelLength[Model]]
-      IO((e1, e2))
+      val e3 = t.get[ModelGetter[Model]]
+      IO((e1, e2, e3))
     }
   }
 
@@ -80,10 +83,11 @@ object xxbb1 extends IOApp.Simple {
   override val run: IO[Unit] = {
     for {
       eu <- ecec
-      (e1, e2) = eu
+      (e1, e2, e3) = eu
       _ <- IO(println(e1))
       _ <- IO(println(e1.name11))
       _ <- IO(println(e2.size))
+      _ <- IO(println(e3.data(modelInstance)))
     } yield {
       //
     }
