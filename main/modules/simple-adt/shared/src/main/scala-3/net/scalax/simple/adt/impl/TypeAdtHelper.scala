@@ -50,9 +50,10 @@ abstract class FoldOptApplyInstance[O[_] <: Tuple]:
       inline def aliasD = d.asInstanceOf[NatFuncPositive[Any, NatFunc]]
 
       funcList.match
+
         case headFunc :: tailFunc =>
           aliasD.match
-            case TypeAdt.Option1.CaseFirst(data) =>
+            case TypeAdt.Option1(data) =>
               Some(headFunc(data))
             case _ =>
               findDeep(tailFunc, aliasD.tail)
