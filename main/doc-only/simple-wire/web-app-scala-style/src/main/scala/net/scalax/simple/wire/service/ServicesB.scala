@@ -8,7 +8,7 @@ import org.http4s.HttpRoutes
 import doobie._
 import model._
 
-class ServiceB(implicit serviceAFunc: () => ServiceA, dbDao: DBDao) {
+class ServiceB(serviceAFunc: () => ServiceA, dbDao: DBDao) {
 
   def serviceA: ServiceA        = serviceAFunc()
   def selectData: IO[List[Cat]] = dbDao.select
