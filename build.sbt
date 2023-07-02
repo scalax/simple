@@ -43,9 +43,6 @@ val `wire/file` = `doc-only/file` / "simple-wire"
 val `wire-web-app/file` = `wire/file` / "web-app"
 lazy val `wire-web-app` = project in `wire-web-app/file`
 
-val `wire-web-scala/file` = `wire/file` / "web-app-scala-style"
-lazy val `wire-web-scala` = project in `wire-web-scala/file`
-
 val `codec/file`  = `wip/file` / "simple-codec"
 val codec         = crossProject(JSPlatform, JVMPlatform) in `codec/file`
 lazy val codecJVM = codec.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM

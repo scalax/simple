@@ -9,13 +9,12 @@ import org.http4s.HttpRoutes
 import doobie._
 import model._
 
-import com.softwaremill.macwire._
-
-trait ServiceA {
+class ServiceA(initPrinter: InitPrinter, serviceBFunc: () => ServiceB, dbDao: DBDao) {
   serviceA: ServiceA =>
-  protected def serviceB: ServiceB
-  protected def dbDao: DBDao
 
+  initPrinter.printAction()
+
+  def serviceB: ServiceB        = serviceBFunc()
   def selectData: IO[List[Cat]] = dbDao.select
 
   def dataCol: IO[(List[Cat], List[Cat])] = for (dataA <- serviceA.selectData; dataB <- serviceB.selectData) yield (dataA, dataB)
@@ -29,11 +28,4 @@ trait ServiceA {
 
   def getByName(name: String): IO[String] = IO(println(serviceB.toString)) *> IO(s"Hello, $name.")
 
-}
-
-object ServiceA {
-  def build(sb: => ServiceB)(implicit xa: Transactor[IO]): ServiceA = new ServiceA {
-    override protected def serviceB: ServiceB = sb
-    override protected val dbDao: DBDao       = DBDao.build
-  }
 }

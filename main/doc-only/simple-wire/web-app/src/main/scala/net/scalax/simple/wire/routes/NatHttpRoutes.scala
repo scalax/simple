@@ -26,7 +26,3 @@ class NatHttpRoutes(serviceA: ServiceA) {
     Ok(view)
   }
 }
-
-object NatHttpRoutes {
-  def build(implicit serviceA: => ServiceA): NatHttpRoutes = new NatHttpRoutes(serviceA)
-}
