@@ -7,12 +7,10 @@ import org.http4s.implicits._
 import org.http4s.HttpRoutes
 import doobie._
 import model._
-import com.softwaremill.macwire._
 
-trait ServiceB {
-  protected def serviceA: ServiceA
-  protected def dbDao: DBDao
+class ServiceB(serviceAFunc: () => ServiceA, dbDao: DBDao) {
 
+  def serviceA: ServiceA        = serviceAFunc()
   def selectData: IO[List[Cat]] = dbDao.select
 
   def insertNameB(list: List[(String, Int)]): IO[List[Cat]] = list match {
@@ -22,11 +20,4 @@ trait ServiceB {
     case Nil => IO(List.empty)
   }
 
-}
-
-object ServiceB {
-  def build(sa: => ServiceA)(implicit xa: Transactor[IO]): ServiceB = new ServiceB {
-    override protected def serviceA: ServiceA = sa
-    override protected val dbDao: DBDao       = DBDao.build
-  }
 }

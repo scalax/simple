@@ -3,14 +3,15 @@ package resource
 
 import doobie._
 import doobie.implicits._
-import cats.effect.{IO, Resource}
+import cats.effect._
 import doobie.hikari._
+import net.scalax.simple.wire.model.SimpleProjectConfig
 
-class H2Doobie(dbName: String) {
+abstract class H2Doobie(dbName: String) {
 
-  private val transactor: Resource[IO, HikariTransactor[IO]] = for {
-    ce <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
-    xa <- HikariTransactor.newHikariTransactor[IO](
+  private def transactor[F[_]: Async]: Resource[F, HikariTransactor[F]] = for {
+    ce <- ExecutionContexts.fixedThreadPool[F](32) // our connect EC
+    xa <- HikariTransactor.newHikariTransactor[F](
       "org.h2.Driver",                          // driver classname
       s"jdbc:h2:mem:$dbName;DB_CLOSE_DELAY=-1", // connect URL
       "sa",                                     // username
@@ -19,7 +20,7 @@ class H2Doobie(dbName: String) {
     )
   } yield xa
 
-  private def executeUpdate: ConnectionIO[Int] = {
+  private val executeUpdate: ConnectionIO[Int] = {
     val sql1 = sql"DROP TABLE IF EXISTS cats".update
     val sql2 = sql"CREATE TABLE cats(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), age INT)".update
 
@@ -29,22 +30,11 @@ class H2Doobie(dbName: String) {
     } yield (a: Int) + (b: Int)
   }
 
-  private val initAction = for {
-    xa <- transactor
-    updateAction = executeUpdate.transact(xa)
-    r <- Resource.eval(updateAction)
-  } yield {
-    r: Int
-    xa
-  }
+  private def initAction[F[_]: MonadCancelThrow](xa: Transactor[F]): Resource[F, Int] = Resource.eval(executeUpdate.transact(xa))
 
-  protected val resource: Resource[IO, Transactor[IO]] = initAction
-
+  def resource[F[_]: Async]: Resource[F, Transactor[F]] = for (xa <- transactor; _ <- initAction(xa)) yield xa
 }
 
-object H2Doobie {
-  def build(name: String): Resource[IO, Transactor[IO]] = {
-    val resourceContent = new H2Doobie(name)
-    resourceContent.resource
-  }
-}
+class EnvAH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvA)
+
+class EnvBH2Doobie(simpleConfig: SimpleProjectConfig) extends H2Doobie(dbName = simpleConfig.simple.wire.doobie.name.EnvB)
