@@ -11,8 +11,8 @@ trait ModelNameImplicitImpl {
 
   type AuxS[_] = PropertyTag[Any]
 
-  def generic[F[_[_]] <: Product](emptyModel: F[AuxS])(implicit u: DefaultSymbolicLabelling.Aux[F[AuxS], _ <: HList]): ModelNames[F] = {
-    val l = symbolHListToList(u.apply())
+  def generic[F[_[_]] <: Product](implicit u: DefaultSymbolicLabelling.Aux[F[AuxS], _ <: HList]): ModelNames[F] = {
+    val l: List[String] = symbolHListToList(u.apply())
     new ModelNames[F] {
       override val names: List[String] = l
     }

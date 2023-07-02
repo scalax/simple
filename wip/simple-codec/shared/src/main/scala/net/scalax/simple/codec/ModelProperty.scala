@@ -9,7 +9,7 @@ trait ModelProperty[F[_[_]]] {
 object ModelProperty {
   type AuxS[_] = String
   def generic[F[_[_]] <: Product](modelNames: ModelNames[F], modelSetter: ModelSetter[F]): ModelProperty[F] = {
-    val l = modelSetter.input[AuxS](modelNames.names)
+    val l = modelSetter.inputList[AuxS](modelNames.names)
     new ModelProperty[F] {
       override val model: F[ModelProperty.AuxS] = l
     }

@@ -6,6 +6,8 @@ final class PropertyTag[T] {
 }
 
 object PropertyTag {
-  private val empty: PropertyTag[Any] = new PropertyTag[Any]
-  def value[T]: PropertyTag[T]        = empty.asInstanceOf[PropertyTag[T]]
+  type AnyAux[_] = PropertyTag[Any]
+  private val empty: PropertyTag[Any]                                 = new PropertyTag[Any]
+  def genericAny[F[_[_]]](implicit setter: ModelSetter[F]): F[AnyAux] = setter.inputSingleton(empty)
+  def generic[F[_[_]]](implicit proAnyAux: F[AnyAux]): F[PropertyTag] = proAnyAux.asInstanceOf[F[PropertyTag]]
 }
