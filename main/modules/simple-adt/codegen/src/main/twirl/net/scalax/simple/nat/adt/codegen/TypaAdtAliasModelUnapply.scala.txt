@@ -26,21 +26,11 @@ object TypeAdtAliasModelUnapplyImpl {
             self =>
             override type ThisType = OptionNatImpl@{i1}
             override val tail: OptionNatImpl@{i1 - 1} = OptionNatImpl@{i1 - 1}.value
-            override val needAlreadyOk: Boolean = false
             override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl@{i1}, U, Data]): Option[Data] = super.apply(u)
             override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CP.Aux[OptionNatImpl@{i1}, U, Data]): Option[Data] = super.unapply(u)
-            override lazy val CaseFirst: OptionNatImpl@{i1} = new OptionNatImpl@{i1} {
-                override val tail: OptionNatImpl@{i1 - 1} = self.tail
-                override lazy val CaseFirst: OptionNatImpl@{i1} = self.CaseFirst
-                override val needAlreadyOk: Boolean = true
-            }
         }
         object OptionNatImpl@{i1} {
-            val value: OptionNatImpl@{i1} = {
-                val xa: OptionNatImpl@{i1} = new OptionNatImpl@{i1}
-                xa.CaseFirst
-                xa
-            }
+            val value: OptionNatImpl@{i1} = new OptionNatImpl@{i1}
 
             implicit def positiveGetTail[T2Tail <: NatFunc, Data, TempData](implicit
                 somethig_not_used: CP.Aux[OptionNatImpl@{i1 - 1}, T2Tail, Data]

@@ -32,54 +32,33 @@ object UnapplyInstance {
   sealed trait UnapplyFunc extends TypeCounter {
     self =>
     type ThisType <: UnapplyFunc
-    def needAlreadyOk: Boolean
-    def extraPositive[Data](u: NatFunc): NatFuncPositive[Data, NatFunc] = inputGHDMZSK(u).asInstanceOf[NatFuncPositive[Data, NatFunc]]
-    def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] = {
-      val positive: NatFuncPositive[Data, NatFunc] = extraPositive(u)
+    protected def extraPositive[Data](u: NatFunc)(needAlreadyOk: Boolean): Option[Data] = {
+      val positive: NatFuncPositive[Data, NatFunc] = inputGHDMZSK(u).asInstanceOf[NatFuncPositive[Data, NatFunc]]
       if (needAlreadyOk) positive.dataInstance.filterNot(_ => positive.isAlreadyOk) else positive.dataInstance
     }
-    def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] = apply(u)
-    def CaseFirst: UnapplyFunc.Aux[ThisType]
-  }
-  object UnapplyFunc {
-    type Aux[T <: UnapplyFunc] = UnapplyFunc { type ThisType = T }
+    def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] =
+      extraPositive(u)(needAlreadyOk = false)
+    def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] =
+      extraPositive(u)(needAlreadyOk = true)
   }
 
   trait UnapplyFuncPositive[Tail <: UnapplyFunc] extends UnapplyFunc {
     self =>
     override type ThisType <: UnapplyFuncPositive[Tail]
-    // override def tail: Tail
-    override def CaseFirst: UnapplyFuncPositive.Aux[Tail, ThisType]
   }
   object UnapplyFuncPositive {
     type Aux[Tail <: UnapplyFunc, T <: UnapplyFunc] = UnapplyFuncPositive[Tail] { type ThisType = T }
   }
 
-  trait UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFuncPositive[UnapplyFuncZero] {
+  class UnapplyFuncZero extends PositiveTypeCounterZero with UnapplyFuncPositive[UnapplyFuncZero] {
     override type ThisType = UnapplyFuncZero
-    override def CaseFirst: UnapplyFuncZero
-    override def unapply[U <: NatFunc, Data](u: U)(implicit
-      somethig_not_used: CountNatPositive.Aux[UnapplyFuncZero, U, Data]
-    ): Option[Data] = apply(u)
+    override def apply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] =
+      super.apply(u)
+    override def unapply[U <: NatFunc, Data](u: U)(implicit somethig_not_used: CountNatPositive.Aux[ThisType, U, Data]): Option[Data] =
+      super.unapply(u)
   }
   object UnapplyFuncZero {
-    private lazy val aImpl: UnapplyFuncZero = new UnapplyFuncZero {
-      override val needAlreadyOk: Boolean          = true
-      override lazy val CaseFirst: UnapplyFuncZero = aImpl
-    }
-
-    private lazy val tempValue: UnapplyFuncZero = new UnapplyFuncZero {
-      override val needAlreadyOk: Boolean = false
-      override lazy val CaseFirst: UnapplyFuncZero = {
-        aImpl.CaseFirst
-        aImpl
-      }
-    }
-
-    val value: UnapplyFuncZero = {
-      tempValue.CaseFirst
-      tempValue
-    }
+    val value: UnapplyFuncZero = new UnapplyFuncZero
 
     implicit def zeroGetTail[T2Tail <: NatFunc, Data]: CountNatPositive.Aux[UnapplyFuncZero, NatFuncPositive[Data, T2Tail], Data] =
       new CountNatPositive[UnapplyFuncZero, NatFuncPositive[Data, T2Tail]] {
@@ -144,116 +123,4 @@ class NatFuncZero private (tailValue: () => NatFuncZero, override val isAlreadyO
 object NatFuncZero {
   lazy val valueIsAlreadyOk: NatFuncZero = new NatFuncZero(() => valueIsAlreadyOk, isAlreadyOk = true)
   lazy val valueIsNotOk: NatFuncZero     = new NatFuncZero(() => valueIsAlreadyOk, isAlreadyOk = false) // 这里的Tail一定已经被取值了，因为到了Zero就已经是“取值了”
-}
-
-object Test extends App {
-
-  type Ux1 = NatFuncPositive[
-    Int,
-    NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncPositive[List[String], NatFuncPositive[String, NatFuncZero]]]]
-  ]
-  type Ux2 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncPositive[List[String], NatFuncZero]]]]
-  type Ux3 = NatFuncPositive[Int, NatFuncPositive[List[String], NatFuncPositive[List[Long], NatFuncZero]]]
-
-  /*
-  val p1: Ux1 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.empty(NatFunc.zero)))))
-  val p2: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.empty(NatFunc.zero))))
-  val p3: Ux3 = NatFunc.empty(NatFunc.empty(NatFunc.success(List(2L, 3L, 5L, 8L), NatFunc.zero)))
-  val p4: Ux2 = NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.empty(NatFunc.zero))))
-  val p5: Ux2 = NatFunc.empty(NatFunc.success(List("abc", "abcdefghij", "abcdefghijklmn"), NatFunc.empty(NatFunc.empty(NatFunc.zero))))
-
-  val Options1 = UnapplyInstance.UnapplyFuncZero.value
-  val Options2 = UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncZero.value)
-  val Options3 = UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncZero.value))
-  val Options4 = UnapplyInstance.UnapplyFuncPositive(
-    UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncZero.value))
-  )
-  val Options5 = UnapplyInstance.UnapplyFuncPositive(
-    UnapplyInstance.UnapplyFuncPositive(
-      UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncZero.value))
-    )
-  )
-  val Options6 = UnapplyInstance.UnapplyFuncPositive(
-    UnapplyInstance.UnapplyFuncPositive(
-      UnapplyInstance.UnapplyFuncPositive(
-        UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncZero.value))
-      )
-    )
-  )
-  val Options7 = UnapplyInstance.UnapplyFuncPositive(
-    UnapplyInstance.UnapplyFuncPositive(
-      UnapplyInstance.UnapplyFuncPositive(
-        UnapplyInstance.UnapplyFuncPositive(
-          UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncPositive(UnapplyInstance.UnapplyFuncZero.value))
-        )
-      )
-    )
-  )
-
-  val preT1 = p1 match {
-    case Options1(t) => List(t)
-    case Options2(t) => t.map(_.size + 1)
-    case Options3(t) => t.map(_.toInt * 2)
-    case Options4(t) => t.map(_.size * 5)
-    case Options5(t) => t.to(List).map(_.toInt * 2)
-    case Options6(t) => t.matchErrorAndNothing
-    case Options7(t) => t.matchErrorAndNothing
-  }
-
-  val t1: List[Int] = preT1
-
-  val preT2 = p2 match {
-    case Options1(t) => List(t)
-    case Options2(t) => t.map(_.size + 1)
-    case Options3(t) => t.map(_.toInt * 2)
-    case Options4(t) => t.map(_.size * 5)
-    case Options5(t) => t.matchErrorAndNothing
-    case Options6(t) => t.matchErrorAndNothing
-  }
-
-  val t2: List[Int] = preT2
-
-  val preT3 = p3 match {
-    case Options1(t) => List(t)
-    case Options2(t) => t.map(_.size + 1)
-    case Options3(t) => t.map(_.toInt * 2)
-    case Options4(t) => t.matchErrorAndNothing
-    case Options5(t) => t.matchErrorAndNothing
-  }
-
-  val t3: List[Int] = preT3
-
-  val preT4 = p4 match {
-    case Options1(t) => Some(List(t))
-    case Options2(t) => Some(t.map(_.size + 1))
-    case Options3(t) => Some(t.map(_.toInt * 2))
-    case Options4(t) => Some(t.map(_.size * 5))
-    case Options5(t) =>
-      t.isEnded
-      Option.empty
-    case Options6(t) =>
-      t.isEnded
-      Option.empty
-  }
-
-  val t4: Option[List[Int]] = preT4
-
-  val preT5 = p5 match {
-    case Options1(t) => List(t)
-    case Options2(t) => t.map(_.size + 1)
-    case Options3(t) => t.map(_.toInt * 2)
-    case Options4(t) => t.map(_.size * 5)
-    case Options5(t) => t.matchErrorAndNothing
-    case Options6(t) => t.matchErrorAndNothing
-  }
-
-  val t5: List[Int] = preT5
-
-  println(t1) // Some(List(4, 6, 10, 16))
-  println(t2) // Some(List(4, 6, 10, 16))
-  println(t3) // Some(List(4, 6, 10, 16))
-  println(t4) // None
-  println(t5) // Some(List(4, 11, 15))
-   */
-
 }
