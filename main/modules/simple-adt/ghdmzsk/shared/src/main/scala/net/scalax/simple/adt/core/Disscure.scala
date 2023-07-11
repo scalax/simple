@@ -24,11 +24,13 @@ object Disscure {
   }
 
   val takeTail: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(func: => ghdmzsk): ghdmzsk = tail
+    override def inputGHDMZSK(numTail: => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(func: => ghdmzsk): ghdmzsk = tail.inputGHDMZSK(numTail)
+      }
     }
   }
-  val takeHead: ghdmzsk = new ghdmzsk {
+  val takeTailZero: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(func: => ghdmzsk): ghdmzsk = func
     }
@@ -44,8 +46,8 @@ object Disscure {
         val func2: ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tailFunc)
         }
-        val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(func2)
-        val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func1)
+        val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(func1)
+        val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
         num1.inputGHDMZSK(selector)
       }
     }
@@ -56,8 +58,8 @@ object Disscure {
       val func2: ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other
       }
-      val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(func2)
-      val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(aZero)
+      val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(aZero)
+      val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
       num1.inputGHDMZSK(selector)
     }
   }
@@ -70,7 +72,7 @@ object Disscure {
   val numData: ghdmzsk =
     a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1VImpl)))))
 
-  val func1ToUse = numData.inputGHDMZSK(takeHead)
+  val func1ToUse = numData.inputGHDMZSK(takeTail.inputGHDMZSK(takeTailZero))
 
   trait GetValue {
     def value: Any
