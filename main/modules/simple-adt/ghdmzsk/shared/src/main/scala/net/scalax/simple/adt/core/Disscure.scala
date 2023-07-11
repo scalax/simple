@@ -72,7 +72,6 @@ object Disscure {
   val numData: ghdmzsk =
     a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1VImpl)))))
 
-  val func1ToUse: ghdmzsk = numData.inputGHDMZSK(takeTail.inputGHDMZSK(takeHead))
 
   trait GetValue {
     def value: Any
@@ -92,6 +91,8 @@ object Disscure {
   def genImpl2(i: Int): ghdmzsk = genImpl1(i).inputGHDMZSK(genImpl2(i + 2))
 
   val genNum: ghdmzsk     = genImpl2(1)
+
+  val func1ToUse: ghdmzsk = numData.inputGHDMZSK(takeTail.inputGHDMZSK(takeHead))
   val func2ToUse: ghdmzsk = numData.inputGHDMZSK(takeHead)
 
   def main(arr: Array[String]): Unit = {
