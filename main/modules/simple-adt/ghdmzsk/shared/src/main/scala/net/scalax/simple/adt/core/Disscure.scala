@@ -30,7 +30,7 @@ object Disscure {
       }
     }
   }
-  val takeTailZero: ghdmzsk = new ghdmzsk {
+  val takeHead: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(func: => ghdmzsk): ghdmzsk = func
     }
@@ -72,16 +72,35 @@ object Disscure {
   val numData: ghdmzsk =
     a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1VImpl)))))
 
-  val func1ToUse = numData.inputGHDMZSK(takeTail.inputGHDMZSK(takeTailZero))
+  val func1ToUse: ghdmzsk = numData.inputGHDMZSK(takeTail.inputGHDMZSK(takeHead))
 
   trait GetValue {
     def value: Any
   }
 
+  trait NumInput {
+    def index: Int
+  }
+
+  def genImpl1(i: Int): ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk with NumInput {
+      override def index: Int                               = i
+      override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tail)
+    }
+  }
+
+  def genImpl2(i: Int): ghdmzsk = genImpl1(i).inputGHDMZSK(genImpl2(i + 2))
+
+  val genNum: ghdmzsk     = genImpl2(1)
+  val func2ToUse: ghdmzsk = numData.inputGHDMZSK(takeHead)
+
   def main(arr: Array[String]): Unit = {
-    val r        = func1ToUse.inputGHDMZSK(identityGhdmzsk)
-    val valueGet = r.asInstanceOf[GetValue].value
-    println(valueGet)
+    val r1: ghdmzsk    = func1ToUse.inputGHDMZSK(identityGhdmzsk)
+    val valueGet1: Any = r1.asInstanceOf[GetValue].value
+    val r2: ghdmzsk    = func2ToUse.inputGHDMZSK(genNum)
+    val valueGet2: Int = r2.asInstanceOf[NumInput].index
+    println(valueGet1)
+    println(valueGet2)
   }
 
 }
