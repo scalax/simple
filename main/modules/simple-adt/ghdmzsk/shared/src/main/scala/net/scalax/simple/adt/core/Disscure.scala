@@ -1,5 +1,5 @@
 package net.scalax.simple.adt
-package test
+package implemention
 
 import scala.collection.compat._
 
@@ -53,25 +53,28 @@ object Disscure {
     }
   }
 
-  val a1VImpl: ghdmzsk = new ghdmzsk {
+  def a1VImpl(value: Any): ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = {
       val func2: ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other
       }
-      val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(aZero)
+      val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(aZero(value))
       val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
       num1.inputGHDMZSK(selector)
     }
   }
 
-  val aZero: ghdmzsk = new ghdmzsk with GetValue {
-    override def value: Any                           = "wowowower爱爱啊"
-    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t.inputGHDMZSK(aZero)
+  def aZero(value: Any): ghdmzsk = {
+    val value1: Any = value
+    def aZeroImpl: ghdmzsk = new ghdmzsk with GetValue {
+      override def value: Any                           = value1
+      override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t.inputGHDMZSK(aZeroImpl)
+    }
+    aZeroImpl
   }
 
   val numData: ghdmzsk =
-    a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1VImpl)))))
-
+    a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1VImpl("呜呜呜"))))))
 
   trait GetValue {
     def value: Any
@@ -90,7 +93,7 @@ object Disscure {
 
   def genImpl2(i: Int): ghdmzsk = genImpl1(i).inputGHDMZSK(genImpl2(i + 2))
 
-  val genNum: ghdmzsk     = genImpl2(1)
+  val genNum: ghdmzsk = genImpl2(1)
 
   val func1ToUse: ghdmzsk = numData.inputGHDMZSK(takeTail.inputGHDMZSK(takeHead))
   val func2ToUse: ghdmzsk = numData.inputGHDMZSK(takeHead)

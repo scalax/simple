@@ -92,6 +92,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl2, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl2, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 1
       }
   }
 
@@ -111,6 +112,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl3, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl3, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 2
       }
   }
 
@@ -130,6 +132,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl4, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl4, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 3
       }
   }
 
@@ -149,6 +152,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl5, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl5, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 4
       }
   }
 
@@ -168,6 +172,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl6, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl6, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 5
       }
   }
 
@@ -187,6 +192,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl7, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl7, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 6
       }
   }
 
@@ -206,6 +212,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl8, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl8, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 7
       }
   }
 
@@ -225,6 +232,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl9, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl9, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 8
       }
   }
 
@@ -245,6 +253,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl10, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl10, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 9
       }
   }
 
@@ -265,6 +274,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl11, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl11, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 10
       }
   }
 
@@ -285,6 +295,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl12, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl12, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 11
       }
   }
 
@@ -305,6 +316,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl13, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl13, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 12
       }
   }
 
@@ -325,6 +337,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl14, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl14, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 13
       }
   }
 
@@ -345,6 +358,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl15, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl15, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 14
       }
   }
 
@@ -365,6 +379,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl16, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl16, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 15
       }
   }
 
@@ -385,6 +400,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl17, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl17, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 16
       }
   }
 
@@ -405,6 +421,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl18, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl18, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 17
       }
   }
 
@@ -425,6 +442,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl19, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl19, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 18
       }
   }
 
@@ -445,6 +463,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl20, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl20, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 19
       }
   }
 
@@ -465,6 +484,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl21, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl21, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 20
       }
   }
 
@@ -485,6 +505,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl22, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl22, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 21
       }
   }
 
@@ -505,6 +526,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl23, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl23, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 22
       }
   }
 
@@ -525,6 +547,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl24, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl24, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 23
       }
   }
 
@@ -545,6 +568,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl25, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl25, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 24
       }
   }
 
@@ -565,6 +589,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl26, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl26, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 25
       }
   }
 
@@ -585,6 +610,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl27, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl27, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 26
       }
   }
 
@@ -605,6 +631,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl28, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl28, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 27
       }
   }
 
@@ -625,6 +652,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl29, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl29, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 28
       }
   }
 
@@ -645,6 +673,7 @@ object TypeAdtAliasModelUnapplyImpl {
     ): CP.Aux[OptionNatImpl30, NatFuncPositive[TempData, T2Tail], Data] =
       new CP[OptionNatImpl30, NatFuncPositive[TempData, T2Tail]] {
         override type DataType = Data
+        override def index: Int = 29
       }
   }
 

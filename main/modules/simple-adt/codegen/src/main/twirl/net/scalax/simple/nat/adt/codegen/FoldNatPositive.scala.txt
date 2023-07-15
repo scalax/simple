@@ -2,28 +2,27 @@
 package net.scalax.simple.adt
 package impl
 
+import net.scalax.simple.ghdmzsk.ghdmzsk
+
 import implemention._
 import net.scalax.simple.adt.{ TypeAdt => InnerAdt }
 
 @paramType(start: Int, i1: Int) = { @for(i2 <- start to i1) { @if(i2 > start){ , } I@{i2} } }
 @classNameForPositive(i1: Int, sum: Int) = { @if(i1 <= sum) { NatFuncPositive[T@{i1}, @classNameForPositive(i1 + 1, sum)] } else { NatFuncZero } }
 @foldPararmeters(count: Int) = { @for(c <- 1 to count) { @if(c > 1) { , } func@{c}: T@{c} => U } }
+@foldPararmetersInstance(count: Int) = { @for(c <- 1 to count) { @if(c > 1) { , } func@{c} } }
 
 object FoldNatPositiveHelper {
 
     @for(i1 <- 1 to 22) {
-        class FoldNatPositiveHelperWrap@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }](override val dataInstance: Option[T1], override val isAlreadyOk: Boolean, override val tail: @classNameForPositive(2, i1)) extends @classNameForPositive(1, i1) (dataInstance) {
+        abstract class FoldNatPositiveHelperWrap@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }](override val dataInstance: Option[T1], override val isAlreadyOk: Boolean, override val tail: @classNameForPositive(2, i1)) extends @classNameForPositive(1, i1) (dataInstance) {
+            def dataImpl: Any
             def foldOpt[U](@foldPararmeters(i1)): Option[U] = {
-                this match {
-                    @for(i2 <- 1 to i1) {
-                        case InnerAdt.Option@{i2}(data) => Some(func@{i2}(data))
-                    }
-                    @for(i2 <- (i1 + 1) to (i1 + 5)) {
-                        case InnerAdt.Option@{i2}(data) =>
-                            def execTag: Nothing = data.matchErrorAndNothing
-                            Option.empty
-                    }
-                }
+                val dataModel = dataImpl
+                val funcs = List(@foldPararmetersInstance(i1))
+                val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
+                val funcInstance = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
+                Some(funcInstance(data._1))
             }
 
             def fold[U](@foldPararmeters(i1)): U = foldOpt(func1 @for(ix <- 2 to i1) { , func@{ix} }).get
