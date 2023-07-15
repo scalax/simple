@@ -80,14 +80,13 @@ object Disscure {
     def value: Any
   }
 
-  trait NumInput {
-    def index: Int
-  }
-
-  def genImpl1(i: Int): ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk with NumInput {
-      override def index: Int                               = i
-      override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tail)
+  def genImpl1(value: Any): ghdmzsk = {
+    val value1: Any = value
+    new ghdmzsk {
+      override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk with GetValue {
+        override def value: Any                               = value1
+        override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tail)
+      }
     }
   }
 
@@ -102,7 +101,7 @@ object Disscure {
     val r1: ghdmzsk    = func1ToUse.inputGHDMZSK(identityGhdmzsk)
     val valueGet1: Any = r1.asInstanceOf[GetValue].value
     val r2: ghdmzsk    = func2ToUse.inputGHDMZSK(genNum)
-    val valueGet2: Int = r2.asInstanceOf[NumInput].index
+    val valueGet2: Int = r2.asInstanceOf[GetValue].value.asInstanceOf[Int]
     println(valueGet1)
     println(valueGet2)
   }

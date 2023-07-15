@@ -14,15 +14,15 @@ object FoldNatPositiveHelper {
     override val tail: NatFuncZero
   ) extends NatFuncPositive[T1, NatFuncZero](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](func1: T1 => U): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+    def fold[U](func1: T1 => U): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](func1: T1 => U): U = foldOpt(func1).get
   }
 
   abstract class FoldNatPositiveHelperWrap2[T1, T2](
@@ -31,15 +31,15 @@ object FoldNatPositiveHelper {
     override val tail: NatFuncPositive[T2, NatFuncZero]
   ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncZero]](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](func1: T1 => U, func2: T2 => U): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+    def fold[U](func1: T1 => U, func2: T2 => U): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](func1: T1 => U, func2: T2 => U): U = foldOpt(func1, func2).get
   }
 
   abstract class FoldNatPositiveHelperWrap3[T1, T2, T3](
@@ -48,15 +48,15 @@ object FoldNatPositiveHelper {
     override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncZero]]
   ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncZero]]](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U): U = foldOpt(func1, func2, func3).get
   }
 
   abstract class FoldNatPositiveHelperWrap4[T1, T2, T3, T4](
@@ -65,15 +65,15 @@ object FoldNatPositiveHelper {
     override val tail: NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncZero]]]
   ) extends NatFuncPositive[T1, NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncZero]]]](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U): U = foldOpt(func1, func2, func3, func4).get
   }
 
   abstract class FoldNatPositiveHelperWrap5[T1, T2, T3, T4, T5](
@@ -84,16 +84,15 @@ object FoldNatPositiveHelper {
         dataInstance
       ) {
     def dataImpl: Any
-    def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U): U =
-      foldOpt(func1, func2, func3, func4, func5).get
   }
 
   abstract class FoldNatPositiveHelperWrap6[T1, T2, T3, T4, T5, T6](
@@ -105,16 +104,15 @@ object FoldNatPositiveHelper {
         NatFuncPositive[T2, NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncZero]]]]]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U, func6: T6 => U): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U, func6: T6 => U): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U, func6: T6 => U): U =
-      foldOpt(func1, func2, func3, func4, func5, func6).get
   }
 
   abstract class FoldNatPositiveHelperWrap7[T1, T2, T3, T4, T5, T6, T7](
@@ -129,24 +127,15 @@ object FoldNatPositiveHelper {
         NatFuncPositive[T3, NatFuncPositive[T4, NatFuncPositive[T5, NatFuncPositive[T6, NatFuncPositive[T7, NatFuncZero]]]]]
       ]](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U, func6: T6 => U, func7: T7 => U): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](func1: T1 => U, func2: T2 => U, func3: T3 => U, func4: T4 => U, func5: T5 => U, func6: T6 => U, func7: T7 => U): U =
-      foldOpt(func1, func2, func3, func4, func5, func6, func7).get
   }
 
   abstract class FoldNatPositiveHelperWrap8[T1, T2, T3, T4, T5, T6, T7, T8](
@@ -164,23 +153,6 @@ object FoldNatPositiveHelper {
         ]]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7, func8)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -190,7 +162,15 @@ object FoldNatPositiveHelper {
       func6: T6 => U,
       func7: T7 => U,
       func8: T8 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8).get
+    ): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap9[T1, T2, T3, T4, T5, T6, T7, T8, T9](
@@ -214,24 +194,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7, func8, func9)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -242,7 +204,15 @@ object FoldNatPositiveHelper {
       func7: T7 => U,
       func8: T8 => U,
       func9: T9 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9).get
+    ): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10](
@@ -272,25 +242,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -302,7 +253,15 @@ object FoldNatPositiveHelper {
       func8: T8 => U,
       func9: T9 => U,
       func10: T10 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10).get
+    ): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11](
@@ -338,26 +297,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -370,7 +309,15 @@ object FoldNatPositiveHelper {
       func9: T9 => U,
       func10: T10 => U,
       func11: T11 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11).get
+    ): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12](
@@ -412,27 +359,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -446,7 +372,15 @@ object FoldNatPositiveHelper {
       func10: T10 => U,
       func11: T11 => U,
       func12: T12 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12).get
+    ): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13](
@@ -494,28 +428,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -530,7 +442,15 @@ object FoldNatPositiveHelper {
       func11: T11 => U,
       func12: T12 => U,
       func13: T13 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13).get
+    ): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14](
@@ -584,29 +504,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U
-    ): Option[U] = {
-      val dataModel        = dataImpl
-      val funcs            = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -622,7 +519,15 @@ object FoldNatPositiveHelper {
       func12: T12 => U,
       func13: T13 => U,
       func14: T14 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14).get
+    ): U = {
+      val dataModel         = dataImpl
+      val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15](
@@ -682,30 +587,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U
-    ): Option[U] = {
-      val dataModel = dataImpl
-      val funcs     = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -722,7 +603,15 @@ object FoldNatPositiveHelper {
       func13: T13 => U,
       func14: T14 => U,
       func15: T15 => U
-    ): U = foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15).get
+    ): U = {
+      val dataModel = dataImpl
+      val funcs     = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16](
@@ -788,32 +677,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U,
-      func16: T16 => U
-    ): Option[U] = {
-      val dataModel = dataImpl
-      val funcs =
-        List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15, func16)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -831,8 +694,16 @@ object FoldNatPositiveHelper {
       func14: T14 => U,
       func15: T15 => U,
       func16: T16 => U
-    ): U =
-      foldOpt(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15, func16).get
+    ): U = {
+      val dataModel = dataImpl
+      val funcs =
+        List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15, func16)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17](
@@ -904,33 +775,6 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U,
-      func16: T16 => U,
-      func17: T17 => U
-    ): Option[U] = {
-      val dataModel = dataImpl
-      val funcs =
-        List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15, func16, func17)
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
-    }
-
     def fold[U](
       func1: T1 => U,
       func2: T2 => U,
@@ -949,25 +793,16 @@ object FoldNatPositiveHelper {
       func15: T15 => U,
       func16: T16 => U,
       func17: T17 => U
-    ): U = foldOpt(
-      func1,
-      func2,
-      func3,
-      func4,
-      func5,
-      func6,
-      func7,
-      func8,
-      func9,
-      func10,
-      func11,
-      func12,
-      func13,
-      func14,
-      func15,
-      func16,
-      func17
-    ).get
+    ): U = {
+      val dataModel = dataImpl
+      val funcs =
+        List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15, func16, func17)
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
+    }
   }
 
   abstract class FoldNatPositiveHelperWrap18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18](
@@ -1045,7 +880,7 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
+    def fold[U](
       func1: T1 => U,
       func2: T2 => U,
       func3: T3 => U,
@@ -1064,7 +899,7 @@ object FoldNatPositiveHelper {
       func16: T16 => U,
       func17: T17 => U,
       func18: T18 => U
-    ): Option[U] = {
+    ): U = {
       val dataModel = dataImpl
       val funcs = List(
         func1,
@@ -1086,50 +921,12 @@ object FoldNatPositiveHelper {
         func17,
         func18
       )
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U,
-      func16: T16 => U,
-      func17: T17 => U,
-      func18: T18 => U
-    ): U = foldOpt(
-      func1,
-      func2,
-      func3,
-      func4,
-      func5,
-      func6,
-      func7,
-      func8,
-      func9,
-      func10,
-      func11,
-      func12,
-      func13,
-      func14,
-      func15,
-      func16,
-      func17,
-      func18
-    ).get
   }
 
   abstract class FoldNatPositiveHelperWrap19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19](
@@ -1213,7 +1010,7 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
+    def fold[U](
       func1: T1 => U,
       func2: T2 => U,
       func3: T3 => U,
@@ -1233,7 +1030,7 @@ object FoldNatPositiveHelper {
       func17: T17 => U,
       func18: T18 => U,
       func19: T19 => U
-    ): Option[U] = {
+    ): U = {
       val dataModel = dataImpl
       val funcs = List(
         func1,
@@ -1256,52 +1053,12 @@ object FoldNatPositiveHelper {
         func18,
         func19
       )
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U,
-      func16: T16 => U,
-      func17: T17 => U,
-      func18: T18 => U,
-      func19: T19 => U
-    ): U = foldOpt(
-      func1,
-      func2,
-      func3,
-      func4,
-      func5,
-      func6,
-      func7,
-      func8,
-      func9,
-      func10,
-      func11,
-      func12,
-      func13,
-      func14,
-      func15,
-      func16,
-      func17,
-      func18,
-      func19
-    ).get
   }
 
   abstract class FoldNatPositiveHelperWrap20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20](
@@ -1391,7 +1148,7 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
+    def fold[U](
       func1: T1 => U,
       func2: T2 => U,
       func3: T3 => U,
@@ -1412,7 +1169,7 @@ object FoldNatPositiveHelper {
       func18: T18 => U,
       func19: T19 => U,
       func20: T20 => U
-    ): Option[U] = {
+    ): U = {
       val dataModel = dataImpl
       val funcs = List(
         func1,
@@ -1436,54 +1193,12 @@ object FoldNatPositiveHelper {
         func19,
         func20
       )
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U,
-      func16: T16 => U,
-      func17: T17 => U,
-      func18: T18 => U,
-      func19: T19 => U,
-      func20: T20 => U
-    ): U = foldOpt(
-      func1,
-      func2,
-      func3,
-      func4,
-      func5,
-      func6,
-      func7,
-      func8,
-      func9,
-      func10,
-      func11,
-      func12,
-      func13,
-      func14,
-      func15,
-      func16,
-      func17,
-      func18,
-      func19,
-      func20
-    ).get
   }
 
   abstract class FoldNatPositiveHelperWrap21[
@@ -1601,7 +1316,7 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
+    def fold[U](
       func1: T1 => U,
       func2: T2 => U,
       func3: T3 => U,
@@ -1623,7 +1338,7 @@ object FoldNatPositiveHelper {
       func19: T19 => U,
       func20: T20 => U,
       func21: T21 => U
-    ): Option[U] = {
+    ): U = {
       val dataModel = dataImpl
       val funcs = List(
         func1,
@@ -1648,56 +1363,12 @@ object FoldNatPositiveHelper {
         func20,
         func21
       )
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U,
-      func16: T16 => U,
-      func17: T17 => U,
-      func18: T18 => U,
-      func19: T19 => U,
-      func20: T20 => U,
-      func21: T21 => U
-    ): U = foldOpt(
-      func1,
-      func2,
-      func3,
-      func4,
-      func5,
-      func6,
-      func7,
-      func8,
-      func9,
-      func10,
-      func11,
-      func12,
-      func13,
-      func14,
-      func15,
-      func16,
-      func17,
-      func18,
-      func19,
-      func20,
-      func21
-    ).get
   }
 
   abstract class FoldNatPositiveHelperWrap22[
@@ -1822,7 +1493,7 @@ object FoldNatPositiveHelper {
         ]
       ](dataInstance) {
     def dataImpl: Any
-    def foldOpt[U](
+    def fold[U](
       func1: T1 => U,
       func2: T2 => U,
       func3: T3 => U,
@@ -1845,7 +1516,7 @@ object FoldNatPositiveHelper {
       func20: T20 => U,
       func21: T21 => U,
       func22: T22 => U
-    ): Option[U] = {
+    ): U = {
       val dataModel = dataImpl
       val funcs = List(
         func1,
@@ -1871,58 +1542,12 @@ object FoldNatPositiveHelper {
         func21,
         func22
       )
-      val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance     = funcs.reverse(data._2 - 1).asInstanceOf[Any => U]
-      Some(funcInstance(data._1))
+      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+      val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
+      val funcInstance =
+        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      funcInstance(data._1)
     }
-
-    def fold[U](
-      func1: T1 => U,
-      func2: T2 => U,
-      func3: T3 => U,
-      func4: T4 => U,
-      func5: T5 => U,
-      func6: T6 => U,
-      func7: T7 => U,
-      func8: T8 => U,
-      func9: T9 => U,
-      func10: T10 => U,
-      func11: T11 => U,
-      func12: T12 => U,
-      func13: T13 => U,
-      func14: T14 => U,
-      func15: T15 => U,
-      func16: T16 => U,
-      func17: T17 => U,
-      func18: T18 => U,
-      func19: T19 => U,
-      func20: T20 => U,
-      func21: T21 => U,
-      func22: T22 => U
-    ): U = foldOpt(
-      func1,
-      func2,
-      func3,
-      func4,
-      func5,
-      func6,
-      func7,
-      func8,
-      func9,
-      func10,
-      func11,
-      func12,
-      func13,
-      func14,
-      func15,
-      func16,
-      func17,
-      func18,
-      func19,
-      func20,
-      func21,
-      func22
-    ).get
   }
 
 }
