@@ -22,7 +22,7 @@ object FoldNatPositiveHelper {
                 val funcs = List(@foldPararmetersInstance(i1))
                 val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
                 val data: (Any, Int) = dataModel.asInstanceOf[(Any, Int)]
-                val funcInstance = this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+                val funcInstance = this.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
                 funcInstance(data._1)
             }
         }

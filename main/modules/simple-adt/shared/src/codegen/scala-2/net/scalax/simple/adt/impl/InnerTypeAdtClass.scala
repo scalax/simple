@@ -18,7 +18,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -40,7 +40,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -65,7 +65,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -90,7 +90,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -115,7 +115,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -144,7 +144,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -173,7 +173,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -205,7 +205,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -240,7 +240,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -278,7 +278,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -319,7 +319,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -363,7 +363,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -410,7 +410,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -460,7 +460,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -513,7 +513,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -569,7 +569,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -628,7 +628,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -709,7 +709,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -795,7 +795,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -885,7 +885,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -979,7 +979,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value
@@ -1077,7 +1077,7 @@ object InnerTypeAdtClass {
         dataInstanceImpl.tail
       ) {
         override def dataImpl: Any = this
-          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
           .inputGHDMZSK(Disscure.identityGhdmzsk)
           .asInstanceOf[Disscure.GetValue]
           .value

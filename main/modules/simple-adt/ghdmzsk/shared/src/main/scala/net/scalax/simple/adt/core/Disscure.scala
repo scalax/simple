@@ -1,8 +1,6 @@
 package net.scalax.simple.adt
 package implemention
 
-import scala.collection.compat._
-
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object Disscure {
@@ -46,21 +44,30 @@ object Disscure {
         val func2: ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tailFunc)
         }
-        val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(func1)
-        val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
-        num1.inputGHDMZSK(selector)
+        val func3: ghdmzsk = func2
+        val num2: ghdmzsk  = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(func1)
+        val num1: ghdmzsk  = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
+        val num0: ghdmzsk  = takeProperty.inputGHDMZSK(num1).inputGHDMZSK(func3)
+        num0.inputGHDMZSK(selector)
       }
     }
   }
 
   def a1VImpl(value: Any): ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = {
-      val func2: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other
+    override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = {
+        val tailFunc = tail.inputGHDMZSK(selector)
+        val func2: ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other
+        }
+        val func3: ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tailFunc)
+        }
+        val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(aZero(value))
+        val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
+        val num0: ghdmzsk = takeProperty.inputGHDMZSK(num1).inputGHDMZSK(func3)
+        num0.inputGHDMZSK(selector)
       }
-      val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(aZero(value))
-      val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
-      num1.inputGHDMZSK(selector)
     }
   }
 
@@ -72,9 +79,6 @@ object Disscure {
     }
     aZeroImpl
   }
-
-  val numData: ghdmzsk =
-    a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1VImpl("呜呜呜"))))))
 
   trait GetValue {
     def value: Any
@@ -90,6 +94,9 @@ object Disscure {
     }
   }
 
+  /*val numData: ghdmzsk =
+    a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1Impl1.inputGHDMZSK(a1VImpl("呜呜呜"))))))
+
   def genImpl2(i: Int): ghdmzsk = genImpl1(i).inputGHDMZSK(genImpl2(i + 2))
 
   val genNum: ghdmzsk = genImpl2(1)
@@ -104,6 +111,6 @@ object Disscure {
     val valueGet2: Int = r2.asInstanceOf[GetValue].value.asInstanceOf[Int]
     println(valueGet1)
     println(valueGet2)
-  }
+  }*/
 
 }

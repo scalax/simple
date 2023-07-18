@@ -19,8 +19,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -36,8 +40,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -53,8 +61,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -70,8 +82,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -89,8 +105,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -109,8 +129,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -132,8 +156,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -167,8 +195,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -209,8 +241,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -258,8 +294,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -314,8 +354,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -377,8 +421,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -447,8 +495,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -524,8 +576,12 @@ object FoldNatPositiveHelper {
       val funcs             = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -608,8 +664,12 @@ object FoldNatPositiveHelper {
       val funcs     = List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -700,8 +760,12 @@ object FoldNatPositiveHelper {
         List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15, func16)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -799,8 +863,12 @@ object FoldNatPositiveHelper {
         List(func1, func2, func3, func4, func5, func6, func7, func8, func9, func10, func11, func12, func13, func14, func15, func16, func17)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -923,8 +991,12 @@ object FoldNatPositiveHelper {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -1055,8 +1127,12 @@ object FoldNatPositiveHelper {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -1195,8 +1271,12 @@ object FoldNatPositiveHelper {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -1365,8 +1445,12 @@ object FoldNatPositiveHelper {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }
@@ -1544,8 +1628,12 @@ object FoldNatPositiveHelper {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val data: (Any, Int)  = dataModel.asInstanceOf[(Any, Int)]
-      val funcInstance =
-        this.inputGHDMZSK(Disscure.takeHead).inputGHDMZSK(listFunc).asInstanceOf[Disscure.GetValue].value.asInstanceOf[Any => U]
+      val funcInstance = this
+        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(listFunc)
+        .asInstanceOf[Disscure.GetValue]
+        .value
+        .asInstanceOf[Any => U]
       funcInstance(data._1)
     }
   }

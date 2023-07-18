@@ -90,7 +90,7 @@ object NatFunc {
     val tail1        = tail
     val isAlreadyOk1 = isAlreadyOk
     new NatFuncPositive[D, T](dataInstance = Some(t)) {
-      override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = Disscure.a1VImpl((t, index)).inputGHDMZSK(g)
+      override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = Disscure.a1VImpl((t, index)).inputGHDMZSK(tail1).inputGHDMZSK(g)
       override val tail: T                              = tail1
       override val isAlreadyOk: Boolean                 = isAlreadyOk1
       override val index: Int                           = tail.index + 1
