@@ -56,7 +56,7 @@ object Disscure {
   def a1VImpl(value: Any): ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = {
-        val tailFunc = tail.inputGHDMZSK(selector)
+        lazy val tailFunc: ghdmzsk = tail.inputGHDMZSK(selector)
         val func2: ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other
         }
