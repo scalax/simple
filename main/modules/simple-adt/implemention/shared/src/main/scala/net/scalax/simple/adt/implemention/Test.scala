@@ -122,7 +122,7 @@ object IsFinishAndNothing {
 class NatFuncZero private (tailValue: () => NatFuncZero, override val isAlreadyOk: Boolean)
     extends NatFuncPositive[IsFinishAndNothing, NatFuncZero](dataInstance = Some(IsFinishAndNothing.value)) {
   override lazy val tail: NatFuncZero               = tailValue()
-  override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = Disscure.a1VImpl((IsFinishAndNothing.value, index)).inputGHDMZSK(g)
+  override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = Disscure.a1VImpl((IsFinishAndNothing.value, index)).inputGHDMZSK(tail).inputGHDMZSK(g)
   override val index: Int                           = 0
 }
 object NatFuncZero {
