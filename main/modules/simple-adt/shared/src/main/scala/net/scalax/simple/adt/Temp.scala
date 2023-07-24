@@ -16,7 +16,7 @@ trait ToGHDMZSK {
 sealed trait Status
 object Status {
   class Passed extends Status
-  object Passed
+  object Passed extends `ADTData的扩展函数`
 
   class NotFinished extends Status
   object NotFinished
