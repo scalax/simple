@@ -3,6 +3,7 @@ package adt
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import implemention._
+import temp._
 
 /** TODO
   *
@@ -12,13 +13,13 @@ import implemention._
   * @since 2022/08/28
   *   02:48
   */
-class TypeAdtApply[Input, Sum <: NatFunc](val value: Boolean => Input => Sum) {
+class TypeAdtApply[Input, Sum <: AdtNat](val value: Boolean => Input => ADTData[Sum]) {
   type State <: TypeAdt.Status
 }
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
-  type Aux[Input, Sum <: NatFunc, S <: TypeAdt.Status] = TypeAdtApply[Input, Sum] { type State = S }
-  def apply[Input, Sum <: NatFunc, S <: TypeAdt.Status](value: Boolean => Input => Sum): Aux[Input, Sum, S] =
+  type Aux[Input, Sum <: AdtNat, S <: TypeAdt.Status] = TypeAdtApply[Input, Sum] { type State = S }
+  def apply[Input, Sum <: AdtNat, S <: TypeAdt.Status](value: Boolean => Input => ADTData[Sum]): Aux[Input, Sum, S] =
     new TypeAdtApply[Input, Sum](value) {
       override type State = S
     }
@@ -33,38 +34,38 @@ package impl {
   }
 
   trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
-    @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: NatFunc, AdtConvertPoly, Status <: TypeAdt.Status](implicit
+    @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtNat, AdtConvertPoly, Status <: TypeAdt.Status](implicit
       adtConvert: TypeAdt.Context[A, B, AdtConvertPoly],
       tailMapping: TypeAdtApply.Aux[A, Tail, Status]
-    ): TypeAdtApply.Aux[A, NatFuncPositive[TypeAdt.Adapter[B, AdtConvertPoly], Tail], TypeAdt.Status.Passed] = {
+    ): TypeAdtApply.Aux[A, AdtNatData[TypeAdt.Adapter[B, AdtConvertPoly], Tail], TypeAdt.Status.Passed] = {
       val adtConvertImpl = new AdapterContext(adtConvert)
-      TypeAdtApply(isOk => i => NatFunc.success(adtConvertImpl.input(i), isAlreadyOk = isOk, tailMapping.value(true)(i)))
+      TypeAdtApply(isOk => i => ADTData.success(adtConvertImpl.input(i), tailMapping.value(true)(i)))
     }
   }
 
   trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
-    @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: NatFunc, Status <: TypeAdt.Status](implicit
+    @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtNat, Status <: TypeAdt.Status](implicit
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type],
       tailMapping: TypeAdtApply.Aux[A, Tail, Status]
-    ): TypeAdtApply.Aux[A, NatFuncPositive[B, Tail], TypeAdt.Status.Passed] =
-      TypeAdtApply(isOk => i => NatFunc.success(adtConvert.input(i), isAlreadyOk = isOk, tailMapping.value(true)(i)))
+    ): TypeAdtApply.Aux[A, AdtNatData[B, Tail], TypeAdt.Status.Passed] =
+      TypeAdtApply(isOk => i => ADTData.success(adtConvert.input(i), tailMapping.value(true)(i)))
   }
 
   trait HListTypeAdtPositiveLower2 extends LowerLevelPoly {
-    @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Status <: TypeAdt.Status, Tail <: NatFunc](implicit
+    @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Status <: TypeAdt.Status, Tail <: AdtNat](implicit
       tailMapping: TypeAdtApply.Aux[A, Tail, Status]
-    ): TypeAdtApply.Aux[A, NatFuncPositive[B, Tail], Status] =
-      TypeAdtApply(isOk => i => NatFunc.empty(isAlreadyOk = false, tailMapping.value(isOk)(i)))
+    ): TypeAdtApply.Aux[A, AdtNatData[B, Tail], Status] =
+      TypeAdtApply(isOk => i => ADTData.empty(tailMapping.value(isOk)(i)))
   }
 
   trait LowerLevelPoly {
-    private object failedValue extends TypeAdtApply[Any, NatFuncZero](value = isOk => i => NatFunc.zeroFromIsOk(isOk = isOk)) {
+    private object failedValue extends TypeAdtApply[Any, AdtNatZero](value = isOk => i => ADTData.zero) {
       override type State = Adt.Status.Failed
     }
-    private def failedValueImpl[T]: TypeAdtApply.Aux[T, NatFuncZero, Adt.Status.Failed] =
-      failedValue.asInstanceOf[TypeAdtApply.Aux[T, NatFuncZero, Adt.Status.Failed]]
+    private def failedValueImpl[T]: TypeAdtApply.Aux[T, AdtNatZero, Adt.Status.Failed] =
+      failedValue.asInstanceOf[TypeAdtApply.Aux[T, AdtNatZero, Adt.Status.Failed]]
 
-    implicit def adtFailedResult[I]: TypeAdtApply.Aux[I, NatFuncZero, Adt.Status.Failed] = failedValueImpl
+    implicit def adtFailedResult[I]: TypeAdtApply.Aux[I, AdtNatZero, Adt.Status.Failed] = failedValueImpl
   }
 
 }
