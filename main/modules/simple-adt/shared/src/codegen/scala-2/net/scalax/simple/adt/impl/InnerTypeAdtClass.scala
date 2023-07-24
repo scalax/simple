@@ -11,12 +11,20 @@ object InnerTypeAdtClass {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, NatFuncPositive[I1, NatFuncZero], Adt.Status.Passed]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap1[I1] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap1(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl1 extends PrepareInnerApply1[Any]
@@ -25,12 +33,20 @@ object InnerTypeAdtClass {
     @inline def apply[T](data: T)(implicit
       v: net.scalax.simple.adt.TypeAdtApply.Aux[T, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncZero]], Adt.Status.Passed]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap2[I1, I2] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap2(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl2 extends PrepareInnerApply2[Any, Any]
@@ -42,12 +58,20 @@ object InnerTypeAdtClass {
         NatFuncPositive[I2, NatFuncPositive[I3, NatFuncZero]]
       ], Adt.Status.Passed]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap3[I1, I2, I3] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap3(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl3 extends PrepareInnerApply3[Any, Any, Any]
@@ -59,12 +83,20 @@ object InnerTypeAdtClass {
         NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncZero]]]
       ], Adt.Status.Passed]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap4[I1, I2, I3, I4] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap4(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl4 extends PrepareInnerApply4[Any, Any, Any, Any]
@@ -76,12 +108,20 @@ object InnerTypeAdtClass {
         NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncZero]]]]
       ], Adt.Status.Passed]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap5[I1, I2, I3, I4, I5] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap5(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl5 extends PrepareInnerApply5[Any, Any, Any, Any, Any]
@@ -97,12 +137,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap6[I1, I2, I3, I4, I5, I6] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap6(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl6 extends PrepareInnerApply6[Any, Any, Any, Any, Any, Any]
@@ -118,12 +166,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap7[I1, I2, I3, I4, I5, I6, I7] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap7(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl7 extends PrepareInnerApply7[Any, Any, Any, Any, Any, Any, Any]
@@ -142,12 +198,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap8[I1, I2, I3, I4, I5, I6, I7, I8] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap8(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl8 extends PrepareInnerApply8[Any, Any, Any, Any, Any, Any, Any, Any]
@@ -169,12 +233,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap9[I1, I2, I3, I4, I5, I6, I7, I8, I9] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap9(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl9 extends PrepareInnerApply9[Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -199,12 +271,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap10(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl10 extends PrepareInnerApply10[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -232,12 +312,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap11(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl11 extends PrepareInnerApply11[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -268,12 +356,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap12(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl12 extends PrepareInnerApply12[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -307,12 +403,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap13(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl13 extends PrepareInnerApply13[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -349,12 +453,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap14(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl14 extends PrepareInnerApply14[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -394,12 +506,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap15(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl15 extends PrepareInnerApply15[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -442,12 +562,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap16(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl16 extends PrepareInnerApply16[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -493,12 +621,20 @@ object InnerTypeAdtClass {
         Adt.Status.Passed
       ]
     ): FoldNatPositiveHelper.FoldNatPositiveHelperWrap17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap17(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl17 extends PrepareInnerApply17[Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any]
@@ -566,12 +702,20 @@ object InnerTypeAdtClass {
       I17,
       I18
     ] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap18(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl18
@@ -644,12 +788,20 @@ object InnerTypeAdtClass {
       I18,
       I19
     ] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap19(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl19
@@ -726,12 +878,20 @@ object InnerTypeAdtClass {
       I19,
       I20
     ] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap20(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl20
@@ -812,12 +972,20 @@ object InnerTypeAdtClass {
       I20,
       I21
     ] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap21(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl21
@@ -902,12 +1070,20 @@ object InnerTypeAdtClass {
       I21,
       I22
     ] = {
-      val dataInstance = v.value(false)(data)
+      val dataInstanceImpl = v.value(false)(data)
       new FoldNatPositiveHelper.FoldNatPositiveHelperWrap22(
-        dataInstance.dataInstance,
-        isAlreadyOk = dataInstance.isAlreadyOk,
-        dataInstance.tail
-      )
+        dataInstanceImpl.dataInstance,
+        isAlreadyOk = dataInstanceImpl.isAlreadyOk,
+        dataInstanceImpl.tail
+      ) {
+        override def dataImpl: Any = this
+          .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+          .inputGHDMZSK(Disscure.identityGhdmzsk)
+          .asInstanceOf[Disscure.GetValue]
+          .value
+        override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+        override val index: Int                           = dataInstanceImpl.index
+      }
     }
   }
   object HelperIOImpl22

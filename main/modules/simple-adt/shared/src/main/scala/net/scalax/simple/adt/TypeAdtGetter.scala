@@ -1,11 +1,19 @@
 package net.scalax.simple.adt
 
-trait TypeAdtGetter {
-  def executeFunction: Any => Any
-}
+import net.scalax.simple.adt.implemention.Disscure
+import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object TypeAdtGetter {
-  def apply(func: Any => Any): TypeAdtGetter = new TypeAdtGetter {
-    override val executeFunction: Any => Any = func
+  def fromList(list: List[Any => Any]): ghdmzsk = {
+    def fromGhdmzsk(l: List[Any => Any]): ghdmzsk = {
+      if (l.isEmpty) {
+        def selfModel: ghdmzsk = Disscure.genImpl1(List.empty).inputGHDMZSK(selfModel)
+        selfModel
+      } else {
+        Disscure.genImpl1(l.head).inputGHDMZSK(fromGhdmzsk(l.tail))
+      }
+    }
+
+    fromGhdmzsk(list)
   }
 }

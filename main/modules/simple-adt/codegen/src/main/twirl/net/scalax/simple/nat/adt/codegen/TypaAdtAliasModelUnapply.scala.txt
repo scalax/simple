@@ -37,6 +37,7 @@ object TypeAdtAliasModelUnapplyImpl {
             ): CP.Aux[OptionNatImpl@{i1}, NatFuncPositive[TempData, T2Tail], Data] =
                 new CP[OptionNatImpl@{i1}, NatFuncPositive[TempData, T2Tail]] {
                     override type DataType = Data
+                    override def index: Int = @{i1 - 1}
                 }
         }
     }

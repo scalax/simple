@@ -21,8 +21,12 @@ object InnerTypeAdtClass {
     @for(i1 <- 1 to 22) {
         class PrepareInnerApply@{i1}[@paramType(1, i1)] {
             @@inline def apply[T](data: T)(implicit v: net.scalax.simple.adt.TypeAdtApply.Aux[T, @buildHList(1, i1), Adt.Status.Passed]): FoldNatPositiveHelper.FoldNatPositiveHelperWrap@{i1}[@paramType(1, i1)] = {
-                val dataInstance = v.value(false)(data)
-                new FoldNatPositiveHelper.FoldNatPositiveHelperWrap@{i1}(dataInstance.dataInstance, isAlreadyOk = dataInstance.isAlreadyOk, dataInstance.tail)
+                val dataInstanceImpl = v.value(false)(data)
+                new FoldNatPositiveHelper.FoldNatPositiveHelperWrap@{i1}(dataInstanceImpl.dataInstance, isAlreadyOk = dataInstanceImpl.isAlreadyOk, dataInstanceImpl.tail) {
+                  override def dataImpl: Any = this.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))).inputGHDMZSK(Disscure.identityGhdmzsk).asInstanceOf[Disscure.GetValue].value
+                  override def inputGHDMZSK(g: => ghdmzsk): ghdmzsk = dataInstanceImpl.inputGHDMZSK(g)
+                  override val index: Int = dataInstanceImpl.index
+                }
             }
         }
         object HelperIOImpl@{i1} extends PrepareInnerApply@{i1}[@paramTypeAny(1, i1)]

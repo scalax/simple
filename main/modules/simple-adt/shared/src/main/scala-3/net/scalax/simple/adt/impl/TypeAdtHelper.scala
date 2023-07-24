@@ -13,8 +13,12 @@ final class FetchAdtApply[S <: NatFunc]:
 
     val list = v.value(false)(data).asInstanceOf[NatFuncPositive[Any, NatFunc]]
 
-    InnerApply(dataInstance = list.dataInstance, isAlreadyOk = list.isAlreadyOk, tail = list.tail)
-      .asInstanceOf[InnerApply[FetchAdtApply.TakeHead[S], FetchAdtApply.TakeTail[S]]]
+    val applyModel = new InnerApply(dataInstance = list.dataInstance, isAlreadyOk = list.isAlreadyOk, tail = list.tail) {
+      override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = list.inputGHDMZSK(t)
+      override val index: Int                           = list.index
+    }
+
+    applyModel.asInstanceOf[InnerApply[FetchAdtApply.TakeHead[S], FetchAdtApply.TakeTail[S]]]
 
   end apply
 
@@ -88,8 +92,11 @@ abstract class FoldApplyInstance[O[_] <: Tuple]:
 
 end FoldApplyInstance
 
-final class InnerApply[Data, T <: NatFunc](override val dataInstance: Option[Data], override val isAlreadyOk: Boolean, override val tail: T)
-    extends NatFuncPositive[Data, T](dataInstance = dataInstance):
+abstract class InnerApply[Data, T <: NatFunc](
+  override val dataInstance: Option[Data],
+  override val isAlreadyOk: Boolean,
+  override val tail: T
+) extends NatFuncPositive[Data, T](dataInstance = dataInstance):
   self: InnerApply[Data, T] =>
 
   inline def foldOpt: FoldOptApplyInstance[[x] =>> FetchAdtApply.HListFix[NatFuncPositive[Data, T], x]] =
