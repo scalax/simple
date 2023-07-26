@@ -1,0 +1,49 @@
+@()
+package net.scalax.simple.adt
+package impl
+
+import net.scalax.simple.ghdmzsk.ghdmzsk
+import implemention._
+import temp._
+import temp.{Status => ADTStatus}
+
+@ADT22Parameter(i: Int) = {
+    @if(i > 0) { AdtNatData[I@{i}, @ADT22Parameter(i - 1)] } else { AdtNatZero }
+}
+
+@TypeParameter22(i: Int) = {
+    @for(i <- 1 to i) { @if(i > 1) { , } I@{i} }
+}
+
+@FunctionParameter22(i: Int) = {
+    @for(i <- 1 to i) { @if(i > 1) { , } func@{i}: I@{i} => D }
+}
+
+@InstanceParameter22(i: Int) = {
+    @for(i <- 1 to i) { @if(i > 1) { , } func@{i} }
+}
+
+trait ADTPassedFunction {
+
+    @for(i <- 1 to 22) {
+        implicit class extra@{i}[@TypeParameter22(i)](private val data: ADTData[@ADT22Parameter(i), ADTStatus.Passed]) {
+            def fold[D](@FunctionParameter22(i)): D  = {
+                val adtDataGHDMZSK = data.toGHDMZSK
+                val dataInstance: Any = adtDataGHDMZSK.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
+                    .inputGHDMZSK(Disscure.identityGhdmzsk)
+                    .asInstanceOf[Disscure.GetValue]
+                    .value
+                val funcs             = List(@InstanceParameter22(i))
+                val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
+                val funcInstance = adtDataGHDMZSK
+                    .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+                    .inputGHDMZSK(listFunc)
+                    .asInstanceOf[Disscure.GetValue]
+                    .value
+                    .asInstanceOf[Any => D]
+                funcInstance(dataInstance)
+            }
+        }
+    }
+
+}

@@ -3,405 +3,607 @@ package adt
 package impl
 
 import implemention._
+import temp._
+import temp.{Status => ADTStatus}
 
 trait TypeAdtAlias {
 
-  type Options1[A, I1]                        = TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncZero], Adt.Status.Passed]
-  type OptionsX1[A, Status <: Adt.Status, I1] = TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncZero], Status]
+  type Options1[A, I1]                              = TypeAdtApply[A, AdtNatData[I1, AdtNatZero], ADTStatus.Passed]
+  type OptionsX1[A, Status <: ADTStatus.Passed, I1] = TypeAdtApply[A, AdtNatData[I1, AdtNatZero], Status]
 
-  type Options2[A, I1, I2] = TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncZero]], Adt.Status.Passed]
-  type OptionsX2[A, Status <: Adt.Status, I1, I2] = TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncZero]], Status]
+  type Options2[A, I1, I2]                              = TypeAdtApply[A, AdtNatData[I2, AdtNatData[I1, AdtNatZero]], ADTStatus.Passed]
+  type OptionsX2[A, Status <: ADTStatus.Passed, I1, I2] = TypeAdtApply[A, AdtNatData[I2, AdtNatData[I1, AdtNatZero]], Status]
 
-  type Options3[A, I1, I2, I3] =
-    TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncPositive[I3, NatFuncZero]]], Adt.Status.Passed]
-  type OptionsX3[A, Status <: Adt.Status, I1, I2, I3] =
-    TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncPositive[I3, NatFuncZero]]], Status]
+  type Options3[A, I1, I2, I3] = TypeAdtApply[A, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]], ADTStatus.Passed]
+  type OptionsX3[A, Status <: ADTStatus.Passed, I1, I2, I3] =
+    TypeAdtApply[A, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]], Status]
 
   type Options4[A, I1, I2, I3, I4] =
-    TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncZero]]]], Adt.Status.Passed]
-  type OptionsX4[A, Status <: Adt.Status, I1, I2, I3, I4] =
-    TypeAdtApply.Aux[A, NatFuncPositive[I1, NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncZero]]]], Status]
+    TypeAdtApply[A, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]], ADTStatus.Passed]
+  type OptionsX4[A, Status <: ADTStatus.Passed, I1, I2, I3, I4] =
+    TypeAdtApply[A, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]], Status]
 
-  type Options5[A, I1, I2, I3, I4, I5] = TypeAdtApply.Aux[A, NatFuncPositive[
-    I1,
-    NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncZero]]]]
-  ], Adt.Status.Passed]
-  type OptionsX5[A, Status <: Adt.Status, I1, I2, I3, I4, I5] = TypeAdtApply.Aux[A, NatFuncPositive[
-    I1,
-    NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncZero]]]]
+  type Options5[A, I1, I2, I3, I4, I5] =
+    TypeAdtApply[A, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]], ADTStatus.Passed]
+  type OptionsX5[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5] =
+    TypeAdtApply[A, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]], Status]
+
+  type Options6[A, I1, I2, I3, I4, I5, I6] = TypeAdtApply[
+    A,
+    AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]],
+    ADTStatus.Passed
+  ]
+  type OptionsX6[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6] =
+    TypeAdtApply[A, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]], Status]
+
+  type Options7[A, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[
+    A,
+    AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]],
+    ADTStatus.Passed
+  ]
+  type OptionsX7[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[
+    A,
+    AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]],
+    Status
+  ]
+
+  type Options8[A, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply[A, AdtNatData[
+    I8,
+    AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+  ], ADTStatus.Passed]
+  type OptionsX8[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply[A, AdtNatData[
+    I8,
+    AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
   ], Status]
 
-  type Options6[A, I1, I2, I3, I4, I5, I6] = TypeAdtApply.Aux[
+  type Options9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply[
     A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncZero]]]]]
-    ],
-    Adt.Status.Passed
+    AdtNatData[I9, AdtNatData[
+      I8,
+      AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+    ]],
+    ADTStatus.Passed
   ]
-  type OptionsX6[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6] = TypeAdtApply.Aux[A, NatFuncPositive[
+  type OptionsX9[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply[
+    A,
+    AdtNatData[I9, AdtNatData[
+      I8,
+      AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+    ]],
+    Status
+  ]
+
+  type Options10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply[
+    A,
+    AdtNatData[I10, AdtNatData[I9, AdtNatData[
+      I8,
+      AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+    ]]],
+    ADTStatus.Passed
+  ]
+  type OptionsX10[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply[
+    A,
+    AdtNatData[I10, AdtNatData[I9, AdtNatData[
+      I8,
+      AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+    ]]],
+    Status
+  ]
+
+  type Options11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I11,
+      AdtNatData[I10, AdtNatData[I9, AdtNatData[
+        I8,
+        AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+      ]]]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX11[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I11,
+      AdtNatData[I10, AdtNatData[I9, AdtNatData[
+        I8,
+        AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+      ]]]
+    ],
+    Status
+  ]
+
+  type Options12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I12,
+      AdtNatData[
+        I11,
+        AdtNatData[I10, AdtNatData[I9, AdtNatData[
+          I8,
+          AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+        ]]]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX12[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I12,
+      AdtNatData[
+        I11,
+        AdtNatData[I10, AdtNatData[I9, AdtNatData[
+          I8,
+          AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+        ]]]
+      ]
+    ],
+    Status
+  ]
+
+  type Options13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I13,
+      AdtNatData[
+        I12,
+        AdtNatData[
+          I11,
+          AdtNatData[I10, AdtNatData[I9, AdtNatData[
+            I8,
+            AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+          ]]]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX13[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I13,
+      AdtNatData[
+        I12,
+        AdtNatData[
+          I11,
+          AdtNatData[I10, AdtNatData[I9, AdtNatData[
+            I8,
+            AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+          ]]]
+        ]
+      ]
+    ],
+    Status
+  ]
+
+  type Options14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I14,
+      AdtNatData[
+        I13,
+        AdtNatData[
+          I12,
+          AdtNatData[
+            I11,
+            AdtNatData[I10, AdtNatData[I9, AdtNatData[
+              I8,
+              AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+            ]]]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX14[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I14,
+      AdtNatData[
+        I13,
+        AdtNatData[
+          I12,
+          AdtNatData[
+            I11,
+            AdtNatData[I10, AdtNatData[I9, AdtNatData[
+              I8,
+              AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+            ]]]
+          ]
+        ]
+      ]
+    ],
+    Status
+  ]
+
+  type Options15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I15,
+      AdtNatData[
+        I14,
+        AdtNatData[
+          I13,
+          AdtNatData[
+            I12,
+            AdtNatData[
+              I11,
+              AdtNatData[I10, AdtNatData[I9, AdtNatData[
+                I8,
+                AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+              ]]]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX15[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I15,
+      AdtNatData[
+        I14,
+        AdtNatData[
+          I13,
+          AdtNatData[
+            I12,
+            AdtNatData[
+              I11,
+              AdtNatData[I10, AdtNatData[I9, AdtNatData[
+                I8,
+                AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+              ]]]
+            ]
+          ]
+        ]
+      ]
+    ],
+    Status
+  ]
+
+  type Options16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I16,
+      AdtNatData[
+        I15,
+        AdtNatData[
+          I14,
+          AdtNatData[
+            I13,
+            AdtNatData[
+              I12,
+              AdtNatData[
+                I11,
+                AdtNatData[I10, AdtNatData[I9, AdtNatData[
+                  I8,
+                  AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+                ]]]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX16[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I16,
+      AdtNatData[
+        I15,
+        AdtNatData[
+          I14,
+          AdtNatData[
+            I13,
+            AdtNatData[
+              I12,
+              AdtNatData[
+                I11,
+                AdtNatData[I10, AdtNatData[I9, AdtNatData[
+                  I8,
+                  AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+                ]]]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    Status
+  ]
+
+  type Options17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I17,
+      AdtNatData[
+        I16,
+        AdtNatData[
+          I15,
+          AdtNatData[
+            I14,
+            AdtNatData[
+              I13,
+              AdtNatData[
+                I12,
+                AdtNatData[
+                  I11,
+                  AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                    I7,
+                    AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                  ]]]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX17[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I17,
+      AdtNatData[
+        I16,
+        AdtNatData[
+          I15,
+          AdtNatData[
+            I14,
+            AdtNatData[
+              I13,
+              AdtNatData[
+                I12,
+                AdtNatData[
+                  I11,
+                  AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                    I7,
+                    AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                  ]]]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    Status
+  ]
+
+  type Options18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I18,
+      AdtNatData[
+        I17,
+        AdtNatData[
+          I16,
+          AdtNatData[
+            I15,
+            AdtNatData[
+              I14,
+              AdtNatData[
+                I13,
+                AdtNatData[
+                  I12,
+                  AdtNatData[
+                    I11,
+                    AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                      I7,
+                      AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                    ]]]]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX18[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
+    TypeAdtApply[
+      A,
+      AdtNatData[
+        I18,
+        AdtNatData[
+          I17,
+          AdtNatData[
+            I16,
+            AdtNatData[
+              I15,
+              AdtNatData[
+                I14,
+                AdtNatData[
+                  I13,
+                  AdtNatData[
+                    I12,
+                    AdtNatData[
+                      I11,
+                      AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                        I7,
+                        AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                      ]]]]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      Status
+    ]
+
+  type Options19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I19,
+      AdtNatData[
+        I18,
+        AdtNatData[
+          I17,
+          AdtNatData[
+            I16,
+            AdtNatData[
+              I15,
+              AdtNatData[
+                I14,
+                AdtNatData[
+                  I13,
+                  AdtNatData[
+                    I12,
+                    AdtNatData[
+                      I11,
+                      AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                        I7,
+                        AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                      ]]]]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX19[A, Status <: ADTStatus.Passed, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
+    TypeAdtApply[
+      A,
+      AdtNatData[
+        I19,
+        AdtNatData[
+          I18,
+          AdtNatData[
+            I17,
+            AdtNatData[
+              I16,
+              AdtNatData[
+                I15,
+                AdtNatData[
+                  I14,
+                  AdtNatData[
+                    I13,
+                    AdtNatData[
+                      I12,
+                      AdtNatData[
+                        I11,
+                        AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                          I7,
+                          AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                        ]]]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      Status
+    ]
+
+  type Options20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I20,
+      AdtNatData[
+        I19,
+        AdtNatData[
+          I18,
+          AdtNatData[
+            I17,
+            AdtNatData[
+              I16,
+              AdtNatData[
+                I15,
+                AdtNatData[
+                  I14,
+                  AdtNatData[
+                    I13,
+                    AdtNatData[
+                      I12,
+                      AdtNatData[
+                        I11,
+                        AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                          I7,
+                          AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                        ]]]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
+  type OptionsX20[
+    A,
+    Status <: ADTStatus.Passed,
     I1,
-    NatFuncPositive[I2, NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncZero]]]]]
-  ], Status]
-
-  type Options7[A, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply.Aux[
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20
+  ] = TypeAdtApply[
     A,
-    NatFuncPositive[I1, NatFuncPositive[
-      I2,
-      NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncZero]]]]]
-    ]],
-    Adt.Status.Passed
-  ]
-  type OptionsX7[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[I1, NatFuncPositive[
-      I2,
-      NatFuncPositive[I3, NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncZero]]]]]
-    ]],
-    Status
-  ]
-
-  type Options8[A, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[I2, NatFuncPositive[
-        I3,
-        NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncZero]]]]]
-      ]]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX8[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[I2, NatFuncPositive[
-        I3,
-        NatFuncPositive[I4, NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncZero]]]]]
-      ]]
-    ],
-    Status
-  ]
-
-  type Options9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[I3, NatFuncPositive[
-          I4,
-          NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncZero]]]]]
-        ]]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX9[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[I3, NatFuncPositive[
-          I4,
-          NatFuncPositive[I5, NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncZero]]]]]
-        ]]
-      ]
-    ],
-    Status
-  ]
-
-  type Options10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[I4, NatFuncPositive[
-            I5,
-            NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncZero]]]]]
-          ]]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX10[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[I4, NatFuncPositive[
-            I5,
-            NatFuncPositive[I6, NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncZero]]]]]
-          ]]
-        ]
-      ]
-    ],
-    Status
-  ]
-
-  type Options11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[I5, NatFuncPositive[
-              I6,
-              NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncZero]]]]]
-            ]]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX11[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[I5, NatFuncPositive[
-              I6,
-              NatFuncPositive[I7, NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncZero]]]]]
-            ]]
-          ]
-        ]
-      ]
-    ],
-    Status
-  ]
-
-  type Options12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[I6, NatFuncPositive[
-                I7,
-                NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[I12, NatFuncZero]]]]]
-              ]]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX12[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[I6, NatFuncPositive[
-                I7,
-                NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[I12, NatFuncZero]]]]]
-              ]]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Status
-  ]
-
-  type Options13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[I7, NatFuncPositive[
-                  I8,
-                  NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[I13, NatFuncZero]]]]]
-                ]]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX13[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[I7, NatFuncPositive[
-                  I8,
-                  NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[I13, NatFuncZero]]]]]
-                ]]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Status
-  ]
-
-  type Options14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[
-                    I10,
-                    NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[I14, NatFuncZero]]]]
-                  ]]]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX14[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[I8, NatFuncPositive[I9, NatFuncPositive[
-                    I10,
-                    NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[I14, NatFuncZero]]]]
-                  ]]]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Status
-  ]
-
-  type Options15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[
-                      I11,
-                      NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[I15, NatFuncZero]]]]
-                    ]]]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX15[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[I9, NatFuncPositive[I10, NatFuncPositive[
-                      I11,
-                      NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[I15, NatFuncZero]]]]
-                    ]]]
+    AdtNatData[
+      I20,
+      AdtNatData[
+        I19,
+        AdtNatData[
+          I18,
+          AdtNatData[
+            I17,
+            AdtNatData[
+              I16,
+              AdtNatData[
+                I15,
+                AdtNatData[
+                  I14,
+                  AdtNatData[
+                    I13,
+                    AdtNatData[
+                      I12,
+                      AdtNatData[
+                        I11,
+                        AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                          I7,
+                          AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                        ]]]]
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -413,30 +615,36 @@ trait TypeAdtAlias {
     Status
   ]
 
-  type Options16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply.Aux[
+  type Options21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = TypeAdtApply[
     A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[
+    AdtNatData[
+      I21,
+      AdtNatData[
+        I20,
+        AdtNatData[
+          I19,
+          AdtNatData[
+            I18,
+            AdtNatData[
+              I17,
+              AdtNatData[
+                I16,
+                AdtNatData[
+                  I15,
+                  AdtNatData[
+                    I14,
+                    AdtNatData[
+                      I13,
+                      AdtNatData[
                         I12,
-                        NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[I16, NatFuncZero]]]]
-                      ]]]
+                        AdtNatData[
+                          I11,
+                          AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                            I7,
+                            AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                          ]]]]
+                        ]
+                      ]
                     ]
                   ]
                 ]
@@ -446,108 +654,61 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTStatus.Passed
   ]
-  type OptionsX16[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply.Aux[
+  type OptionsX21[
     A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[I10, NatFuncPositive[I11, NatFuncPositive[
+    Status <: ADTStatus.Passed,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21
+  ] = TypeAdtApply[
+    A,
+    AdtNatData[
+      I21,
+      AdtNatData[
+        I20,
+        AdtNatData[
+          I19,
+          AdtNatData[
+            I18,
+            AdtNatData[
+              I17,
+              AdtNatData[
+                I16,
+                AdtNatData[
+                  I15,
+                  AdtNatData[
+                    I14,
+                    AdtNatData[
+                      I13,
+                      AdtNatData[
                         I12,
-                        NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[I16, NatFuncZero]]]]
-                      ]]]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Status
-  ]
-
-  type Options17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[
-                          I13,
-                          NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[I17, NatFuncZero]]]]
-                        ]]]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX17[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[I11, NatFuncPositive[I12, NatFuncPositive[
-                          I13,
-                          NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[I17, NatFuncZero]]]]
-                        ]]]
+                        AdtNatData[
+                          I11,
+                          AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                            I7,
+                            AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                          ]]]]
+                        ]
                       ]
                     ]
                   ]
@@ -561,120 +722,36 @@ trait TypeAdtAlias {
     Status
   ]
 
-  type Options18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply.Aux[
+  type Options22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = TypeAdtApply[
     A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[
-                          I11,
-                          NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[
-                            I14,
-                            NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[I18, NatFuncZero]]]]
-                          ]]]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX18[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
-    TypeAdtApply.Aux[
-      A,
-      NatFuncPositive[
-        I1,
-        NatFuncPositive[
-          I2,
-          NatFuncPositive[
-            I3,
-            NatFuncPositive[
-              I4,
-              NatFuncPositive[
-                I5,
-                NatFuncPositive[
-                  I6,
-                  NatFuncPositive[
-                    I7,
-                    NatFuncPositive[
-                      I8,
-                      NatFuncPositive[
-                        I9,
-                        NatFuncPositive[
-                          I10,
-                          NatFuncPositive[
+    AdtNatData[
+      I22,
+      AdtNatData[
+        I21,
+        AdtNatData[
+          I20,
+          AdtNatData[
+            I19,
+            AdtNatData[
+              I18,
+              AdtNatData[
+                I17,
+                AdtNatData[
+                  I16,
+                  AdtNatData[
+                    I15,
+                    AdtNatData[
+                      I14,
+                      AdtNatData[
+                        I13,
+                        AdtNatData[
+                          I12,
+                          AdtNatData[
                             I11,
-                            NatFuncPositive[I12, NatFuncPositive[I13, NatFuncPositive[
-                              I14,
-                              NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[I18, NatFuncZero]]]]
-                            ]]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      Status
-    ]
-
-  type Options19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[
-                          I11,
-                          NatFuncPositive[
-                            I12,
-                            NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[
-                              I15,
-                              NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[I18, NatFuncPositive[I19, NatFuncZero]]]]
-                            ]]]
+                            AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                              I7,
+                              AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                            ]]]]
                           ]
                         ]
                       ]
@@ -687,308 +764,11 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
-  ]
-  type OptionsX19[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
-    TypeAdtApply.Aux[
-      A,
-      NatFuncPositive[
-        I1,
-        NatFuncPositive[
-          I2,
-          NatFuncPositive[
-            I3,
-            NatFuncPositive[
-              I4,
-              NatFuncPositive[
-                I5,
-                NatFuncPositive[
-                  I6,
-                  NatFuncPositive[
-                    I7,
-                    NatFuncPositive[
-                      I8,
-                      NatFuncPositive[
-                        I9,
-                        NatFuncPositive[
-                          I10,
-                          NatFuncPositive[
-                            I11,
-                            NatFuncPositive[
-                              I12,
-                              NatFuncPositive[I13, NatFuncPositive[I14, NatFuncPositive[
-                                I15,
-                                NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[I18, NatFuncPositive[I19, NatFuncZero]]]]
-                              ]]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      Status
-    ]
-
-  type Options20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[
-                          I11,
-                          NatFuncPositive[
-                            I12,
-                            NatFuncPositive[
-                              I13,
-                              NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[
-                                I16,
-                                NatFuncPositive[I17, NatFuncPositive[I18, NatFuncPositive[I19, NatFuncPositive[I20, NatFuncZero]]]]
-                              ]]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX20[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
-    TypeAdtApply.Aux[
-      A,
-      NatFuncPositive[
-        I1,
-        NatFuncPositive[
-          I2,
-          NatFuncPositive[
-            I3,
-            NatFuncPositive[
-              I4,
-              NatFuncPositive[
-                I5,
-                NatFuncPositive[
-                  I6,
-                  NatFuncPositive[
-                    I7,
-                    NatFuncPositive[
-                      I8,
-                      NatFuncPositive[
-                        I9,
-                        NatFuncPositive[
-                          I10,
-                          NatFuncPositive[
-                            I11,
-                            NatFuncPositive[
-                              I12,
-                              NatFuncPositive[
-                                I13,
-                                NatFuncPositive[I14, NatFuncPositive[I15, NatFuncPositive[
-                                  I16,
-                                  NatFuncPositive[I17, NatFuncPositive[I18, NatFuncPositive[I19, NatFuncPositive[I20, NatFuncZero]]]]
-                                ]]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      Status
-    ]
-
-  type Options21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[
-                          I11,
-                          NatFuncPositive[
-                            I12,
-                            NatFuncPositive[
-                              I13,
-                              NatFuncPositive[
-                                I14,
-                                NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[
-                                  I17,
-                                  NatFuncPositive[I18, NatFuncPositive[I19, NatFuncPositive[I20, NatFuncPositive[I21, NatFuncZero]]]]
-                                ]]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
-  ]
-  type OptionsX21[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
-    TypeAdtApply.Aux[
-      A,
-      NatFuncPositive[
-        I1,
-        NatFuncPositive[
-          I2,
-          NatFuncPositive[
-            I3,
-            NatFuncPositive[
-              I4,
-              NatFuncPositive[
-                I5,
-                NatFuncPositive[
-                  I6,
-                  NatFuncPositive[
-                    I7,
-                    NatFuncPositive[
-                      I8,
-                      NatFuncPositive[
-                        I9,
-                        NatFuncPositive[
-                          I10,
-                          NatFuncPositive[
-                            I11,
-                            NatFuncPositive[
-                              I12,
-                              NatFuncPositive[
-                                I13,
-                                NatFuncPositive[
-                                  I14,
-                                  NatFuncPositive[I15, NatFuncPositive[I16, NatFuncPositive[
-                                    I17,
-                                    NatFuncPositive[I18, NatFuncPositive[I19, NatFuncPositive[I20, NatFuncPositive[I21, NatFuncZero]]]]
-                                  ]]]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      Status
-    ]
-
-  type Options22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = TypeAdtApply.Aux[
-    A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[
-                          I11,
-                          NatFuncPositive[
-                            I12,
-                            NatFuncPositive[
-                              I13,
-                              NatFuncPositive[
-                                I14,
-                                NatFuncPositive[
-                                  I15,
-                                  NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[
-                                    I18,
-                                    NatFuncPositive[I19, NatFuncPositive[I20, NatFuncPositive[I21, NatFuncPositive[I22, NatFuncZero]]]]
-                                  ]]]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ],
-    Adt.Status.Passed
+    ADTStatus.Passed
   ]
   type OptionsX22[
     A,
-    Status <: Adt.Status,
+    Status <: ADTStatus.Passed,
     I1,
     I2,
     I3,
@@ -1011,45 +791,36 @@ trait TypeAdtAlias {
     I20,
     I21,
     I22
-  ] = TypeAdtApply.Aux[
+  ] = TypeAdtApply[
     A,
-    NatFuncPositive[
-      I1,
-      NatFuncPositive[
-        I2,
-        NatFuncPositive[
-          I3,
-          NatFuncPositive[
-            I4,
-            NatFuncPositive[
-              I5,
-              NatFuncPositive[
-                I6,
-                NatFuncPositive[
-                  I7,
-                  NatFuncPositive[
-                    I8,
-                    NatFuncPositive[
-                      I9,
-                      NatFuncPositive[
-                        I10,
-                        NatFuncPositive[
-                          I11,
-                          NatFuncPositive[
-                            I12,
-                            NatFuncPositive[
-                              I13,
-                              NatFuncPositive[
-                                I14,
-                                NatFuncPositive[
-                                  I15,
-                                  NatFuncPositive[I16, NatFuncPositive[I17, NatFuncPositive[
-                                    I18,
-                                    NatFuncPositive[I19, NatFuncPositive[I20, NatFuncPositive[I21, NatFuncPositive[I22, NatFuncZero]]]]
-                                  ]]]
-                                ]
-                              ]
-                            ]
+    AdtNatData[
+      I22,
+      AdtNatData[
+        I21,
+        AdtNatData[
+          I20,
+          AdtNatData[
+            I19,
+            AdtNatData[
+              I18,
+              AdtNatData[
+                I17,
+                AdtNatData[
+                  I16,
+                  AdtNatData[
+                    I15,
+                    AdtNatData[
+                      I14,
+                      AdtNatData[
+                        I13,
+                        AdtNatData[
+                          I12,
+                          AdtNatData[
+                            I11,
+                            AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                              I7,
+                              AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                            ]]]]
                           ]
                         ]
                       ]

@@ -2,129 +2,652 @@ package net.scalax.simple
 package adt
 package impl
 
+import temp._
+import temp.{Status => ADTStatus}
+
 trait TypeAdtAliasModel {
 
-  type Option1[T1] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap1[T1]
+  type Option1[
+    I1
+  ] = ADTData[AdtNatData[I1, AdtNatZero], ADTStatus.Passed]
 
-  type Option2[T1, T2] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap2[T1, T2]
+  type Option2[
+    I1,
+    I2
+  ] = ADTData[AdtNatData[I2, AdtNatData[I1, AdtNatZero]], ADTStatus.Passed]
 
-  type Option3[T1, T2, T3] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap3[T1, T2, T3]
+  type Option3[
+    I1,
+    I2,
+    I3
+  ] = ADTData[AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]], ADTStatus.Passed]
 
-  type Option4[T1, T2, T3, T4] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap4[T1, T2, T3, T4]
+  type Option4[
+    I1,
+    I2,
+    I3,
+    I4
+  ] = ADTData[AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]], ADTStatus.Passed]
 
-  type Option5[T1, T2, T3, T4, T5] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap5[T1, T2, T3, T4, T5]
+  type Option5[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5
+  ] = ADTData[AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]], ADTStatus.Passed]
 
-  type Option6[T1, T2, T3, T4, T5, T6] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap6[T1, T2, T3, T4, T5, T6]
+  type Option6[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6
+  ] = ADTData[AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]], ADTStatus.Passed]
 
-  type Option7[T1, T2, T3, T4, T5, T6, T7] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap7[T1, T2, T3, T4, T5, T6, T7]
+  type Option7[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7
+  ] = ADTData[
+    AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]],
+    ADTStatus.Passed
+  ]
 
-  type Option8[T1, T2, T3, T4, T5, T6, T7, T8] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap8[T1, T2, T3, T4, T5, T6, T7, T8]
+  type Option8[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8
+  ] = ADTData[AdtNatData[
+    I8,
+    AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+  ], ADTStatus.Passed]
 
-  type Option9[T1, T2, T3, T4, T5, T6, T7, T8, T9] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap9[T1, T2, T3, T4, T5, T6, T7, T8, T9]
+  type Option9[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9
+  ] = ADTData[
+    AdtNatData[I9, AdtNatData[
+      I8,
+      AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+    ]],
+    ADTStatus.Passed
+  ]
 
-  type Option10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap10[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]
+  type Option10[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10
+  ] = ADTData[
+    AdtNatData[I10, AdtNatData[I9, AdtNatData[
+      I8,
+      AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+    ]]],
+    ADTStatus.Passed
+  ]
 
-  type Option11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap11[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]
+  type Option11[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11
+  ] = ADTData[
+    AdtNatData[
+      I11,
+      AdtNatData[I10, AdtNatData[I9, AdtNatData[
+        I8,
+        AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+      ]]]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap12[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]
+  type Option12[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12
+  ] = ADTData[
+    AdtNatData[
+      I12,
+      AdtNatData[
+        I11,
+        AdtNatData[I10, AdtNatData[I9, AdtNatData[
+          I8,
+          AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+        ]]]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]
+  type Option13[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13
+  ] = ADTData[
+    AdtNatData[
+      I13,
+      AdtNatData[
+        I12,
+        AdtNatData[
+          I11,
+          AdtNatData[I10, AdtNatData[I9, AdtNatData[
+            I8,
+            AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+          ]]]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]
+  type Option14[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14
+  ] = ADTData[
+    AdtNatData[
+      I14,
+      AdtNatData[
+        I13,
+        AdtNatData[
+          I12,
+          AdtNatData[
+            I11,
+            AdtNatData[I10, AdtNatData[I9, AdtNatData[
+              I8,
+              AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+            ]]]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap15[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]
+  type Option15[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15
+  ] = ADTData[
+    AdtNatData[
+      I15,
+      AdtNatData[
+        I14,
+        AdtNatData[
+          I13,
+          AdtNatData[
+            I12,
+            AdtNatData[
+              I11,
+              AdtNatData[I10, AdtNatData[I9, AdtNatData[
+                I8,
+                AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+              ]]]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap16[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]
+  type Option16[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16
+  ] = ADTData[
+    AdtNatData[
+      I16,
+      AdtNatData[
+        I15,
+        AdtNatData[
+          I14,
+          AdtNatData[
+            I13,
+            AdtNatData[
+              I12,
+              AdtNatData[
+                I11,
+                AdtNatData[I10, AdtNatData[I9, AdtNatData[
+                  I8,
+                  AdtNatData[I7, AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]]
+                ]]]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap17[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]
+  type Option17[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17
+  ] = ADTData[
+    AdtNatData[
+      I17,
+      AdtNatData[
+        I16,
+        AdtNatData[
+          I15,
+          AdtNatData[
+            I14,
+            AdtNatData[
+              I13,
+              AdtNatData[
+                I12,
+                AdtNatData[
+                  I11,
+                  AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                    I7,
+                    AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                  ]]]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap18[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]
+  type Option18[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18
+  ] = ADTData[
+    AdtNatData[
+      I18,
+      AdtNatData[
+        I17,
+        AdtNatData[
+          I16,
+          AdtNatData[
+            I15,
+            AdtNatData[
+              I14,
+              AdtNatData[
+                I13,
+                AdtNatData[
+                  I12,
+                  AdtNatData[
+                    I11,
+                    AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                      I7,
+                      AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                    ]]]]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap19[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]
+  type Option19[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19
+  ] = ADTData[
+    AdtNatData[
+      I19,
+      AdtNatData[
+        I18,
+        AdtNatData[
+          I17,
+          AdtNatData[
+            I16,
+            AdtNatData[
+              I15,
+              AdtNatData[
+                I14,
+                AdtNatData[
+                  I13,
+                  AdtNatData[
+                    I12,
+                    AdtNatData[
+                      I11,
+                      AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                        I7,
+                        AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                      ]]]]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option20[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap20[
-      T1,
-      T2,
-      T3,
-      T4,
-      T5,
-      T6,
-      T7,
-      T8,
-      T9,
-      T10,
-      T11,
-      T12,
-      T13,
-      T14,
-      T15,
-      T16,
-      T17,
-      T18,
-      T19,
-      T20
-    ]
+  type Option20[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20
+  ] = ADTData[
+    AdtNatData[
+      I20,
+      AdtNatData[
+        I19,
+        AdtNatData[
+          I18,
+          AdtNatData[
+            I17,
+            AdtNatData[
+              I16,
+              AdtNatData[
+                I15,
+                AdtNatData[
+                  I14,
+                  AdtNatData[
+                    I13,
+                    AdtNatData[
+                      I12,
+                      AdtNatData[
+                        I11,
+                        AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                          I7,
+                          AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                        ]]]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option21[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap21[
-      T1,
-      T2,
-      T3,
-      T4,
-      T5,
-      T6,
-      T7,
-      T8,
-      T9,
-      T10,
-      T11,
-      T12,
-      T13,
-      T14,
-      T15,
-      T16,
-      T17,
-      T18,
-      T19,
-      T20,
-      T21
-    ]
+  type Option21[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21
+  ] = ADTData[
+    AdtNatData[
+      I21,
+      AdtNatData[
+        I20,
+        AdtNatData[
+          I19,
+          AdtNatData[
+            I18,
+            AdtNatData[
+              I17,
+              AdtNatData[
+                I16,
+                AdtNatData[
+                  I15,
+                  AdtNatData[
+                    I14,
+                    AdtNatData[
+                      I13,
+                      AdtNatData[
+                        I12,
+                        AdtNatData[
+                          I11,
+                          AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                            I7,
+                            AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                          ]]]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
-  type Option22[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22] =
-    FoldNatPositiveHelper.FoldNatPositiveHelperWrap22[
-      T1,
-      T2,
-      T3,
-      T4,
-      T5,
-      T6,
-      T7,
-      T8,
-      T9,
-      T10,
-      T11,
-      T12,
-      T13,
-      T14,
-      T15,
-      T16,
-      T17,
-      T18,
-      T19,
-      T20,
-      T21,
-      T22
-    ]
+  type Option22[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    I22
+  ] = ADTData[
+    AdtNatData[
+      I22,
+      AdtNatData[
+        I21,
+        AdtNatData[
+          I20,
+          AdtNatData[
+            I19,
+            AdtNatData[
+              I18,
+              AdtNatData[
+                I17,
+                AdtNatData[
+                  I16,
+                  AdtNatData[
+                    I15,
+                    AdtNatData[
+                      I14,
+                      AdtNatData[
+                        I13,
+                        AdtNatData[
+                          I12,
+                          AdtNatData[
+                            I11,
+                            AdtNatData[I10, AdtNatData[I9, AdtNatData[I8, AdtNatData[
+                              I7,
+                              AdtNatData[I6, AdtNatData[I5, AdtNatData[I4, AdtNatData[I3, AdtNatData[I2, AdtNatData[I1, AdtNatZero]]]]]]
+                            ]]]]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTStatus.Passed
+  ]
 
 }

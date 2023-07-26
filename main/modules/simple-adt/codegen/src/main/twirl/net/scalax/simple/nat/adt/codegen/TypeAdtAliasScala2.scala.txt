@@ -3,12 +3,19 @@ package net.scalax.simple
 package adt
 package impl
 
-@buildHList(start: Int, i1: Int) = { @if(start <= i1) {
-    AdtAlias.AdtAppend[I@start, @buildHList(start + 1, i1)]
-} else { AdtAlias.AdtZero } }
+import temp._
+import temp.{Status => ADTStatus}
+
+@TypeParameter22(i: Int) = {
+    @for(i <- 1 to i) { @if(i > 1) { , } I@{i} }
+}
+
+@ADT22Parameter(i: Int) = {
+    @if(i > 0) { AdtNatData[I@{i}, @ADT22Parameter(i - 1)] } else { AdtNatZero }
+}
 
 trait TypeAdtAliasModel {
-    @for(i1 <- 1 to 22) {
-        type Option@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }] = FoldNatPositiveHelper.FoldNatPositiveHelperWrap@{i1}[@for(i2 <- 1 to i1) { @if(i2 > 1) { , } T@{i2} }]
+    @for(i <- 1 to 22) {
+        type Option@{i}[@TypeParameter22(i)] = ADTData[@ADT22Parameter(i), ADTStatus.Passed]
     }
 }
