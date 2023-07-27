@@ -1,165 +1,688 @@
 package net.scalax.simple.adt
 package impl
 
+import temp._
+import temp.{Status => ADTStatus}
+
 trait TypeAdtRuntimeApply {
 
-  def Options1[I1]: InnerTypeAdtClass.PrepareInnerApply1[I1] =
-    InnerTypeAdtClass.HelperIOImpl1.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply1[I1]]
+  def Options1[
+    I1
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatZero]
+  ] = ApplyFactory.apply
 
-  def Options2[I1, I2]: InnerTypeAdtClass.PrepareInnerApply2[I1, I2] =
-    InnerTypeAdtClass.HelperIOImpl2.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply2[I1, I2]]
+  def Options2[
+    I1,
+    I2
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[I2, AdtNatZero]]
+  ] = ApplyFactory.apply
 
-  def Options3[I1, I2, I3]: InnerTypeAdtClass.PrepareInnerApply3[I1, I2, I3] =
-    InnerTypeAdtClass.HelperIOImpl3.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply3[I1, I2, I3]]
+  def Options3[
+    I1,
+    I2,
+    I3
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatZero]]]
+  ] = ApplyFactory.apply
 
-  def Options4[I1, I2, I3, I4]: InnerTypeAdtClass.PrepareInnerApply4[I1, I2, I3, I4] =
-    InnerTypeAdtClass.HelperIOImpl4.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply4[I1, I2, I3, I4]]
+  def Options4[
+    I1,
+    I2,
+    I3,
+    I4
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatZero]]]]
+  ] = ApplyFactory.apply
 
-  def Options5[I1, I2, I3, I4, I5]: InnerTypeAdtClass.PrepareInnerApply5[I1, I2, I3, I4, I5] =
-    InnerTypeAdtClass.HelperIOImpl5.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply5[I1, I2, I3, I4, I5]]
+  def Options5[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatZero]]]]]
+  ] = ApplyFactory.apply
 
-  def Options6[I1, I2, I3, I4, I5, I6]: InnerTypeAdtClass.PrepareInnerApply6[I1, I2, I3, I4, I5, I6] =
-    InnerTypeAdtClass.HelperIOImpl6.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply6[I1, I2, I3, I4, I5, I6]]
+  def Options6[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatZero]]]]]]
+  ] = ApplyFactory.apply
 
-  def Options7[I1, I2, I3, I4, I5, I6, I7]: InnerTypeAdtClass.PrepareInnerApply7[I1, I2, I3, I4, I5, I6, I7] =
-    InnerTypeAdtClass.HelperIOImpl7.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply7[I1, I2, I3, I4, I5, I6, I7]]
+  def Options7[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatZero]]]]]]]
+  ] = ApplyFactory.apply
 
-  def Options8[I1, I2, I3, I4, I5, I6, I7, I8]: InnerTypeAdtClass.PrepareInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8] =
-    InnerTypeAdtClass.HelperIOImpl8.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply8[I1, I2, I3, I4, I5, I6, I7, I8]]
-
-  def Options9[I1, I2, I3, I4, I5, I6, I7, I8, I9]: InnerTypeAdtClass.PrepareInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9] =
-    InnerTypeAdtClass.HelperIOImpl9.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply9[I1, I2, I3, I4, I5, I6, I7, I8, I9]]
-
-  def Options10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]: InnerTypeAdtClass.PrepareInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] =
-    InnerTypeAdtClass.HelperIOImpl10.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]]
-
-  def Options11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]
-    : InnerTypeAdtClass.PrepareInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] =
-    InnerTypeAdtClass.HelperIOImpl11.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]]
-
-  def Options12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]
-    : InnerTypeAdtClass.PrepareInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] =
-    InnerTypeAdtClass.HelperIOImpl12.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]]
-
-  def Options13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]
-    : InnerTypeAdtClass.PrepareInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] =
-    InnerTypeAdtClass.HelperIOImpl13
-      .asInstanceOf[InnerTypeAdtClass.PrepareInnerApply13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]]
-
-  def Options14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
-    : InnerTypeAdtClass.PrepareInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] =
-    InnerTypeAdtClass.HelperIOImpl14
-      .asInstanceOf[InnerTypeAdtClass.PrepareInnerApply14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]]
-
-  def Options15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]
-    : InnerTypeAdtClass.PrepareInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] =
-    InnerTypeAdtClass.HelperIOImpl15
-      .asInstanceOf[InnerTypeAdtClass.PrepareInnerApply15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]]
-
-  def Options16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]
-    : InnerTypeAdtClass.PrepareInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] =
-    InnerTypeAdtClass.HelperIOImpl16
-      .asInstanceOf[InnerTypeAdtClass.PrepareInnerApply16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]]
-
-  def Options17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]
-    : InnerTypeAdtClass.PrepareInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] =
-    InnerTypeAdtClass.HelperIOImpl17
-      .asInstanceOf[InnerTypeAdtClass.PrepareInnerApply17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]]
-
-  def Options18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]
-    : InnerTypeAdtClass.PrepareInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
-    InnerTypeAdtClass.HelperIOImpl18
-      .asInstanceOf[InnerTypeAdtClass.PrepareInnerApply18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]]
-
-  def Options19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
-    : InnerTypeAdtClass.PrepareInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
-    InnerTypeAdtClass.HelperIOImpl19.asInstanceOf[
-      InnerTypeAdtClass.PrepareInnerApply19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
-    ]
-
-  def Options20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]
-    : InnerTypeAdtClass.PrepareInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
-    InnerTypeAdtClass.HelperIOImpl20.asInstanceOf[
-      InnerTypeAdtClass.PrepareInnerApply20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]
-    ]
-
-  def Options21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
-    : InnerTypeAdtClass.PrepareInnerApply21[
-      I1,
+  def Options8[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[
       I2,
-      I3,
-      I4,
-      I5,
-      I6,
-      I7,
-      I8,
-      I9,
-      I10,
-      I11,
-      I12,
-      I13,
-      I14,
-      I15,
-      I16,
-      I17,
-      I18,
-      I19,
-      I20,
-      I21
-    ] =
-    InnerTypeAdtClass.HelperIOImpl21.asInstanceOf[
-      InnerTypeAdtClass.PrepareInnerApply21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
-    ]
-
-  def Options22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22]
-    : InnerTypeAdtClass.PrepareInnerApply22[
-      I1,
-      I2,
-      I3,
-      I4,
-      I5,
-      I6,
-      I7,
-      I8,
-      I9,
-      I10,
-      I11,
-      I12,
-      I13,
-      I14,
-      I15,
-      I16,
-      I17,
-      I18,
-      I19,
-      I20,
-      I21,
-      I22
-    ] =
-    InnerTypeAdtClass.HelperIOImpl22.asInstanceOf[InnerTypeAdtClass.PrepareInnerApply22[
-      I1,
-      I2,
-      I3,
-      I4,
-      I5,
-      I6,
-      I7,
-      I8,
-      I9,
-      I10,
-      I11,
-      I12,
-      I13,
-      I14,
-      I15,
-      I16,
-      I17,
-      I18,
-      I19,
-      I20,
-      I21,
-      I22
+      AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatZero]]]]]]
     ]]
+  ] = ApplyFactory.apply
+
+  def Options9[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[
+      I2,
+      AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatZero]]]]]]]
+    ]]
+  ] = ApplyFactory.apply
+
+  def Options10[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10
+  ]: ApplyFactory[
+    AdtNatData[I1, AdtNatData[I2, AdtNatData[
+      I3,
+      AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatZero]]]]]]]
+    ]]]
+  ] = ApplyFactory.apply
+
+  def Options11[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[I3, AdtNatData[
+          I4,
+          AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatZero]]]]]]]
+        ]]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options12[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[I4, AdtNatData[
+            I5,
+            AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatZero]]]]]]]
+          ]]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options13[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[I5, AdtNatData[
+              I6,
+              AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatZero]]]]]]]
+            ]]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options14[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[I6, AdtNatData[I7, AdtNatData[
+                I8,
+                AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatZero]]]]]]
+              ]]]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options15[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[I7, AdtNatData[I8, AdtNatData[
+                  I9,
+                  AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatZero]]]]]]
+                ]]]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options16[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[
+                  I7,
+                  AdtNatData[I8, AdtNatData[I9, AdtNatData[
+                    I10,
+                    AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatZero]]]]]]
+                  ]]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options17[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[
+                  I7,
+                  AdtNatData[
+                    I8,
+                    AdtNatData[I9, AdtNatData[I10, AdtNatData[
+                      I11,
+                      AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatZero]]]]]]
+                    ]]]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options18[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[
+                  I7,
+                  AdtNatData[
+                    I8,
+                    AdtNatData[
+                      I9,
+                      AdtNatData[I10, AdtNatData[I11, AdtNatData[
+                        I12,
+                        AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatZero]]]]]]
+                      ]]]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options19[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[
+                  I7,
+                  AdtNatData[
+                    I8,
+                    AdtNatData[
+                      I9,
+                      AdtNatData[
+                        I10,
+                        AdtNatData[I11, AdtNatData[I12, AdtNatData[
+                          I13,
+                          AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatZero]]]]]]
+                        ]]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options20[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[
+                  I7,
+                  AdtNatData[
+                    I8,
+                    AdtNatData[
+                      I9,
+                      AdtNatData[
+                        I10,
+                        AdtNatData[
+                          I11,
+                          AdtNatData[I12, AdtNatData[I13, AdtNatData[
+                            I14,
+                            AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatZero]]]]]]
+                          ]]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options21[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[
+                  I7,
+                  AdtNatData[
+                    I8,
+                    AdtNatData[
+                      I9,
+                      AdtNatData[
+                        I10,
+                        AdtNatData[
+                          I11,
+                          AdtNatData[
+                            I12,
+                            AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[
+                              I16,
+                              AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatData[I21, AdtNatZero]]]]]
+                            ]]]]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
+
+  def Options22[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    I22
+  ]: ApplyFactory[
+    AdtNatData[
+      I1,
+      AdtNatData[
+        I2,
+        AdtNatData[
+          I3,
+          AdtNatData[
+            I4,
+            AdtNatData[
+              I5,
+              AdtNatData[
+                I6,
+                AdtNatData[
+                  I7,
+                  AdtNatData[
+                    I8,
+                    AdtNatData[
+                      I9,
+                      AdtNatData[
+                        I10,
+                        AdtNatData[
+                          I11,
+                          AdtNatData[
+                            I12,
+                            AdtNatData[
+                              I13,
+                              AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[
+                                I17,
+                                AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatData[I21, AdtNatData[I22, AdtNatZero]]]]]
+                              ]]]]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ] = ApplyFactory.apply
 
 }
 

@@ -7,8 +7,8 @@ import implemention._
 import temp._
 import temp.{Status => ADTStatus}
 
-@ADT22Parameter(i: Int) = {
-    @if(i > 0) { AdtNatData[I@{i}, @ADT22Parameter(i - 1)] } else { AdtNatZero }
+@ADT22Parameter(min: Int, max: Int) = {
+    @if(min < max) { AdtNatData[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
 }
 
 @TypeParameter22(i: Int) = {
@@ -17,8 +17,8 @@ import temp.{Status => ADTStatus}
 
 trait TypeAdtAlias {
     @for(i <- 1 to 22) {
-        type Options@{i}[A, @TypeParameter22(i)] = TypeAdtApply[A, @ADT22Parameter(i), ADTStatus.Passed]
-        type OptionsX@{i}[A, Status <: ADTStatus.Passed, @TypeParameter22(i)] = TypeAdtApply[A, @ADT22Parameter(i), Status]
+        type Options@{i}[A, @TypeParameter22(i)] = TypeAdtApply[A, @ADT22Parameter(1, i + 1), ADTStatus.Passed]
+        type OptionsX@{i}[A, ST <: ADTStatus, @TypeParameter22(i)] = TypeAdtApply[A, @ADT22Parameter(1, i + 1), ST]
     }
 }
 

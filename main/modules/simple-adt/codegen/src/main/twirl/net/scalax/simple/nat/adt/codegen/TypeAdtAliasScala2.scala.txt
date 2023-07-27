@@ -10,12 +10,12 @@ import temp.{Status => ADTStatus}
     @for(i <- 1 to i) { @if(i > 1) { , } I@{i} }
 }
 
-@ADT22Parameter(i: Int) = {
-    @if(i > 0) { AdtNatData[I@{i}, @ADT22Parameter(i - 1)] } else { AdtNatZero }
+@ADT22Parameter(min: Int, max: Int) = {
+    @if(min < max) { AdtNatData[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
 }
 
 trait TypeAdtAliasModel {
     @for(i <- 1 to 22) {
-        type Option@{i}[@TypeParameter22(i)] = ADTData[@ADT22Parameter(i), ADTStatus.Passed]
+        type Option@{i}[@TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ADTStatus.Passed]
     }
 }

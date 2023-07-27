@@ -15,7 +15,9 @@ import zio.test.Assertion._
   */
 object TestCase3 extends ZIOSpecDefault {
 
-  def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json =
+  def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit
+    cv: S <:< Adt.Status.NotFinished
+  ): Json =
     t.asJson
 
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314-2")(
