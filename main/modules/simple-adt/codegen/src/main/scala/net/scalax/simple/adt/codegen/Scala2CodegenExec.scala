@@ -31,22 +31,6 @@ object Scala2CodegenExec:
     }*/
 
     locally {
-      val filePath = writePath.resolve("TypeAdtAliasModel.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasScala2().body
-        writer.println(linerContent)
-      }
-    }
-
-    locally {
-      val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtRuntimeApplyScala2().body
-        writer.println(linerContent)
-      }
-    }
-
-    locally {
       val filePath = writePath.resolve("ADTPassedFunction.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
         val linerContent = net.scalax.simple.nat.adt.codegen.txt.ADTPassedFunction().body
