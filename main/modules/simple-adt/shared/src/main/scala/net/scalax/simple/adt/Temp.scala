@@ -15,8 +15,8 @@ trait ToGHDMZSK {
 
 sealed trait Status
 object Status {
-  class Passed extends Status
-  object Passed extends `ADTData的扩展函数`
+  class Passed  extends Status
+  object Passed extends impl.ADTPassedFunction
 
   class NotFinished extends Status
   object NotFinished
@@ -46,4 +46,17 @@ final class IsFinishAndNothing {
 }
 object IsFinishAndNothing {
   lazy val value: IsFinishAndNothing = new IsFinishAndNothing
+}
+
+trait ApplyFactory[N <: AdtNat] {
+  def apply[D](d: D)(implicit v: TypeAdtApply[D, N, Status.Passed]): ADTData[N, Status.Passed] = v.value(false)(d)
+}
+
+object ApplyFactory {
+  private val any: ApplyFactory[AdtNat] = new ApplyFactory[AdtNat] {
+    //
+  }
+  private def factoryApply[N <: AdtNat]: ApplyFactory[N] = any.asInstanceOf[ApplyFactory[N]]
+
+  def apply[N <: AdtNat]: ApplyFactory[N] = factoryApply
 }

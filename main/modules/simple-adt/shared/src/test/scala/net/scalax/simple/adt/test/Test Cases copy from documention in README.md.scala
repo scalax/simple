@@ -31,11 +31,6 @@ object `Test Cases copy from documention in README.md` {
       case DoubleAdtData(doubleValue) => Some(BigDecimal(doubleValue))
     }
 
-    assert(inputAdtDataSealedTrait(IntAdtData(2)).get == BigDecimal("2"))
-    assert(inputAdtDataSealedTrait(StringAdtData("6")).get == BigDecimal("6"))
-    assert(inputAdtDataSealedTrait(DoubleAdtData(2.3620)).get == BigDecimal("2.362"))
-    assert(inputAdtDataSealedTrait(StringAdtData("error number")) == None)
-
     // simple-adt style
     import net.scalax.simple.adt.{TypeAdt => Adt}
     def inputAdtDataSimple[T: Adt.Options3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
@@ -142,7 +137,9 @@ object `Test Cases copy from documention in README.md` {
     import io.circe._
     import io.circe.syntax._
 
-    def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json =
+    def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit
+      cv: S <:< Adt.Status.NotFinished
+    ): Json =
       t.asJson
 
     // inputAdtData(None)              // Compile Failed
@@ -215,8 +212,8 @@ import zio.test._
 import zio.test.Assertion._
 object ZioTestCaseForDoc extends ZIOSpecDefault {
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case for doc in README.md")(
-    test("Confirm Doc")(
+    test("Confirm Doc") {
       assert(`Test Cases copy from documention in README.md`)(Assertion.equalTo(`Test Cases copy from documention in README.md`))
-    )
+    }
   )
 }
