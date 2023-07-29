@@ -10,7 +10,7 @@ trait ADTPassedFunction {
 
   implicit class extra1[
     I1
-  ](private val data: ADTData[AdtNatData[I1, AdtNatZero], ADTStatus.Passed]) {
+  ](private val data: ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed]) {
     def fold[D](
       func1: I1 => D
     ): D = {
@@ -37,7 +37,7 @@ trait ADTPassedFunction {
   implicit class extra2[
     I1,
     I2
-  ](private val data: ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatZero]], ADTStatus.Passed]) {
+  ](private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed]) {
     def fold[D](
       func1: I1 => D,
       func2: I2 => D
@@ -67,7 +67,7 @@ trait ADTPassedFunction {
     I1,
     I2,
     I3
-  ](private val data: ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatZero]]], ADTStatus.Passed]) {
+  ](private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed]) {
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -100,7 +100,9 @@ trait ADTPassedFunction {
     I2,
     I3,
     I4
-  ](private val data: ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatZero]]]], ADTStatus.Passed]) {
+  ](
+    private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed]
+  ) {
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -137,7 +139,10 @@ trait ADTPassedFunction {
     I4,
     I5
   ](
-    private val data: ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatZero]]]]], ADTStatus.Passed]
+    private val data: ADTData[
+      AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
+      ADTStatus.Passed
+    ]
   ) {
     def fold[D](
       func1: I1 => D,
@@ -179,7 +184,7 @@ trait ADTPassedFunction {
     I6
   ](
     private val data: ADTData[
-      AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatZero]]]]]],
+      AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
       ADTStatus.Passed
     ]
   ) {
@@ -226,7 +231,10 @@ trait ADTPassedFunction {
     I7
   ](
     private val data: ADTData[
-      AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatZero]]]]]]],
+      AdtNatPositive[
+        I1,
+        AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
+      ],
       ADTStatus.Passed
     ]
   ) {
@@ -275,10 +283,13 @@ trait ADTPassedFunction {
     I7,
     I8
   ](
-    private val data: ADTData[AdtNatData[
-      I1,
-      AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatZero]]]]]]]
-    ], ADTStatus.Passed]
+    private val data: ADTData[
+      AdtNatPositive[I1, AdtNatPositive[
+        I2,
+        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
+      ]],
+      ADTStatus.Passed
+    ]
   ) {
     def fold[D](
       func1: I1 => D,
@@ -329,10 +340,13 @@ trait ADTPassedFunction {
     I9
   ](
     private val data: ADTData[
-      AdtNatData[I1, AdtNatData[
-        I2,
-        AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatZero]]]]]]]
-      ]],
+      AdtNatPositive[
+        I1,
+        AdtNatPositive[I2, AdtNatPositive[
+          I3,
+          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
+        ]]
+      ],
       ADTStatus.Passed
     ]
   ) {
@@ -388,10 +402,16 @@ trait ADTPassedFunction {
     I10
   ](
     private val data: ADTData[
-      AdtNatData[I1, AdtNatData[I2, AdtNatData[
-        I3,
-        AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatZero]]]]]]]
-      ]]],
+      AdtNatPositive[
+        I1,
+        AdtNatPositive[
+          I2,
+          AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
+            I5,
+            AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
+          ]]]
+        ]
+      ],
       ADTStatus.Passed
     ]
   ) {
@@ -450,14 +470,17 @@ trait ADTPassedFunction {
     I11
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[I3, AdtNatData[
-            I4,
-            AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatZero]]]]]]]
-          ]]
+          AdtNatPositive[
+            I3,
+            AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
+              I6,
+              AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
+            ]]]
+          ]
         ]
       ],
       ADTStatus.Passed
@@ -521,16 +544,19 @@ trait ADTPassedFunction {
     I12
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[I4, AdtNatData[
-              I5,
-              AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatZero]]]]]]]
-            ]]
+            AdtNatPositive[
+              I4,
+              AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
+                I7,
+                AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
+              ]]]
+            ]
           ]
         ]
       ],
@@ -598,18 +624,24 @@ trait ADTPassedFunction {
     I13
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[I5, AdtNatData[I6, AdtNatData[
-                I7,
-                AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatZero]]]]]]
-              ]]]
+              AdtNatPositive[
+                I5,
+                AdtNatPositive[
+                  I6,
+                  AdtNatPositive[I7, AdtNatPositive[
+                    I8,
+                    AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
+                  ]]
+                ]
+              ]
             ]
           ]
         ]
@@ -681,20 +713,26 @@ trait ADTPassedFunction {
     I14
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[I6, AdtNatData[I7, AdtNatData[
-                  I8,
-                  AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatZero]]]]]]
-                ]]]
+                AdtNatPositive[
+                  I6,
+                  AdtNatPositive[
+                    I7,
+                    AdtNatPositive[I8, AdtNatPositive[
+                      I9,
+                      AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
+                    ]]
+                  ]
+                ]
               ]
             ]
           ]
@@ -770,22 +808,28 @@ trait ADTPassedFunction {
     I15
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[I7, AdtNatData[I8, AdtNatData[
-                    I9,
-                    AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatZero]]]]]]
-                  ]]]
+                  AdtNatPositive[
+                    I7,
+                    AdtNatPositive[
+                      I8,
+                      AdtNatPositive[I9, AdtNatPositive[
+                        I10,
+                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
+                      ]]
+                    ]
+                  ]
                 ]
               ]
             ]
@@ -865,24 +909,30 @@ trait ADTPassedFunction {
     I16
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[
+                  AdtNatPositive[
                     I7,
-                    AdtNatData[I8, AdtNatData[I9, AdtNatData[
-                      I10,
-                      AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatZero]]]]]]
-                    ]]]
+                    AdtNatPositive[
+                      I8,
+                      AdtNatPositive[
+                        I9,
+                        AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[
+                          I12,
+                          AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]
+                        ]]]
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -966,26 +1016,32 @@ trait ADTPassedFunction {
     I17
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[
+                  AdtNatPositive[
                     I7,
-                    AdtNatData[
+                    AdtNatPositive[
                       I8,
-                      AdtNatData[I9, AdtNatData[I10, AdtNatData[
-                        I11,
-                        AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatZero]]]]]]
-                      ]]]
+                      AdtNatPositive[
+                        I9,
+                        AdtNatPositive[
+                          I10,
+                          AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
+                            I13,
+                            AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
+                          ]]]
+                        ]
+                      ]
                     ]
                   ]
                 ]
@@ -1073,28 +1129,34 @@ trait ADTPassedFunction {
     I18
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[
+                  AdtNatPositive[
                     I7,
-                    AdtNatData[
+                    AdtNatPositive[
                       I8,
-                      AdtNatData[
+                      AdtNatPositive[
                         I9,
-                        AdtNatData[I10, AdtNatData[I11, AdtNatData[
-                          I12,
-                          AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatZero]]]]]]
-                        ]]]
+                        AdtNatPositive[
+                          I10,
+                          AdtNatPositive[
+                            I11,
+                            AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
+                              I14,
+                              AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
+                            ]]]
+                          ]
+                        ]
                       ]
                     ]
                   ]
@@ -1186,30 +1248,36 @@ trait ADTPassedFunction {
     I19
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[
+                  AdtNatPositive[
                     I7,
-                    AdtNatData[
+                    AdtNatPositive[
                       I8,
-                      AdtNatData[
+                      AdtNatPositive[
                         I9,
-                        AdtNatData[
+                        AdtNatPositive[
                           I10,
-                          AdtNatData[I11, AdtNatData[I12, AdtNatData[
-                            I13,
-                            AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatZero]]]]]]
-                          ]]]
+                          AdtNatPositive[
+                            I11,
+                            AdtNatPositive[
+                              I12,
+                              AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
+                                I15,
+                                AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
+                              ]]]
+                            ]
+                          ]
                         ]
                       ]
                     ]
@@ -1305,32 +1373,38 @@ trait ADTPassedFunction {
     I20
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[
+                  AdtNatPositive[
                     I7,
-                    AdtNatData[
+                    AdtNatPositive[
                       I8,
-                      AdtNatData[
+                      AdtNatPositive[
                         I9,
-                        AdtNatData[
+                        AdtNatPositive[
                           I10,
-                          AdtNatData[
+                          AdtNatPositive[
                             I11,
-                            AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[
-                              I15,
-                              AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatZero]]]]]
-                            ]]]]
+                            AdtNatPositive[
+                              I12,
+                              AdtNatPositive[
+                                I13,
+                                AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
+                                  I16,
+                                  AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
+                                ]]]
+                              ]
+                            ]
                           ]
                         ]
                       ]
@@ -1430,34 +1504,40 @@ trait ADTPassedFunction {
     I21
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[
+                  AdtNatPositive[
                     I7,
-                    AdtNatData[
+                    AdtNatPositive[
                       I8,
-                      AdtNatData[
+                      AdtNatPositive[
                         I9,
-                        AdtNatData[
+                        AdtNatPositive[
                           I10,
-                          AdtNatData[
+                          AdtNatPositive[
                             I11,
-                            AdtNatData[
+                            AdtNatPositive[
                               I12,
-                              AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[
-                                I16,
-                                AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatData[I21, AdtNatZero]]]]]
-                              ]]]]
+                              AdtNatPositive[
+                                I13,
+                                AdtNatPositive[
+                                  I14,
+                                  AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
+                                    I17,
+                                    AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
+                                  ]]]
+                                ]
+                              ]
                             ]
                           ]
                         ]
@@ -1561,36 +1641,42 @@ trait ADTPassedFunction {
     I22
   ](
     private val data: ADTData[
-      AdtNatData[
+      AdtNatPositive[
         I1,
-        AdtNatData[
+        AdtNatPositive[
           I2,
-          AdtNatData[
+          AdtNatPositive[
             I3,
-            AdtNatData[
+            AdtNatPositive[
               I4,
-              AdtNatData[
+              AdtNatPositive[
                 I5,
-                AdtNatData[
+                AdtNatPositive[
                   I6,
-                  AdtNatData[
+                  AdtNatPositive[
                     I7,
-                    AdtNatData[
+                    AdtNatPositive[
                       I8,
-                      AdtNatData[
+                      AdtNatPositive[
                         I9,
-                        AdtNatData[
+                        AdtNatPositive[
                           I10,
-                          AdtNatData[
+                          AdtNatPositive[
                             I11,
-                            AdtNatData[
+                            AdtNatPositive[
                               I12,
-                              AdtNatData[
+                              AdtNatPositive[
                                 I13,
-                                AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[
-                                  I17,
-                                  AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatData[I21, AdtNatData[I22, AdtNatZero]]]]]
-                                ]]]]
+                                AdtNatPositive[
+                                  I14,
+                                  AdtNatPositive[
+                                    I15,
+                                    AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
+                                      I18,
+                                      AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
+                                    ]]]
+                                  ]
+                                ]
                               ]
                             ]
                           ]

@@ -139,8 +139,7 @@ object `Test Cases copy from documention in README.md` {
 
     def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit
       cv: S <:< Adt.Status.NotFinished
-    ): Json =
-      t.asJson
+    ): Json = t.asJson
 
     // inputAdtData(None)              // Compile Failed
     // inputAdtData(??? : Some[Int])   // Compile Failed

@@ -9,25 +9,25 @@ trait TypeAdtAliasModel {
 
   type Option1[
     I1
-  ] = ADTData[AdtNatData[I1, AdtNatZero], ADTStatus.Passed]
+  ] = ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed]
 
   type Option2[
     I1,
     I2
-  ] = ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatZero]], ADTStatus.Passed]
+  ] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed]
 
   type Option3[
     I1,
     I2,
     I3
-  ] = ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatZero]]], ADTStatus.Passed]
+  ] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed]
 
   type Option4[
     I1,
     I2,
     I3,
     I4
-  ] = ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatZero]]]], ADTStatus.Passed]
+  ] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed]
 
   type Option5[
     I1,
@@ -35,7 +35,10 @@ trait TypeAdtAliasModel {
     I3,
     I4,
     I5
-  ] = ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatZero]]]]], ADTStatus.Passed]
+  ] = ADTData[
+    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
+    ADTStatus.Passed
+  ]
 
   type Option6[
     I1,
@@ -44,7 +47,10 @@ trait TypeAdtAliasModel {
     I4,
     I5,
     I6
-  ] = ADTData[AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatZero]]]]]], ADTStatus.Passed]
+  ] = ADTData[
+    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
+    ADTStatus.Passed
+  ]
 
   type Option7[
     I1,
@@ -55,7 +61,10 @@ trait TypeAdtAliasModel {
     I6,
     I7
   ] = ADTData[
-    AdtNatData[I1, AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatZero]]]]]]],
+    AdtNatPositive[
+      I1,
+      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
+    ],
     ADTStatus.Passed
   ]
 
@@ -68,10 +77,13 @@ trait TypeAdtAliasModel {
     I6,
     I7,
     I8
-  ] = ADTData[AdtNatData[
-    I1,
-    AdtNatData[I2, AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatZero]]]]]]]
-  ], ADTStatus.Passed]
+  ] = ADTData[
+    AdtNatPositive[I1, AdtNatPositive[
+      I2,
+      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
+    ]],
+    ADTStatus.Passed
+  ]
 
   type Option9[
     I1,
@@ -84,10 +96,13 @@ trait TypeAdtAliasModel {
     I8,
     I9
   ] = ADTData[
-    AdtNatData[I1, AdtNatData[
-      I2,
-      AdtNatData[I3, AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatZero]]]]]]]
-    ]],
+    AdtNatPositive[
+      I1,
+      AdtNatPositive[I2, AdtNatPositive[
+        I3,
+        AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
+      ]]
+    ],
     ADTStatus.Passed
   ]
 
@@ -103,10 +118,16 @@ trait TypeAdtAliasModel {
     I9,
     I10
   ] = ADTData[
-    AdtNatData[I1, AdtNatData[I2, AdtNatData[
-      I3,
-      AdtNatData[I4, AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatZero]]]]]]]
-    ]]],
+    AdtNatPositive[
+      I1,
+      AdtNatPositive[
+        I2,
+        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
+          I5,
+          AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
+        ]]]
+      ]
+    ],
     ADTStatus.Passed
   ]
 
@@ -123,14 +144,17 @@ trait TypeAdtAliasModel {
     I10,
     I11
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[I3, AdtNatData[
-          I4,
-          AdtNatData[I5, AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatZero]]]]]]]
-        ]]
+        AdtNatPositive[
+          I3,
+          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
+            I6,
+            AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
+          ]]]
+        ]
       ]
     ],
     ADTStatus.Passed
@@ -150,16 +174,19 @@ trait TypeAdtAliasModel {
     I11,
     I12
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[I4, AdtNatData[
-            I5,
-            AdtNatData[I6, AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatZero]]]]]]]
-          ]]
+          AdtNatPositive[
+            I4,
+            AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
+              I7,
+              AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
+            ]]]
+          ]
         ]
       ]
     ],
@@ -181,18 +208,24 @@ trait TypeAdtAliasModel {
     I12,
     I13
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[I5, AdtNatData[
-              I6,
-              AdtNatData[I7, AdtNatData[I8, AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatZero]]]]]]]
-            ]]
+            AdtNatPositive[
+              I5,
+              AdtNatPositive[
+                I6,
+                AdtNatPositive[I7, AdtNatPositive[
+                  I8,
+                  AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
+                ]]
+              ]
+            ]
           ]
         ]
       ]
@@ -216,20 +249,26 @@ trait TypeAdtAliasModel {
     I13,
     I14
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[I6, AdtNatData[I7, AdtNatData[
-                I8,
-                AdtNatData[I9, AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatZero]]]]]]
-              ]]]
+              AdtNatPositive[
+                I6,
+                AdtNatPositive[
+                  I7,
+                  AdtNatPositive[I8, AdtNatPositive[
+                    I9,
+                    AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
+                  ]]
+                ]
+              ]
             ]
           ]
         ]
@@ -255,22 +294,28 @@ trait TypeAdtAliasModel {
     I14,
     I15
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[I7, AdtNatData[I8, AdtNatData[
-                  I9,
-                  AdtNatData[I10, AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatZero]]]]]]
-                ]]]
+                AdtNatPositive[
+                  I7,
+                  AdtNatPositive[
+                    I8,
+                    AdtNatPositive[I9, AdtNatPositive[
+                      I10,
+                      AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
+                    ]]
+                  ]
+                ]
               ]
             ]
           ]
@@ -298,24 +343,30 @@ trait TypeAdtAliasModel {
     I15,
     I16
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[
+                AdtNatPositive[
                   I7,
-                  AdtNatData[I8, AdtNatData[I9, AdtNatData[
-                    I10,
-                    AdtNatData[I11, AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatZero]]]]]]
-                  ]]]
+                  AdtNatPositive[
+                    I8,
+                    AdtNatPositive[
+                      I9,
+                      AdtNatPositive[I10, AdtNatPositive[
+                        I11,
+                        AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]
+                      ]]
+                    ]
+                  ]
                 ]
               ]
             ]
@@ -345,26 +396,32 @@ trait TypeAdtAliasModel {
     I16,
     I17
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[
+                AdtNatPositive[
                   I7,
-                  AdtNatData[
+                  AdtNatPositive[
                     I8,
-                    AdtNatData[I9, AdtNatData[I10, AdtNatData[
-                      I11,
-                      AdtNatData[I12, AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatZero]]]]]]
-                    ]]]
+                    AdtNatPositive[
+                      I9,
+                      AdtNatPositive[
+                        I10,
+                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
+                          I13,
+                          AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
+                        ]]]
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -396,28 +453,34 @@ trait TypeAdtAliasModel {
     I17,
     I18
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[
+                AdtNatPositive[
                   I7,
-                  AdtNatData[
+                  AdtNatPositive[
                     I8,
-                    AdtNatData[
+                    AdtNatPositive[
                       I9,
-                      AdtNatData[I10, AdtNatData[I11, AdtNatData[
-                        I12,
-                        AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatZero]]]]]]
-                      ]]]
+                      AdtNatPositive[
+                        I10,
+                        AdtNatPositive[
+                          I11,
+                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
+                            I14,
+                            AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
+                          ]]]
+                        ]
+                      ]
                     ]
                   ]
                 ]
@@ -451,30 +514,36 @@ trait TypeAdtAliasModel {
     I18,
     I19
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[
+                AdtNatPositive[
                   I7,
-                  AdtNatData[
+                  AdtNatPositive[
                     I8,
-                    AdtNatData[
+                    AdtNatPositive[
                       I9,
-                      AdtNatData[
+                      AdtNatPositive[
                         I10,
-                        AdtNatData[I11, AdtNatData[I12, AdtNatData[
-                          I13,
-                          AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatZero]]]]]]
-                        ]]]
+                        AdtNatPositive[
+                          I11,
+                          AdtNatPositive[
+                            I12,
+                            AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
+                              I15,
+                              AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
+                            ]]]
+                          ]
+                        ]
                       ]
                     ]
                   ]
@@ -510,32 +579,38 @@ trait TypeAdtAliasModel {
     I19,
     I20
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[
+                AdtNatPositive[
                   I7,
-                  AdtNatData[
+                  AdtNatPositive[
                     I8,
-                    AdtNatData[
+                    AdtNatPositive[
                       I9,
-                      AdtNatData[
+                      AdtNatPositive[
                         I10,
-                        AdtNatData[
+                        AdtNatPositive[
                           I11,
-                          AdtNatData[I12, AdtNatData[I13, AdtNatData[
-                            I14,
-                            AdtNatData[I15, AdtNatData[I16, AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatZero]]]]]]
-                          ]]]
+                          AdtNatPositive[
+                            I12,
+                            AdtNatPositive[
+                              I13,
+                              AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
+                                I16,
+                                AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
+                              ]]]
+                            ]
+                          ]
                         ]
                       ]
                     ]
@@ -573,34 +648,40 @@ trait TypeAdtAliasModel {
     I20,
     I21
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[
+                AdtNatPositive[
                   I7,
-                  AdtNatData[
+                  AdtNatPositive[
                     I8,
-                    AdtNatData[
+                    AdtNatPositive[
                       I9,
-                      AdtNatData[
+                      AdtNatPositive[
                         I10,
-                        AdtNatData[
+                        AdtNatPositive[
                           I11,
-                          AdtNatData[
+                          AdtNatPositive[
                             I12,
-                            AdtNatData[I13, AdtNatData[I14, AdtNatData[I15, AdtNatData[
-                              I16,
-                              AdtNatData[I17, AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatData[I21, AdtNatZero]]]]]
-                            ]]]]
+                            AdtNatPositive[
+                              I13,
+                              AdtNatPositive[
+                                I14,
+                                AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
+                                  I17,
+                                  AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
+                                ]]]
+                              ]
+                            ]
                           ]
                         ]
                       ]
@@ -640,36 +721,42 @@ trait TypeAdtAliasModel {
     I21,
     I22
   ] = ADTData[
-    AdtNatData[
+    AdtNatPositive[
       I1,
-      AdtNatData[
+      AdtNatPositive[
         I2,
-        AdtNatData[
+        AdtNatPositive[
           I3,
-          AdtNatData[
+          AdtNatPositive[
             I4,
-            AdtNatData[
+            AdtNatPositive[
               I5,
-              AdtNatData[
+              AdtNatPositive[
                 I6,
-                AdtNatData[
+                AdtNatPositive[
                   I7,
-                  AdtNatData[
+                  AdtNatPositive[
                     I8,
-                    AdtNatData[
+                    AdtNatPositive[
                       I9,
-                      AdtNatData[
+                      AdtNatPositive[
                         I10,
-                        AdtNatData[
+                        AdtNatPositive[
                           I11,
-                          AdtNatData[
+                          AdtNatPositive[
                             I12,
-                            AdtNatData[
+                            AdtNatPositive[
                               I13,
-                              AdtNatData[I14, AdtNatData[I15, AdtNatData[I16, AdtNatData[
-                                I17,
-                                AdtNatData[I18, AdtNatData[I19, AdtNatData[I20, AdtNatData[I21, AdtNatData[I22, AdtNatZero]]]]]
-                              ]]]]
+                              AdtNatPositive[
+                                I14,
+                                AdtNatPositive[
+                                  I15,
+                                  AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
+                                    I18,
+                                    AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
+                                  ]]]
+                                ]
+                              ]
                             ]
                           ]
                         ]

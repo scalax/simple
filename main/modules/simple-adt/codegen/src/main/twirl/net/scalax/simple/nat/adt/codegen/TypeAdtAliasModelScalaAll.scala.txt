@@ -11,7 +11,7 @@ import temp.{Status => ADTStatus}
 }
 
 @ADT22Parameter(min: Int, max: Int) = {
-    @if(min < max) { AdtNatData[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
+    @if(min < max) { AdtNatPositive[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
 }
 
 trait TypeAdtAliasModel {

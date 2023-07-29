@@ -32,7 +32,7 @@ package impl {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtNat, AdtConvertPoly, ST <: TStatus](implicit
       adtConvert: TypeAdt.Context[A, B, AdtConvertPoly],
       tailMapping: TypeAdtApply[A, Tail, ST]
-    ): TypeAdtApply[A, AdtNatData[TypeAdt.Adapter[B, AdtConvertPoly], Tail], TStatus.Passed] = {
+    ): TypeAdtApply[A, AdtNatPositive[TypeAdt.Adapter[B, AdtConvertPoly], Tail], TStatus.Passed] = {
       val adtConvertImpl = new AdapterContext(adtConvert)
       TypeAdtApply(isOk => i => ADTData.success(adtConvertImpl.input(i), tailMapping.value(true)(i)))
     }
@@ -42,14 +42,14 @@ package impl {
     @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtNat, ST <: TStatus](implicit
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type],
       tailMapping: TypeAdtApply[A, Tail, ST]
-    ): TypeAdtApply[A, AdtNatData[B, Tail], TStatus.Passed] =
+    ): TypeAdtApply[A, AdtNatPositive[B, Tail], TStatus.Passed] =
       TypeAdtApply(isOk => i => ADTData.success(adtConvert.input(i), tailMapping.value(true)(i)))
   }
 
   trait HListTypeAdtPositiveLower2 extends LowerLevelPoly {
     @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: AdtNat, ST <: TStatus](implicit
       tailMapping: TypeAdtApply[A, Tail, ST]
-    ): TypeAdtApply[A, AdtNatData[B, Tail], ST] = TypeAdtApply(isOk => i => ADTData.empty(tailMapping.value(isOk)(i)))
+    ): TypeAdtApply[A, AdtNatPositive[B, Tail], ST] = TypeAdtApply(isOk => i => ADTData.empty(tailMapping.value(isOk)(i)))
   }
 
   trait LowerLevelPoly {

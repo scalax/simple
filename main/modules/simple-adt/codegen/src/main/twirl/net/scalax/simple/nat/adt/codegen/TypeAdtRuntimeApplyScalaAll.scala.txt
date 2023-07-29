@@ -6,7 +6,7 @@ import temp._
 import temp.{ Status => ADTStatus }
 
 @ADT22Parameter(min: Int, max: Int) = {
-    @if(min < max) { AdtNatData[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
+    @if(min < max) { AdtNatPositive[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
 }
 
 @TypeParameter22(i: Int) = {
@@ -15,8 +15,6 @@ import temp.{ Status => ADTStatus }
 
 trait TypeAdtRuntimeApply {
     @for(i <- 1 to 22) {
-        def Options@{i}[@TypeParameter22(i)]: ApplyFactory[@ADT22Parameter(1, i + 1)] = ApplyFactory.apply
+        def Options@{i}[@TypeParameter22(i)]: ApplyFactory[@ADT22Parameter(1, i + 1)] = ApplyFactory.build
     }
 }
-
-object TypeAdtRuntimeApply extends TypeAdtRuntimeApply
