@@ -3,7 +3,7 @@ package net.scalax.simple.adt
 package impl
 
 import temp._
-import temp.{ Status => ADTStatus }
+import Adt.{ Status => ADTStatus }
 
 @ADT22Parameter(min: Int, max: Int) = {
     @if(min < max) { AdtNatPositive[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }

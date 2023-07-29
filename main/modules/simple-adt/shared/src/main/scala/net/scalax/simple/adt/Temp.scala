@@ -3,6 +3,7 @@ package temp
 
 import net.scalax.simple.adt.implemention.Disscure
 import net.scalax.simple.ghdmzsk.ghdmzsk
+import impl.Adt.Status
 
 trait AdtNat
 trait AdtNatPositive[Head, +T <: AdtNat] extends AdtNat
@@ -10,15 +11,6 @@ class AdtNatZero                         extends AdtNatPositive[IsFinishAndNothi
 
 trait ToGHDMZSK {
   def toGHDMZSK: ghdmzsk
-}
-
-sealed trait Status
-object Status {
-  class Passed  extends Status
-  object Passed extends impl.ADTPassedFunction
-
-  class NotFinished extends Status
-  object NotFinished
 }
 
 trait ADTData[+N <: AdtNat, S <: Status] extends ToGHDMZSK {
@@ -48,7 +40,7 @@ object IsFinishAndNothing {
 }
 
 trait ApplyFactory[N <: AdtNat] {
-  def apply[D](d: D)(implicit v: TypeAdtApply[D, N, Status.Passed]): ADTData[N, Status.Passed] = v.value(false)(d)
+  def apply[D](d: D)(implicit v: TypeAdtApply[D, N, Status.Passed]): ADTData[N, Status.Passed] = v.value(d)
 }
 
 object ApplyFactory {

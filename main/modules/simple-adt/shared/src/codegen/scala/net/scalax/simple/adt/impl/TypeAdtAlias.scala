@@ -4,7 +4,7 @@ package impl
 
 import implemention._
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 
 trait TypeAdtAlias {
 

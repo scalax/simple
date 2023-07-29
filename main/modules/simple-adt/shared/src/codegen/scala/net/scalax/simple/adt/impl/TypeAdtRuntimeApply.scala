@@ -2,7 +2,7 @@ package net.scalax.simple.adt
 package impl
 
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 
 trait TypeAdtRuntimeApply {
 

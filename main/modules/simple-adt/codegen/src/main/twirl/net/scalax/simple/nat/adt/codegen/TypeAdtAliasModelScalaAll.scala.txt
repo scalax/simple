@@ -4,7 +4,7 @@ package adt
 package impl
 
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 
 @TypeParameter22(i: Int) = {
     @for(i <- 1 to i) { @if(i > 1) { , } I@{i} }

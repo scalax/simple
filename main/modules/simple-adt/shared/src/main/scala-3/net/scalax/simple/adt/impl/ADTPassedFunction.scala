@@ -4,7 +4,7 @@ package impl
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import implemention.Disscure
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 
 trait ADTPassedFunction:
 

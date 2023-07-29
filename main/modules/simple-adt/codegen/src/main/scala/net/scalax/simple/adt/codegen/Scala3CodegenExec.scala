@@ -14,22 +14,6 @@ object Scala3CodegenExec:
     val writePath        = rootPath.resolve(Paths.get("net", "scalax", "simple", "adt", "impl"))
     Files.createDirectories(writePath)
 
-    /*locally {
-      val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtRuntimeApplyScala3().body
-        writer.println(linerContent)
-      }
-    }
-
-    locally {
-      val filePath = writePath.resolve("TypeAdtAliasModel.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasScala3().body
-        writer.println(linerContent)
-      }
-    }*/
-
   end main
 
 end Scala3CodegenExec

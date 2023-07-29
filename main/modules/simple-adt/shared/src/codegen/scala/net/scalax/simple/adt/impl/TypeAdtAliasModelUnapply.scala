@@ -4,7 +4,7 @@ package impl
 
 import implemention._
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 trait TypeAdtAliasModelUnapply {
