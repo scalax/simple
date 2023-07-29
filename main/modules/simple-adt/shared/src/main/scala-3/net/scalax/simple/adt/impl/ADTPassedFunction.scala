@@ -2,9 +2,9 @@ package net.scalax.simple.adt
 package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import implemention._
+import implemention.Disscure
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 
 trait ADTPassedFunction:
 
@@ -18,8 +18,8 @@ end ADTPassedFunction
 package impl:
 
   type ExportToFunction[t <: AdtNat, r] <: Tuple = t match
-    case AdtNatData[d, tail] => (d => r) *: ExportToFunction[tail, r]
-    case AdtNatZero          => EmptyTuple
+    case AdtNatPositive[IsFinishAndNothing, tail] => EmptyTuple
+    case AdtNatPositive[d, tail]                  => (d => r) *: ExportToFunction[tail, r]
   end ExportToFunction
 
   class ApplyImplicitInstance[O[U] <: Tuple](private val data: ADTData[AdtNat, ADTStatus.Passed]) extends AnyVal:

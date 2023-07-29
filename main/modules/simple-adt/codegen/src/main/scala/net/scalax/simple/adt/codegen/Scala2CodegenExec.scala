@@ -14,22 +14,6 @@ object Scala2CodegenExec:
     val writePath        = rootPath.resolve(Paths.get("net", "scalax", "simple", "adt", "impl"))
     Files.createDirectories(writePath)
 
-    /*locally {
-      val filePath = writePath.resolve("FoldNatPositiveHelper.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.FoldNatPositive().body
-        writer.println(linerContent)
-      }
-    }
-
-    locally {
-      val filePath = writePath.resolve("InnerTypeAdtClass.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.InnerTypeAdtClassScala2().body
-        writer.println(linerContent)
-      }
-    }*/
-
     locally {
       val filePath = writePath.resolve("ADTPassedFunction.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>

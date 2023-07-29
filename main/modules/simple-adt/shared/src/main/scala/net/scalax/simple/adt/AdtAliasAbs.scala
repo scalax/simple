@@ -20,10 +20,13 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel 
     }
   }
 
-  type Status = temp.Status
+  sealed trait Status
+
   object Status {
-    type Passed      = temp.Status.Passed
-    type NotFinished = temp.Status.NotFinished
+    class Passed      extends Status
+    object Passed     extends ADTPassedFunction
+    class NotFinished extends Status
+    object NotFinished
   }
 
 }

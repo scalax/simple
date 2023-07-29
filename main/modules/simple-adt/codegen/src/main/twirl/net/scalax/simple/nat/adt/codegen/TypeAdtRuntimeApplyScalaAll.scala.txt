@@ -1,0 +1,20 @@
+@()
+package net.scalax.simple.adt
+package impl
+
+import temp._
+import Adt.{ Status => ADTStatus }
+
+@ADT22Parameter(min: Int, max: Int) = {
+    @if(min < max) { AdtNatPositive[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
+}
+
+@TypeParameter22(i: Int) = {
+    @for(i <- 1 to i) { @if(i > 1) { , } I@{i} }
+}
+
+trait TypeAdtRuntimeApply {
+    @for(i <- 1 to 22) {
+        def Options@{i}[@TypeParameter22(i)]: ApplyFactory[@ADT22Parameter(1, i + 1)] = ApplyFactory.build
+    }
+}

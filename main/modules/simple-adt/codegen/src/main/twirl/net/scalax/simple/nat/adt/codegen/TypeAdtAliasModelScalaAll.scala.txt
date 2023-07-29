@@ -4,14 +4,14 @@ package adt
 package impl
 
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 
 @TypeParameter22(i: Int) = {
     @for(i <- 1 to i) { @if(i > 1) { , } I@{i} }
 }
 
 @ADT22Parameter(min: Int, max: Int) = {
-    @if(min < max) { AdtNatData[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
+    @if(min < max) { AdtNatPositive[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
 }
 
 trait TypeAdtAliasModel {

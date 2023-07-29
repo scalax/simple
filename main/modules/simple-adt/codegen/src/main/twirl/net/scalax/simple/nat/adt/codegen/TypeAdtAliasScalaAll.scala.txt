@@ -5,10 +5,10 @@ package impl
 
 import implemention._
 import temp._
-import temp.{Status => ADTStatus}
+import Adt.{Status => ADTStatus}
 
 @ADT22Parameter(min: Int, max: Int) = {
-    @if(min < max) { AdtNatData[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
+    @if(min < max) { AdtNatPositive[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
 }
 
 @TypeParameter22(i: Int) = {
@@ -21,5 +21,3 @@ trait TypeAdtAlias {
         type OptionsX@{i}[A, ST <: ADTStatus, @TypeParameter22(i)] = TypeAdtApply[A, @ADT22Parameter(1, i + 1), ST]
     }
 }
-
-object TypeAdtAlias extends TypeAdtAlias with TypeAdtAliasModel with TypeAdtAliasModelUnapply
