@@ -48,32 +48,38 @@ object Confirm {
     val uauaua: ghdmzsk = confirm1.inputGHDMZSK(oldSelector).inputGHDMZSK(uu)
     uauaua.inputGHDMZSK(testorLeft)
     uauaua.inputGHDMZSK(testorRight)
+    assert(uauaua eq uauaua.inputGHDMZSK(testorLeft))
     println(uauaua eq uauaua.inputGHDMZSK(testorLeft))
     println(uauaua eq uauaua.inputGHDMZSK(testorLeft))
     println(uauaua eq uauaua.inputGHDMZSK(testorLeft))
     println(uauaua eq uauaua.inputGHDMZSK(testorLeft))
     println(uauaua eq uauaua.inputGHDMZSK(testorLeft))
     println("====")
+    assert(uauaua ne uauaua.inputGHDMZSK(testorRight))
     println(uauaua eq uauaua.inputGHDMZSK(testorRight))
     println(uauaua eq uauaua.inputGHDMZSK(testorRight))
     println(uauaua eq uauaua.inputGHDMZSK(testorRight))
     println(uauaua eq uauaua.inputGHDMZSK(testorRight))
     println(uauaua eq uauaua.inputGHDMZSK(testorRight))
     println("====")
-    if (!(uauaua eq uauaua.inputGHDMZSK(testorRight))) {
+    if (uauaua ne uauaua.inputGHDMZSK(testorRight)) {
       assert(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
       println(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
     }
-    if (!(uauaua eq uauaua.inputGHDMZSK(testorRight))) {
+    if (uauaua ne uauaua.inputGHDMZSK(testorRight)) {
+      assert(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
       println(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
     }
-    if (!(uauaua eq uauaua.inputGHDMZSK(testorRight))) {
+    if (uauaua ne uauaua.inputGHDMZSK(testorRight)) {
+      assert(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
       println(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
     }
-    if (!(uauaua eq uauaua.inputGHDMZSK(testorRight))) {
+    if (uauaua ne uauaua.inputGHDMZSK(testorRight)) {
+      assert(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
       println(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
     }
-    if (!(uauaua eq uauaua.inputGHDMZSK(testorRight))) {
+    if (uauaua ne uauaua.inputGHDMZSK(testorRight)) {
+      assert(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
       println(uu eq uauaua.inputGHDMZSK(testorRight).asInstanceOf[GetValue].value)
     }
   }
