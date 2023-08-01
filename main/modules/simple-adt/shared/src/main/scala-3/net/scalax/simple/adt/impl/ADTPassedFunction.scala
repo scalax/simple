@@ -8,9 +8,9 @@ import Adt.{Status => ADTStatus}
 
 trait ADTPassedFunction:
 
-  extension [N <: AdtNat](data: ADTData[N, ADTStatus.Passed])
-    def fold: impl.ApplyImplicitInstance[[r] =>> impl.ExportToFunction[N, r]] =
-      impl.ApplyImplicitInstance[[r] =>> impl.ExportToFunction[N, r]](data)
+  extension [N <: AdtNat, S <: ADTStatus](data: ADTData[N, S])
+    def fold: impl.ApplyImplicitInstance[[r] =>> impl.ExportToFunction[N, r], S] =
+      impl.ApplyImplicitInstance[[r] =>> impl.ExportToFunction[N, r], S](data)
   end extension
 
 end ADTPassedFunction
@@ -22,7 +22,7 @@ package impl:
     case AdtNatPositive[d, tail]                  => (d => r) *: ExportToFunction[tail, r]
   end ExportToFunction
 
-  class ApplyImplicitInstance[O[U] <: Tuple](private val data: ADTData[AdtNat, ADTStatus.Passed]) extends AnyVal:
+  class ApplyImplicitInstance[O[U] <: Tuple, S <: ADTStatus](private val data: ADTData[AdtNat, S]) extends AnyVal:
     def apply[D](parameters: O[D]): D =
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK

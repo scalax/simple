@@ -10,15 +10,15 @@ val `modules/file`  = `main/file` / "modules"
 val `test/file`     = `main/file` / "test"
 val `doc-only/file` = `main/file` / "doc-only"
 
-val `ghdmzsk/file` = `modules/file` / "simple-ghdmzsk"
-val ghdmzsk        = crossProject(JSPlatform, JVMPlatform) in `ghdmzsk/file`
-val ghdmzskJVM     = ghdmzsk.jvm
-val ghdmzskJS      = ghdmzsk.js
+val `ghdmzsk/file`                        = `modules/file` / "simple-ghdmzsk"
+val ghdmzsk: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `ghdmzsk/file`
+val ghdmzskJVM: Project                   = ghdmzsk.jvm
+val ghdmzskJS: Project                    = ghdmzsk.js
 
-val `adt/file`  = `modules/file` / "simple-adt"
-val adt         = crossProject(JSPlatform, JVMPlatform) in `adt/file`
-lazy val adtJVM = adt.jvm dependsOn (`adt-implementionJVM`, `test-commonJVM` % Test) aggregate `adt-implementionJVM`
-lazy val adtJS  = adt.js dependsOn (`adt-implementionJS`, `test-commonJS`    % Test) aggregate `adt-implementionJS`
+val `adt/file`                        = `modules/file` / "simple-adt"
+val adt: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `adt/file`
+lazy val adtJVM: Project              = adt.jvm dependsOn (`adt-implementionJVM`, `test-commonJVM` % Test) aggregate `adt-implementionJVM`
+lazy val adtJS: Project               = adt.js dependsOn (`adt-implementionJS`, `test-commonJS`    % Test) aggregate `adt-implementionJS`
 
 val `adt-codegen/file` = `adt/file` / "codegen"
 val `adt-codegen`      = project in `adt-codegen/file`
@@ -58,10 +58,10 @@ val generic         = crossProject(JSPlatform, JVMPlatform) in `generic/file`
 lazy val genericJVM = generic.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
 lazy val genericJS  = generic.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
 
-val `test-common/file`    = `test/file` / "test-common"
-val `test-common`         = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
-lazy val `test-commonJVM` = `test-common`.jvm
-lazy val `test-commonJS`  = `test-common`.js
+val `test-common/file`                          = `test/file` / "test-common"
+val `test-common`: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
+lazy val `test-commonJVM`: Project              = `test-common`.jvm
+lazy val `test-commonJS`: Project               = `test-common`.js
 
 `adt-codegen` / rootCodegenPath := (adtJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 

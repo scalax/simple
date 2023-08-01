@@ -26,7 +26,7 @@ import Adt.{Status => ADTStatus}
 trait ADTPassedFunction {
 
     @for(i <- 1 to 22) {
-        implicit class extra@{i}[@TypeParameter22(i)](private val data: ADTData[@ADT22Parameter(1, i + 1), ADTStatus.Passed]) {
+        implicit class extra@{i}[@TypeParameter22(i), S <: ADTStatus](private val data: ADTData[@ADT22Parameter(1, i + 1), S]) {
             def fold[D](@FunctionParameter22(i)): D  = {
                 val adtDataGHDMZSK = data.toGHDMZSK
                 val dataInstance: Any = adtDataGHDMZSK.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
