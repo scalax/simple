@@ -8,9 +8,7 @@ import Adt.{Status => ADTStatus}
 
 trait ADTPassedFunction {
 
-  implicit class extra1[
-    I1
-  ](private val data: ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed]) {
+  implicit class extra1[I1, S <: ADTStatus](private val data: ADTData[AdtNatPositive[I1, AdtNatZero], S]) {
     def fold[D](
       func1: I1 => D
     ): D = {
@@ -34,10 +32,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra2[
-    I1,
-    I2
-  ](private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed]) {
+  implicit class extra2[I1, I2, S <: ADTStatus](private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], S]) {
     def fold[D](
       func1: I1 => D,
       func2: I2 => D
@@ -63,11 +58,9 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra3[
-    I1,
-    I2,
-    I3
-  ](private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed]) {
+  implicit class extra3[I1, I2, I3, S <: ADTStatus](
+    private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], S]
+  ) {
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -95,13 +88,8 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra4[
-    I1,
-    I2,
-    I3,
-    I4
-  ](
-    private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed]
+  implicit class extra4[I1, I2, I3, I4, S <: ADTStatus](
+    private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], S]
   ) {
     def fold[D](
       func1: I1 => D,
@@ -132,16 +120,10 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra5[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5
-  ](
+  implicit class extra5[I1, I2, I3, I4, I5, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -175,17 +157,10 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra6[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6
-  ](
+  implicit class extra6[I1, I2, I3, I4, I5, I6, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -221,22 +196,11 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra7[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7
-  ](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
-      ],
-      ADTStatus.Passed
-    ]
+  implicit class extra7[I1, I2, I3, I4, I5, I6, I7, S <: ADTStatus](
+    private val data: ADTData[AdtNatPositive[
+      I1,
+      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
+    ], S]
   ) {
     def fold[D](
       func1: I1 => D,
@@ -273,22 +237,13 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra8[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8
-  ](
+  implicit class extra8[I1, I2, I3, I4, I5, I6, I7, I8, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[I1, AdtNatPositive[
         I2,
         AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
       ]],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -328,17 +283,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra9[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9
-  ](
+  implicit class extra9[I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -347,7 +292,7 @@ trait ADTPassedFunction {
           AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
         ]]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -389,18 +334,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra10[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10
-  ](
+  implicit class extra10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -412,7 +346,7 @@ trait ADTPassedFunction {
           ]]]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -456,19 +390,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra11[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11
-  ](
+  implicit class extra11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -483,7 +405,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -529,20 +451,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra12[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12
-  ](
+  implicit class extra12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -560,7 +469,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -608,21 +517,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra13[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13
-  ](
+  implicit class extra13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -646,7 +541,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -696,22 +591,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra14[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14
-  ](
+  implicit class extra14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -738,7 +618,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -790,23 +670,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra15[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15
-  ](
+  implicit class extra15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -836,7 +700,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -890,24 +754,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra16[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15,
-    I16
-  ](
+  implicit class extra16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -940,7 +787,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -996,25 +843,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra17[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15,
-    I16,
-    I17
-  ](
+  implicit class extra17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -1050,7 +879,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -1108,26 +937,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra18[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15,
-    I16,
-    I17,
-    I18
-  ](
+  implicit class extra18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -1166,7 +976,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -1226,27 +1036,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra19[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15,
-    I16,
-    I17,
-    I18,
-    I19
-  ](
+  implicit class extra19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -1288,7 +1078,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -1350,28 +1140,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra20[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15,
-    I16,
-    I17,
-    I18,
-    I19,
-    I20
-  ](
+  implicit class extra20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -1416,7 +1185,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -1480,29 +1249,7 @@ trait ADTPassedFunction {
     }
   }
 
-  implicit class extra21[
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15,
-    I16,
-    I17,
-    I18,
-    I19,
-    I20,
-    I21
-  ](
+  implicit class extra21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: ADTStatus](
     private val data: ADTData[
       AdtNatPositive[
         I1,
@@ -1550,7 +1297,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
@@ -1638,7 +1385,8 @@ trait ADTPassedFunction {
     I19,
     I20,
     I21,
-    I22
+    I22,
+    S <: ADTStatus
   ](
     private val data: ADTData[
       AdtNatPositive[
@@ -1690,7 +1438,7 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      ADTStatus.Passed
+      S
     ]
   ) {
     def fold[D](
