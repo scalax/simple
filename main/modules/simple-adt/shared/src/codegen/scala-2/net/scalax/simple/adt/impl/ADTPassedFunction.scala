@@ -2,7 +2,7 @@ package net.scalax.simple.adt
 package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import implemention._
+import implemention.ADTGHDMZSK
 import temp._
 import Adt.{Status => ADTStatus}
 
@@ -14,18 +14,18 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -39,9 +39,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -49,9 +49,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -68,9 +68,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -79,9 +79,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -99,9 +99,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -111,9 +111,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -135,9 +135,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -148,9 +148,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -173,9 +173,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -187,9 +187,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -213,9 +213,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -228,9 +228,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -258,9 +258,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -274,9 +274,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -308,9 +308,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -325,9 +325,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -363,9 +363,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -381,9 +381,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -423,9 +423,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -442,9 +442,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -488,9 +488,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -508,9 +508,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -561,9 +561,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -582,9 +582,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -639,9 +639,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -661,9 +661,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -722,9 +722,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -745,9 +745,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -810,9 +810,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -834,9 +834,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -903,9 +903,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -928,9 +928,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -1001,9 +1001,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -1027,9 +1027,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -1104,9 +1104,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -1131,9 +1131,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -1212,9 +1212,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -1240,9 +1240,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -1325,9 +1325,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -1354,9 +1354,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
@@ -1467,9 +1467,9 @@ trait ADTPassedFunction {
     ): D = {
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs = List(
         func1,
@@ -1497,9 +1497,9 @@ trait ADTPassedFunction {
       )
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)

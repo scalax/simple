@@ -2,7 +2,7 @@ package net.scalax.simple.adt
 package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import implemention.Disscure
+import implemention.ADTGHDMZSK
 import temp._
 import Adt.{Status => ADTStatus}
 
@@ -26,16 +26,16 @@ package impl:
     def apply[D](parameters: O[D]): D =
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead)))
-        .inputGHDMZSK(Disscure.identityGhdmzsk)
-        .asInstanceOf[Disscure.GetValue]
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs             = parameters.productIterator.asInstanceOf[Iterator[Any => Any]].to(List)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(Disscure.takeTail.inputGHDMZSK(Disscure.takeHead))
+        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
         .inputGHDMZSK(listFunc)
-        .asInstanceOf[Disscure.GetValue]
+        .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]
 

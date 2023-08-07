@@ -17,5 +17,6 @@ import Adt.{Status => ADTStatus}
 trait TypeAdtAliasModel {
     @for(i <- 1 to 22) {
         type Option@{i}[@TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ADTStatus.Passed]
+        type OptionX@{i}[ST <: ADTStatus, @TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ST]
     }
 }
