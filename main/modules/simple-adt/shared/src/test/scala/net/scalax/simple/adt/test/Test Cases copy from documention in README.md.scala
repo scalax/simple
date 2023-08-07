@@ -236,7 +236,7 @@ object `Test Cases copy from documention in README.md` {
           case Adt.Option2(optData) =>
             val opt = for (intData <- optData) yield intData + 20000
             opt.asJson
-          case Adt.Option3(other) => other.default(t.asJson) // Keep safe for API changed
+          case Adt.Option3(other) => other.default(t.asJson) // For match failed
           case Adt.Option4(other) => other.default(t.asJson)
           case Adt.Option5(other) => other.default(t.asJson)
           case Adt.Option6(other) => other.default(t.asJson)
