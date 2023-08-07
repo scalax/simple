@@ -158,6 +158,7 @@ object `Test Cases copy from documention in README.md` {
       import scala.util.Try
       def inputAdtDataSimple[T: Adt.Options3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
         val applyM = Adt.Options3[Int, String, Double](t)
+        applyM: Adt.Option3[Int, String, Double] // Confirm Type
         applyM match {
           case Adt.Option1(intValue)    => Some(BigDecimal(intValue))
           case Adt.Option2(strValue)    => Try(BigDecimal(strValue)).toOption
@@ -179,6 +180,7 @@ object `Test Cases copy from documention in README.md` {
 
       def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
         val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
+        applyM: Adt.Option3[None.type, Some[Int], Option[Int]] // Confirm Type
         applyM match {
           case Adt.Option1(noneValue) => ("None", -100)
           case Adt.Option2(intSome)   => ("Some", intSome.get + 1)
@@ -202,6 +204,7 @@ object `Test Cases copy from documention in README.md` {
 
       def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
         val applyM = Adt.Options3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
+        applyM: Adt.Option3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]] // Confirm Type
         applyM match {
           case Adt.Option1(noneValue)            => "Null Tag".asJson
           case Adt.Option2(intOpt)               => intOpt.map(_ + 1).asJson
@@ -227,6 +230,7 @@ object `Test Cases copy from documention in README.md` {
 
       def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T): Json = {
         val applyM = Adt.Options2[Int, Option[Int]](t)
+        applyM: Adt.OptionX2[S, Int, Option[Int]] // Confirm Type
         applyM match {
           case Adt.Option1(intData) => (intData + 10000).asJson
           case Adt.Option2(optData) =>
