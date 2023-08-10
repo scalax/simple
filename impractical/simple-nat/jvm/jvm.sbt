@@ -15,3 +15,5 @@ taskAA := {
   (Compile / runMain).inputTaskValue.partialInput(" net.scalax.simple.nat.number12.RunMain2").evaluated
   (Compile / runMain).inputTaskValue.partialInput(" net.scalax.simple.nat.number12.RunMain3").evaluated
 }
+
+libraryDependencies ++= libScalax.`scala-collection-compat`.value
