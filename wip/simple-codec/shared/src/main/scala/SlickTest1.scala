@@ -2,6 +2,7 @@ package net.scalax.simple.codec
 package aa
 
 import slick.ast.{ColumnOption, TypedType}
+import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.{ProvenShape, ShapedValue}
 
@@ -17,22 +18,27 @@ object Model1 {
   val users = TableQuery[Users]
 }
 
-object Model2 {
-  class TableHelper1[Model](tInstance: Table[Model]) {
+class Helper[V <: JdbcProfile](val uAPI: U[V]) {
+  type ColumnOptions = uAPI.ColumnOptions
+  class TableHelper1[Model](tInstance: uAPI.profile.Table[Model]) {
     def apply[T](name: String, columnOption: Seq[ColumnOption[T]], typedType: TypedType[T]): Rep[T] =
       tInstance.column(name, columnOption: _*)(typedType)
 
     def forOpts[T](h: uAPI.ColumnOptions => T): T = h(tInstance.O)
   }
+}
+
+object Model2 {
 
   case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
+
   type Id[T]          = T
   type StrAny[T]      = String
   type ColOpt[T]      = Seq[ColumnOption[T]]
   type ShapeF[T]      = Shape[_ <: FlatShapeLevel, Rep[T], T, _]
   type ShapeValueF[T] = ShapedValue[Rep[T], T]
 
-  val uAPI = new U(slickProfile)
+  val helper: Helper[MySQLProfile] = new Helper(new U(slickProfile))
 
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
     UserAbs[TypedType, U](implicitly, implicitly, implicitly)
@@ -41,14 +47,14 @@ object Model2 {
   def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
 
   def userOptImpl[U[_]]: UserAbs[ColOpt, U] = UserAbs[ColOpt, U](id = Seq.empty, Seq.empty, Seq.empty)
-  def userOpt[U[_]]: uAPI.ColumnOptions => UserAbs[ColOpt, U] = { O =>
+  def userOpt[U[_]]: helper.ColumnOptions => UserAbs[ColOpt, U] = { O =>
     val u1 = userOptImpl[U]
     u1.copy[ColOpt, U](id = List(O.PrimaryKey, O.AutoInc))
   }
 
   def modelSetter[F[_], U[_]]: ModelSetter[UserAbs[F, U]] = ModelSetter[UserAbs[F, U]](x => UserAbs[F, U](x.get, x.get, x.get))
 
-  def userRep[U[_]](implicit tt12: TypedType[U[Int]]): TableHelper1[UserAbs[Id, U]] => UserAbs[Rep, U] = { colN =>
+  def userRep[U[_]](implicit tt12: TypedType[U[Int]]): helper.TableHelper1[UserAbs[Id, U]] => UserAbs[Rep, U] = { colN =>
     val l1 = userNamed[U]
     val l2 = colN.forOpts(userOpt[U])
     val l3 = userTypedType[U]
@@ -58,7 +64,7 @@ object Model2 {
   def userShapedValue[U[_]](implicit
     tt1: TypedType[U[Int]],
     tt12: ShapeF[U[Int]]
-  ): TableHelper1[UserAbs[Id, U]] => UserAbs[ShapeValueF, U] = { colN =>
+  ): helper.TableHelper1[UserAbs[Id, U]] => UserAbs[ShapeValueF, U] = { colN =>
     val rep1Impl = userRep[U]
     val rep1     = rep1Impl(colN)
     val shape1   = userShape[U]
@@ -69,12 +75,12 @@ object Model2 {
     )
   }
 
-  class TableUserAbs[F[_], U[_]](tag: Tag)(implicit tt: TypedType[U[Int]]) extends Table[UserAbs[Id, U]](tag, "users") {
+  class TableUserAbs[F[_], U[_]](tag: Tag)(implicit tt: TypedType[U[Int]]) extends helper.uAPI.profile.Table[UserAbs[Id, U]](tag, "users") {
     self =>
     def t: UserAbs[Rep, U] = {
-      val tImpl  = userRep[U]
-      val helper = new TableHelper1[UserAbs[Id, U]](self)
-      tImpl(helper)
+      val tImpl = userRep[U]
+      val h     = new helper.TableHelper1[UserAbs[Id, U]](self)
+      tImpl(h)
     }
 
     override def * : ProvenShape[UserAbs[Id, U]] = throw new Exception("xuxux")
