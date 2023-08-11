@@ -1,1 +1,1 @@
-enablePlugins(`settings-global-plugin`, CodegenPlugin)
+enablePlugins(`settings-global-plugin`, CodegenPlugin, `push-settings-plugin`)

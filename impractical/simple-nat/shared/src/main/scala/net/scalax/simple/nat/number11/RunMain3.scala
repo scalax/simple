@@ -1,5 +1,6 @@
 package net.scalax.simple.nat.number11
 
+import scala.collection.compat._
 import java.io.{FileOutputStream, PrintWriter}
 import scala.util.Using
 

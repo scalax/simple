@@ -17,3 +17,4 @@ libraryDependencies ++= libScalax.`doobie`.value
 libraryDependencies ++= libScalax.`cats-effect`.value
 libraryDependencies ++= libScalax.`fs2`.value
 libraryDependencies ++= libScalax.`circe`.value
+libraryDependencies ++= libScalax.`slick`.value
