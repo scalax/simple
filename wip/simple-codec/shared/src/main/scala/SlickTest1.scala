@@ -52,8 +52,6 @@ object Model2 {
     u1.copy[ColOpt, U](id = List(O.PrimaryKey, O.AutoInc))
   }
 
-  def modelSetter[F[_], U[_]]: ModelSetter[UserAbs[F, U]] = ModelSetter[UserAbs[F, U]](x => UserAbs[F, U](x.get, x.get, x.get))
-
   def userRep[U[_]](implicit tt12: TypedType[U[Int]]): helper.TableHelper1[UserAbs[Id, U]] => UserAbs[Rep, U] = { colN =>
     val l1 = userNamed[U]
     val l2 = colN.forOpts(userOpt[U])
