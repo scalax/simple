@@ -7,7 +7,7 @@ trait ModelLength[F[_[_]]] {
 }
 
 object ModelLength {
-  def generic[F[_[_]] <: Product](implicit p: F[PropertyTag], getter: ModelGetter[F]): ModelLength[F] = {
+  def generic[F[_[_]] <: Product](implicit p: F[PropertyTag], getter: ModelGetter[F[PropertyTag]]): ModelLength[F] = {
     val sizeImpl = getter.data(p)
     new ModelLength[F] {
       override val size: Int = sizeImpl.size

@@ -8,8 +8,8 @@ trait ModelNameProperty[F[_[_]]] {
 
 object ModelNameProperty {
   type Aux[_] = String
-  def generic[F[_[_]]](implicit modelNames: ModelNames[F], setter: ModelSetter[F]): ModelNameProperty[F] = {
-    val m = setter.inputList[ModelNameProperty.Aux](modelNames.names)
+  def generic[F[_[_]]](implicit modelNames: ModelNames[F], setter: ModelSetter[F[ModelNameProperty.Aux]]): ModelNameProperty[F] = {
+    val m: F[ModelNameProperty.Aux] = setter.inputList(modelNames.names)
     new ModelNameProperty[F] {
       override val model: F[Aux] = m
     }
