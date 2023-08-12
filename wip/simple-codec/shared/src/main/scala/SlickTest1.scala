@@ -73,14 +73,26 @@ object Model2 {
     )
   }
 
-  class TableUserAbs[F[_], U[_]](tag: Tag)(implicit tt: TypedType[U[Int]]) extends helper.uAPI.profile.Table[UserAbs[Id, U]](tag, "users") {
+  class TableUserAbs[F[_], U[_]](tag: Tag)(implicit tt: TypedType[U[Int]], s: ShapeF[U[Int]])
+      extends helper.uAPI.profile.Table[UserAbs[Id, U]](tag, "users") {
     self =>
+    def tableHelper = new helper.TableHelper1[UserAbs[Id, U]](self)
+
     def t: UserAbs[Rep, U] = {
       val tImpl = userRep[U]
-      val h     = new helper.TableHelper1[UserAbs[Id, U]](self)
-      tImpl(h)
+      tImpl(tableHelper)
     }
 
-    override def * : ProvenShape[UserAbs[Id, U]] = throw new Exception("xuxux")
+    def sv: UserAbs[ShapeValueF, U] = {
+      val v = userShapedValue[U]
+      v(tableHelper)
+    }
+
+    import slick.collection.heterogeneous._
+    import slick.collection.heterogeneous.syntax._
+
+    override def * : ProvenShape[UserAbs[Id, U]] =
+      (sv.id :: sv.first :: sv.last :: HNil) <> (u => UserAbs.apply[Id, U](u.head, u.tail.head, u.tail.tail.head), (t: UserAbs[Id, U]) =>
+        Some(t.id :: t.first :: t.last :: HNil))
   }
 }
