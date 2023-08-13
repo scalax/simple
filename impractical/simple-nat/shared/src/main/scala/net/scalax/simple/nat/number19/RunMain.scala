@@ -136,7 +136,7 @@ object `啊呜` {
         } else {
           throw new Exception("黑人问号？？？")
         }
-        if ((long1 + long2) / 100000L == 0) {
+        if ((long1 + long2) / 100000L < 5) {
           println(s"except:$result1, now: ${BigDecimal(long2) / BigDecimal(long1)}")
         }
         forCountExec(forCount.inputGHDMZSK(execSelf))
