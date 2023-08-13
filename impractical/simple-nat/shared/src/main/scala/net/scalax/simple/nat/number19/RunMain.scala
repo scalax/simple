@@ -4,73 +4,146 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `嘻嘻嘻` {
+object `啊呜` {
 
-  def main(arr: Array[String]): Unit = {
-    var count1: Long = 0
-    var count2: Long = 0
+  val oldSelector: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
+  }
 
-    lazy val countGhdmzsk1: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(anything: => ghdmzsk): ghdmzsk = {
-            val tailImpl = tail
-            if (tailImpl == b0) {
-              count1 += 1
-            }
-            if ((tailImpl == a1) || (tailImpl == a2) || (tailImpl == a3) || (tailImpl == a4) || (tailImpl == a5) || (tailImpl == a6)) {
-              count2 += 1
-            }
-            tailImpl.inputGHDMZSK(other)
+  val notSelf: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
+  }
+
+  val testorLeft: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(leftSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(exec: => ghdmzsk): ghdmzsk = leftSelf
+      }
+    }
+  }
+
+  val testorRight: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(leftSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(exec: => ghdmzsk): ghdmzsk = rightSelf
+      }
+    }
+  }
+
+  val execSelf: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(leftSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(exec: => ghdmzsk): ghdmzsk = exec
+      }
+    }
+  }
+
+  val confirm1 = new ghdmzsk {
+    override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
+        lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
+            lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(tempConfirmObject)
+            lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(notSelf)
+            lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
+            selector.inputGHDMZSK(reuy)
           }
         }
+        tempConfirmObject
       }
     }
+  }
 
-    lazy val a6: ghdmzsk = countGhdmzsk1.inputGHDMZSK(a5)
-    lazy val a5: ghdmzsk = countGhdmzsk1.inputGHDMZSK(a4)
-    lazy val a4: ghdmzsk = countGhdmzsk1.inputGHDMZSK(a3)
-    lazy val a3: ghdmzsk = countGhdmzsk1.inputGHDMZSK(a2)
-    lazy val a2: ghdmzsk = countGhdmzsk1.inputGHDMZSK(a1)
-    lazy val a1: ghdmzsk = countGhdmzsk1.inputGHDMZSK(a0)
-    lazy val a0: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(next: => ghdmzsk): ghdmzsk = countGhdmzsk1.inputGHDMZSK(next).inputGHDMZSK(a6)
+  val confirm2 = new ghdmzsk {
+    override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
+        lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
+            lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(notSelf)
+            lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(tempConfirmObject)
+            lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
+            selector.inputGHDMZSK(reuy)
+          }
+        }
+        tempConfirmObject
+      }
     }
+  }
 
-    lazy val b6: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(next: => ghdmzsk): ghdmzsk = countGhdmzsk1.inputGHDMZSK(next).inputGHDMZSK(b5)
-    }
-    lazy val b5: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(next: => ghdmzsk): ghdmzsk = countGhdmzsk1.inputGHDMZSK(next).inputGHDMZSK(b4)
-    }
-    lazy val b4: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(next: => ghdmzsk): ghdmzsk = countGhdmzsk1.inputGHDMZSK(next).inputGHDMZSK(b3)
-    }
-    lazy val b3: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(next: => ghdmzsk): ghdmzsk = countGhdmzsk1.inputGHDMZSK(next).inputGHDMZSK(b2)
-    }
-    lazy val b2: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(next: => ghdmzsk): ghdmzsk = countGhdmzsk1.inputGHDMZSK(next).inputGHDMZSK(b1)
-    }
-    lazy val b1: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(next: => ghdmzsk): ghdmzsk = countGhdmzsk1.inputGHDMZSK(next).inputGHDMZSK(b0)
-    }
-    lazy val b0: ghdmzsk = countGhdmzsk1.inputGHDMZSK(b6)
-
-    val ghdmzskAny = new ghdmzsk {
-      override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
-    }
-
-    var u: Long              = 1000000000
-    var tempGhdmzsk: ghdmzsk = b3.inputGHDMZSK(a6)
-    while (u > 0) {
-      tempGhdmzsk = tempGhdmzsk.inputGHDMZSK(ghdmzskAny)
-      if (u % 10000000 == 0) {
-        if (count1 > 0) {
-          println(BigDecimal(count2) / BigDecimal(count1))
+  object chufa {
+    object beichushu {
+      val zhengshu: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tail)
         }
       }
-      u += 1
+      val zero: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = confirm1.inputGHDMZSK(oldSelector).inputGHDMZSK(other.inputGHDMZSK(tail))
+        }
+      }
+      def gen(i: Int): ghdmzsk = {
+        def genImpl(i: Int, zero: => ghdmzsk): ghdmzsk = {
+          if (i > 0) {
+            zhengshu.inputGHDMZSK(genImpl(i - 1, zero))
+          } else zero
+        }
+
+        lazy val positive: ghdmzsk = genImpl(i, zeroNum)
+        lazy val zeroNum: ghdmzsk  = zero.inputGHDMZSK(positive)
+        positive
+      }
+    }
+    object chushu {
+      val zhengshu: ghdmzsk = beichushu.zhengshu
+      val zero: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = confirm2.inputGHDMZSK(oldSelector).inputGHDMZSK(other.inputGHDMZSK(tail))
+        }
+      }
+      def gen(i: Int): ghdmzsk = {
+        def genImpl(i: Int, zero: => ghdmzsk): ghdmzsk = {
+          if (i > 0) {
+            zhengshu.inputGHDMZSK(genImpl(i - 1, zero))
+          } else zero
+        }
+
+        lazy val positive: ghdmzsk = genImpl(i, zeroNum)
+        lazy val zeroNum: ghdmzsk  = zero.inputGHDMZSK(positive)
+        positive
+      }
+    }
+  }
+
+  def main(arr: Array[String]): Unit = {
+    val num1: Int            = 278
+    val num2: Int            = 32
+    val result1: BigDecimal  = BigDecimal(num1) / BigDecimal(num2)
+    val num1GHDMZSK: ghdmzsk = chufa.beichushu.gen(num1)
+    val num2GHDMZSK: ghdmzsk = chufa.chushu.gen(num2)
+
+    {
+      var long1: Long = 1
+      var long2: Long = 1
+      @tailrec
+      def forCountExec(forCount: ghdmzsk): Unit = {
+        val temp1: ghdmzsk = forCount.inputGHDMZSK(testorLeft)
+        val temp2: ghdmzsk = forCount.inputGHDMZSK(testorRight)
+        if (forCount eq temp1) {
+          long1 += 1
+        } else if (forCount eq temp2) {
+          long2 += 1
+        } else {
+          throw new Exception("黑人问号？？？")
+        }
+        if ((long1 + long2) / 100000L == 0) {
+          println(s"except:$result1, now: ${BigDecimal(long2) / BigDecimal(long1)}")
+        }
+        forCountExec(forCount.inputGHDMZSK(execSelf))
+      }
+
+      def execResult: ghdmzsk = num1GHDMZSK.inputGHDMZSK(num2GHDMZSK)
+      forCountExec(execResult)
     }
   }
 
