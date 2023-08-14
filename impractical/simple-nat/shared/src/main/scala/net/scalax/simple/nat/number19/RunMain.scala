@@ -116,9 +116,9 @@ object `啊呜` {
   }
 
   def main(arr: Array[String]): Unit = {
-    val num1: Int            = 278
-    val num2: Int            = 32
-    val result1: BigDecimal  = BigDecimal(num1) / BigDecimal(num2)
+    val num1: Int            = 281
+    val num2: Int            = 68
+    val result1: BigDecimal  = BigDecimal(num1 + 1) / BigDecimal(num2 + 1)
     val num1GHDMZSK: ghdmzsk = chufa.beichushu.gen(num1)
     val num2GHDMZSK: ghdmzsk = chufa.chushu.gen(num2)
 
