@@ -9,10 +9,15 @@ case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[
 
 object xxbb1 extends IOApp {
 
-  def encodeModel[F[_[_]]](implicit modelEn: F[Encoder], g: ModelGetter[F], lNames: ModelNames[F]): Encoder[F[cats.Id]] = {
+  def encodeModel[F[_[_]]](implicit
+    modelEn: F[Encoder],
+    g: ModelGetter[F[Encoder]],
+    g1: ModelGetter[F[cats.Id]],
+    lNames: ModelNames[F]
+  ): Encoder[F[cats.Id]] = {
     val encoders = g.data(modelEn).asInstanceOf[List[Encoder[Any]]]
     Encoder.instance[F[cats.Id]] { m =>
-      val dataList = g.data(m)
+      val dataList = g1.data(m)
       val jsonList: List[(String, Json)] = encoders.zip(dataList).zip(lNames.names).map { case ((en, data), name) =>
         (name, en(data))
       }
@@ -23,10 +28,15 @@ object xxbb1 extends IOApp {
 
   type EncoderAux[_]      = Encoder[String]
   type EncoderModelAux[_] = String
-  def encodeModelName[F[_[_]]](implicit modelEn: F[EncoderAux], g: ModelGetter[F], lNames: ModelNames[F]): Encoder[F[EncoderModelAux]] = {
+  def encodeModelName[F[_[_]]](implicit
+    modelEn: F[EncoderAux],
+    g: ModelGetter[F[EncoderAux]],
+    g1: ModelGetter[F[EncoderModelAux]],
+    lNames: ModelNames[F]
+  ): Encoder[F[EncoderModelAux]] = {
     val encoders = g.data(modelEn).asInstanceOf[List[Encoder[Any]]]
     Encoder.instance[F[EncoderModelAux]] { m =>
-      val dataList = g.data(m)
+      val dataList = g1.data(m)
       val jsonList: List[(String, Json)] = encoders.zip(dataList).zip(lNames.names).map { case ((en, data), name) =>
         (name, en(data))
       }
@@ -35,9 +45,9 @@ object xxbb1 extends IOApp {
     }
   }
 
-  implicit val getter: ModelGetter[CatName] = ModelGetter.generic
-  implicit val setter: ModelSetter[CatName] = ModelSetter[CatName](u => CatName[ModelSetter.Aux](u.get, u.get, u.get, u.get, u.get))
-  implicit val propertyAny: CatName[PropertyTag.AnyAux]      = PropertyTag.genericAny
+  implicit def getter[U[_]]: ModelGetter[CatName[U]]         = ModelGetter.generic
+  implicit def setter[U[_]]: ModelSetter[CatName[U]]         = ModelSetter[CatName[U]](u => CatName[U](u.get, u.get, u.get, u.get, u.get))
+  implicit val propertyAny: CatName[PropertyTag.AnyAux]      = PropertyTag.genericAny[CatName]
   implicit val propertyTag: CatName[PropertyTag]             = PropertyTag.generic
   implicit val modelNames: ModelNames[CatName]               = ModelNames.generic
   implicit val modelLength: ModelLength[CatName]             = ModelLength.generic

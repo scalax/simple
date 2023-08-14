@@ -2,9 +2,9 @@ package net.scalax.simple.codec
 
 import scala.collection.compat._
 
-trait ModelSetter[F[_[_]]] {
-  def input[U[_]](data: ModelSetter.GetItem): F[U]
-  def inputList[U[_]](data: List[Any]): F[U] = {
+trait ModelSetter[U] {
+  def input(data: ModelSetter.GetItem): U
+  def inputList(data: List[Any]): U = {
     var listData: List[Any] = data
     val listGetItem = new ModelSetter.GetItem {
       override def get[T]: T = {
@@ -15,7 +15,7 @@ trait ModelSetter[F[_[_]]] {
     }
     input(listGetItem)
   }
-  def inputSingleton[U[_]](obj: Any): F[U] = {
+  def inputSingleton(obj: Any): U = {
     val objImpl: Any = obj
     val singletonGetItem = new ModelSetter.GetItem {
       override def get[T]: T = objImpl.asInstanceOf[T]
@@ -25,10 +25,8 @@ trait ModelSetter[F[_[_]]] {
 }
 
 object ModelSetter {
-  type Aux[_] = Any
-
-  def apply[F[_[_]]](dataFunc: ModelSetter.GetItem => F[ModelSetter.Aux]): ModelSetter[F] = new ModelSetter[F] {
-    override def input[U[_]](data: ModelSetter.GetItem): F[U] = dataFunc(data).asInstanceOf[F[U]]
+  def apply[U](dataFunc: ModelSetter.GetItem => U): ModelSetter[U] = new ModelSetter[U] {
+    override def input(data: ModelSetter.GetItem): U = dataFunc(data).asInstanceOf[U]
   }
 
   trait GetItem {
