@@ -71,56 +71,38 @@ object `啊呜` {
   }
 
   object chufa {
-    object beichushu {
-      val zhengshu: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tail)
-        }
-      }
-      val zero: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = confirm1.inputGHDMZSK(oldSelector).inputGHDMZSK(other.inputGHDMZSK(tail))
-        }
-      }
-      def gen(i: Int): ghdmzsk = {
-        def genImpl(i: Int, zero: => ghdmzsk): ghdmzsk = {
-          if (i > 0) {
-            zhengshu.inputGHDMZSK(genImpl(i - 1, zero))
-          } else zero
-        }
-
-        lazy val positive: ghdmzsk = genImpl(i, zeroNum)
-        lazy val zeroNum: ghdmzsk  = zero.inputGHDMZSK(positive)
-        positive
+    val zhengshu: ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tail)
       }
     }
-    object chushu {
-      val zhengshu: ghdmzsk = beichushu.zhengshu
-      val zero: ghdmzsk = new ghdmzsk {
+    val zero: ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(confirmX: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = confirm2.inputGHDMZSK(oldSelector).inputGHDMZSK(other.inputGHDMZSK(tail))
+          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk =
+            confirmX.inputGHDMZSK(oldSelector).inputGHDMZSK(tail.inputGHDMZSK(other))
         }
       }
-      def gen(i: Int): ghdmzsk = {
-        def genImpl(i: Int, zero: => ghdmzsk): ghdmzsk = {
-          if (i > 0) {
-            zhengshu.inputGHDMZSK(genImpl(i - 1, zero))
-          } else zero
-        }
+    }
+    def gen(i: Int, confirmX: ghdmzsk): ghdmzsk = {
+      def genImpl(i: Int, zero: => ghdmzsk): ghdmzsk = {
+        if (i > 0) {
+          zhengshu.inputGHDMZSK(genImpl(i - 1, zero))
+        } else zero
+      }
 
-        lazy val positive: ghdmzsk = genImpl(i, zeroNum)
-        lazy val zeroNum: ghdmzsk  = zero.inputGHDMZSK(positive)
-        positive
-      }
+      lazy val positive: ghdmzsk = genImpl(i, zeroNum)
+      lazy val zeroNum: ghdmzsk  = zero.inputGHDMZSK(confirmX).inputGHDMZSK(positive)
+      positive
     }
   }
 
   def main(arr: Array[String]): Unit = {
     val num1: Int            = 281
     val num2: Int            = 68
-    val result1: BigDecimal  = BigDecimal(num1 + 1) / BigDecimal(num2 + 1)
-    val num1GHDMZSK: ghdmzsk = chufa.beichushu.gen(num1)
-    val num2GHDMZSK: ghdmzsk = chufa.chushu.gen(num2)
+    val result1: BigDecimal  = BigDecimal(num1) / BigDecimal(num2)
+    val num1GHDMZSK: ghdmzsk = chufa.gen(num1, confirmX = confirm1)
+    val num2GHDMZSK: ghdmzsk = chufa.gen(num2, confirmX = confirm2)
 
     {
       var long1: Long = 1
