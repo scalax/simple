@@ -6,10 +6,6 @@ import scala.annotation.tailrec
 
 object `啊呜` {
 
-  val oldSelector: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
-  }
-
   val notSelf: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
   }
@@ -39,34 +35,30 @@ object `啊呜` {
   }
 
   val confirm1 = new ghdmzsk {
-    override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
-        lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
-            lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(tempConfirmObject)
-            lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(notSelf)
-            lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
-            selector.inputGHDMZSK(reuy)
-          }
+    override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
+      lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
+          lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(tempConfirmObject)
+          lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(notSelf)
+          lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
+          reuy
         }
-        tempConfirmObject
       }
+      tempConfirmObject
     }
   }
 
   val confirm2 = new ghdmzsk {
-    override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
-        lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
-            lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(notSelf)
-            lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(tempConfirmObject)
-            lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
-            selector.inputGHDMZSK(reuy)
-          }
+    override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
+      lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
+          lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(notSelf)
+          lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(tempConfirmObject)
+          lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
+          reuy
         }
-        tempConfirmObject
       }
+      tempConfirmObject
     }
   }
 
@@ -80,7 +72,7 @@ object `啊呜` {
       override def inputGHDMZSK(confirmX: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk =
-            confirmX.inputGHDMZSK(oldSelector).inputGHDMZSK(tail.inputGHDMZSK(other))
+            confirmX.inputGHDMZSK(tail.inputGHDMZSK(other))
         }
       }
     }
