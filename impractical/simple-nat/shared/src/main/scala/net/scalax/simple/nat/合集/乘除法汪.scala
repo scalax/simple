@@ -7,16 +7,13 @@ import scala.annotation.tailrec
 object 乘除法汪 {
 
   def main(arr: Array[String]): Unit = {
-    val num1: Int            = 21
-    val num2: Int            = 672
-    val num3: Int            = 32
-    /*val num1GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s1, 合集.nums.s2, num1)
-    val num2GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s6, 合集.nums.s3, num2)
-    val num3GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s4, 合集.nums.s3, num3)*/
+    val num1: Int = 21
+    val num2: Int = 672
+    val num3: Int = 32
 
-    val num1GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s7, 合集.nums.s3, num1)
-    val num2GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s6, 合集.nums.s3, num2)
-    val num3GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s4, 合集.nums.s3, num3)
+    val num1GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s2, 合集.nums.s4, num1)
+    val num2GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s1, 合集.nums.s3, num2)
+    val num3GHDMZSK: ghdmzsk = 合集.gen(合集.nums.s4, 合集.nums.s5, num3)
 
     val execResultForInput: ghdmzsk = num1GHDMZSK.inputGHDMZSK(num2GHDMZSK).inputGHDMZSK(num3GHDMZSK)
 
@@ -25,7 +22,7 @@ object 乘除法汪 {
       def forCountExec(forCount: ghdmzsk, long1: Long, long2: Long): Unit = {
         if ((long1 + long2) % 821L == 0L) {
           println(s"long1:$long1, long2: $long2, 临时结果: ${long1 - long2}")
-          // assert((long1 - long2).abs < 2000)
+          assert((long1 - long2).abs < 2000)
         }
 
         val temp1: ghdmzsk = forCount.inputGHDMZSK(合集.testorLeft)

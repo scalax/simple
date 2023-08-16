@@ -48,50 +48,46 @@ object 合集 {
     val s2: ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n1).inputGHDMZSK(n2)
+          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk =
+            confirm2.inputGHDMZSK(n1.inputGHDMZSK(n2).inputGHDMZSK(n3))
         }
       }
     }
+
     val s3: ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n2).inputGHDMZSK(n1)
+          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n1).inputGHDMZSK(n2)
         }
       }
     }
     val s4: ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n2.inputGHDMZSK(n3).inputGHDMZSK(n1)
+          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n2).inputGHDMZSK(n1)
         }
       }
     }
+
     val s5: ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n2.inputGHDMZSK(n1).inputGHDMZSK(n3)
+          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n2.inputGHDMZSK(n3).inputGHDMZSK(n1)
         }
       }
     }
     val s6: ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk =
-            confirm2.inputGHDMZSK(n1.inputGHDMZSK(n2).inputGHDMZSK(n3))
+          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n2.inputGHDMZSK(n1).inputGHDMZSK(n3)
         }
       }
     }
+
     val s7: ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = confirm1.inputGHDMZSK(n2.inputGHDMZSK(n1).inputGHDMZSK(n3))
-        }
-      }
-    }
-    val s8: ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n1.inputGHDMZSK(n3).inputGHDMZSK(n2)
+          override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = confirm2.inputGHDMZSK(n2.inputGHDMZSK(n1).inputGHDMZSK(n3))
         }
       }
     }
