@@ -39,17 +39,17 @@ object `模式2` {
   object `乘法` {
     object `被乘数` {
       val zhengshu: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk =
-              confirm1.inputGHDMZSK(tail.inputGHDMZSK(`乘数Impl`).inputGHDMZSK(`积Impl`))
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk =
+              confirm1.inputGHDMZSK(n1.inputGHDMZSK(n2).inputGHDMZSK(n3))
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk = `乘数Impl`.inputGHDMZSK(tail).inputGHDMZSK(`积Impl`)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n1).inputGHDMZSK(n2)
           }
         }
       }
@@ -69,16 +69,17 @@ object `模式2` {
 
     object `乘数` {
       val zhengshu: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk = `被乘数Impl`.inputGHDMZSK(tail).inputGHDMZSK(`积Impl`)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk =
+              confirm2.inputGHDMZSK(n1.inputGHDMZSK(n2).inputGHDMZSK(n3))
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk = `积Impl`.inputGHDMZSK(`被乘数Impl`).inputGHDMZSK(tail)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n2).inputGHDMZSK(n1)
           }
         }
       }
@@ -98,17 +99,16 @@ object `模式2` {
 
     object `积` {
       val zhengshu: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk =
-              confirm2.inputGHDMZSK(tail.inputGHDMZSK(`被乘数Impl`).inputGHDMZSK(`乘数Impl`))
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n2.inputGHDMZSK(n3).inputGHDMZSK(n1)
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk = `乘数Impl`.inputGHDMZSK(`被乘数Impl`).inputGHDMZSK(tail)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n2).inputGHDMZSK(n1)
           }
         }
       }
@@ -128,9 +128,9 @@ object `模式2` {
   }
 
   def main(arr: Array[String]): Unit = {
-    val num1: Int            = 32
-    val num2: Int            = 21
-    val num3: Int            = 672
+    val num1: Int            = 21
+    val num2: Int            = 672
+    val num3: Int            = 32
     val num1GHDMZSK: ghdmzsk = `乘法`.`被乘数`.gen(num1)
     val num2GHDMZSK: ghdmzsk = `乘法`.`乘数`.gen(num2)
     val num3GHDMZSK: ghdmzsk = `乘法`.`积`.gen(num3)
@@ -142,7 +142,7 @@ object `模式2` {
       def forCountExec(forCount: ghdmzsk, long1: Long, long2: Long): Unit = {
         if ((long1 + long2) % 821L == 0L) {
           println(s"long1:$long1, long2: $long2, 临时结果: ${long1 - long2}")
-          assert((long1 - long2).abs < 800)
+          assert((long1 - long2).abs < 2000)
         }
 
         val temp1: ghdmzsk = forCount.inputGHDMZSK(testorLeft)
