@@ -39,17 +39,17 @@ object `模式` {
   object `乘法` {
     object `被乘数` {
       val zhengshu: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk = `乘数Impl`.inputGHDMZSK(tail).inputGHDMZSK(`积Impl`)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n2.inputGHDMZSK(n1).inputGHDMZSK(n3)
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk =
-              confirm1.inputGHDMZSK(tail.inputGHDMZSK(`乘数Impl`).inputGHDMZSK(`积Impl`))
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk =
+              confirm1.inputGHDMZSK(n1.inputGHDMZSK(n2).inputGHDMZSK(n3))
           }
         }
       }
@@ -69,16 +69,16 @@ object `模式` {
 
     object `乘数` {
       val zhengshu: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk = `被乘数Impl`.inputGHDMZSK(tail).inputGHDMZSK(`积Impl`)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n2.inputGHDMZSK(n1).inputGHDMZSK(n3)
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`积Impl`: => ghdmzsk): ghdmzsk = `积Impl`.inputGHDMZSK(`被乘数Impl`).inputGHDMZSK(tail)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n2).inputGHDMZSK(n1)
           }
         }
       }
@@ -98,17 +98,16 @@ object `模式` {
 
     object `积` {
       val zhengshu: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk = `乘数Impl`.inputGHDMZSK(`被乘数Impl`).inputGHDMZSK(tail)
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = n3.inputGHDMZSK(n2).inputGHDMZSK(n1)
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(`被乘数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`乘数Impl`: => ghdmzsk): ghdmzsk =
-              confirm2.inputGHDMZSK(tail.inputGHDMZSK(`被乘数Impl`).inputGHDMZSK(`乘数Impl`))
+        override def inputGHDMZSK(n1: => ghdmzsk): ghdmzsk = new ghdmzsk {
+          override def inputGHDMZSK(n2: => ghdmzsk): ghdmzsk = new ghdmzsk {
+            override def inputGHDMZSK(n3: => ghdmzsk): ghdmzsk = confirm2.inputGHDMZSK(n1.inputGHDMZSK(n2).inputGHDMZSK(n3))
           }
         }
       }
