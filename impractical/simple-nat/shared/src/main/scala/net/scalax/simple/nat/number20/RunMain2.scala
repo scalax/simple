@@ -142,7 +142,7 @@ object `模式` {
       def forCountExec(forCount: ghdmzsk, long1: Long, long2: Long): Unit = {
         if ((long1 + long2) % 821L == 0L) {
           println(s"long1:$long1, long2: $long2, 临时结果: ${long1 - long2}")
-          assert((long1 - long2) < 500)
+          assert((long1 - long2).abs < 500)
         }
 
         val temp1: ghdmzsk = forCount.inputGHDMZSK(testorLeft)
