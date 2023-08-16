@@ -6,67 +6,33 @@ import scala.annotation.tailrec
 
 object `啊呜` {
 
-  val oldSelector: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
-  }
-
-  val notSelf: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
-  }
-
   val testorLeft: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(leftSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(exec: => ghdmzsk): ghdmzsk = leftSelf
-      }
+      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = leftSelf
     }
   }
 
   val testorRight: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(leftSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(exec: => ghdmzsk): ghdmzsk = rightSelf
-      }
+      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = rightSelf
     }
   }
 
-  val execSelf: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(leftSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(rightSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(exec: => ghdmzsk): ghdmzsk = exec
+  val confirm1: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
+      lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = testor.inputGHDMZSK(tempConfirmObject).inputGHDMZSK(targetNumber)
       }
+      tempConfirmObject
     }
   }
 
-  val confirm1 = new ghdmzsk {
-    override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
-        lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
-            lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(tempConfirmObject)
-            lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(notSelf)
-            lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
-            selector.inputGHDMZSK(reuy)
-          }
-        }
-        tempConfirmObject
+  val confirm2: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
+      lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = testor.inputGHDMZSK(targetNumber).inputGHDMZSK(tempConfirmObject)
       }
-    }
-  }
-
-  val confirm2 = new ghdmzsk {
-    override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(targetNumber: => ghdmzsk): ghdmzsk = {
-        lazy val tempConfirmObject: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(testor: => ghdmzsk): ghdmzsk = {
-            lazy val leftTemp1: ghdmzsk  = testor.inputGHDMZSK(notSelf)
-            lazy val rightTemp1: ghdmzsk = leftTemp1.inputGHDMZSK(tempConfirmObject)
-            lazy val reuy: ghdmzsk       = rightTemp1.inputGHDMZSK(targetNumber)
-            selector.inputGHDMZSK(reuy)
-          }
-        }
-        tempConfirmObject
-      }
+      tempConfirmObject
     }
   }
 
@@ -80,7 +46,7 @@ object `啊呜` {
       override def inputGHDMZSK(confirmX: => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk =
-            confirmX.inputGHDMZSK(oldSelector).inputGHDMZSK(tail.inputGHDMZSK(other))
+            confirmX.inputGHDMZSK(tail.inputGHDMZSK(other))
         }
       }
     }
@@ -104,28 +70,25 @@ object `啊呜` {
     val num1GHDMZSK: ghdmzsk = chufa.gen(num1, confirmX = confirm1)
     val num2GHDMZSK: ghdmzsk = chufa.gen(num2, confirmX = confirm2)
 
+    val execResultForInput: ghdmzsk = num1GHDMZSK.inputGHDMZSK(num2GHDMZSK)
+
     {
-      var long1: Long = 1
-      var long2: Long = 1
       @tailrec
-      def forCountExec(forCount: ghdmzsk): Unit = {
-        val temp1: ghdmzsk = forCount.inputGHDMZSK(testorLeft)
-        val temp2: ghdmzsk = forCount.inputGHDMZSK(testorRight)
-        if (forCount eq temp1) {
-          long1 += 1
-        } else if (forCount eq temp2) {
-          long2 += 1
-        } else {
-          throw new Exception("黑人问号？？？")
-        }
+      def forCountExec(forCount: ghdmzsk, long1: Long, long2: Long): Unit = {
         if ((long1 + long2) % 100000L == 0L) {
           println(s"except:$result1, now: ${BigDecimal(long2) / BigDecimal(long1)}")
         }
-        forCountExec(forCount.inputGHDMZSK(execSelf))
+
+        val temp1: ghdmzsk = forCount.inputGHDMZSK(testorLeft)
+
+        if (forCount eq temp1) {
+          forCountExec(temp1.inputGHDMZSK(testorRight), long1 = long1 + 1, long2 = long2)
+        } else {
+          forCountExec(temp1, long1 = long1, long2 = long2 + 1)
+        }
       }
 
-      def execResult: ghdmzsk = num1GHDMZSK.inputGHDMZSK(num2GHDMZSK)
-      forCountExec(execResult)
+      forCountExec(execResultForInput, 1, 1)
     }
   }
 
