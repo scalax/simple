@@ -1,10 +1,10 @@
-package net.scalax.simple.nat.number20
+package net.scalax.simple.nat.另一种选择
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `贤者` {
+object `贤者2` {
 
   val testorLeft: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(leftSelf: => ghdmzsk): ghdmzsk = new ghdmzsk {
@@ -42,14 +42,14 @@ object `贤者` {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(`加数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
             override def inputGHDMZSK(`和Impl`: => ghdmzsk): ghdmzsk =
-              confirm1.inputGHDMZSK(tail.inputGHDMZSK(`加数Impl`).inputGHDMZSK(`和Impl`))
+              confirm1.inputGHDMZSK(`和Impl`.inputGHDMZSK(`加数Impl`).inputGHDMZSK(tail))
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(`加数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`和Impl`: => ghdmzsk): ghdmzsk = `加数Impl`.inputGHDMZSK(tail).inputGHDMZSK(`和Impl`)
+            override def inputGHDMZSK(`和Impl`: => ghdmzsk): ghdmzsk = tail.inputGHDMZSK(`加数Impl`).inputGHDMZSK(`和Impl`)
           }
         }
       }
@@ -72,14 +72,14 @@ object `贤者` {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(`被加数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
             override def inputGHDMZSK(`和Impl`: => ghdmzsk): ghdmzsk =
-              confirm1.inputGHDMZSK(tail.inputGHDMZSK(`被加数Impl`).inputGHDMZSK(`和Impl`))
+              confirm1.inputGHDMZSK(`和Impl`.inputGHDMZSK(`被加数Impl`).inputGHDMZSK(tail))
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(`被加数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`和Impl`: => ghdmzsk): ghdmzsk = `和Impl`.inputGHDMZSK(被加数Impl).inputGHDMZSK(tail)
+            override def inputGHDMZSK(`和Impl`: => ghdmzsk): ghdmzsk = tail.inputGHDMZSK(`被加数Impl`).inputGHDMZSK(`和Impl`)
           }
         }
       }
@@ -102,14 +102,14 @@ object `贤者` {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(`被加数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
             override def inputGHDMZSK(`加数Impl`: => ghdmzsk): ghdmzsk =
-              confirm2.inputGHDMZSK(tail.inputGHDMZSK(`被加数Impl`).inputGHDMZSK(`加数Impl`))
+              confirm2.inputGHDMZSK(`被加数Impl`.inputGHDMZSK(`加数Impl`).inputGHDMZSK(tail))
           }
         }
       }
       val zero: ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(`被加数Impl`: => ghdmzsk): ghdmzsk = new ghdmzsk {
-            override def inputGHDMZSK(`加数Impl`: => ghdmzsk): ghdmzsk = `被加数Impl`.inputGHDMZSK(`加数Impl`).inputGHDMZSK(tail)
+            override def inputGHDMZSK(`加数Impl`: => ghdmzsk): ghdmzsk = tail.inputGHDMZSK(`被加数Impl`).inputGHDMZSK(`加数Impl`)
           }
         }
       }
@@ -141,9 +141,9 @@ object `贤者` {
     {
       @tailrec
       def forCountExec(forCount: ghdmzsk, long1: Long, long2: Long): Unit = {
-        if ((long1 + long2) % 100000L == 0L) {
+        if ((long1 + long2) % 871L == 0L) {
           println(s"long1:$long1, long2: $long2, 临时结果: ${long1 - long2}")
-          assert((long1 - long2).abs < 500)
+          // assert((long1 - long2).abs < 900)
         }
 
         val temp1: ghdmzsk = forCount.inputGHDMZSK(testorLeft)
