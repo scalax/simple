@@ -50,12 +50,12 @@ object 统计 {
     pos
   }
 
-  def confirm(forConfirm: ghdmzsk): Unit = {
+  def confirm(forConfirm: ghdmzsk, brokeNum: Long = 2000): Unit = {
     @tailrec
     def confirmImpl(forCount: ghdmzsk, long1: Long, long2: Long): Unit = {
       if ((long1 + long2) % 821L == 0L) {
         println(s"long1:$long1, long2:$long2, 临时结果: ${long1 - long2}")
-        assert((long1 - long2).abs < 2000)
+        assert((long1 - long2).abs < brokeNum)
       }
 
       val temp1: ghdmzsk = forCount.inputGHDMZSK(统计.testorLeft)
