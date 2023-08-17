@@ -67,7 +67,6 @@ object Model2 {
       tImpl(tableHelper)
     }
 
-    override def * : ProvenShape[UserAbs[Id, U]] =
-      UserAbs.unapply[Rep, U](t).get <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
+    override def * : ProvenShape[UserAbs[Id, U]] = Tuple.fromProductTyped(t) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
   }
 }
