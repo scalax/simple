@@ -65,15 +65,15 @@ object Model2 {
   class TableUserAbs[U[_]](tag: Tag)(implicit tt: TypedType[U[Int]], s: ShapeF[U[Int]])
       extends slickProfile.Table[UserAbs[Id, U]](tag, "users") {
     self =>
-    private val repModel                          = userRep[U]
-    private def __tableInnserRep: UserAbs[Rep, U] = repModel(self)
+    private val repModel: slickProfile.Table[_] => UserAbs[Rep, U] = userRep[U]
+    private def __tableInnserRep: UserAbs[Rep, U]                  = repModel(self)
     override def * : ProvenShape[UserAbs[Id, U]] =
       // Tuple.fromProductTyped(__tableInnserRep) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
       UserAbs.unapply[Rep, U](__tableInnserRep).get <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
   }
 
   object TableUserAbs {
-    implicit class TableUserAbsTableImpl[U[_]](tb: TableUserAbs[U])(implicit tt: TypedType[U[Int]])
+    implicit class TableUserAbsTableImpl[U[_]](tb: TableUserAbs[U])
         extends UserAbs[Rep, U](id = tb.__tableInnserRep.id, first = tb.__tableInnserRep.first, last = tb.__tableInnserRep.last)
   }
 
