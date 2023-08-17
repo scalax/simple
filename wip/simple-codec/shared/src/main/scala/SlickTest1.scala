@@ -18,14 +18,10 @@ object Model1 {
   val users = TableQuery[Users]
 }
 
+// Codec test. ====
+
 class Helper[V <: JdbcProfile](val uAPI: U[V]) {
   type ColumnOptions = uAPI.ColumnOptions
-  /*class TableHelper1[Model](tInstance: uAPI.profile.Table[Model]) {
-    def apply[T](name: String, columnOption: Seq[ColumnOption[T]], typedType: TypedType[T]): Rep[T] =
-      tInstance.column(name, columnOption: _*)(typedType)
-
-    def forOpts[T](h: uAPI.ColumnOptions => T): T = h(tInstance.O)
-  }*/
 }
 
 object Model2 {
