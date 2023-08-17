@@ -25,7 +25,7 @@ object 乘除法喵 {
 
     val execResultForInput: ghdmzsk = num1GHDMZSK.inputGHDMZSK(num2GHDMZSK).inputGHDMZSK(num3GHDMZSK)
 
-    统计.confirm(execResultForInput)
+    统计.confirm(execResultForInput, brokeNum = 300000)
   }
 
 }
