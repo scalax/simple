@@ -20,38 +20,28 @@ object Model1 {
 
 // Codec test. ====
 
-class Helper[V <: JdbcProfile](val uAPI: U[V]) {
-  type ColumnOptions = uAPI.ColumnOptions
-}
-
 object Model2 {
-
   case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
 
   type Id[T]           = T
   type StrAny[T]       = String
   type ShapeF[T]       = Shape[_ <: FlatShapeLevel, Rep[T], T, _]
-  type RepFromTable[T] = helper.uAPI.profile.Table[_] => Rep[T]
-  type OptsFromCol[T]  = Seq[helper.ColumnOptions => ColumnOption[T]]
-
-  val helper: Helper[MySQLProfile] = new Helper(new U(slickProfile))
+  type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
+  type OptsFromCol[T]  = Seq[slickProfile.ColumnOptions => ColumnOption[T]]
+  // type OptsFromCol[T] = Seq[slickProfile.SqlColumnOptions => ColumnOption[T]]
 
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
     UserAbs[TypedType, U](implicitly, implicitly, implicitly)
 
   def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
 
-  def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](id = Seq.empty, Seq.empty, Seq.empty)
-  def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
-    val u1 = userOptImpl[U]
-    u1.copy[OptsFromCol, U](id = List(_.PrimaryKey, _.AutoInc))
-  }
+  def userOpt[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](id = List(_.PrimaryKey, _.AutoInc), Seq.empty, Seq.empty)
 
   def colN[T](
     name: String,
     func: OptsFromCol[T],
     tt: TypedType[T]
-  ): helper.uAPI.profile.Table[_] => Rep[T] = { tb =>
+  ): slickProfile.Table[_] => Rep[T] = { tb =>
     val colsFunc = for (n <- func) yield n(tb.O)
     tb.column(name, colsFunc: _*)(tt)
   }
@@ -67,19 +57,18 @@ object Model2 {
     )
   }
 
-  def userRep[U[_]](implicit tt: TypedType[U[Int]]): helper.uAPI.profile.Table[_] => UserAbs[Rep, U] = { tb =>
+  def userRep[U[_]](implicit tt: TypedType[U[Int]]): slickProfile.Table[_] => UserAbs[Rep, U] = { tb =>
     val impl = userRepImpl[U]
     UserAbs[Rep, U](id = impl.id(tb), first = impl.first(tb), last = impl.last(tb))
   }
 
   class TableUserAbs[U[_]](tag: Tag)(implicit tt: TypedType[U[Int]], s: ShapeF[U[Int]])
-      extends helper.uAPI.profile.Table[UserAbs[Id, U]](tag, "users") {
+      extends slickProfile.Table[UserAbs[Id, U]](tag, "users") {
     self =>
-    private def __tableInnserRep: UserAbs[Rep, U] = {
-      val repModel = userRep[U]
-      repModel(self)
-    }
+    private val repModel                          = userRep[U]
+    private def __tableInnserRep: UserAbs[Rep, U] = repModel(self)
     override def * : ProvenShape[UserAbs[Id, U]] =
+      // Tuple.fromProductTyped(__tableInnserRep) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
       UserAbs.unapply[Rep, U](__tableInnserRep).get <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
   }
 
