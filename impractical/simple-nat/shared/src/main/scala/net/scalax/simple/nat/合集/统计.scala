@@ -36,22 +36,26 @@ object 统计 {
     }
   }
 
-  def gen(positive: ghdmzsk, zero: ghdmzsk, len: Int): ghdmzsk = {
-    def genImpl(lenImpl: Int, zeroNUM: => ghdmzsk): ghdmzsk = if (lenImpl > 0) {
-      positive.inputGHDMZSK(genImpl(lenImpl - 1, zeroNUM))
+  def gen(positive: ghdmzsk, zero: ghdmzsk)(positiveLen: Int, zeroLen: Int): ghdmzsk = {
+    def genPositiveImpl(lenImpl: Int, zeroNUM: => ghdmzsk): ghdmzsk = if (lenImpl > 0) {
+      positive.inputGHDMZSK(genPositiveImpl(lenImpl - 1, zeroNUM))
     } else zeroNUM
 
-    lazy val pos: ghdmzsk  = genImpl(len, zNUM)
-    lazy val zNUM: ghdmzsk = zero.inputGHDMZSK(pos)
+    def genZeroImpl(lenImpl: Int, positiveNUM: => ghdmzsk): ghdmzsk = if (lenImpl > 0) {
+      zero.inputGHDMZSK(genZeroImpl(lenImpl - 1, positiveNUM))
+    } else positiveNUM
+
+    lazy val pos: ghdmzsk  = genPositiveImpl(positiveLen, zNUM)
+    lazy val zNUM: ghdmzsk = genZeroImpl(zeroLen, pos)
     pos
   }
 
-  def confirm(forConfirm: ghdmzsk): Unit = {
+  def confirm(forConfirm: ghdmzsk, brokeNum: Long = 2000): Unit = {
     @tailrec
     def confirmImpl(forCount: ghdmzsk, long1: Long, long2: Long): Unit = {
       if ((long1 + long2) % 821L == 0L) {
-        println(s"long1:$long1, long2: $long2, 临时结果: ${long1 - long2}")
-        assert((long1 - long2).abs < 2000)
+        println(s"long1:$long1, long2:$long2, 临时结果: ${long1 - long2}")
+        assert((long1 - long2).abs < brokeNum)
       }
 
       val temp1: ghdmzsk = forCount.inputGHDMZSK(统计.testorLeft)
