@@ -36,29 +36,8 @@ object 统计 {
     }
   }
 
-  def gen(selfPos: ghdmzsk, other: => ghdmzsk)(selfLen: Int, deep: Int = 1): ghdmzsk = if (deep == 1)
-    gen1(selfPos = selfPos, other = other)(selfLen = selfLen)
-  else if (deep == 2) gen2(selfPos = selfPos, other = other)(selfLen = selfLen)
-  else if (deep == 3) gen3(selfPos = selfPos, other = other)(selfLen = selfLen)
-  else throw new Exception("母鸡")
-
-  def gen1(selfPos: ghdmzsk, other: => ghdmzsk)(selfLen: Int): ghdmzsk = if (selfLen > 0)
-    selfPos.inputGHDMZSK(gen1(selfPos, other)(selfLen - 1))
-  else other
-
-  def gen2(selfPos: ghdmzsk, other: => ghdmzsk)(selfLen: Int): ghdmzsk = if (selfLen > 0)
-    new ghdmzsk {
-      override def inputGHDMZSK(sp: => ghdmzsk): ghdmzsk = selfPos.inputGHDMZSK(sp).inputGHDMZSK(gen2(selfPos, other)(selfLen - 1))
-    }
-  else other
-
-  def gen3(selfPos: ghdmzsk, other: => ghdmzsk)(selfLen: Int): ghdmzsk = if (selfLen > 0)
-    new ghdmzsk {
-      override def inputGHDMZSK(sp1: => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(sp2: => ghdmzsk): ghdmzsk =
-          selfPos.inputGHDMZSK(sp1).inputGHDMZSK(sp2).inputGHDMZSK(gen3(selfPos, other)(selfLen - 1))
-      }
-    }
+  def gen(selfPos: ghdmzsk, other: => ghdmzsk)(numberLen: Int): ghdmzsk = if (numberLen > 0)
+    selfPos.inputGHDMZSK(gen(selfPos, other)(numberLen - 1))
   else other
 
   def confirm(forConfirm: ghdmzsk, brokeNum: Long = 2000, maxCount: Long = 60000000): Boolean = {
