@@ -66,7 +66,7 @@ object 统计 {
     def confirmImpl(forCount: ghdmzsk, long1: Long, long2: Long, maxC: Long): Boolean = if (maxC > maxCount) true
     else {
       if ((long1 + long2) % 821L == 0L) {
-        println(s"long1:$long1, long2:$long2, 临时结果: ${long1 - long2}")
+        println(s"long1:$long1, long2:$long2, 临时结果: ${long1 - long2} (count: $maxC, maxCount: $maxCount)")
         assert((long1 - long2).abs < brokeNum)
       }
 

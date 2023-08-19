@@ -2,7 +2,7 @@ package net.scalax.simple.nat.不是合集
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
-object 乘除法u {
+object 乘除法跑我 {
 
   def main(arr: Array[String]): Unit = {
     object num1 {
@@ -26,9 +26,13 @@ object 乘除法u {
     lazy val num3GHDMZSK: ghdmzsk      = 统计.gen(合集.y.b, num3GHDMZSKOther)(num3.Parent)
     lazy val num3GHDMZSKOther: ghdmzsk = 统计.gen(合集.x.a, num3GHDMZSK)(num3.Sub)
 
-    val execResultForInput: ghdmzsk = num1GHDMZSK.inputGHDMZSK(num2GHDMZSK).inputGHDMZSK(num3GHDMZSK)
-
-    统计.confirm(execResultForInput, brokeNum = 200000)
+    统计.confirm(num1GHDMZSK.inputGHDMZSK(num2GHDMZSK).inputGHDMZSK(num3GHDMZSK), brokeNum = 200000)
+    统计.confirm(num1GHDMZSK.inputGHDMZSK(num3GHDMZSK).inputGHDMZSK(num2GHDMZSK), brokeNum = 200000)
+    统计.confirm(num2GHDMZSK.inputGHDMZSK(num1GHDMZSK).inputGHDMZSK(num3GHDMZSK), brokeNum = 200000)
+    统计.confirm(num2GHDMZSK.inputGHDMZSK(num3GHDMZSK).inputGHDMZSK(num1GHDMZSK), brokeNum = 200000)
+    统计.confirm(num3GHDMZSK.inputGHDMZSK(num1GHDMZSK).inputGHDMZSK(num2GHDMZSK), brokeNum = 200000)
+    统计.confirm(num3GHDMZSK.inputGHDMZSK(num2GHDMZSK).inputGHDMZSK(num1GHDMZSK), brokeNum = 200000)
+    println("===验证完毕===")
   }
 
 }
