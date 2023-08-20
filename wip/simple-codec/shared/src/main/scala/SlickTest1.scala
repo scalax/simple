@@ -21,13 +21,15 @@ object Model1 {
 // Codec test. ====
 
 object Model2 {
+  val compatAlias = SlickCompatAlias.build
+
   case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
 
   type Id[T]           = T
   type StrAny[T]       = String
   type ShapeF[T]       = Shape[_ <: FlatShapeLevel, Rep[T], T, _]
   type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
-  type OptsFromCol[T]  = Seq[slickProfile.ColumnOptions => ColumnOption[T]]
+  type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
   // type OptsFromCol[T] = Seq[slickProfile.SqlColumnOptions => ColumnOption[T]]
 
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
@@ -68,8 +70,8 @@ object Model2 {
     private val repModel: slickProfile.Table[_] => UserAbs[Rep, U] = userRep[U]
     private def __tableInnserRep: UserAbs[Rep, U]                  = repModel(self)
     override def * : ProvenShape[UserAbs[Id, U]] =
-      // Tuple.fromProductTyped(__tableInnserRep) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
-      UserAbs.unapply[Rep, U](__tableInnserRep).get <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
+      Tuple.fromProductTyped(__tableInnserRep) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
+    // UserAbs.unapply[Rep, U](__tableInnserRep).get <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
   }
 
   object TableUserAbs {
