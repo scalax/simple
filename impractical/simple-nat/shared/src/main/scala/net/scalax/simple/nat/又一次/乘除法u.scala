@@ -27,7 +27,7 @@ object 嘿嘿嘿嘿 {
       CF.gen(leftBuilder = NC.y.b, rightBuilder = NC.x.a)(leftLength = num3.Parent, rightLength = num3.Sub)(selfNumber = num3GHDMZSK)
 
     val brokeNum: Int = 200000
-    val maxCount: Int = 800000
+    val maxCount: Int = 2000000
     CountFunction.confirm(num1GHDMZSK.inputGHDMZSK(num2GHDMZSK).inputGHDMZSK(num3GHDMZSK), brokeNum = brokeNum, maxCount = maxCount)
     CountFunction.confirm(num1GHDMZSK.inputGHDMZSK(num3GHDMZSK).inputGHDMZSK(num2GHDMZSK), brokeNum = brokeNum, maxCount = maxCount)
     CountFunction.confirm(num2GHDMZSK.inputGHDMZSK(num1GHDMZSK).inputGHDMZSK(num3GHDMZSK), brokeNum = brokeNum, maxCount = maxCount)
