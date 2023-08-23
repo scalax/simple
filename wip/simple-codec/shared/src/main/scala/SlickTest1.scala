@@ -3,7 +3,7 @@ package aa
 
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.MySQLProfile.api._
-import slick.lifted.{ProvenShape, ShapedValue}
+import slick.lifted.ProvenShape
 import slickless._
 
 object Model1 {
@@ -36,7 +36,13 @@ object Model2 {
 
   def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
 
-  def userOpt[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](id = List(_.PrimaryKey, _.AutoInc), Seq.empty, Seq.empty)
+  def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
+  def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
+    def addElem[T](seq: Seq[T], t: T): Seq[T] = t +: seq
+    val impl                                  = userOptImpl[U]
+    val list: OptsFromCol[U[Int]]             = addElem(addElem(impl.id, _.AutoInc), _.PrimaryKey)
+    impl.copy[OptsFromCol, U](id = list)
+  }
 
   def colN[T](
     name: String,
