@@ -8,15 +8,8 @@ object TypedHelper:
 
     def build(using m: scala.deriving.Mirror.ProductOf[Model]): SlickUtilsCompat.GenericInstance[Model, m.MirroredElemTypes] =
       new SlickUtilsCompat.GenericInstance[Model, m.MirroredElemTypes]:
-        override val from: SlickUtilsCompat.FunctionOpt[m.MirroredElemTypes, Model] =
-          new SlickUtilsCompat.FunctionOpt[m.MirroredElemTypes, Model]:
-            override def apply(t: m.MirroredElemTypes): Model = m.fromTuple(t)
-          end new
-
-        override val to: SlickUtilsCompat.FunctionOpt[Model, m.MirroredElemTypes] =
-          new SlickUtilsCompat.FunctionOpt[Model, m.MirroredElemTypes]:
-            override def apply(t: Model): m.MirroredElemTypes = Tuple.fromProductTyped(t)
-          end new
+        override val from: SlickUtilsCompat.FunctionOpt[m.MirroredElemTypes, Model] = t => m.fromTuple(t)
+        override val to: SlickUtilsCompat.FunctionOpt[Model, m.MirroredElemTypes]   = t => Tuple.fromProductTyped(t)
       end new
     end build
 
