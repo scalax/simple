@@ -2,9 +2,9 @@ package net.scalax.simple.codec
 package aa
 
 import slick.ast.{ColumnOption, TypedType}
-import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.{ProvenShape, ShapedValue}
+import slickless._
 
 object Model1 {
   case class User(id: Option[Int], first: String, last: String)
@@ -21,7 +21,7 @@ object Model1 {
 // Codec test. ====
 
 object Model2 {
-  val compatAlias = SlickCompatAlias.build
+  val compatAlias = SlickCompatAlias.build(slickProfile)
 
   case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
 
@@ -30,7 +30,6 @@ object Model2 {
   type ShapeF[T]       = Shape[_ <: FlatShapeLevel, Rep[T], T, _]
   type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
   type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
-  // type OptsFromCol[T] = Seq[slickProfile.SqlColumnOptions => ColumnOption[T]]
 
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
     UserAbs[TypedType, U](implicitly, implicitly, implicitly)
@@ -69,9 +68,11 @@ object Model2 {
     self =>
     private val repModel: slickProfile.Table[_] => UserAbs[Rep, U] = userRep[U]
     private def __tableInnserRep: UserAbs[Rep, U]                  = repModel(self)
-    override def * : ProvenShape[UserAbs[Id, U]] =
-      Tuple.fromProductTyped(__tableInnserRep) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
-    // UserAbs.unapply[Rep, U](__tableInnserRep).get <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
+
+    private val generic1 = TypedHelper[UserAbs[Rep, U]].build
+    private val generic2 = TypedHelper[UserAbs[Id, U]].build
+
+    override def * : ProvenShape[UserAbs[Id, U]] = generic1.to(__tableInnserRep) <> (generic2.from, generic2.to.opt)
   }
 
   object TableUserAbs {
@@ -79,10 +80,11 @@ object Model2 {
         extends UserAbs[Rep, U](id = tb.__tableInnserRep.id, first = tb.__tableInnserRep.first, last = tb.__tableInnserRep.last)
   }
 
-  def TableUserAbsQuery[U[_]](implicit tt: TypedType[U[Int]], s: ShapeF[U[Int]]): TableQuery[TableUserAbs[U]] =
-    TableQuery(cons => new TableUserAbs[U](cons))
+  object TableUserAbsQuery extends TableQuery[TableUserAbs[Id]](cons => new TableUserAbs[Id](cons)) {
+    object forInsert extends TableQuery[TableUserAbs[Option]](cons => new TableUserAbs[Option](cons))
+  }
 
-  val query1: Query[Rep[Option[Int]], Option[Int], Seq] = for (q <- TableUserAbsQuery[Option]) yield q.id
-  val query2: Query[Rep[Int], Int, Seq]                 = for (q <- TableUserAbsQuery[Id]) yield q.id
+  val query1: Query[Rep[Option[Int]], Option[Int], Seq] = for (q <- TableUserAbsQuery.forInsert) yield q.id
+  val query2: Query[Rep[Int], Int, Seq]                 = for (q <- TableUserAbsQuery) yield q.id
 
 }
