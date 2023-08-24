@@ -6,22 +6,18 @@ import slick.jdbc.MySQLProfile.api._
 import slick.lifted.ProvenShape
 import slickless._
 
-object Model1 {
-  case class User(id: Option[Int], first: String, last: String)
-
-  class Users(tag: Tag) extends Table[User](tag, "users") {
-    def id                             = column[Int]("id", O.PrimaryKey, O.AutoInc)
-    def first                          = column[String]("first")
-    def last                           = column[String]("last")
-    override def * : ProvenShape[User] = (id.?, first, last) <> ((User.apply _).tupled, User.unapply _)
-  }
-  val users = TableQuery[Users]
-}
-
-// Codec test. ====
-
 object Model2 {
   val compatAlias = SlickCompatAlias.build(slickProfile)
+
+  def addElem[T](seq: Seq[T], t: T*): Seq[T] = t ++: seq
+  def colN[T](
+    name: String,
+    func: OptsFromCol[T],
+    tt: TypedType[T]
+  ): slickProfile.Table[_] => Rep[T] = { tb =>
+    val colsFunc = for (n <- func) yield n(tb.O)
+    tb.column(name, colsFunc: _*)(tt)
+  }
 
   case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
 
@@ -38,19 +34,9 @@ object Model2 {
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
-    def addElem[T](seq: Seq[T], t: T*): Seq[T] = t ++: seq
-    val impl                                   = userOptImpl[U]
-    val list: OptsFromCol[U[Int]]              = addElem(impl.id, _.AutoInc, _.PrimaryKey)
+    val impl                      = userOptImpl[U]
+    val list: OptsFromCol[U[Int]] = addElem(impl.id, _.AutoInc, _.PrimaryKey)
     impl.copy[OptsFromCol, U](id = list)
-  }
-
-  def colN[T](
-    name: String,
-    func: OptsFromCol[T],
-    tt: TypedType[T]
-  ): slickProfile.Table[_] => Rep[T] = { tb =>
-    val colsFunc = for (n <- func) yield n(tb.O)
-    tb.column(name, colsFunc: _*)(tt)
   }
 
   def userRepImpl[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[RepFromTable, U] = {
