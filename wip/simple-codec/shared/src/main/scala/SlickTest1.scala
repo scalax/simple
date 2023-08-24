@@ -38,9 +38,9 @@ object Model2 {
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
-    def addElem[T](seq: Seq[T], t: T): Seq[T] = t +: seq
-    val impl                                  = userOptImpl[U]
-    val list: OptsFromCol[U[Int]]             = addElem(addElem(impl.id, _.AutoInc), _.PrimaryKey)
+    def addElem[T](seq: Seq[T], t: T*): Seq[T] = t ++: seq
+    val impl                                   = userOptImpl[U]
+    val list: OptsFromCol[U[Int]]              = addElem(impl.id, _.AutoInc, _.PrimaryKey)
     impl.copy[OptsFromCol, U](id = list)
   }
 
