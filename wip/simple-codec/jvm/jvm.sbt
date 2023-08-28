@@ -15,7 +15,7 @@ libraryDependencies ++= libScalax.`slick`.value
 
 libraryDependencies ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, _)) => List(("io.underscore" %% "slickless" % "0.3.7-M1"))
+    case Some((2, _)) => List(("net.scalax" %% "slickless" % "0.3.7-M6"))
     case _            => List.empty
   }
 }

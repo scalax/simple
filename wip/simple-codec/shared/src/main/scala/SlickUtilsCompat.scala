@@ -13,7 +13,6 @@ object SlickUtilsCompat {
 
   trait GenericInstance[Model, H] {
     def from: SlickUtilsCompat.FunctionOpt[H, Model]
-
     def to: SlickUtilsCompat.FunctionOpt[Model, H]
   }
 }
