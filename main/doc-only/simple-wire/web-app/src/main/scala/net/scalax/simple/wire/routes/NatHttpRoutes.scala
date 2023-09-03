@@ -16,12 +16,9 @@ class NatHttpRoutes(serviceA: ServiceA) {
     val action = serviceA.insertName(for (i <- (1 to 20).to(List)) yield (s"$name$i", i + 2))
 
     val view = for {
-      a       <- action
-      dataCol <- serviceA.dataCol
-    } yield {
-      val (dataA, dataB) = dataCol
-      net.scalax.simple.wire.views.html.View1(models = a)(dataA = dataA, dataB = dataB)
-    }
+      a              <- action
+      (dataA, dataB) <- serviceA.dataCol
+    } yield net.scalax.simple.wire.views.html.View1(models = a)(dataA = dataA, dataB = dataB)
 
     Ok(view)
   }
