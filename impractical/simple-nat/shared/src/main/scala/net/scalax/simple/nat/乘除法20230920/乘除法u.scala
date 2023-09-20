@@ -2,7 +2,7 @@ package net.scalax.simple.nat.又一次
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
-object 嘿嘿嘿嘿 {
+object `嘿嘿嘿嘿终版20230918` {
   val NC: NumberCollection.type = NumberCollection
   val CF: CountFunction.type    = CountFunction
 

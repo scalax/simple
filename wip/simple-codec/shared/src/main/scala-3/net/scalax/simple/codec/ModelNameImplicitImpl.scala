@@ -1,11 +1,18 @@
 package net.scalax.simple.codec
 
-import slick.jdbc.JdbcProfile
+object TypedHelper:
 
-class SlickCompatAlias[V <: JdbcProfile](val profile: V) {
-  type ColumnOptions = profile.SqlColumnOptions
-}
+  def apply[P <: Product]: CompatImpl5[P] = new CompatImpl5[P]
 
-object SlickCompatAlias {
-  def build[V <: JdbcProfile](implicit p: V): SlickCompatAlias[V] = new SlickCompatAlias(profile = p)
-}
+  class CompatImpl5[Model <: Product]:
+
+    def build(using m: scala.deriving.Mirror.ProductOf[Model]): SlickUtilsCompat.GenericInstance[Model, m.MirroredElemTypes] =
+      new SlickUtilsCompat.GenericInstance[Model, m.MirroredElemTypes]:
+        override val from: SlickUtilsCompat.FunctionOpt[m.MirroredElemTypes, Model] = t => m.fromTuple(t)
+        override val to: SlickUtilsCompat.FunctionOpt[Model, m.MirroredElemTypes]   = t => Tuple.fromProductTyped(t)
+      end new
+    end build
+
+  end CompatImpl5
+
+end TypedHelper

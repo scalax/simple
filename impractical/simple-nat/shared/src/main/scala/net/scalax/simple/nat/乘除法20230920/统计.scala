@@ -54,7 +54,7 @@ object CountFunction {
     } else if (rightLength == 0) {
       useLeftNum
     } else {
-      val useLeft = Random.nextInt(new Date().getTime.toInt) % 2 == 1
+      val useLeft = Random.nextLong(new Date().getTime) % 2L == 1L
       if (useLeft) useLeftNum else useRightNum
     }
   }
@@ -65,6 +65,9 @@ object CountFunction {
     else {
       if ((long1 + long2) % 821L == 0L) {
         println(s"long1:$long1, long2:$long2, 临时结果: ${long1 - long2} (count: $maxC, maxCount: $maxCount)")
+        if (long2 != 0L) {
+          println(BigDecimal(long1) / BigDecimal(long2))
+        }
         assert((long1 - long2).abs < brokeNum)
       }
 

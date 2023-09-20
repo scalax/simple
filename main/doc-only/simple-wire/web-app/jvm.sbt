@@ -12,3 +12,5 @@ libraryDependencies ++= libScalax.`doobie`.value
 libraryDependencies ++= libScalax.`doobie-h2`.value
 libraryDependencies ++= libScalax.`h2`.value
 libraryDependencies ++= libScalax.`zio-config`.value
+
+addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
