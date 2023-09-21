@@ -3,23 +3,25 @@ package net.scalax.simple.nat.整数树20230920
 object Number1 {
 
   sealed trait NumberAbs
-  trait NumberA                                            extends NumberAbs
-  trait NumberB                                            extends NumberAbs
-  case class NumberAPositive(numA: NumberA, numB: NumberB) extends NumberA
-  case class NumberBPositive(numB: NumberB, numA: NumberA) extends NumberB
-  case object NumberAZero                                  extends NumberA
-  case object NumberBZero                                  extends NumberB
+  trait NumberA                                                extends NumberAbs
+  trait NumberB                                                extends NumberAbs
+  case class NumberAPositive(numA: NumberAbs, numB: NumberAbs) extends NumberA
+  case class NumberBPositive(numB: NumberAbs, numA: NumberAbs) extends NumberB
+  case object NumberAZero                                      extends NumberA
+  case object NumberBZero                                      extends NumberB
 
   trait NumImplAbs {
     def method1(numA: NumImplAbs, numB: NumImplAbs): NumberAbs
   }
 
-  case class NumberAImpl(numA: NumberAImpl, numB: NumberBImpl) extends NumImplAbs {
-    override def method1(num2: NumImplAbs, num3: NumImplAbs): NumberA = NumberAPositive(numA.method1(numA, numB), numB.method1(numA, numB))
+  case class NumberAImpl(numA: NumImplAbs, numB: NumImplAbs) extends NumImplAbs {
+    override def method1(num2: NumImplAbs, num3: NumImplAbs): NumberAbs =
+      NumberAPositive(numA.method1(num2, num3), numB.method1(num2, num3))
   }
 
-  case class NumberBImpl(numB: NumberBImpl, numA: NumberAImpl) extends NumImplAbs {
-    override def method1(num2: NumImplAbs, num3: NumImplAbs): NumberB = NumberBPositive(numB.method1(numA, numB), numA.method1(numA, numB))
+  case class NumberBImpl(numB: NumImplAbs, numA: NumImplAbs) extends NumImplAbs {
+    override def method1(num2: NumImplAbs, num3: NumImplAbs): NumberAbs =
+      NumberBPositive(numA.method1(num2, num3), numB.method1(num2, num3))
   }
 
   case class NumberAZeroImplAbstraction(bZero: () => NumberBZeroImplAbstraction) extends NumImplAbs {
@@ -43,7 +45,7 @@ object Number1 {
       if (needEnd1 && needEnd2 && needEnd3) {
         NumberBZero
       } else {
-        num2.method1(aZero(), num3)
+        num2.method1(num3, aZero())
       }
     }
   }
