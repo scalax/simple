@@ -94,8 +94,7 @@ object 整数树Runnersdfsdfwaerwerwer {
         val n1 = count1(tail1)
         val n2 = count2(tail2)
         n1.plus(n2).upI1
-      case Number1_1U(_, _) =>
-        Num(i1 = 0, i2 = 0)
+      case Number1_1U.Value => Num(i1 = 0, i2 = 0)
     }
 
     def count2(num1_2: Number1_2): Num = num1_2 match {
@@ -106,8 +105,7 @@ object 整数树Runnersdfsdfwaerwerwer {
         val n1 = count1(tail1)
         val n2 = count2(tail2)
         n1.plus(n2).upI2
-      case Number1_2U(_, _) =>
-        Num(i1 = 0, i2 = 0)
+      case Number1_2U.Value => Num(i1 = 0, i2 = 0)
     }
   }
 
@@ -120,8 +118,7 @@ object 整数树Runnersdfsdfwaerwerwer {
         val n1 = count1(tail1)
         val n2 = count2(tail2)
         n1.plus(n2).upI1
-      case Number2_1U(_, _) =>
-        Num(i1 = 0, i2 = 0)
+      case Number2_1U.Value => Num(i1 = 0, i2 = 0)
     }
 
     def count2(num2: Number2_2): Num = num2 match {
@@ -132,8 +129,7 @@ object 整数树Runnersdfsdfwaerwerwer {
         val n1 = count1(tail1)
         val n2 = count2(tail2)
         n1.plus(n2).upI2
-      case Number2_2U(_, _) =>
-        Num(i1 = 0, i2 = 0)
+      case Number2_2U.Value => Num(i1 = 0, i2 = 0)
     }
   }
 
@@ -145,6 +141,7 @@ object 整数树Runnersdfsdfwaerwerwer {
       case Number3_1T(tail1, tail2) =>
         val (n1, n2) = (count1(tail1()), count2(tail2()))
         n1.plus(n2).upI1
+      case Number3_1U.Value => Num(i1 = 0, i2 = 0)
     }
 
     def count2(num2: Number3_2): Num = num2 match {
@@ -154,6 +151,7 @@ object 整数树Runnersdfsdfwaerwerwer {
       case Number3_2T(tail2, tail1) =>
         val (n1, n2) = (count1(tail1()), count2(tail2()))
         n1.plus(n2).upI2
+      case Number3_2U.Value => Num(i1 = 0, i2 = 0)
     }
   }
 
