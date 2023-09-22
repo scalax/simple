@@ -63,7 +63,7 @@ object `啊呜` {
     }
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val num1: Int            = 281
     val num2: Int            = 68
     val result1: BigDecimal  = BigDecimal(num1) / BigDecimal(num2)

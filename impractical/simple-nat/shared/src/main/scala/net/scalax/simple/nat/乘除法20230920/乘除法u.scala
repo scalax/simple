@@ -6,7 +6,7 @@ object `嘿嘿嘿嘿终版20230918` {
   val NC: NumberCollection.type = NumberCollection
   val CF: CountFunction.type    = CountFunction
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     object num1 {
       val Parent: Int = 105
       val Sub: Int    = 5

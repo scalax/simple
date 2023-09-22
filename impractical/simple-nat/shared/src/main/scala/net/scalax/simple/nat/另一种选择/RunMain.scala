@@ -125,7 +125,7 @@ object `贤者2` {
     }
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val num1: Int            = 281
     val num2: Int            = 68
     val num3: Int            = 349
