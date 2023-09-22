@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 
 object 乘除法汪 {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     object num1 {
       val Parent: Int = 42
       val Sub: Int    = 16
