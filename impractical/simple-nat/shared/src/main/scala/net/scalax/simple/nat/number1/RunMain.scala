@@ -33,7 +33,7 @@ object RunMain {
   def numbertGen(n: Int, zero: => Core2): Core2     = if (n > 0) Number.T(() => numbertGen(n - 1, zero)) else zero
   def numbertImplGen(n: Int, zero: => Core2): Core2 = if (n > 0) TImpl(() => numbertImplGen(n - 1, zero)) else zero
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     locally {
       for {
         i1 <- 0 to 20

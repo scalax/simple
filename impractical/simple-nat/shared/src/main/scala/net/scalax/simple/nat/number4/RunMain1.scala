@@ -61,7 +61,7 @@ object RunMain1 {
       Some(count.value).filter(_ < 500)
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     locally {
       for {
         i1 <- 0 to 15
