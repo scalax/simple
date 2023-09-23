@@ -1,8 +1,9 @@
 package net.scalax.simple.nat.number12
 
+import net.scalax.simple.core.App_1
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
-object RunMain3 extends App {
+object RunMain3 extends App_1 {
 
   for {
     i1 <- 1 to 20
