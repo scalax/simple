@@ -31,13 +31,26 @@ object NENE喵A呜哇 {
     )
     val num2 = NumberAImpl(NumberAImpl(num1, NumberBZeroImpl), NumberBImpl(NumberBZeroImpl, NumberAImpl(num1, NumberBZeroImpl)))
     val num3 = NumberBImpl(NumberBImpl(NumberBImpl(NumberBZeroImpl, NumberAZeroImpl), NumberAZeroImpl), NumberAImpl(num1, NumberBZeroImpl))
-    val num4 = NumberBImpl(NumberBImpl(NumberBImpl(num3, NumberAZeroImpl), NumberAZeroImpl), NumberAImpl(NumberAZeroImpl, num3))
-    println(count1Impl1(num1))
-    println("Need-1: " + count1Impl1(num2))
+    val num4 =
+      NumberBImpl(
+        NumberBImpl(NumberBImpl(num3, NumberAZeroImpl), NumberAZeroImpl),
+        NumberAImpl(
+          NumberAZeroImpl,
+          NumberBImpl(
+            NumberBImpl(
+              NumberBImpl(NumberBImpl(NumberBImpl(NumberBImpl(num3, NumberAZeroImpl), NumberAZeroImpl), NumberAZeroImpl), NumberAZeroImpl),
+              NumberAZeroImpl
+            ),
+            NumberAZeroImpl
+          )
+        )
+      )
+    println("Need-1: " + count1Impl1(num1))
+    println("Need-2: " + count1Impl1(num2))
     println(count1Impl2(num3))
-    println("Need-2: " + count1Impl2(num4))
+    println("Need-3: " + count1Impl2(num4))
 
-    println("Result-3: " + count2Impl1(num1.method1(num2, num4)))
+    println("Result-4: " + count2Impl1(num1.method1(num2, num4)))
   }
 
 }
