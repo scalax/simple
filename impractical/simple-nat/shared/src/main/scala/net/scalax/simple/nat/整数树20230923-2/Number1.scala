@@ -19,7 +19,7 @@ object Number1 {
 
   case class NumberAImpl(next: NumAImpls, precursor: NumBImpls) extends NumAImpls {
     override def method1(numA1: NumAImpls, numB1: NumBImpls): NumberA =
-      NumberAPositive(next.method1(numA1, NumberBZeroImpl), precursor.method2(numB1, NumberAZeroImpl))
+      NumberAPositive(next = next.method1(numA1, NumberBZeroImpl), precursor = precursor.method2(numB1, NumberAZeroImpl))
   }
   case class NumberAZeroImplAbstraction(next: () => NumAImpls) extends NumAImpls {
     override def method1(numA1: NumAImpls, numB1: NumBImpls): NumberA = {
@@ -34,7 +34,7 @@ object Number1 {
     }
   }
 
-  lazy val NumberAZeroImpl: NumberAZeroImplAbstraction = NumberAZeroImplAbstraction(() => NumberAZeroImpl)
+  lazy val NumberAZeroImpl: NumberAZeroImplAbstraction = NumberAZeroImplAbstraction(next = () => NumberAZeroImpl)
 
   // ========== NumberB
   trait NumBImpls {
@@ -43,7 +43,7 @@ object Number1 {
 
   case class NumberBImpl(next: NumBImpls, precursor: NumAImpls) extends NumBImpls {
     override def method2(numB1: NumBImpls, numA1: NumAImpls): NumberB =
-      NumberBPositive(next.method2(numB1, NumberAZeroImpl), precursor.method1(numA1, NumberBZeroImpl))
+      NumberBPositive(next = next.method2(numB1, NumberAZeroImpl), precursor = precursor.method1(numA1, NumberBZeroImpl))
   }
   case class NumberBZeroImplAbstraction(next: () => NumBImpls) extends NumBImpls {
     override def method2(numB1: NumBImpls, numA1: NumAImpls): NumberB = {
@@ -58,6 +58,6 @@ object Number1 {
     }
   }
 
-  lazy val NumberBZeroImpl: NumberBZeroImplAbstraction = NumberBZeroImplAbstraction(() => NumberBZeroImpl)
+  lazy val NumberBZeroImpl: NumberBZeroImplAbstraction = NumberBZeroImplAbstraction(next = () => NumberBZeroImpl)
 
 }
