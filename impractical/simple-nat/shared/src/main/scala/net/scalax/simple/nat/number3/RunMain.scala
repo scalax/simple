@@ -50,7 +50,7 @@ object RunMain {
     if (n > 0) TImpl(count)(() => numbertImplGen(n - 1, count, zero)) else zero
   def numbertGen(n: Int, zero: => Number.Core2): Number.Core2 = if (n > 0) Number.T(() => numbertGen(n - 1, zero)) else zero
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     locally {
       for {
         i1 <- 0 to 20

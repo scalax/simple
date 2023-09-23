@@ -2,9 +2,9 @@ package net.scalax.simple
 package nat
 package number10
 
-import core.Core2
+import core.{App_1, Core2}
 
-object Number extends App {
+object Number extends App_1 {
 
   def Core2(t: (() => Core2) => Core2): Core2 = new Core2 {
     override def apply(v1: () => Core2): Core2 = t(v1)

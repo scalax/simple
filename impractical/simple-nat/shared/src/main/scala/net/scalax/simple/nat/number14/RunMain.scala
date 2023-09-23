@@ -1,10 +1,11 @@
 package net.scalax.simple.nat.number14
 
+import net.scalax.simple.core.App_1
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `Run我Run我Run我` extends App {
+object `Run我Run我Run我` extends App_1 {
 
   def count(num: () => ghdmzsk): (Long, Long) = {
     @tailrec

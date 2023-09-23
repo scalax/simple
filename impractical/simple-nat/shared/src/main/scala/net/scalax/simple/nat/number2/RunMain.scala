@@ -29,7 +29,7 @@ object RunMain {
   }
   else Number.SZero
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     locally {
       for (i1 <- 0 to 200) {
         val count: Count                = Count.newInstance

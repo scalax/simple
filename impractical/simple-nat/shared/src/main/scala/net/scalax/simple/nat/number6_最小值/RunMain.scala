@@ -12,7 +12,7 @@ object RunMain {
   def number1Gen(n: Int): Number1 = if (n > 0) Number1S(number1Gen(n - 1)) else Number1T
   def number2Gen(n: Int): Number2 = if (n > 0) Number2S(() => number2Gen(n - 1)) else Number2T
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     locally {
       for {
         i1 <- 1 to 20

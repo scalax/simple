@@ -6,7 +6,7 @@ import scala.annotation.tailrec
 
 object `嘻嘻嘻` {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     var count1: Long = 0
     var count2: Long = 0
 

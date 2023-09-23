@@ -4,7 +4,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object Confirm {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val oldSelector: ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
     }

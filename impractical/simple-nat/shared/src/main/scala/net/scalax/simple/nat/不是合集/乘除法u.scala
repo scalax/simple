@@ -4,7 +4,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object 乘除法跑我 {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     object num1 {
       val Parent: Int = 105
       val Sub: Int    = 5

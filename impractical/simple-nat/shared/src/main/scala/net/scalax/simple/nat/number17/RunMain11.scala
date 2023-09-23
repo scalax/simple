@@ -203,7 +203,7 @@ object MainApp {
     countImpl(() => number)
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
 
     for {
       avg <- 8 to 8

@@ -53,7 +53,7 @@ object `跑我跑我` {
     countImpl(() => number)
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     def countAction(numAvg: Int, num1Value: Int, num2Value: Int, num3Value: Int): ghdmzsk = {
       val (number1S, number1T) = build1(numAvg)
       val (number2S, number2T) = build2(numAvg)

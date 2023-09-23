@@ -126,7 +126,7 @@ object `模式` {
     }
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val num1: Int            = 672
     val num2: Int            = 21
     val num3: Int            = 32
