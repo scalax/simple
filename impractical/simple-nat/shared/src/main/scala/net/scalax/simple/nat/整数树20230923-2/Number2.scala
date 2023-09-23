@@ -24,7 +24,7 @@ object NENE喵A呜哇 {
     case NumberBZero                 => 0
   }
 
-  def main1(arr: Array[String]): Unit = {
+  def main(arr: Array[String]): Unit = {
     val num1 = NumberAImpl(
       NumberAImpl(NumberAZeroImpl, NumberBZeroImpl),
       NumberBImpl(NumberBZeroImpl, NumberAImpl(NumberAZeroImpl, NumberBZeroImpl))
@@ -51,6 +51,9 @@ object NENE喵A呜哇 {
     println("Need-3: " + count1Impl2(num4))
 
     println("Result-4: " + count2Impl1(num1.method1(num2, num4)))
+
+    assert(count1Impl1(num1) + count1Impl1(num2) + count1Impl2(num4) == 0)
+    assert(count2Impl1(num1.method1(num2, num4)) == 0)
   }
 
 }

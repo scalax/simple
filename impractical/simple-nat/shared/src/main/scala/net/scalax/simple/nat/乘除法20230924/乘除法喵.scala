@@ -2,7 +2,7 @@ package net.scalax.simple.nat.合集1
 
 object 乘除法喵 {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     object num1 {
       val Parent: Int = 42
       val Sub: Int    = 16
