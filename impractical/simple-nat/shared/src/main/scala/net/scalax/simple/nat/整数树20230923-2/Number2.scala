@@ -24,7 +24,7 @@ object NENE喵A呜哇 {
     case NumberBZero                 => 0
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val num1 = NumberAImpl(
       NumberAImpl(NumberAZeroImpl, NumberBZeroImpl),
       NumberBImpl(NumberBZeroImpl, NumberAImpl(NumberAZeroImpl, NumberBZeroImpl))
