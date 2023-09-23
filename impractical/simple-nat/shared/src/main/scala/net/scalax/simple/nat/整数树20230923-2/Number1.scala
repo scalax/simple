@@ -21,7 +21,7 @@ object Number1 {
     override def method1(numA1: NumAImpls, numB1: NumBImpls): NumberA =
       NumberAPositive(next.method1(numA1, NumberBZeroImpl), precursor.method2(numB1, NumberAZeroImpl))
   }
-  case class NumberAZeroImplAbstraction(next: () => NumberAZeroImplAbstraction) extends NumAImpls {
+  case class NumberAZeroImplAbstraction(next: () => NumAImpls) extends NumAImpls {
     override def method1(numA1: NumAImpls, numB1: NumBImpls): NumberA = {
       val needEnd1: Boolean = next() == NumberAZeroImpl
       val needEnd2: Boolean = numA1 == NumberAZeroImpl
@@ -45,7 +45,7 @@ object Number1 {
     override def method2(numB1: NumBImpls, numA1: NumAImpls): NumberB =
       NumberBPositive(next.method2(numB1, NumberAZeroImpl), precursor.method1(numA1, NumberBZeroImpl))
   }
-  case class NumberBZeroImplAbstraction(next: () => NumberBZeroImplAbstraction) extends NumBImpls {
+  case class NumberBZeroImplAbstraction(next: () => NumBImpls) extends NumBImpls {
     override def method2(numB1: NumBImpls, numA1: NumAImpls): NumberB = {
       val needEnd1: Boolean = next() == NumberBZeroImpl
       val needEnd2: Boolean = numB1 == NumberBZeroImpl
