@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.整数树20230923
+package net.scalax.simple.nat.`整数树20230923-1`
 
 import scala.util.Random
 

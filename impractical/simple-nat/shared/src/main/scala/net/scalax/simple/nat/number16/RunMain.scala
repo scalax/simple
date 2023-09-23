@@ -36,7 +36,7 @@ object RunMain {
       zeroGhdmzsk
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     for {
       i1 <- 0 to 20
       i2 <- 0 to 20

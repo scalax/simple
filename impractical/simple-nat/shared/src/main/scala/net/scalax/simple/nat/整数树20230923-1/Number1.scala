@@ -1,4 +1,4 @@
-package net.scalax.simple.nat.整数树20230923
+package net.scalax.simple.nat.`整数树20230923-1`
 
 trait Number1_1 {
   def method1(num2: Number2_1): Number3_1
