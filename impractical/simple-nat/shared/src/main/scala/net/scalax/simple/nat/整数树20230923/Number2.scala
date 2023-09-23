@@ -155,7 +155,7 @@ object 整数树Runnersdfsdfwaerwerwer {
     }
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     for {
       i1 <- -20 to 20
       i2 <- -20 to 20

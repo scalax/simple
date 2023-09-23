@@ -16,12 +16,12 @@ object Number1 {
 
   case class NumberAImpl(numA: NumImplAbs, numB: NumImplAbs) extends NumImplAbs {
     override def method1(num2: NumImplAbs, num3: NumImplAbs): NumberAbs =
-      NumberAPositive(numA.method1(num2, num3), numB.method1(num2, num3))
+      NumberAPositive(numA.method1(num2, NumberAZeroImpl), numB.method1(num3, NumberBZeroImpl))
   }
 
   case class NumberBImpl(numB: NumImplAbs, numA: NumImplAbs) extends NumImplAbs {
     override def method1(num2: NumImplAbs, num3: NumImplAbs): NumberAbs =
-      NumberBPositive(numA.method1(num2, num3), numB.method1(num2, num3))
+      NumberBPositive(numA.method1(num2, NumberAZeroImpl), numB.method1(num3, NumberBZeroImpl))
   }
 
   case class NumberAZeroImplAbstraction(bZero: () => NumberBZeroImplAbstraction) extends NumImplAbs {
