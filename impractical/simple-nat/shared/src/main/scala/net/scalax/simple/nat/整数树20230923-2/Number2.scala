@@ -4,13 +4,13 @@ object NENE喵A呜哇 {
 
   import Number1._
 
-  def count1Impl1(numImplAbs: NumAExecute): Int = numImplAbs match {
-    case NumAExecutePositive(numA, numB) => count1Impl1(numA()) + count1Impl2(numB) + 1
+  def countExecuteA(numImplAbs: NumAExecute): Int = numImplAbs match {
+    case NumAExecutePositive(numA, numB) => countExecuteA(numA()) + countExecuteB(numB) + 1
     case NumAExecuteZerp                 => 0
   }
 
-  def count1Impl2(numImplAbs: NumBExecute): Int = numImplAbs match {
-    case NumBExecutePositive(numB, numA) => count1Impl1(numA) + count1Impl2(numB()) - 1
+  def countExecuteB(numImplAbs: NumBExecute): Int = numImplAbs match {
+    case NumBExecutePositive(numB, numA) => countExecuteA(numA) + countExecuteB(numB()) - 1
     case NumBExecuteZero                 => 0
   }
 
@@ -54,14 +54,14 @@ object NENE喵A呜哇 {
           )
         )
       )
-    println("Need-1: " + count1Impl1(num1))
-    println("Need-2: " + count1Impl1(num2))
-    println(count1Impl2(num3))
-    println("Need-3: " + count1Impl2(num4))
+    println("Need-1: " + countExecuteA(num1))
+    println("Need-2: " + countExecuteA(num2))
+    println(countExecuteB(num3))
+    println("Need-3: " + countExecuteB(num4))
 
     println("Result-4: " + countResultA(num1.method1(num2, num4)))
 
-    assert(count1Impl1(num1) + count1Impl1(num2) + count1Impl2(num4) == countResultA(num1.method1(num2, num4)))
+    assert(countExecuteA(num1) + countExecuteA(num2) + countExecuteB(num4) == countResultA(num1.method1(num2, num4)))
   }
 
 }
