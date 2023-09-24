@@ -7,8 +7,8 @@ import scala.util.Random
 object 统计 {
 
   def gen(
-    leftBuilder: (() => 合集.InputNum) => 合集.InputNum,
-    rightBuilder: (() => 合集.InputNum) => 合集.InputNum
+    leftBuilder: (() => 合集.InputNum) => 合集.InputNum with 合集.CLeft,
+    rightBuilder: (() => 合集.InputNum) => 合集.InputNum with 合集.CRight
   )(leftLength: Int, rightLength: Int)(selfNumber: => 合集.InputNum): 合集.InputNum = {
     lazy val leftNumInstance: 合集.InputNum =
       gen(leftBuilder = leftBuilder, rightBuilder = rightBuilder)(leftLength = leftLength - 1, rightLength = rightLength)(selfNumber)
@@ -36,7 +36,7 @@ object 统计 {
     else {
       if ((long1 + long2) % 8210L == 0L) {
         if (long2 != 0L) {
-          val currentResult: BigDecimal = BigDecimal(long1) / BigDecimal(long2)
+          val currentResult: BigDecimal = BigDecimal(long2) / BigDecimal(long1)
           println(s"current: $currentResult, except: $except, cha: ${currentResult - except}")
         }
       }

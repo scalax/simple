@@ -13,45 +13,31 @@ object Number1 {
   case class NumBCountPositive(next: () => NumBCount, precursor: () => NumACount) extends NumBCount(next)
 
   // ========== NumberA
-  abstract class NumAExecute(next: () => NumAExecute) extends NumACount(next = next) {
-    def method1(numA: NumAExecute, numB: NumBExecute): NumACount
+  class NumAExecute(next: () => NumAExecute) extends NumACount(next = next) {
+    def method1(numA: NumAExecute, numB: NumBExecute): NumACount = numA.method1(next(), numB)
   }
 
   case class NumAExecutePositive(next: () => NumAExecute, precursor: () => NumBExecute) extends NumAExecute(next) {
-    override def method1(numA1: NumAExecute, numB1: NumBExecute): NumACount =
-      NumACountPositive(
-        next = () => next().method1(numA1, NumBExecuteZeroImpl),
-        precursor = () => precursor().method2(numB1, NumAExecuteZeroImpl)
-      )
+    override def method1(numA: NumAExecute, numB: NumBExecute): NumACount = NumACountPositive(
+      next = () => next().method1(numA, NumBExecuteZero),
+      precursor = () => precursor().method2(numB, NumAExecuteZero)
+    )
   }
 
-  private class NumAExecuteZeroImpl(next: () => NumAExecuteZeroImpl) extends NumAExecute(next) {
-    override def method1(numA1: NumAExecute, numB1: NumBExecute): NumACount = {
-      numA1.method1(next(), numB1)
-    }
-  }
-  private lazy val NumAExecuteZeroImpl: NumAExecuteZeroImpl = new NumAExecuteZeroImpl(next = () => NumAExecuteZeroImpl)
-  val NumAExecuteZero: NumAExecute                          = NumAExecuteZeroImpl
+  lazy val NumAExecuteZero: NumAExecute = new NumAExecute(next = () => NumAExecuteZero)
 
   // ========== NumberB
-  abstract class NumBExecute(next: () => NumBExecute) extends NumBCount(next) {
-    def method2(numB: NumBExecute, numA: NumAExecute): NumBCount
+  class NumBExecute(next: () => NumBExecute) extends NumBCount(next) {
+    def method2(numB: NumBExecute, numA: NumAExecute): NumBCount = numB.method2(next(), numA)
   }
 
   case class NumBExecutePositive(next: () => NumBExecute, precursor: () => NumAExecute) extends NumBExecute(next) {
-    override def method2(numB1: NumBExecute, numA1: NumAExecute): NumBCount =
-      NumBCountPositive(
-        next = () => next().method2(numB1, NumAExecuteZeroImpl),
-        precursor = () => precursor().method1(numA1, NumBExecuteZeroImpl)
-      )
+    override def method2(numB: NumBExecute, numA: NumAExecute): NumBCount = NumBCountPositive(
+      next = () => next().method2(numB, NumAExecuteZero),
+      precursor = () => precursor().method1(numA, NumBExecuteZero)
+    )
   }
 
-  private class NumBExecuteZeroImpl(next: () => NumBExecuteZeroImpl) extends NumBExecute(next) {
-    override def method2(numB1: NumBExecute, numA1: NumAExecute): NumBCount = {
-      numB1.method2(next(), numA1)
-    }
-  }
-  private lazy val NumBExecuteZeroImpl: NumBExecuteZeroImpl = new NumBExecuteZeroImpl(next = () => NumBExecuteZeroImpl)
-  val NumBExecuteZero: NumBExecute                          = NumBExecuteZeroImpl
+  val NumBExecuteZero: NumBExecute = new NumBExecute(() => NumBExecuteZero)
 
 }

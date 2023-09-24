@@ -16,15 +16,15 @@ object 乘除法喵 {
       val Sub: Int    = 27
     }
     lazy val num1GHDMZSK: 合集.InputNum =
-      统计.gen(leftBuilder = t => 合集.InputNum4(t), rightBuilder = t => 合集.InputNum1(t))(leftLength = num1.Parent, rightLength = num1.Sub)(
+      统计.gen(leftBuilder = t => 合集.InputNum1(t), rightBuilder = t => 合集.InputNum4(t))(leftLength = num1.Parent, rightLength = num1.Sub)(
         num1GHDMZSK
       )
     lazy val num2GHDMZSK: 合集.InputNum =
-      统计.gen(leftBuilder = t => 合集.InputNum3(t), rightBuilder = t => 合集.InputNum4(t))(leftLength = num2.Parent, rightLength = num2.Sub)(
+      统计.gen(leftBuilder = t => 合集.InputNum5(t), rightBuilder = t => 合集.InputNum6(t))(leftLength = num2.Parent, rightLength = num2.Sub)(
         num2GHDMZSK
       )
     lazy val num3GHDMZSK: 合集.InputNum =
-      统计.gen(leftBuilder = t => 合集.InputNum2(t), rightBuilder = t => 合集.InputNum3(t))(leftLength = num3.Parent, rightLength = num3.Sub)(
+      统计.gen(leftBuilder = t => 合集.InputNum3(t), rightBuilder = t => 合集.InputNum2(t))(leftLength = num3.Parent, rightLength = num3.Sub)(
         num3GHDMZSK
       )
 
