@@ -47,7 +47,7 @@ object RunMain {
       val except: BigDecimal = BigDecimal(i1) + BigDecimal(i2)
       val r1                 = count(num1Count.inputGHDMZSK(num2Count))
 
-      println(i1, '+', i2, '=', except, r1)
+      println((i1, '+', i2, '=', except, r1))
       assert(r1 == i1 + i2)
     }
   }

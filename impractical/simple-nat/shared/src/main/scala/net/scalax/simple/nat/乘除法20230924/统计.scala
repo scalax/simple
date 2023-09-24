@@ -6,10 +6,6 @@ import scala.util.Random
 
 object 统计 {
 
-  sealed trait NumCount
-  case class NumCountLeft(tail: () => NumCount)  extends NumCount
-  case class NumCountRight(tail: () => NumCount) extends NumCount
-
   def gen(
     leftBuilder: (() => 合集.InputNum) => 合集.InputNum,
     rightBuilder: (() => 合集.InputNum) => 合集.InputNum
@@ -34,26 +30,26 @@ object 统计 {
     }
   }
 
-  def confirm(forConfirm: () => 统计.NumCount, brokeNum: Long = 2000): Unit = {
+  def confirm(forConfirm: () => 合集.NumCount, except: BigDecimal, brokeNum: Long = 2000, maxCount: Long = 60000000): Boolean = {
     @tailrec
-    def confirmImpl(forCount: () => 统计.NumCount, long1: Long, long2: Long): Unit = {
-      if ((long1 + long2) % 821L == 0L) {
-        println(s"long1:$long1, long2:$long2, 临时结果: ${long1 - long2}")
-        if (long2 != 0) {
-          println(BigDecimal(long1) / BigDecimal(long2))
+    def confirmImpl(forCount: () => 合集.NumCount, long1: Long, long2: Long, maxC: Long): Boolean = if (maxC > maxCount) true
+    else {
+      if ((long1 + long2) % 8210L == 0L) {
+        if (long2 != 0L) {
+          val currentResult: BigDecimal = BigDecimal(long1) / BigDecimal(long2)
+          println(s"current: $currentResult, except: $except, cha: ${currentResult - except}")
         }
-        assert((long1 - long2).abs < brokeNum)
       }
 
       forCount() match {
-        case 统计.NumCountLeft(tail) =>
-          confirmImpl(tail, long1 = long1 + 1, long2 = long2)
-        case 统计.NumCountRight(tail) =>
-          confirmImpl(tail, long1 = long1, long2 = long2 + 1)
+        case 合集.NumCountLeft(tail) =>
+          confirmImpl(tail, long1 = long1 + 1, long2 = long2, maxC = maxC + 1)
+        case 合集.NumCountRight(tail) =>
+          confirmImpl(tail, long1 = long1, long2 = long2 + 1, maxC = maxC + 1)
       }
     }
 
-    confirmImpl(forConfirm, 1, 1)
+    confirmImpl(forConfirm, 1, 1, 0)
   }
 
 }
