@@ -1,63 +1,75 @@
 package net.scalax.simple.nat.`整数树20230923-2`
 
+import net.scalax.simple.nat.合集1.合集
+
 object Number1 {
 
-  // ========= Result
-  trait NumberA
-  trait NumberB
-  case class NumberAPositive(next: NumberA, precursor: NumberB) extends NumberA
-  case class NumberBPositive(next: NumberB, precursor: NumberA) extends NumberB
-  case class NumberAZeroAbstraction(next: () => NumberA)        extends NumberA
-  lazy val NumberAZero: NumberA = NumberAZeroAbstraction(next = () => NumberAZero)
-  case class NumberBZeroAbstraction(next: () => NumberB) extends NumberB
-  lazy val NumberBZero: NumberB = NumberBZeroAbstraction(next = () => NumberBZero)
+  // ========= ResultA
+  class NumACount(next: () => NumACount) extends 合集.NumCount(next)
+
+  case class NumACountPositive(next: () => NumACount, precursor: NumBCount) extends NumACount(next)
+
+  private class NumACountZeroImpl(next: () => NumACountZeroImpl) extends NumACount(next)
+  private lazy val NumACountZeroImpl: NumACountZeroImpl = new NumACountZeroImpl(next = () => NumACountZeroImpl)
+  val NumACountZero: NumACount                          = NumACountZeroImpl
+
+  // ========= ResultB
+  class NumBCount(next: () => NumBCount) extends 合集.NumCount(next)
+
+  case class NumBCountPositive(next: () => NumBCount, precursor: NumACount) extends NumBCount(next)
+
+  private class NumBCountZeroImpl(next: () => NumBCountZeroImpl) extends NumBCount(next)
+  private lazy val NumBCountZeroImpl: NumBCountZeroImpl = new NumBCountZeroImpl(next = () => NumBCountZeroImpl)
+  val NumBCountZero: NumBCount                          = NumBCountZeroImpl
 
   // ========== NumberA
-  trait NumAImpls {
-    def method1(numA: NumAImpls, numB: NumBImpls): NumberA
+  abstract class NumAExecute(next: () => NumAExecute) extends NumACount(next = next) {
+    def method1(numA: NumAExecute, numB: NumBExecute): NumACount
   }
 
-  case class NumberAImpl(next: NumAImpls, precursor: NumBImpls) extends NumAImpls {
-    override def method1(numA1: NumAImpls, numB1: NumBImpls): NumberA =
-      NumberAPositive(next = next.method1(numA1, NumberBZeroImpl), precursor = precursor.method2(numB1, NumberAZeroImpl))
+  case class NumAExecutePositive(next: () => NumAExecute, precursor: NumBExecute) extends NumAExecute(next) {
+    override def method1(numA1: NumAExecute, numB1: NumBExecute): NumACount =
+      NumACountPositive(next = () => next().method1(numA1, NumBExecuteZeroImpl), precursor = precursor.method2(numB1, NumAExecuteZerpImpl))
   }
-  case class NumberAZeroImplAbstraction(next: () => NumAImpls) extends NumAImpls {
-    override def method1(numA1: NumAImpls, numB1: NumBImpls): NumberA = {
-      val needEnd1: Boolean = next() == NumberAZeroImpl
-      val needEnd2: Boolean = numA1 == NumberAZeroImpl
-      val needEnd3: Boolean = numB1 == NumberBZeroImpl
+
+  private class NumAExecuteZerpImpl(next: () => NumAExecuteZerpImpl) extends NumAExecute(next) {
+    override def method1(numA1: NumAExecute, numB1: NumBExecute): NumACount = {
+      val needEnd1: Boolean = next() == NumAExecuteZerpImpl
+      val needEnd2: Boolean = numA1 == NumAExecuteZerpImpl
+      val needEnd3: Boolean = numB1 == NumBExecuteZeroImpl
       if (needEnd1 && needEnd2 && needEnd3) {
-        NumberAZero
+        NumACountZero
       } else {
         numA1.method1(next(), numB1)
       }
     }
   }
-
-  lazy val NumberAZeroImpl: NumberAZeroImplAbstraction = NumberAZeroImplAbstraction(next = () => NumberAZeroImpl)
+  private lazy val NumAExecuteZerpImpl: NumAExecuteZerpImpl = new NumAExecuteZerpImpl(next = () => NumAExecuteZerpImpl)
+  val NumAExecuteZerp: NumAExecute                          = NumAExecuteZerpImpl
 
   // ========== NumberB
-  trait NumBImpls {
-    def method2(numB: NumBImpls, numA: NumAImpls): NumberB
+  abstract class NumBExecute(next: () => NumBExecute) extends NumBCount(next) {
+    def method2(numB: NumBExecute, numA: NumAExecute): NumBCount
   }
 
-  case class NumberBImpl(next: NumBImpls, precursor: NumAImpls) extends NumBImpls {
-    override def method2(numB1: NumBImpls, numA1: NumAImpls): NumberB =
-      NumberBPositive(next = next.method2(numB1, NumberAZeroImpl), precursor = precursor.method1(numA1, NumberBZeroImpl))
+  case class NumBExecutePositive(next: () => NumBExecute, precursor: NumAExecute) extends NumBExecute(next) {
+    override def method2(numB1: NumBExecute, numA1: NumAExecute): NumBCount =
+      NumBCountPositive(next = () => next().method2(numB1, NumAExecuteZerpImpl), precursor = precursor.method1(numA1, NumBExecuteZeroImpl))
   }
-  case class NumberBZeroImplAbstraction(next: () => NumBImpls) extends NumBImpls {
-    override def method2(numB1: NumBImpls, numA1: NumAImpls): NumberB = {
-      val needEnd1: Boolean = next() == NumberBZeroImpl
-      val needEnd2: Boolean = numB1 == NumberBZeroImpl
-      val needEnd3: Boolean = numA1 == NumberAZeroImpl
+
+  private class NumBExecuteZeroImpl(next: () => NumBExecuteZeroImpl) extends NumBExecute(next) {
+    override def method2(numB1: NumBExecute, numA1: NumAExecute): NumBCount = {
+      val needEnd1: Boolean = next() == NumBExecuteZeroImpl
+      val needEnd2: Boolean = numB1 == NumBExecuteZeroImpl
+      val needEnd3: Boolean = numA1 == NumAExecuteZerpImpl
       if (needEnd1 && needEnd2 && needEnd3) {
-        NumberBZero
+        NumBCountZero
       } else {
         numB1.method2(next(), numA1)
       }
     }
   }
-
-  lazy val NumberBZeroImpl: NumberBZeroImplAbstraction = NumberBZeroImplAbstraction(next = () => NumberBZeroImpl)
+  private lazy val NumBExecuteZeroImpl: NumBExecuteZeroImpl = new NumBExecuteZeroImpl(next = () => NumBExecuteZeroImpl)
+  val NumBExecuteZero: NumBExecute                          = NumBExecuteZeroImpl
 
 }

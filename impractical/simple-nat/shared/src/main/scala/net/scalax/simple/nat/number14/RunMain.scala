@@ -25,7 +25,7 @@ object `Run我Run我Run我` extends App_1 {
 
   val (g1, g2) = count(() => Number.n1Pos.inputGHDMZSK(Number.n2Pos).inputGHDMZSK(Number.n4Pos).inputGHDMZSK(Number.n2Pos))
 
-  println(g1, g2)
-  println(BigDecimal(g1) / BigDecimal(g2))
+  println((g1, g2))
+  println((BigDecimal(g1) / BigDecimal(g2)))
 
 }

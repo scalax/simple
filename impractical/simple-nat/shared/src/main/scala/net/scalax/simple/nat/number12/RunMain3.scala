@@ -51,7 +51,7 @@ object RunMain3 extends App_1 {
     val result7: BigDecimal = count(() => numZero1.inputGHDMZSK(numZero2))
     val result8: BigDecimal = count(() => numZero2.inputGHDMZSK(numZero1))
 
-    println(i1, i2, result0, result1, result2, result3, result4, result5, result6, result7, result8)
+    println((i1, i2, result0, result1, result2, result3, result4, result5, result6, result7, result8))
 
     assert((result0 - result1).abs < cha)
     assert((result0 - result2).abs < cha)

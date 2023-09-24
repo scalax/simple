@@ -4,33 +4,37 @@ object 乘除法喵 {
 
   def main1(arr: Array[String]): Unit = {
     object num1 {
-      val Parent: Int = 42
-      val Sub: Int    = 16
+      val Parent: Int = 24
+      val Sub: Int    = 547
     }
     object num2 {
-      val Parent: Int = 105
-      val Sub: Int    = 5
+      val Parent: Int = 485
+      val Sub: Int    = 711
     }
     object num3 {
-      val Parent: Int = 4
-      val Sub: Int    = 32
+      val Parent: Int = 57
+      val Sub: Int    = 27
     }
     lazy val num1GHDMZSK: 合集.InputNum =
-      统计.gen(leftBuilder = t => 合集.InputNum6(t), rightBuilder = t => 合集.InputNum1(t))(leftLength = num1.Parent, rightLength = num1.Sub)(
+      统计.gen(leftBuilder = t => 合集.InputNum4(t), rightBuilder = t => 合集.InputNum1(t))(leftLength = num1.Parent, rightLength = num1.Sub)(
         num1GHDMZSK
       )
     lazy val num2GHDMZSK: 合集.InputNum =
-      统计.gen(leftBuilder = t => 合集.InputNum6(t), rightBuilder = t => 合集.InputNum4(t))(leftLength = num2.Parent, rightLength = num2.Sub)(
+      统计.gen(leftBuilder = t => 合集.InputNum3(t), rightBuilder = t => 合集.InputNum4(t))(leftLength = num2.Parent, rightLength = num2.Sub)(
         num2GHDMZSK
       )
     lazy val num3GHDMZSK: 合集.InputNum =
-      统计.gen(leftBuilder = t => 合集.InputNum4(t), rightBuilder = t => 合集.InputNum2(t))(leftLength = num3.Parent, rightLength = num3.Sub)(
+      统计.gen(leftBuilder = t => 合集.InputNum2(t), rightBuilder = t => 合集.InputNum3(t))(leftLength = num3.Parent, rightLength = num3.Sub)(
         num3GHDMZSK
       )
 
-    val execResultForInput: 统计.NumCount = num1GHDMZSK.input(num2GHDMZSK, num3GHDMZSK)
+    val execResultForInput: 合集.NumCount = num1GHDMZSK.input(num2GHDMZSK, num3GHDMZSK)
 
-    统计.confirm(() => execResultForInput, brokeNum = 300000)
+    val bigDecimal1: BigDecimal = BigDecimal(num1.Sub) / BigDecimal(num1.Parent)
+    val bigDecimal2: BigDecimal = BigDecimal(num2.Sub) / BigDecimal(num2.Parent)
+    val bigDecimal3: BigDecimal = BigDecimal(num3.Sub) / BigDecimal(num3.Parent)
+    统计.confirm(() => execResultForInput, except = bigDecimal1 * bigDecimal2 * bigDecimal3, brokeNum = 300000)
+
   }
 
 }

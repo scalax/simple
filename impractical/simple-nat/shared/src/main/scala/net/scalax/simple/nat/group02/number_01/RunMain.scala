@@ -8,8 +8,8 @@ import scala.annotation.tailrec
 object `喵_Number_01` extends App_1 {
 
   def genNumber(c: Int): (ghdmzsk, ghdmzsk) = {
-    lazy val (n1Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number1S, zero = Number.number1T, count = c - 1)
-    lazy val (n3Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number1T, zero = Number.number2S, count = c)
+    lazy val (n1Pos, _) = Number.genNumberImpl(positive = Number.number1S, zero = Number.number1T, count = c - 1)
+    lazy val (n3Pos, _) = Number.genNumberImpl(positive = Number.number1T, zero = Number.number2S, count = c)
 
     (n1Pos, n3Pos)
   }
@@ -53,9 +53,9 @@ object `喵_Number_01` extends App_1 {
     val (g1, g2)       = count(except = i, i1 = i1)
     val i2: BigDecimal = BigDecimal(i1 - 1)
     val r: BigDecimal  = BigDecimal(g1) / BigDecimal(g2)
-    println(g1, g2)
-    println(i, s"$i ^ 2 - 1", r)
-    assert((i2 - r).abs < BigDecimal("0.001"))
+    println((g1, g2))
+    println((i, s"$i ^ 2 - 1", r))
+    assert(((i2 - r).abs < BigDecimal("0.001")))
   }
 
 }

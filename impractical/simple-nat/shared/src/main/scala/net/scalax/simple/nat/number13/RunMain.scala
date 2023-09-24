@@ -66,7 +66,7 @@ object RunMain extends App_1 {
     val r3 = count(num1CountZero, num2CountZero, except)
     val r4 = count(num1CountZero, num2Count, except)
 
-    println(i1, '+', i2, '=', except, r1, r2, r3, r4)
+    println((i1, '+', i2, '=', except, r1, r2, r3, r4))
   }
 
   for {
@@ -86,7 +86,7 @@ object RunMain extends App_1 {
     val r3 = count(num1CountZero, num2CountZero, except)
     val r4 = count(num1CountZero, num2Count, except)
 
-    println(i1, '×', i2, '=', except, r1, r2, r3, r4)
+    println((i1, '×', i2, '=', except, r1, r2, r3, r4))
   }
 
   for {
@@ -106,7 +106,7 @@ object RunMain extends App_1 {
     val r3 = count(num1CountZero, num2CountZero, except)
     val r4 = count(num1CountZero, num2Count, except)
 
-    println(i1, '÷', i2, '=', except, r1, r2, r3, r4)
+    println((i1, '÷', i2, '=', except, r1, r2, r3, r4))
   }
 
 }
