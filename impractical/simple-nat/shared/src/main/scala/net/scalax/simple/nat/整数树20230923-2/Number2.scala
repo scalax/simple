@@ -23,7 +23,7 @@ object NENE喵A呜哇 {
       }
 
     tempInstance
-      .map { case NumACountPositive(numA, numB) =>
+      .map { case NumACount(numA, numB) =>
         countResultA(numA) + countResultB(numB) + 1
       }
       .getOrElse(0)
@@ -38,7 +38,7 @@ object NENE喵A呜哇 {
       }
 
     tempInstance
-      .map { case NumBCountPositive(numB, numA) =>
+      .map { case NumBCount(numB, numA) =>
         countResultA(numA) + countResultB(numB) - 1
       }
       .getOrElse(0)
