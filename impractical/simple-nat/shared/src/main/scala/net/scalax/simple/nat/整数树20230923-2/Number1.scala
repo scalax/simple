@@ -5,20 +5,18 @@ import net.scalax.simple.nat.合集1.合集
 object Number1 {
 
   // ========= ResultA
-  class NumACount(next: () => NumACount)                                          extends 合集.NumCount(next)
-  case class NumACountPositive(next: () => NumACount, precursor: () => NumBCount) extends NumACount(next)
+  case class NumACount(next: () => NumACount, precursor: () => NumBCount)
 
   // ========= ResultB
-  class NumBCount(next: () => NumBCount)                                          extends 合集.NumCount(next)
-  case class NumBCountPositive(next: () => NumBCount, precursor: () => NumACount) extends NumBCount(next)
+  case class NumBCount(next: () => NumBCount, precursor: () => NumACount)
 
   // ========== NumberA
-  class NumAExecute(next: () => NumAExecute) extends NumACount(next = next) {
+  class NumAExecute(next: () => NumAExecute) {
     def method1(numA: NumAExecute, numB: NumBExecute): NumACount = numA.method1(next(), numB)
   }
 
   case class NumAExecutePositive(next: () => NumAExecute, precursor: () => NumBExecute) extends NumAExecute(next) {
-    override def method1(numA: NumAExecute, numB: NumBExecute): NumACount = NumACountPositive(
+    override def method1(numA: NumAExecute, numB: NumBExecute): NumACount = NumACount(
       next = () => next().method1(numA, NumBExecuteZero),
       precursor = () => precursor().method2(numB, NumAExecuteZero)
     )
@@ -27,12 +25,12 @@ object Number1 {
   lazy val NumAExecuteZero: NumAExecute = new NumAExecute(next = () => NumAExecuteZero)
 
   // ========== NumberB
-  class NumBExecute(next: () => NumBExecute) extends NumBCount(next) {
+  class NumBExecute(next: () => NumBExecute) {
     def method2(numB: NumBExecute, numA: NumAExecute): NumBCount = numB.method2(next(), numA)
   }
 
   case class NumBExecutePositive(next: () => NumBExecute, precursor: () => NumAExecute) extends NumBExecute(next) {
-    override def method2(numB: NumBExecute, numA: NumAExecute): NumBCount = NumBCountPositive(
+    override def method2(numB: NumBExecute, numA: NumAExecute): NumBCount = NumBCount(
       next = () => next().method2(numB, NumAExecuteZero),
       precursor = () => precursor().method1(numA, NumBExecuteZero)
     )
