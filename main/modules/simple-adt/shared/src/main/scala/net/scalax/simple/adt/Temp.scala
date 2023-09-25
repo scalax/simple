@@ -31,9 +31,9 @@ object ADTData {
 }
 
 final class IsFinishAndNothing {
-  def default[T](t: => T): T           = t
-  lazy val isEnded: IsFinishAndNothing = this
-  def matchErrorAndNothing: Nothing    = throw new Exception("match error.")
+  def default[T](t: => T): T               = t
+  lazy val isEnded: IsFinishAndNothing     = this
+  def matchErrorAndThrowException: Nothing = throw new Exception("match error.")
 }
 object IsFinishAndNothing {
   lazy val value: IsFinishAndNothing = new IsFinishAndNothing

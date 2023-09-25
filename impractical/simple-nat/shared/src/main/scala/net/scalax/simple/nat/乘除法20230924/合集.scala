@@ -4,12 +4,12 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 
 object 合集 {
 
-  trait CLeft
-  trait CRight
-
-  // ResultAB
+  // Result
   case class NumCountLeft(tail: () => Adt.Option2[NumCountLeft, NumCountRight])
   case class NumCountRight(tail: () => Adt.Option2[NumCountLeft, NumCountRight])
+
+  trait CLeft
+  trait CRight
 
   // NUMAB
   abstract class InputNum(tail: () => InputNum) {

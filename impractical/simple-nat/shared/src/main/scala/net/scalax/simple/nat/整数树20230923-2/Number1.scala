@@ -1,13 +1,9 @@
 package net.scalax.simple.nat.`整数树20230923-2`
 
-import net.scalax.simple.nat.合集1.合集
-
 object Number1 {
 
-  // ========= ResultA
+  // ========= Result
   case class NumACount(next: () => NumACount, precursor: () => NumBCount)
-
-  // ========= ResultB
   case class NumBCount(next: () => NumBCount, precursor: () => NumACount)
 
   // ========== NumberA

@@ -165,9 +165,9 @@ object `Test Cases copy from documention in README.md` {
           case Adt.Option1(intValue)    => Some(BigDecimal(intValue))
           case Adt.Option2(strValue)    => Try(BigDecimal(strValue)).toOption
           case Adt.Option3(doubleValue) => Some(BigDecimal(doubleValue))
-          case Adt.Option4(empty)       => empty.matchErrorAndNothing // Keep safe for API changed
-          case Adt.Option5(empty)       => empty.matchErrorAndNothing
-          case Adt.Option6(empty)       => empty.matchErrorAndNothing
+          case Adt.Option4(empty)       => empty.matchErrorAndThrowException // Keep safe for API changed
+          case Adt.Option5(empty)       => empty.matchErrorAndThrowException
+          case Adt.Option6(empty)       => empty.matchErrorAndThrowException
         }
       }
 
@@ -187,9 +187,9 @@ object `Test Cases copy from documention in README.md` {
           case Adt.Option1(noneValue) => ("None", -100)
           case Adt.Option2(intSome)   => ("Some", intSome.get + 1)
           case Adt.Option3(intOpt)    => ("Option", intOpt.map(_ + 2).getOrElse(-500))
-          case Adt.Option4(empty)     => empty.matchErrorAndNothing // Keep safe for API changed
-          case Adt.Option5(empty)     => empty.matchErrorAndNothing
-          case Adt.Option6(empty)     => empty.matchErrorAndNothing
+          case Adt.Option4(empty)     => empty.matchErrorAndThrowException // Keep safe for API changed
+          case Adt.Option5(empty)     => empty.matchErrorAndThrowException
+          case Adt.Option6(empty)     => empty.matchErrorAndThrowException
         }
       }
 
@@ -211,9 +211,9 @@ object `Test Cases copy from documention in README.md` {
           case Adt.Option1(noneValue)            => "Null Tag".asJson
           case Adt.Option2(intOpt)               => intOpt.map(_ + 1).asJson
           case Adt.Option3(Adt.Adapter(encoder)) => encoder(t)
-          case Adt.Option4(empty)                => empty.matchErrorAndNothing // Keep safe for API changed
-          case Adt.Option5(empty)                => empty.matchErrorAndNothing
-          case Adt.Option6(empty)                => empty.matchErrorAndNothing
+          case Adt.Option4(empty)                => empty.matchErrorAndThrowException // Keep safe for API changed
+          case Adt.Option5(empty)                => empty.matchErrorAndThrowException
+          case Adt.Option6(empty)                => empty.matchErrorAndThrowException
         }
       }
 

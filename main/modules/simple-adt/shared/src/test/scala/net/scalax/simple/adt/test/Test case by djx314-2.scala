@@ -42,7 +42,7 @@ object TestCase2 extends ZIOSpecDefault {
         "Null Tag".asJson
       case Adt.Option2(n) => n.map(_ + 1).asJson
       case Adt.Option3(n) => n.value
-      case Adt.Option4(n) => n.matchErrorAndNothing
+      case Adt.Option4(n) => n.matchErrorAndThrowException
     }
 
     if (ra != rb) {
