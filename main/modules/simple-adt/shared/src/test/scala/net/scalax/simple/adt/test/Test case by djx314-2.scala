@@ -23,9 +23,9 @@ object TestCase2 extends ZIOSpecDefault {
     }
   }
 
-  def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
-    val applyM: Adt.Option3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]] =
-      Adt.Options3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
+  def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
+    val applyM: Adt.CoProduct3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]] =
+      Adt.CoProducts3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
 
     val ra: Json = applyM.fold(
       { n =>
@@ -37,12 +37,12 @@ object TestCase2 extends ZIOSpecDefault {
     )
 
     val rb = applyM match {
-      case Adt.Option1(n) =>
+      case Adt.CoProduct1(n) =>
         scalaAssert(n.isEmpty)
         "Null Tag".asJson
-      case Adt.Option2(n) => n.map(_ + 1).asJson
-      case Adt.Option3(n) => n.value
-      case Adt.Option4(n) => n.matchErrorAndThrowException
+      case Adt.CoProduct2(n) => n.map(_ + 1).asJson
+      case Adt.CoProduct3(n) => n.value
+      case Adt.CoProduct4(n) => n.matchErrorAndThrowException
     }
 
     if (ra != rb) {
