@@ -50,8 +50,8 @@ lazy val codecJS  = codec.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) ag
 
 val `nat/file`  = `impractical/file` / "simple-nat"
 val nat         = crossProject(JSPlatform, JVMPlatform) in `nat/file`
-lazy val natJVM = nat.jvm dependsOn ghdmzskJVM aggregate ghdmzskJVM
-lazy val natJS  = nat.js dependsOn ghdmzskJS aggregate ghdmzskJS
+lazy val natJVM = nat.jvm
+lazy val natJS  = nat.js
 
 val `generic/file`  = `wip/file` / "simple-generic"
 val generic         = crossProject(JSPlatform, JVMPlatform) in `generic/file`
