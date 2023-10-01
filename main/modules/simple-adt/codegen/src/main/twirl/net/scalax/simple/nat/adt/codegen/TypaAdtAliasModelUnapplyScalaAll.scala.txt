@@ -16,7 +16,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 trait TypeAdtAliasModelUnapply {
     @for(i <- 1 to 22) {
-        object Option@{i} {
+        object CoProduct@{i} {
             def unapply[@TypeParameters22(i), S <: ADTStatus](data: ADTData[@ADT22Parameter(1, i), S]): Option[I@{i}] = {
                 val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
                 val model: ghdmzsk = dataInstance.inputGHDMZSK(impl.TypeAdtAliasModelUnapplyGhdmzsk.options@{i}GHDMZSK)

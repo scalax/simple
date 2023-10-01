@@ -4,16 +4,6 @@ object NENE喵A呜哇 {
 
   import Number1._
 
-  def countExecuteA(numImplAbs: () => NumAExecute): Int = numImplAbs() match {
-    case NumAExecutePositive(numA, numB) => countExecuteA(numA) + countExecuteB(numB) + 1
-    case NumAExecuteZero                 => 0
-  }
-
-  def countExecuteB(numImplAbs: () => NumBExecute): Int = numImplAbs() match {
-    case NumBExecutePositive(numB, numA) => countExecuteA(numA) + countExecuteB(numB) - 1
-    case NumBExecuteZero                 => 0
-  }
-
   def countResultA(numImplAbs: () => NumACount): Int = {
     val tempInstance =
       try
@@ -23,8 +13,10 @@ object NENE喵A呜哇 {
       }
 
     tempInstance
-      .map { case NumACount(numA, numB) =>
-        countResultA(numA) + countResultB(numB) + 1
+      .map {
+        case NumAExecuteZero => 0
+        case NumACount(numA, numB) =>
+          countResultA(numA) + countResultB(numB) + 1
       }
       .getOrElse(0)
   }
@@ -38,48 +30,51 @@ object NENE喵A呜哇 {
       }
 
     tempInstance
-      .map { case NumBCount(numB, numA) =>
-        countResultA(numA) + countResultB(numB) - 1
+      .map {
+        case NumBExecuteZero => 0
+        case NumBCount(numB, numA) =>
+          countResultA(numA) + countResultB(numB) - 1
       }
       .getOrElse(0)
   }
 
   def main(arr: Array[String]): Unit = {
-    val num1 = NumAExecutePositive(
+    val num1 = new NumAExecutePositive(
       () => NumAExecuteZero,
       () =>
-        NumBExecutePositive(
+        new NumBExecutePositive(
           () =>
-            NumBExecutePositive(
-              () => NumBExecutePositive(() => NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero), () => NumAExecuteZero),
+            new NumBExecutePositive(
+              () =>
+                new NumBExecutePositive(() => new NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero), () => NumAExecuteZero),
               () => NumAExecuteZero
             ),
-          () => NumAExecutePositive(() => NumAExecuteZero, () => NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero))
+          () => new NumAExecutePositive(() => NumAExecuteZero, () => new NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero))
         )
     )
     val num2 =
-      NumAExecutePositive(
+      new NumAExecutePositive(
         () =>
-          NumAExecutePositive(
+          new NumAExecutePositive(
             () =>
-              NumAExecutePositive(
+              new NumAExecutePositive(
                 () =>
-                  NumAExecutePositive(
+                  new NumAExecutePositive(
                     () =>
-                      NumAExecutePositive(
+                      new NumAExecutePositive(
                         () =>
-                          NumAExecutePositive(
+                          new NumAExecutePositive(
                             () =>
-                              NumAExecutePositive(
+                              new NumAExecutePositive(
                                 () =>
-                                  NumAExecutePositive(
+                                  new NumAExecutePositive(
                                     () => NumAExecuteZero,
-                                    () => NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero)
+                                    () => new NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero)
                                   ),
                                 () =>
-                                  NumBExecutePositive(
+                                  new NumBExecutePositive(
                                     () => NumBExecuteZero,
-                                    () => NumAExecutePositive(() => NumAExecuteZero, () => NumBExecuteZero)
+                                    () => new NumAExecutePositive(() => NumAExecuteZero, () => NumBExecuteZero)
                                   )
                               ),
                             () => NumBExecuteZero
@@ -95,25 +90,25 @@ object NENE喵A呜哇 {
         () => NumBExecuteZero
       )
     val num3 =
-      NumBExecutePositive(
-        () => NumBExecutePositive(() => NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero), () => NumAExecuteZero),
-        () => NumAExecutePositive(() => num1, () => NumBExecuteZero)
+      new NumBExecutePositive(
+        () => new NumBExecutePositive(() => new NumBExecutePositive(() => NumBExecuteZero, () => NumAExecuteZero), () => NumAExecuteZero),
+        () => new NumAExecutePositive(() => num1, () => NumBExecuteZero)
       )
     val num4 =
-      NumBExecutePositive(
+      new NumBExecutePositive(
         () =>
-          NumBExecutePositive(
-            () => NumBExecutePositive(() => NumBExecutePositive(() => NumBExecuteZero, () => num2), () => num1),
+          new NumBExecutePositive(
+            () => new NumBExecutePositive(() => new NumBExecutePositive(() => NumBExecuteZero, () => num2), () => num1),
             () => NumAExecuteZero
           ),
         () =>
-          NumAExecutePositive(
+          new NumAExecutePositive(
             () => num1,
             () =>
-              NumBExecutePositive(
+              new NumBExecutePositive(
                 () =>
-                  NumBExecutePositive(
-                    () => NumBExecutePositive(() => NumBExecutePositive(() => num3, () => NumAExecuteZero), () => NumAExecuteZero),
+                  new NumBExecutePositive(
+                    () => new NumBExecutePositive(() => new NumBExecutePositive(() => num3, () => NumAExecuteZero), () => NumAExecuteZero),
                     () => NumAExecuteZero
                   ),
                 () => NumAExecuteZero
@@ -121,14 +116,14 @@ object NENE喵A呜哇 {
           )
       )
 
-    println("Need-1: " + countExecuteA(() => num1))
-    println("Need-2: " + countExecuteA(() => num2))
-    println("Not-Need-1: " + countExecuteB(() => num3))
-    println("Need-3: " + countExecuteB(() => num4))
+    println("Need-1: " + countResultA(() => num1))
+    println("Need-2: " + countResultA(() => num2))
+    println("Not-Need-1: " + countResultB(() => num3))
+    println("Need-3: " + countResultB(() => num4))
     println("Result-4: " + countResultA(() => num1.method1(num2, num4)))
 
     assert(
-      countExecuteA(() => num1) + countExecuteA(() => num2) + countExecuteB(() => num4) == countResultA(() => num1.method1(num2, num4))
+      countResultA(() => num1) + countResultA(() => num2) + countResultB(() => num4) == countResultA(() => num1.method1(num2, num4))
     )
   }
 

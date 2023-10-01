@@ -1,5 +1,7 @@
 package net.scalax.simple.nat.合集1
 
+import net.scalax.simple.adt.{TypeAdt => Adt}
+
 object 乘除法喵 {
 
   def main1(arr: Array[String]): Unit = {
@@ -28,7 +30,7 @@ object 乘除法喵 {
         num3GHDMZSK
       )
 
-    val execResultForInput: 合集.NumCount = num1GHDMZSK.input(num2GHDMZSK, num3GHDMZSK)
+    val execResultForInput: Adt.Option2[合集.NumCountLeft, 合集.NumCountRight] = num1GHDMZSK.input(num2GHDMZSK, num3GHDMZSK)
 
     val bigDecimal1: BigDecimal = BigDecimal(num1.Sub) / BigDecimal(num1.Parent)
     val bigDecimal2: BigDecimal = BigDecimal(num2.Sub) / BigDecimal(num2.Parent)

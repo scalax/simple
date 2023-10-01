@@ -9,5 +9,3 @@ addSbtPlugin(pluginCol.`sbt-scalajs-crossproject`)
 addSbtPlugin(pluginCol.`sbt-git`)
 addSbtPlugin(pluginCol.`sbt-ide-settings`)
 addSbtPlugin(pluginCol.`sbt-scalajs`)
-
-addDependencyTreePlugin

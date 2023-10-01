@@ -4,6 +4,8 @@ import java.util.Date
 import scala.annotation.tailrec
 import scala.util.Random
 
+import net.scalax.simple.adt.{TypeAdt => Adt}
+
 object 统计 {
 
   def gen(
@@ -30,9 +32,16 @@ object 统计 {
     }
   }
 
-  def confirm(forConfirm: () => 合集.NumCount, except: BigDecimal, brokeNum: Long = 2000, maxCount: Long = 60000000): Boolean = {
+  def confirm(
+    forConfirm: () => Adt.Option2[合集.NumCountLeft, 合集.NumCountRight],
+    except: BigDecimal,
+    brokeNum: Long = 2000,
+    maxCount: Long = 60000000
+  ): Boolean = {
     @tailrec
-    def confirmImpl(forCount: () => 合集.NumCount, long1: Long, long2: Long, maxC: Long): Boolean = if (maxC > maxCount) true
+    def confirmImpl(forCount: () => Adt.Option2[合集.NumCountLeft, 合集.NumCountRight], long1: Long, long2: Long, maxC: Long): Boolean = if (
+      maxC > maxCount
+    ) true
     else {
       if ((long1 + long2) % 8210L == 0L) {
         if (long2 != 0L) {
@@ -42,11 +51,14 @@ object 统计 {
       }
 
       forCount() match {
-        case 合集.NumCountLeft(tail) =>
+        case Adt.Option1(合集.NumCountLeft(tail)) =>
           confirmImpl(tail, long1 = long1 + 1, long2 = long2, maxC = maxC + 1)
-        case 合集.NumCountRight(tail) =>
+        case Adt.Option2(合集.NumCountRight(tail)) =>
           confirmImpl(tail, long1 = long1, long2 = long2 + 1, maxC = maxC + 1)
+        case Adt.Option3(t) =>
+          t.matchErrorAndNothing
       }
+
     }
 
     confirmImpl(forConfirm, 1, 1, 0)

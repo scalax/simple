@@ -9,7 +9,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 trait TypeAdtAliasModelUnapply {
 
-  object Option1 {
+  object CoProduct1 {
     def unapply[I1, S <: ADTStatus](data: ADTData[AdtNatPositive[I1, AdtNat], S]): Option[I1] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
       val model: ghdmzsk        = dataInstance.inputGHDMZSK(impl.TypeAdtAliasModelUnapplyGhdmzsk.options1GHDMZSK)
@@ -20,7 +20,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option2 {
+  object CoProduct2 {
     def unapply[I1, I2, S <: ADTStatus](data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNat]], S]): Option[I2] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
       val model: ghdmzsk        = dataInstance.inputGHDMZSK(impl.TypeAdtAliasModelUnapplyGhdmzsk.options2GHDMZSK)
@@ -31,7 +31,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option3 {
+  object CoProduct3 {
     def unapply[I1, I2, I3, S <: ADTStatus](
       data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNat]]], S]
     ): Option[I3] = {
@@ -44,7 +44,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option4 {
+  object CoProduct4 {
     def unapply[I1, I2, I3, I4, S <: ADTStatus](
       data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNat]]]], S]
     ): Option[I4] = {
@@ -57,7 +57,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option5 {
+  object CoProduct5 {
     def unapply[I1, I2, I3, I4, I5, S <: ADTStatus](
       data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNat]]]]], S]
     ): Option[I5] = {
@@ -70,7 +70,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option6 {
+  object CoProduct6 {
     def unapply[I1, I2, I3, I4, I5, I6, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNat]]]]]],
@@ -86,7 +86,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option7 {
+  object CoProduct7 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, S <: ADTStatus](
       data: ADTData[AdtNatPositive[
         I1,
@@ -102,7 +102,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option8 {
+  object CoProduct8 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[I1, AdtNatPositive[
@@ -121,7 +121,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option9 {
+  object CoProduct9 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -143,7 +143,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option10 {
+  object CoProduct10 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -168,7 +168,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option11 {
+  object CoProduct11 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -196,7 +196,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option12 {
+  object CoProduct12 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -227,7 +227,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option13 {
+  object CoProduct13 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -261,7 +261,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option14 {
+  object CoProduct14 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -298,7 +298,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option15 {
+  object CoProduct15 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -338,7 +338,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option16 {
+  object CoProduct16 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -381,7 +381,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option17 {
+  object CoProduct17 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -430,7 +430,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option18 {
+  object CoProduct18 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -482,7 +482,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option19 {
+  object CoProduct19 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -537,7 +537,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option20 {
+  object CoProduct20 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -595,7 +595,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option21 {
+  object CoProduct21 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
@@ -656,7 +656,7 @@ trait TypeAdtAliasModelUnapply {
     }
   }
 
-  object Option22 {
+  object CoProduct22 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22, S <: ADTStatus](
       data: ADTData[
         AdtNatPositive[
