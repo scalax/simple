@@ -4,9 +4,16 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 
 object 合集 {
 
+  val setter1 = Adt.Options2[NumCountLeft, NumCountRight]
+
   // Result
   case class NumCountLeft(tail: () => Adt.Option2[NumCountLeft, NumCountRight])
   case class NumCountRight(tail: () => Adt.Option2[NumCountLeft, NumCountRight])
+
+  abstract class InputNumLeft(tail: () => Adt.Option2[InputNumLeft, InputNumRight])
+      extends NumCountLeft(tail = () => tail().fold(a => setter1(a), a => setter1(a)))
+  abstract class InputNumRight(tail: () => Adt.Option2[InputNumLeft, InputNumRight])
+      extends NumCountRight(tail = () => tail().fold(a => setter1(a), a => setter1(a)))
 
   trait CLeft
   trait CRight
