@@ -8,9 +8,9 @@ import Adt.{Status => ADTStatus}
 
 trait ADTPassedFunction:
 
-  extension [N <: AdtNat, S <: ADTStatus](data: ADTData[N, S])(using t: impl1.HListTran[N])
-    def fold: impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[t.Out, r], S] =
-      impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[t.Out, r], S](data)
+  extension [N <: AdtNat, S <: ADTStatus, H <: impl1.HListI1](data: ADTData[N, S])(using t: impl1.HListTran.Aux[N, H])
+    def fold: impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[H, r], S] =
+      impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[H, r], S](data)
   end extension
 
 end ADTPassedFunction
@@ -26,19 +26,22 @@ package impl1:
   end HListTran
 
   object HListTran extends HListTranImplicit1:
-    type Aux[N <: AdtNat, O <: HListI1] = HListTran[N] { type Out = O }
+    type Aux[N <: AdtNat, O <: HListI1] = HListTran[N] {
+      type Out = O
+    }
 
-    given HListTran.Aux[AdtNatZero, HListI1Zero] = new HListTran[AdtNatZero] {
+    private val zeroValue: HListTran.Aux[AdtNatZero, HListI1Zero] = new HListTran[AdtNatZero] {
       override type Out = HListI1Zero
     }
+
+    given HListTran.Aux[AdtNatZero, HListI1Zero] = zeroValue
   end HListTran
 
   trait HListTranImplicit1:
     given [Data, T <: AdtNat, O <: HListI1](using
       t1: HListTran.Aux[T, O]
-    ): HListTran.Aux[AdtNatPositive[Data, T], HListI1Positive[Data, O]] = new HListTran[AdtNatPositive[Data, T]] {
-      override type Out = HListI1Positive[Data, O]
-    }
+    ): HListTran.Aux[AdtNatPositive[Data, T], HListI1Positive[Data, O]] =
+      summon[HListTran.Aux[AdtNatZero, HListI1Zero]].asInstanceOf[HListTran.Aux[AdtNatPositive[Data, T], HListI1Positive[Data, O]]]
   end HListTranImplicit1
 
   type ExportToFunction[t <: HListI1, r] <: Tuple = t match

@@ -10,10 +10,18 @@ object 合集 {
   case class NumCountLeft(tail: () => Adt.CoProduct2[NumCountLeft, NumCountRight])
   case class NumCountRight(tail: () => Adt.CoProduct2[NumCountLeft, NumCountRight])
 
-  abstract class InputNumLeft(tail: () => Adt.CoProduct2[InputNumLeft, InputNumRight])
-      extends NumCountLeft(tail = () => tail().fold(a => setter1(a), a => setter1(a)))
-  abstract class InputNumRight(tail: () => Adt.CoProduct2[InputNumLeft, InputNumRight])
-      extends NumCountRight(tail = () => tail().fold(a => setter1(a), a => setter1(a)))
+  abstract class InputNumLeft(tail: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends NumCountLeft(tail) {
+    def input(
+      num2: Adt.CoProduct2[NumCountLeft, NumCountRight],
+      num3: Adt.CoProduct2[NumCountLeft, NumCountRight]
+    ): Adt.CoProduct2[NumCountLeft, NumCountRight]
+  }
+  abstract class InputNumRight(tail: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends NumCountRight(tail) {
+    def input(
+      num2: Adt.CoProduct2[NumCountLeft, NumCountRight],
+      num3: Adt.CoProduct2[NumCountLeft, NumCountRight]
+    ): Adt.CoProduct2[NumCountLeft, NumCountRight]
+  }
 
   trait CLeft
   trait CRight
@@ -24,13 +32,15 @@ object 合集 {
   }
 
   case class InputNum1(num1: () => InputNum) extends InputNum(num1) with CLeft {
-    def input(num2: InputNum, num3: InputNum): Adt.CoProduct2[NumCountLeft, NumCountRight] =
-      Adt.CoProducts2[NumCountLeft, NumCountRight](NumCountLeft(() => num1().input(num2, num3)))
+    def input(num2: InputNum, num3: InputNum): Adt.CoProduct2[NumCountLeft, NumCountRight] = setter1(
+      NumCountLeft(() => num1().input(num2, num3))
+    )
   }
 
   case class InputNum2(num1: () => InputNum) extends InputNum(num1) with CRight {
-    def input(num2: InputNum, num3: InputNum): Adt.CoProduct2[NumCountLeft, NumCountRight] =
-      Adt.CoProducts2[NumCountLeft, NumCountRight](NumCountRight(() => num1().input(num2, num3)))
+    def input(num2: InputNum, num3: InputNum): Adt.CoProduct2[NumCountLeft, NumCountRight] = setter1(
+      NumCountRight(() => num1().input(num2, num3))
+    )
   }
 
   case class InputNum3(num1: () => InputNum) extends InputNum(num1) with CLeft {
