@@ -9,13 +9,13 @@ import Adt.{Status => ADTStatus}
 trait ADTPassedFunction:
 
   extension [N <: AdtNat, S <: ADTStatus](data: ADTData[N, S])
-    def fold: impl.ApplyImplicitInstance[[r] =>> impl.ExportToFunction[N, r], S] =
-      impl.ApplyImplicitInstance[[r] =>> impl.ExportToFunction[N, r], S](data)
+    def fold: impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[N, r], S] =
+      impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[N, r], S](data)
   end extension
 
 end ADTPassedFunction
 
-package impl:
+package impl1:
 
   type ExportToFunction[t <: AdtNat, r] <: Tuple = t match
     case AdtNatPositive[IsFinishAndNothing, _] => EmptyTuple
@@ -43,4 +43,4 @@ package impl:
     end apply
   end ApplyImplicitInstance
 
-end impl
+end impl1
