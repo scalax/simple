@@ -18,8 +18,8 @@ end ADTPassedFunction
 package impl:
 
   type ExportToFunction[t <: AdtNat, r] <: Tuple = t match
-    case AdtNatPositive[IsFinishAndNothing, tail] => EmptyTuple
-    case AdtNatPositive[d, tail]                  => (d => r) *: ExportToFunction[tail, r]
+    case AdtNatPositive[IsFinishAndNothing, _] => EmptyTuple
+    case AdtNatPositive[d, tail]               => (d => r) *: ExportToFunction[tail, r]
   end ExportToFunction
 
   class ApplyImplicitInstance[O[U] <: Tuple, S <: ADTStatus](private val data: ADTData[AdtNat, S]) extends AnyVal:

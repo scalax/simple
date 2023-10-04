@@ -37,7 +37,7 @@ object `Test Cases copy from documention in README.md` {
     import net.scalax.simple.adt.{TypeAdt => Adt}
     def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
       val applyM = Adt.CoProducts3[Int, String, Double](t)
-      applyM.fold(
+      applyM.fold.apply(
         intValue => Some(BigDecimal(intValue)),
         strValue => Try(BigDecimal(strValue)).toOption,
         doubleValue => Some(BigDecimal(doubleValue))

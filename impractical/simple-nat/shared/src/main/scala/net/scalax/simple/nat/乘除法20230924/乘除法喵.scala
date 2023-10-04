@@ -4,7 +4,7 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 
 object 乘除法喵 {
 
-  def main1(arr: Array[String]): Unit = {
+  def main(arr: Array[String]): Unit = {
     object num1 {
       val Parent: Int = 24
       val Sub: Int    = 547

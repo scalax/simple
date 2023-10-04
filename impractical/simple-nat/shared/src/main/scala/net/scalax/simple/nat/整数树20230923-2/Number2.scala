@@ -38,7 +38,7 @@ object NENE喵A呜哇 {
       .getOrElse(0)
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val num1 = new NumAExecutePositive(
       () => NumAExecuteZero,
       () =>
