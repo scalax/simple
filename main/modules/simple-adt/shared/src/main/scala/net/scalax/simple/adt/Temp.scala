@@ -6,8 +6,8 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import impl.Adt.Status
 
 trait AdtNat
-trait AdtNatPositive[Head, +T <: AdtNat] extends AdtNat
-class AdtNatZero                         extends AdtNatPositive[IsFinishAndNothing, AdtNatZero]
+trait AdtNatPositive[+Head, +T <: AdtNat] extends AdtNat
+class AdtNatZero                          extends AdtNatPositive[IsFinishAndNothing, AdtNatZero]
 
 trait ToGHDMZSK {
   def toGHDMZSK: ghdmzsk
