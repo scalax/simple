@@ -29,24 +29,24 @@ object 合集 {
       other(2).fold(a => a.input(other + ((1, num1()))), a => a.input(other + ((1, num1()))))
   }
 
-  class InputNum3(num1: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumLeft(num1) {
+  class InputNum3(num2: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumLeft(num2) {
     def input(other: Map[Int, Adt.CoProduct2[InputNumLeft, InputNumRight]]): Adt.CoProduct2[NumCountLeft, NumCountRight] =
-      other(2).fold(a => a.input(other + ((1, num1()))), a => a.input(other + ((1, num1()))))
+      other(1).fold(a => a.input(other + ((2, num2()))), a => a.input(other + ((2, num2()))))
   }
 
-  class InputNum4(num1: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumRight(num1) {
+  class InputNum4(num2: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumRight(num2) {
     def input(other: Map[Int, Adt.CoProduct2[InputNumLeft, InputNumRight]]): Adt.CoProduct2[NumCountLeft, NumCountRight] =
-      other(3).fold(a => a.input(other + ((1, num1()))), a => a.input(other + ((1, num1()))))
+      other(3).fold(a => a.input(other + ((2, num2()))), a => a.input(other + ((2, num2()))))
   }
 
-  class InputNum5(num1: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumLeft(num1) {
+  class InputNum5(num3: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumLeft(num3) {
     def input(other: Map[Int, Adt.CoProduct2[InputNumLeft, InputNumRight]]): Adt.CoProduct2[NumCountLeft, NumCountRight] =
-      other(3).fold(a => a.input(other + ((1, num1()))), a => a.input(other + ((1, num1()))))
+      other(2).fold(a => a.input(other + ((3, num3()))), a => a.input(other + ((3, num3()))))
   }
 
-  class InputNum6(num1: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumRight(num1) {
+  class InputNum6(num3: () => Adt.CoProduct2[InputNumLeft, InputNumRight]) extends InputNumRight(num3) {
     def input(other: Map[Int, Adt.CoProduct2[InputNumLeft, InputNumRight]]): Adt.CoProduct2[NumCountLeft, NumCountRight] = setter1(
-      NumCountRight(() => num1().fold(a => a.input(other), a => a.input(other)))
+      NumCountRight(() => num3().fold(a => a.input(other), a => a.input(other)))
     )
   }
 

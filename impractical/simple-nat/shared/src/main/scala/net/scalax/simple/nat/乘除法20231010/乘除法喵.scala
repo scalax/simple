@@ -30,7 +30,7 @@ object 乘除法喵 {
       rightLength = num3.Sub
     )(num3GHDMZSK)
 
-    val numMapInput: Map[Int, 合集.InputNum] = Map(1 -> num2GHDMZSK, 3 -> num3GHDMZSK)
+    val numMapInput: Map[Int, 合集.InputNum] = Map(2 -> num2GHDMZSK, 3 -> num3GHDMZSK)
     val execResultForInput: Adt.CoProduct2[合集.NumCountLeft, 合集.NumCountRight] =
       num1GHDMZSK.fold(a => a.input(numMapInput), a => a.input(numMapInput))
 
