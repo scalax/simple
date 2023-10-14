@@ -21,14 +21,20 @@ object LabelledInstalled {
     }
   }
 
+  trait DerivedApply[F[_[_]]] {
+    def derived[H1, H2](implicit
+      symbolLabelledInstalled: SymbolLabelledInstalled[F],
+      generic1: Generic.Aux[F[SymbolLabelledInstalled.ToNamedSymbol], H1],
+      generic2: Generic.Aux[F[ToNamed], H2],
+      shTosh: SymbolHListToStringHList[H1, H2]
+    ): LabelledInstalled[F] = new LabelledInstalled[F] {
+      override def model: F[LabelledInstalled.ToNamed] = generic2.from(shTosh.to(generic1.to(symbolLabelledInstalled.model)))
+    }
+  }
+
   type ToNamed[_] = String
 
-  implicit def derived[F[_[_]], H1, H2](implicit
-    symbolLabelledInstalled: SymbolLabelledInstalled[F],
-    generic1: Generic.Aux[F[SymbolLabelledInstalled.ToNamedSymbol], H1],
-    generic2: Generic.Aux[F[ToNamed], H2],
-    shTosh: SymbolHListToStringHList[H1, H2]
-  ): LabelledInstalled[F] = new LabelledInstalled[F] {
-    override def model: F[LabelledInstalled.ToNamed] = generic2.from(shTosh.to(generic1.to(symbolLabelledInstalled.model)))
+  def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F] {
+    //
   }
 }

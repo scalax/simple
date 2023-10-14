@@ -30,7 +30,14 @@ object Model2 {
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
     UserAbs[TypedType, U](implicitly, implicitly, implicitly)
 
-  def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
+  class UserAbsAlias[U[_]] {
+    type F1[E1[_]] = UserAbs[E1, U]
+  }
+  implicit def userNamedGeneric1[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] = SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived
+  implicit def userNamedGeneric2[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1]       = LabelledInstalled[UserAbsAlias[U]#F1].derived
+
+  // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
+  def userNamed[U[_]]: UserAbs[StrAny, U] = userNamedGeneric2[U].model
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
