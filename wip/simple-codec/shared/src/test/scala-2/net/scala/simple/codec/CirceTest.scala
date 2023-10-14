@@ -9,7 +9,8 @@ case class CatNameScala2[F[_]](name: F[Int], str: F[Option[String]], uClass: F[O
 
 object scala2xbb11 extends IOApp {
 
-  implicit val im1 = implicitly[NamedInstalled[CatNameScala2]]
+  implicit val im1 = implicitly[LabelledInstalled[CatNameScala2]]
+  println(im1.model)
 
   def encodeModel[F[_[_]]](implicit
     modelEn: F[Encoder],
