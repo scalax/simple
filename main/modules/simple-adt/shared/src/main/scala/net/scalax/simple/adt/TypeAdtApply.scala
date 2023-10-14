@@ -27,7 +27,7 @@ package impl {
       }
 
     private val failedValue: TypeAdtApply[Any, AdtNatZero, ADTStatus.NotFinished] =
-      new TypeAdtApply[Any, AdtNatZero, ADTStatus.NotFinished](value = i => ADTData.zero)
+      new TypeAdtApply[Any, AdtNatZero, ADTStatus.NotFinished](value = i => ADTData.zero(IsFinishAndNothing.value(i)))
 
     def failedValueImpl[T]: TypeAdtApply[T, AdtNatZero, ADTStatus.NotFinished] =
       failedValue.asInstanceOf[TypeAdtApply[T, AdtNatZero, ADTStatus.NotFinished]]

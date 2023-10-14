@@ -5,6 +5,8 @@ import net.scalax.simple.adt.implemention.ADTGHDMZSK
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import impl.Adt.Status
 
+import scala.annotation.meta.param
+
 trait AdtNat
 trait AdtNatPositive[+Head, +T <: AdtNat] extends AdtNat
 class AdtNatZero                          extends AdtNatPositive[IsFinishAndNothing, AdtNatZero]
@@ -25,18 +27,18 @@ object ADTData {
   def empty[D, T <: AdtNat, S <: Status](tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
     override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1Impl1.inputGHDMZSK(tail.toGHDMZSK)
   }
-  lazy val zero: ADTData[AdtNatZero, Status.NotFinished] = new ADTData[AdtNatZero, Status.NotFinished] {
-    override lazy val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(IsFinishAndNothing.value).inputGHDMZSK(zero.toGHDMZSK)
+  def zero(isFinishAndNothing: IsFinishAndNothing): ADTData[AdtNatZero, Status.NotFinished] = new ADTData[AdtNatZero, Status.NotFinished] {
+    override lazy val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(isFinishAndNothing).inputGHDMZSK(zero(isFinishAndNothing).toGHDMZSK)
   }
 }
 
-final class IsFinishAndNothing {
+final class IsFinishAndNothing(@transient @param obj: Any) {
   def default[T](t: => T): T               = t
-  lazy val isEnded: IsFinishAndNothing     = this
-  def matchErrorAndThrowException: Nothing = throw new Exception("match error.")
+  def isEnded: IsFinishAndNothing          = this
+  def matchErrorAndThrowException: Nothing = throw new MatchError(obj)
 }
 object IsFinishAndNothing {
-  lazy val value: IsFinishAndNothing = new IsFinishAndNothing
+  def value(obj: Any): IsFinishAndNothing = new IsFinishAndNothing(obj)
 }
 
 trait ApplyFactory[N <: AdtNat] {
