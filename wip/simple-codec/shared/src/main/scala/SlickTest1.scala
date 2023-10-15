@@ -27,8 +27,9 @@ object Model2 {
   type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
   type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
 
-  def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
-    UserAbs[TypedType, U](implicitly, implicitly, implicitly)
+  def userTypedTypeGeneric[U[_]](implicit tt12: TypedType[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, TypedType] =
+    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived
+  def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = userTypedTypeGeneric[U].model
 
   class UserAbsAlias[U[_]] {
     type F1[E1[_]] = UserAbs[E1, U]

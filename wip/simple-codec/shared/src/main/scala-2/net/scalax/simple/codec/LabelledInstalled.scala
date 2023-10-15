@@ -11,6 +11,7 @@ object LabelledInstalled {
     def to(h1: H1): H2
   }
   object SymbolHListToStringHList {
+
     implicit def implicit1[H1 <: HList, H2 <: HList](implicit
       cv: SymbolHListToStringHList[H1, H2]
     ): SymbolHListToStringHList[Symbol :: H1, String :: H2] = new SymbolHListToStringHList[Symbol :: H1, String :: H2] {
@@ -37,4 +38,5 @@ object LabelledInstalled {
   def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F] {
     //
   }
+
 }

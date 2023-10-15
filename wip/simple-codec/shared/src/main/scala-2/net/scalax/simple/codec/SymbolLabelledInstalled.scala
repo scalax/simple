@@ -7,6 +7,7 @@ trait SymbolLabelledInstalled[F[_[_]]] {
 }
 
 object SymbolLabelledInstalled {
+
   type ToAny[_]         = Any
   type ToNamedSymbol[_] = Symbol
 
