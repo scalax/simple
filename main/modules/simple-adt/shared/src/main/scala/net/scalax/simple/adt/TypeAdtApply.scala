@@ -3,6 +3,7 @@ package adt
 
 import temp._
 import impl.Adt.{Status => ADTStatus}
+import net.scalax.simple.adt.nat.AdtNat
 
 /** TODO
   *
@@ -17,6 +18,8 @@ class TypeAdtApply[Input, Sum <: AdtNat, ST <: ADTStatus](val value: Input => AD
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher
 
 package impl {
+
+  import net.scalax.simple.adt.nat.{AdtNatPositive, AdtNatZero}
 
   private object Helper {
     def adapterContext[A, B, AdtConvertPoly](
