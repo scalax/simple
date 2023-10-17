@@ -22,9 +22,8 @@ object LabelledInstalled {
     }
   }
 
-  trait DerivedApply[F[_[_]]] {
+  class DerivedApply[F[_[_]]](symbolLabelledInstalled: SymbolLabelledInstalled[F]) {
     def derived[H1, H2](implicit
-      symbolLabelledInstalled: SymbolLabelledInstalled[F],
       generic1: Generic.Aux[F[SymbolLabelledInstalled.ToNamedSymbol], H1],
       generic2: Generic.Aux[F[ToNamed], H2],
       shTosh: SymbolHListToStringHList[H1, H2]
@@ -35,8 +34,7 @@ object LabelledInstalled {
 
   type ToNamed[_] = String
 
-  def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F] {
-    //
-  }
+  def apply[F[_[_]]](implicit symbolLabelledInstalled: SymbolLabelledInstalled[F]): DerivedApply[F] =
+    new DerivedApply[F](symbolLabelledInstalled)
 
 }

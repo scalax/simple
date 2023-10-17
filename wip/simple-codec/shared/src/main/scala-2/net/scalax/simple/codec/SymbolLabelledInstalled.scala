@@ -12,10 +12,9 @@ object SymbolLabelledInstalled {
   type ToNamedSymbol[_] = Symbol
 
   trait DerivedApply[F[_[_]]] {
-    def derived[H1, H2](implicit
+    def derived[H1 >: H2, H2](implicit
       generic: Generic.Aux[F[ToNamedSymbol], H1],
-      toAnyLabelled: DefaultSymbolicLabelling.Aux[F[ToAny], H2],
-      cv: H2 <:< H1
+      toAnyLabelled: DefaultSymbolicLabelling.Aux[F[ToAny], H2]
     ): SymbolLabelledInstalled[F] = new SymbolLabelledInstalled[F] {
       override def model: F[SymbolLabelledInstalled.ToNamedSymbol] = generic.from(toAnyLabelled.apply())
     }
