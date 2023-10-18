@@ -6,8 +6,6 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import impl.Adt.Status
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
-import scala.annotation.meta.param
-
 trait ToGHDMZSK {
   def toGHDMZSK: ghdmzsk
 }
