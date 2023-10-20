@@ -22,7 +22,9 @@ object LabelledInstalled {
     }
   }
 
-  class DerivedApply[F[_[_]], SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], NamedModel <: F[ToNamed]](
+  class DerivedApply[F[_[_]], SymbolModel >: F[SymbolLabelledInstalled.ToNamedSymbol] <: F[
+    SymbolLabelledInstalled.ToNamedSymbol
+  ], NamedModel >: F[ToNamed] <: F[ToNamed]](
     symbolLabelledInstalled: SymbolModel
   ) {
     def derived[H1, H2](implicit

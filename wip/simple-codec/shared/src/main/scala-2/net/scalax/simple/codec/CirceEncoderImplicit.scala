@@ -28,7 +28,7 @@ object CirceEncoderImplicit {
     }
   }
 
-  class DerivedApply[F[_[_]], StrModel <: F[StringF], EncoderModel <: F[Encoder], IdModel >: F[Id]](
+  class DerivedApply[F[_[_]], StrModel >: F[StringF] <: F[StringF], EncoderModel >: F[Encoder] <: F[Encoder], IdModel >: F[Id] <: F[Id]](
     namedModel: StrModel,
     encoderModel: EncoderModel
   ) {

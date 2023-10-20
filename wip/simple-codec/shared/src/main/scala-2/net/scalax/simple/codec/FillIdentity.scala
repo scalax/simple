@@ -20,7 +20,7 @@ object FillIdentity {
     }
   }
 
-  class DerivedApply[F[_[_]], I[_], ModelMode <: F[I]] {
+  class DerivedApply[F[_[_]], I[_], ModelMode >: F[I] <: F[I]] {
     object law {
       def apply[Model >: ModelMode <: ModelMode]: DerivedApply[F, I, Model] = new DerivedApply[F, I, Model]
     }
