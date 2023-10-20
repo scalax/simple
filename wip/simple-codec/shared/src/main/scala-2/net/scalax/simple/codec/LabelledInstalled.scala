@@ -22,9 +22,9 @@ object LabelledInstalled {
     }
   }
 
-  trait DerivedApply[F[_[_]], SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], NamedModel <: F[ToNamed]] {
-    def symbolLabelledInstalled: SymbolModel
-
+  class DerivedApply[F[_[_]], SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], NamedModel <: F[ToNamed]](
+    symbolLabelledInstalled: SymbolModel
+  ) {
     def derived[H1, H2](implicit
       generic1: Generic.Aux[SymbolModel, H1],
       generic2: Generic.Aux[NamedModel, H2],
@@ -35,13 +35,7 @@ object LabelledInstalled {
 
     object law {
       def apply[SymbolModelImpl >: SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], NamedModelIml >: NamedModel <: F[ToNamed]]
-        : DerivedApply[F, SymbolModelImpl, NamedModelIml] = {
-        val symbolLabelledInstalled1 = symbolLabelledInstalled
-        new DerivedApply[F, SymbolModelImpl, NamedModelIml] {
-          override def symbolLabelledInstalled: SymbolModelImpl = symbolLabelledInstalled1
-        }
-      }
-
+        : DerivedApply[F, SymbolModelImpl, NamedModelIml] = new DerivedApply[F, SymbolModelImpl, NamedModelIml](symbolLabelledInstalled)
     }
   }
 
@@ -49,11 +43,7 @@ object LabelledInstalled {
 
   def apply[F[_[_]]](implicit
     symbolLabelledInstalled: SymbolLabelledInstalled[F]
-  ): DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[ToNamed]] = {
-    val symbolLabelledInstalled1 = symbolLabelledInstalled
-    new DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[ToNamed]] {
-      override def symbolLabelledInstalled: F[SymbolLabelledInstalled.ToNamedSymbol] = symbolLabelledInstalled1.model
-    }
-  }
+  ): DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[ToNamed]] =
+    new DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[ToNamed]](symbolLabelledInstalled.model)
 
 }

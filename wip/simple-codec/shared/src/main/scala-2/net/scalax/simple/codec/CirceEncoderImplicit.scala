@@ -28,9 +28,10 @@ object CirceEncoderImplicit {
     }
   }
 
-  abstract class DerivedApply[F[_[_]], StrModel <: F[StringF], EncoderModel <: F[Encoder], IdModel >: F[Id]] {
-    def namedModel: StrModel
-    def encoderModel: EncoderModel
+  class DerivedApply[F[_[_]], StrModel <: F[StringF], EncoderModel <: F[Encoder], IdModel >: F[Id]](
+    namedModel: StrModel,
+    encoderModel: EncoderModel
+  ) {
 
     def derived[H1, H2, H3](implicit
       generic1: Generic.Aux[StrModel, H1],
@@ -45,27 +46,15 @@ object CirceEncoderImplicit {
     }
 
     def law[StrModelImpl >: StrModel <: F[StringF], EncoderModelIml >: EncoderModel <: F[Encoder], IdModelImpl >: F[Id]]
-      : DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] = {
-      val namedModel1   = namedModel
-      val encoderModel1 = encoderModel
-      new DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] {
-        override def namedModel: StrModelImpl      = namedModel1
-        override def encoderModel: EncoderModelIml = encoderModel1
-      }
-    }
+      : DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] =
+      new DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl](namedModel, encoderModel)
 
   }
 
   def apply[F[_[_]]](implicit
     namedModel: LabelledInstalled[F],
     encoderModel: FillIdentity[F, Encoder]
-  ): DerivedApply[F, F[StringF], F[Encoder], F[Id]] = {
-    val namedModel1   = namedModel
-    val encoderModel1 = encoderModel
-    new DerivedApply[F, F[StringF], F[Encoder], F[Id]] {
-      override def namedModel   = namedModel1.model
-      override def encoderModel = encoderModel1.model
-    }
-  }
+  ): DerivedApply[F, F[StringF], F[Encoder], F[Id]] =
+    new DerivedApply[F, F[StringF], F[Encoder], F[Id]](namedModel.model, encoderModel.model)
 
 }

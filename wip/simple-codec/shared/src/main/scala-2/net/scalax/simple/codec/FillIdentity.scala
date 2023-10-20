@@ -30,8 +30,6 @@ object FillIdentity {
       }
   }
 
-  def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[I]] = new DerivedApply[F, I, F[I]] {
-    //
-  }
+  def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[I]] = new DerivedApply[F, I, F[I]]
 
 }
