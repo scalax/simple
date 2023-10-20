@@ -28,11 +28,14 @@ object CirceEncoderImplicit {
     }
   }
 
-  class DerivedApply[F[_[_]]](namedModel: F[StringF], encoderModel: F[Encoder]) {
+  abstract class DerivedApply[F[_[_]], StrModel <: F[StringF], EncoderModel <: F[Encoder], IdModel >: F[Id]] {
+    def namedModel: StrModel
+    def encoderModel: EncoderModel
+
     def derived[H1, H2, H3](implicit
-      generic1: Generic.Aux[F[StringF], H1],
-      generic2: Generic.Aux[F[Id], H2],
-      generic3: Generic.Aux[F[Encoder], H3],
+      generic1: Generic.Aux[StrModel, H1],
+      generic2: Generic.Aux[IdModel, H2],
+      generic3: Generic.Aux[EncoderModel, H3],
       toJson: ToListJson[H1, H2, H3]
     ): CirceEncoderImplicit[F] = new CirceEncoderImplicit[F] {
       override val model: JsonObjectEncoder[F[Id]] = JsonObjectEncoder.instance[F[Id]] { model =>
@@ -40,9 +43,29 @@ object CirceEncoderImplicit {
         JsonObject.fromIterable(it)
       }
     }
+
+    def law[StrModelImpl >: StrModel <: F[StringF], EncoderModelIml >: EncoderModel <: F[Encoder], IdModelImpl >: F[Id]]
+      : DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] = {
+      val namedModel1   = namedModel
+      val encoderModel1 = encoderModel
+      new DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] {
+        override def namedModel: StrModelImpl      = namedModel1
+        override def encoderModel: EncoderModelIml = encoderModel1
+      }
+    }
+
   }
 
-  def apply[F[_[_]]](implicit namedModel: LabelledInstalled[F], encoderModel: FillIdentity[F, Encoder]): DerivedApply[F] =
-    new DerivedApply[F](namedModel = namedModel.model, encoderModel = encoderModel.model)
+  def apply[F[_[_]]](implicit
+    namedModel: LabelledInstalled[F],
+    encoderModel: FillIdentity[F, Encoder]
+  ): DerivedApply[F, F[StringF], F[Encoder], F[Id]] = {
+    val namedModel1   = namedModel
+    val encoderModel1 = encoderModel
+    new DerivedApply[F, F[StringF], F[Encoder], F[Id]] {
+      override def namedModel   = namedModel1.model
+      override def encoderModel = encoderModel1.model
+    }
+  }
 
 }

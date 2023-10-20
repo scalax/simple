@@ -20,13 +20,17 @@ object FillIdentity {
     }
   }
 
-  trait DerivedApply[F[_[_]], I[_]] {
-    def derived[H1](implicit generic1: Generic.Aux[F[I], H1], generic2: FillIdentityImpl[H1]): FillIdentity[F, I] = new FillIdentity[F, I] {
-      override def model: F[I] = generic1.from(generic2.fillResult)
+  class DerivedApply[F[_[_]], I[_], ModelMode <: F[I]] {
+    object law {
+      def apply[Model <: F[I]]: DerivedApply[F, I, Model] = new DerivedApply[F, I, Model]
     }
+    def derived[H1](implicit generic1: Generic.Aux[ModelMode, H1], generic2: FillIdentityImpl[H1]): FillIdentity[F, I] =
+      new FillIdentity[F, I] {
+        override def model: ModelMode = generic1.from(generic2.fillResult)
+      }
   }
 
-  def apply[F[_[_]], I[_]]: DerivedApply[F, I] = new DerivedApply[F, I] {
+  def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[I]] = new DerivedApply[F, I, F[I]] {
     //
   }
 
