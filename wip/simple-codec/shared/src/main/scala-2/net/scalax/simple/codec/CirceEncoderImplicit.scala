@@ -45,7 +45,7 @@ object CirceEncoderImplicit {
       }
     }
 
-    def law[StrModelImpl >: StrModel <: F[StringF], EncoderModelIml >: EncoderModel <: F[Encoder], IdModelImpl >: F[Id]]
+    def law[StrModelImpl >: StrModel <: F[StringF], EncoderModelIml >: EncoderModel <: F[Encoder], IdModelImpl >: F[Id] <: IdModel]
       : DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] =
       new DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl](namedModel, encoderModel)
 
