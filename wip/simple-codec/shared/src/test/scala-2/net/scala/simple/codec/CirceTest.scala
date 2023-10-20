@@ -28,6 +28,8 @@ object scala2xbb11 extends IOApp {
   implicit val im4: CirceEncoderImplicit[CatNameScala2]    = CirceEncoderImplicit[CatNameScala2].derived
   println(im2.model)
 
+  // implicit val uuj1 = SymbolLabelledInstalled[UFAliasF].derived
+
   val modelInstance: CatNameScala2[cats.Id] = CatNameScala2[cats.Id](
     name = 8594,
     str = Option("sdfwerwfweher迷雾日哦"),

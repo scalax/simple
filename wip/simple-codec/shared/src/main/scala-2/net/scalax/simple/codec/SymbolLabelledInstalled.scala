@@ -13,8 +13,7 @@ object SymbolLabelledInstalled {
   trait DerivedApplyImpl[F[_[_]], SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], AnyModel] {
     def derived[H1 >: H2, H2](implicit
       generic: Generic.Aux[SymbolModel, H1],
-      toAnyLabelled: DefaultSymbolicLabelling.Aux[AnyModel, H2],
-      cv: H2 <:< H1
+      toAnyLabelled: DefaultSymbolicLabelling.Aux[AnyModel, H2]
     ): SymbolLabelledInstalled[F] = new SymbolLabelledInstalled[F] {
       override def model: SymbolModel = generic.from(toAnyLabelled.apply())
     }
