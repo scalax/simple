@@ -34,7 +34,7 @@ object LabelledInstalled {
     }
 
     object law {
-      def apply[SymbolModelImpl >: SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], NamedModelIml >: NamedModel <: F[ToNamed]]
+      def apply[SymbolModelImpl >: SymbolModel <: SymbolModel, NamedModelIml >: NamedModel <: NamedModel]
         : DerivedApply[F, SymbolModelImpl, NamedModelIml] = new DerivedApply[F, SymbolModelImpl, NamedModelIml](symbolLabelledInstalled)
     }
   }

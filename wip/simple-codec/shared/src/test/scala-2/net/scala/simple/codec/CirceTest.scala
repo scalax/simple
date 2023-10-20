@@ -19,7 +19,9 @@ object scala2xbb11 extends IOApp {
   type U1[_] = Encoder[String]
   type U2[_] = String
   implicit val uuj1: SymbolLabelledInstalled[UFAliasF] =
-    SymbolLabelledInstalled[UFAliasF].law[CatNameScala2[SymbolLabelledInstalled.ToNamedSymbol]].derived
+    SymbolLabelledInstalled[UFAliasF]
+      .law[CatNameScala2[SymbolLabelledInstalled.ToNamedSymbol], CatNameScala2[SymbolLabelledInstalled.ToNamedSymbol]]
+      .derived
   implicit val uuj2: LabelledInstalled[UFAliasF] =
     LabelledInstalled[UFAliasF].law[CatNameScala2[SymbolLabelledInstalled.ToNamedSymbol], CatNameScala2[LabelledInstalled.ToNamed]].derived
   implicit val uuj3: FillIdentity[UFAliasF, Encoder] = FillIdentity[UFAliasF, Encoder].law[CatNameScala2[U1]].derived

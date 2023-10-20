@@ -22,7 +22,7 @@ object FillIdentity {
 
   class DerivedApply[F[_[_]], I[_], ModelMode <: F[I]] {
     object law {
-      def apply[Model >: ModelMode <: F[I]]: DerivedApply[F, I, Model] = new DerivedApply[F, I, Model]
+      def apply[Model >: ModelMode <: ModelMode]: DerivedApply[F, I, Model] = new DerivedApply[F, I, Model]
     }
     def derived[H1](implicit generic1: Generic.Aux[ModelMode, H1], generic2: FillIdentityImpl[H1]): FillIdentity[F, I] =
       new FillIdentity[F, I] {
