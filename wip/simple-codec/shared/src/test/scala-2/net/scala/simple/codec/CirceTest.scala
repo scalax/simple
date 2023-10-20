@@ -9,70 +9,39 @@ case class CatNameScala2[F[_]](name: F[Int], str: F[Option[String]], uClass: F[O
 
 object scala2xbb11 extends IOApp {
 
-  implicit val im1 = implicitly[LabelledInstalled[CatNameScala2]]
-  println(im1.model)
-
-  def encodeModel[F[_[_]]](implicit
-    modelEn: F[Encoder],
-    g: ModelGetter[F[Encoder]],
-    g1: ModelGetter[F[cats.Id]],
-    lNames: ModelNames[F]
-  ): Encoder[F[cats.Id]] = {
-    val encoders = g.data(modelEn).asInstanceOf[List[Encoder[Any]]]
-    Encoder.instance[F[cats.Id]] { m =>
-      val dataList = g1.data(m)
-      val jsonList: List[(String, Json)] = encoders.zip(dataList).zip(lNames.names).map { case ((en, data), name) =>
-        (name, en(data))
-      }
-      val jsonObject = JsonObject.fromIterable(jsonList)
-      Json.fromJsonObject(jsonObject)
-    }
+  type StrU[_]          = String
+  type UFAliasF[T11[_]] = CatNameScala2[({ type U1[T] = T11[StrU[T]] })#U1]
+  object UFAliasF {
+    def apply[T111[_]](
+      name: T111[String],
+      str: T111[String],
+      uClass: T111[String],
+      name11: T111[String],
+      namexu: T111[String]
+    ): UFAliasF[T111] =
+      CatNameScala2[({ type U1[T] = T111[StrU[T]] })#U1](name = name, str = str, uClass = uClass, name11 = name11, namexu = namexu)
   }
 
-  type EncoderAux[_]      = Encoder[String]
-  type EncoderModelAux[_] = String
-  def encodeModelName[F[_[_]]](implicit
-    modelEn: F[EncoderAux],
-    g: ModelGetter[F[EncoderAux]],
-    g1: ModelGetter[F[EncoderModelAux]],
-    lNames: ModelNames[F]
-  ): Encoder[F[EncoderModelAux]] = {
-    val encoders = g.data(modelEn).asInstanceOf[List[Encoder[Any]]]
-    Encoder.instance[F[EncoderModelAux]] { m =>
-      val dataList = g1.data(m)
-      val jsonList: List[(String, Json)] = encoders.zip(dataList).zip(lNames.names).map { case ((en, data), name) =>
-        (name, en(data))
-      }
-      val jsonObject = JsonObject.fromIterable(jsonList)
-      Json.fromJsonObject(jsonObject)
-    }
-  }
+  implicit val im1: SymbolLabelledInstalled[CatNameScala2] = SymbolLabelledInstalled[CatNameScala2].derived
+  implicit val im2: LabelledInstalled[CatNameScala2]       = LabelledInstalled[CatNameScala2].derived
+  implicit val im3: FillIdentity[CatNameScala2, Encoder]   = FillIdentity[CatNameScala2, Encoder].derived
+  implicit val im4: CirceEncoderImplicit[CatNameScala2]    = CirceEncoderImplicit[CatNameScala2].derived
+  println(im2.model)
 
-  implicit def getter[U[_]]: ModelGetter[CatName[U]]         = ModelGetter.generic
-  implicit def setter[U[_]]: ModelSetter[CatName[U]]         = ModelSetter[CatName[U]](u => CatName[U](u.get, u.get, u.get, u.get, u.get))
-  implicit val propertyAny: CatName[PropertyTag.AnyAux]      = PropertyTag.genericAny[CatName]
-  implicit val propertyTag: CatName[PropertyTag]             = PropertyTag.generic
-  implicit val modelNames: ModelNames[CatName]               = ModelNames.generic
-  implicit val modelLength: ModelLength[CatName]             = ModelLength.generic
-  implicit val modelNameProperty: ModelNameProperty[CatName] = ModelNameProperty.generic
-  implicit val modelEncoder: CatName[Encoder]                = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
-  implicit val modelStringEncoder: CatName[EncoderAux]     = CatName[EncoderAux](implicitly, implicitly, implicitly, implicitly, implicitly)
-  implicit val caseClassEncoder: Encoder[CatName[cats.Id]] = encodeModel
-  implicit val caseClassNameEncoder: Encoder[CatName[EncoderModelAux]] = encodeModelName
+  val modelInstance: CatNameScala2[cats.Id] = CatNameScala2[cats.Id](
+    name = 8594,
+    str = Option("sdfwerwfweher迷雾日哦"),
+    uClass = Option.empty,
+    name11 = "xxiwerwjkl",
+    namexu = "jerokwjoe收代理费加沃尔"
+  )
 
-  val modelInstance: CatName[cats.Id] =
-    CatName[cats.Id](
-      name = 8594,
-      str = Option("sdfwerwfweher迷雾日哦"),
-      uClass = Option.empty,
-      name11 = "xxiwerwjkl",
-      namexu = "jerokwjoe收代理费加沃尔"
-    )
+  implicit val im5: Encoder[CatNameScala2[cats.Id]] = im4.model
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {
       _ <- IO(println(modelInstance.asJson.spaces2))
-      _ <- IO(println(modelNameProperty.model.asJson.spaces2))
+      // _ <- IO(println(modelNameProperty.model.asJson.spaces2))
     } yield {
       //
     }

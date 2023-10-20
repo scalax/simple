@@ -8,20 +8,20 @@ trait SymbolLabelledInstalled[F[_[_]]] {
 
 object SymbolLabelledInstalled {
 
-  type ToAny[_]         = Any
   type ToNamedSymbol[_] = Symbol
 
-  trait DerivedApply[F[_[_]]] {
+  trait DerivedApplyImpl[F[_[_]], SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], AnyModel] {
     def derived[H1 >: H2, H2](implicit
-      generic: Generic.Aux[F[ToNamedSymbol], H1],
-      toAnyLabelled: DefaultSymbolicLabelling.Aux[F[ToAny], H2]
+      generic: Generic.Aux[SymbolModel, H1],
+      toAnyLabelled: DefaultSymbolicLabelling.Aux[AnyModel, H2],
+      cv: H2 <:< H1
     ): SymbolLabelledInstalled[F] = new SymbolLabelledInstalled[F] {
-      override def model: F[SymbolLabelledInstalled.ToNamedSymbol] = generic.from(toAnyLabelled.apply())
+      override def model: SymbolModel = generic.from(toAnyLabelled.apply())
     }
   }
 
-  def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F] {
-    //
-  }
+  class DerivedApply[F[_[_]]] extends DerivedApplyImpl[F, F[ToNamedSymbol], F[ToNamedSymbol]]
+
+  def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]
 
 }
