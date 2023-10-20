@@ -27,10 +27,18 @@ object Model2 {
   type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
   type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
 
-  def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
-    UserAbs[TypedType, U](implicitly, implicitly, implicitly)
+  def userTypedTypeGeneric[U[_]](implicit tt12: TypedType[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, TypedType] =
+    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived
+  def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = userTypedTypeGeneric[U].model
 
-  def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
+  class UserAbsAlias[U[_]] {
+    type F1[E1[_]] = UserAbs[E1, U]
+  }
+  implicit def userNamedGeneric1[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] = SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived
+  implicit def userNamedGeneric2[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1]       = LabelledInstalled[UserAbsAlias[U]#F1].derived
+
+  // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
+  def userNamed[U[_]]: UserAbs[StrAny, U] = userNamedGeneric2[U].model
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {

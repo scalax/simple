@@ -4,6 +4,7 @@ package impl
 
 import temp._
 import Adt.{Status => ADTStatus}
+import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtAliasModel {
 

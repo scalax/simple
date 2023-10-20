@@ -5,69 +5,22 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import implemention.ADTGHDMZSK
 import temp._
 import Adt.{Status => ADTStatus}
+import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait ADTPassedFunction:
 
-  extension [N <: AdtNat, S <: ADTStatus, H <: impl1.HListI1](data: ADTData[N, S])(using t: impl1.HListTran.Aux[N, H])
-    def fold: impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[H, r], S] =
-      impl1.ApplyImplicitInstance[[r] =>> impl1.ExportToFunction[H, r], S](data)
+  import utils._
+
+  extension [N <: AdtNat, S <: ADTStatus, H <: GenericUtil.SimpleHList](data: ADTData[N, S])(using t: GenericUtil.SimpleHListAux[N, H])
+    def fold: ApplyToFunc.FunctionApplyInstance[[r] =>> ApplyToFunc.ToFunctionTuple[H, r], S] =
+      ApplyToFunc.FunctionApplyInstance[[r] =>> ApplyToFunc.ToFunctionTuple[H, r], S](data)
   end extension
 
 end ADTPassedFunction
 
-package impl1:
+package utils:
 
-  trait HListI1
-  class HListI1Positive[T, Tail <: HListI1] extends HListI1
-  class HListI1Zero                         extends HListI1
+  object GenericUtil extends GenericUtilInstance
+  object ApplyToFunc extends ApplyToFunctionUtilInstance
 
-  trait HListTran[N <: AdtNat]:
-    type Out <: HListI1
-  end HListTran
-
-  object HListTran extends HListTranImplicit1:
-    type Aux[N <: AdtNat, O <: HListI1] = HListTran[N] {
-      type Out = O
-    }
-
-    private val zeroValue: HListTran.Aux[AdtNatZero, HListI1Zero] = new HListTran[AdtNatZero] {
-      override type Out = HListI1Zero
-    }
-
-    given HListTran.Aux[AdtNatZero, HListI1Zero] = zeroValue
-  end HListTran
-
-  trait HListTranImplicit1:
-    given [Data, T <: AdtNat, O <: HListI1](using
-      t1: HListTran.Aux[T, O]
-    ): HListTran.Aux[AdtNatPositive[Data, T], HListI1Positive[Data, O]] =
-      summon[HListTran.Aux[AdtNatZero, HListI1Zero]].asInstanceOf[HListTran.Aux[AdtNatPositive[Data, T], HListI1Positive[Data, O]]]
-  end HListTranImplicit1
-
-  type ExportToFunction[t <: HListI1, r] <: Tuple = t match
-    case HListI1Positive[d, tail] => (d => r) *: ExportToFunction[tail, r]
-    case HListI1Zero              => EmptyTuple
-  end ExportToFunction
-
-  class ApplyImplicitInstance[O[U] <: Tuple, S <: ADTStatus](private val data: ADTData[AdtNat, S]) extends AnyVal:
-    def apply[D](parameters: O[D]): D =
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs             = parameters.productIterator.asInstanceOf[Iterator[Any => Any]].to(List)
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-
-      funcInstance(dataInstance)
-    end apply
-  end ApplyImplicitInstance
-
-end impl1
+end utils

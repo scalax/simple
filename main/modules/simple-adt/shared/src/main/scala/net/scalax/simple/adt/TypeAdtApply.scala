@@ -3,6 +3,7 @@ package adt
 
 import temp._
 import impl.Adt.{Status => ADTStatus}
+import net.scalax.simple.adt.nat.AdtNat
 
 /** TODO
   *
@@ -18,6 +19,8 @@ object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher
 
 package impl {
 
+  import net.scalax.simple.adt.nat.{AdtNatPositive, AdtNatZero}
+
   private object Helper {
     def adapterContext[A, B, AdtConvertPoly](
       c: TypeAdt.Context[A, B, AdtConvertPoly]
@@ -27,7 +30,7 @@ package impl {
       }
 
     private val failedValue: TypeAdtApply[Any, AdtNatZero, ADTStatus.NotFinished] =
-      new TypeAdtApply[Any, AdtNatZero, ADTStatus.NotFinished](value = i => ADTData.zero)
+      new TypeAdtApply[Any, AdtNatZero, ADTStatus.NotFinished](value = i => ADTData.zero(IsFinishAndNothing.value(i)))
 
     def failedValueImpl[T]: TypeAdtApply[T, AdtNatZero, ADTStatus.NotFinished] =
       failedValue.asInstanceOf[TypeAdtApply[T, AdtNatZero, ADTStatus.NotFinished]]

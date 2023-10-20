@@ -8,16 +8,21 @@ object CirceModelSample {
   case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
 
   type Id[T]           = T
-  type StringAny[T]    = String
   type JsonAny[T]      = Json
   type NamedJsonAny[T] = (String, Json)
 
-  def encoderProps[U[_]](implicit u: Encoder[U[Int]]): UserAbs[Encoder, U] = UserAbs[Encoder, U](implicitly, implicitly, implicitly)
-  def named[U[_]]: UserAbs[StringAny, U] = UserAbs[StringAny, U](id = "id", first = "first", last = "last")
+  class UserAbsAlias[U[_]] {
+    type F1[E1[_]] = UserAbs[E1, U]
+  }
+
+  implicit def userNamedGeneric2[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] = SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived
+  implicit def named[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1]                   = LabelledInstalled[UserAbsAlias[U]#F1].derived
+  implicit def encoderProps[U[_]](implicit u: Encoder[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, Encoder] =
+    FillIdentity[UserAbsAlias[U]#F1, Encoder].derived
 
   def encoder[U[_]](implicit u: Encoder[U[Int]]): Encoder[UserAbs[Id, U]] = {
-    val enProps  = encoderProps[U]
-    val nameProp = named[U]
+    val enProps  = encoderProps[U].model
+    val nameProp = named[U].model
 
     Encoder.instance { u =>
       val jsonModel: UserAbs[JsonAny, U] =
