@@ -3,7 +3,6 @@ package net.scalax.simple.codec
 import cats._
 import shapeless._
 
-
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.ToNamed]
 }

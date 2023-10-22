@@ -4,12 +4,12 @@ import shapeless._
 import cats._
 
 trait FunctorKCodec[F[_[_]]] {
-  def mapK[I1[_],I2[_]](cv: I1 ~> I2): F[I1] => F[I2]
+  def mapK[I1[_], I2[_]](cv: I1 ~> I2): F[I1] => F[I2]
 }
 
 object FunctorKCodec {
-  trait FillIdentityImpl[I1[_],I2[_],H1,H2] {
-    def fillResult(cv: I1 ~> I2)(u1:I1[H1]): I2[H2]
+  trait FillIdentityImpl[I1[_], I2[_], H1, H2] {
+    def fillResult(cv: I1 ~> I2)(u1: I1[H1]): I2[H2]
   }
   object FillIdentityImpl {
     implicit def implicit1[H1, Tail <: HList](implicit h: H1, t: FillIdentityImpl[Tail]): FillIdentityImpl[H1 :: Tail] =
