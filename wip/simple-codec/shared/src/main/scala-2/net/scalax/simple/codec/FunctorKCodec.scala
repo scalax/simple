@@ -1,14 +1,15 @@
 package net.scalax.simple.codec
 
 import shapeless._
+import cats._
 
-trait FillIdentity[F[_[_]], I[_]] {
-  def model: F[I]
+trait FunctorKCodec[F[_[_]]] {
+  def mapK[I1[_],I2[_]](cv: I1 ~> I2): F[I1] => F[I2]
 }
 
-object FillIdentity {
-  trait FillIdentityImpl[H] {
-    def fillResult: H
+object FunctorKCodec {
+  trait FillIdentityImpl[I1[_],I2[_],H1,H2] {
+    def fillResult(cv: I1 ~> I2)(u1:I1[H1]): I2[H2]
   }
   object FillIdentityImpl {
     implicit def implicit1[H1, Tail <: HList](implicit h: H1, t: FillIdentityImpl[Tail]): FillIdentityImpl[H1 :: Tail] =

@@ -22,6 +22,8 @@ object scala2xbb11 extends IOApp {
   implicit val uuj3: FillIdentity[UFAliasF, Encoder] = FillIdentity[UFAliasF, Encoder].law[CatNameScala2[U1]].derived
   implicit val uuj4: CirceEncoderImplicit[UFAliasF] =
     CirceEncoderImplicit[UFAliasF].law[CatNameScala2[LabelledInstalled.ToNamed], CatNameScala2[U1], CatNameScala2[U2]].derived
+  implicit val uuj6: FillIdentity[UFAliasF, cats.Id] =
+    FillIdentity[UFAliasF, cats.Id].instance(LabelledInstalled[CatNameScala2].summon.model)
 
   val modelNameProperty: CatNameScala2[U2] = uuj2.model
   val modelInstance: CatNameScala2[cats.Id] = CatNameScala2[cats.Id](

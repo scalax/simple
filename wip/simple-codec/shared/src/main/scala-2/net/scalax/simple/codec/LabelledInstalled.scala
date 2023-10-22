@@ -1,12 +1,15 @@
 package net.scalax.simple.codec
 
+import cats._
 import shapeless._
+
 
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.ToNamed]
 }
 
 object LabelledInstalled {
+
   trait SymbolHListToStringHList[H1, H2] {
     def to(h1: H1): H2
   }
@@ -31,9 +34,7 @@ object LabelledInstalled {
       generic1: Generic.Aux[SymbolModel, H1],
       generic2: Generic.Aux[NamedModel, H2],
       shTosh: SymbolHListToStringHList[H1, H2]
-    ): LabelledInstalled[F] = new LabelledInstalled[F] {
-      override def model: NamedModel = generic2.from(shTosh.to(generic1.to(symbolLabelledInstalled.model)))
-    }
+    ): LabelledInstalled[F] = derivedWithContext(implicitly)
 
     def derivedWithContext[H1, H2](symbolLabelledInstalled: SymbolLabelledInstalled[F])(implicit
       generic1: Generic.Aux[SymbolModel, H1],

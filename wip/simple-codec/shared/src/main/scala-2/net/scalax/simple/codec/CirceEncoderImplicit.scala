@@ -28,33 +28,34 @@ object CirceEncoderImplicit {
     }
   }
 
-  class DerivedApply[F[_[_]], StrModel >: F[StringF] <: F[StringF], EncoderModel >: F[Encoder] <: F[Encoder], IdModel >: F[Id] <: F[Id]](
-    namedModel: StrModel,
-    encoderModel: EncoderModel
-  ) {
+  class DerivedApply[F[_[_]], StrModel >: F[StringF] <: F[StringF], EncoderModel >: F[Encoder] <: F[Encoder], IdModel >: F[Id] <: F[Id]] {
 
     def derived[H1, H2, H3](implicit
+      namedModel: LabelledInstalled[F],
+      encoderModel: FillIdentity[F, Encoder],
+      generic1: Generic.Aux[StrModel, H1],
+      generic2: Generic.Aux[IdModel, H2],
+      generic3: Generic.Aux[EncoderModel, H3],
+      toJson: ToListJson[H1, H2, H3]
+    ): CirceEncoderImplicit[F] = derivedWithContext(implicitly, implicitly)
+
+    def derivedWithContext[H1, H2, H3](namedModel: LabelledInstalled[F], encoderModel: FillIdentity[F, Encoder])(implicit
       generic1: Generic.Aux[StrModel, H1],
       generic2: Generic.Aux[IdModel, H2],
       generic3: Generic.Aux[EncoderModel, H3],
       toJson: ToListJson[H1, H2, H3]
     ): CirceEncoderImplicit[F] = new CirceEncoderImplicit[F] {
       override val model: JsonObjectEncoder[F[Id]] = JsonObjectEncoder.instance[F[Id]] { model =>
-        val it = toJson.toListJSON(generic1.to(namedModel), generic2.to(model), generic3.to(encoderModel))
+        val it = toJson.toListJSON(generic1.to(namedModel.model), generic2.to(model), generic3.to(encoderModel.model))
         JsonObject.fromIterable(it)
       }
     }
 
     def law[StrModelImpl >: StrModel <: StrModel, EncoderModelIml >: EncoderModel <: EncoderModel, IdModelImpl >: IdModel <: IdModel]
-      : DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] =
-      new DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl](namedModel, encoderModel)
+      : DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl] = new DerivedApply[F, StrModelImpl, EncoderModelIml, IdModelImpl]
 
   }
 
-  def apply[F[_[_]]](implicit
-    namedModel: LabelledInstalled[F],
-    encoderModel: FillIdentity[F, Encoder]
-  ): DerivedApply[F, F[StringF], F[Encoder], F[Id]] =
-    new DerivedApply[F, F[StringF], F[Encoder], F[Id]](namedModel.model, encoderModel.model)
+  def apply[F[_[_]]]: DerivedApply[F, F[StringF], F[Encoder], F[Id]] = new DerivedApply[F, F[StringF], F[Encoder], F[Id]]
 
 }
