@@ -8,10 +8,12 @@ trait FunctorKCodec[F[_[_]]] {
 }
 
 object FunctorKCodec {
+
   trait FillIdentityImpl[I1[_], I2[_], H1, H2] {
     def fillResult(cv: I1 ~> I2)(u1: I1[H1]): I2[H2]
   }
-  object FillIdentityImpl {
+
+  /*object FillIdentityImpl {
     implicit def implicit1[H1, Tail <: HList](implicit h: H1, t: FillIdentityImpl[Tail]): FillIdentityImpl[H1 :: Tail] =
       new FillIdentityImpl[H1 :: Tail] {
         override def fillResult: H1 :: Tail = h :: t.fillResult
@@ -41,6 +43,6 @@ object FunctorKCodec {
     def summon(implicit model: FillIdentity[F, I]): FillIdentity[F, I] = model
   }
 
-  def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[I]] = new DerivedApply[F, I, F[I]]
+  def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[I]] = new DerivedApply[F, I, F[I]]*/
 
 }

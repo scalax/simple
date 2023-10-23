@@ -7,13 +7,14 @@ trait FillByInstance[F[_[_]], I[_]] {
 }
 
 object FillByInstance {
+
   trait FillWay[T[_]] {
     def instance[U]: T[U]
     def wrapModel[U]: FillModel[T, U] = FillModel[T, U](instance)
   }
   case class FillModel[F[_], T](model: F[T])
 
-  class DerivedApply[
+  /*class DerivedApply[
     F[_[_]],
     I[_],
     SymbolModel >: F[SymbolLabelledInstalled.ToNamedSymbol] <: F[SymbolLabelledInstalled.ToNamedSymbol]
@@ -30,6 +31,6 @@ object FillByInstance {
   }
 
   def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[SymbolLabelledInstalled.ToNamedSymbol]] =
-    new DerivedApply[F, I, F[SymbolLabelledInstalled.ToNamedSymbol]]
+    new DerivedApply[F, I, F[SymbolLabelledInstalled.ToNamedSymbol]]*/
 
 }
