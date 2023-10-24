@@ -5,6 +5,7 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 import io.circe._
 import io.circe.syntax._
 import scala.collection.compat._
+import net.scalax.simple.test.SimpleCompat._
 
 import zio._
 import zio.test._
@@ -23,7 +24,7 @@ object TestCase3 extends ZIOSpecDefault {
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314-2")(
     test("Simple adt fold in test data.") {
 
-      def asserts = TestResult.all(
+      def asserts = TestResult.allSuccesses(
         {
 
           val data = None

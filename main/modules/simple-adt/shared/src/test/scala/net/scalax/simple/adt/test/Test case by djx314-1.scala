@@ -2,6 +2,7 @@ package net.scalax.simple.adt.test
 
 import net.scalax.simple.adt.{TypeAdt => Adt}
 import scala.collection.compat._
+import net.scalax.simple.test.SimpleCompat._
 
 import zio._
 import zio.test._
@@ -22,7 +23,7 @@ object TestCase1 extends ZIOSpecDefault {
     test("Simple adt fold in test data.") {
       val baseValue = 2
 
-      def asserts = TestResult.all(
+      def asserts = TestResult.allSuccesses(
         {
 
           val data     = None

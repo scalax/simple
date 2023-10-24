@@ -17,13 +17,13 @@ trait ADTData[+N <: AdtNat, S <: Status] extends ToGHDMZSK {
 object ADTData {
   def success[D, T <: AdtNat, S <: Status](data: D, tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], Status.Passed] =
     new ADTData[AdtNatPositive[D, T], Status.Passed] {
-      override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(data).inputGHDMZSK(tail.toGHDMZSK)
+      override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(data).inputGHDMZSK(() => tail.toGHDMZSK)
     }
   def empty[D, T <: AdtNat, S <: Status](tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
-    override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1Impl1.inputGHDMZSK(tail.toGHDMZSK)
+    override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1Impl1.inputGHDMZSK(() => tail.toGHDMZSK)
   }
   def zero(isFinishAndNothing: IsFinishAndNothing): ADTData[AdtNatZero, Status.NotFinished] = new ADTData[AdtNatZero, Status.NotFinished] {
-    override lazy val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(isFinishAndNothing).inputGHDMZSK(zero(isFinishAndNothing).toGHDMZSK)
+    override lazy val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(isFinishAndNothing).inputGHDMZSK(() => zero(isFinishAndNothing).toGHDMZSK)
   }
 }
 

@@ -5,6 +5,7 @@ import io.circe._
 import io.circe.syntax._
 import scala.collection.compat._
 import scala.Predef.{assert => scalaAssert}
+import net.scalax.simple.test.SimpleCompat._
 
 import zio._
 import zio.test._
@@ -56,7 +57,7 @@ object TestCase2 extends ZIOSpecDefault {
     test("Simple adt fold in test data.") {
       val baseValue = 2
 
-      def asserts = TestResult.all(
+      def asserts = TestResult.allSuccesses(
         {
 
           val data     = None

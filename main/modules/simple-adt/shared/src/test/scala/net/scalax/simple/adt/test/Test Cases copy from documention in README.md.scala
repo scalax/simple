@@ -6,16 +6,6 @@ object `Test Cases copy from documention in README.md` {
 
   println("Test cases for doc started.")
 
-  def assert(value: => Boolean): Unit = {
-    val result =
-      try value
-      catch {
-        case _: Throwable => false
-      }
-
-    if (!result) throw new Exception("Error Assert")
-  }
-
   def `Common usage - compare with Scala sealed trait`[T](body: => T): T = body
 
   `Common usage - compare with Scala sealed trait` {

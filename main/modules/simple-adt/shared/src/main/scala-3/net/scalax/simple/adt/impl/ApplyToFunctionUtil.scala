@@ -19,15 +19,15 @@ trait ApplyToFunctionUtilInstance:
     def apply[D](parameters: O[D]): D =
       val adtDataGHDMZSK = data.toGHDMZSK
       val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(ADTGHDMZSK.identityGhdmzsk)
+        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
+        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
         .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
       val funcs             = parameters.productIterator.asInstanceOf[Iterator[Any => Any]].to(List)
       val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
       val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(listFunc)
+        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
+        .inputGHDMZSK(() => listFunc)
         .asInstanceOf[ADTGHDMZSK.GetValue]
         .value
         .asInstanceOf[Any => D]

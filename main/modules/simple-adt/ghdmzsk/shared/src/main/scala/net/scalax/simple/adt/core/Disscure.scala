@@ -5,18 +5,16 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object Disscure {
 
-  val emptyGhdmzsk: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = throw new Exception("xuejd")
-  }
+  lazy val emptyGhdmzsk: () => ghdmzsk = () => emptyGhdmzsk()
 
   val identityGhdmzsk: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t
+    override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = t()
   }
 
   val takeProperty: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(func: => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = selector.inputGHDMZSK(tail).inputGHDMZSK(func)
+    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(func: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(selector: () => ghdmzsk): ghdmzsk = selector().inputGHDMZSK(tail).inputGHDMZSK(func)
       }
     }
   }
@@ -35,43 +33,45 @@ object Disscure {
   }*/
 
   val a1Impl1: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = {
-        val tailFunc = tail.inputGHDMZSK(selector)
+    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(selector: () => ghdmzsk): ghdmzsk = {
+        val tailFunc = tail().inputGHDMZSK(selector)
         val func1: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(data: => ghdmzsk): ghdmzsk = tailFunc.inputGHDMZSK(data)
+          override def inputGHDMZSK(data: () => ghdmzsk): ghdmzsk = tailFunc.inputGHDMZSK(data)
         }
         val func2: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tailFunc)
+          override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = other().inputGHDMZSK(() => tailFunc)
         }
         val func3: ghdmzsk = func2
-        val num2: ghdmzsk  = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(func1)
-        val num1: ghdmzsk  = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
-        val num0: ghdmzsk  = takeProperty.inputGHDMZSK(num1).inputGHDMZSK(func3)
+        val num2: ghdmzsk  = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(() => func1)
+        val num1: ghdmzsk  = takeProperty.inputGHDMZSK(() => num2).inputGHDMZSK(() => func2)
+        val num0: ghdmzsk  = takeProperty.inputGHDMZSK(() => num1).inputGHDMZSK(() => func3)
         num0.inputGHDMZSK(selector)
       }
     }
   }
 
   def a1VImpl(value: Any): ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(selector: => ghdmzsk): ghdmzsk = {
-        lazy val tailFunc: ghdmzsk = tail.inputGHDMZSK(selector)
+    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(selector: () => ghdmzsk): ghdmzsk = {
+        lazy val tailFunc: ghdmzsk = tail().inputGHDMZSK(selector)
         val func2: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other
+          override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = other()
         }
         val func3: ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = {
+          override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
             val value1: Any = value
-            other.inputGHDMZSK(new GetValue with ghdmzsk {
-              override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = tailFunc.inputGHDMZSK(t)
-              override def value: Any                           = value1
-            })
+            other().inputGHDMZSK(() =>
+              new GetValue with ghdmzsk {
+                override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = tailFunc.inputGHDMZSK(t)
+                override def value: Any                              = value1
+              }
+            )
           }
         }
-        val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(aZero(value))
-        val num1: ghdmzsk = takeProperty.inputGHDMZSK(num2).inputGHDMZSK(func2)
-        val num0: ghdmzsk = takeProperty.inputGHDMZSK(num1).inputGHDMZSK(func3)
+        val num2: ghdmzsk = takeProperty.inputGHDMZSK(emptyGhdmzsk).inputGHDMZSK(() => aZero(value))
+        val num1: ghdmzsk = takeProperty.inputGHDMZSK(() => num2).inputGHDMZSK(() => func2)
+        val num0: ghdmzsk = takeProperty.inputGHDMZSK(() => num1).inputGHDMZSK(() => func3)
         num0.inputGHDMZSK(selector)
       }
     }
@@ -80,8 +80,8 @@ object Disscure {
   def aZero(value: Any): ghdmzsk = {
     val value1: Any = value
     def aZeroImpl: ghdmzsk = new ghdmzsk with GetValue {
-      override def value: Any                           = value1
-      override def inputGHDMZSK(t: => ghdmzsk): ghdmzsk = t.inputGHDMZSK(aZeroImpl)
+      override def value: Any                              = value1
+      override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = t().inputGHDMZSK(() => aZeroImpl)
     }
     aZeroImpl
   }
@@ -93,9 +93,9 @@ object Disscure {
   def genImpl1(value: Any): ghdmzsk = {
     val value1: Any = value
     new ghdmzsk {
-      override def inputGHDMZSK(tail: => ghdmzsk): ghdmzsk = new ghdmzsk with GetValue {
-        override def value: Any                               = value1
-        override def inputGHDMZSK(other: => ghdmzsk): ghdmzsk = other.inputGHDMZSK(tail)
+      override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk with GetValue {
+        override def value: Any                                  = value1
+        override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = other().inputGHDMZSK(tail)
       }
     }
   }
