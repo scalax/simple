@@ -15,16 +15,17 @@ object scala2xbb11 extends IOApp {
   implicit val im2: LabelledInstalled[CatNameScala2]       = LabelledInstalled[CatNameScala2].derived
   implicit val im3: FillIdentity[CatNameScala2, Encoder]   = FillIdentity[CatNameScala2, Encoder].derived
   implicit val im4: CirceEncoderImplicit[CatNameScala2]    = CirceEncoderImplicit[CatNameScala2].derived
+  implicit val im6: FillIdentity[CatNameScala2, FillModel] = FillIdentity[CatNameScala2, FillModel].derived
 
   type U1[_] = Encoder[String]
   type U2[_] = String
-  implicit val uuj1: SymbolLabelledInstalled[UFAliasF] =
-    SymbolLabelledInstalled[UFAliasF].law[CatNameScala2[SymbolLabelledInstalled.ToNamedSymbol]].derived
-  implicit val uuj2: LabelledInstalled[UFAliasF] =
-    LabelledInstalled[UFAliasF].law[CatNameScala2[SymbolLabelledInstalled.ToNamedSymbol], CatNameScala2[LabelledInstalled.ToNamed]].derived
+  implicit val uuj2: LabelledInstalled[UFAliasF]     = LabelledInstalled[UFAliasF].instance(LabelledInstalled[CatNameScala2].summon.model)
   implicit val uuj3: FillIdentity[UFAliasF, Encoder] = FillIdentity[UFAliasF, Encoder].law[CatNameScala2[U1]].derived
   implicit val uuj4: CirceEncoderImplicit[UFAliasF] =
     CirceEncoderImplicit[UFAliasF].law[CatNameScala2[LabelledInstalled.ToNamed], CatNameScala2[U1], CatNameScala2[U2]].derived
+  implicit val uuj6: FillIdentity[UFAliasF, cats.Id] =
+    FillIdentity[UFAliasF, cats.Id].instance(LabelledInstalled[CatNameScala2].summon.model)
+  implicit val uuj7: FillIdentity[CatNameScala2, FillModel] = FillIdentity[CatNameScala2, FillModel].derived
 
   val modelNameProperty: CatNameScala2[U2] = uuj2.model
   val modelInstance: CatNameScala2[cats.Id] = CatNameScala2[cats.Id](
@@ -52,4 +53,5 @@ object scala2xbb11 extends IOApp {
 
   /** { "name" : "name", "str" : "str", "uClass" : "uClass", "name11" : "name11", "namexu" : "namexu" }
     */
+
 }

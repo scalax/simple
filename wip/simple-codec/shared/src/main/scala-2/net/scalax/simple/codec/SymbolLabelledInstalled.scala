@@ -10,7 +10,11 @@ object SymbolLabelledInstalled {
 
   type ToNamedSymbol[_] = Symbol
 
-  class DerivedApply[F[_[_]], SymbolModel <: F[SymbolLabelledInstalled.ToNamedSymbol], AnyModel] {
+  class DerivedApply[
+    F[_[_]],
+    SymbolModel >: F[SymbolLabelledInstalled.ToNamedSymbol] <: F[SymbolLabelledInstalled.ToNamedSymbol],
+    AnyModel
+  ] {
     def derived[H1 >: H2, H2](implicit
       generic: Generic.Aux[SymbolModel, H1],
       toAnyLabelled: DefaultSymbolicLabelling.Aux[AnyModel, H2]
@@ -19,8 +23,8 @@ object SymbolLabelledInstalled {
     }
 
     object law {
-      def apply[Target <: F[SymbolLabelledInstalled.ToNamedSymbol]]: DerivedApply[F, Target, Target] =
-        new DerivedApply[F, Target, Target]
+      def apply[Target >: SymbolModel <: SymbolModel, AnyModelImpl >: AnyModel <: AnyModel]: DerivedApply[F, Target, AnyModelImpl] =
+        new DerivedApply[F, Target, AnyModelImpl]
     }
   }
 

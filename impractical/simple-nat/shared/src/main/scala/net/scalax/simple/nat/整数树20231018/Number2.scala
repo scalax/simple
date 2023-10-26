@@ -1,3 +1,4 @@
+/*
 package net.scalax.simple.nat.整数树20231018
 
 object NENE喵A呜哇 {
@@ -128,3 +129,4 @@ object NENE喵A呜哇 {
   }
 
 }
+ */

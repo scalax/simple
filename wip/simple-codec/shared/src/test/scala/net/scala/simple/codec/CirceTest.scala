@@ -7,7 +7,11 @@ import cats.effect._
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
-object xxbb1 extends IOApp {
+trait IOApp1 {
+  def run(args: List[String]): IO[ExitCode]
+}
+
+object xxbb1 extends IOApp1 {
 
   def encodeModel[F[_[_]]](implicit
     modelEn: F[Encoder],
