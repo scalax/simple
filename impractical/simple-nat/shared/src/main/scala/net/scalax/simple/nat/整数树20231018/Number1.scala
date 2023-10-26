@@ -1,3 +1,4 @@
+/*
 package net.scalax.simple.nat.整数树20231018
 
 object Number1 {
@@ -35,3 +36,4 @@ object Number1 {
   lazy val NumBExecuteZero: NumBExecute = new NumBExecute(() => NumBExecuteZero, precursor = () => NumAExecuteZero)
 
 }
+ */

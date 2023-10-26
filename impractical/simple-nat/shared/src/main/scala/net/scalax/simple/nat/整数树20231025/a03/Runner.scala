@@ -2,7 +2,7 @@ package a03
 
 object Runner {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     a03_1.step1.Runner.main()
     a03_1.step2.Runner.main()
     a03_1.step3.Runner.main()
