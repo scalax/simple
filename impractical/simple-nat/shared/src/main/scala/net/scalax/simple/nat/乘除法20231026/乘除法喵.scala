@@ -27,7 +27,7 @@ object 乘除法喵 {
 
     val bigDecimal1: BigDecimal = BigDecimal(num1.Parent) / BigDecimal(num1.Sub)
     val bigDecimal2: BigDecimal = BigDecimal(num2.Parent) / BigDecimal(num2.Sub)
-    统计.confirm(forConfirm = () => execResultForInput, except = bigDecimal1 * bigDecimal2, maxCount = 20000000)
+    统计.confirm(forConfirm = () => execResultForInput, except = bigDecimal1 * bigDecimal2, maxCount = 200000000L)
 
   }
 
