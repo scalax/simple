@@ -17,10 +17,9 @@ object scala2xbb11 extends IOApp {
   implicit val im4: CirceEncoderImplicit[CatNameScala2]    = CirceEncoderImplicit[CatNameScala2].derived
 
   implicit val im7: FillFuncInstance[CatNameScala2] = {
-    val getter                                                    = FillIdentity[CatNameScala2, IdentityGetter].derived
-    def derivedIm7Inner2[UE[_]]: SetToIdentity[CatNameScala2, UE] = SetToIdentity[CatNameScala2, UE].derivedWithContext(getter)
-    new FillFuncInstance[CatNameScala2] {
-      override def fill[I[_]](i: IdentityGetter.FGen[I]): CatNameScala2[I] = derivedIm7Inner2[I].model(i)
+    val getter = FillIdentity[CatNameScala2, IdentityGetter].derived
+    new FillFuncInstance.Impl1[CatNameScala2] {
+      override def setter[I[_]]: SetToIdentity[CatNameScala2, I] = SetToIdentity[CatNameScala2, I].derivedWithContext(getter)
     }
   }
 
@@ -34,14 +33,12 @@ object scala2xbb11 extends IOApp {
   implicit val uuj6: FillIdentity[UFAliasF, cats.Id] =
     FillIdentity[UFAliasF, cats.Id].instance(LabelledInstalled[CatNameScala2].summon.model)
 
-  implicit val uuj8: FillFuncInstance[UFAliasF] = {
-    val getter = FillIdentity[UFAliasF, IdentityGetter].law[CatNameScala2[U4]].derived
-    def derivedUUJ8Inner2[UE[_]]: SetToIdentity[UFAliasF, UE] = {
-      type UU7[_] = UE[String]
-      SetToIdentity[UFAliasF, UE].law[CatNameScala2[U4], CatNameScala2[UU7]].derivedWithContext(getter)
-    }
-    new FillFuncInstance[UFAliasF] {
-      override def fill[I[_]](i: IdentityGetter.FGen[I]): UFAliasF[I] = derivedUUJ8Inner2[I].model(i)
+  implicit val uuj8: FillFuncInstance[UFAliasF] = new FillFuncInstance[UFAliasF] {
+    override def fill[I[_]](i: IdentityGetter.FGen[I]): UFAliasF[I] = {
+      type UU7[_] = I[String]
+      implicitly[FillFuncInstance[CatNameScala2]].fill[UU7](new IdentityGetter.FGen[UU7] {
+        override def gen[T]: I[String] = i.gen[String]
+      })
     }
   }
 
