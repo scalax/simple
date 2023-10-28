@@ -15,17 +15,35 @@ object scala2xbb11 extends IOApp {
   implicit val im2: LabelledInstalled[CatNameScala2]       = LabelledInstalled[CatNameScala2].derived
   implicit val im3: FillIdentity[CatNameScala2, Encoder]   = FillIdentity[CatNameScala2, Encoder].derived
   implicit val im4: CirceEncoderImplicit[CatNameScala2]    = CirceEncoderImplicit[CatNameScala2].derived
-  implicit val im6: FillIdentity[CatNameScala2, FillModel] = FillIdentity[CatNameScala2, FillModel].derived
+
+  implicit val im7: FillFuncInstance[CatNameScala2] = {
+    val getter                                                    = FillIdentity[CatNameScala2, IdentityGetter].derived
+    def derivedIm7Inner2[UE[_]]: SetToIdentity[CatNameScala2, UE] = SetToIdentity[CatNameScala2, UE].derivedWithContext(getter)
+    new FillFuncInstance[CatNameScala2] {
+      override def fill[I[_]](i: IdentityGetter.FGen[I]): CatNameScala2[I] = derivedIm7Inner2[I].model(i)
+    }
+  }
 
   type U1[_] = Encoder[String]
   type U2[_] = String
+  type U4[_] = IdentityGetter[String]
   implicit val uuj2: LabelledInstalled[UFAliasF]     = LabelledInstalled[UFAliasF].instance(LabelledInstalled[CatNameScala2].summon.model)
   implicit val uuj3: FillIdentity[UFAliasF, Encoder] = FillIdentity[UFAliasF, Encoder].law[CatNameScala2[U1]].derived
   implicit val uuj4: CirceEncoderImplicit[UFAliasF] =
     CirceEncoderImplicit[UFAliasF].law[CatNameScala2[LabelledInstalled.ToNamed], CatNameScala2[U1], CatNameScala2[U2]].derived
   implicit val uuj6: FillIdentity[UFAliasF, cats.Id] =
     FillIdentity[UFAliasF, cats.Id].instance(LabelledInstalled[CatNameScala2].summon.model)
-  implicit val uuj7: FillIdentity[CatNameScala2, FillModel] = FillIdentity[CatNameScala2, FillModel].derived
+
+  implicit val uuj8: FillFuncInstance[UFAliasF] = {
+    val getter = FillIdentity[UFAliasF, IdentityGetter].law[CatNameScala2[U4]].derived
+    def derivedUUJ8Inner2[UE[_]]: SetToIdentity[UFAliasF, UE] = {
+      type UU7[_] = UE[String]
+      SetToIdentity[UFAliasF, UE].law[CatNameScala2[U4], CatNameScala2[UU7]].derivedWithContext(getter)
+    }
+    new FillFuncInstance[UFAliasF] {
+      override def fill[I[_]](i: IdentityGetter.FGen[I]): UFAliasF[I] = derivedUUJ8Inner2[I].model(i)
+    }
+  }
 
   val modelNameProperty: CatNameScala2[U2] = uuj2.model
   val modelInstance: CatNameScala2[cats.Id] = CatNameScala2[cats.Id](

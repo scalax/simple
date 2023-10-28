@@ -1,14 +1,7 @@
 package net.scalax.simple.codec
 
-trait FillFunc[I[_]] {
-  def instance[U]: I[U]
-}
-trait FillModel[U] {
-  def input[I[_]](ins: FillFunc[I]): I[U]
+trait FillFuncInstance[F[_[_]]] {
+  def fill[I[_]](identityGetter: IdentityGetter.FGen[I]): F[I]
 }
 
-object FillModel {
-  implicit def implicit1[U]: FillModel[U] = new FillModel[U] {
-    override def input[I[_]](ins: FillFunc[I]): I[U] = ins.instance[U]
-  }
-}
+abstract class FillFuncInstanceImpl1[F[_[_]]](val getter: FillIdentity[F, IdentityGetter]) extends FillFuncInstance[F]
