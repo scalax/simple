@@ -4,6 +4,7 @@ package codec
 import io.circe._
 import io.circe.syntax._
 import cats.effect._
+import cats.~>
 
 case class CatNameScala2[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
@@ -19,7 +20,14 @@ object scala2xbb11 extends IOApp {
   implicit val im7: FillFuncInstance[CatNameScala2] = {
     val getter = FillIdentity[CatNameScala2, IdentityGetter].derived
     new FillFuncInstance.Impl1[CatNameScala2] {
-      override def setter[I[_]]: SetToIdentity[CatNameScala2, I] = SetToIdentity[CatNameScala2, I].derivedWithContext(getter)
+      override def setter[I[_]]: FillFuncInstance.SetToIdentity[CatNameScala2, I] =
+        FillFuncInstance[CatNameScala2, I].derivedWithContext(getter)
+    }
+  }
+  implicit val im8: FuncTyped[CatNameScala2] = new FuncTyped.Impl1[CatNameScala2] {
+    override def impl[In[_], Out[_]]: FuncTyped.FuncTypedImpl[CatNameScala2, In, Out] = {
+      type IO1[T] = FuncTyped.IOModel[In[T], Out[T]]
+      FuncTyped[CatNameScala2, In, Out].law[CatNameScala2[In], CatNameScala2[Out], CatNameScala2[IO1]].derived
     }
   }
 
@@ -35,10 +43,19 @@ object scala2xbb11 extends IOApp {
 
   implicit val uuj8: FillFuncInstance[UFAliasF] = new FillFuncInstance[UFAliasF] {
     override def fill[I[_]](i: IdentityGetter.FGen[I]): UFAliasF[I] = {
-      type UU7[_] = I[String]
-      implicitly[FillFuncInstance[CatNameScala2]].fill[UU7](new IdentityGetter.FGen[UU7] {
-        override def gen[T]: I[String] = i.gen[String]
-      })
+      implicitly[FillFuncInstance[CatNameScala2]]
+        .fill[({ type F1[T] = I[String] })#F1](new IdentityGetter.FGen[({ type F1[T] = I[String] })#F1] {
+          override def gen[T]: I[String] = i.gen[String]
+        })
+    }
+  }
+  implicit val uuj9: FuncTyped[UFAliasF] = new FuncTyped[UFAliasF] {
+    override def fill[In[_], Out[_]](func: In ~> Out): UFAliasF[In] => UFAliasF[Out] = {
+      val funcInstance: ({ type F1[T] = In[String] })#F1 ~> ({ type F2[T] = Out[String] })#F2 = new (({ type F1[T] = In[String] })#F1 ~>
+        ({ type F2[T] = Out[String] })#F2) {
+        override def apply[T](t: In[String]): Out[String] = func(t)
+      }
+      implicitly[FuncTyped[CatNameScala2]].fill[({ type F1[T] = In[String] })#F1, ({ type F2[T] = Out[String] })#F2](funcInstance)
     }
   }
 
