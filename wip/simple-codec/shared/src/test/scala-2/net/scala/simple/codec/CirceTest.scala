@@ -17,19 +17,18 @@ object scala2xbb11 extends IOApp {
   implicit val im3: FillIdentity[CatNameScala2, Encoder]   = FillIdentity[CatNameScala2, Encoder].derived
   implicit val im4: CirceEncoderImplicit[CatNameScala2]    = CirceEncoderImplicit[CatNameScala2].derived
 
-  implicit val im7: FillFuncInstance[CatNameScala2] = {
-    val getter = FillIdentity[CatNameScala2, IdentityGetter].derived
-    new FillFuncInstance.Impl1[CatNameScala2] {
-      override def setter[I[_]]: FillFuncInstance.SetToIdentity[CatNameScala2, I] =
-        FillFuncInstance[CatNameScala2, I].derivedWithContext(getter)
-    }
+  implicit val im7: FillFuncInstance[CatNameScala2] = new FillFuncInstance.Impl1[CatNameScala2] {
+    override def setter[I[_]](set1: Set1, set2: Set2[I]): Set3[I] = set2.derivedWithContext(set1.derived)
   }
   implicit val im8: FuncTyped[CatNameScala2] = new FuncTyped.Impl1[CatNameScala2] {
-    override def impl[In[_], Out[_]]: FuncTyped.FuncTypedImpl[CatNameScala2, In, Out] = {
+    override def setter[In[_], Out[_]](set1: Set1[In, Out]): Set2[In, Out] = {
       type IO1[T] = FuncTyped.IOModel[In[T], Out[T]]
-      FuncTyped[CatNameScala2, In, Out].law[CatNameScala2[In], CatNameScala2[Out], CatNameScala2[IO1]].derived
+      set1.law[CatNameScala2[In], CatNameScala2[Out], CatNameScala2[IO1]].derived
     }
   }
+  type JsonPaire[T] = (String, Json)
+  implicit val im9: OutputBySameType[CatNameScala2, (String, Json), JsonPaire] =
+    OutputBySameType[CatNameScala2, (String, Json), JsonPaire].derived
 
   type U1[_] = Encoder[String]
   type U2[_] = String
@@ -57,6 +56,10 @@ object scala2xbb11 extends IOApp {
       }
       implicitly[FuncTyped[CatNameScala2]].fill[({ type F1[T] = In[String] })#F1, ({ type F2[T] = Out[String] })#F2](funcInstance)
     }
+  }
+  implicit val uuj10: OutputBySameType[UFAliasF, (String, Json), JsonPaire] = new OutputBySameType[UFAliasF, (String, Json), JsonPaire] {
+    override def model(input: CatNameScala2[JsonPaire]): List[(String, Json)] =
+      implicitly[OutputBySameType[CatNameScala2, (String, Json), JsonPaire]].model(input)
   }
 
   val modelNameProperty: CatNameScala2[U2] = uuj2.model

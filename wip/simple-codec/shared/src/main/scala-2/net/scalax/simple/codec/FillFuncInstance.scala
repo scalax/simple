@@ -29,8 +29,15 @@ object FillFuncInstance {
   }
 
   trait Impl1[F[_[_]]] extends FillFuncInstance[F] {
-    def setter[I[_]]: SetToIdentity[F, I]
-    override def fill[I[_]](identityGetter: IdentityGetter.FGen[I]): F[I] = setter[I].model(identityGetter)
+    type Set1       = FillIdentity.DerivedApply[F, IdentityGetter, F[IdentityGetter]]
+    type Set2[I[_]] = DerivedApply[F, I, F[IdentityGetter], F[I]]
+    type Set3[I[_]] = SetToIdentity[F, I]
+    def setter[I[_]](
+      apply1: Set1,
+      apply2: Set2[I]
+    ): SetToIdentity[F, I]
+    override def fill[I[_]](identityGetter: IdentityGetter.FGen[I]): F[I] =
+      setter[I](FillIdentity[F, IdentityGetter], FillFuncInstance[F, I]).model(identityGetter)
   }
 
   class DerivedApply[

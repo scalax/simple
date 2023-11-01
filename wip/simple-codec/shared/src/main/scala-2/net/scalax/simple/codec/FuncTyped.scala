@@ -13,8 +13,10 @@ object FuncTyped {
   }
 
   trait Impl1[F[_[_]]] extends FuncTyped[F] {
-    override def fill[In[_], Out[_]](func: In ~> Out): F[In] => F[Out] = impl[In, Out].fill(func)
-    def impl[In[_], Out[_]]: FuncTypedImpl[F, In, Out]
+    type Set1[In[_], Out[_]] = DerivedApply[F, In, Out, F[In], F[Out], F[TypeFunc[In, Out]#Func]]
+    type Set2[In[_], Out[_]] = FuncTypedImpl[F, In, Out]
+    override def fill[In[_], Out[_]](func: In ~> Out): F[In] => F[Out] = setter[In, Out](FuncTyped[F, In, Out]).fill(func)
+    def setter[In[_], Out[_]](set1: Set1[In, Out]): Set2[In, Out]
   }
 
   trait FuncTypedImpl[F[_[_]], In[_], Out[_]] {
