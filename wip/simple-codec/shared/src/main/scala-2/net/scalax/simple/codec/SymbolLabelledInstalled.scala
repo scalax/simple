@@ -8,27 +8,34 @@ trait SymbolLabelledInstalled[F[_[_]]] {
 
 object SymbolLabelledInstalled {
 
-  type ToNamedSymbol[_] = Symbol
-
-  class DerivedApply[
-    F[_[_]],
-    SymbolModel >: F[SymbolLabelledInstalled.ToNamedSymbol] <: F[SymbolLabelledInstalled.ToNamedSymbol],
-    AnyModel
-  ] {
-    def derived[H1 >: H2, H2](implicit
-      generic: Generic.Aux[SymbolModel, H1],
-      toAnyLabelled: DefaultSymbolicLabelling.Aux[AnyModel, H2]
-    ): SymbolLabelledInstalled[F] = new SymbolLabelledInstalled[F] {
-      override def model: SymbolModel = generic.from(toAnyLabelled.apply())
-    }
-
-    object law {
-      def apply[Target >: SymbolModel <: SymbolModel, AnyModelImpl >: AnyModel <: AnyModel]: DerivedApply[F, Target, AnyModelImpl] =
-        new DerivedApply[F, Target, AnyModelImpl]
+  trait LabelledGeneric[Model] {
+    def generic[H1](implicit l: DefaultSymbolicLabelling.Aux[Model, H1]): H1 = l.apply()
+    def law[ModelImpl >: Model <: Model]: LabelledGeneric[ModelImpl]         = LabelledGeneric[ModelImpl]
+  }
+  object LabelledGeneric {
+    def apply[T]: LabelledGeneric[T] = new LabelledGeneric[T] {
+      //
     }
   }
 
-  def apply[F[_[_]]]: DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[SymbolLabelledInstalled.ToNamedSymbol]] =
-    new DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[SymbolLabelledInstalled.ToNamedSymbol]]
+  type ToNamedSymbol[_] = Symbol
+
+  class DerivedApply[F[_[_]]] {
+    def derived2[HTypeTemp](
+      genericType: LabelledGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]] => HTypeTemp
+    ): InnerApply1[HTypeTemp] = new InnerApply1[HTypeTemp](genericType(LabelledGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]]))
+
+    class InnerApply1[HTemp](genericType: HTemp) {
+      def apply(
+        t: SimpleFromGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]] => HTemp => F[SymbolLabelledInstalled.ToNamedSymbol]
+      ): SymbolLabelledInstalled[F] =
+        new SymbolLabelledInstalled[F] {
+          def model: F[SymbolLabelledInstalled.ToNamedSymbol] =
+            t(SimpleFromGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]])(genericType)
+        }
+    }
+  }
+
+  def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]
 
 }

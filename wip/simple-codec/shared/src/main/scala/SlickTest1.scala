@@ -34,8 +34,9 @@ object Model2 {
   class UserAbsAlias[U[_]] {
     type F1[E1[_]] = UserAbs[E1, U]
   }
-  implicit def userNamedGeneric1[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] = SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived
-  implicit def userNamedGeneric2[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1]       = LabelledInstalled[UserAbsAlias[U]#F1].derived
+  implicit def userNamedGeneric1[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] =
+    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(_.generic)
+  implicit def userNamedGeneric2[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
   def userNamed[U[_]]: UserAbs[StrAny, U] = userNamedGeneric2[U].model

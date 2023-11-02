@@ -11,8 +11,17 @@ object FillFuncInstance {
     def model(gen: IdentityGetter.FGen[I]): F[I]
   }
 
-  trait SetTo[I[_], From, To] {
-    def setTo(gen: IdentityGetter.FGen[I])(from: From): To
+  trait SetTo[I[_], -From, +Target] {
+    def setTo(gen: IdentityGetter.FGen[I])(from: From): Target
+  }
+
+  trait SetToGeneric[I[_], From] {
+    def generic[To](implicit s: SetTo[I, From, To]): SetTo[I, From, To] = s
+  }
+  object SetToGeneric {
+    def apply[I[_], From]: SetToGeneric[I, From] = new SetToGeneric[I, From] {
+      //
+    }
   }
 
   object SetTo {
@@ -29,36 +38,40 @@ object FillFuncInstance {
   }
 
   trait Impl1[F[_[_]]] extends FillFuncInstance[F] {
-    type Set1       = FillIdentity.DerivedApply[F, IdentityGetter, F[IdentityGetter]]
-    type Set2[I[_]] = DerivedApply[F, I, F[IdentityGetter], F[I]]
-    type Set3[I[_]] = SetToIdentity[F, I]
-    def setter[I[_]](
-      apply1: Set1,
-      apply2: Set2[I]
-    ): SetToIdentity[F, I]
-    override def fill[I[_]](identityGetter: IdentityGetter.FGen[I]): F[I] =
-      setter[I](FillIdentity[F, IdentityGetter], FillFuncInstance[F, I]).model(identityGetter)
+    def gen[I[_]]: DerivedApply[F, I] => IdentityGetter.FGen[I] => F[I]
+    override def fill[I[_]](identityGetter: IdentityGetter.FGen[I]): F[I] = gen(FillFuncInstance[F, I])(identityGetter)
   }
 
-  class DerivedApply[
-    F[_[_]],
-    I[_],
-    SymbolModel >: F[IdentityGetter] <: F[IdentityGetter],
-    IdModel >: F[I] <: F[I]
-  ] {
-    def derivedWithContext[H1, H2, H3 <: H2](fim: FillIdentity[F, IdentityGetter])(implicit
-      generic: Generic.Aux[SymbolModel, H1],
-      setTo: SetTo[I, H1, H3],
-      inFromGeneric: Generic.Aux[IdModel, H2]
-    ): SetToIdentity[F, I] = new SetToIdentity[F, I] {
-      override def model(gen: IdentityGetter.FGen[I]): IdModel = inFromGeneric.from(setTo.setTo(gen)(generic.to(fim.model)))
-    }
-
-    object law {
-      def apply[Target >: SymbolModel <: SymbolModel, IdModelImpl >: IdModel <: IdModel]: DerivedApply[F, I, Target, IdModelImpl] =
-        new DerivedApply[F, I, Target, IdModelImpl]
+  trait FillIdentityGeneric[F[_[_]]] {
+    def generic(implicit fim: FillIdentity[F, IdentityGetter]): F[IdentityGetter] = justInstance(fim.model)
+    def justInstance(f: F[IdentityGetter]): F[IdentityGetter]                     = f
+  }
+  object FillIdentityGeneric {
+    def apply[F[_[_]]]: FillIdentityGeneric[F] = new FillIdentityGeneric[F] {
+      //
     }
   }
 
-  def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[IdentityGetter], F[I]] = new DerivedApply[F, I, F[IdentityGetter], F[I]]
+  class DerivedApply[F[_[_]], I[_]] {
+    def derived4(g: FillIdentityGeneric[F] => F[IdentityGetter]): ApplyImpl2 = new ApplyImpl2(c = g(FillIdentityGeneric[F]))
+
+    class ApplyImpl2(c: F[IdentityGetter]) {
+      def apply[H1](generic: SimpleToGeneric[F[IdentityGetter]] => F[IdentityGetter] => H1): ApplyImpl3[H1] =
+        new ApplyImpl3[H1](generic(SimpleToGeneric[F[IdentityGetter]])(c))
+    }
+
+    class ApplyImpl3[H1](h1: H1) {
+      def apply[H2](t: SetToGeneric[I, H1] => SetTo[I, H1, H2]): ApplyImpl4[H1, H2] = new ApplyImpl4(h1, t(SetToGeneric[I, H1]))
+    }
+
+    class ApplyImpl4[H1, H2](h1: H1, to2: SetTo[I, H1, H2]) {
+      def apply(fc: SimpleFromGeneric[F[I]] => H2 => F[I]): IdentityGetter.FGen[I] => F[I] = { idenModel =>
+        val tempModel = to2.setTo(idenModel)(h1)
+        fc(SimpleFromGeneric[F[I]])(tempModel)
+      }
+    }
+
+  }
+
+  def apply[F[_[_]], I[_]]: DerivedApply[F, I] = new DerivedApply[F, I]
 }

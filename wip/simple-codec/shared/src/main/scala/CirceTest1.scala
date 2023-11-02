@@ -15,8 +15,9 @@ object CirceModelSample {
     type F1[E1[_]] = UserAbs[E1, U]
   }
 
-  implicit def userNamedGeneric2[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] = SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived
-  implicit def named[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1]                   = LabelledInstalled[UserAbsAlias[U]#F1].derived
+  implicit def userNamedGeneric2[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] =
+    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(_.generic)
+  implicit def named[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
   implicit def encoderProps[U[_]](implicit u: Encoder[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, Encoder] =
     FillIdentity[UserAbsAlias[U]#F1, Encoder].derived
 

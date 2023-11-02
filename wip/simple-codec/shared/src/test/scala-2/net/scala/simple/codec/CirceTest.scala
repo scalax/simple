@@ -12,22 +12,22 @@ object scala2xbb11 extends IOApp {
 
   type UFAliasF[T11[_]] = CatNameScala2[({ type U1[_] = T11[String] })#U1]
 
-  implicit val im1: SymbolLabelledInstalled[CatNameScala2] = SymbolLabelledInstalled[CatNameScala2].derived
-  implicit val im2: LabelledInstalled[CatNameScala2]       = LabelledInstalled[CatNameScala2].derived
-  implicit val im3: FillIdentity[CatNameScala2, Encoder]   = FillIdentity[CatNameScala2, Encoder].derived
-  implicit val im4: CirceEncoderImplicit[CatNameScala2]    = CirceEncoderImplicit[CatNameScala2].derived
-
-  implicit val im7: FillFuncInstance[CatNameScala2] = new FillFuncInstance.Impl1[CatNameScala2] {
-    override def setter[I[_]](set1: Set1, set2: Set2[I]): Set3[I] = set2.derivedWithContext(set1.derived)
+  implicit val im1: SymbolLabelledInstalled[CatNameScala2]      = SymbolLabelledInstalled[CatNameScala2].derived2(_.generic)(_.generic)
+  implicit val im2: LabelledInstalled[CatNameScala2]            = LabelledInstalled[CatNameScala2].derived
+  implicit val im3: FillIdentity[CatNameScala2, Encoder]        = FillIdentity[CatNameScala2, Encoder].derived
+  implicit val im4: CirceEncoderImplicit[CatNameScala2]         = CirceEncoderImplicit[CatNameScala2].derived
+  implicit val im7: FillIdentity[CatNameScala2, IdentityGetter] = FillIdentity[CatNameScala2, IdentityGetter].derived
+  implicit val im8: FillFuncInstance[CatNameScala2] = new FillFuncInstance.Impl1[CatNameScala2] {
+    override def gen[I[_]] = _.derived4(_.generic)(_.generic)(_.generic)(_.generic)
   }
-  implicit val im8: FuncTyped[CatNameScala2] = new FuncTyped.Impl1[CatNameScala2] {
+  implicit val im9: FuncTyped[CatNameScala2] = new FuncTyped.Impl1[CatNameScala2] {
     override def setter[In[_], Out[_]](set1: Set1[In, Out]): Set2[In, Out] = {
       type IO1[T] = FuncTyped.IOModel[In[T], Out[T]]
       set1.law[CatNameScala2[In], CatNameScala2[Out], CatNameScala2[IO1]].derived
     }
   }
   type JsonPaire[T] = (String, Json)
-  implicit val im9: OutputBySameType[CatNameScala2, (String, Json), JsonPaire] =
+  implicit val im10: OutputBySameType[CatNameScala2, (String, Json), JsonPaire] =
     OutputBySameType[CatNameScala2, (String, Json), JsonPaire].derived
 
   type U1[_] = Encoder[String]
