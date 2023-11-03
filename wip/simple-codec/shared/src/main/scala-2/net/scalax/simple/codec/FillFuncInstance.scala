@@ -56,8 +56,7 @@ object FillFuncInstance {
     def derived4(g: FillIdentityGeneric[F] => F[IdentityGetter]): ApplyImpl2 = new ApplyImpl2(c = g(FillIdentityGeneric[F]))
 
     class ApplyImpl2(c: F[IdentityGetter]) {
-      def apply[H1](generic: SimpleToGeneric[F[IdentityGetter]] => F[IdentityGetter] => H1): ApplyImpl3[H1] =
-        new ApplyImpl3[H1](generic(SimpleToGeneric[F[IdentityGetter]])(c))
+      def apply[H1](generic: SimpleTo[F[IdentityGetter], H1]): ApplyImpl3[H1] = new ApplyImpl3[H1](generic.to(c))
     }
 
     class ApplyImpl3[H1](h1: H1) {
@@ -65,9 +64,9 @@ object FillFuncInstance {
     }
 
     class ApplyImpl4[H1, H2](h1: H1, to2: SetTo[I, H1, H2]) {
-      def apply(fc: SimpleFromGeneric[F[I]] => H2 => F[I]): IdentityGetter.FGen[I] => F[I] = { idenModel =>
+      def apply(fc: SimpleFrom[F[I], H2]): IdentityGetter.FGen[I] => F[I] = { idenModel =>
         val tempModel = to2.setTo(idenModel)(h1)
-        fc(SimpleFromGeneric[F[I]])(tempModel)
+        fc.from(tempModel)
       }
     }
 

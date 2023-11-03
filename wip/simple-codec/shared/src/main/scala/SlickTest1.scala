@@ -1,6 +1,7 @@
 package net.scalax.simple.codec
 package aa
 
+import net.scalax.simple.codec.generic.SimpleFromProduct
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.ProvenShape
@@ -34,8 +35,11 @@ object Model2 {
   class UserAbsAlias[U[_]] {
     type F1[E1[_]] = UserAbs[E1, U]
   }
+
+  def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
+
   implicit def userNamedGeneric1[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] =
-    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(_.generic)
+    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(simpleGen1[U, SymbolLabelledInstalled.ToNamedSymbol].target)
   implicit def userNamedGeneric2[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")

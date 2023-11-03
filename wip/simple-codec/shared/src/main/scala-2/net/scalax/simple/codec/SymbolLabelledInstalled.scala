@@ -1,5 +1,6 @@
 package net.scalax.simple.codec
 
+import net.scalax.simple.codec.generic.SimpleFromProduct
 import shapeless._
 
 trait SymbolLabelledInstalled[F[_[_]]] {
@@ -26,12 +27,9 @@ object SymbolLabelledInstalled {
     ): InnerApply1[HTypeTemp] = new InnerApply1[HTypeTemp](genericType(LabelledGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]]))
 
     class InnerApply1[HTemp](genericType: HTemp) {
-      def apply(
-        t: SimpleFromGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]] => HTemp => F[SymbolLabelledInstalled.ToNamedSymbol]
-      ): SymbolLabelledInstalled[F] =
+      def apply(t: SimpleFrom[F[SymbolLabelledInstalled.ToNamedSymbol], HTemp]): SymbolLabelledInstalled[F] =
         new SymbolLabelledInstalled[F] {
-          def model: F[SymbolLabelledInstalled.ToNamedSymbol] =
-            t(SimpleFromGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]])(genericType)
+          def model: F[SymbolLabelledInstalled.ToNamedSymbol] = t.from(genericType)
         }
     }
   }
