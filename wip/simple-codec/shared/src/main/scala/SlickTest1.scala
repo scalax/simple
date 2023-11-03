@@ -29,7 +29,7 @@ object Model2 {
   type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
 
   def userTypedTypeGeneric[U[_]](implicit tt12: TypedType[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, TypedType] =
-    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived
+    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived1(simpleGen1[U, TypedType].generic)
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = userTypedTypeGeneric[U].model
 
   class UserAbsAlias[U[_]] {
@@ -39,7 +39,7 @@ object Model2 {
   def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
 
   implicit def userNamedGeneric1[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] =
-    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(simpleGen1[U, SymbolLabelledInstalled.ToNamedSymbol].target)
+    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(simpleGen1[U, SymbolLabelledInstalled.ToNamedSymbol].generic)
   implicit def userNamedGeneric2[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")

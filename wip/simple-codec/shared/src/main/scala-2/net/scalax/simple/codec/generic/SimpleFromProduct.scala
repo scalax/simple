@@ -10,7 +10,7 @@ trait SimpleFromTo[Model, Target] extends SimpleFrom[Model, Target] with SimpleT
 
 trait SimpleFromProduct[F[_[_]], I[_]] {
   type Target
-  val target: SimpleFromTo[F[I], Target]
+  val generic: SimpleFromTo[F[I], Target]
 }
 
 object SimpleFromProduct {
@@ -27,7 +27,7 @@ object SimpleFromProduct {
     }
     def derived[H](implicit g: Generic.Aux[ModelType, H]): SimpleFromProduct.Aux[F, I, H] = new SimpleFromProduct[F, I] {
       override type Target = H
-      override val target: SimpleFromTo[F[I], Target] = new SimpleFromTo[F[I], Target] {
+      override val generic: SimpleFromTo[F[I], Target] = new SimpleFromTo[F[I], Target] {
         override def from(t: H): F[I] = g.from(t)
         override def to(t: F[I]): H   = g.to(t)
       }

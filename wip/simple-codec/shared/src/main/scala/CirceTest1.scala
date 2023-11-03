@@ -19,10 +19,10 @@ object CirceModelSample {
   def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
 
   implicit def userNamedGeneric2[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] =
-    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(simpleGen1[U, SymbolLabelledInstalled.ToNamedSymbol].target)
+    SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived2(_.generic)(simpleGen1[U, SymbolLabelledInstalled.ToNamedSymbol].generic)
   implicit def named[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
   implicit def encoderProps[U[_]](implicit u: Encoder[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, Encoder] =
-    FillIdentity[UserAbsAlias[U]#F1, Encoder].derived
+    FillIdentity[UserAbsAlias[U]#F1, Encoder].derived1(simpleGen1[U, Encoder].generic)
 
   def encoder[U[_]](implicit u: Encoder[U[Int]]): Encoder[UserAbs[Id, U]] = {
     val enProps  = encoderProps[U].model

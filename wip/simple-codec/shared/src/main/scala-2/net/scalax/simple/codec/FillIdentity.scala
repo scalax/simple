@@ -20,26 +20,26 @@ object FillIdentity {
     }
   }
 
-  class DerivedApply[F[_[_]], I[_], ModelMode >: F[I] <: F[I]] {
-    object law {
+  class DerivedApply[F[_[_]], I[_]] {
+    /*object law {
       def apply[Model >: ModelMode <: ModelMode]: DerivedApply[F, I, Model] = new DerivedApply[F, I, Model]
-    }
+    }*/
 
-    def derived[H1](implicit generic1: Generic.Aux[ModelMode, H1], generic2: FillIdentityImpl[H1]): FillIdentity[F, I] =
+    def derived1[H1](generic1: SimpleFrom[F[I], H1])(implicit generic2: FillIdentityImpl[H1]): FillIdentity[F, I] =
       new FillIdentity[F, I] {
-        override def model: ModelMode = generic1.from(generic2.fillResult)
+        override def model: F[I] = generic1.from(generic2.fillResult)
       }
 
-    def instance(model: ModelMode): FillIdentity[F, I] = {
+    def instance(model: F[I]): FillIdentity[F, I] = {
       val model1 = model
       new FillIdentity[F, I] {
-        override def model: ModelMode = model1
+        override def model: F[I] = model1
       }
     }
 
     def summon(implicit model: FillIdentity[F, I]): FillIdentity[F, I] = model
   }
 
-  def apply[F[_[_]], I[_]]: DerivedApply[F, I, F[I]] = new DerivedApply[F, I, F[I]]
+  def apply[F[_[_]], I[_]]: DerivedApply[F, I] = new DerivedApply[F, I]
 
 }

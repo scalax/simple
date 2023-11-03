@@ -8,7 +8,7 @@ trait NewFuncTyped[F[_[_]]] {
 
 object NewFuncTyped {
   trait Func3K[-In1[_], -In2[_], +In3[_]] {
-    def input[T](in1: In1[T], in2: In2[T]): In3[T]
+    def input[T]: Func3Model[In1[T], In2[T], In3[T]]
   }
 
   trait Func3Model[-F1, -F2, +F3] {
