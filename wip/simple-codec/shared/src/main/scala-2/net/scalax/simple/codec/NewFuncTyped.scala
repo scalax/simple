@@ -3,12 +3,13 @@ package net.scalax.simple.codec
 import shapeless._
 
 trait NewFuncTyped[F[_[_]]] {
-  def input[In1[_], In2[_], Out[_]](func3k: NewFuncTyped.Func3K[In1, In2, Out]): NewFuncTyped.Func3Model[F[In1], F[In2], F[Out]]
+  def input[In1[_], In2[_], Out[_]](func3k: F[NewFuncTyped.Func3K[In1, In2, Out]#Input]): NewFuncTyped.Func3Model[F[In1], F[In2], F[Out]]
 }
 
 object NewFuncTyped {
-  trait Func3K[-In1[_], -In2[_], +In3[_]] {
+  trait Func3K[In1[_], In2[_], In3[_]] {
     def input[T]: Func3Model[In1[T], In2[T], In3[T]]
+    type Input[T] = Func3Model[In1[T], In2[T], In3[T]]
   }
 
   trait Func3Model[-F1, -F2, +F3] {
@@ -38,11 +39,38 @@ object NewFuncTyped {
     }
   }
 
-  trait Func3ModelTransGeneric[Input]
+  trait Func3ModelTransGeneric[Input] {
+    def generic[In1, In2, In3](implicit t: Func3ModelTrans[Input, In1, In2, In3]): Func3ModelTrans[Input, In1, In2, In3] = t
+  }
   object Func3ModelTransGeneric {
     def apply[Input]: Func3ModelTransGeneric[Input] = new Func3ModelTransGeneric[Input] {
       //
     }
   }
+
+  class DerivedApply[F[_[_]], In1[_], In2[_], In3[_]] {
+    def derived2[H1](generic1: SimpleTo[F[Func3K[In1, In2, In3]#Input], H1]): InnerApply1[F, In1, In2, In3, H1] =
+      new InnerApply1[F, In1, In2, In3, H1](generic1)
+  }
+  class InnerApply1[F[_[_]], In1[_], In2[_], In3[_], H1](to: SimpleTo[F[Func3K[In1, In2, In3]#Input], H1]) {
+    def apply[II1, II2, II3](
+      in: Func3ModelTransGeneric[H1] => Func3ModelTrans[H1, II1, II2, II3]
+    ): InnerApply2[F, In1, In2, In3, II1, II2, II3] = new InnerApply2[F, In1, In2, In3, II1, II2, II3](input =>
+      in(Func3ModelTransGeneric[H1]).input(to.to(input))
+    )
+  }
+  class InnerApply2[F[_[_]], In1[_], In2[_], In3[_], II1, II2, II3](inOut: F[Func3K[In1, In2, In3]#Input] => Func3Model[II1, II2, II3]) {
+    def apply(
+      to1: SimpleTo[F[In1], II1],
+      to2: SimpleTo[F[In2], II2],
+      from3: SimpleFrom[F[In3], II3]
+    ): F[NewFuncTyped.Func3K[In1, In2, In3]#Input] => NewFuncTyped.Func3Model[F[In1], F[In2], F[In3]] = inOut.andThen(t =>
+      new Func3Model[F[In1], F[In2], F[In3]] {
+        override def input(f1: F[In1], f2: F[In2]): F[In3] = from3.from(t.input(to1.to(f1), to2.to(f2)))
+      }
+    )
+  }
+
+  def apply[F[_[_]], In1[_], In2[_], In3[_]]: DerivedApply[F, In1, In2, In3] = new DerivedApply[F, In1, In2, In3]
 
 }

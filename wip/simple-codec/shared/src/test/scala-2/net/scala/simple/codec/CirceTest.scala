@@ -34,6 +34,16 @@ object scala2xbb11 extends IOApp {
   type JsonPaire[T] = (String, Json)
   implicit val im10: OutputBySameType[CatNameScala2, (String, Json), JsonPaire] =
     OutputBySameType[CatNameScala2, (String, Json), JsonPaire].derived
+  implicit val im11: NewFuncTyped[CatNameScala2] = new NewFuncTyped[CatNameScala2] {
+    override def input[In1[_], In2[_], Out[_]](
+      func3k: CatNameScala2[NewFuncTyped.Func3K[In1, In2, Out]#Input]
+    ): NewFuncTyped.Func3Model[CatNameScala2[In1], CatNameScala2[In2], CatNameScala2[Out]] =
+      NewFuncTyped[CatNameScala2, In1, In2, Out].derived2(simpleGen1[NewFuncTyped.Func3K[In1, In2, Out]#Input].generic)(_.generic)(
+        simpleGen1[In1].generic,
+        simpleGen1[In2].generic,
+        simpleGen1[Out].generic
+      )(func3k)
+  }
 
   type U1[_] = Encoder[String]
   type U2[_] = String
