@@ -1,23 +1,26 @@
 package net.scalax.simple
-package codec
+package codec11
 
 import io.circe._
 import io.circe.syntax._
 import cats.effect._
 import cats.~>
-import net.scalax.simple.codec.function_generic.{FuncIndex1, FuncIndex2, FuncIndex3, FuncIndex4, FuncIndex5, FunctionKCol}
+import net.scalax.simple.codec.IOApp1
+// import net.scalax.simple.codec.function_generic.{FuncIndex1, FuncIndex2, FuncIndex3, FuncIndex4, FuncIndex5, FunctionKCol}
 import net.scalax.simple.codec.generic.SimpleFromProduct
+import net.scalax.simple.codec.LabelledInstalled
 
-case class CatNameScala2[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
+case class CatNameScala11[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
-object scala2xbb11 extends IOApp1 {
+object TempTest11 extends IOApp {
 
-  type UFAliasF[T11[_]] = CatNameScala2[({ type U1[_] = T11[String] })#U1]
+  type UFAliasF[T11[_]] = CatNameScala11[({ type U1[_] = T11[String] })#U1]
 
-  def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala2, I].derived
+  def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala11, I].derived
 
-  implicit val im1: LabelledInstalled[CatNameScala2] =
-    LabelledInstalled[CatNameScala2].derived2(_.generic)(simpleGen1[LabelledInstalled.ToNamed].generic)
+  implicit val im1: LabelledInstalled[CatNameScala11] =
+    LabelledInstalled[CatNameScala11].derived2(_.generic)(simpleGen1[LabelledInstalled.ToNamed].generic)
+  /*implicit val im2: LabelledInstalled[CatNameScala2]     = LabelledInstalled[CatNameScala2].derived
   implicit val im3: FillIdentity[CatNameScala2, Encoder] = FillIdentity[CatNameScala2, Encoder].derived1(simpleGen1[Encoder].generic)
   implicit val im4: CirceEncoderImplicit[CatNameScala2]  = CirceEncoderImplicit[CatNameScala2].derived
   implicit val im7: FillIdentity[CatNameScala2, IdentityGetter] =
@@ -50,7 +53,6 @@ object scala2xbb11 extends IOApp1 {
   implicit val im15: FuncIndex5[CatNameScala2] = FuncIndex5[CatNameScala2].derived2(implicitly)(implicitly)
 
   type U1[_] = Encoder[String]
-
   type U2[_] = String
   type U4[_] = IdentityGetter[String]
   implicit val uuj2: LabelledInstalled[UFAliasF] = LabelledInstalled[UFAliasF].instance(LabelledInstalled[CatNameScala2].summon.model)
@@ -93,12 +95,13 @@ object scala2xbb11 extends IOApp1 {
   )
 
   implicit val im5: Encoder[CatNameScala2[cats.Id]] = im4.model
-  implicit val uuj5: Encoder[CatNameScala2[U2]]     = uuj4.model
+  implicit val uuj5: Encoder[CatNameScala2[U2]]     = uuj4.model*/
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {
-      _ <- IO(println(modelInstance.asJson.spaces2))
-      _ <- IO(println(modelNameProperty.asJson.spaces2))
+      _ <- IO(println(im1.model))
+      // _ <- IO(println(modelInstance.asJson.spaces2))
+      // _ <- IO(println(modelNameProperty.asJson.spaces2))
     } yield {
       //
     }

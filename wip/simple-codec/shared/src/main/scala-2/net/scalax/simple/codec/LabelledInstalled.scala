@@ -1,4 +1,4 @@
-package net.scalax.simple.codec
+/*package net.scalax.simple.codec
 
 import cats._
 import shapeless._
@@ -63,4 +63,4 @@ object LabelledInstalled {
   def apply[F[_[_]]]: DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[ToNamed]] =
     new DerivedApply[F, F[SymbolLabelledInstalled.ToNamedSymbol], F[ToNamed]]
 
-}
+}*/
