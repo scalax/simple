@@ -1,53 +1,18 @@
 package net.scalax.simple.codec
 
-import shapeless._
-import shapeless.labelled.FieldType
+import net.scalax.simple.codec.generic.SimpleName
 
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.ToNamed]
 }
 
 object LabelledInstalled {
-  trait SymbolHListToStringHList[-H1, +H2] {
-    def to(h1: H1): H2
-  }
-
-  object SymbolHListToStringHList {
-    implicit def implicit1[H1 <: HList, H2 <: HList](implicit
-      cv: SymbolHListToStringHList[H1, H2]
-    ): SymbolHListToStringHList[Symbol :: H1, String :: H2] = new SymbolHListToStringHList[Symbol :: H1, String :: H2] {
-      override def to(in: Symbol :: H1): String :: H2 = in.head.name :: cv.to(in.tail)
-    }
-
-    implicit val implicit2: SymbolHListToStringHList[HNil, HNil] = new SymbolHListToStringHList[HNil, HNil] {
-      override def to(in: HNil): HNil = in
-    }
-  }
-
-  trait LabelledGeneric[Model] {
-    def generic[H1, H2](implicit l: shapeless.DefaultSymbolicLabelling.Aux[Model, H1], mapper: SymbolHListToStringHList[H1, H2]): H2 =
-      mapper.to(l.apply())
-    def law[ModelImpl >: Model <: Model]: LabelledGeneric[ModelImpl] = LabelledGeneric[ModelImpl]
-  }
-  object LabelledGeneric {
-    def apply[T]: LabelledGeneric[T] = new LabelledGeneric[T] {
-      //
-    }
-  }
 
   type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
-    def derived2[HTypeTemp](
-      genericType: LabelledGeneric[F[LabelledInstalled.ToNamed]] => HTypeTemp
-    ): InnerApply1[HTypeTemp] = new InnerApply1[HTypeTemp](genericType(LabelledGeneric[F[LabelledInstalled.ToNamed]]))
-
-    class InnerApply1[HTemp](genericType: HTemp) {
-      def apply(t: SimpleFrom[F[LabelledInstalled.ToNamed], HTemp]): LabelledInstalled[F] =
-        new LabelledInstalled[F] {
-          def model: F[LabelledInstalled.ToNamed] = t.from(genericType)
-        }
-    }
+    def derived2[AnyType, HTypeTemp](labelled: SimpleName[AnyType, HTypeTemp]): InnerApply1[F, HTypeTemp] =
+      new InnerApply1[F, HTypeTemp](labelled.names)
 
     def instance(model: F[ToNamed]): LabelledInstalled[F] = {
       val model1 = model
@@ -57,6 +22,13 @@ object LabelledInstalled {
     }
 
     def summon(implicit model: LabelledInstalled[F]): LabelledInstalled[F] = model
+  }
+
+  class InnerApply1[F[_[_]], HTemp](genericType: HTemp) {
+    def apply(t: SimpleFrom[F[LabelledInstalled.ToNamed], HTemp]): LabelledInstalled[F] =
+      new LabelledInstalled[F] {
+        def model: F[LabelledInstalled.ToNamed] = t.from(genericType)
+      }
   }
 
   def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]

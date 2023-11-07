@@ -39,8 +39,7 @@ object Model2 {
   def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
 
   implicit def userNamedGeneric1[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] =
-    LabelledInstalled[UserAbsAlias[U]#F1]
-      .derived2(_.law[UserAbs[LabelledInstalled.ToNamed, U]].generic)(simpleGen1[U, LabelledInstalled.ToNamed].generic)
+    LabelledInstalled[UserAbsAlias[U]#F1].derived2(simpleGen1[U, cats.Id].generic)(simpleGen1[U, LabelledInstalled.ToNamed].generic)
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
   def userNamed[U[_]]: UserAbs[StrAny, U] = userNamedGeneric1[U].model

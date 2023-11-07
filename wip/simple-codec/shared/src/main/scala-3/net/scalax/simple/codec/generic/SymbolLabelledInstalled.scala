@@ -1,8 +1,6 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.generic.SimpleFromProduct
-import scala.deriving.Mirror
-import scala.compiletime._
+import net.scalax.simple.codec.generic.SimpleName
 
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.ToNamed]
@@ -10,29 +8,27 @@ trait LabelledInstalled[F[_[_]]] {
 
 object LabelledInstalled {
 
-  trait LabelledGeneric[Model] {
-    inline def generic(using l: Mirror.ProductOf[Model]): l.MirroredElemLabels = constValueTuple[l.MirroredElemLabels]
-    def law[ModelImpl >: Model <: Model]: LabelledGeneric[ModelImpl]           = LabelledGeneric[ModelImpl]
-  }
-  object LabelledGeneric {
-    def apply[T]: LabelledGeneric[T] = new LabelledGeneric[T] {
-      //
-    }
-  }
-
   type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
-    def derived2[HTypeTemp](
-      genericType: LabelledGeneric[F[LabelledInstalled.ToNamed]] => HTypeTemp
-    ): InnerApply1[HTypeTemp] = new InnerApply1[HTypeTemp](genericType(LabelledGeneric[F[LabelledInstalled.ToNamed]]))
+    def derived2[AnyType, HTypeTemp](labelled: SimpleName[AnyType, HTypeTemp]): InnerApply1[F, HTypeTemp] =
+      new InnerApply1[F, HTypeTemp](labelled.names)
 
-    class InnerApply1[HTemp](genericType: HTemp) {
-      def apply(t: SimpleFrom[F[LabelledInstalled.ToNamed], HTemp]): LabelledInstalled[F] =
-        new LabelledInstalled[F] {
-          val model: F[LabelledInstalled.ToNamed] = t.from(genericType)
-        }
+    def instance(model: F[ToNamed]): LabelledInstalled[F] = {
+      val model1 = model
+      new LabelledInstalled[F] {
+        override val model: F[ToNamed] = model1
+      }
     }
+
+    def summon(implicit model: LabelledInstalled[F]): LabelledInstalled[F] = model
+  }
+
+  class InnerApply1[F[_[_]], HTemp](genericType: HTemp) {
+    def apply(t: SimpleFrom[F[LabelledInstalled.ToNamed], HTemp]): LabelledInstalled[F] =
+      new LabelledInstalled[F] {
+        def model: F[LabelledInstalled.ToNamed] = t.from(genericType)
+      }
   }
 
   def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]
