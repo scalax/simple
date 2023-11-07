@@ -4,11 +4,11 @@ import net.scalax.simple.codec.generic.SimpleFromProduct
 import scala.deriving.Mirror
 import scala.compiletime._
 
-trait SymbolLabelledInstalled[F[_[_]]] {
-  def model: F[SymbolLabelledInstalled.ToNamedSymbol]
+trait LabelledInstalled[F[_[_]]] {
+  def model: F[LabelledInstalled.ToNamed]
 }
 
-object SymbolLabelledInstalled {
+object LabelledInstalled {
 
   trait LabelledGeneric[Model] {
     inline def generic(using l: Mirror.ProductOf[Model]): l.MirroredElemLabels = constValueTuple[l.MirroredElemLabels]
@@ -20,17 +20,17 @@ object SymbolLabelledInstalled {
     }
   }
 
-  type ToNamedSymbol[_] = String
+  type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
     def derived2[HTypeTemp](
-      genericType: LabelledGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]] => HTypeTemp
-    ): InnerApply1[HTypeTemp] = new InnerApply1[HTypeTemp](genericType(LabelledGeneric[F[SymbolLabelledInstalled.ToNamedSymbol]]))
+      genericType: LabelledGeneric[F[LabelledInstalled.ToNamed]] => HTypeTemp
+    ): InnerApply1[HTypeTemp] = new InnerApply1[HTypeTemp](genericType(LabelledGeneric[F[LabelledInstalled.ToNamed]]))
 
     class InnerApply1[HTemp](genericType: HTemp) {
-      def apply(t: SimpleFrom[F[SymbolLabelledInstalled.ToNamedSymbol], HTemp]): SymbolLabelledInstalled[F] =
-        new SymbolLabelledInstalled[F] {
-          def model: F[SymbolLabelledInstalled.ToNamedSymbol] = t.from(genericType)
+      def apply(t: SimpleFrom[F[LabelledInstalled.ToNamed], HTemp]): LabelledInstalled[F] =
+        new LabelledInstalled[F] {
+          val model: F[LabelledInstalled.ToNamed] = t.from(genericType)
         }
     }
   }

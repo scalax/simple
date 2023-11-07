@@ -1,6 +1,7 @@
 package net.scalax.simple.codec
 
 import shapeless._
+import shapeless.labelled.FieldType
 
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.ToNamed]
@@ -15,16 +16,16 @@ object LabelledInstalled {
     implicit def implicit1[H1 <: HList, H2 <: HList](implicit
       cv: SymbolHListToStringHList[H1, H2]
     ): SymbolHListToStringHList[Symbol :: H1, String :: H2] = new SymbolHListToStringHList[Symbol :: H1, String :: H2] {
-      override def to(h1: Symbol :: H1): String :: H2 = h1.head.name :: cv.to(h1.tail)
+      override def to(in: Symbol :: H1): String :: H2 = in.head.name :: cv.to(in.tail)
     }
 
     implicit val implicit2: SymbolHListToStringHList[HNil, HNil] = new SymbolHListToStringHList[HNil, HNil] {
-      override def to(h: HNil): HNil = h
+      override def to(in: HNil): HNil = in
     }
   }
 
   trait LabelledGeneric[Model] {
-    def generic[H1, H2](implicit l: DefaultSymbolicLabelling.Aux[Model, H1], mapper: SymbolHListToStringHList[H1, H2]): H2 =
+    def generic[H1, H2](implicit l: shapeless.DefaultSymbolicLabelling.Aux[Model, H1], mapper: SymbolHListToStringHList[H1, H2]): H2 =
       mapper.to(l.apply())
     def law[ModelImpl >: Model <: Model]: LabelledGeneric[ModelImpl] = LabelledGeneric[ModelImpl]
   }
@@ -51,7 +52,7 @@ object LabelledInstalled {
     def instance(model: F[ToNamed]): LabelledInstalled[F] = {
       val model1 = model
       new LabelledInstalled[F] {
-        override def model: F[ToNamed] = model1
+        override val model: F[ToNamed] = model1
       }
     }
 
