@@ -2,7 +2,7 @@ package net.scalax.simple.codec.generic
 
 import shapeless._
 
-trait SimpleName[+Model, +HList] {
+trait SimpleName[Model, +HList] {
   def names: HList
 }
 

@@ -11,8 +11,8 @@ object LabelledInstalled {
   type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
-    def derived2[AnyType, HTypeTemp](labelled: SimpleName[AnyType, HTypeTemp]): InnerApply1[F, HTypeTemp] =
-      new InnerApply1[F, HTypeTemp](labelled.names)
+    def derived[HTypeTemp](labelled: SimpleName[F[ToNamed], HTypeTemp] with SimpleFrom[F[ToNamed], HTypeTemp]): LabelledInstalled[F] =
+      instance(labelled.from(labelled.names))
 
     def instance(model: F[ToNamed]): LabelledInstalled[F] = {
       val model1 = model
@@ -22,13 +22,6 @@ object LabelledInstalled {
     }
 
     def summon(implicit model: LabelledInstalled[F]): LabelledInstalled[F] = model
-  }
-
-  class InnerApply1[F[_[_]], HTemp](genericType: HTemp) {
-    def apply(t: SimpleFrom[F[LabelledInstalled.ToNamed], HTemp]): LabelledInstalled[F] =
-      new LabelledInstalled[F] {
-        def model: F[LabelledInstalled.ToNamed] = t.from(genericType)
-      }
   }
 
   def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]

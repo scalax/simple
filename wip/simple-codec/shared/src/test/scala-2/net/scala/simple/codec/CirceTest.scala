@@ -17,7 +17,7 @@ object scala2xbb11 extends IOApp1 {
   def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala2, I].derived
 
   implicit val im1: LabelledInstalled[CatNameScala2] =
-    LabelledInstalled[CatNameScala2].derived2(simpleGen1[cats.Id].generic)(simpleGen1[LabelledInstalled.ToNamed].generic)
+    LabelledInstalled[CatNameScala2].derived(simpleGen1[LabelledInstalled.ToNamed].generic)
   implicit val im3: FillIdentity[CatNameScala2, Encoder] = FillIdentity[CatNameScala2, Encoder].derived1(simpleGen1[Encoder].generic)
   implicit val im4: CirceEncoderImplicit[CatNameScala2]  = CirceEncoderImplicit[CatNameScala2].derived
   implicit val im7: FillIdentity[CatNameScala2, IdentityGetter] =
