@@ -5,7 +5,7 @@ import io.circe._
 import io.circe.syntax._
 import cats.effect._
 import cats.~>
-import net.scalax.simple.codec.IOApp1
+import net.scalax.simple.codec.{FillIdentity, IOApp1}
 // import net.scalax.simple.codec.function_generic.{FuncIndex1, FuncIndex2, FuncIndex3, FuncIndex4, FuncIndex5, FunctionKCol}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 import net.scalax.simple.codec.LabelledInstalled
@@ -20,9 +20,8 @@ object TempTest11 extends IOApp {
 
   implicit val im1: LabelledInstalled[CatNameScala11] =
     LabelledInstalled[CatNameScala11].derived(simpleGen1[LabelledInstalled.ToNamed].generic)
-  /*implicit val im2: LabelledInstalled[CatNameScala2]     = LabelledInstalled[CatNameScala2].derived
-  implicit val im3: FillIdentity[CatNameScala2, Encoder] = FillIdentity[CatNameScala2, Encoder].derived1(simpleGen1[Encoder].generic)
-  implicit val im4: CirceEncoderImplicit[CatNameScala2]  = CirceEncoderImplicit[CatNameScala2].derived
+  implicit val im3: FillIdentity[CatNameScala11, Encoder] = FillIdentity[CatNameScala11, Encoder].derived1(simpleGen1[Encoder].generic)
+  /*implicit val im4: CirceEncoderImplicit[CatNameScala2]  = CirceEncoderImplicit[CatNameScala2].derived
   implicit val im7: FillIdentity[CatNameScala2, IdentityGetter] =
     FillIdentity[CatNameScala2, IdentityGetter].derived1(simpleGen1[IdentityGetter].generic)
   implicit val im8: FillFuncInstance[CatNameScala2] = new FillFuncInstance.Impl1[CatNameScala2] {
