@@ -20,7 +20,8 @@ object TempTest11 extends IOApp {
 
   implicit val im1: LabelledInstalled[CatNameScala11] =
     LabelledInstalled[CatNameScala11].derived(simpleGen1[LabelledInstalled.ToNamed].generic)
-  implicit val im3: FillIdentity[CatNameScala11, Encoder] = FillIdentity[CatNameScala11, Encoder].derived1(simpleGen1[Encoder].generic)
+  implicit val im3: FillIdentity[CatNameScala11, Encoder] =
+    FillIdentity[CatNameScala11, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
   /*implicit val im4: CirceEncoderImplicit[CatNameScala2]  = CirceEncoderImplicit[CatNameScala2].derived
   implicit val im7: FillIdentity[CatNameScala2, IdentityGetter] =
     FillIdentity[CatNameScala2, IdentityGetter].derived1(simpleGen1[IdentityGetter].generic)

@@ -29,7 +29,7 @@ object Model2 {
   type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
 
   def userTypedTypeGeneric[U[_]](implicit tt12: TypedType[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, TypedType] =
-    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived1(simpleGen1[U, TypedType].generic)
+    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived2(simpleGen1[U, TypedType].generic)(_.generic)
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = userTypedTypeGeneric[U].model
 
   class UserAbsAlias[U[_]] {

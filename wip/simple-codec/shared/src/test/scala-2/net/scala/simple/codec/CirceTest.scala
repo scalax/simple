@@ -18,10 +18,11 @@ object scala2xbb11 extends IOApp1 {
 
   implicit val im1: LabelledInstalled[CatNameScala2] =
     LabelledInstalled[CatNameScala2].derived(simpleGen1[LabelledInstalled.ToNamed].generic)
-  implicit val im3: FillIdentity[CatNameScala2, Encoder] = FillIdentity[CatNameScala2, Encoder].derived1(simpleGen1[Encoder].generic)
-  implicit val im4: CirceEncoderImplicit[CatNameScala2]  = CirceEncoderImplicit[CatNameScala2].derived
+  implicit val im3: FillIdentity[CatNameScala2, Encoder] =
+    FillIdentity[CatNameScala2, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
+  implicit val im4: CirceEncoderImplicit[CatNameScala2] = CirceEncoderImplicit[CatNameScala2].derived
   implicit val im7: FillIdentity[CatNameScala2, IdentityGetter] =
-    FillIdentity[CatNameScala2, IdentityGetter].derived1(simpleGen1[IdentityGetter].generic)
+    FillIdentity[CatNameScala2, IdentityGetter].derived2(simpleGen1[IdentityGetter].generic)(_.generic)
   implicit val im8: FillFuncInstance[CatNameScala2] = new FillFuncInstance.Impl1[CatNameScala2] {
     override def gen[I[_]] = _.derived4(_.generic)(simpleGen1[IdentityGetter].generic)(_.generic)(simpleGen1[I].generic)
   }
@@ -55,7 +56,7 @@ object scala2xbb11 extends IOApp1 {
   type U4[_] = IdentityGetter[String]
   implicit val uuj2: LabelledInstalled[UFAliasF] = LabelledInstalled[UFAliasF].instance(LabelledInstalled[CatNameScala2].summon.model)
   implicit val uuj3: FillIdentity[UFAliasF, Encoder] =
-    FillIdentity[UFAliasF, Encoder].derived1(simpleGen1[({ type U1[_] = Encoder[String] })#U1].generic)
+    FillIdentity[UFAliasF, Encoder].derived2(simpleGen1[({ type U1[_] = Encoder[String] })#U1].generic)(_.generic)
   implicit val uuj4: CirceEncoderImplicit[UFAliasF] =
     CirceEncoderImplicit[UFAliasF].law[CatNameScala2[LabelledInstalled.ToNamed], CatNameScala2[U1], CatNameScala2[U2]].derived
   implicit val uuj6: FillIdentity[UFAliasF, cats.Id] =
