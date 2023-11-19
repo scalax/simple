@@ -8,6 +8,7 @@ import cats.~>
 import net.scalax.simple.codec.{FillIdentity, IOApp1, LabelledInstalled, UnFunctionGeneric}
 import net.scalax.simple.codec.function_generic.{FuncIndex1, FuncIndex2, FunctionKCol}
 import net.scalax.simple.codec.generic.SimpleFromProduct
+import net.scalax.simple.codec.unzip_generic.ZipCommonGen
 
 case class CatNameScala11[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
@@ -47,6 +48,10 @@ object TempTest11 extends IOApp {
   implicit val im111: UnFunctionGeneric[CatNameScala11] = new UnFunctionGeneric.Impl[CatNameScala11] {
     override def impl[In1[_], In2[_]] =
       _.derived2(simpleGen1[FuncImpl[In1, In2]#UNFun].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
+  }
+  implicit val im112: ZipCommonGen[CatNameScala11] = new ZipCommonGen.Impl[CatNameScala11] {
+    override def impl[In1[_], In2[_]] =
+      _.derived2(simpleGen1[FuncImpl[In1, In2]#Zip].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
   }
   /*implicit val im13: FuncIndex3[CatNameScala2] = new FuncIndex3[CatNameScala2] {
     override def input[In1[_]](func3k: FunctionKCol.Func1K[In1]): CatNameScala2[In1] =
