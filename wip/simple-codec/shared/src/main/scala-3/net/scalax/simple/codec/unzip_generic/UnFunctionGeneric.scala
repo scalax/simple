@@ -31,7 +31,7 @@ object UnFunctionGeneric {
 
   object Func1ModelTrans {
     val instanceAny: Func1ModelTrans[Tuple, Tuple, Tuple] = new Func1ModelTrans[Tuple, Tuple, Tuple] { self =>
-      def input(i: Tuple): Tuple => Tuple = i match {
+      override def input(i: Tuple): Tuple => Tuple = i match {
         case (hFunc: (Any => Any)) *: tailFunc =>
           _.match { case hData *: tailData =>
             hFunc(hData) *: self.input(tailFunc)(tailData)
