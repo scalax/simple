@@ -46,8 +46,8 @@ object TempTest11 extends IOApp {
   }
   implicit val im12: FuncIndex2[CatNameScala11] = FuncIndex2[CatNameScala11].derived(implicitly)
   implicit val im111: UnFunctionGeneric[CatNameScala11] = new UnFunctionGeneric.Impl[CatNameScala11] {
-    override def impl[In1[_], In2[_]] =
-      _.derived2(simpleGen1[FuncImpl[In1, In2]#UNFun].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
+    override def impl[In1, In2] =
+      _.derived2(simpleGen1[UnFunctionGeneric.Context[In1]#F].generic, simpleGen1[UnFunctionGeneric.Context[In2]#F].generic)(_.generic)
   }
   implicit val im112: ZipCommonGen[CatNameScala11] = new ZipCommonGen.Impl[CatNameScala11] {
     override def impl[In1[_], In2[_]] =
