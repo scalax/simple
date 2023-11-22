@@ -38,8 +38,16 @@ object Model2 {
 
   def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
 
-  implicit def userNamedGeneric1[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] =
-    LabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, LabelledInstalled.ToNamed].generic)
+  implicit def im111[U[_]]: UnFunctionGeneric[UserAbsAlias[U]#F1] = new UnFunctionGeneric.Impl[UserAbsAlias[U]#F1] {
+    override def impl[In1, In2] =
+      _.derived2(simpleGen1[U, UnFunctionGeneric.Context[In1]#F].generic, simpleGen1[U, UnFunctionGeneric.Context[In2]#F].generic)(
+        _.generic
+      )
+  }
+  implicit def userNamedGenericPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
+    CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.ToNamed].generic)
+
+  implicit def userNamedGeneric1[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
   def userNamed[U[_]]: UserAbs[StrAny, U] = userNamedGeneric1[U].model

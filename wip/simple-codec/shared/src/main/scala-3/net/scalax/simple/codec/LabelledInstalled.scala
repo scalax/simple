@@ -11,8 +11,9 @@ object LabelledInstalled {
   type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
-    def derived[HTypeTemp](labelled: SimpleName[F[ToNamed], HTypeTemp] with SimpleFrom[F[ToNamed], HTypeTemp]): LabelledInstalled[F] =
-      instance(labelled.from(labelled.names))
+    def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: UnFunctionGeneric[F]): LabelledInstalled[F] = {
+      instance(compatLabelledInstalled.model)
+    }
 
     def instance(model: F[ToNamed]): LabelledInstalled[F] = {
       val model1 = model

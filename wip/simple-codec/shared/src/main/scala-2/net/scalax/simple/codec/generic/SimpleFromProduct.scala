@@ -33,17 +33,16 @@ object SimpleFromProduct {
       //
     }
 
-    def derived[H, N1, N2](implicit
+    def derived[H, N1](implicit
       g: Generic.Aux[ModelType, H],
-      d1: DefaultSymbolicLabelling.Aux[ModelType, N1],
-      d2: SimpleNameGeneric.SymbolHListToStringHList[N1, N2]
-    ): SimpleFromProduct.Aux[F, I, H, N2] = new SimpleFromProduct[F, I] {
+      d1: DefaultSymbolicLabelling.Aux[ModelType, N1]
+    ): SimpleFromProduct.Aux[F, I, H, N1] = new SimpleFromProduct[F, I] {
       override type Target     = H
-      override type NameTarget = N2
-      override val generic: SimpleFromTo[F[I], Target, N2] = new SimpleFromTo[F[I], Target, N2] {
+      override type NameTarget = N1
+      override val generic: SimpleFromTo[F[I], Target, N1] = new SimpleFromTo[F[I], Target, N1] {
         override def from(t: H): F[I] = g.from(t)
         override def to(t: F[I]): H   = g.to(t)
-        override val names: N2        = d2.to(d1.apply())
+        override val names: N1        = d1.apply()
       }
     }
   }

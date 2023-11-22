@@ -2,6 +2,7 @@ package net.scalax.simple.codec
 package aa
 
 import io.circe._
+import net.scalax.simple.codec.aa.Model2.{simpleGen1, UserAbsAlias}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
 object CirceModelSample {
@@ -18,8 +19,16 @@ object CirceModelSample {
 
   def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
 
-  implicit def named[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] =
-    LabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, LabelledInstalled.ToNamed].generic)
+  implicit def im111[U[_]]: UnFunctionGeneric[UserAbsAlias[U]#F1] = new UnFunctionGeneric.Impl[UserAbsAlias[U]#F1] {
+    override def impl[In1, In2] =
+      _.derived2(simpleGen1[U, UnFunctionGeneric.Context[In1]#F].generic, simpleGen1[U, UnFunctionGeneric.Context[In2]#F].generic)(
+        _.generic
+      )
+  }
+
+  implicit def namedPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
+    CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.ToNamed].generic)
+  implicit def named[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
   implicit def encoderProps[U[_]](implicit u: Encoder[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, Encoder] =
     FillIdentity[UserAbsAlias[U]#F1, Encoder].derived2(simpleGen1[U, Encoder].generic)(_.generic)
 
