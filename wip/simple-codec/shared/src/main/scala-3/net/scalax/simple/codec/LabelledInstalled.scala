@@ -1,6 +1,7 @@
 package net.scalax.simple.codec
 
 import net.scalax.simple.codec.generic.SimpleName
+import net.scalax.simple.codec.unzip_generic.Func2Generic
 
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.ToNamed]
@@ -11,7 +12,7 @@ object LabelledInstalled {
   type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
-    def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: UnFunctionGeneric[F]): LabelledInstalled[F] = {
+    def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: Func2Generic[F]): LabelledInstalled[F] = {
       instance(compatLabelledInstalled.model)
     }
 

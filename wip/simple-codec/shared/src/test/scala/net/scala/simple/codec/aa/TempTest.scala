@@ -5,10 +5,10 @@ import io.circe._
 import io.circe.syntax._
 import cats.effect._
 import cats.~>
-import net.scalax.simple.codec.{CompatLabelledInstalled, FillIdentity, IOApp1, LabelledInstalled, UnFunctionGeneric}
+import net.scalax.simple.codec.{CompatLabelledInstalled, FillIdentity, IOApp1, LabelledInstalled}
 import net.scalax.simple.codec.function_generic.{FuncIndex1, FuncIndex2, FunctionKCol}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.unzip_generic.ZipCommonGen
+import net.scalax.simple.codec.unzip_generic.{Func2Generic, ZipCommonGen}
 
 case class CatNameScala11[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
@@ -18,9 +18,9 @@ object TempTest11 extends IOApp {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala11, I].derived
 
-  implicit val im111: UnFunctionGeneric[CatNameScala11] = new UnFunctionGeneric.Impl[CatNameScala11] {
-    override def impl[In1, In2] =
-      _.derived2(simpleGen1[UnFunctionGeneric.Context[In1]#F].generic, simpleGen1[UnFunctionGeneric.Context[In2]#F].generic)(_.generic)
+  implicit val im111: Func2Generic[CatNameScala11] = new Func2Generic.Impl[CatNameScala11] {
+    override def impl[In1[_], In2[_]] =
+      _.derived2(simpleGen1[cats.Id].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
   }
 
   implicit val im1: CompatLabelledInstalled[CatNameScala11] =
