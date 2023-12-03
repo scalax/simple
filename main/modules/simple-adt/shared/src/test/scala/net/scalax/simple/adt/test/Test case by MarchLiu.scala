@@ -16,7 +16,7 @@ object TestCase4 extends ZIOSpecDefault {
   type TypeOpt[T] = Adt.CoProducts3[Seq[T], Seq[String], Seq[Int], Seq[Option[Long]]]
 
   def inputAdtData[T: TypeOpt](t: T*): Seq[Option[Long]] = {
-    val applyM = Adt.CoProducts3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
+    val applyM = Adt.CoProduct3Apply[Seq[String], Seq[Int], Seq[Option[Long]]](t)
     applyM.fold(
       t1 => t1.map(t => Some(t.length.toLong)),
       t2 => t2.map(t => Some(t.toLong)),
