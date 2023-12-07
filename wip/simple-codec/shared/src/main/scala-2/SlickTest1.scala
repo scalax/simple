@@ -1,6 +1,8 @@
 package net.scalax.simple.codec
 package aa
 
+import net.scalax.simple.codec.generic.SimpleFromProduct
+import net.scalax.simple.codec.unzip_generic.Func2Generic
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.ProvenShape
@@ -28,17 +30,31 @@ object Model2 {
   type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
 
   def userTypedTypeGeneric[U[_]](implicit tt12: TypedType[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, TypedType] =
-    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived
+    FillIdentity[UserAbsAlias[U]#F1, TypedType].derived2(simpleGen1[U, TypedType].generic)(_.generic)
   def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = userTypedTypeGeneric[U].model
 
   class UserAbsAlias[U[_]] {
     type F1[E1[_]] = UserAbs[E1, U]
   }
-  implicit def userNamedGeneric1[U[_]]: SymbolLabelledInstalled[UserAbsAlias[U]#F1] = SymbolLabelledInstalled[UserAbsAlias[U]#F1].derived
-  implicit def userNamedGeneric2[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1]       = LabelledInstalled[UserAbsAlias[U]#F1].derived
+
+  def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
+
+  implicit def im111[U[_]]: Func2Generic[UserAbsAlias[U]#F1] = new Func2Generic.Impl[UserAbsAlias[U]#F1] {
+    override def impl1[In1[_], In2[_]] =
+      _.derived2(simpleGen1[U, cats.Id].generic)(_.generic)(simpleGen1[U, In1].generic, simpleGen1[U, In2].generic)
+    override def impl2[In1[_], In2[_]] = _.derived2(simpleGen1[U, cats.Id].generic)(_.generic)(
+      simpleGen1[U, Func2Generic.Zip2Func[In1, In2]#Zip].generic,
+      simpleGen1[U, In1].generic,
+      simpleGen1[U, In2].generic
+    )
+  }
+  implicit def userNamedGenericPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
+    CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.ToNamed].generic)
+
+  implicit def userNamedGeneric1[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
-  def userNamed[U[_]]: UserAbs[StrAny, U] = userNamedGeneric2[U].model
+  def userNamed[U[_]]: UserAbs[StrAny, U] = userNamedGeneric1[U].model
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {

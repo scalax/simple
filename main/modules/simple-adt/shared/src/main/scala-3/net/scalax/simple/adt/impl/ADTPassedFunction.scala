@@ -11,9 +11,9 @@ trait ADTPassedFunction:
 
   import utils._
 
-  extension [N <: AdtNat, S <: ADTStatus, H <: GenericUtil.SimpleHList](data: ADTData[N, S])(using t: GenericUtil.SimpleHListAux[N, H])
-    def fold: ApplyToFunc.FunctionApplyInstance[[r] =>> ApplyToFunc.ToFunctionTuple[H, r], S] =
-      ApplyToFunc.FunctionApplyInstance[[r] =>> ApplyToFunc.ToFunctionTuple[H, r], S](data)
+  extension [N <: AdtNat, S <: ADTStatus](data: ADTData[N, S])(using t: GenericUtil.SimpleHListFromAdtNat[N])
+    def fold: ApplyToFunc.FunctionApplyInstance[[r] =>> ApplyToFunc.ToFunctionTuple[t.Out, r], S] =
+      ApplyToFunc.FunctionApplyInstance[[r] =>> ApplyToFunc.ToFunctionTuple[t.Out, r], S](data)
   end extension
 
 end ADTPassedFunction

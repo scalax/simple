@@ -16,6 +16,7 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtRuntimeApply {
     @for(i <- 1 to 22) {
-        def CoProducts@{i}[@TypeParameter22(i)]: ApplyFactory[@ADT22Parameter(1, i + 1)] = ApplyFactory.build
+        def CoProduct@{i}Apply[@TypeParameter22(i)]: CoProduct@{i}Apply[@TypeParameter22(i)] = ApplyFactory.build
+        type CoProduct@{i}Apply[@TypeParameter22(i)] = ApplyFactory[@ADT22Parameter(1, i + 1)]
     }
 }

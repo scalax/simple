@@ -7,58 +7,118 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtRuntimeApply {
 
-  def CoProducts1[
+  def CoProduct1Apply[
     I1
-  ]: ApplyFactory[
-    AdtNatPositive[I1, AdtNatZero]
+  ]: CoProduct1Apply[
+    I1
   ] = ApplyFactory.build
+  type CoProduct1Apply[
+    I1
+  ] = ApplyFactory[
+    AdtNatPositive[I1, AdtNatZero]
+  ]
 
-  def CoProducts2[
+  def CoProduct2Apply[
     I1,
     I2
-  ]: ApplyFactory[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]]
+  ]: CoProduct2Apply[
+    I1,
+    I2
   ] = ApplyFactory.build
+  type CoProduct2Apply[
+    I1,
+    I2
+  ] = ApplyFactory[
+    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]]
+  ]
 
-  def CoProducts3[
+  def CoProduct3Apply[
     I1,
     I2,
     I3
-  ]: ApplyFactory[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]]
+  ]: CoProduct3Apply[
+    I1,
+    I2,
+    I3
   ] = ApplyFactory.build
+  type CoProduct3Apply[
+    I1,
+    I2,
+    I3
+  ] = ApplyFactory[
+    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]]
+  ]
 
-  def CoProducts4[
+  def CoProduct4Apply[
     I1,
     I2,
     I3,
     I4
-  ]: ApplyFactory[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]]
+  ]: CoProduct4Apply[
+    I1,
+    I2,
+    I3,
+    I4
   ] = ApplyFactory.build
+  type CoProduct4Apply[
+    I1,
+    I2,
+    I3,
+    I4
+  ] = ApplyFactory[
+    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]]
+  ]
 
-  def CoProducts5[
+  def CoProduct5Apply[
     I1,
     I2,
     I3,
     I4,
     I5
-  ]: ApplyFactory[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]]
+  ]: CoProduct5Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5
   ] = ApplyFactory.build
+  type CoProduct5Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5
+  ] = ApplyFactory[
+    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]]
+  ]
 
-  def CoProducts6[
+  def CoProduct6Apply[
     I1,
     I2,
     I3,
     I4,
     I5,
     I6
-  ]: ApplyFactory[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]]
+  ]: CoProduct6Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6
   ] = ApplyFactory.build
+  type CoProduct6Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6
+  ] = ApplyFactory[
+    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]]
+  ]
 
-  def CoProducts7[
+  def CoProduct7Apply[
     I1,
     I2,
     I3,
@@ -66,14 +126,31 @@ trait TypeAdtRuntimeApply {
     I5,
     I6,
     I7
-  ]: ApplyFactory[
-    AdtNatPositive[I1, AdtNatPositive[
-      I2,
-      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]
-    ]]
+  ]: CoProduct7Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7
   ] = ApplyFactory.build
+  type CoProduct7Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7
+  ] = ApplyFactory[
+    AdtNatPositive[
+      I1,
+      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
+    ]
+  ]
 
-  def CoProducts8[
+  def CoProduct8Apply[
     I1,
     I2,
     I3,
@@ -82,14 +159,33 @@ trait TypeAdtRuntimeApply {
     I6,
     I7,
     I8
-  ]: ApplyFactory[
+  ]: CoProduct8Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8
+  ] = ApplyFactory.build
+  type CoProduct8Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8
+  ] = ApplyFactory[
     AdtNatPositive[I1, AdtNatPositive[
       I2,
       AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
     ]]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts9[
+  def CoProduct9Apply[
     I1,
     I2,
     I3,
@@ -99,7 +195,28 @@ trait TypeAdtRuntimeApply {
     I7,
     I8,
     I9
-  ]: ApplyFactory[
+  ]: CoProduct9Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9
+  ] = ApplyFactory.build
+  type CoProduct9Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[I2, AdtNatPositive[
@@ -107,9 +224,9 @@ trait TypeAdtRuntimeApply {
         AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
       ]]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts10[
+  def CoProduct10Apply[
     I1,
     I2,
     I3,
@@ -120,7 +237,30 @@ trait TypeAdtRuntimeApply {
     I8,
     I9,
     I10
-  ]: ApplyFactory[
+  ]: CoProduct10Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10
+  ] = ApplyFactory.build
+  type CoProduct10Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -131,9 +271,9 @@ trait TypeAdtRuntimeApply {
         ]]]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts11[
+  def CoProduct11Apply[
     I1,
     I2,
     I3,
@@ -145,7 +285,32 @@ trait TypeAdtRuntimeApply {
     I9,
     I10,
     I11
-  ]: ApplyFactory[
+  ]: CoProduct11Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11
+  ] = ApplyFactory.build
+  type CoProduct11Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -159,9 +324,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts12[
+  def CoProduct12Apply[
     I1,
     I2,
     I3,
@@ -174,7 +339,34 @@ trait TypeAdtRuntimeApply {
     I10,
     I11,
     I12
-  ]: ApplyFactory[
+  ]: CoProduct12Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12
+  ] = ApplyFactory.build
+  type CoProduct12Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -191,9 +383,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts13[
+  def CoProduct13Apply[
     I1,
     I2,
     I3,
@@ -207,7 +399,36 @@ trait TypeAdtRuntimeApply {
     I11,
     I12,
     I13
-  ]: ApplyFactory[
+  ]: CoProduct13Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13
+  ] = ApplyFactory.build
+  type CoProduct13Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -230,9 +451,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts14[
+  def CoProduct14Apply[
     I1,
     I2,
     I3,
@@ -247,7 +468,38 @@ trait TypeAdtRuntimeApply {
     I12,
     I13,
     I14
-  ]: ApplyFactory[
+  ]: CoProduct14Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14
+  ] = ApplyFactory.build
+  type CoProduct14Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -273,9 +525,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts15[
+  def CoProduct15Apply[
     I1,
     I2,
     I3,
@@ -291,7 +543,40 @@ trait TypeAdtRuntimeApply {
     I13,
     I14,
     I15
-  ]: ApplyFactory[
+  ]: CoProduct15Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15
+  ] = ApplyFactory.build
+  type CoProduct15Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -320,9 +605,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts16[
+  def CoProduct16Apply[
     I1,
     I2,
     I3,
@@ -339,7 +624,42 @@ trait TypeAdtRuntimeApply {
     I14,
     I15,
     I16
-  ]: ApplyFactory[
+  ]: CoProduct16Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16
+  ] = ApplyFactory.build
+  type CoProduct16Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -371,9 +691,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts17[
+  def CoProduct17Apply[
     I1,
     I2,
     I3,
@@ -391,7 +711,44 @@ trait TypeAdtRuntimeApply {
     I15,
     I16,
     I17
-  ]: ApplyFactory[
+  ]: CoProduct17Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17
+  ] = ApplyFactory.build
+  type CoProduct17Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -426,9 +783,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts18[
+  def CoProduct18Apply[
     I1,
     I2,
     I3,
@@ -447,7 +804,46 @@ trait TypeAdtRuntimeApply {
     I16,
     I17,
     I18
-  ]: ApplyFactory[
+  ]: CoProduct18Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18
+  ] = ApplyFactory.build
+  type CoProduct18Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -485,9 +881,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts19[
+  def CoProduct19Apply[
     I1,
     I2,
     I3,
@@ -507,7 +903,48 @@ trait TypeAdtRuntimeApply {
     I17,
     I18,
     I19
-  ]: ApplyFactory[
+  ]: CoProduct19Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19
+  ] = ApplyFactory.build
+  type CoProduct19Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -548,9 +985,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts20[
+  def CoProduct20Apply[
     I1,
     I2,
     I3,
@@ -571,7 +1008,50 @@ trait TypeAdtRuntimeApply {
     I18,
     I19,
     I20
-  ]: ApplyFactory[
+  ]: CoProduct20Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20
+  ] = ApplyFactory.build
+  type CoProduct20Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -615,9 +1095,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts21[
+  def CoProduct21Apply[
     I1,
     I2,
     I3,
@@ -639,7 +1119,52 @@ trait TypeAdtRuntimeApply {
     I19,
     I20,
     I21
-  ]: ApplyFactory[
+  ]: CoProduct21Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21
+  ] = ApplyFactory.build
+  type CoProduct21Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -686,9 +1211,9 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
-  def CoProducts22[
+  def CoProduct22Apply[
     I1,
     I2,
     I3,
@@ -711,7 +1236,54 @@ trait TypeAdtRuntimeApply {
     I20,
     I21,
     I22
-  ]: ApplyFactory[
+  ]: CoProduct22Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    I22
+  ] = ApplyFactory.build
+  type CoProduct22Apply[
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    I22
+  ] = ApplyFactory[
     AdtNatPositive[
       I1,
       AdtNatPositive[
@@ -761,6 +1333,6 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ] = ApplyFactory.build
+  ]
 
 }
