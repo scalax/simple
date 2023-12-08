@@ -7,6 +7,22 @@ trait Func2Generic[F[_[_]]] {
   def unfunction[S[_], T[_]](func: Func2Generic.Func2Func[S, T]): F[S] => F[T]
   def unzip[S[_], T[_]](fs1: F[S], ft1: F[T]): F[Func2Generic.Zip2Func[S, T]#Zip]
   def function2[S[_], T[_], U[_]](func2Func: Func2Generic.Func3Func[S, T, U]): F[S] => F[T] => F[U] = { fs => ft =>
+    /*def input(func1: Func2Generic.Func2Func[S, T], func2: Func2Generic.Func2Func[T, U]): F[S] => F[U] = {
+      val f1 = unfunction[S, T](func1)
+      val f2 = unfunction[T, U](func2)
+      locally { (fs1: F[S]) =>
+        val data1 = f1(fs1)
+        f2(data1)
+      }
+    }
+
+    def output(in: F[T]): (Func2Generic.Func2Func[S, T], Func2Generic.Func2Func[T, U]) = {
+      val a1: Func2Generic.Func2Func[S, T] = new Func2Generic.Func2Func[S, T] {
+        override def apply[X](in: S[X]): T[X] = aa
+      }
+      11
+    }*/
+
     val temp1: Func2Generic.Func2Func[Func2Generic.Zip2Func[S, T]#Zip, U] => F[Func2Generic.Zip2Func[S, T]#Zip] => F[U] = gen1 =>
       unfunction[Func2Generic.Zip2Func[S, T]#Zip, U](gen1)
 
