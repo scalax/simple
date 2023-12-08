@@ -5,7 +5,19 @@ import shapeless._
 
 trait Func2Generic[F[_[_]]] {
   def unfunction[S[_], T[_]](func: Func2Generic.Func2Func[S, T]): F[S] => F[T]
-  def unzip[S[_], T[_]](zipModel: F[Func2Generic.Zip2Func[S, T]#Zip]): (F[S], F[T])
+  def unzip[S[_], T[_]](fs1: F[S], ft1: F[T]): F[Func2Generic.Zip2Func[S, T]#Zip]
+  def function2[S[_], T[_], U[_]](func2Func: Func2Generic.Func3Func[S, T, U]): F[S] => F[T] => F[U] = { fs => ft =>
+    val temp1: Func2Generic.Func2Func[Func2Generic.Zip2Func[S, T]#Zip, U] => F[Func2Generic.Zip2Func[S, T]#Zip] => F[U] = gen1 =>
+      unfunction[Func2Generic.Zip2Func[S, T]#Zip, U](gen1)
+
+    val temp2: Func2Generic.Func2Func[Func2Generic.Zip2Func[S, T]#Zip, U] = new Func2Generic.Func2Func[Func2Generic.Zip2Func[S, T]#Zip, U] {
+      override def apply[X](in: (S[X], T[X])): U[X] = func2Func[X](in._1)(in._2)
+    }
+
+    val temp3: F[Func2Generic.Zip2Func[S, T]#Zip] => F[U] = temp1(temp2)
+
+    temp3(unzip[S, T](fs, ft))
+  }
 }
 
 object Func2Generic {
@@ -13,6 +25,10 @@ object Func2Generic {
 
   trait Func2Func[S[_], T[_]] {
     def apply[U](in: S[U]): T[U]
+  }
+
+  trait Func3Func[S[_], T[_], U[_]] {
+    def apply[X]: S[X] => T[X] => U[X]
   }
 
   trait Zip2Func[S[_], T[_]] {
@@ -48,24 +64,22 @@ object Func2Generic {
 
   // ===
   trait HListZipMap[HListInput, S[_], T[_], ZipIn, Out1, Out2] {
-    def input(func: ZipIn): (Out1, Out2)
+    def input(in1: Out1, in2: Out2): ZipIn
   }
   object HListZipMap {
     implicit def implicit1[In, S[_], T[_], HImplHList <: HList, ZipIn <: HList, HListIn <: HList, HListOut <: HList](implicit
       tailImpl: HListZipMap[HImplHList, S, T, ZipIn, HListIn, HListOut]
     ): HListZipMap[In :: HImplHList, S, T, (S[In], T[In]) :: ZipIn, S[In] :: HListIn, T[In] :: HListOut] =
       new HListZipMap[In :: HImplHList, S, T, (S[In], T[In]) :: ZipIn, S[In] :: HListIn, T[In] :: HListOut] {
-        override def input(func: (S[In], T[In]) :: ZipIn): (S[In] :: HListIn, T[In] :: HListOut) = {
-          val tupleTemp = tailImpl.input(func.tail)
-          (func.head._1 :: tupleTemp._1, func.head._2 :: tupleTemp._2)
+        override def input(in1: S[In] :: HListIn, in2: T[In] :: HListOut): (S[In], T[In]) :: ZipIn = {
+          val tupleTemp = tailImpl.input(in1.tail, in2.tail)
+          (in1.head -> in2.head) :: tupleTemp
         }
       }
 
-    private val identityHNil: (HNil, HNil) = (HNil, HNil)
-    implicit def implicit2[S[_], T[_]]: HListZipMap[HNil, S, T, HNil, HNil, HNil] =
-      new HListZipMap[HNil, S, T, HNil, HNil, HNil] {
-        override def input(zipIn: HNil): (HNil, HNil) = identityHNil
-      }
+    implicit def implicit2[S[_], T[_]]: HListZipMap[HNil, S, T, HNil, HNil, HNil] = new HListZipMap[HNil, S, T, HNil, HNil, HNil] {
+      override def input(in1: HNil, in2: HNil): HNil = HNil
+    }
   }
 
   trait HListZipMapGeneric[In, S[_], T[_]] {
@@ -114,22 +128,22 @@ object Func2Generic {
 
   class ZipInnerApply2[F[_[_]], S[_], T[_], ZipInput, U1, U2, Unused](t: HListZipMap[Unused, S, T, ZipInput, U1, U2]) {
     def apply(
-      zipTo: SimpleTo[F[Zip2Func[S, T]#Zip], ZipInput],
-      from1: SimpleFrom[F[S], U1],
-      from2: SimpleFrom[F[T], U2]
-    ): F[Zip2Func[S, T]#Zip] => (F[S], F[T]) = { u =>
-      val tuple2Temp = t.input(zipTo.to(u))
-      (from1.from(tuple2Temp._1), from2.from(tuple2Temp._2))
+      zipTo: SimpleFrom[F[Zip2Func[S, T]#Zip], ZipInput],
+      from1: SimpleTo[F[S], U1],
+      from2: SimpleTo[F[T], U2]
+    ): (F[S], F[T]) => F[Zip2Func[S, T]#Zip] = { (fs, ft) =>
+      val tuple2Temp = t.input(from1.to(fs), from2.to(ft))
+      zipTo.from(tuple2Temp)
     }
   }
 
   trait Impl[F[_[_]]] extends Func2Generic[F] {
     def impl1[T1[_], T2[_]]: SimpleFuncion2Impl[F, T1, T2] => Func2Func[T1, T2] => F[T1] => F[T2]
-    def impl2[T1[_], T2[_]]: SimpleUnZip2Impl[F, T1, T2] => F[Func2Generic.Zip2Func[T1, T2]#Zip] => (F[T1], F[T2])
+    def impl2[T1[_], T2[_]]: SimpleUnZip2Impl[F, T1, T2] => (F[T1], F[T2]) => F[Func2Generic.Zip2Func[T1, T2]#Zip]
     override def unfunction[T1[_], T2[_]](func: Func2Generic.Func2Func[T1, T2]): F[T1] => F[T2] =
       impl1[T1, T2](new SimpleFuncion2Impl[F, T1, T2])(func)
-    override def unzip[T1[_], T2[_]](func: F[Func2Generic.Zip2Func[T1, T2]#Zip]): (F[T1], F[T2]) =
-      impl2[T1, T2](new SimpleUnZip2Impl[F, T1, T2])(func)
+    override def unzip[T1[_], T2[_]](fs1: F[T1], ft1: F[T2]): F[Func2Generic.Zip2Func[T1, T2]#Zip] =
+      impl2[T1, T2](new SimpleUnZip2Impl[F, T1, T2])(fs1, ft1)
   }
 
 }
