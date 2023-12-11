@@ -1,38 +1,22 @@
-package net.scalax.simple.codec.unzip_generic
+package net.scalax.simple.codec
+package unzip_generic
 
 import net.scalax.simple.codec.{SimpleFrom, SimpleTo}
 
-trait Func2Generic[F[_[_]]] {
-  def unfunction[S[_], T[_]](func: Func2Generic.Func2Func[S, T]): F[S] => F[T]
-  def unzip[S[_], T[_]](fs1: F[S], ft1: F[T]): F[Func2Generic.Zip2Func[S, T]#Zip]
-  def function2[S[_], T[_], U[_]](func2Func: Func2Generic.Func3Func[S, T, U]): F[S] => F[T] => F[U] = { fs => ft =>
-    val temp1: Func2Generic.Func2Func[Func2Generic.Zip2Func[S, T]#Zip, U] => F[Func2Generic.Zip2Func[S, T]#Zip] => F[U] = gen1 =>
-      unfunction[Func2Generic.Zip2Func[S, T]#Zip, U](gen1)
-
-    val temp2: Func2Generic.Func2Func[Func2Generic.Zip2Func[S, T]#Zip, U] = new Func2Generic.Func2Func[Func2Generic.Zip2Func[S, T]#Zip, U] {
-      override def apply[X](in: (S[X], T[X])): U[X] = func2Func[X](in._1)(in._2)
-    }
-
-    val temp3: F[Func2Generic.Zip2Func[S, T]#Zip] => F[U] = temp1(temp2)
-
-    temp3(unzip[S, T](fs, ft))
-  }
+trait Func2Generic[F[_[_]]]
+    extends Function0Generic[F]
+    with Function1Generic[F]
+    with Function2Generic[F]
+    with Function3Generic[F]
+    with Function4Generic[F] {
+  self =>
+  override def function0[T[_]](func1: Function0Generic.Func0Func[T]): F[T]
+  override def function1[T1[_], T2[_]](func1: Function1Generic.Func1Func[T1, T2]): F[T1] => F[T2] = super.function1[T1, T2](func1)
+  override def function2[S[_], T[_], U[_]](func1: Function2Generic.Func2Func[S, T, U]): (F[S], F[T]) => F[U]
 }
 
 object Func2Generic {
   type IdImpl[T] = T
-
-  trait Func2Func[S[_], T[_]] {
-    def apply[U](in: S[U]): T[U]
-  }
-
-  trait Func3Func[S[_], T[_], U[_]] {
-    def apply[X]: S[X] => T[X] => U[X]
-  }
-
-  trait Zip2Func[S[_], T[_]] {
-    type Zip[U] = (S[U], T[U])
-  }
 
   type Match1[In, S[_]] <: Tuple = In match {
     case h *: tail  => S[h] *: Match1[tail, S]
@@ -40,20 +24,20 @@ object Func2Generic {
   }
 
   // ===
-  trait HListFuncMap[HListInput, S[_], T[_], FuncIn, FuncOut] {
-    def input(func: Func2Func[S, T]): FuncIn => FuncOut
+  trait HListFuncMap[HListInput, S[_], FuncOut] {
+    def input(func: Function0Generic.Func0Func[S]): FuncOut
   }
   object HListFuncMap {
-    private val instanceImpl: HListFuncMap[Any, [x] =>> Any, [x] =>> Any, Tuple, Tuple] =
-      new HListFuncMap[Any, [x] =>> Any, [x] =>> Any, Tuple, Tuple] {
+    private val instanceImpl: HListFuncMap[Any, [x] =>> Any, Tuple] =
+      new HListFuncMap[Any, [x] =>> Any, Tuple] {
         self =>
-        override def input(func: Func2Func[[x] =>> Any, [x] =>> Any]): Tuple => Tuple = _.match {
+        override def input(func: Function0Generic.Func0Func[[x] =>> Any]): Tuple = _.match {
           case h *: tail  => func(h) *: self.input(func)(tail)
           case EmptyTuple => EmptyTuple
         }
       }
 
-    def instance[U, S[_], T[_]]: HListFuncMap[U, S, T, Match1[U, S], Match1[U, T]] = instanceImpl.asInstanceOf
+    def instance[U, S[_], T[_]]: HListFuncMap[U, S, Match1[U, S]] = instanceImpl.asInstanceOf
   }
 
   trait HListFuncMapGeneric[In, S[_], T[_]] {

@@ -13,10 +13,10 @@ object LabelledInstalled {
 
   class DerivedApply[F[_[_]]] {
     def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: Func2Generic[F]): LabelledInstalled[F] = {
-      val func1 = new Func2Generic.Func2Func[ToSymbol, ToNamed] {
+      val func1 = new Function1Generic.Func1Func[ToSymbol, ToNamed] {
         override def apply[U](in: Symbol): String = in.name
       }
-      instance(mapper.funcion1(func1)(compatLabelledInstalled.model))
+      instance(mapper.function1[ToSymbol, ToNamed](func1)(compatLabelledInstalled.model))
     }
 
     def instance(model: F[ToNamed]): LabelledInstalled[F] = {
