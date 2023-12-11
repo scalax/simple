@@ -16,7 +16,7 @@ object LabelledInstalled {
       val func1 = new Func2Generic.Func2Func[ToSymbol, ToNamed] {
         override def apply[U](in: Symbol): String = in.name
       }
-      instance(mapper.unfunction(func1)(compatLabelledInstalled.model))
+      instance(mapper.funcion1(func1)(compatLabelledInstalled.model))
     }
 
     def instance(model: F[ToNamed]): LabelledInstalled[F] = {
