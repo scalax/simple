@@ -7,7 +7,7 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtRuntimeApply {
 
-  def CoProduct1Apply[
+  def CoProduct1[
     I1
   ]: CoProduct1Apply[
     I1
@@ -18,7 +18,7 @@ trait TypeAdtRuntimeApply {
     AdtNatPositive[I1, AdtNatZero]
   ]
 
-  def CoProduct2Apply[
+  def CoProduct2[
     I1,
     I2
   ]: CoProduct2Apply[
@@ -32,7 +32,7 @@ trait TypeAdtRuntimeApply {
     AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]]
   ]
 
-  def CoProduct3Apply[
+  def CoProduct3[
     I1,
     I2,
     I3
@@ -49,7 +49,7 @@ trait TypeAdtRuntimeApply {
     AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]]
   ]
 
-  def CoProduct4Apply[
+  def CoProduct4[
     I1,
     I2,
     I3,
@@ -69,7 +69,7 @@ trait TypeAdtRuntimeApply {
     AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]]
   ]
 
-  def CoProduct5Apply[
+  def CoProduct5[
     I1,
     I2,
     I3,
@@ -92,7 +92,7 @@ trait TypeAdtRuntimeApply {
     AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]]
   ]
 
-  def CoProduct6Apply[
+  def CoProduct6[
     I1,
     I2,
     I3,
@@ -118,7 +118,7 @@ trait TypeAdtRuntimeApply {
     AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]]
   ]
 
-  def CoProduct7Apply[
+  def CoProduct7[
     I1,
     I2,
     I3,
@@ -150,7 +150,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct8Apply[
+  def CoProduct8[
     I1,
     I2,
     I3,
@@ -185,7 +185,7 @@ trait TypeAdtRuntimeApply {
     ]]
   ]
 
-  def CoProduct9Apply[
+  def CoProduct9[
     I1,
     I2,
     I3,
@@ -226,7 +226,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct10Apply[
+  def CoProduct10[
     I1,
     I2,
     I3,
@@ -273,7 +273,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct11Apply[
+  def CoProduct11[
     I1,
     I2,
     I3,
@@ -326,7 +326,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct12Apply[
+  def CoProduct12[
     I1,
     I2,
     I3,
@@ -385,7 +385,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct13Apply[
+  def CoProduct13[
     I1,
     I2,
     I3,
@@ -453,7 +453,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct14Apply[
+  def CoProduct14[
     I1,
     I2,
     I3,
@@ -527,7 +527,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct15Apply[
+  def CoProduct15[
     I1,
     I2,
     I3,
@@ -607,7 +607,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct16Apply[
+  def CoProduct16[
     I1,
     I2,
     I3,
@@ -693,7 +693,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct17Apply[
+  def CoProduct17[
     I1,
     I2,
     I3,
@@ -785,7 +785,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct18Apply[
+  def CoProduct18[
     I1,
     I2,
     I3,
@@ -883,7 +883,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct19Apply[
+  def CoProduct19[
     I1,
     I2,
     I3,
@@ -987,7 +987,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct20Apply[
+  def CoProduct20[
     I1,
     I2,
     I3,
@@ -1097,7 +1097,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct21Apply[
+  def CoProduct21[
     I1,
     I2,
     I3,
@@ -1213,7 +1213,7 @@ trait TypeAdtRuntimeApply {
     ]
   ]
 
-  def CoProduct22Apply[
+  def CoProduct22[
     I1,
     I2,
     I3,

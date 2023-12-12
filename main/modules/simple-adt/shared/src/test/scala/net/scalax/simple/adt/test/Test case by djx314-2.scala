@@ -26,7 +26,7 @@ object TestCase2 extends ZIOSpecDefault {
 
   def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]]](t: T): Json = {
     val applyM: Adt.CoProduct3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]] =
-      Adt.CoProduct3Apply[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
+      Adt.CoProduct3[None.type, Option[Int], Adt.Adapter[Json, JsonAdtPoly.type]](t)
 
     val ra: Json = applyM.fold(
       { n =>
