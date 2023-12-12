@@ -125,4 +125,4 @@ object Func2Generic {
 
 }
 
-class BB(val aa: String) extends AnyVal
+
