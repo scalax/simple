@@ -11,8 +11,8 @@ trait Func2Generic[F[_[_]]]
     with Function4Generic[F] {
   self =>
   override def function0[T[_]](func1: Function0Generic.Func0Func[T]): F[T]
-  override def function1[T1[_], T2[_]](func1: Function1Generic.Func1Func[T1, T2]): F[T1] => F[T2] = super.function1[T1, T2](func1)
-  override def function2[S[_], T[_], U[_]](func1: Function2Generic.Func2Func[S, T, U]): (F[S], F[T]) => F[U]
+  override def function1[T1[_], T2[_]](func1: Function1Generic.Func1Func[T1, T2])(f1: F[T1]): F[T2] = super.function1[T1, T2](func1)(f1)
+  override def function2[S[_], T[_], U[_]](func1: Function2Generic.Func2Func[S, T, U])(f1: F[S], f2: F[T]): F[U]
 }
 
 object Func2Generic {
@@ -133,8 +133,8 @@ object Func2Generic {
     def impl1[T1[_]]: SimpleFuncion1Impl[F, T1] => Function0Generic.Func0Func[T1] => F[T1]
     def impl2[T1[_], T2[_], T3[_]]: SimpleUnZip2Impl[F, T1, T2, T3] => Function2Generic.Func2Func[T1, T2, T3] => (F[T1], F[T2]) => F[T3]
     override def function0[T[_]](func: Function0Generic.Func0Func[T]): F[T] = impl1[T](new SimpleFuncion1Impl[F, T])(func)
-    override def function2[S[_], T[_], U[_]](func2Func: Function2Generic.Func2Func[S, T, U]): (F[S], F[T]) => F[U] =
-      impl2[S, T, U](new SimpleUnZip2Impl[F, S, T, U])(func2Func)
+    override def function2[S[_], T[_], U[_]](func2Func: Function2Generic.Func2Func[S, T, U])(f1: F[S], f2: F[T]): F[U] =
+      impl2[S, T, U](new SimpleUnZip2Impl[F, S, T, U])(func2Func)(f1, f2)
   }
 
 }
