@@ -11,13 +11,23 @@ object ScalaAllCodegenExec:
 
     val List(rootString) = arr.to(List)
     val rootPath         = Paths.get(rootString)
-    val writePath        = rootPath.resolve(Paths.get("net", "scalax", "simple", "codec", "impl"))
-    Files.createDirectories(writePath)
+    val writePath1       = rootPath.resolve(Paths.get("net", "scalax", "simple", "codec"))
+    val writePath2       = writePath1.resolve("impl")
+    Files.createDirectories(writePath1)
+    Files.createDirectories(writePath2)
 
     locally {
-      val filePath = writePath.resolve("FunctionNGeneric.scala")
+      val filePath = writePath2.resolve("FunctionNGeneric.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
         val linerContent = net.scalax.simple.nat.codec.codegen.txt.FunctionNGeneric().body
+        writer.println(linerContent)
+      }
+    }
+
+    locally {
+      val filePath = writePath1.resolve("FunctionNApply.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent = net.scalax.simple.nat.codec.codegen.txt.FunctionNFunc().body
         writer.println(linerContent)
       }
     }

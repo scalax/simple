@@ -5,9 +5,9 @@ import net.scalax.simple.codec.{SimpleFrom, SimpleTo}
 
 trait Func2Generic[F[_[_]]] extends FunctionNGenericSum[F] {
   self =>
-  override def function0[T[_]](func1: Function0Generic.Func0Func[T]): F[T]
-  override def function1[T1[_], T2[_]](func1: Function1Generic.Func1Func[T1, T2])(f1: F[T1]): F[T2] = super.function1[T1, T2](func1)(f1)
-  override def function2[S[_], T[_], U[_]](func1: Function2Generic.Func2Func[S, T, U])(f1: F[S], f2: F[T]): F[U]
+  override def function0[T[_]](func1: Function0Apply[T]): F[T]
+  override def function1[T1[_], T2[_]](func1: Function1Apply[T1, T2])(f1: F[T1]): F[T2] = super.function1[T1, T2](func1)(f1)
+  override def function2[S[_], T[_], U[_]](func1: Function2Apply[S, T, U])(f1: F[S], f2: F[T]): F[U]
 }
 
 object Func2Generic {
@@ -20,13 +20,13 @@ object Func2Generic {
 
   // ===
   trait HListFuncMap[HListInput, S[_], FuncOut] {
-    def input(func: Function0Generic.Func0Func[S]): FuncOut
+    def input(func: Function0Apply[S]): FuncOut
   }
   object HListFuncMap {
     private def instanceImpl(size: Int): HListFuncMap[Tuple, [x] =>> Any, Tuple] =
       new HListFuncMap[Tuple, [x] =>> Any, Tuple] {
         self =>
-        override def input(func: Function0Generic.Func0Func[[x] =>> Any]): Tuple = {
+        override def input(func: Function0Apply[[x] =>> Any]): Tuple = {
           def sizeOfTuple(s: Int): Tuple = if (s > 0) func[Any] *: sizeOfTuple(s - 1) else EmptyTuple
           sizeOfTuple(size)
         }
@@ -54,13 +54,13 @@ object Func2Generic {
 
   // ===
   trait HListZipMap[HListInput, S[_], T[_], G[_], ZipIn, Out1, Out2] {
-    def input(in1: Function2Generic.Func2Func[S, T, G]): (ZipIn, Out1) => Out2
+    def input(in1: Function2Apply[S, T, G]): (ZipIn, Out1) => Out2
   }
   object HListZipMap {
     private val instanceImpl: HListZipMap[Any, [x] =>> Any, [x] =>> Any, [x] =>> Any, Tuple, Tuple, Tuple] =
       new HListZipMap[Any, [x] =>> Any, [x] =>> Any, [x] =>> Any, Tuple, Tuple, Tuple] {
         self =>
-        override def input(in1: Function2Generic.Func2Func[[x] =>> Any, [x] =>> Any, [x] =>> Any]): (Tuple, Tuple) => Tuple = {
+        override def input(in1: Function2Apply[[x] =>> Any, [x] =>> Any, [x] =>> Any]): (Tuple, Tuple) => Tuple = {
           (_, _).match
             case ((h1 *: tail1), (h2 *: tail2)) =>
               val newTail = self.input(in1)(tail1, tail2)
@@ -99,7 +99,7 @@ object Func2Generic {
   class FuncInnerApply2[F[_[_]], S[_], U1, Unused](t: HListFuncMap[Unused, S, U1]) {
     def apply(
       simpleTo: SimpleFrom[F[S], U1]
-    ): Function0Generic.Func0Func[S] => F[S] = u => simpleTo.from(t.input(u))
+    ): Function0Apply[S] => F[S] = u => simpleTo.from(t.input(u))
   }
 
   // ===
@@ -121,14 +121,14 @@ object Func2Generic {
       to1: SimpleTo[F[S], ZipInput],
       to2: SimpleTo[F[T], U1],
       from1: SimpleFrom[F[G], U2]
-    ): Function2Generic.Func2Func[S, T, G] => (F[S], F[T]) => F[G] = in1 => (fs, ft) => from1.from(t.input(in1)(to1.to(fs), to2.to(ft)))
+    ): Function2Apply[S, T, G] => (F[S], F[T]) => F[G] = in1 => (fs, ft) => from1.from(t.input(in1)(to1.to(fs), to2.to(ft)))
   }
 
   trait Impl[F[_[_]]] extends Func2Generic[F] {
-    def impl1[T1[_]]: SimpleFuncion1Impl[F, T1] => Function0Generic.Func0Func[T1] => F[T1]
-    def impl2[T1[_], T2[_], T3[_]]: SimpleUnZip2Impl[F, T1, T2, T3] => Function2Generic.Func2Func[T1, T2, T3] => (F[T1], F[T2]) => F[T3]
-    override def function0[T[_]](func: Function0Generic.Func0Func[T]): F[T] = impl1[T](new SimpleFuncion1Impl[F, T])(func)
-    override def function2[S[_], T[_], U[_]](func2Func: Function2Generic.Func2Func[S, T, U])(f1: F[S], f2: F[T]): F[U] =
+    def impl1[T1[_]]: SimpleFuncion1Impl[F, T1] => Function0Apply[T1] => F[T1]
+    def impl2[T1[_], T2[_], T3[_]]: SimpleUnZip2Impl[F, T1, T2, T3] => Function2Apply[T1, T2, T3] => (F[T1], F[T2]) => F[T3]
+    override def function0[T[_]](func: Function0Apply[T]): F[T] = impl1[T](new SimpleFuncion1Impl[F, T])(func)
+    override def function2[S[_], T[_], U[_]](func2Func: Function2Apply[S, T, U])(f1: F[S], f2: F[T]): F[U] =
       impl2[S, T, U](new SimpleUnZip2Impl[F, S, T, U])(func2Func)(f1, f2)
   }
 

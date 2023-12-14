@@ -1,0 +1,14 @@
+@()
+package net.scalax.simple.codec
+
+trait Function0Apply[TOut[_]] {
+  def apply[X]: TOut[X]
+}
+
+@for(i <- 1 to 50) {
+
+trait Function@{i}Apply[@for(i1 <- 1 to i) { T@{i1}[_], } TOut[_]] {
+  def apply[X](@for(i1 <- 1 to i - 1) { t@{i1}: T@{i1}[X], } t@{i}: T@{i}[X]): TOut[X]
+}
+
+}
