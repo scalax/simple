@@ -9,7 +9,7 @@ object `Type confirm test by djx314` {
   locally {
     type TypeOpt2[T] = Adt.CoProducts2[List[T], List[String], List[Int]]
     def assertTypeMethod1[T: TypeOpt2](t: T*): List[String] = {
-      val b = Adt.CoProduct2Apply[List[String], List[Int]](t.to(List))
+      val b = Adt.CoProduct2[List[String], List[Int]](t.to(List))
       locally {
         val t1 = Tag(b)
         val t2 = Tag[Adt.CoProduct2[List[String], List[Int]]]
