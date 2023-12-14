@@ -13,6 +13,14 @@ organizationName := "Scala Workers"
 // end setting
 
 // start setting
+xerial.sbt.Sonatype.autoImport.sonatypeProfileName := "net.scalax"
+// end setting
+
+// start setting
+xerial.sbt.Sonatype.autoImport.sonatypeBundleDirectory := baseDirectory.value / target.value.getName / "sonatype-staging" / version.value
+// end setting
+
+// start setting
 organizationHomepage := Some(url("https://github.com/scala-workers"))
 // end setting
 
