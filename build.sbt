@@ -48,6 +48,9 @@ val codec         = crossProject(JSPlatform, JVMPlatform) in `codec/file`
 lazy val codecJVM = codec.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
 lazy val codecJS  = codec.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
 
+val `codec-codegen/file` = `codec/file` / "codegen"
+val `codec-codegen`      = project in `codec-codegen/file`
+
 val `nat/file`  = `impractical/file` / "simple-nat"
 val nat         = crossProject(JSPlatform, JVMPlatform) in `nat/file`
 lazy val natJVM = nat.jvm
@@ -63,7 +66,8 @@ val `test-common`: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPl
 lazy val `test-commonJVM`: Project              = `test-common`.jvm
 lazy val `test-commonJS`: Project               = `test-common`.js
 
-`adt-codegen` / rootCodegenPath := (adtJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
+`adt-codegen` / rootCodegenPath   := (adtJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
+`codec-codegen` / rootCodegenPath := (codecJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
 addCommandAlias("codegen", s"; ++${scalaV.v3}; adt-codegen/preCodegenImpl; adt-codegen/codegenImpl")
 addCommandAlias("releaseSimple", "; +adtJVM/publishSigned; +adtJS/publishSigned;")

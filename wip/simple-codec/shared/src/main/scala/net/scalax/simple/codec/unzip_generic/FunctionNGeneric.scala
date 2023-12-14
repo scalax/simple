@@ -40,7 +40,13 @@ object Function2Generic {
   }
 }
 
-trait Function3Generic[F[_[_]]] {
+trait FunctionNGenericSum[F[_[_]]]
+    extends Function0Generic[F]
+    with Function1Generic[F]
+    with Function2Generic[F]
+    with impl.FunctionNGenericSumImpl[F]
+
+/*trait Function3Generic[F[_[_]]] {
   self: Function2Generic[F] =>
   def function3[T1[_], T2[_], T3[_], TT[_]](func1: Function3Generic.Func3Func[T1, T2, T3, TT])(f1: F[T1], f2: F[T2], f3: F[T3]): F[TT] = {
     type Zip2[X] = (T1[X], T2[X])
@@ -87,4 +93,4 @@ object Function4Generic {
   trait Func4Func[T1[_], T2[_], T3[_], T4[_], TT[_]] {
     def apply[U](i1: T1[U], i2: T2[U], i3: T3[U], i4: T4[U]): TT[U]
   }
-}
+}*/

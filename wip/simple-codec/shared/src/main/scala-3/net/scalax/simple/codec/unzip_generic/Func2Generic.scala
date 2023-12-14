@@ -3,12 +3,7 @@ package unzip_generic
 
 import net.scalax.simple.codec.{SimpleFrom, SimpleTo}
 
-trait Func2Generic[F[_[_]]]
-    extends Function0Generic[F]
-    with Function1Generic[F]
-    with Function2Generic[F]
-    with Function3Generic[F]
-    with Function4Generic[F] {
+trait Func2Generic[F[_[_]]] extends FunctionNGenericSum[F] {
   self =>
   override def function0[T[_]](func1: Function0Generic.Func0Func[T]): F[T]
   override def function1[T1[_], T2[_]](func1: Function1Generic.Func1Func[T1, T2])(f1: F[T1]): F[T2] = super.function1[T1, T2](func1)(f1)
