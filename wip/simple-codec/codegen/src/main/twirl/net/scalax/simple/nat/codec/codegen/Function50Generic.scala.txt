@@ -1,0 +1,14 @@
+@()
+package net.scalax.simple.codec
+
+trait Function50Generic[F[_[_]]] {
+
+  def function0[T[_]](func: Function0Apply[T]): F[T]
+
+  @for(i <- 1 to 50) {
+    def function@{i}[@for(i1 <- 1 to i) { T@{i1}[_], } TOut[_]](func: Function@{i}Apply[@for(i1 <- 1 to i) { T@{i1}, } TOut])(
+      @for(i1 <- 1 to i - 1) { t@{i1}: F[T@{i1}], } t@{i}: F[T@{i}]
+    ): F[TOut]
+  }
+
+}

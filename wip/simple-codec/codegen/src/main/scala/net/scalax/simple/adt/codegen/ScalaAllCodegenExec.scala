@@ -32,6 +32,14 @@ object ScalaAllCodegenExec:
       }
     }
 
+    locally {
+      val filePath = writePath1.resolve("Function50Generic.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent = net.scalax.simple.nat.codec.codegen.txt.Function50Generic().body
+        writer.println(linerContent)
+      }
+    }
+
   end main
 
 end ScalaAllCodegenExec

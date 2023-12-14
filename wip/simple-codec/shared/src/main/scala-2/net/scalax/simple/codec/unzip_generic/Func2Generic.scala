@@ -4,14 +4,13 @@ package unzip_generic
 import net.scalax.simple.codec.{SimpleFrom, SimpleTo}
 import shapeless._
 
-trait Func2Generic[F[_[_]]] extends FunctionNGenericSum[F] {
+trait Func50GenericImpl[F[_[_]]] extends FunctionNGenericSum[F] {
   self =>
   override def function0[T[_]](func1: Function0Apply[T]): F[T]
-  override def function1[T1[_], T2[_]](func1: Function1Apply[T1, T2])(f1: F[T1]): F[T2] = super.function1[T1, T2](func1)(f1)
   override def function2[S[_], T[_], U[_]](func1: Function2Apply[S, T, U])(f1: F[S], f2: F[T]): F[U]
 }
 
-object Func2Generic {
+object Func50Generic {
   type IdImpl[T] = T
 
   // ===
@@ -110,7 +109,7 @@ object Func2Generic {
     ): Function2Apply[S, T, G] => (F[S], F[T]) => F[G] = in1 => (fs, ft) => from1.from(t.input(in1)(to1.to(fs), to2.to(ft)))
   }
 
-  trait Impl[F[_[_]]] extends Func2Generic[F] {
+  trait Impl[F[_[_]]] extends Func50GenericImpl[F] {
     def impl1[T1[_]]: SimpleFuncion1Impl[F, T1] => Function0Apply[T1] => F[T1]
     def impl2[T1[_], T2[_], T3[_]]: SimpleUnZip2Impl[F, T1, T2, T3] => Function2Apply[T1, T2, T3] => (F[T1], F[T2]) => F[T3]
     override def function0[T[_]](func: Function0Apply[T]): F[T] = impl1[T](new SimpleFuncion1Impl[F, T])(func)

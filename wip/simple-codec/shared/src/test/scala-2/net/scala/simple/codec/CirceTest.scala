@@ -7,7 +7,7 @@ import cats.effect._
 import cats.~>
 import net.scalax.simple.codec.function_generic.{FuncIndex1, FuncIndex2, FuncIndex3, FuncIndex4, FuncIndex5, FunctionKCol}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.unzip_generic.Func2Generic
+import net.scalax.simple.codec.unzip_generic.Func50Generic
 
 case class CatNameScala2[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
@@ -17,7 +17,7 @@ object scala2xbb11 extends IOApp1 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala2, I].derived
 
-  implicit val im111: Func2Generic[CatNameScala2] = new Func2Generic.Impl[CatNameScala2] {
+  implicit val im111: Function50Generic[CatNameScala2] = new Func50Generic.Impl[CatNameScala2] {
     override def impl1[In1[_]] =
       _.derived2(simpleGen1[cats.Id].generic)(_.generic)(simpleGen1[In1].generic)
     override def impl2[In1[_], In2[_], In3[_]] = _.derived2(simpleGen1[cats.Id].generic)(_.generic)(

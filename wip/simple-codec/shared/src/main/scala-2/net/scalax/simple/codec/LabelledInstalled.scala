@@ -1,7 +1,5 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.unzip_generic.Func2Generic
-
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.ToNamed]
 }
@@ -12,7 +10,7 @@ object LabelledInstalled {
   type ToSymbol[_] = Symbol
 
   class DerivedApply[F[_[_]]] {
-    def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: Func2Generic[F]): LabelledInstalled[F] = {
+    def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: Function50Generic[F]): LabelledInstalled[F] = {
       val func1 = new Function1Apply[ToSymbol, ToNamed] {
         override def apply[U](in: Symbol): String = in.name
       }
