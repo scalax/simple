@@ -24,24 +24,19 @@ private type ::[+H, +T <: InnerHList] = InnerHPositive[H, T]
   trait Function@{i}Generic[F[_[_]]] {
     self : Function2Generic[F] with Function@{i - 1}Generic[F] =>
 
-    def function@{i}[@for(i1 <- 1 to i) { T@{i1}[_], } TOut[_]](func: Function@{i}Generic.Func@{i}Func[@for(i1 <- 1 to i) { T@{i1}, } TOut])(
+    def function@{i}[@for(i1 <- 1 to i) { T@{i1}[_], } TOut[_]](func: Function@{i}Apply[@for(i1 <- 1 to i) { T@{i1}, } TOut])(
       @for(i1 <- 1 to i - 1) { t@{i1}: F[T@{i1}], } t@{i}: F[T@{i}]
     ): F[TOut] = {
       type ZipType[U] = @for(i1 <- 1 to i - 1) { T@{i1}[U] :: } InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T@{i}, TOut] = new Function2Generic.Func2Func[ZipType, T@{i}, TOut] {
+      val func2: Function2Apply[ZipType, T@{i}, TOut] = new Function2Apply[ZipType, T@{i}, TOut] {
         override def apply[X](param1: @for(i1 <- 1 to i - 1) { T@{i1}[X] :: } InnerHZero, i2: T@{i}[X]): TOut[X] =
           func(@for(i1 <- 0 to i - 2) { param1 @for(i2 <- 1 to i1) { .tail } .head , } i2)
       }
-      val func3: Function@{i - 1}Generic.Func@{i - 1}Func[@for(i1 <- 1 to i - 1) { T@{i1}, } ZipType] = new Function@{i - 1}Generic.Func@{i - 1}Func[@for(i1 <- 1 to i - 1) { T@{i1}, } ZipType] {
+      val func3: Function@{i - 1}Apply[@for(i1 <- 1 to i - 1) { T@{i1}, } ZipType] = new Function@{i - 1}Apply[@for(i1 <- 1 to i - 1) { T@{i1}, } ZipType] {
         override def apply[X](@for(i1 <- 1 to i - 2) { t@{i1}: T@{i1}[X], } t@{i - 1}: T@{i - 1}[X]): @for(i1 <- 1 to i - 1) { T@{i1}[X] :: } InnerHZero = @for(i1 <- 1 to i - 1) { t@{i1} :: } InnerHZero
       }
       val temp2: F[ZipType] = self.function@{i - 1}(func3)(@for(i1 <- 1 to i - 2) { t@{i1}, } t@{i - 1})
       self.function2(func2)(temp2, t@{i})
-    }
-  }
-  object Function@{i}Generic {
-    trait Func@{i}Func[@for(i1 <- 1 to i) { T@{i1}[_], } TOut[_]] {
-      def apply[X](@for(i1 <- 1 to i - 1) { t@{i1}: T@{i1}[X], } t@{i}: T@{i}[X]): TOut[X]
     }
   }
 

@@ -21,60 +21,50 @@ object impl {
   trait Function3Generic[F[_[_]]] {
     self: Function2Generic[F] with Function2Generic[F] =>
 
-    def function3[T1[_], T2[_], T3[_], TOut[_]](func: Function3Generic.Func3Func[T1, T2, T3, TOut])(
+    def function3[T1[_], T2[_], T3[_], TOut[_]](func: Function3Apply[T1, T2, T3, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T3, TOut] = new Function2Generic.Func2Func[ZipType, T3, TOut] {
+      val func2: Function2Apply[ZipType, T3, TOut] = new Function2Apply[ZipType, T3, TOut] {
         override def apply[X](param1: T1[X] :: T2[X] :: InnerHZero, i2: T3[X]): TOut[X] =
           func(param1.head, param1.tail.head, i2)
       }
-      val func3: Function2Generic.Func2Func[T1, T2, ZipType] = new Function2Generic.Func2Func[T1, T2, ZipType] {
+      val func3: Function2Apply[T1, T2, ZipType] = new Function2Apply[T1, T2, ZipType] {
         override def apply[X](t1: T1[X], t2: T2[X]): T1[X] :: T2[X] :: InnerHZero = t1 :: t2 :: InnerHZero
       }
       val temp2: F[ZipType] = self.function2(func3)(t1, t2)
       self.function2(func2)(temp2, t3)
     }
   }
-  object Function3Generic {
-    trait Func3Func[T1[_], T2[_], T3[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X]): TOut[X]
-    }
-  }
 
   trait Function4Generic[F[_[_]]] {
     self: Function2Generic[F] with Function3Generic[F] =>
 
-    def function4[T1[_], T2[_], T3[_], T4[_], TOut[_]](func: Function4Generic.Func4Func[T1, T2, T3, T4, TOut])(
+    def function4[T1[_], T2[_], T3[_], T4[_], TOut[_]](func: Function4Apply[T1, T2, T3, T4, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
       t4: F[T4]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T4, TOut] = new Function2Generic.Func2Func[ZipType, T4, TOut] {
+      val func2: Function2Apply[ZipType, T4, TOut] = new Function2Apply[ZipType, T4, TOut] {
         override def apply[X](param1: T1[X] :: T2[X] :: T3[X] :: InnerHZero, i2: T4[X]): TOut[X] =
           func(param1.head, param1.tail.head, param1.tail.tail.head, i2)
       }
-      val func3: Function3Generic.Func3Func[T1, T2, T3, ZipType] = new Function3Generic.Func3Func[T1, T2, T3, ZipType] {
+      val func3: Function3Apply[T1, T2, T3, ZipType] = new Function3Apply[T1, T2, T3, ZipType] {
         override def apply[X](t1: T1[X], t2: T2[X], t3: T3[X]): T1[X] :: T2[X] :: T3[X] :: InnerHZero = t1 :: t2 :: t3 :: InnerHZero
       }
       val temp2: F[ZipType] = self.function3(func3)(t1, t2, t3)
       self.function2(func2)(temp2, t4)
     }
   }
-  object Function4Generic {
-    trait Func4Func[T1[_], T2[_], T3[_], T4[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X]): TOut[X]
-    }
-  }
 
   trait Function5Generic[F[_[_]]] {
     self: Function2Generic[F] with Function4Generic[F] =>
 
-    def function5[T1[_], T2[_], T3[_], T4[_], T5[_], TOut[_]](func: Function5Generic.Func5Func[T1, T2, T3, T4, T5, TOut])(
+    def function5[T1[_], T2[_], T3[_], T4[_], T5[_], TOut[_]](func: Function5Apply[T1, T2, T3, T4, T5, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -82,11 +72,11 @@ object impl {
       t5: F[T5]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T5, TOut] = new Function2Generic.Func2Func[ZipType, T5, TOut] {
+      val func2: Function2Apply[ZipType, T5, TOut] = new Function2Apply[ZipType, T5, TOut] {
         override def apply[X](param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: InnerHZero, i2: T5[X]): TOut[X] =
           func(param1.head, param1.tail.head, param1.tail.tail.head, param1.tail.tail.tail.head, i2)
       }
-      val func3: Function4Generic.Func4Func[T1, T2, T3, T4, ZipType] = new Function4Generic.Func4Func[T1, T2, T3, T4, ZipType] {
+      val func3: Function4Apply[T1, T2, T3, T4, ZipType] = new Function4Apply[T1, T2, T3, T4, ZipType] {
         override def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X]): T1[X] :: T2[X] :: T3[X] :: T4[X] :: InnerHZero =
           t1 :: t2 :: t3 :: t4 :: InnerHZero
       }
@@ -94,16 +84,11 @@ object impl {
       self.function2(func2)(temp2, t5)
     }
   }
-  object Function5Generic {
-    trait Func5Func[T1[_], T2[_], T3[_], T4[_], T5[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X]): TOut[X]
-    }
-  }
 
   trait Function6Generic[F[_[_]]] {
     self: Function2Generic[F] with Function5Generic[F] =>
 
-    def function6[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], TOut[_]](func: Function6Generic.Func6Func[T1, T2, T3, T4, T5, T6, TOut])(
+    def function6[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], TOut[_]](func: Function6Apply[T1, T2, T3, T4, T5, T6, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -112,11 +97,11 @@ object impl {
       t6: F[T6]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T6, TOut] = new Function2Generic.Func2Func[ZipType, T6, TOut] {
+      val func2: Function2Apply[ZipType, T6, TOut] = new Function2Apply[ZipType, T6, TOut] {
         override def apply[X](param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: InnerHZero, i2: T6[X]): TOut[X] =
           func(param1.head, param1.tail.head, param1.tail.tail.head, param1.tail.tail.tail.head, param1.tail.tail.tail.tail.head, i2)
       }
-      val func3: Function5Generic.Func5Func[T1, T2, T3, T4, T5, ZipType] = new Function5Generic.Func5Func[T1, T2, T3, T4, T5, ZipType] {
+      val func3: Function5Apply[T1, T2, T3, T4, T5, ZipType] = new Function5Apply[T1, T2, T3, T4, T5, ZipType] {
         override def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X]): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] ::
           InnerHZero = t1 :: t2 :: t3 :: t4 :: t5 :: InnerHZero
       }
@@ -124,18 +109,11 @@ object impl {
       self.function2(func2)(temp2, t6)
     }
   }
-  object Function6Generic {
-    trait Func6Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X]): TOut[X]
-    }
-  }
 
   trait Function7Generic[F[_[_]]] {
     self: Function2Generic[F] with Function6Generic[F] =>
 
-    def function7[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], TOut[_]](
-      func: Function7Generic.Func7Func[T1, T2, T3, T4, T5, T6, T7, TOut]
-    )(
+    def function7[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], TOut[_]](func: Function7Apply[T1, T2, T3, T4, T5, T6, T7, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -145,7 +123,7 @@ object impl {
       t7: F[T7]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T7, TOut] = new Function2Generic.Func2Func[ZipType, T7, TOut] {
+      val func2: Function2Apply[ZipType, T7, TOut] = new Function2Apply[ZipType, T7, TOut] {
         override def apply[X](param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: InnerHZero, i2: T7[X]): TOut[X] =
           func(
             param1.head,
@@ -157,24 +135,18 @@ object impl {
             i2
           )
       }
-      val func3: Function6Generic.Func6Func[T1, T2, T3, T4, T5, T6, ZipType] =
-        new Function6Generic.Func6Func[T1, T2, T3, T4, T5, T6, ZipType] {
-          override def apply[X](
-            t1: T1[X],
-            t2: T2[X],
-            t3: T3[X],
-            t4: T4[X],
-            t5: T5[X],
-            t6: T6[X]
-          ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: InnerHZero = t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: InnerHZero
-        }
+      val func3: Function6Apply[T1, T2, T3, T4, T5, T6, ZipType] = new Function6Apply[T1, T2, T3, T4, T5, T6, ZipType] {
+        override def apply[X](
+          t1: T1[X],
+          t2: T2[X],
+          t3: T3[X],
+          t4: T4[X],
+          t5: T5[X],
+          t6: T6[X]
+        ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: InnerHZero = t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: InnerHZero
+      }
       val temp2: F[ZipType] = self.function6(func3)(t1, t2, t3, t4, t5, t6)
       self.function2(func2)(temp2, t7)
-    }
-  }
-  object Function7Generic {
-    trait Func7Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X], t7: T7[X]): TOut[X]
     }
   }
 
@@ -182,7 +154,7 @@ object impl {
     self: Function2Generic[F] with Function7Generic[F] =>
 
     def function8[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], TOut[_]](
-      func: Function8Generic.Func8Func[T1, T2, T3, T4, T5, T6, T7, T8, TOut]
+      func: Function8Apply[T1, T2, T3, T4, T5, T6, T7, T8, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -194,7 +166,7 @@ object impl {
       t8: F[T8]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T8, TOut] = new Function2Generic.Func2Func[ZipType, T8, TOut] {
+      val func2: Function2Apply[ZipType, T8, TOut] = new Function2Apply[ZipType, T8, TOut] {
         override def apply[X](param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: InnerHZero, i2: T8[X]): TOut[X] =
           func(
             param1.head,
@@ -207,26 +179,19 @@ object impl {
             i2
           )
       }
-      val func3: Function7Generic.Func7Func[T1, T2, T3, T4, T5, T6, T7, ZipType] =
-        new Function7Generic.Func7Func[T1, T2, T3, T4, T5, T6, T7, ZipType] {
-          override def apply[X](
-            t1: T1[X],
-            t2: T2[X],
-            t3: T3[X],
-            t4: T4[X],
-            t5: T5[X],
-            t6: T6[X],
-            t7: T7[X]
-          ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: InnerHZero =
-            t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: InnerHZero
-        }
+      val func3: Function7Apply[T1, T2, T3, T4, T5, T6, T7, ZipType] = new Function7Apply[T1, T2, T3, T4, T5, T6, T7, ZipType] {
+        override def apply[X](
+          t1: T1[X],
+          t2: T2[X],
+          t3: T3[X],
+          t4: T4[X],
+          t5: T5[X],
+          t6: T6[X],
+          t7: T7[X]
+        ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: InnerHZero = t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: InnerHZero
+      }
       val temp2: F[ZipType] = self.function7(func3)(t1, t2, t3, t4, t5, t6, t7)
       self.function2(func2)(temp2, t8)
-    }
-  }
-  object Function8Generic {
-    trait Func8Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X], t7: T7[X], t8: T8[X]): TOut[X]
     }
   }
 
@@ -234,7 +199,7 @@ object impl {
     self: Function2Generic[F] with Function8Generic[F] =>
 
     def function9[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], TOut[_]](
-      func: Function9Generic.Func9Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, TOut]
+      func: Function9Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -247,7 +212,7 @@ object impl {
       t9: F[T9]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T9, TOut] = new Function2Generic.Func2Func[ZipType, T9, TOut] {
+      val func2: Function2Apply[ZipType, T9, TOut] = new Function2Apply[ZipType, T9, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: InnerHZero,
           i2: T9[X]
@@ -264,19 +229,13 @@ object impl {
             i2
           )
       }
-      val func3: Function8Generic.Func8Func[T1, T2, T3, T4, T5, T6, T7, T8, ZipType] =
-        new Function8Generic.Func8Func[T1, T2, T3, T4, T5, T6, T7, T8, ZipType] {
-          override def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X], t7: T7[X], t8: T8[X])
-            : T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: InnerHZero =
-            t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: t8 :: InnerHZero
-        }
+      val func3: Function8Apply[T1, T2, T3, T4, T5, T6, T7, T8, ZipType] = new Function8Apply[T1, T2, T3, T4, T5, T6, T7, T8, ZipType] {
+        override def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X], t7: T7[X], t8: T8[X])
+          : T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: InnerHZero =
+          t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: t8 :: InnerHZero
+      }
       val temp2: F[ZipType] = self.function8(func3)(t1, t2, t3, t4, t5, t6, t7, t8)
       self.function2(func2)(temp2, t9)
-    }
-  }
-  object Function9Generic {
-    trait Func9Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X], t7: T7[X], t8: T8[X], t9: T9[X]): TOut[X]
     }
   }
 
@@ -284,7 +243,7 @@ object impl {
     self: Function2Generic[F] with Function9Generic[F] =>
 
     def function10[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], TOut[_]](
-      func: Function10Generic.Func10Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TOut]
+      func: Function10Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -298,7 +257,7 @@ object impl {
       t10: F[T10]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T10, TOut] = new Function2Generic.Func2Func[ZipType, T10, TOut] {
+      val func2: Function2Apply[ZipType, T10, TOut] = new Function2Apply[ZipType, T10, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: InnerHZero,
           i2: T10[X]
@@ -316,8 +275,8 @@ object impl {
             i2
           )
       }
-      val func3: Function9Generic.Func9Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, ZipType] =
-        new Function9Generic.Func9Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, ZipType] {
+      val func3: Function9Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, ZipType] =
+        new Function9Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, ZipType] {
           override def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X], t7: T7[X], t8: T8[X], t9: T9[X])
             : T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: InnerHZero =
             t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: t8 :: t9 :: InnerHZero
@@ -326,17 +285,12 @@ object impl {
       self.function2(func2)(temp2, t10)
     }
   }
-  object Function10Generic {
-    trait Func10Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], TOut[_]] {
-      def apply[X](t1: T1[X], t2: T2[X], t3: T3[X], t4: T4[X], t5: T5[X], t6: T6[X], t7: T7[X], t8: T8[X], t9: T9[X], t10: T10[X]): TOut[X]
-    }
-  }
 
   trait Function11Generic[F[_[_]]] {
     self: Function2Generic[F] with Function10Generic[F] =>
 
     def function11[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], TOut[_]](
-      func: Function11Generic.Func11Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TOut]
+      func: Function11Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -351,7 +305,7 @@ object impl {
       t11: F[T11]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T11, TOut] = new Function2Generic.Func2Func[ZipType, T11, TOut] {
+      val func2: Function2Apply[ZipType, T11, TOut] = new Function2Apply[ZipType, T11, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: InnerHZero,
           i2: T11[X]
@@ -370,8 +324,8 @@ object impl {
             i2
           )
       }
-      val func3: Function10Generic.Func10Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, ZipType] =
-        new Function10Generic.Func10Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, ZipType] {
+      val func3: Function10Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, ZipType] =
+        new Function10Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -390,29 +344,12 @@ object impl {
       self.function2(func2)(temp2, t11)
     }
   }
-  object Function11Generic {
-    trait Func11Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function12Generic[F[_[_]]] {
     self: Function2Generic[F] with Function11Generic[F] =>
 
     def function12[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], TOut[_]](
-      func: Function12Generic.Func12Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TOut]
+      func: Function12Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -428,7 +365,7 @@ object impl {
       t12: F[T12]
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T12, TOut] = new Function2Generic.Func2Func[ZipType, T12, TOut] {
+      val func2: Function2Apply[ZipType, T12, TOut] = new Function2Apply[ZipType, T12, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: InnerHZero,
           i2: T12[X]
@@ -448,8 +385,8 @@ object impl {
             i2
           )
       }
-      val func3: Function11Generic.Func11Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, ZipType] =
-        new Function11Generic.Func11Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, ZipType] {
+      val func3: Function11Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, ZipType] =
+        new Function11Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -469,30 +406,12 @@ object impl {
       self.function2(func2)(temp2, t12)
     }
   }
-  object Function12Generic {
-    trait Func12Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function13Generic[F[_[_]]] {
     self: Function2Generic[F] with Function12Generic[F] =>
 
     def function13[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], TOut[_]](
-      func: Function13Generic.Func13Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TOut]
+      func: Function13Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -510,7 +429,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T13, TOut] = new Function2Generic.Func2Func[ZipType, T13, TOut] {
+      val func2: Function2Apply[ZipType, T13, TOut] = new Function2Apply[ZipType, T13, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: InnerHZero,
           i2: T13[X]
@@ -531,8 +450,8 @@ object impl {
             i2
           )
       }
-      val func3: Function12Generic.Func12Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, ZipType] =
-        new Function12Generic.Func12Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, ZipType] {
+      val func3: Function12Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, ZipType] =
+        new Function12Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -553,31 +472,12 @@ object impl {
       self.function2(func2)(temp2, t13)
     }
   }
-  object Function13Generic {
-    trait Func13Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function14Generic[F[_[_]]] {
     self: Function2Generic[F] with Function13Generic[F] =>
 
     def function14[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], TOut[_]](
-      func: Function14Generic.Func14Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TOut]
+      func: Function14Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -596,7 +496,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T14, TOut] = new Function2Generic.Func2Func[ZipType, T14, TOut] {
+      val func2: Function2Apply[ZipType, T14, TOut] = new Function2Apply[ZipType, T14, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             InnerHZero,
@@ -619,8 +519,8 @@ object impl {
             i2
           )
       }
-      val func3: Function13Generic.Func13Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, ZipType] =
-        new Function13Generic.Func13Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, ZipType] {
+      val func3: Function13Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, ZipType] =
+        new Function13Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -642,32 +542,12 @@ object impl {
       self.function2(func2)(temp2, t14)
     }
   }
-  object Function14Generic {
-    trait Func14Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function15Generic[F[_[_]]] {
     self: Function2Generic[F] with Function14Generic[F] =>
 
     def function15[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], TOut[_]](
-      func: Function15Generic.Func15Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TOut]
+      func: Function15Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -687,7 +567,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T15, TOut] = new Function2Generic.Func2Func[ZipType, T15, TOut] {
+      val func2: Function2Apply[ZipType, T15, TOut] = new Function2Apply[ZipType, T15, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: InnerHZero,
@@ -711,8 +591,8 @@ object impl {
             i2
           )
       }
-      val func3: Function14Generic.Func14Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, ZipType] =
-        new Function14Generic.Func14Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, ZipType] {
+      val func3: Function14Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, ZipType] =
+        new Function14Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -735,51 +615,13 @@ object impl {
       self.function2(func2)(temp2, t15)
     }
   }
-  object Function15Generic {
-    trait Func15Func[
-      T1[_],
-      T2[_],
-      T3[_],
-      T4[_],
-      T5[_],
-      T6[_],
-      T7[_],
-      T8[_],
-      T9[_],
-      T10[_],
-      T11[_],
-      T12[_],
-      T13[_],
-      T14[_],
-      T15[_],
-      TOut[_]
-    ] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function16Generic[F[_[_]]] {
     self: Function2Generic[F] with Function15Generic[F] =>
 
     def function16[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
-    ], TOut[_]](func: Function16Generic.Func16Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TOut])(
+    ], TOut[_]](func: Function16Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -799,7 +641,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T16, TOut] = new Function2Generic.Func2Func[ZipType, T16, TOut] {
+      val func2: Function2Apply[ZipType, T16, TOut] = new Function2Apply[ZipType, T16, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: InnerHZero,
@@ -824,8 +666,8 @@ object impl {
             i2
           )
       }
-      val func3: Function15Generic.Func15Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, ZipType] =
-        new Function15Generic.Func15Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, ZipType] {
+      val func3: Function15Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, ZipType] =
+        new Function15Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -850,39 +692,13 @@ object impl {
       self.function2(func2)(temp2, t16)
     }
   }
-  object Function16Generic {
-    trait Func16Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function17Generic[F[_[_]]] {
     self: Function2Generic[F] with Function16Generic[F] =>
 
     def function17[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
-    ], T17[_], TOut[_]](
-      func: Function17Generic.Func17Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, TOut]
-    )(
+    ], T17[_], TOut[_]](func: Function17Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -903,7 +719,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T17, TOut] = new Function2Generic.Func2Func[ZipType, T17, TOut] {
+      val func2: Function2Apply[ZipType, T17, TOut] = new Function2Apply[ZipType, T17, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: InnerHZero,
@@ -929,8 +745,8 @@ object impl {
             i2
           )
       }
-      val func3: Function16Generic.Func16Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, ZipType] =
-        new Function16Generic.Func16Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, ZipType] {
+      val func3: Function16Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, ZipType] =
+        new Function16Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -956,31 +772,6 @@ object impl {
       self.function2(func2)(temp2, t17)
     }
   }
-  object Function17Generic {
-    trait Func17Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function18Generic[F[_[_]]] {
     self: Function2Generic[F] with Function17Generic[F] =>
@@ -988,7 +779,7 @@ object impl {
     def function18[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], TOut[_]](
-      func: Function18Generic.Func18Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, TOut]
+      func: Function18Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -1011,7 +802,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T18, TOut] = new Function2Generic.Func2Func[ZipType, T18, TOut] {
+      val func2: Function2Apply[ZipType, T18, TOut] = new Function2Apply[ZipType, T18, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: InnerHZero,
@@ -1038,8 +829,8 @@ object impl {
             i2
           )
       }
-      val func3: Function17Generic.Func17Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, ZipType] =
-        new Function17Generic.Func17Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, ZipType] {
+      val func3: Function17Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, ZipType] =
+        new Function17Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -1066,32 +857,6 @@ object impl {
       self.function2(func2)(temp2, t18)
     }
   }
-  object Function18Generic {
-    trait Func18Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function19Generic[F[_[_]]] {
     self: Function2Generic[F] with Function18Generic[F] =>
@@ -1099,7 +864,7 @@ object impl {
     def function19[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], TOut[_]](
-      func: Function19Generic.Func19Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, TOut]
+      func: Function19Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -1123,7 +888,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T19, TOut] = new Function2Generic.Func2Func[ZipType, T19, TOut] {
+      val func2: Function2Apply[ZipType, T19, TOut] = new Function2Apply[ZipType, T19, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: InnerHZero,
@@ -1151,8 +916,8 @@ object impl {
             i2
           )
       }
-      val func3: Function18Generic.Func18Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, ZipType] =
-        new Function18Generic.Func18Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, ZipType] {
+      val func3: Function18Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, ZipType] =
+        new Function18Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -1180,33 +945,6 @@ object impl {
       self.function2(func2)(temp2, t19)
     }
   }
-  object Function19Generic {
-    trait Func19Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function20Generic[F[_[_]]] {
     self: Function2Generic[F] with Function19Generic[F] =>
@@ -1214,7 +952,7 @@ object impl {
     def function20[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], TOut[_]](
-      func: Function20Generic.Func20Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, TOut]
+      func: Function20Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -1239,7 +977,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T20, TOut] = new Function2Generic.Func2Func[ZipType, T20, TOut] {
+      val func2: Function2Apply[ZipType, T20, TOut] = new Function2Apply[ZipType, T20, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: InnerHZero,
@@ -1268,9 +1006,8 @@ object impl {
             i2
           )
       }
-      val func3
-        : Function19Generic.Func19Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, ZipType] =
-        new Function19Generic.Func19Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, ZipType] {
+      val func3: Function19Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, ZipType] =
+        new Function19Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -1299,34 +1036,6 @@ object impl {
       self.function2(func2)(temp2, t20)
     }
   }
-  object Function20Generic {
-    trait Func20Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function21Generic[F[_[_]]] {
     self: Function2Generic[F] with Function20Generic[F] =>
@@ -1334,30 +1043,7 @@ object impl {
     def function21[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], TOut[_]](
-      func: Function21Generic.Func21Func[
-        T1,
-        T2,
-        T3,
-        T4,
-        T5,
-        T6,
-        T7,
-        T8,
-        T9,
-        T10,
-        T11,
-        T12,
-        T13,
-        T14,
-        T15,
-        T16,
-        T17,
-        T18,
-        T19,
-        T20,
-        T21,
-        TOut
-      ]
+      func: Function21Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -1383,7 +1069,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T21, TOut] = new Function2Generic.Func2Func[ZipType, T21, TOut] {
+      val func2: Function2Apply[ZipType, T21, TOut] = new Function2Apply[ZipType, T21, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: InnerHZero,
@@ -1413,31 +1099,8 @@ object impl {
             i2
           )
       }
-      val func3
-        : Function20Generic.Func20Func[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, ZipType] =
-        new Function20Generic.Func20Func[
-          T1,
-          T2,
-          T3,
-          T4,
-          T5,
-          T6,
-          T7,
-          T8,
-          T9,
-          T10,
-          T11,
-          T12,
-          T13,
-          T14,
-          T15,
-          T16,
-          T17,
-          T18,
-          T19,
-          T20,
-          ZipType
-        ] {
+      val func3: Function20Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, ZipType] =
+        new Function20Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, ZipType] {
           override def apply[X](
             t1: T1[X],
             t2: T2[X],
@@ -1468,35 +1131,6 @@ object impl {
       self.function2(func2)(temp2, t21)
     }
   }
-  object Function21Generic {
-    trait Func21Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function22Generic[F[_[_]]] {
     self: Function2Generic[F] with Function21Generic[F] =>
@@ -1504,31 +1138,7 @@ object impl {
     def function22[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], TOut[_]](
-      func: Function22Generic.Func22Func[
-        T1,
-        T2,
-        T3,
-        T4,
-        T5,
-        T6,
-        T7,
-        T8,
-        T9,
-        T10,
-        T11,
-        T12,
-        T13,
-        T14,
-        T15,
-        T16,
-        T17,
-        T18,
-        T19,
-        T20,
-        T21,
-        T22,
-        TOut
-      ]
+      func: Function22Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -1555,7 +1165,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T22, TOut] = new Function2Generic.Func2Func[ZipType, T22, TOut] {
+      val func2: Function2Apply[ZipType, T22, TOut] = new Function2Apply[ZipType, T22, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: InnerHZero,
@@ -1586,112 +1196,37 @@ object impl {
             i2
           )
       }
-      val func3: Function21Generic.Func21Func[
-        T1,
-        T2,
-        T3,
-        T4,
-        T5,
-        T6,
-        T7,
-        T8,
-        T9,
-        T10,
-        T11,
-        T12,
-        T13,
-        T14,
-        T15,
-        T16,
-        T17,
-        T18,
-        T19,
-        T20,
-        T21,
-        ZipType
-      ] = new Function21Generic.Func21Func[
-        T1,
-        T2,
-        T3,
-        T4,
-        T5,
-        T6,
-        T7,
-        T8,
-        T9,
-        T10,
-        T11,
-        T12,
-        T13,
-        T14,
-        T15,
-        T16,
-        T17,
-        T18,
-        T19,
-        T20,
-        T21,
-        ZipType
-      ] {
-        override def apply[X](
-          t1: T1[X],
-          t2: T2[X],
-          t3: T3[X],
-          t4: T4[X],
-          t5: T5[X],
-          t6: T6[X],
-          t7: T7[X],
-          t8: T8[X],
-          t9: T9[X],
-          t10: T10[X],
-          t11: T11[X],
-          t12: T12[X],
-          t13: T13[X],
-          t14: T14[X],
-          t15: T15[X],
-          t16: T16[X],
-          t17: T17[X],
-          t18: T18[X],
-          t19: T19[X],
-          t20: T20[X],
-          t21: T21[X]
-        ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
-          T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: InnerHZero =
-          t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: t8 :: t9 :: t10 :: t11 :: t12 :: t13 :: t14 :: t15 :: t16 :: t17 :: t18 :: t19 :: t20 :: t21 :: InnerHZero
-      }
+      val func3: Function21Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, ZipType] =
+        new Function21Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, ZipType] {
+          override def apply[X](
+            t1: T1[X],
+            t2: T2[X],
+            t3: T3[X],
+            t4: T4[X],
+            t5: T5[X],
+            t6: T6[X],
+            t7: T7[X],
+            t8: T8[X],
+            t9: T9[X],
+            t10: T10[X],
+            t11: T11[X],
+            t12: T12[X],
+            t13: T13[X],
+            t14: T14[X],
+            t15: T15[X],
+            t16: T16[X],
+            t17: T17[X],
+            t18: T18[X],
+            t19: T19[X],
+            t20: T20[X],
+            t21: T21[X]
+          ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
+            T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: InnerHZero =
+            t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: t8 :: t9 :: t10 :: t11 :: t12 :: t13 :: t14 :: t15 :: t16 :: t17 :: t18 :: t19 :: t20 :: t21 :: InnerHZero
+        }
       val temp2: F[ZipType] =
         self.function21(func3)(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21)
       self.function2(func2)(temp2, t22)
-    }
-  }
-  object Function22Generic {
-    trait Func22Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X]
-      ): TOut[X]
     }
   }
 
@@ -1701,32 +1236,7 @@ object impl {
     def function23[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], TOut[_]](
-      func: Function23Generic.Func23Func[
-        T1,
-        T2,
-        T3,
-        T4,
-        T5,
-        T6,
-        T7,
-        T8,
-        T9,
-        T10,
-        T11,
-        T12,
-        T13,
-        T14,
-        T15,
-        T16,
-        T17,
-        T18,
-        T19,
-        T20,
-        T21,
-        T22,
-        T23,
-        TOut
-      ]
+      func: Function23Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, TOut]
     )(
       t1: F[T1],
       t2: F[T2],
@@ -1754,7 +1264,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T23, TOut] = new Function2Generic.Func2Func[ZipType, T23, TOut] {
+      val func2: Function2Apply[ZipType, T23, TOut] = new Function2Apply[ZipType, T23, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: InnerHZero,
@@ -1786,116 +1296,39 @@ object impl {
             i2
           )
       }
-      val func3: Function22Generic.Func22Func[
-        T1,
-        T2,
-        T3,
-        T4,
-        T5,
-        T6,
-        T7,
-        T8,
-        T9,
-        T10,
-        T11,
-        T12,
-        T13,
-        T14,
-        T15,
-        T16,
-        T17,
-        T18,
-        T19,
-        T20,
-        T21,
-        T22,
-        ZipType
-      ] = new Function22Generic.Func22Func[
-        T1,
-        T2,
-        T3,
-        T4,
-        T5,
-        T6,
-        T7,
-        T8,
-        T9,
-        T10,
-        T11,
-        T12,
-        T13,
-        T14,
-        T15,
-        T16,
-        T17,
-        T18,
-        T19,
-        T20,
-        T21,
-        T22,
-        ZipType
-      ] {
-        override def apply[X](
-          t1: T1[X],
-          t2: T2[X],
-          t3: T3[X],
-          t4: T4[X],
-          t5: T5[X],
-          t6: T6[X],
-          t7: T7[X],
-          t8: T8[X],
-          t9: T9[X],
-          t10: T10[X],
-          t11: T11[X],
-          t12: T12[X],
-          t13: T13[X],
-          t14: T14[X],
-          t15: T15[X],
-          t16: T16[X],
-          t17: T17[X],
-          t18: T18[X],
-          t19: T19[X],
-          t20: T20[X],
-          t21: T21[X],
-          t22: T22[X]
-        ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
-          T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: InnerHZero =
-          t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: t8 :: t9 :: t10 :: t11 :: t12 :: t13 :: t14 :: t15 :: t16 :: t17 :: t18 :: t19 :: t20 :: t21 :: t22 :: InnerHZero
-      }
+      val func3
+        : Function22Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, ZipType] =
+        new Function22Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, ZipType] {
+          override def apply[X](
+            t1: T1[X],
+            t2: T2[X],
+            t3: T3[X],
+            t4: T4[X],
+            t5: T5[X],
+            t6: T6[X],
+            t7: T7[X],
+            t8: T8[X],
+            t9: T9[X],
+            t10: T10[X],
+            t11: T11[X],
+            t12: T12[X],
+            t13: T13[X],
+            t14: T14[X],
+            t15: T15[X],
+            t16: T16[X],
+            t17: T17[X],
+            t18: T18[X],
+            t19: T19[X],
+            t20: T20[X],
+            t21: T21[X],
+            t22: T22[X]
+          ): T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
+            T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: InnerHZero =
+            t1 :: t2 :: t3 :: t4 :: t5 :: t6 :: t7 :: t8 :: t9 :: t10 :: t11 :: t12 :: t13 :: t14 :: t15 :: t16 :: t17 :: t18 :: t19 :: t20 :: t21 :: t22 :: InnerHZero
+        }
       val temp2: F[ZipType] =
         self.function22(func3)(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22)
       self.function2(func2)(temp2, t23)
-    }
-  }
-  object Function23Generic {
-    trait Func23Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X]
-      ): TOut[X]
     }
   }
 
@@ -1905,7 +1338,7 @@ object impl {
     def function24[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], TOut[_]](
-      func: Function24Generic.Func24Func[
+      func: Function24Apply[
         T1,
         T2,
         T3,
@@ -1960,7 +1393,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T24, TOut] = new Function2Generic.Func2Func[ZipType, T24, TOut] {
+      val func2: Function2Apply[ZipType, T24, TOut] = new Function2Apply[ZipType, T24, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: InnerHZero,
@@ -1993,7 +1426,7 @@ object impl {
             i2
           )
       }
-      val func3: Function23Generic.Func23Func[
+      val func3: Function23Apply[
         T1,
         T2,
         T3,
@@ -2018,7 +1451,7 @@ object impl {
         T22,
         T23,
         ZipType
-      ] = new Function23Generic.Func23Func[
+      ] = new Function23Apply[
         T1,
         T2,
         T3,
@@ -2077,38 +1510,6 @@ object impl {
       self.function2(func2)(temp2, t24)
     }
   }
-  object Function24Generic {
-    trait Func24Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function25Generic[F[_[_]]] {
     self: Function2Generic[F] with Function24Generic[F] =>
@@ -2116,7 +1517,7 @@ object impl {
     def function25[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], TOut[_]](
-      func: Function25Generic.Func25Func[
+      func: Function25Apply[
         T1,
         T2,
         T3,
@@ -2173,7 +1574,7 @@ object impl {
     ): F[TOut] = {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T25, TOut] = new Function2Generic.Func2Func[ZipType, T25, TOut] {
+      val func2: Function2Apply[ZipType, T25, TOut] = new Function2Apply[ZipType, T25, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: InnerHZero,
@@ -2207,7 +1608,7 @@ object impl {
             i2
           )
       }
-      val func3: Function24Generic.Func24Func[
+      val func3: Function24Apply[
         T1,
         T2,
         T3,
@@ -2233,7 +1634,7 @@ object impl {
         T23,
         T24,
         ZipType
-      ] = new Function24Generic.Func24Func[
+      ] = new Function24Apply[
         T1,
         T2,
         T3,
@@ -2294,39 +1695,6 @@ object impl {
       self.function2(func2)(temp2, t25)
     }
   }
-  object Function25Generic {
-    trait Func25Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function26Generic[F[_[_]]] {
     self: Function2Generic[F] with Function25Generic[F] =>
@@ -2334,7 +1702,7 @@ object impl {
     def function26[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], TOut[_]](
-      func: Function26Generic.Func26Func[
+      func: Function26Apply[
         T1,
         T2,
         T3,
@@ -2394,7 +1762,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T26, TOut] = new Function2Generic.Func2Func[ZipType, T26, TOut] {
+      val func2: Function2Apply[ZipType, T26, TOut] = new Function2Apply[ZipType, T26, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -2430,7 +1798,7 @@ object impl {
             i2
           )
       }
-      val func3: Function25Generic.Func25Func[
+      val func3: Function25Apply[
         T1,
         T2,
         T3,
@@ -2457,7 +1825,7 @@ object impl {
         T24,
         T25,
         ZipType
-      ] = new Function25Generic.Func25Func[
+      ] = new Function25Apply[
         T1,
         T2,
         T3,
@@ -2546,40 +1914,6 @@ object impl {
       self.function2(func2)(temp2, t26)
     }
   }
-  object Function26Generic {
-    trait Func26Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function27Generic[F[_[_]]] {
     self: Function2Generic[F] with Function26Generic[F] =>
@@ -2587,7 +1921,7 @@ object impl {
     def function27[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], TOut[_]](
-      func: Function27Generic.Func27Func[
+      func: Function27Apply[
         T1,
         T2,
         T3,
@@ -2649,7 +1983,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T27, TOut] = new Function2Generic.Func2Func[ZipType, T27, TOut] {
+      val func2: Function2Apply[ZipType, T27, TOut] = new Function2Apply[ZipType, T27, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -2686,7 +2020,7 @@ object impl {
             i2
           )
       }
-      val func3: Function26Generic.Func26Func[
+      val func3: Function26Apply[
         T1,
         T2,
         T3,
@@ -2714,7 +2048,7 @@ object impl {
         T25,
         T26,
         ZipType
-      ] = new Function26Generic.Func26Func[
+      ] = new Function26Apply[
         T1,
         T2,
         T3,
@@ -2806,41 +2140,6 @@ object impl {
       self.function2(func2)(temp2, t27)
     }
   }
-  object Function27Generic {
-    trait Func27Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function28Generic[F[_[_]]] {
     self: Function2Generic[F] with Function27Generic[F] =>
@@ -2848,7 +2147,7 @@ object impl {
     def function28[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], TOut[_]](
-      func: Function28Generic.Func28Func[
+      func: Function28Apply[
         T1,
         T2,
         T3,
@@ -2912,7 +2211,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T28, TOut] = new Function2Generic.Func2Func[ZipType, T28, TOut] {
+      val func2: Function2Apply[ZipType, T28, TOut] = new Function2Apply[ZipType, T28, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -2950,7 +2249,7 @@ object impl {
             i2
           )
       }
-      val func3: Function27Generic.Func27Func[
+      val func3: Function27Apply[
         T1,
         T2,
         T3,
@@ -2979,7 +2278,7 @@ object impl {
         T26,
         T27,
         ZipType
-      ] = new Function27Generic.Func27Func[
+      ] = new Function27Apply[
         T1,
         T2,
         T3,
@@ -3074,42 +2373,6 @@ object impl {
       self.function2(func2)(temp2, t28)
     }
   }
-  object Function28Generic {
-    trait Func28Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function29Generic[F[_[_]]] {
     self: Function2Generic[F] with Function28Generic[F] =>
@@ -3117,7 +2380,7 @@ object impl {
     def function29[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], TOut[_]](
-      func: Function29Generic.Func29Func[
+      func: Function29Apply[
         T1,
         T2,
         T3,
@@ -3183,7 +2446,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T29, TOut] = new Function2Generic.Func2Func[ZipType, T29, TOut] {
+      val func2: Function2Apply[ZipType, T29, TOut] = new Function2Apply[ZipType, T29, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -3222,7 +2485,7 @@ object impl {
             i2
           )
       }
-      val func3: Function28Generic.Func28Func[
+      val func3: Function28Apply[
         T1,
         T2,
         T3,
@@ -3252,7 +2515,7 @@ object impl {
         T27,
         T28,
         ZipType
-      ] = new Function28Generic.Func28Func[
+      ] = new Function28Apply[
         T1,
         T2,
         T3,
@@ -3350,43 +2613,6 @@ object impl {
       self.function2(func2)(temp2, t29)
     }
   }
-  object Function29Generic {
-    trait Func29Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function30Generic[F[_[_]]] {
     self: Function2Generic[F] with Function29Generic[F] =>
@@ -3394,7 +2620,7 @@ object impl {
     def function30[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], TOut[_]](
-      func: Function30Generic.Func30Func[
+      func: Function30Apply[
         T1,
         T2,
         T3,
@@ -3462,7 +2688,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T30, TOut] = new Function2Generic.Func2Func[ZipType, T30, TOut] {
+      val func2: Function2Apply[ZipType, T30, TOut] = new Function2Apply[ZipType, T30, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -3502,7 +2728,7 @@ object impl {
             i2
           )
       }
-      val func3: Function29Generic.Func29Func[
+      val func3: Function29Apply[
         T1,
         T2,
         T3,
@@ -3533,7 +2759,7 @@ object impl {
         T28,
         T29,
         ZipType
-      ] = new Function29Generic.Func29Func[
+      ] = new Function29Apply[
         T1,
         T2,
         T3,
@@ -3634,44 +2860,6 @@ object impl {
       self.function2(func2)(temp2, t30)
     }
   }
-  object Function30Generic {
-    trait Func30Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function31Generic[F[_[_]]] {
     self: Function2Generic[F] with Function30Generic[F] =>
@@ -3679,7 +2867,7 @@ object impl {
     def function31[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
       _
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], TOut[_]](
-      func: Function31Generic.Func31Func[
+      func: Function31Apply[
         T1,
         T2,
         T3,
@@ -3749,7 +2937,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T31, TOut] = new Function2Generic.Func2Func[ZipType, T31, TOut] {
+      val func2: Function2Apply[ZipType, T31, TOut] = new Function2Apply[ZipType, T31, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -3790,7 +2978,7 @@ object impl {
             i2
           )
       }
-      val func3: Function30Generic.Func30Func[
+      val func3: Function30Apply[
         T1,
         T2,
         T3,
@@ -3822,7 +3010,7 @@ object impl {
         T29,
         T30,
         ZipType
-      ] = new Function30Generic.Func30Func[
+      ] = new Function30Apply[
         T1,
         T2,
         T3,
@@ -3926,45 +3114,6 @@ object impl {
       self.function2(func2)(temp2, t31)
     }
   }
-  object Function31Generic {
-    trait Func31Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function32Generic[F[_[_]]] {
     self: Function2Generic[F] with Function31Generic[F] =>
@@ -3974,7 +3123,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], TOut[
       _
     ]](
-      func: Function32Generic.Func32Func[
+      func: Function32Apply[
         T1,
         T2,
         T3,
@@ -4046,7 +3195,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T32, TOut] = new Function2Generic.Func2Func[ZipType, T32, TOut] {
+      val func2: Function2Apply[ZipType, T32, TOut] = new Function2Apply[ZipType, T32, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -4088,7 +3237,7 @@ object impl {
             i2
           )
       }
-      val func3: Function31Generic.Func31Func[
+      val func3: Function31Apply[
         T1,
         T2,
         T3,
@@ -4121,7 +3270,7 @@ object impl {
         T30,
         T31,
         ZipType
-      ] = new Function31Generic.Func31Func[
+      ] = new Function31Apply[
         T1,
         T2,
         T3,
@@ -4228,48 +3377,6 @@ object impl {
       self.function2(func2)(temp2, t32)
     }
   }
-  object Function32Generic {
-    trait Func32Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], TOut[
-      _
-    ]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function33Generic[F[_[_]]] {
     self: Function2Generic[F] with Function32Generic[F] =>
@@ -4279,7 +3386,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], TOut[_]](
-      func: Function33Generic.Func33Func[
+      func: Function33Apply[
         T1,
         T2,
         T3,
@@ -4353,7 +3460,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T33, TOut] = new Function2Generic.Func2Func[ZipType, T33, TOut] {
+      val func2: Function2Apply[ZipType, T33, TOut] = new Function2Apply[ZipType, T33, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -4396,7 +3503,7 @@ object impl {
             i2
           )
       }
-      val func3: Function32Generic.Func32Func[
+      val func3: Function32Apply[
         T1,
         T2,
         T3,
@@ -4430,7 +3537,7 @@ object impl {
         T31,
         T32,
         ZipType
-      ] = new Function32Generic.Func32Func[
+      ] = new Function32Apply[
         T1,
         T2,
         T3,
@@ -4540,49 +3647,6 @@ object impl {
       self.function2(func2)(temp2, t33)
     }
   }
-  object Function33Generic {
-    trait Func33Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function34Generic[F[_[_]]] {
     self: Function2Generic[F] with Function33Generic[F] =>
@@ -4592,7 +3656,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], TOut[_]](
-      func: Function34Generic.Func34Func[
+      func: Function34Apply[
         T1,
         T2,
         T3,
@@ -4668,7 +3732,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T34, TOut] = new Function2Generic.Func2Func[ZipType, T34, TOut] {
+      val func2: Function2Apply[ZipType, T34, TOut] = new Function2Apply[ZipType, T34, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -4712,7 +3776,7 @@ object impl {
             i2
           )
       }
-      val func3: Function33Generic.Func33Func[
+      val func3: Function33Apply[
         T1,
         T2,
         T3,
@@ -4747,7 +3811,7 @@ object impl {
         T32,
         T33,
         ZipType
-      ] = new Function33Generic.Func33Func[
+      ] = new Function33Apply[
         T1,
         T2,
         T3,
@@ -4860,50 +3924,6 @@ object impl {
       self.function2(func2)(temp2, t34)
     }
   }
-  object Function34Generic {
-    trait Func34Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function35Generic[F[_[_]]] {
     self: Function2Generic[F] with Function34Generic[F] =>
@@ -4913,7 +3933,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], TOut[_]](
-      func: Function35Generic.Func35Func[
+      func: Function35Apply[
         T1,
         T2,
         T3,
@@ -4991,7 +4011,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T35, TOut] = new Function2Generic.Func2Func[ZipType, T35, TOut] {
+      val func2: Function2Apply[ZipType, T35, TOut] = new Function2Apply[ZipType, T35, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -5036,7 +4056,7 @@ object impl {
             i2
           )
       }
-      val func3: Function34Generic.Func34Func[
+      val func3: Function34Apply[
         T1,
         T2,
         T3,
@@ -5072,7 +4092,7 @@ object impl {
         T33,
         T34,
         ZipType
-      ] = new Function34Generic.Func34Func[
+      ] = new Function34Apply[
         T1,
         T2,
         T3,
@@ -5188,51 +4208,6 @@ object impl {
       self.function2(func2)(temp2, t35)
     }
   }
-  object Function35Generic {
-    trait Func35Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function36Generic[F[_[_]]] {
     self: Function2Generic[F] with Function35Generic[F] =>
@@ -5242,7 +4217,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], TOut[_]](
-      func: Function36Generic.Func36Func[
+      func: Function36Apply[
         T1,
         T2,
         T3,
@@ -5322,7 +4297,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T36, TOut] = new Function2Generic.Func2Func[ZipType, T36, TOut] {
+      val func2: Function2Apply[ZipType, T36, TOut] = new Function2Apply[ZipType, T36, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -5368,7 +4343,7 @@ object impl {
             i2
           )
       }
-      val func3: Function35Generic.Func35Func[
+      val func3: Function35Apply[
         T1,
         T2,
         T3,
@@ -5405,7 +4380,7 @@ object impl {
         T34,
         T35,
         ZipType
-      ] = new Function35Generic.Func35Func[
+      ] = new Function35Apply[
         T1,
         T2,
         T3,
@@ -5524,52 +4499,6 @@ object impl {
       self.function2(func2)(temp2, t36)
     }
   }
-  object Function36Generic {
-    trait Func36Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function37Generic[F[_[_]]] {
     self: Function2Generic[F] with Function36Generic[F] =>
@@ -5579,7 +4508,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], TOut[_]](
-      func: Function37Generic.Func37Func[
+      func: Function37Apply[
         T1,
         T2,
         T3,
@@ -5661,7 +4590,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T37, TOut] = new Function2Generic.Func2Func[ZipType, T37, TOut] {
+      val func2: Function2Apply[ZipType, T37, TOut] = new Function2Apply[ZipType, T37, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -5708,7 +4637,7 @@ object impl {
             i2
           )
       }
-      val func3: Function36Generic.Func36Func[
+      val func3: Function36Apply[
         T1,
         T2,
         T3,
@@ -5746,7 +4675,7 @@ object impl {
         T35,
         T36,
         ZipType
-      ] = new Function36Generic.Func36Func[
+      ] = new Function36Apply[
         T1,
         T2,
         T3,
@@ -5868,53 +4797,6 @@ object impl {
       self.function2(func2)(temp2, t37)
     }
   }
-  object Function37Generic {
-    trait Func37Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function38Generic[F[_[_]]] {
     self: Function2Generic[F] with Function37Generic[F] =>
@@ -5924,7 +4806,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], TOut[_]](
-      func: Function38Generic.Func38Func[
+      func: Function38Apply[
         T1,
         T2,
         T3,
@@ -6008,7 +4890,7 @@ object impl {
       type ZipType[U] = T1[U] :: T2[U] :: T3[U] :: T4[U] :: T5[U] :: T6[U] :: T7[U] :: T8[U] :: T9[U] :: T10[U] :: T11[U] :: T12[U] ::
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T38, TOut] = new Function2Generic.Func2Func[ZipType, T38, TOut] {
+      val func2: Function2Apply[ZipType, T38, TOut] = new Function2Apply[ZipType, T38, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -6057,7 +4939,7 @@ object impl {
             i2
           )
       }
-      val func3: Function37Generic.Func37Func[
+      val func3: Function37Apply[
         T1,
         T2,
         T3,
@@ -6096,7 +4978,7 @@ object impl {
         T36,
         T37,
         ZipType
-      ] = new Function37Generic.Func37Func[
+      ] = new Function37Apply[
         T1,
         T2,
         T3,
@@ -6221,54 +5103,6 @@ object impl {
       self.function2(func2)(temp2, t38)
     }
   }
-  object Function38Generic {
-    trait Func38Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function39Generic[F[_[_]]] {
     self: Function2Generic[F] with Function38Generic[F] =>
@@ -6278,7 +5112,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], TOut[_]](
-      func: Function39Generic.Func39Func[
+      func: Function39Apply[
         T1,
         T2,
         T3,
@@ -6365,7 +5199,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T39, TOut] = new Function2Generic.Func2Func[ZipType, T39, TOut] {
+      val func2: Function2Apply[ZipType, T39, TOut] = new Function2Apply[ZipType, T39, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -6415,7 +5249,7 @@ object impl {
             i2
           )
       }
-      val func3: Function38Generic.Func38Func[
+      val func3: Function38Apply[
         T1,
         T2,
         T3,
@@ -6455,7 +5289,7 @@ object impl {
         T37,
         T38,
         ZipType
-      ] = new Function38Generic.Func38Func[
+      ] = new Function38Apply[
         T1,
         T2,
         T3,
@@ -6584,55 +5418,6 @@ object impl {
       self.function2(func2)(temp2, t39)
     }
   }
-  object Function39Generic {
-    trait Func39Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function40Generic[F[_[_]]] {
     self: Function2Generic[F] with Function39Generic[F] =>
@@ -6642,7 +5427,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], TOut[_]](
-      func: Function40Generic.Func40Func[
+      func: Function40Apply[
         T1,
         T2,
         T3,
@@ -6731,7 +5516,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T40, TOut] = new Function2Generic.Func2Func[ZipType, T40, TOut] {
+      val func2: Function2Apply[ZipType, T40, TOut] = new Function2Apply[ZipType, T40, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -6782,7 +5567,7 @@ object impl {
             i2
           )
       }
-      val func3: Function39Generic.Func39Func[
+      val func3: Function39Apply[
         T1,
         T2,
         T3,
@@ -6823,7 +5608,7 @@ object impl {
         T38,
         T39,
         ZipType
-      ] = new Function39Generic.Func39Func[
+      ] = new Function39Apply[
         T1,
         T2,
         T3,
@@ -6955,56 +5740,6 @@ object impl {
       self.function2(func2)(temp2, t40)
     }
   }
-  object Function40Generic {
-    trait Func40Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function41Generic[F[_[_]]] {
     self: Function2Generic[F] with Function40Generic[F] =>
@@ -7014,7 +5749,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], TOut[_]](
-      func: Function41Generic.Func41Func[
+      func: Function41Apply[
         T1,
         T2,
         T3,
@@ -7105,7 +5840,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T41, TOut] = new Function2Generic.Func2Func[ZipType, T41, TOut] {
+      val func2: Function2Apply[ZipType, T41, TOut] = new Function2Apply[ZipType, T41, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -7157,7 +5892,7 @@ object impl {
             i2
           )
       }
-      val func3: Function40Generic.Func40Func[
+      val func3: Function40Apply[
         T1,
         T2,
         T3,
@@ -7199,7 +5934,7 @@ object impl {
         T39,
         T40,
         ZipType
-      ] = new Function40Generic.Func40Func[
+      ] = new Function40Apply[
         T1,
         T2,
         T3,
@@ -7334,57 +6069,6 @@ object impl {
       self.function2(func2)(temp2, t41)
     }
   }
-  object Function41Generic {
-    trait Func41Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function42Generic[F[_[_]]] {
     self: Function2Generic[F] with Function41Generic[F] =>
@@ -7394,7 +6078,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], TOut[_]](
-      func: Function42Generic.Func42Func[
+      func: Function42Apply[
         T1,
         T2,
         T3,
@@ -7487,7 +6171,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T42, TOut] = new Function2Generic.Func2Func[ZipType, T42, TOut] {
+      val func2: Function2Apply[ZipType, T42, TOut] = new Function2Apply[ZipType, T42, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -7540,7 +6224,7 @@ object impl {
             i2
           )
       }
-      val func3: Function41Generic.Func41Func[
+      val func3: Function41Apply[
         T1,
         T2,
         T3,
@@ -7583,7 +6267,7 @@ object impl {
         T40,
         T41,
         ZipType
-      ] = new Function41Generic.Func41Func[
+      ] = new Function41Apply[
         T1,
         T2,
         T3,
@@ -7721,58 +6405,6 @@ object impl {
       self.function2(func2)(temp2, t42)
     }
   }
-  object Function42Generic {
-    trait Func42Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function43Generic[F[_[_]]] {
     self: Function2Generic[F] with Function42Generic[F] =>
@@ -7782,7 +6414,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], TOut[_]](
-      func: Function43Generic.Func43Func[
+      func: Function43Apply[
         T1,
         T2,
         T3,
@@ -7877,7 +6509,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T43, TOut] = new Function2Generic.Func2Func[ZipType, T43, TOut] {
+      val func2: Function2Apply[ZipType, T43, TOut] = new Function2Apply[ZipType, T43, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -7931,7 +6563,7 @@ object impl {
             i2
           )
       }
-      val func3: Function42Generic.Func42Func[
+      val func3: Function42Apply[
         T1,
         T2,
         T3,
@@ -7975,7 +6607,7 @@ object impl {
         T41,
         T42,
         ZipType
-      ] = new Function42Generic.Func42Func[
+      ] = new Function42Apply[
         T1,
         T2,
         T3,
@@ -8116,59 +6748,6 @@ object impl {
       self.function2(func2)(temp2, t43)
     }
   }
-  object Function43Generic {
-    trait Func43Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function44Generic[F[_[_]]] {
     self: Function2Generic[F] with Function43Generic[F] =>
@@ -8178,7 +6757,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], TOut[_]](
-      func: Function44Generic.Func44Func[
+      func: Function44Apply[
         T1,
         T2,
         T3,
@@ -8275,7 +6854,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: T43[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T44, TOut] = new Function2Generic.Func2Func[ZipType, T44, TOut] {
+      val func2: Function2Apply[ZipType, T44, TOut] = new Function2Apply[ZipType, T44, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -8330,7 +6909,7 @@ object impl {
             i2
           )
       }
-      val func3: Function43Generic.Func43Func[
+      val func3: Function43Apply[
         T1,
         T2,
         T3,
@@ -8375,7 +6954,7 @@ object impl {
         T42,
         T43,
         ZipType
-      ] = new Function43Generic.Func43Func[
+      ] = new Function43Apply[
         T1,
         T2,
         T3,
@@ -8519,60 +7098,6 @@ object impl {
       self.function2(func2)(temp2, t44)
     }
   }
-  object Function44Generic {
-    trait Func44Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X],
-        t44: T44[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function45Generic[F[_[_]]] {
     self: Function2Generic[F] with Function44Generic[F] =>
@@ -8582,7 +7107,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], TOut[_]](
-      func: Function45Generic.Func45Func[
+      func: Function45Apply[
         T1,
         T2,
         T3,
@@ -8681,7 +7206,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: T43[U] :: T44[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T45, TOut] = new Function2Generic.Func2Func[ZipType, T45, TOut] {
+      val func2: Function2Apply[ZipType, T45, TOut] = new Function2Apply[ZipType, T45, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -8737,7 +7262,7 @@ object impl {
             i2
           )
       }
-      val func3: Function44Generic.Func44Func[
+      val func3: Function44Apply[
         T1,
         T2,
         T3,
@@ -8783,7 +7308,7 @@ object impl {
         T43,
         T44,
         ZipType
-      ] = new Function44Generic.Func44Func[
+      ] = new Function44Apply[
         T1,
         T2,
         T3,
@@ -8930,61 +7455,6 @@ object impl {
       self.function2(func2)(temp2, t45)
     }
   }
-  object Function45Generic {
-    trait Func45Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X],
-        t44: T44[X],
-        t45: T45[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function46Generic[F[_[_]]] {
     self: Function2Generic[F] with Function45Generic[F] =>
@@ -8994,7 +7464,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], TOut[_]](
-      func: Function46Generic.Func46Func[
+      func: Function46Apply[
         T1,
         T2,
         T3,
@@ -9095,7 +7565,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: T43[U] :: T44[U] :: T45[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T46, TOut] = new Function2Generic.Func2Func[ZipType, T46, TOut] {
+      val func2: Function2Apply[ZipType, T46, TOut] = new Function2Apply[ZipType, T46, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -9152,7 +7622,7 @@ object impl {
             i2
           )
       }
-      val func3: Function45Generic.Func45Func[
+      val func3: Function45Apply[
         T1,
         T2,
         T3,
@@ -9199,7 +7669,7 @@ object impl {
         T44,
         T45,
         ZipType
-      ] = new Function45Generic.Func45Func[
+      ] = new Function45Apply[
         T1,
         T2,
         T3,
@@ -9349,62 +7819,6 @@ object impl {
       self.function2(func2)(temp2, t46)
     }
   }
-  object Function46Generic {
-    trait Func46Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X],
-        t44: T44[X],
-        t45: T45[X],
-        t46: T46[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function47Generic[F[_[_]]] {
     self: Function2Generic[F] with Function46Generic[F] =>
@@ -9414,7 +7828,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], TOut[_]](
-      func: Function47Generic.Func47Func[
+      func: Function47Apply[
         T1,
         T2,
         T3,
@@ -9517,7 +7931,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: T43[U] :: T44[U] :: T45[U] :: T46[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T47, TOut] = new Function2Generic.Func2Func[ZipType, T47, TOut] {
+      val func2: Function2Apply[ZipType, T47, TOut] = new Function2Apply[ZipType, T47, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -9575,7 +7989,7 @@ object impl {
             i2
           )
       }
-      val func3: Function46Generic.Func46Func[
+      val func3: Function46Apply[
         T1,
         T2,
         T3,
@@ -9623,7 +8037,7 @@ object impl {
         T45,
         T46,
         ZipType
-      ] = new Function46Generic.Func46Func[
+      ] = new Function46Apply[
         T1,
         T2,
         T3,
@@ -9776,63 +8190,6 @@ object impl {
       self.function2(func2)(temp2, t47)
     }
   }
-  object Function47Generic {
-    trait Func47Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X],
-        t44: T44[X],
-        t45: T45[X],
-        t46: T46[X],
-        t47: T47[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function48Generic[F[_[_]]] {
     self: Function2Generic[F] with Function47Generic[F] =>
@@ -9842,7 +8199,7 @@ object impl {
     ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
       _
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], TOut[_]](
-      func: Function48Generic.Func48Func[
+      func: Function48Apply[
         T1,
         T2,
         T3,
@@ -9947,7 +8304,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: T43[U] :: T44[U] :: T45[U] :: T46[U] :: T47[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T48, TOut] = new Function2Generic.Func2Func[ZipType, T48, TOut] {
+      val func2: Function2Apply[ZipType, T48, TOut] = new Function2Apply[ZipType, T48, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -10006,7 +8363,7 @@ object impl {
             i2
           )
       }
-      val func3: Function47Generic.Func47Func[
+      val func3: Function47Apply[
         T1,
         T2,
         T3,
@@ -10055,7 +8412,7 @@ object impl {
         T46,
         T47,
         ZipType
-      ] = new Function47Generic.Func47Func[
+      ] = new Function47Apply[
         T1,
         T2,
         T3,
@@ -10211,64 +8568,6 @@ object impl {
       self.function2(func2)(temp2, t48)
     }
   }
-  object Function48Generic {
-    trait Func48Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X],
-        t44: T44[X],
-        t45: T45[X],
-        t46: T46[X],
-        t47: T47[X],
-        t48: T48[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function49Generic[F[_[_]]] {
     self: Function2Generic[F] with Function48Generic[F] =>
@@ -10280,7 +8579,7 @@ object impl {
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[_], TOut[
       _
     ]](
-      func: Function49Generic.Func49Func[
+      func: Function49Apply[
         T1,
         T2,
         T3,
@@ -10387,7 +8686,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: T43[U] :: T44[U] :: T45[U] :: T46[U] :: T47[U] :: T48[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T49, TOut] = new Function2Generic.Func2Func[ZipType, T49, TOut] {
+      val func2: Function2Apply[ZipType, T49, TOut] = new Function2Apply[ZipType, T49, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -10447,7 +8746,7 @@ object impl {
             i2
           )
       }
-      val func3: Function48Generic.Func48Func[
+      val func3: Function48Apply[
         T1,
         T2,
         T3,
@@ -10497,7 +8796,7 @@ object impl {
         T47,
         T48,
         ZipType
-      ] = new Function48Generic.Func48Func[
+      ] = new Function48Apply[
         T1,
         T2,
         T3,
@@ -10656,67 +8955,6 @@ object impl {
       self.function2(func2)(temp2, t49)
     }
   }
-  object Function49Generic {
-    trait Func49Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[_], TOut[
-      _
-    ]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X],
-        t44: T44[X],
-        t45: T45[X],
-        t46: T46[X],
-        t47: T47[X],
-        t48: T48[X],
-        t49: T49[X]
-      ): TOut[X]
-    }
-  }
 
   trait Function50Generic[F[_[_]]] {
     self: Function2Generic[F] with Function49Generic[F] =>
@@ -10728,7 +8966,7 @@ object impl {
     ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[_], T50[
       _
     ], TOut[_]](
-      func: Function50Generic.Func50Func[
+      func: Function50Apply[
         T1,
         T2,
         T3,
@@ -10837,7 +9075,7 @@ object impl {
         T13[U] :: T14[U] :: T15[U] :: T16[U] :: T17[U] :: T18[U] :: T19[U] :: T20[U] :: T21[U] :: T22[U] :: T23[U] :: T24[U] :: T25[U] ::
         T26[U] :: T27[U] :: T28[U] :: T29[U] :: T30[U] :: T31[U] :: T32[U] :: T33[U] :: T34[U] :: T35[U] :: T36[U] :: T37[U] :: T38[U] ::
         T39[U] :: T40[U] :: T41[U] :: T42[U] :: T43[U] :: T44[U] :: T45[U] :: T46[U] :: T47[U] :: T48[U] :: T49[U] :: InnerHZero
-      val func2: Function2Generic.Func2Func[ZipType, T50, TOut] = new Function2Generic.Func2Func[ZipType, T50, TOut] {
+      val func2: Function2Apply[ZipType, T50, TOut] = new Function2Apply[ZipType, T50, TOut] {
         override def apply[X](
           param1: T1[X] :: T2[X] :: T3[X] :: T4[X] :: T5[X] :: T6[X] :: T7[X] :: T8[X] :: T9[X] :: T10[X] :: T11[X] :: T12[X] :: T13[X] ::
             T14[X] :: T15[X] :: T16[X] :: T17[X] :: T18[X] :: T19[X] :: T20[X] :: T21[X] :: T22[X] :: T23[X] :: T24[X] :: T25[X] ::
@@ -10899,7 +9137,7 @@ object impl {
             i2
           )
       }
-      val func3: Function49Generic.Func49Func[
+      val func3: Function49Apply[
         T1,
         T2,
         T3,
@@ -10950,7 +9188,7 @@ object impl {
         T48,
         T49,
         ZipType
-      ] = new Function49Generic.Func49Func[
+      ] = new Function49Apply[
         T1,
         T2,
         T3,
@@ -11110,68 +9348,6 @@ object impl {
         t49
       )
       self.function2(func2)(temp2, t50)
-    }
-  }
-  object Function50Generic {
-    trait Func50Func[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
-      _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
-      _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[_], T50[
-      _
-    ], TOut[_]] {
-      def apply[X](
-        t1: T1[X],
-        t2: T2[X],
-        t3: T3[X],
-        t4: T4[X],
-        t5: T5[X],
-        t6: T6[X],
-        t7: T7[X],
-        t8: T8[X],
-        t9: T9[X],
-        t10: T10[X],
-        t11: T11[X],
-        t12: T12[X],
-        t13: T13[X],
-        t14: T14[X],
-        t15: T15[X],
-        t16: T16[X],
-        t17: T17[X],
-        t18: T18[X],
-        t19: T19[X],
-        t20: T20[X],
-        t21: T21[X],
-        t22: T22[X],
-        t23: T23[X],
-        t24: T24[X],
-        t25: T25[X],
-        t26: T26[X],
-        t27: T27[X],
-        t28: T28[X],
-        t29: T29[X],
-        t30: T30[X],
-        t31: T31[X],
-        t32: T32[X],
-        t33: T33[X],
-        t34: T34[X],
-        t35: T35[X],
-        t36: T36[X],
-        t37: T37[X],
-        t38: T38[X],
-        t39: T39[X],
-        t40: T40[X],
-        t41: T41[X],
-        t42: T42[X],
-        t43: T43[X],
-        t44: T44[X],
-        t45: T45[X],
-        t46: T46[X],
-        t47: T47[X],
-        t48: T48[X],
-        t49: T49[X],
-        t50: T50[X]
-      ): TOut[X]
     }
   }
 
