@@ -9,79 +9,165 @@ object `Test Cases copy from documention in README.md` {
   def `Common usage - compare with Scala sealed trait`[T](body: => T): T = body
 
   `Common usage - compare with Scala sealed trait` {
-    import scala.util.Try
+    {
+      import scala.util.Try
 
-    // sealed trait style
-    sealed trait AdtData
-    case class IntAdtData(intValue: Int)           extends AdtData
-    case class StringAdtData(strValue: String)     extends AdtData
-    case class DoubleAdtData(decimalValue: Double) extends AdtData
+      // sealed trait style
+      sealed trait AdtData
+      case class IntAdtData(intValue: Int)           extends AdtData
+      case class StringAdtData(strValue: String)     extends AdtData
+      case class DoubleAdtData(decimalValue: Double) extends AdtData
 
-    def inputAdtDataSealedTrait(adtData: AdtData): Option[BigDecimal] = adtData match {
-      case IntAdtData(intValue)       => Some(BigDecimal(intValue))
-      case StringAdtData(strValue)    => Try(BigDecimal(strValue)).toOption
-      case DoubleAdtData(doubleValue) => Some(BigDecimal(doubleValue))
+      def inputAdtDataSealedTrait(adtData: AdtData): Option[BigDecimal] = adtData match {
+        case IntAdtData(intValue)       => Some(BigDecimal(intValue))
+        case StringAdtData(strValue)    => Try(BigDecimal(strValue)).toOption
+        case DoubleAdtData(doubleValue) => Some(BigDecimal(doubleValue))
+      }
+
+      assert(inputAdtDataSealedTrait(IntAdtData(2)).get == BigDecimal("2"))
+      assert(inputAdtDataSealedTrait(StringAdtData("6")).get == BigDecimal("6"))
+      assert(inputAdtDataSealedTrait(DoubleAdtData(2.3620)).get == BigDecimal("2.362"))
+      assert(inputAdtDataSealedTrait(StringAdtData("error number")) == None)
     }
 
     // simple-adt style
-    import net.scalax.simple.adt.{TypeAdt => Adt}
-    def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
-      val applyM = Adt.CoProduct3[Int, String, Double](t)
-      applyM.fold(
-        intValue => Some(BigDecimal(intValue)),
-        strValue => Try(BigDecimal(strValue)).toOption,
-        doubleValue => Some(BigDecimal(doubleValue))
-      )
-    }
+    {
+      {
+        import net.scalax.simple.adt.{TypeAdt => Adt}
+        import scala.util.Try
+        def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
+          val applyM = Adt.CoProduct3[Int, String, Double](t)
+          applyM.fold(
+            intValue => Some(BigDecimal(intValue)),
+            strValue => Try(BigDecimal(strValue)).toOption,
+            doubleValue => Some(BigDecimal(doubleValue))
+          )
+        }
 
-    assert(inputAdtDataSimple(2).get == BigDecimal("2"))
-    assert(inputAdtDataSimple("6").get == BigDecimal("6"))
-    assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
-    assert(inputAdtDataSimple("error number") == None)
+        assert(inputAdtDataSimple(2).get == BigDecimal("2"))
+        assert(inputAdtDataSimple("6").get == BigDecimal("6"))
+        assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
+        assert(inputAdtDataSimple("error number") == None)
+      }
+
+      {
+        import net.scalax.simple.adt.{TypeAdt => Adt}
+        import scala.util.Try
+        def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
+          val applyM = Adt.CoProduct3[Int, String, Double](t)
+          Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
+          applyM match {
+            case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
+            case Adt.CoProduct2(strValue)    => Try(BigDecimal(strValue)).toOption
+            case Adt.CoProduct3(doubleValue) => Some(BigDecimal(doubleValue))
+            case Adt.CoProduct4(empty)       => empty.matchErrorAndThrowException // Keep safe for API changed
+            case Adt.CoProduct5(empty)       => empty.matchErrorAndThrowException
+            case Adt.CoProduct6(empty)       => empty.matchErrorAndThrowException
+          }
+        }
+
+        assert(inputAdtDataSimple(2).get == BigDecimal("2"))
+        assert(inputAdtDataSimple("6").get == BigDecimal("6"))
+        assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
+        assert(inputAdtDataSimple("error number") == None)
+      }
+    }
   }
 
   def `Usage of @djx314 Point 1`[T](body: => T): T = body
 
   `Usage of @djx314 Point 1` {
-    import net.scalax.simple.adt.{TypeAdt => Adt}
+    {
+      import net.scalax.simple.adt.{TypeAdt => Adt}
 
-    def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
-      val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
-      applyM.fold(
-        noneValue => ("None", -100),
-        intSome => ("Some", intSome.get + 1),
-        intOpt => ("Option", intOpt.map(_ + 2).getOrElse(-500))
-      )
+      def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
+        val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
+        applyM.fold(
+          noneValue => ("None", -100),
+          intSome => ("Some", intSome.get + 1),
+          intOpt => ("Option", intOpt.map(_ + 2).getOrElse(-500))
+        )
+      }
+
+      assert(inputAdtData(None) == ("None", -100))
+      assert(inputAdtData(Option(2)) == ("Option", 2 + 2))
+      assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
+      assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
     }
 
-    assert(inputAdtData(None) == ("None", -100))
-    assert(inputAdtData(Option(2)) == ("Option", 2 + 2))
-    assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
-    assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
+    {
+      import net.scalax.simple.adt.{TypeAdt => Adt}
+
+      def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
+        val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
+        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
+        applyM match {
+          case Adt.CoProduct1(noneValue) => ("None", -100)
+          case Adt.CoProduct2(intSome)   => ("Some", intSome.get + 1)
+          case Adt.CoProduct3(intOpt)    => ("Option", intOpt.map(_ + 2).getOrElse(-500))
+          case Adt.CoProduct4(empty)     => empty.matchErrorAndThrowException // Keep safe for API changed
+          case Adt.CoProduct5(empty)     => empty.matchErrorAndThrowException
+          case Adt.CoProduct6(empty)     => empty.matchErrorAndThrowException
+        }
+      }
+
+      assert(inputAdtData(None) == ("None", -100))
+      assert(inputAdtData(Option(2)) == ("Option", 2 + 2))
+      assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
+      assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
+    }
   }
 
   def `Usage of @djx314 Point 2`[T](body: => T): T = body
 
   `Usage of @djx314 Point 2` {
-    import net.scalax.simple.adt.{TypeAdt => Adt}
-    import io.circe._
-    import io.circe.syntax._
+    {
+      import net.scalax.simple.adt.{TypeAdt => Adt}
+      import io.circe._
+      import io.circe.syntax._
 
-    def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
-      val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
-      applyM.fold(
-        noneValue => "Null Tag".asJson,
-        intOpt => intOpt.map(_ + 1).asJson,
-        { case Adt.Adapter(encoder) => encoder(t) }
-      )
+      def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
+        val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
+        applyM.fold(
+          noneValue => "Null Tag".asJson,
+          intOpt => intOpt.map(_ + 1).asJson,
+          { case Adt.Adapter(encoder) => encoder(t) }
+        )
+      }
+
+      assert(inputAdtData(None) == "Null Tag".asJson)
+      assert(inputAdtData(Some(2)) == (2 + 1).asJson)
+      // Match Encoder[String] by Type Class matching.
+      assert(inputAdtData("My Name") == "My Name".asJson)
+      // Match Encoder[JsonObject] by Type Class matching.
+      assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
     }
 
-    assert(inputAdtData(None) == "Null Tag".asJson)
-    assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-    // Match Encoder[String] by Type Class matching.
-    assert(inputAdtData("My Name") == "My Name".asJson)
-    // Match Encoder[JsonObject] by Type Class matching.
-    assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
+    {
+      import net.scalax.simple.adt.{TypeAdt => Adt}
+      import io.circe._
+      import io.circe.syntax._
+
+      def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
+        val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
+        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]]]) // Confirm Type
+        applyM match {
+          case Adt.CoProduct1(noneValue)            => "Null Tag".asJson
+          case Adt.CoProduct2(intOpt)               => intOpt.map(_ + 1).asJson
+          case Adt.CoProduct3(Adt.Adapter(encoder)) => encoder(t)
+          case Adt.CoProduct4(empty)                => empty.matchErrorAndThrowException // Keep safe for API changed
+          case Adt.CoProduct5(empty)                => empty.matchErrorAndThrowException
+          case Adt.CoProduct6(empty)                => empty.matchErrorAndThrowException
+        }
+      }
+
+      assert(inputAdtData(None) == "Null Tag".asJson)
+      assert(inputAdtData(Some(2)) == (2 + 1).asJson)
+      // Match Encoder[String] by Type Class matching.
+      assert(inputAdtData("My Name") == "My Name".asJson)
+      // Match Encoder[JsonObject] by Type Class matching.
+      assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
+    }
   }
 
   def `Usage of @djx314 Point 3`[T](body: => T): T = body
@@ -144,76 +230,8 @@ object `Test Cases copy from documention in README.md` {
 
   def `Usage of @djx314 Point 5`[T](body: => T): T = body
 
+  // match case mode: usage of notMatch.default(xx)
   `Usage of @djx314 Point 5` {
-    {
-      import net.scalax.simple.adt.{TypeAdt => Adt}
-      import scala.util.Try
-      def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
-        val applyM = Adt.CoProduct3[Int, String, Double](t)
-        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
-        applyM match {
-          case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
-          case Adt.CoProduct2(strValue)    => Try(BigDecimal(strValue)).toOption
-          case Adt.CoProduct3(doubleValue) => Some(BigDecimal(doubleValue))
-          case Adt.CoProduct4(empty)       => empty.matchErrorAndThrowException // Keep safe for API changed
-          case Adt.CoProduct5(empty)       => empty.matchErrorAndThrowException
-          case Adt.CoProduct6(empty)       => empty.matchErrorAndThrowException
-        }
-      }
-
-      assert(inputAdtDataSimple(2).get == BigDecimal("2"))
-      assert(inputAdtDataSimple("6").get == BigDecimal("6"))
-      assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
-      assert(inputAdtDataSimple("error number") == None)
-    }
-
-    {
-      import net.scalax.simple.adt.{TypeAdt => Adt}
-
-      def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
-        val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
-        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
-        applyM match {
-          case Adt.CoProduct1(noneValue) => ("None", -100)
-          case Adt.CoProduct2(intSome)   => ("Some", intSome.get + 1)
-          case Adt.CoProduct3(intOpt)    => ("Option", intOpt.map(_ + 2).getOrElse(-500))
-          case Adt.CoProduct4(empty)     => empty.matchErrorAndThrowException // Keep safe for API changed
-          case Adt.CoProduct5(empty)     => empty.matchErrorAndThrowException
-          case Adt.CoProduct6(empty)     => empty.matchErrorAndThrowException
-        }
-      }
-
-      assert(inputAdtData(None) == ("None", -100))
-      assert(inputAdtData(Option(2)) == ("Option", 2 + 2))
-      assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
-      assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
-    }
-
-    {
-      import net.scalax.simple.adt.{TypeAdt => Adt}
-      import io.circe._
-      import io.circe.syntax._
-
-      def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
-        val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
-        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]]]) // Confirm Type
-        applyM match {
-          case Adt.CoProduct1(noneValue)            => "Null Tag".asJson
-          case Adt.CoProduct2(intOpt)               => intOpt.map(_ + 1).asJson
-          case Adt.CoProduct3(Adt.Adapter(encoder)) => encoder(t)
-          case Adt.CoProduct4(empty)                => empty.matchErrorAndThrowException // Keep safe for API changed
-          case Adt.CoProduct5(empty)                => empty.matchErrorAndThrowException
-          case Adt.CoProduct6(empty)                => empty.matchErrorAndThrowException
-        }
-      }
-
-      assert(inputAdtData(None) == "Null Tag".asJson)
-      assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-      // Match Encoder[String] by Type Class matching.
-      assert(inputAdtData("My Name") == "My Name".asJson)
-      // Match Encoder[JsonObject] by Type Class matching.
-      assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
-    }
 
     {
       import net.scalax.simple.adt.{TypeAdt => Adt}

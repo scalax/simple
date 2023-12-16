@@ -6,6 +6,8 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import impl.Adt.Status
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
+import scala.annotation.meta.param
+
 trait ToGHDMZSK {
   def toGHDMZSK: ghdmzsk
 }
@@ -27,7 +29,7 @@ object ADTData {
   }
 }
 
-final class IsFinishAndNothing(@transient obj: Any) {
+final class IsFinishAndNothing(@(transient @param) obj: Any) {
   def default[T](t: => T): T               = t
   def isEnded: IsFinishAndNothing          = this
   def matchErrorAndThrowException: Nothing = throw new MatchError(obj)
