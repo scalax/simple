@@ -10,9 +10,9 @@ object `Test Cases copy from documention in README.md` {
 
   `Common usage - compare with Scala sealed trait` {
     {
+      // sealed trait style
       import scala.util.Try
 
-      // sealed trait style
       sealed trait AdtData
       case class IntAdtData(intValue: Int)           extends AdtData
       case class StringAdtData(strValue: String)     extends AdtData
@@ -30,11 +30,12 @@ object `Test Cases copy from documention in README.md` {
       assert(inputAdtDataSealedTrait(StringAdtData("error number")) == None)
     }
 
-    // simple-adt style
     {
       {
+        // simple-adt common style
         import net.scalax.simple.adt.{TypeAdt => Adt}
         import scala.util.Try
+
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
           applyM.fold(
@@ -51,8 +52,10 @@ object `Test Cases copy from documention in README.md` {
       }
 
       {
+        // simple-adt match case style
         import net.scalax.simple.adt.{TypeAdt => Adt}
         import scala.util.Try
+
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
           Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
@@ -78,10 +81,12 @@ object `Test Cases copy from documention in README.md` {
 
   `Usage of @djx314 Point 1` {
     {
+      // simple-adt common style
       import net.scalax.simple.adt.{TypeAdt => Adt}
 
       def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
         val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
+        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
         applyM.fold(
           noneValue => ("None", -100),
           intSome => ("Some", intSome.get + 1),
@@ -96,6 +101,7 @@ object `Test Cases copy from documention in README.md` {
     }
 
     {
+      // simple-adt match case style
       import net.scalax.simple.adt.{TypeAdt => Adt}
 
       def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
@@ -122,6 +128,7 @@ object `Test Cases copy from documention in README.md` {
 
   `Usage of @djx314 Point 2` {
     {
+      // simple-adt common style
       import net.scalax.simple.adt.{TypeAdt => Adt}
       import io.circe._
       import io.circe.syntax._
@@ -144,6 +151,7 @@ object `Test Cases copy from documention in README.md` {
     }
 
     {
+      // simple-adt match case style
       import net.scalax.simple.adt.{TypeAdt => Adt}
       import io.circe._
       import io.circe.syntax._
@@ -230,7 +238,6 @@ object `Test Cases copy from documention in README.md` {
 
   def `Usage of @djx314 Point 5`[T](body: => T): T = body
 
-  // match case mode: usage of notMatch.default(xx)
   `Usage of @djx314 Point 5` {
 
     {
