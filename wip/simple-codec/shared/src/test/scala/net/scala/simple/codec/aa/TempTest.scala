@@ -6,7 +6,6 @@ import io.circe.syntax._
 import cats.effect._
 import cats.~>
 import net.scalax.simple.codec.{CompatLabelledInstalled, FillIdentity, IOApp1, LabelledInstalled}
-import net.scalax.simple.codec.function_generic.{FuncIndex1, FuncIndex2, FunctionKCol}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 import net.scalax.simple.codec.unzip_generic.{Func50Generic, ZipCommonGen}
 import codec.Function50Generic
@@ -49,14 +48,14 @@ object TempTest11 extends IOApp {
   type JsonPaire[T] = (String, Json)
   implicit val im10: OutputBySameType[CatNameScala2, (String, Json), JsonPaire] =
     OutputBySameType[CatNameScala2, (String, Json), JsonPaire].derived */
-  implicit val im11: FuncIndex1[CatNameScala11] = new FuncIndex1[CatNameScala11] {
+  /*implicit val im11: FuncIndex1[CatNameScala11] = new FuncIndex1[CatNameScala11] {
     override def input[In1[_], In2[_], Out[_]](
       func3k: CatNameScala11[FunctionKCol.Func3K[In1, In2, Out]#Input]
     ): (CatNameScala11[In1], CatNameScala11[In2]) => CatNameScala11[Out] = FuncIndex1[CatNameScala11, In1, In2, Out].derived2(
       simpleGen1[FunctionKCol.Func3K[In1, In2, Out]#Input].generic
     )(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic, simpleGen1[Out].generic)(func3k)
   }
-  implicit val im12: FuncIndex2[CatNameScala11] = FuncIndex2[CatNameScala11].derived(implicitly)
+  implicit val im12: FuncIndex2[CatNameScala11] = FuncIndex2[CatNameScala11].derived(implicitly)*/
   implicit val im112: ZipCommonGen[CatNameScala11] = new ZipCommonGen.Impl[CatNameScala11] {
     override def impl[In1[_], In2[_]] =
       _.derived2(simpleGen1[FuncImpl[In1, In2]#Zip].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
