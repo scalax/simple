@@ -14,23 +14,23 @@ object Func50Generic {
   type IdImpl[T] = T
 
   // ===
-  trait HListFuncMap[HListInput, T[_], FuncOut] {
+  trait HListFuncMap[HListInput, FuncOut, T[_]] {
     def input(func: Function0Apply[T]): FuncOut
   }
   object HListFuncMap {
     implicit def implicit1[In, T[_], HImplHList <: HList, HListOut <: HList](implicit
-      tailImpl: HListFuncMap[HImplHList, T, HListOut]
-    ): HListFuncMap[In :: HImplHList, T, T[In] :: HListOut] = new HListFuncMap[In :: HImplHList, T, T[In] :: HListOut] {
+      tailImpl: HListFuncMap[HImplHList, HListOut, T]
+    ): HListFuncMap[In :: HImplHList, T[In] :: HListOut, T] = new HListFuncMap[In :: HImplHList, T[In] :: HListOut, T] {
       override def input(func: Function0Apply[T]): T[In] :: HListOut = func[In] :: tailImpl.input(func)
     }
 
-    implicit def implicit2[T[_]]: HListFuncMap[HNil, T, HNil] = new HListFuncMap[HNil, T, HNil] {
+    implicit def implicit2[T[_]]: HListFuncMap[HNil, HNil, T] = new HListFuncMap[HNil, HNil, T] {
       override def input(func: Function0Apply[T]): HNil = HNil
     }
   }
 
   trait HListFuncMapGeneric[In, T[_]] {
-    def generic[HListOut](implicit io: HListFuncMap[In, T, HListOut]): HListFuncMap[In, T, HListOut] = io
+    def generic[HListOut](implicit io: HListFuncMap[In, HListOut, T]): HListFuncMap[In, HListOut, T] = io
   }
   object HListFuncMapGeneric {
     def apply[In, T[_]]: HListFuncMapGeneric[In, T] = new HListFuncMapGeneric[In, T] {
@@ -71,17 +71,20 @@ object Func50Generic {
   // ===
   class SimpleFuncion1Impl[F[_[_]], S[_]] {
     self =>
-    def derived2[Target1](simpleTo: SimpleTo[F[IdImpl], Target1]): FuncInnerApply1[F, S, Target1] = new FuncInnerApply1[F, S, Target1]
+    def derived2[Target1, Target2](
+      simpleTo: SimpleTo[F[IdImpl], Target1],
+      simpleFrom: SimpleFrom[F[IdImpl], Target2]
+    ): FuncInnerApply1[F, S, Target1, Target2] = new FuncInnerApply1[F, S, Target1, Target2]
   }
 
-  class FuncInnerApply1[F[_[_]], S[_], Target1] {
-    def apply[U1](
-      genericFunc: HListFuncMapGeneric[Target1, S] => HListFuncMap[Target1, S, U1]
-    ): FuncInnerApply2[F, S, U1, Target1] =
-      new FuncInnerApply2[F, S, U1, Target1](genericFunc(HListFuncMapGeneric[Target1, S]))
+  class FuncInnerApply1[F[_[_]], S[_], Target1, Target2] {
+    def apply(
+      genericFunc: HListFuncMapGeneric[Target1, Target2, S] => HListFuncMap[Target1, Target2, S]
+    ): FuncInnerApply2[F, S,Target1, Target2 ] =
+      new FuncInnerApply2[F, S, Target1,Target2 ](genericFunc(HListFuncMapGeneric[Target1, S]))
   }
 
-  class FuncInnerApply2[F[_[_]], S[_], U1, Unused](t: HListFuncMap[Unused, S, U1]) {
+  class FuncInnerApply2[F[_[_]], S[_], Target1,Target2](t: HListFuncMap[Target1, S, U1]) {
     def apply(
       simpleTo: SimpleFrom[F[S], U1]
     ): Function0Apply[S] => F[S] = u => simpleTo.from(t.input(u))
