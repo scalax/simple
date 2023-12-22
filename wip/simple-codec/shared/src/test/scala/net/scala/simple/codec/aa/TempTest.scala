@@ -20,8 +20,7 @@ object TempTest11 extends IOApp {
   def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala11, I].derived
 
   implicit val im111: Function50Generic[CatNameScala11] = new Func50Generic.Impl[CatNameScala11] {
-    override def impl1[In1[_]] =
-      _.derived2(simpleGen1[cats.Id].generic)(_.generic)(simpleGen1[In1].generic)
+    override def impl1[In1[_]] = _.derived2(simpleGen1[cats.Id].generic, simpleGen1[In1].generic)(_.generic)
     override def impl2[In1[_], In2[_], In3[_]] = _.derived2(simpleGen1[cats.Id].generic)(_.generic)(
       simpleGen1[In1].generic,
       simpleGen1[In2].generic,

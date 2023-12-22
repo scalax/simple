@@ -13,32 +13,31 @@ trait Func50GenericImpl[F[_[_]]] extends FunctionNGenericSum[F] {
 object Func50Generic {
   type IdImpl[T] = T
 
-  type Match1[In <: Tuple, S[_]] <: Tuple = In match {
+  type Match1[InTuple, S[_]] = InTuple match {
     case h *: tail  => S[h] *: Match1[tail, S]
     case EmptyTuple => EmptyTuple
   }
 
   // ===
-  trait HListFuncMap[HListInput, S[_], FuncOut] {
+  trait HListFuncMap[HListInput, FuncOut, S[_]] {
     def input(func: Function0Apply[S]): FuncOut
   }
   object HListFuncMap {
-    private def instanceImpl(size: Int): HListFuncMap[Tuple, [x] =>> Any, Tuple] =
-      new HListFuncMap[Tuple, [x] =>> Any, Tuple] {
-        self =>
-        override def input(func: Function0Apply[[x] =>> Any]): Tuple = {
-          def sizeOfTuple(s: Int): Tuple = if (s > 0) func[Any] *: sizeOfTuple(s - 1) else EmptyTuple
-          sizeOfTuple(size)
-        }
+    private def instanceImpl(size: Int): HListFuncMap[Tuple, Tuple, [x] =>> Any] = new HListFuncMap[Tuple, Tuple, [x] =>> Any] {
+      self =>
+      override def input(func: Function0Apply[[x] =>> Any]): Tuple = {
+        def sizeOfTuple(s: Int): Tuple = if (s > 0) func[Any] *: sizeOfTuple(s - 1) else EmptyTuple
+        sizeOfTuple(size)
       }
+    }
 
-    def instance[U <: Tuple, S[_], T[_]](using ValueOf[Tuple.Size[U]]): HListFuncMap[U, S, Match1[U, S]] = instanceImpl(
+    def instance[U <: Tuple, S[_], T[_]](using ValueOf[Tuple.Size[U]]): HListFuncMap[U, Match1[U, S], S] = instanceImpl(
       summon[ValueOf[Tuple.Size[U]]].value
     ).asInstanceOf
   }
 
   trait HListFuncMapGeneric[In <: Tuple, S[_]] {
-    def generic(using ValueOf[Tuple.Size[In]]): HListFuncMap[In, S, Match1[In, S]] = HListFuncMap.instance
+    def generic(using ValueOf[Tuple.Size[In]]): HListFuncMap[In, Match1[In, S], S] = HListFuncMap.instance
   }
   object HListFuncMapGeneric {
     def apply[In <: Tuple, S[_]]: HListFuncMapGeneric[In, S] = new HListFuncMapGeneric[In, S] {
@@ -85,21 +84,15 @@ object Func50Generic {
   // ===
   class SimpleFuncion1Impl[F[_[_]], S[_]] {
     self =>
-    def derived2[Target1 <: Tuple](simpleTo: SimpleTo[F[IdImpl], Target1]): FuncInnerApply1[F, S, Target1] =
-      new FuncInnerApply1[F, S, Target1]
+    def derived2[Target1 <: Tuple, Target2](
+      simpleTo: SimpleTo[F[IdImpl], Target1],
+      simpleFrom: SimpleFrom[F[S], Target2]
+    ): FuncInnerApply1[F, S, Target1, Target2] = new FuncInnerApply1[F, S, Target1, Target2](simpleFrom = simpleFrom)
   }
 
-  class FuncInnerApply1[F[_[_]], S[_], Target1 <: Tuple] {
-    def apply[U1](
-      genericFunc: HListFuncMapGeneric[Target1, S] => HListFuncMap[Target1, S, U1]
-    ): FuncInnerApply2[F, S, U1, Target1] =
-      new FuncInnerApply2[F, S, U1, Target1](genericFunc(HListFuncMapGeneric[Target1, S]))
-  }
-
-  class FuncInnerApply2[F[_[_]], S[_], U1, Unused](t: HListFuncMap[Unused, S, U1]) {
-    def apply(
-      simpleTo: SimpleFrom[F[S], U1]
-    ): Function0Apply[S] => F[S] = u => simpleTo.from(t.input(u))
+  class FuncInnerApply1[F[_[_]], S[_], Target1 <: Tuple, Target2](simpleFrom: SimpleFrom[F[S], Target2]) {
+    def apply(genericFunc: HListFuncMapGeneric[Target1, S] => HListFuncMap[Target1, Target2, S]): Function0Apply[S] => F[S] = applyM =>
+      simpleFrom.from(genericFunc(HListFuncMapGeneric[Target1, S]).input(applyM))
   }
 
   // ===

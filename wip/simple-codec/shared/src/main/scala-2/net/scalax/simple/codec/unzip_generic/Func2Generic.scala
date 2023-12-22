@@ -73,21 +73,13 @@ object Func50Generic {
     self =>
     def derived2[Target1, Target2](
       simpleTo: SimpleTo[F[IdImpl], Target1],
-      simpleFrom: SimpleFrom[F[IdImpl], Target2]
-    ): FuncInnerApply1[F, S, Target1, Target2] = new FuncInnerApply1[F, S, Target1, Target2]
+      simpleFrom: SimpleFrom[F[S], Target2]
+    ): FuncInnerApply1[F, S, Target1, Target2] = new FuncInnerApply1[F, S, Target1, Target2](simpleFrom = simpleFrom)
   }
 
-  class FuncInnerApply1[F[_[_]], S[_], Target1, Target2] {
-    def apply(
-      genericFunc: HListFuncMapGeneric[Target1, Target2, S] => HListFuncMap[Target1, Target2, S]
-    ): FuncInnerApply2[F, S,Target1, Target2 ] =
-      new FuncInnerApply2[F, S, Target1,Target2 ](genericFunc(HListFuncMapGeneric[Target1, S]))
-  }
-
-  class FuncInnerApply2[F[_[_]], S[_], Target1,Target2](t: HListFuncMap[Target1, S, U1]) {
-    def apply(
-      simpleTo: SimpleFrom[F[S], U1]
-    ): Function0Apply[S] => F[S] = u => simpleTo.from(t.input(u))
+  class FuncInnerApply1[F[_[_]], S[_], Target1, Target2](simpleFrom: SimpleFrom[F[S], Target2]) {
+    def apply(genericFunc: HListFuncMapGeneric[Target1, S] => HListFuncMap[Target1, Target2, S]): Function0Apply[S] => F[S] = applyM =>
+      simpleFrom.from(genericFunc(HListFuncMapGeneric[Target1, S]).input(applyM))
   }
 
   // ===

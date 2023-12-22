@@ -17,8 +17,7 @@ object scala2xbb11 extends IOApp1 {
   def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala2, I].derived
 
   implicit val im111: Function50Generic[CatNameScala2] = new Func50Generic.Impl[CatNameScala2] {
-    override def impl1[In1[_]] =
-      _.derived2(simpleGen1[cats.Id].generic)(_.generic)(simpleGen1[In1].generic)
+    override def impl1[In1[_]] = _.derived2(simpleGen1[cats.Id].generic, simpleGen1[In1].generic)(_.generic)
     override def impl2[In1[_], In2[_], In3[_]] = _.derived2(simpleGen1[cats.Id].generic)(_.generic)(
       simpleGen1[In1].generic,
       simpleGen1[In2].generic,
