@@ -95,14 +95,13 @@ object xxbb1 extends IOApp1 {
   implicit val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel
   implicit val caseClassNameEncoder: Encoder[CatName[EncoderModelAux]] = encodeModelName
 
-  val modelInstance: CatName[cats.Id] =
-    CatName[cats.Id](
-      name = 8594,
-      str = Option("sdfwerwfweher迷雾日哦"),
-      uClass = Option.empty,
-      name11 = "xxiwerwjkl",
-      namexu = "jerokwjoe收代理费加沃尔"
-    )
+  val modelInstance: CatName[cats.Id] = CatName[cats.Id](
+    name = 8594,
+    str = Option("sdfwerwfweher迷雾日哦"),
+    uClass = Option.empty,
+    name11 = "xxiwerwjkl",
+    namexu = "jerokwjoe收代理费加沃尔"
+  )
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {
