@@ -98,23 +98,24 @@ object Func50Generic {
   // ===
   class SimpleUnZip2Impl[F[_[_]], S[_], T[_], G[_]] {
     self =>
-    def derived2[Target1 <: Tuple](simpleTo: SimpleTo[F[IdImpl], Target1]): ZipInnerApply1[F, S, T, G, Target1] =
-      new ZipInnerApply1[F, S, T, G, Target1]
+    def derived2[HListBoot, HListInput1, HListInput2, HListOut1](
+      simpleTo: SimpleTo[F[IdImpl], HListBoot],
+      to1: SimpleTo[F[S], HListInput1],
+      to2: SimpleTo[F[T], HListInput2],
+      from1: SimpleFrom[F[G], HListOut1]
+    ): ZipInnerApply1[F, S, T, G, HListBoot, HListInput1, HListInput2, HListOut1] =
+      new ZipInnerApply1[F, S, T, G, HListBoot, HListInput1, HListInput2, HListOut1](to1 = to1, to2 = to2, from1 = from1)
   }
 
-  class ZipInnerApply1[F[_[_]], S[_], T[_], G[_], Target1 <: Tuple] {
-    def apply[ZipInput, U1, U2](
-      genericFunc: HListZipMapGeneric[Target1, S, T, G] => HListZipMap[Target1, S, T, G, ZipInput, U1, U2]
-    ): ZipInnerApply2[F, S, T, G, ZipInput, U1, U2, Target1] =
-      new ZipInnerApply2[F, S, T, G, ZipInput, U1, U2, Target1](genericFunc(HListZipMapGeneric[Target1, S, T, G]))
-  }
-
-  class ZipInnerApply2[F[_[_]], S[_], T[_], G[_], ZipInput, U1, U2, Unused](t: HListZipMap[Unused, S, T, G, ZipInput, U1, U2]) {
+  class ZipInnerApply1[F[_[_]], S[_], T[_], G[_], HListBoot, HListInput1, HListInput2, HListOut1](
+    to2: SimpleTo[F[T], HListInput2],
+    to1: SimpleTo[F[S], HListInput1],
+    from1: SimpleFrom[F[G], HListOut1]
+  ) {
     def apply(
-      to1: SimpleTo[F[S], ZipInput],
-      to2: SimpleTo[F[T], U1],
-      from1: SimpleFrom[F[G], U2]
-    ): Function2Apply[S, T, G] => (F[S], F[T]) => F[G] = in1 => (fs, ft) => from1.from(t.input(in1)(to1.to(fs), to2.to(ft)))
+      genericFunc: HListZipMapGeneric[HListBoot, S, T, G] => HListZipMap[HListBoot, S, T, G, HListInput1, HListInput2, HListOut1]
+    ): Function2Apply[S, T, G] => (F[S], F[T]) => F[G] = in1 =>
+      (fs, ft) => from1.from(genericFunc(HListZipMapGeneric[HListBoot, S, T, G]).input(in1)(to1.to(fs), to2.to(ft)))
   }
 
   trait Impl[F[_[_]]] extends Func50GenericImpl[F] {

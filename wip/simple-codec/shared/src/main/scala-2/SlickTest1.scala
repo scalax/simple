@@ -42,11 +42,10 @@ object Model2 {
   implicit def im111[U[_]]: Function50Generic[UserAbsAlias[U]#F1] = new Func50Generic.Impl[UserAbsAlias[U]#F1] {
     override def impl1[In1[_]] =
       _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, In1].generic)(_.generic)
-    override def impl2[In1[_], In2[_], In3[_]] = _.derived2(simpleGen1[U, cats.Id].generic)(_.generic)(
-      simpleGen1[U, In1].generic,
-      simpleGen1[U, In2].generic,
-      simpleGen1[U, In3].generic
-    )
+    override def impl2[In1[_], In2[_], In3[_]] =
+      _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, In1].generic, simpleGen1[U, In2].generic, simpleGen1[U, In3].generic)(
+        _.generic
+      )
   }
   implicit def userNamedGenericPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
     CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.ToNamed].generic)
