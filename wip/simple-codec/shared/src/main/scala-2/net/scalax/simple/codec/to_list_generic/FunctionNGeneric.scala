@@ -48,7 +48,7 @@ object ToListGenerc {
   }
 
   trait Impl[F[_[_]]] extends ToListGenerc[F] {
-    def impl[U]: SimpleFuncion1Impl[F, U] => (F[({ type U1[_] = U })#U1] => List[U])
+    def impl[U]: SimpleFuncion1Impl[F, U] => F[({ type U1[_] = U })#U1] => List[U]
     override def toList[T](input: F[({ type U1[_] = T })#U1]): List[T] = impl[T](new SimpleFuncion1Impl[F, T])(input)
   }
 }

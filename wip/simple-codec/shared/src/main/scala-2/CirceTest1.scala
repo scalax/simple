@@ -4,6 +4,7 @@ package aa
 import io.circe._
 import net.scalax.simple.codec.aa.Model2.{simpleGen1, UserAbsAlias}
 import net.scalax.simple.codec.generic.SimpleFromProduct
+import net.scalax.simple.codec.to_list_generic.ToListGenerc
 import net.scalax.simple.codec.unzip_generic.Func50Generic
 
 object CirceModelSample {
@@ -28,28 +29,30 @@ object CirceModelSample {
       simpleGen1[U, In3].generic
     )
   }
+  implicit def toListImplicit[U[_]]: ToListGenerc[UserAbsAlias[U]#F1] = new ToListGenerc.Impl[UserAbsAlias[U]#F1] {
+    override def impl[In1] = _.derived2(simpleGen1[U, ({ type U1[_] = In1 })#U1].generic)(_.generic)
+  }
 
   implicit def namedPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
     CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.ToNamed].generic)
   implicit def named[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
-  implicit def encoderProps[U[_]](implicit u: Encoder[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, Encoder] =
-    FillIdentity[UserAbsAlias[U]#F1, Encoder].derived2(simpleGen1[U, Encoder].generic)(_.generic)
+  implicit def encoderProps[U1[_]](implicit u: Encoder[U1[Int]]): FillIdentity[UserAbsAlias[U1]#F1, Encoder] =
+    FillIdentity[UserAbsAlias[U1]#F1, Encoder].derived2(simpleGen1[U1, Encoder].generic)(_.generic)
 
-  def encoder[U[_]](implicit u: Encoder[U[Int]]): Encoder[UserAbs[Id, U]] = {
-    val enProps  = encoderProps[U].model
-    val nameProp = named[U].model
+  def encoder[U[_]](implicit typeEncoder: Encoder[U[Int]]): Encoder[UserAbs[Id, U]] = {
+    val nameProp   = implicitly[LabelledInstalled[UserAbsAlias[U]#F1]].model
+    val enProps    = implicitly[FillIdentity[UserAbsAlias[U]#F1, Encoder]].model
+    val funcAction = implicitly[Function50Generic[UserAbsAlias[U]#F1]]
+    val toListFunc = implicitly[ToListGenerc[UserAbsAlias[U]#F1]]
 
     Encoder.instance { u =>
-      val jsonModel: UserAbs[JsonAny, U] =
-        UserAbs[JsonAny, U](id = enProps.id(u.id), first = enProps.first(u.first), last = enProps.last(u.last))
+      val tempModel = funcAction.function3(new Function3Apply[Id, LabelledInstalled.ToNamed, Encoder, NamedJsonAny] {
+        override def apply[X](i1: X, i2: String, i3: Encoder[X]): (String, Json) = i2 -> i3(i1)
+      })(u, nameProp, enProps)
 
-      val namedModel: UserAbs[NamedJsonAny, U] = UserAbs[NamedJsonAny, U](
-        id = (nameProp.id, jsonModel.id),
-        first = (nameProp.first, jsonModel.first),
-        last = (nameProp.last, jsonModel.last)
-      )
+      val modelCol = toListFunc.toList[(String, Json)](tempModel)
 
-      Json.fromJsonObject(JsonObject.fromIterable(List(namedModel.id, namedModel.first, namedModel.last)))
+      Json.fromJsonObject(JsonObject.fromIterable(modelCol))
     }
   }
 
