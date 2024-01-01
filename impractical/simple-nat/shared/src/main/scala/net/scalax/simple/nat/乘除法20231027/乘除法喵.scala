@@ -6,7 +6,7 @@ object 乘除法喵 {
 
   import 合集._
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
 
     object num1 {
       val Parent: Int = 547
