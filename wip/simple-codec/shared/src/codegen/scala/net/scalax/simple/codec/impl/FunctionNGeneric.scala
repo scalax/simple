@@ -18,10 +18,10 @@ object impl {
 
   private type ::[+H, +T <: InnerHList] = InnerHPositive[H, T]
 
-  trait Function3Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function2Generic[F] =>
+  trait Function3GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function3[T1[_], T2[_], T3[_], TOut[_]](func: Function3Apply[T1, T2, T3, TOut])(
+    override def function3[T1[_], T2[_], T3[_], TOut[_]](func: Function3Apply[T1, T2, T3, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3]
@@ -39,10 +39,10 @@ object impl {
     }
   }
 
-  trait Function4Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function3Generic[F] =>
+  trait Function4GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function4[T1[_], T2[_], T3[_], T4[_], TOut[_]](func: Function4Apply[T1, T2, T3, T4, TOut])(
+    override def function4[T1[_], T2[_], T3[_], T4[_], TOut[_]](func: Function4Apply[T1, T2, T3, T4, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -61,10 +61,10 @@ object impl {
     }
   }
 
-  trait Function5Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function4Generic[F] =>
+  trait Function5GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function5[T1[_], T2[_], T3[_], T4[_], T5[_], TOut[_]](func: Function5Apply[T1, T2, T3, T4, T5, TOut])(
+    override def function5[T1[_], T2[_], T3[_], T4[_], T5[_], TOut[_]](func: Function5Apply[T1, T2, T3, T4, T5, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -85,10 +85,10 @@ object impl {
     }
   }
 
-  trait Function6Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function5Generic[F] =>
+  trait Function6GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function6[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], TOut[_]](func: Function6Apply[T1, T2, T3, T4, T5, T6, TOut])(
+    override def function6[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], TOut[_]](func: Function6Apply[T1, T2, T3, T4, T5, T6, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -110,10 +110,12 @@ object impl {
     }
   }
 
-  trait Function7Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function6Generic[F] =>
+  trait Function7GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function7[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], TOut[_]](func: Function7Apply[T1, T2, T3, T4, T5, T6, T7, TOut])(
+    override def function7[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], TOut[_]](
+      func: Function7Apply[T1, T2, T3, T4, T5, T6, T7, TOut]
+    )(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -150,10 +152,10 @@ object impl {
     }
   }
 
-  trait Function8Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function7Generic[F] =>
+  trait Function8GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function8[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], TOut[_]](
+    override def function8[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], TOut[_]](
       func: Function8Apply[T1, T2, T3, T4, T5, T6, T7, T8, TOut]
     )(
       t1: F[T1],
@@ -195,10 +197,10 @@ object impl {
     }
   }
 
-  trait Function9Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function8Generic[F] =>
+  trait Function9GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function9[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], TOut[_]](
+    override def function9[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], TOut[_]](
       func: Function9Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, TOut]
     )(
       t1: F[T1],
@@ -239,10 +241,10 @@ object impl {
     }
   }
 
-  trait Function10Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function9Generic[F] =>
+  trait Function10GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function10[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], TOut[_]](
+    override def function10[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], TOut[_]](
       func: Function10Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TOut]
     )(
       t1: F[T1],
@@ -286,10 +288,10 @@ object impl {
     }
   }
 
-  trait Function11Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function10Generic[F] =>
+  trait Function11GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function11[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], TOut[_]](
+    override def function11[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], TOut[_]](
       func: Function11Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TOut]
     )(
       t1: F[T1],
@@ -345,10 +347,10 @@ object impl {
     }
   }
 
-  trait Function12Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function11Generic[F] =>
+  trait Function12GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function12[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], TOut[_]](
+    override def function12[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], TOut[_]](
       func: Function12Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TOut]
     )(
       t1: F[T1],
@@ -407,10 +409,10 @@ object impl {
     }
   }
 
-  trait Function13Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function12Generic[F] =>
+  trait Function13GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function13[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], TOut[_]](
+    override def function13[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], TOut[_]](
       func: Function13Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TOut]
     )(
       t1: F[T1],
@@ -473,10 +475,10 @@ object impl {
     }
   }
 
-  trait Function14Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function13Generic[F] =>
+  trait Function14GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function14[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], TOut[_]](
+    override def function14[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], TOut[_]](
       func: Function14Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TOut]
     )(
       t1: F[T1],
@@ -543,12 +545,12 @@ object impl {
     }
   }
 
-  trait Function15Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function14Generic[F] =>
+  trait Function15GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function15[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], TOut[_]](
-      func: Function15Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TOut]
-    )(
+    override def function15[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
+      _
+    ], TOut[_]](func: Function15Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -616,12 +618,12 @@ object impl {
     }
   }
 
-  trait Function16Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function15Generic[F] =>
+  trait Function16GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function16[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function16[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], TOut[_]](func: Function16Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TOut])(
+    ], T16[_], TOut[_]](func: Function16Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -693,12 +695,12 @@ object impl {
     }
   }
 
-  trait Function17Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function16Generic[F] =>
+  trait Function17GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function17[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function17[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], TOut[_]](func: Function17Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, TOut])(
+    ], T16[_], T17[_], TOut[_]](func: Function17Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, TOut])(
       t1: F[T1],
       t2: F[T2],
       t3: F[T3],
@@ -773,12 +775,12 @@ object impl {
     }
   }
 
-  trait Function18Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function17Generic[F] =>
+  trait Function18GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function18[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function18[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], TOut[_]](
       func: Function18Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, TOut]
     )(
       t1: F[T1],
@@ -858,12 +860,12 @@ object impl {
     }
   }
 
-  trait Function19Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function18Generic[F] =>
+  trait Function19GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function19[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function19[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], TOut[_]](
       func: Function19Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, TOut]
     )(
       t1: F[T1],
@@ -946,12 +948,12 @@ object impl {
     }
   }
 
-  trait Function20Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function19Generic[F] =>
+  trait Function20GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function20[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function20[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], TOut[_]](
       func: Function20Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, TOut]
     )(
       t1: F[T1],
@@ -1037,12 +1039,12 @@ object impl {
     }
   }
 
-  trait Function21Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function20Generic[F] =>
+  trait Function21GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function21[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function21[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], TOut[_]](
       func: Function21Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, TOut]
     )(
       t1: F[T1],
@@ -1132,12 +1134,12 @@ object impl {
     }
   }
 
-  trait Function22Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function21Generic[F] =>
+  trait Function22GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function22[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function22[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], TOut[_]](
       func: Function22Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, TOut]
     )(
       t1: F[T1],
@@ -1230,12 +1232,12 @@ object impl {
     }
   }
 
-  trait Function23Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function22Generic[F] =>
+  trait Function23GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function23[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function23[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], TOut[_]](
       func: Function23Apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, TOut]
     )(
       t1: F[T1],
@@ -1332,12 +1334,12 @@ object impl {
     }
   }
 
-  trait Function24Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function23Generic[F] =>
+  trait Function24GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function24[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function24[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], TOut[_]](
       func: Function24Apply[
         T1,
         T2,
@@ -1511,12 +1513,12 @@ object impl {
     }
   }
 
-  trait Function25Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function24Generic[F] =>
+  trait Function25GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function25[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function25[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], TOut[_]](
       func: Function25Apply[
         T1,
         T2,
@@ -1696,12 +1698,12 @@ object impl {
     }
   }
 
-  trait Function26Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function25Generic[F] =>
+  trait Function26GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function26[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function26[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], TOut[_]](
       func: Function26Apply[
         T1,
         T2,
@@ -1915,12 +1917,12 @@ object impl {
     }
   }
 
-  trait Function27Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function26Generic[F] =>
+  trait Function27GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function27[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function27[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], TOut[_]](
       func: Function27Apply[
         T1,
         T2,
@@ -2141,12 +2143,12 @@ object impl {
     }
   }
 
-  trait Function28Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function27Generic[F] =>
+  trait Function28GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function28[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function28[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], TOut[_]](
       func: Function28Apply[
         T1,
         T2,
@@ -2374,12 +2376,12 @@ object impl {
     }
   }
 
-  trait Function29Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function28Generic[F] =>
+  trait Function29GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function29[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function29[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], TOut[_]](
       func: Function29Apply[
         T1,
         T2,
@@ -2614,12 +2616,12 @@ object impl {
     }
   }
 
-  trait Function30Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function29Generic[F] =>
+  trait Function30GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function30[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function30[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], TOut[_]](
       func: Function30Apply[
         T1,
         T2,
@@ -2861,12 +2863,14 @@ object impl {
     }
   }
 
-  trait Function31Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function30Generic[F] =>
+  trait Function31GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function31[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function31[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], TOut[_]](
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], TOut[
+      _
+    ]](
       func: Function31Apply[
         T1,
         T2,
@@ -3115,14 +3119,14 @@ object impl {
     }
   }
 
-  trait Function32Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function31Generic[F] =>
+  trait Function32GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function32[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function32[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], TOut[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ]](
+    ], TOut[_]](
       func: Function32Apply[
         T1,
         T2,
@@ -3378,14 +3382,14 @@ object impl {
     }
   }
 
-  trait Function33Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function32Generic[F] =>
+  trait Function33GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function33[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function33[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], TOut[_]](
+    ], T33[_], TOut[_]](
       func: Function33Apply[
         T1,
         T2,
@@ -3648,14 +3652,14 @@ object impl {
     }
   }
 
-  trait Function34Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function33Generic[F] =>
+  trait Function34GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function34[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function34[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], TOut[_]](
+    ], T33[_], T34[_], TOut[_]](
       func: Function34Apply[
         T1,
         T2,
@@ -3925,14 +3929,14 @@ object impl {
     }
   }
 
-  trait Function35Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function34Generic[F] =>
+  trait Function35GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function35[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function35[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], TOut[_]](
       func: Function35Apply[
         T1,
         T2,
@@ -4209,14 +4213,14 @@ object impl {
     }
   }
 
-  trait Function36Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function35Generic[F] =>
+  trait Function36GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function36[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function36[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], TOut[_]](
       func: Function36Apply[
         T1,
         T2,
@@ -4500,14 +4504,14 @@ object impl {
     }
   }
 
-  trait Function37Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function36Generic[F] =>
+  trait Function37GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function37[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function37[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], TOut[_]](
       func: Function37Apply[
         T1,
         T2,
@@ -4798,14 +4802,14 @@ object impl {
     }
   }
 
-  trait Function38Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function37Generic[F] =>
+  trait Function38GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function38[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function38[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], TOut[_]](
       func: Function38Apply[
         T1,
         T2,
@@ -5104,14 +5108,14 @@ object impl {
     }
   }
 
-  trait Function39Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function38Generic[F] =>
+  trait Function39GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function39[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function39[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], TOut[_]](
       func: Function39Apply[
         T1,
         T2,
@@ -5419,14 +5423,14 @@ object impl {
     }
   }
 
-  trait Function40Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function39Generic[F] =>
+  trait Function40GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function40[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function40[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], TOut[_]](
       func: Function40Apply[
         T1,
         T2,
@@ -5741,14 +5745,14 @@ object impl {
     }
   }
 
-  trait Function41Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function40Generic[F] =>
+  trait Function41GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function41[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function41[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], TOut[_]](
       func: Function41Apply[
         T1,
         T2,
@@ -6070,14 +6074,14 @@ object impl {
     }
   }
 
-  trait Function42Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function41Generic[F] =>
+  trait Function42GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function42[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function42[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], TOut[_]](
       func: Function42Apply[
         T1,
         T2,
@@ -6406,14 +6410,14 @@ object impl {
     }
   }
 
-  trait Function43Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function42Generic[F] =>
+  trait Function43GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function43[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function43[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], TOut[_]](
       func: Function43Apply[
         T1,
         T2,
@@ -6749,14 +6753,14 @@ object impl {
     }
   }
 
-  trait Function44Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function43Generic[F] =>
+  trait Function44GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function44[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function44[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], TOut[_]](
       func: Function44Apply[
         T1,
         T2,
@@ -7099,14 +7103,14 @@ object impl {
     }
   }
 
-  trait Function45Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function44Generic[F] =>
+  trait Function45GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function45[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function45[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], TOut[_]](
       func: Function45Apply[
         T1,
         T2,
@@ -7456,14 +7460,14 @@ object impl {
     }
   }
 
-  trait Function46Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function45Generic[F] =>
+  trait Function46GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function46[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function46[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], TOut[_]](
       func: Function46Apply[
         T1,
         T2,
@@ -7820,14 +7824,14 @@ object impl {
     }
   }
 
-  trait Function47Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function46Generic[F] =>
+  trait Function47GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function47[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function47[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], TOut[_]](
       func: Function47Apply[
         T1,
         T2,
@@ -8191,14 +8195,16 @@ object impl {
     }
   }
 
-  trait Function48Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function47Generic[F] =>
+  trait Function48GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function48[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function48[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], TOut[_]](
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], TOut[
+      _
+    ]](
       func: Function48Apply[
         T1,
         T2,
@@ -8569,16 +8575,16 @@ object impl {
     }
   }
 
-  trait Function49Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function48Generic[F] =>
+  trait Function49GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function49[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function49[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[_], TOut[
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[
       _
-    ]](
+    ], TOut[_]](
       func: Function49Apply[
         T1,
         T2,
@@ -8956,16 +8962,16 @@ object impl {
     }
   }
 
-  trait Function50Generic[F[_[_]]] {
-    self: Function2Generic[F] with Function49Generic[F] =>
+  trait Function50GenericImpl[F[_[_]]] extends Function50Generic[F] {
+    self =>
 
-    def function50[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[_], T16[
+    override def function50[T1[_], T2[_], T3[_], T4[_], T5[_], T6[_], T7[_], T8[_], T9[_], T10[_], T11[_], T12[_], T13[_], T14[_], T15[
       _
-    ], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[_], T33[
+    ], T16[_], T17[_], T18[_], T19[_], T20[_], T21[_], T22[_], T23[_], T24[_], T25[_], T26[_], T27[_], T28[_], T29[_], T30[_], T31[_], T32[
       _
-    ], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[_], T50[
+    ], T33[_], T34[_], T35[_], T36[_], T37[_], T38[_], T39[_], T40[_], T41[_], T42[_], T43[_], T44[_], T45[_], T46[_], T47[_], T48[_], T49[
       _
-    ], TOut[_]](
+    ], T50[_], TOut[_]](
       func: Function50Apply[
         T1,
         T2,
@@ -9352,55 +9358,54 @@ object impl {
   }
 
   trait FunctionNGenericSumImpl[F[_[_]]]
-      extends Function3Generic[F]
-      with Function4Generic[F]
-      with Function5Generic[F]
-      with Function6Generic[F]
-      with Function7Generic[F]
-      with Function8Generic[F]
-      with Function9Generic[F]
-      with Function10Generic[F]
-      with Function11Generic[F]
-      with Function12Generic[F]
-      with Function13Generic[F]
-      with Function14Generic[F]
-      with Function15Generic[F]
-      with Function16Generic[F]
-      with Function17Generic[F]
-      with Function18Generic[F]
-      with Function19Generic[F]
-      with Function20Generic[F]
-      with Function21Generic[F]
-      with Function22Generic[F]
-      with Function23Generic[F]
-      with Function24Generic[F]
-      with Function25Generic[F]
-      with Function26Generic[F]
-      with Function27Generic[F]
-      with Function28Generic[F]
-      with Function29Generic[F]
-      with Function30Generic[F]
-      with Function31Generic[F]
-      with Function32Generic[F]
-      with Function33Generic[F]
-      with Function34Generic[F]
-      with Function35Generic[F]
-      with Function36Generic[F]
-      with Function37Generic[F]
-      with Function38Generic[F]
-      with Function39Generic[F]
-      with Function40Generic[F]
-      with Function41Generic[F]
-      with Function42Generic[F]
-      with Function43Generic[F]
-      with Function44Generic[F]
-      with Function45Generic[F]
-      with Function46Generic[F]
-      with Function47Generic[F]
-      with Function48Generic[F]
-      with Function49Generic[F]
-      with Function50Generic[F] {
-    self: Function2Generic[F] =>
-  }
+      extends Function50Generic[F]
+      with impl.Function3GenericImpl[F]
+      with impl.Function4GenericImpl[F]
+      with impl.Function5GenericImpl[F]
+      with impl.Function6GenericImpl[F]
+      with impl.Function7GenericImpl[F]
+      with impl.Function8GenericImpl[F]
+      with impl.Function9GenericImpl[F]
+      with impl.Function10GenericImpl[F]
+      with impl.Function11GenericImpl[F]
+      with impl.Function12GenericImpl[F]
+      with impl.Function13GenericImpl[F]
+      with impl.Function14GenericImpl[F]
+      with impl.Function15GenericImpl[F]
+      with impl.Function16GenericImpl[F]
+      with impl.Function17GenericImpl[F]
+      with impl.Function18GenericImpl[F]
+      with impl.Function19GenericImpl[F]
+      with impl.Function20GenericImpl[F]
+      with impl.Function21GenericImpl[F]
+      with impl.Function22GenericImpl[F]
+      with impl.Function23GenericImpl[F]
+      with impl.Function24GenericImpl[F]
+      with impl.Function25GenericImpl[F]
+      with impl.Function26GenericImpl[F]
+      with impl.Function27GenericImpl[F]
+      with impl.Function28GenericImpl[F]
+      with impl.Function29GenericImpl[F]
+      with impl.Function30GenericImpl[F]
+      with impl.Function31GenericImpl[F]
+      with impl.Function32GenericImpl[F]
+      with impl.Function33GenericImpl[F]
+      with impl.Function34GenericImpl[F]
+      with impl.Function35GenericImpl[F]
+      with impl.Function36GenericImpl[F]
+      with impl.Function37GenericImpl[F]
+      with impl.Function38GenericImpl[F]
+      with impl.Function39GenericImpl[F]
+      with impl.Function40GenericImpl[F]
+      with impl.Function41GenericImpl[F]
+      with impl.Function42GenericImpl[F]
+      with impl.Function43GenericImpl[F]
+      with impl.Function44GenericImpl[F]
+      with impl.Function45GenericImpl[F]
+      with impl.Function46GenericImpl[F]
+      with impl.Function47GenericImpl[F]
+      with impl.Function48GenericImpl[F]
+      with impl.Function49GenericImpl[F]
+      with impl.Function50GenericImpl[F]
 
 }

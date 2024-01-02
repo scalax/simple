@@ -26,7 +26,8 @@ trait Function2Generic[F[_[_]]] {
 }
 
 trait FunctionNGenericSum[F[_[_]]]
-    extends Function0Generic[F]
+    extends Function50Generic[F]
+    with Function0Generic[F]
     with Function1Generic[F]
     with Function2Generic[F]
     with impl.FunctionNGenericSumImpl[F]

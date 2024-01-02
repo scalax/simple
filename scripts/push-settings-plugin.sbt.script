@@ -1,7 +1,7 @@
 // scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys
 
 // start setting
-version := "0.0.2-M7"
+version := "0.0.2-M9"
 // end setting
 
 // start setting
@@ -10,6 +10,14 @@ organization := "net.scalax.simple"
 
 // start setting
 organizationName := "Scala Workers"
+// end setting
+
+// start setting
+xerial.sbt.Sonatype.autoImport.sonatypeProfileName := "net.scalax"
+// end setting
+
+// start setting
+xerial.sbt.Sonatype.autoImport.sonatypeBundleDirectory := baseDirectory.value / target.value.getName / "sonatype-staging" / version.value
 // end setting
 
 // start setting

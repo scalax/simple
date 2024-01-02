@@ -15,7 +15,10 @@ import net.scalax.simple.adt.nat.AdtNat
   */
 class TypeAdtApply[Input, Sum <: AdtNat, ST <: ADTStatus](val value: Input => ADTData[Sum, ST]) extends AnyVal
 
-object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher
+object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
+  implicit def identityImplicit[S <: AdtNat, ST <: ADTStatus]: TypeAdtApply[ADTData[S, ST], S, ST] =
+    new TypeAdtApply[ADTData[S, ST], S, ST](identity)
+}
 
 package impl {
 
