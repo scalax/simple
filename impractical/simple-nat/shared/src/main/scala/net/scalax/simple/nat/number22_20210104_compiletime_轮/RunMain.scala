@@ -83,7 +83,7 @@ object RunTest1 {
     val num1: Either[Number1, Number1] = build(分子 = 分子1, 分母 = 分母1)
     val num2: Either[Number1, Number1] = build(分子 = 分子2, 分母 = 分母2)
 
-    val result1: () => Either[Number1, Number1] = () => num1.fold(num => num.input(() => Right(num2)), num => num.input(() => Right(num2)))
+    val result1: () => Either[Number1, Number1] = () => num1.fold(num => num.input(Right(num2)), num => num.input(Right(num2)))
 
     count(result1, except1 = except1, except2 = except2, printlnSum = 10, speed = 3000000)
 
@@ -96,8 +96,7 @@ object RunTest1 {
 
     val num3: Either[Number1, Number1] = build(分子 = 分子3, 分母 = 分母3)
 
-    val result2: () => Either[Number1, Number1] = () =>
-      result1().fold(num => num.input(() => Right(num3)), num => num.input(() => Right(num3)))
+    val result2: () => Either[Number1, Number1] = () => result1().fold(num => num.input(Right(num3)), num => num.input(Right(num3)))
 
     count(result2, except1 = except3, except2 = except4, printlnSum = 10, speed = 600000)
 
@@ -106,11 +105,11 @@ object RunTest1 {
     val except6: BigDecimal = except3
 
     val result3: () => Either[Number1, Number1] = () =>
-      result2().fold(num => num.input(() => Right(result1())), num => num.input(() => Right(result1())))
+      result2().fold(num => num.input(Right(result1())), num => num.input(Right(result1())))
     count(result3, except1 = except5, except2 = except6, printlnSum = 18, speed = 30000)
 
     val result4: () => Either[Number1, Number1] = () =>
-      result2().fold(num => num.input(() => Right(result1())), num => num.input(() => Left(result1())))
+      result2().fold(num => num.input(Right(result1())), num => num.input(Left(result1())))
     count(result4, except1 = except6, except2 = except5, printlnSum = 18, speed = 30000)
   }
 
