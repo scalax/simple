@@ -63,7 +63,7 @@ object Func50Generic {
           (_, _).match
             case ((h1 *: tail1), (h2 *: tail2)) =>
               val newTail = self.input(in1)(tail1, tail2)
-              (in1(h1, h2)) -> newTail
+              in1(h1, h2) *: newTail
             case (EmptyTuple, EmptyTuple) => EmptyTuple
         }
       }
