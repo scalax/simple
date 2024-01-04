@@ -8,9 +8,9 @@ object RunTest1 {
     def buildImpl(isFenmu: Boolean, numLong: Long, zero: () => Either[Number1, Number1]): Either[Number1, Number1] = {
       if (numLong > 0) {
         if (isFenmu) {
-          Left(Number1.input._1(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero)))
+          Number1.input1(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
         } else {
-          Right(Number1.input._2(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero)))
+          Number1.input2(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
         }
       } else {
         zero()
