@@ -19,3 +19,4 @@ taskAA := {
 
 libraryDependencies ++= libScalax.`scala-collection-compat`.value
 libraryDependencies ++= libScalax.`simple-adt`.value
+libraryDependencies ++= libScalax.`commons-io`.value
