@@ -6,15 +6,14 @@ trait LabelledInstalled[F[_[_]]] {
 
 object LabelledInstalled {
 
-  type ToNamed[_]  = String
-  type ToSymbol[_] = Symbol
+  type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
     def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: Function50Generic[F]): LabelledInstalled[F] = {
-      val func1 = new Function1Apply[ToSymbol, ToNamed] {
+      val func1 = new Function1Apply[CompatLabelledInstalled.ToNamed, ToNamed] {
         override def apply[U](in: Symbol): String = in.name
       }
-      instance(mapper.function1[ToSymbol, ToNamed](func1)(compatLabelledInstalled.model))
+      instance(mapper.function1[CompatLabelledInstalled.ToNamed, ToNamed](func1)(compatLabelledInstalled.model))
     }
 
     def instance(model: F[ToNamed]): LabelledInstalled[F] = {

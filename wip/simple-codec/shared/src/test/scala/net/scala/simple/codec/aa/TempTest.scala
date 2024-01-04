@@ -7,7 +7,7 @@ import cats.effect._
 import cats.~>
 import net.scalax.simple.codec.{CompatLabelledInstalled, FillIdentity, IOApp1, LabelledInstalled}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.unzip_generic.{Func50Generic, ZipCommonGen}
+import net.scalax.simple.codec.unzip_generic.Func50Generic
 import codec.Function50Generic
 import net.scalax.simple.codec.to_list_generic.ToListGenerc
 
@@ -33,10 +33,10 @@ object TempTest11 extends IOApp {
   implicit val userNamedGeneric1: LabelledInstalled[CatNameScala11] = LabelledInstalled[CatNameScala11].derived
   implicit val im3: FillIdentity[CatNameScala11, Encoder] =
     FillIdentity[CatNameScala11, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
-  implicit val im112: ZipCommonGen[CatNameScala11] = new ZipCommonGen.Impl[CatNameScala11] {
+  /*implicit val im112: ZipCommonGen[CatNameScala11] = new ZipCommonGen.Impl[CatNameScala11] {
     override def impl[In1[_], In2[_]] =
       _.derived2(simpleGen1[FuncImpl[In1, In2]#Zip].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
-  }
+  }*/
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {

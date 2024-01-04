@@ -19,10 +19,9 @@ object ToListGenerc {
   object HListFuncMapGeneric {
     private val applyAny: HListFuncMapGeneric[Tuple, Tuple, Any] = new HListFuncMapGeneric[Tuple, Tuple, Any] {
       self =>
-      override def output(o: Tuple): List[Any] = if (o.size > 0) {
-        self.output(o.asInstanceOf[Any *: Tuple].tail)
-      } else List.empty
+      override def output(o: Tuple): List[Any] = o.productIterator.to(List)
     }
+
     def apply[Target1, T]: HListFuncMapGeneric[Target1, Macher1[T, Target1], T] =
       applyAny.asInstanceOf[HListFuncMapGeneric[Target1, Macher1[T, Target1], T]]
   }

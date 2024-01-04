@@ -15,7 +15,7 @@ trait IOApp1 {
   def run(args: List[String]): IO[ExitCode]
 }
 
-object xxbb1 extends IOApp1 {
+object xxbb1 extends IOApp {
 
   def encodeModel[F[_[_]]](implicit
     g: FillIdentity[F, Encoder],
