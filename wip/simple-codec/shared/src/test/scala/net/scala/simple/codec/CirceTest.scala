@@ -94,7 +94,7 @@ object xxbb1 extends IOApp {
 
   val deco1: ToDecoderGeneric[CatName] = new ToDecoderGeneric.Impl[CatName] {
     override def impl[M1[_], M2[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[({ type U1[X] = M1[M2[X]] })#U1].generic, simpleGen1[M2].generic)(_.generic)
+      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[({ type U1[X] = M1[M2[X]] })#U1].generic)(_.generic)
   }
 
   implicit val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel

@@ -47,22 +47,22 @@ object ToDecoderGeneric {
     self =>
     def derived2[Source1, Target1, Target2](
       simpleTo1: SimpleTo[F[IdImpl], Source1],
-      simpleTo2: SimpleTo[F[({ type U1[X] = M1[M2[X]] })#U1], Target1],
-      simpleFrom3: SimpleFrom[F[M2], Target2]
+      simpleFrom2: SimpleFrom[F[M2], Target2],
+      simpleTo3: SimpleTo[F[({ type U1[X] = M1[M2[X]] })#U1], Target1]
     ): FuncInnerApply1[F, M1, M2, Source1, Target1, Target2] =
-      new FuncInnerApply1[F, M1, M2, Source1, Target1, Target2](simpleTo1, simpleTo2, simpleFrom3)
+      new FuncInnerApply1[F, M1, M2, Source1, Target1, Target2](simpleTo1, simpleFrom2, simpleTo3)
   }
 
   class FuncInnerApply1[F[_[_]], M1[_], M2[_], Source1, Target1, Target2](
     simpleTo1: SimpleTo[F[IdImpl], Source1],
-    simpleTo2: SimpleTo[F[({ type U1[X] = M1[M2[X]] })#U1], Target1],
-    simpleFrom3: SimpleFrom[F[M2], Target2]
+    simpleFrom2: SimpleFrom[F[M2], Target2],
+    simpleTo3: SimpleTo[F[({ type U1[X] = M1[M2[X]] })#U1], Target1]
   ) {
     def apply(
       genericFunc: HListFuncMapGenericGen[Source1, M1, M2] => HListFuncMapGeneric[Source1, Target1, Target2, M1, M2]
     ): MonadAdd[M1] => F[({ type U1[X] = M1[M2[X]] })#U1] => M1[F[M2]] = { monad => model =>
-      monad.flatMap(genericFunc(HListFuncMapGenericGen[Source1, M1, M2]).output(monad)(simpleTo2.to(model)))(innerModel =>
-        monad.pure(simpleFrom3.from(innerModel))
+      monad.flatMap(genericFunc(HListFuncMapGenericGen[Source1, M1, M2]).output(monad)(simpleTo3.to(model)))(innerModel =>
+        monad.pure(simpleFrom2.from(innerModel))
       )
     }
   }
