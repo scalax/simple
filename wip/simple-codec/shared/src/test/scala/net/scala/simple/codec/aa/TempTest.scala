@@ -13,7 +13,11 @@ import net.scalax.simple.codec.to_list_generic.ToListGenerc
 
 case class CatNameScala11[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
-object TempTest11 extends IOApp {
+trait IOApp_1 {
+  def run(args: List[String]): IO[ExitCode]
+}
+
+object TempTest11 extends IOApp_1 {
 
   type UFAliasF[T11[_]] = CatNameScala11[({ type U1[_] = T11[String] })#U1]
 
@@ -33,10 +37,6 @@ object TempTest11 extends IOApp {
   implicit val userNamedGeneric1: LabelledInstalled[CatNameScala11] = LabelledInstalled[CatNameScala11].derived
   implicit val im3: FillIdentity[CatNameScala11, Encoder] =
     FillIdentity[CatNameScala11, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
-  /*implicit val im112: ZipCommonGen[CatNameScala11] = new ZipCommonGen.Impl[CatNameScala11] {
-    override def impl[In1[_], In2[_]] =
-      _.derived2(simpleGen1[FuncImpl[In1, In2]#Zip].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
-  }*/
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {

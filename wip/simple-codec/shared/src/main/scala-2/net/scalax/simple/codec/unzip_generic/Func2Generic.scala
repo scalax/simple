@@ -11,7 +11,6 @@ trait Func50GenericImpl[F[_[_]]] extends FunctionNGenericSum[F] {
 }
 object Func50Generic {
   type IdImpl[T] = T
-  Tuple2().productIterator
 
   // ===
   trait HListFuncMap[HListInput, FuncOut, T[_]] {
@@ -78,8 +77,8 @@ object Func50Generic {
   }
 
   class FuncInnerApply1[F[_[_]], S[_], Target1, Target2](simpleFrom: SimpleFrom[F[S], Target2]) {
-    def apply(genericFunc: HListFuncMapGeneric[Target1, S] => HListFuncMap[Target1, Target2, S]): Function0Apply[S] => F[S] = applyM =>
-      simpleFrom.from(genericFunc(HListFuncMapGeneric[Target1, S]).input(applyM))
+    def apply(genericFunc: HListFuncMapGeneric[Target1, S] => HListFuncMap[Target1, Target2, S]): Function0Apply[S] => F[S] =
+      applyM => simpleFrom.from(genericFunc(HListFuncMapGeneric[Target1, S]).input(applyM))
   }
 
   // ===

@@ -5,7 +5,7 @@ import io.circe._
 import io.circe.syntax._
 import cats.effect._
 import net.scalax.simple.codec.LabelledInstalled.ToNamed
-import net.scalax.simple.codec.to_list_generic.ToListGenerc
+import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToListGenerc}
 import net.scalax.simple.codec.unzip_generic.{Func50Generic, Func50GenericImpl}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
@@ -91,6 +91,11 @@ object xxbb1 extends IOApp {
     FillIdentity[CatName, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
   implicit val modelEncoder2: FillIdentity[CatName, EncoderAux] =
     FillIdentity[CatName, EncoderAux].derived2(simpleGen1[EncoderAux].generic)(_.generic)
+
+  val deco1: ToDecoderGeneric[CatName] = new ToDecoderGeneric.Impl[CatName] {
+    override def impl[M1[_], M2[_]] =
+      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[({ type U1[X] = M1[M2[X]] })#U1].generic, simpleGen1[M2].generic)(_.generic)
+  }
 
   implicit val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel
   implicit val caseClassNameEncoder: Encoder[CatName[EncoderModelAux]] = encodeModelName
