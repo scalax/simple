@@ -37,39 +37,6 @@ object xxbb1 extends IOApp {
 
   type EncoderAux[_]      = Encoder[String]
   type EncoderModelAux[_] = String
-  def encodeModelName[F[_[_]]](implicit
-    modelEn: FillIdentity[F, EncoderAux],
-    g: LabelledInstalled[F],
-    g1: Function50Generic[F],
-    lNames: ToListGenerc[F]
-  ): Encoder[F[EncoderModelAux]] = {
-    type FAlias[UX[_]] = F[({ type U1[T] = UX[String] })#U1]
-
-    val li1: FillIdentity[FAlias, Encoder] = new FillIdentity[FAlias, Encoder] {
-      override def model: FAlias[Encoder] = modelEn.model
-    }
-
-    val li: LabelledInstalled[FAlias] = new LabelledInstalled[FAlias] {
-      override def model: FAlias[ToNamed] = g.model
-    }
-    val gen: Function50Generic[FAlias] = new Func50GenericImpl[FAlias] {
-      override def function0[T[_]](func1: Function0Apply[T]): FAlias[T] =
-        g1.function0[({ type U1[XX] = T[String] })#U1](new Function0Apply[({ type U1[XX] = T[String] })#U1] {
-          override def apply[X1]: T[String] = func1.apply[String]
-        })
-      override def function2[S[_], T[_], U[_]](func1: Function2Apply[S, T, U])(f1: FAlias[S], f2: FAlias[T]): FAlias[U] =
-        g1.function2[({ type U1[_] = S[String] })#U1, ({ type U1[_] = T[String] })#U1, ({ type U1[_] = U[String] })#U1](
-          new Function2Apply[({ type U1[_] = S[String] })#U1, ({ type U1[_] = T[String] })#U1, ({ type U1[_] = U[String] })#U1] {
-            override def apply[X1](i1: S[String], i2: T[String]): U[String] = func1.apply[String](i1, i2)
-          }
-        )(f1, f2)
-    }
-    val to1: ToListGenerc[FAlias] = new ToListGenerc[FAlias] {
-      override def toList[TU](input: FAlias[({ type U1[X] = TU })#U1]): List[TU] = lNames.toList[TU](input)
-    }
-
-    encodeModel(li1, li, gen, to1)
-  }
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
@@ -97,8 +64,31 @@ object xxbb1 extends IOApp {
       _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[({ type U1[X] = M1[M2[X]] })#U1].generic)(_.generic)
   }
 
+  type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
+  implicit val li11: LabelledInstalled[FAlias] = new LabelledInstalled[FAlias] {
+    override def model: FAlias[ToNamed] = implicitly[LabelledInstalled[CatName]].model
+  }
+  implicit val gen11: Function50Generic[FAlias] = new Func50GenericImpl[FAlias] {
+    val g1: Function50Generic[CatName] = implicitly[Function50Generic[CatName]]
+
+    override def function0[T[_]](func1: Function0Apply[T]): FAlias[T] =
+      g1.function0[({ type U1[XX] = T[String] })#U1](new Function0Apply[({ type U1[XX] = T[String] })#U1] {
+        override def apply[X1]: T[String] = func1.apply[String]
+      })
+    override def function2[S[_], T[_], U[_]](func1: Function2Apply[S, T, U])(f1: FAlias[S], f2: FAlias[T]): FAlias[U] =
+      g1.function2[({ type U1[_] = S[String] })#U1, ({ type U1[_] = T[String] })#U1, ({ type U1[_] = U[String] })#U1](
+        new Function2Apply[({ type U1[_] = S[String] })#U1, ({ type U1[_] = T[String] })#U1, ({ type U1[_] = U[String] })#U1] {
+          override def apply[X1](i1: S[String], i2: T[String]): U[String] = func1.apply[String](i1, i2)
+        }
+      )(f1, f2)
+  }
+  implicit val to1111: ToListGenerc[FAlias] = new ToListGenerc[FAlias] {
+    override def toList[TU](input: FAlias[({ type U1[X] = TU })#U1]): List[TU] = implicitly[ToListGenerc[CatName]].toList[TU](input)
+  }
+  implicit val li1222: FillIdentity[FAlias, Encoder] = FillIdentity[FAlias, Encoder].derived2(simpleGen1[EncoderAux].generic)(_.generic)
+
   implicit val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel
-  implicit val caseClassNameEncoder: Encoder[CatName[EncoderModelAux]] = encodeModelName
+  implicit val caseClassNameEncoder: Encoder[CatName[EncoderModelAux]] = encodeModel[FAlias]
 
   val modelInstance: CatName[cats.Id] = CatName[cats.Id](
     name = 8594,
