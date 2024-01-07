@@ -45,9 +45,6 @@ object xxbb1 extends IOApp {
     override def impl2[In1[_], In2[_], In3[_]] =
       _.derived2(simpleGen1[cats.Id].generic, simpleGen1[In1].generic, simpleGen1[In2].generic, simpleGen1[In3].generic)(_.generic)
   }
-  implicit val im2: ToListGenerc[CatName] = new ToListGenerc.Impl[CatName] {
-    override def impl[U] = _.derived2(simpleGen1[({ type U1[_] = U })#U1].generic)(_.generic)
-  }
 
   implicit val compatLabelledInstalled: CompatLabelledInstalled[CatName] =
     CompatLabelledInstalled[CatName].derived(simpleGen1[CompatLabelledInstalled.ToNamed].generic)
@@ -63,6 +60,7 @@ object xxbb1 extends IOApp {
     override def impl[M1[_], M2[_]] =
       _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[({ type U1[X] = M1[M2[X]] })#U1].generic)(_.generic)
   }
+  implicit val im2: ToListGenerc[CatName] = ToListGenerc.fromOther[CatName](deco1, im111)
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
   implicit val li11: LabelledInstalled[FAlias] = new LabelledInstalled[FAlias] {

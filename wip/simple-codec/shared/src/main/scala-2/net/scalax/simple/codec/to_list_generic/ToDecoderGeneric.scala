@@ -18,12 +18,14 @@ object ToDecoderGeneric {
       tail: HListFuncMapGeneric[Source1, HL1, HL2, M1, M2]
     ): HListFuncMapGeneric[T1 :: Source1, M1[M2[T1]] :: HL1, M2[T1] :: HL2, M1, M2] =
       new HListFuncMapGeneric[T1 :: Source1, M1[M2[T1]] :: HL1, M2[T1] :: HL2, M1, M2] {
-        override def output(o: MonadAdd[M1])(o1: M1[M2[T1]] :: HL1): M1[M2[T1] :: HL2] =
-          o.flatMap(tail.output(o)(o1.tail))(m2Tail => o.flatMap(o1.head)(m1m2t1 => o.pure(m1m2t1 :: m2Tail)))
+        override def output(o: MonadAdd[M1])(o1: M1[M2[T1]] :: HL1): M1[M2[T1] :: HL2] = {
+          val m1 = o.zip(tail.output(o)(o1.tail), o1.head)
+          o.map(m1)(tuplei => tuplei._2 :: tuplei._1)
+        }
       }
     implicit def implicit2[M1[_], M2[_]]: HListFuncMapGeneric[HNil, HNil, HNil, M1, M2] =
       new HListFuncMapGeneric[HNil, HNil, HNil, M1, M2] {
-        override def output(o: MonadAdd[M1])(o1: HNil): M1[HNil] = o.pure(o1)
+        override def output(o: MonadAdd[M1])(o1: HNil): M1[HNil] = o.map(o.unit)(_ => HNil)
       }
   }
 
@@ -57,9 +59,7 @@ object ToDecoderGeneric {
     def apply(
       genericFunc: HListFuncMapGenericGen[Source1, M1, M2] => HListFuncMapGeneric[Source1, Target1, Target2, M1, M2]
     ): MonadAdd[M1] => F[({ type U1[X] = M1[M2[X]] })#U1] => M1[F[M2]] = { monad => model =>
-      monad.flatMap(genericFunc(HListFuncMapGenericGen[Source1, M1, M2]).output(monad)(simpleTo3.to(model)))(innerModel =>
-        monad.pure(simpleFrom2.from(innerModel))
-      )
+      monad.map(genericFunc(HListFuncMapGenericGen[Source1, M1, M2]).output(monad)(simpleTo3.to(model)))(simpleFrom2.from)
     }
   }
 
