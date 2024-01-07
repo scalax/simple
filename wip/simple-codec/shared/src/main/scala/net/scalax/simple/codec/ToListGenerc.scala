@@ -1,8 +1,6 @@
 package net.scalax.simple.codec
 package to_list_generic
 
-import shapeless._
-
 trait ToListGenerc[F[_[_]]] {
   def toList[TA](input: F[({ type U1[_] = TA })#U1]): List[TA]
 }
@@ -47,7 +45,7 @@ object ToListGenerc {
     }
   }
 
-  trait HListFuncMapGeneric[Target1, Target2, T] {
+  /*trait HListFuncMapGeneric[Target1, Target2, T] {
     def output(o: Target2): List[T]
   }
   object HListFuncMapGeneric {
@@ -87,5 +85,5 @@ object ToListGenerc {
   trait Impl[F[_[_]]] extends ToListGenerc[F] {
     def impl[U]: SimpleFuncion1Impl[F, U] => F[({ type U1[_] = U })#U1] => List[U]
     override def toList[T](input: F[({ type U1[_] = T })#U1]): List[T] = impl[T](new SimpleFuncion1Impl[F, T])(input)
-  }
+  }*/
 }
