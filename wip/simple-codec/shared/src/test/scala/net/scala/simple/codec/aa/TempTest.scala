@@ -37,7 +37,6 @@ object TempTest11 extends IOApp_1 {
         _.generic
       )
   }
-  implicit val im2: ToListGenerc[CatNameScala11]                    = ToListGenerc.fromOther[CatNameScala11](deco1, im111)
   implicit val userNamedGeneric1: LabelledInstalled[CatNameScala11] = LabelledInstalled[CatNameScala11].derived
   implicit val im3: FillIdentity[CatNameScala11, Encoder] =
     FillIdentity[CatNameScala11, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
