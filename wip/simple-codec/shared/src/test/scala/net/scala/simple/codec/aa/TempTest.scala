@@ -32,8 +32,8 @@ object TempTest11 extends IOApp_1 {
   implicit val im1: CompatLabelledInstalled[CatNameScala11] =
     CompatLabelledInstalled[CatNameScala11].derived(simpleGen1[CompatLabelledInstalled.ToNamed].generic)
   val deco1: ToDecoderGeneric[CatNameScala11] = new ToDecoderGeneric.Impl[CatNameScala11] {
-    override def impl[M1[_], M2[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[({ type U1[X] = M1[M2[X]] })#U1].generic)(
+    override def impl[M1[_], M2[_], M3[_]] =
+      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M3].generic, simpleGen1[M1].generic)(
         _.generic
       )
   }

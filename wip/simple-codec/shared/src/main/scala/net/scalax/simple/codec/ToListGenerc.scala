@@ -10,7 +10,7 @@ object ToListGenerc {
   type IdImpl[T] = T
 
   trait MonadAddImpl1[ProType, ModelType] {
-    def toList(list: List[ProType]): List[ProType]
+    def toList(model: ModelType): List[ProType] => List[ProType]
   }
 
   def monadImpl[Protype]: MonadAdd[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] =
@@ -19,13 +19,18 @@ object ToListGenerc {
         m1: MonadAddImpl1[Protype, U],
         m2: MonadAddImpl1[Protype, X]
       ): MonadAddImpl1[Protype, (U, X)] = new MonadAddImpl1[Protype, (U, X)] {
-        override def toList(list: List[Protype]): List[Protype] = m2.toList(m1.toList(list))
+        override def toList(model: (U, X)): List[Protype] => List[Protype] = {
+          val tolist1 = m1.toList(model._1)
+          val tolist2 = m2.toList(model._2)
+          l => tolist2(tolist1(l))
+        }
       }
-      override def map[U, X](param: MonadAddImpl1[Protype, U])(m: U => X): MonadAddImpl1[Protype, X] = new MonadAddImpl1[Protype, X] {
-        def toList(list: List[Protype]): List[Protype] = param.toList(list)
-      }
+      override def reverse_map[U, X](param: MonadAddImpl1[Protype, U])(m: X => U): MonadAddImpl1[Protype, X] =
+        new MonadAddImpl1[Protype, X] {
+          override def toList(model: X): List[Protype] => List[Protype] = param.toList(m(model))
+        }
       override val unit: MonadAddImpl1[Protype, Unit] = new MonadAddImpl1[Protype, Unit] {
-        def toList(list: List[Protype]): List[Protype] = list
+        override def toList(model: Unit): List[Protype] => List[Protype] = identity _
       }
     }
 
@@ -38,14 +43,26 @@ object ToListGenerc {
           o2.function1[({ type U1[NI] = TA })#U1, ({ type U1[NI] = MonadAddImpl1[TA, TA] })#U1](
             new Function1Apply[({ type U1[NI] = TA })#U1, ({ type U1[NI] = MonadAddImpl1[TA, TA] })#U1] {
               override def apply[AX](i1: TA): MonadAddImpl1[TA, TA] = new MonadAddImpl1[TA, TA] {
-                override def toList(list: List[TA]): List[TA] = i1 :: list
+                override def toList(model: TA): List[TA] => List[TA] = list => i1 :: list
               }
             }
           )(input)
 
-        val u = o1.toHList[({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1](monadImpl[TA])(gouzao)
+        val func = new ToDecoderGeneric.FuncImpl[
+          ({ type U1[NI] = TA })#U1,
+          ({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1,
+          ({ type U1[NI] = TA })#U1
+        ] {
+          override def apply[T](input: TA): MonadAddImpl1[TA, TA] = new MonadAddImpl1[TA, TA] {
+            override def toList(model: TA): List[TA] => List[TA] = l => model :: l
+          }
+        }
 
-        u.toList(List.empty)
+        val u = o1.toHList[({ type U1[NI] = TA })#U1, ({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1](
+          monadImpl[TA]
+        )(func)(input)
+
+        u.toList(input)(List.empty)
       }
     }
   }

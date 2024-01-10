@@ -29,8 +29,8 @@ object CirceModelSample {
       )
   }
   def deco1[U[_]]: ToDecoderGeneric[UserAbsAlias[U]#F1] = new ToDecoderGeneric.Impl[UserAbsAlias[U]#F1] {
-    override def impl[M1[_], M2[_]] =
-      _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M2].generic, simpleGen1[U, ({ type U1[X] = M1[M2[X]] })#U1].generic)(
+    override def impl[M1[_], M2[_], M3[_]] =
+      _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M3].generic, simpleGen1[U, M1].generic)(
         _.generic
       )
   }
