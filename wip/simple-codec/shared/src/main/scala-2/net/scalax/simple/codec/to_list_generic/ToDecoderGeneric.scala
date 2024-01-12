@@ -14,15 +14,23 @@ object ToDecoderGeneric {
   }
 
   trait HListFuncMapGeneric[Source1, Target1, Target2, M1[_], M2[_, _], M3[_]] {
-    def output(monad: MonadAdd[M2])(func: FuncImpl[M1, M2, M3])(o1: Target1): M2[Target2]
+    def output(monad: MonadAdd[M2])(func: FuncImpl[M1, M2, M3]): M2[Target1, Target2]
   }
   object HListFuncMapGeneric {
-    implicit def implicit1[T1, Source1 <: HList, HL1 <: HList, HL2 <: HList, M1[_], M2[_], M3[_]](implicit
+    implicit def implicit1[T1, Source1 <: HList, HL1 <: HList, HL2 <: HList, M1[_], M2[_, _], M3[_]](implicit
       tail: HListFuncMapGeneric[Source1, HL1, HL2, M1, M2, M3]
     ): HListFuncMapGeneric[T1 :: Source1, M1[T1] :: HL1, M3[T1] :: HL2, M1, M2, M3] =
       new HListFuncMapGeneric[T1 :: Source1, M1[T1] :: HL1, M3[T1] :: HL2, M1, M2, M3] {
-        override def output(o: MonadAdd[M2])(func: FuncImpl[M1, M2, M3])(o1: M1[T1] :: HL1): M2[M3[T1] :: HL2] = {
-          val m1 = o.zip(tail.output(o)(func)(o1.tail), func(o1.head))
+        override def output(o: MonadAdd[M2])(func: FuncImpl[M1, M2, M3]): M2[M1[T1] :: HL1, M3[T1] :: HL2] = {
+          val tailM1: M2[HL1, HL2]       = tail.output(o)(func)
+          val headM1: M2[M1[T1], M3[T1]] = func[T1]
+          val m1 = o.to[HL1, HL2, M1[T1] :: HL1, M3[T1] :: HL2](
+            in1 = ??? : M2[HL1, M1[T1] :: HL1],
+            out1 = ??? : M2[HL2, M3[T1] :: HL2]
+          )(
+            tail.output(o)(func)(o1.tail),
+            func(o1.head)
+          )
           o.reverse_map(m1)(hl => hl.tail -> hl.head)
         }
       }

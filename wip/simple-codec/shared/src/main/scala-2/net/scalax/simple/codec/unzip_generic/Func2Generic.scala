@@ -9,6 +9,7 @@ trait Func50GenericImpl[F[_[_]]] extends FunctionNGenericSum[F] {
   override def function0[T[_]](func1: Function0Apply[T]): F[T]
   override def function2[S[_], T[_], U[_]](func1: Function2Apply[S, T, U])(f1: F[S], f2: F[T]): F[U]
 }
+
 object Func50Generic {
   type IdImpl[T] = T
 
