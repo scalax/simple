@@ -1,9 +1,7 @@
 package net.scalax.simple.codec
 
 trait MonadAdd[M[_, _]] {
-  def to[A, B, S, T](in1: A => B, in2: S => T, out1: B => A, out2: T => S): M[A, B] => M[S, T]
+  def zip[A, B, S, T](ma: M[A, B], ms: M[S, T]): M[(A, S), (B, T)]
+  def to[A, B, S, T](m1: M[A, B])(in1: A => S, in2: B => T)(out1: S => A, out2: T => B): M[S, T]
+  def zero: M[Unit, Unit]
 }
-
-/*trait MonadAdd[M[_, _]] {
-  def to[A, B, S, T](in1: M[A, S], out1: M[B, T]): M[A, B] => M[S, T]
-}*/
