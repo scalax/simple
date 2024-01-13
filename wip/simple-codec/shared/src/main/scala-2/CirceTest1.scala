@@ -4,7 +4,7 @@ package aa
 import io.circe._
 import net.scalax.simple.codec.aa.Model2.{simpleGen1, UserAbsAlias}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToListGenerc}
+import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric1, ToListGenerc}
 import net.scalax.simple.codec.unzip_generic.Func50Generic
 
 object CirceModelSample {
@@ -28,18 +28,21 @@ object CirceModelSample {
         _.generic
       )
   }
-  def deco1[U[_]]: ToDecoderGeneric[UserAbsAlias[U]#F1] = new ToDecoderGeneric.Impl[UserAbsAlias[U]#F1] {
+  def deco1_1[U[_]]: ToDecoderGeneric[UserAbsAlias[U]#F1] = new ToDecoderGeneric.Impl[UserAbsAlias[U]#F1] {
     override def impl[M1[_], M2[_, _], M3[_]] =
-      _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M3].generic, simpleGen1[U, M1].generic)(
+      _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M1].generic, simpleGen1[U, M3].generic)(
         _.generic
       )
+  }
+  def deco1_2[U[_]]: ToDecoderGeneric1[UserAbsAlias[U]#F1] = new ToDecoderGeneric1.Impl[UserAbsAlias[U]#F1] {
+    override def impl[M1[_], M2[_]] = _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M1].generic)(_.generic)
   }
 
   def namedPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
     CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.ToNamed].generic)
 
   implicit def basedInstalled1[U[_]]: BasedInstalled[UserAbsAlias[U]#F1] =
-    BasedInstalled[UserAbsAlias[U]#F1].derived(namedPrepare[U], im111[U], deco1[U])
+    BasedInstalled[UserAbsAlias[U]#F1].derived(namedPrepare[U], im111[U], deco1_1[U], deco1_2[U])
 
   implicit def encoderProps[U1[_]](implicit u: Encoder[U1[Int]]): FillIdentity[UserAbsAlias[U1]#F1, Encoder] =
     FillIdentity[UserAbsAlias[U1]#F1, Encoder].derived2(simpleGen1[U1, Encoder].generic)(_.generic)

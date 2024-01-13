@@ -40,7 +40,13 @@ object ToDecoderGeneric {
     implicit def implicit2[M1[_], M2[_, _], M3[_]]: HListFuncMapGeneric[HNil, HNil, HNil, M1, M2, M3] =
       new HListFuncMapGeneric[HNil, HNil, HNil, M1, M2, M3] {
         override def output(o: MonadAdd[M2])(func: FuncImpl[M1, M2, M3]): M2[HNil, HNil] =
-          o.to(o.zero)(_ => HNil: HNil, _ => HNil: HNil)(_ => (), _ => ())
+          o.to(o.zero)(
+            _ => HNil: HNil,
+            _ => HNil: HNil
+          )(
+            _ => (),
+            _ => ()
+          )
       }
   }
 
@@ -61,24 +67,24 @@ object ToDecoderGeneric {
     self =>
     def derived2[Source1, Target1, Target2](
       simpleTo1: SimpleTo[F[IdImpl], Source1],
-      simpleGeneric2: SimpleFrom[F[M3], Target2] with SimpleTo[F[M3], Target2],
-      simpleGeneric3: SimpleFrom[F[M1], Target1] with SimpleTo[F[M1], Target1]
+      simpleGeneric2: SimpleFrom[F[M1], Target1] with SimpleTo[F[M1], Target1],
+      simpleGeneric3: SimpleFrom[F[M3], Target2] with SimpleTo[F[M3], Target2]
     ): FuncInnerApply1[F, M1, M2, M3, Source1, Target1, Target2] =
       new FuncInnerApply1[F, M1, M2, M3, Source1, Target1, Target2](simpleTo1, simpleGeneric2, simpleGeneric3)
   }
 
   class FuncInnerApply1[F[_[_]], M1[_], M2[_, _], M3[_], Source1, Target1, Target2](
     simpleTo1: SimpleTo[F[IdImpl], Source1],
-    simpleGeneric2: SimpleFrom[F[M3], Target2] with SimpleTo[F[M3], Target2],
-    simpleGeneric3: SimpleFrom[F[M1], Target1] with SimpleTo[F[M1], Target1]
+    simpleGeneric2: SimpleFrom[F[M1], Target1] with SimpleTo[F[M1], Target1],
+    simpleGeneric3: SimpleFrom[F[M3], Target2] with SimpleTo[F[M3], Target2]
   ) {
     def apply(
       genericFunc: HListFuncMapGenericGen[Source1, M1, M2, M3] => HListFuncMapGeneric[Source1, Target1, Target2, M1, M2, M3]
     ): MonadAdd[M2] => FuncImpl[M1, M2, M3] => M2[F[M1], F[M3]] = { monad => func =>
-      monad.to(genericFunc(HListFuncMapGenericGen[Source1, M1, M2, M3]).output(monad)(func))(simpleGeneric3.from, simpleGeneric2.from)(
-        simpleGeneric3.to,
-        simpleGeneric2.to
-      )
+      monad.to(genericFunc(HListFuncMapGenericGen[Source1, M1, M2, M3]).output(monad)(func))(
+        simpleGeneric2.from,
+        simpleGeneric3.from
+      )(simpleGeneric2.to, simpleGeneric3.to)
     }
   }
 
