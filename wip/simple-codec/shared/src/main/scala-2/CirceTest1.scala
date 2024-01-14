@@ -4,7 +4,7 @@ package aa
 import io.circe._
 import net.scalax.simple.codec.aa.Model2.{simpleGen1, UserAbsAlias}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric1, ToListGenerc}
+import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric1, ToListGeneric}
 import net.scalax.simple.codec.unzip_generic.Func50Generic
 
 object CirceModelSample {
@@ -51,7 +51,7 @@ object CirceModelSample {
     val nameProp   = basedInstalled.labelled.model
     val enProps    = implicitly[FillIdentity[UserAbsAlias[U]#F1, Encoder]].model
     val funcAction = basedInstalled.funcion50
-    val toListFunc = ToListGenerc[UserAbsAlias[U]#F1].derived(basedInstalled)
+    val toListFunc = ToListGeneric[UserAbsAlias[U]#F1].derived(basedInstalled)
 
     Encoder.instance { u =>
       val tempModel = funcAction.function3(new Function3Apply[Id, LabelledInstalled.ToNamed, Encoder, NamedJsonAny] {
