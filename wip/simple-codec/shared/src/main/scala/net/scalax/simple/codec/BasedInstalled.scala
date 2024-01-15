@@ -36,9 +36,7 @@ object BasedInstalled {
       val func50_1: Func50GenericImpl[F] = new Func50GenericImpl[F] {
         override def function0[T[_]](func1: Function0Apply[T]): F[T] = mapper.function0[T](func1)
         override def function2[S[_], T[_], U[_]](func1: Function2Apply[S, T, U])(f1: F[S], f2: F[T]): F[U] = {
-
-          trait TMImpl[MX1[_], MX2[_]] {
-
+          /*trait TMImpl[MX1[_], MX2[_]] {
             type ZipMin[T] = (MX1[T], MX2[T])
 
             type M1[S, T] = S => T
@@ -53,8 +51,7 @@ object BasedInstalled {
             }
 
             def inputOutput: (F[MX1] => F[MX2]) => F[MX1] => F[ZipMin]
-
-          }
+          }*/
 
           mapper.function2[S, T, U](func1)(f1, f2)
         }

@@ -40,6 +40,30 @@ object ScalaAllCodegenExec:
       }
     }
 
+    locally {
+      val filePath = writePath1.resolve("MNFunc.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent = net.scalax.simple.nat.codec.codegen.txt.MNFunc().body
+        writer.println(linerContent)
+      }
+    }
+
+    locally {
+      val filePath = writePath1.resolve("MNFuncGeneric.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent = net.scalax.simple.nat.codec.codegen.txt.MNFuncGeneric().body
+        writer.println(linerContent)
+      }
+    }
+
+    locally {
+      val filePath = writePath1.resolve("MMFunctionInput.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent = net.scalax.simple.nat.codec.codegen.txt.MMFunctionInput().body
+        writer.println(linerContent)
+      }
+    }
+
   end main
 
 end ScalaAllCodegenExec
