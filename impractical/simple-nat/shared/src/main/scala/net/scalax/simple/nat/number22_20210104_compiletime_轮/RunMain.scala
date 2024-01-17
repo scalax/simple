@@ -71,7 +71,7 @@ object RunTest1 {
   def count(num: () => Either[Number1, Number1], except1: BigDecimal, except2: BigDecimal, printlnSum: Int, speed: Long = 800000): Unit =
     countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1 / except2, printlnSum = printlnSum, speed = speed)
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val 分子1: Long = 123
     val 分母1: Long = 4342
     val 分子2: Long = 328

@@ -3,7 +3,6 @@ package decode.projection
 
 trait TypeHList[F[_[_]]] {
   type Head[_]
-  type Model = F[Head]
   type Tail <: TypeHList[F]
 }
 
@@ -16,7 +15,6 @@ object ZeroInstance {
 
 trait ZeroTypeHList[F[_[_]]] extends TypeHList[F] {
   override type Head[_] = ZeroInstance
-  override type Model   = F[Head]
   override type Tail    = ZeroTypeHList[F]
 }
 
