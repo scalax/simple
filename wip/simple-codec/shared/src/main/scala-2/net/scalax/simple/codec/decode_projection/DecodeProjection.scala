@@ -1,9 +1,9 @@
 package net.scalax.simple.codec
 package decode.projection
 
-trait TypeHList[F[_[_]]] {
-  type Head[_]
-  type Tail <: TypeHList[F]
+trait TypeHList {
+  type TypeHead[_]
+  type TypeTail <: TypeHList
 }
 
 trait ZeroInstance
@@ -13,29 +13,29 @@ object ZeroInstance {
   }
 }
 
-trait ZeroTypeHList[F[_[_]]] extends TypeHList[F] {
-  override type Head[_] = ZeroInstance
-  override type Tail    = ZeroTypeHList[F]
+trait ZeroTypeHList extends TypeHList {
+  override type TypeHead[_] = ZeroInstance
+  override type TypeTail    = ZeroTypeHList
 }
 
-trait InstanceHList[F[_[_]], T <: TypeHList[F]] {
-  def head[X]: T#Head[X]
-  def tail: InstanceHList[F, T#Tail]
+trait InstanceHList[T <: TypeHList] {
+  def typeHead[X]: T#TypeHead[X]
+  def typeTail: InstanceHList[T#TypeTail]
 }
 
-trait InstanceZeroHList[F[_[_]]] extends InstanceHList[F, ZeroTypeHList[F]] {
-  override def head[X]: ZeroInstance = ZeroInstance.instance
-  override def tail: InstanceZeroHList[F]
+trait InstanceZeroHList extends InstanceHList[ZeroTypeHList] {
+  override def typeHead[X]: ZeroInstance = ZeroInstance.instance
+  override def typeTail: InstanceZeroHList
 }
 
 object InstanceZeroHList {
   self =>
 
-  def instance[F[_[_]]]: InstanceZeroHList[F] = new InstanceZeroHList[F] {
-    override def tail: InstanceZeroHList[F] = self.instance[F]
+  lazy val instance: InstanceZeroHList = new InstanceZeroHList {
+    override lazy val typeTail: InstanceZeroHList = self.instance
   }
 }
 
-trait DeptProjectionM[M1[_ <: TypeHList[F]], F[_[_]]] {
-  def input[T <: TypeHList[F]](monad: InstanceHList[F, T]): M1[T]
+trait DeptProjectionM[M1[_ <: TypeHList]] {
+  def input[T <: TypeHList](monad: InstanceHList[T]): M1[T]
 }
