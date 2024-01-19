@@ -1,4 +1,4 @@
-scalaVersion := scalaV.v213
+scalaVersion := scalaV.v3
 name         := "simple-nat"
 
 enableZIOTest := true

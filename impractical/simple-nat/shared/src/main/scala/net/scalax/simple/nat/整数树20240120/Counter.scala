@@ -1,15 +1,34 @@
 package `整数树20240120`
 
-class Number1(next: () => Number2, val pre: () => Number1) extends Number2(next = next) {
-  override def method1(number2: () => Number2): Number1 = new Number1(number2, () => pre().method1(next))
-}
-object Number1 {
-  def zero(num2: () => Number2): Number1 = new Number1(next = num2, pre = () => zero(num2))
+class Number3(pre: () => Number2, next: () => Number1) extends Number2(next = next) with Number1(pre = pre) {
+  override def method2(other: () => Number1): Number2 => Number3 = { num2 =>
+    //
+    ???
+  }
+
+  override def method1(other: () => Number1): Number1 = {
+    //
+    ???
+  }
+
+  override def size: Int = pre().size + 1
 }
 
-class Number2(val next: () => Number2) {
-  def method1(number1: () => Number2): Number2 = number1().method1(next)
+trait Number2(next: () => Number1) {
+  def method2(other: () => Number1): Number2 => Number1 = {
+    //
+    ???
+  }
+
+  def size: Int = 0
 }
-object Number2 {
-  lazy val value: Number2 = new Number2(() => value)
+
+trait Number1(pre: () => Number2) {
+  def method1(other: () => Number1): Number1 = {
+    lazy val num1: Number2 => Number1 = pre().method2(other)
+
+    ???
+  }
+
+  def size: Int = pre().size + 1
 }
