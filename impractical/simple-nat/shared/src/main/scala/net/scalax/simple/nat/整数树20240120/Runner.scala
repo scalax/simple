@@ -3,7 +3,7 @@ package `整数树20240120`
 object Runner {
 
   def main(arr: Array[String]): Unit = {
-    val number1: Number1 = {
+    /*val number1: Number1 = {
       lazy val num0: Number2 = new Number2(() => num1) {
         //
       }
@@ -33,7 +33,7 @@ object Runner {
 
     println(number1.size)
     println(number2.size)
-    println(number1.method1(() => number2).size)
+    println(number1.method1(() => number2).size)*/
   }
 
 }
