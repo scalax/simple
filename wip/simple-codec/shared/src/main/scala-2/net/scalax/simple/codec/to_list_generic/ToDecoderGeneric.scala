@@ -4,27 +4,24 @@ package to_list_generic
 import shapeless._
 
 trait ToDecoderGeneric[F[_[_]]] {
-  def toHList[M1[_], M2[_, _], M3[_]](monad: MonadAdd[M2])(func: ToDecoderGeneric.FuncImpl[M1, M2, M3]): M2[F[M1], F[M3]]
+  def toHList[M1[_], M2[_, _], M3[_]](monad: MonadAdd[M2]): M2[F[M1], F[M3]]
 }
 
 object ToDecoderGeneric {
 
   type IdImpl[T] = T
-  trait FuncImpl[M1[_], M2[_, _], M3[_]] {
-    def apply[T]: M2[M1[T], M3[T]]
-  }
 
   trait HListFuncMapGeneric[Source1, Target1, Target2, M1[_], M2[_, _], M3[_]] {
-    def output(monad: MonadAdd[M2])(func: FuncImpl[M1, M2, M3]): M2[Target1, Target2]
+    def output(monad: MonadAdd[M2]): M2[Target1, Target2]
   }
   object HListFuncMapGeneric {
     implicit def implicit1[T1, Source1 <: HList, HL1 <: HList, HL2 <: HList, M1[_], M2[_, _], M3[_]](implicit
       tail: HListFuncMapGeneric[Source1, HL1, HL2, M1, M2, M3]
     ): HListFuncMapGeneric[T1 :: Source1, M1[T1] :: HL1, M3[T1] :: HL2, M1, M2, M3] =
       new HListFuncMapGeneric[T1 :: Source1, M1[T1] :: HL1, M3[T1] :: HL2, M1, M2, M3] {
-        override def output(o: MonadAdd[M2])(func: FuncImpl[M1, M2, M3]): M2[M1[T1] :: HL1, M3[T1] :: HL2] = {
-          val tailM1: M2[HL1, HL2]                   = tail.output(o)(func)
-          val headM1: M2[M1[T1], M3[T1]]             = func[T1]
+        override def output(o: MonadAdd[M2]): M2[M1[T1] :: HL1, M3[T1] :: HL2] = {
+          val tailM1: M2[HL1, HL2]                   = tail.output(o)
+          val headM1: M2[M1[T1], M3[T1]]             = o.one[M1[T1], M3[T1]]
           val zipM: M2[(HL1, M1[T1]), (HL2, M3[T1])] = o.zip(tailM1, headM1)
 
           o.to(zipM)(
