@@ -22,19 +22,24 @@ trait MonadMTypeHList[M1[_ <: TypeHList, _]] {
 }
 
 trait ZipTypeHList[T1 <: DataHList, T2 <: DataHList] extends DataHList {
-  override type DataTail = ZipTypeHList[T1#DataTail, T2#DataTail]
-  override type UpToF[F[_]] <: DataHListF[F]
+  override type DataType    = Tuple2[T1#DataType, T2#DataType]
+  override type DataTail    = ZipTypeHList[T1#DataTail, T2#DataTail]
+  override type UpToF[F[_]] = ZipTypeHList[T1#UpToF[F], T2#UpToF[F]]
 }
 
-trait ZipDataHListF[F[_], T1 <: DataHListF[F], T2 <: DataHListF[F]] extends DataHListF[F] {
-  override type DataType    = Tuple2[T1#DataType, T2#DataType]
-  override type DataTail    = ZipDataHListF[F, T1#DataTail, T2#DataTail]
-  override type UpToF[U[_]] = ZipDataHListF[U, T1#UpToF[U], T2#UpToF[U]]
+trait DFuncType[T1 <: DataHList, T2 <: DataHList] extends DataHList {
+  override type DataType    = (T1#DataType => T2#DataType, T2#DataType => T1#DataType)
+  override type DataTail    = DFuncType[T1#DataTail, T2#DataTail]
+  override type UpToF[U[_]] = DFuncType[T1#UpToF[U], T2#UpToF[U]]
+
+  def functionInstance: DataType
+
+  def funcitonIn1: T1#DataType => T2#DataType = functionInstance._1
+  def funcitonIn2: T2#DataType => T1#DataType = functionInstance._2
 }
 
 trait FunctionMTypeHList[M1[_ <: DataHList]] {
   def zip[T1 <: DataHList, T2 <: DataHList](ma: M1[T1], ms: M1[T2]): M1[ZipTypeHList[T1, T2]]
-  def map[T1 <: DataHList, T2 <: DataHList](fa: T1#ToHList => T2#ToHList)(fb: T2#ToHList => T1#ToHList): M1[T1] => M1[T2]
-  def one[T1 <: DataHList]: M1[T1]
+  def map[T1 <: DataHList, T2 <: DataHList](fa: DFuncType[T1, T2]): M1[T1] => M1[T2]
   def zero: M1[DataHListZero]
 }

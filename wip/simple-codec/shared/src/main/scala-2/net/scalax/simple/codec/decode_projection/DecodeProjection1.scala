@@ -6,28 +6,28 @@ import shapeless._
 trait DataHList {
   type DataType
   type DataTail <: DataHList
-  type ToHList <: HList
-  type UpToF[F[_]] <: DataHListF[F]
+  // type ToHList <: HList
+  type UpToF[F[_]] <: DataHList
 }
 
 trait DataHListPositive[H, T <: DataHList] extends DataHList {
-  override type DataType    = H
-  override type DataTail    = T
-  override type ToHList     = H :: T#ToHList
-  override type UpToF[F[_]] = DataHListFPositive[H, F, DataTail]
+  override type DataType = H
+  override type DataTail = T
+  // override type ToHList     = H :: T#ToHList
+  override type UpToF[F[_]] = DataHListPositive[F[H], DataTail]
 }
 
 trait DataHListZero extends DataHList {
   override type DataType = ZeroInstance
   override type DataTail <: DataHListZero
-  override type ToHList     = HNil
-  override type UpToF[F[_]] = DataHListFZero[F]
+  // override type ToHList     = HNil
+  override type UpToF[F[_]] = DataHListZero
 }
 
-trait DataHListF[F[_]] extends DataHList {
+/*trait DataHListF[F[_]] extends DataHList {
   override type DataType
   override type DataTail <: DataHListF[F]
-  override type ToHList <: HList
+  // override type ToHList <: HList
   override type UpToF[U[_]] <: DataHListF[U]
 }
 
@@ -38,10 +38,10 @@ trait DataHListFPositive[H, F[_], Tail <: DataHList] extends DataHListF[F] with 
 trait DataHListFZero[F[_]] extends DataHListF[F] with DataHListZero {
   override type DataType = ZeroInstance
   override type DataTail = DataHListFZero[F]
-  override type ToHList  = HNil
-}
+  // override type ToHList  = HNil
+}*/
 
-object AAAA {
+/*object AAAA {
 
   class Tag[T]
 
@@ -85,4 +85,4 @@ object AAAA {
     ] = data3
 
   }
-}
+}*/
