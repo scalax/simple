@@ -16,53 +16,75 @@ object ScalaAllCodegenExec:
     Files.createDirectories(writePath1)
     Files.createDirectories(writePath2)
 
-    locally {
-      val filePath = writePath2.resolve("FunctionNGeneric.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.codec.codegen.txt.FunctionNGeneric().body
-        writer.println(linerContent)
-      }
-    }
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = writePath2.resolve("FunctionNGeneric.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.codec.codegen.txt.FunctionNGeneric().body
+            writer.println(linerContent)
+        )
+    )
 
-    locally {
-      val filePath = writePath1.resolve("FunctionNApply.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.codec.codegen.txt.FunctionNFunc().body
-        writer.println(linerContent)
-      }
-    }
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = writePath1.resolve("FunctionNApply.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.codec.codegen.txt.FunctionNFunc().body
+            writer.println(linerContent)
+        )
+    )
 
-    locally {
-      val filePath = writePath1.resolve("Function50Generic.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.codec.codegen.txt.Function50Generic().body
-        writer.println(linerContent)
-      }
-    }
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = writePath1.resolve("Function50Generic.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.codec.codegen.txt.Function50Generic().body
+            writer.println(linerContent)
+        )
+    )
 
-    locally {
-      val filePath = writePath1.resolve("MNFunc.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.codec.codegen.txt.MNFunc().body
-        writer.println(linerContent)
-      }
-    }
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = writePath1.resolve("MNFunc.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.codec.codegen.txt.MNFunc().body
+            writer.println(linerContent)
+        )
+    )
 
-    locally {
-      val filePath = writePath1.resolve("MNFuncGeneric.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.codec.codegen.txt.MNFuncGeneric().body
-        writer.println(linerContent)
-      }
-    }
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = writePath1.resolve("MNFuncGeneric.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.codec.codegen.txt.MNFuncGeneric().body
+            writer.println(linerContent)
+        )
+    )
 
-    locally {
-      val filePath = writePath1.resolve("MMFunctionInput.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.codec.codegen.txt.MMFunctionInput().body
-        writer.println(linerContent)
-      }
-    }
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = writePath1.resolve("MMFunctionInput.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.codec.codegen.txt.MMFunctionInput().body
+            writer.println(linerContent)
+        )
+    )
+
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = writePath1.resolve("Method22FromProjection.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.codec.codegen.txt.Method22FromProjection().body
+            writer.println(linerContent)
+        )
+    )
 
   end main
 

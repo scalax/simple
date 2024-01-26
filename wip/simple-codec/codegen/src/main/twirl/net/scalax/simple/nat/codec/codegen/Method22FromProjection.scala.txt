@@ -1,0 +1,18 @@
+@()
+package net.scalax.simple.codec
+
+@for(i <- 1 to 22) {
+
+trait Monad@{i}TypeLevel[M1[@for(i1 <- 1 to i) { _ , } _]] {
+
+  def zip[@for(i1 <- 1 to i) { IA@{i1} , } @for(i1 <- 1 to i - 1) { IB@{i1} , } IB@{i}](m1: M1[@for(i1 <- 1 to i - 1) { IA@{i1} , } IA@{i}], m2: M1[@for(i1 <- 1 to i - 1) { IB@{i1} , } IB@{i}]): M1[@for(i1 <- 1 to i - 1) { (IA@{i1}, IB@{i1}) , } (IA@{i}, IB@{i})]
+
+  @for(i <- 1 to 50) {
+    def function@{i}[@for(i1 <- 1 to i) { T@{i1}[_], } TOut[_]](func: Function@{i}Apply[@for(i1 <- 1 to i) { T@{i1}, } TOut])(
+      @for(i1 <- 1 to i - 1) { t@{i1}: F[T@{i1}], } t@{i}: F[T@{i}]
+    ): F[TOut]
+  }
+
+}
+
+}
