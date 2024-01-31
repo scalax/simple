@@ -1,11 +1,13 @@
 @()
 package net.scalax.simple.codec
 
+import decode.projection._
+
 @for(i <- 1 to 22) {
 
-trait Monad@{i}TypeLevel[M1[@for(i1 <- 1 to i) { _ , } _]] {
+trait Monad@{i}TypeLevel[M1[@for(i1 <- 1 to i - 1) { _ , } _]] {
 
-  def mImpl[M2[_ <: DataList]]: String
+  def mImpl[M2[_ <: DataHList]]: FunctionMTypeHList[M2]
 
   def zip[@for(i1 <- 1 to i) { IA@{i1} , } @for(i1 <- 1 to i - 1) { IB@{i1} , } IB@{i}](m1: M1[@for(i1 <- 1 to i - 1) { IA@{i1} , } IA@{i}], m2: M1[@for(i1 <- 1 to i - 1) { IB@{i1} , } IB@{i}]): M1[@for(i1 <- 1 to i - 1) { (IA@{i1}, IB@{i1}) , } (IA@{i}, IB@{i})]
 
