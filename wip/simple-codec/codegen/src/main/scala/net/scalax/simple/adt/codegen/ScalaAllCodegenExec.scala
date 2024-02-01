@@ -81,7 +81,7 @@ object ScalaAllCodegenExec:
         val filePath = writePath1.resolve("Method22FromProjection.scala")
         Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
           case writer =>
-            val linerContent = net.scalax.simple.nat.codec.codegen.txt.Method22FromProjection().body
+            val linerContent: String = text.PreCodegen.text1
             writer.println(linerContent)
         )
     )
