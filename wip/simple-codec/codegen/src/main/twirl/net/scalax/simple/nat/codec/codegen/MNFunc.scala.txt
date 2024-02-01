@@ -1,0 +1,14 @@
+@()
+package net.scalax.simple.codec
+
+@for(i <- 0 to 21) {
+
+trait Monad@{i}Apply[M[@for(i1 <- 0 to i - 1) { _, } _]] {
+    def zip[@for(i1 <- 0 to i) { X@{i1}, } @for(i1 <- 0 to i - 1) { TU@{i1}, } TU@{i}](
+        in1: M[@for(i1 <- 0 to i - 1) { X@{i1}, } X@{i}],
+        in2: M[@for(i1 <- 0 to i - 1) { TU@{i1}, } TU@{i}]
+    )
+    : M[@for(i1 <- 0 to i - 1) { (X@{i1}, TU@{i1}), } (X@{i}, TU@{i})]
+}
+
+}

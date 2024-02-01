@@ -84,10 +84,10 @@ object Model2 {
     private val repModel: slickProfile.Table[_] => UserAbs[Rep, U] = userRep[U]
     private def __tableInnserRep: UserAbs[Rep, U]                  = repModel(self)
 
-    private val generic1 = TypedHelper[UserAbs[Rep, U]].build
-    private val generic2 = TypedHelper[UserAbs[Id, U]].build
+    private val generic1 = simpleGen1[U, Rep].generic
+    private val generic2 = simpleGen1[U, Id].generic
 
-    override def * : ProvenShape[UserAbs[Id, U]] = generic1.to(__tableInnserRep) <> (generic2.from, generic2.to.opt)
+    override def * : ProvenShape[UserAbs[Id, U]] = generic1.to(__tableInnserRep) <> (generic2.from, generic2.to _ andThen Some.apply)
   }
 
   object TableUserAbs {

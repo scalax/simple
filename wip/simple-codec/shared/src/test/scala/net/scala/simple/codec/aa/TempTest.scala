@@ -7,13 +7,17 @@ import cats.effect._
 import cats.~>
 import net.scalax.simple.codec.{CompatLabelledInstalled, FillIdentity, IOApp1, LabelledInstalled}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.unzip_generic.{Func50Generic, ZipCommonGen}
+import net.scalax.simple.codec.unzip_generic.Func50Generic
 import codec.Function50Generic
-import net.scalax.simple.codec.to_list_generic.ToListGenerc
+import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToListGeneric}
 
 case class CatNameScala11[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
-object TempTest11 extends IOApp {
+trait IOApp_1 {
+  def run(args: List[String]): IO[ExitCode]
+}
+
+object TempTest11 extends IOApp_1 {
 
   type UFAliasF[T11[_]] = CatNameScala11[({ type U1[_] = T11[String] })#U1]
 
@@ -27,16 +31,13 @@ object TempTest11 extends IOApp {
 
   implicit val im1: CompatLabelledInstalled[CatNameScala11] =
     CompatLabelledInstalled[CatNameScala11].derived(simpleGen1[CompatLabelledInstalled.ToNamed].generic)
-  implicit val im2: ToListGenerc[CatNameScala11] = new ToListGenerc.Impl[CatNameScala11] {
-    override def impl[U] = _.derived2(simpleGen1[({ type U1[_] = U })#U1].generic)(_.generic)
+  val deco1: ToDecoderGeneric[CatNameScala11] = new ToDecoderGeneric.Impl[CatNameScala11] {
+    override def impl[M1[_], M2[_, _], M3[_]] =
+      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M1].generic, simpleGen1[M3].generic)(_.generic)
   }
   implicit val userNamedGeneric1: LabelledInstalled[CatNameScala11] = LabelledInstalled[CatNameScala11].derived
   implicit val im3: FillIdentity[CatNameScala11, Encoder] =
     FillIdentity[CatNameScala11, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
-  implicit val im112: ZipCommonGen[CatNameScala11] = new ZipCommonGen.Impl[CatNameScala11] {
-    override def impl[In1[_], In2[_]] =
-      _.derived2(simpleGen1[FuncImpl[In1, In2]#Zip].generic)(_.generic)(simpleGen1[In1].generic, simpleGen1[In2].generic)
-  }
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {

@@ -1,10 +1,11 @@
-package net.scalax.simple.nat.number22
+package net.scalax.simple.nat
+package number23
 
 import scala.annotation.tailrec
 
 object RunTest1 {
 
-  def build(分子: Long, 分母: Long): Either[Number1, Number1] = {
+  /*def build(分子: Long, 分母: Long): Either[Number1, Number1] = {
     def buildImpl(isFenmu: Boolean, numLong: Long, zero: () => Either[Number1, Number1]): Either[Number1, Number1] = {
       if (numLong > 0) {
         if (isFenmu) {
@@ -111,6 +112,6 @@ object RunTest1 {
     val result4: () => Either[Number1, Number1] = () =>
       result2().fold(num => num.input(Right(result1())), num => num.input(Left(result1())))
     count(result4, except1 = except6, except2 = except5, printlnSum = 18, speed = 30000)
-  }
+  }*/
 
 }
