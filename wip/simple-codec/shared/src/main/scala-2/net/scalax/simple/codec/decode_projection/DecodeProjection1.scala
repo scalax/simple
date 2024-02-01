@@ -6,21 +6,18 @@ import shapeless._
 trait DataHList {
   type DataType
   type DataTail <: DataHList
-  // type ToHList <: HList
   type UpToF[F[_]] <: DataHList
 }
 
 trait DataHListPositive[H, T <: DataHList] extends DataHList {
-  override type DataType = H
-  override type DataTail = T
-  // override type ToHList     = H :: T#ToHList
+  override type DataType    = H
+  override type DataTail    = T
   override type UpToF[F[_]] = DataHListPositive[F[H], DataTail]
 }
 
 trait DataHListZero extends DataHList {
-  override type DataType = ZeroInstance
-  override type DataTail <: DataHListZero
-  // override type ToHList     = HNil
+  override type DataType    = ZeroInstance
+  override type DataTail    = DataHListZero
   override type UpToF[F[_]] = DataHListZero
 }
 
