@@ -7,6 +7,12 @@ import java.nio.file.Paths
 
 object PreCodegen:
 
+  def repeat(times: Int)(text: Int => String): List[String] = {
+    val listString = for (i <- 1 to times) yield text(i)
+    listString.to(List)
+  }
+  val dot1: String = ','.toString
+
   def text1: String =
     s"""
        package net.scalax.simple.codec
@@ -14,13 +20,20 @@ object PreCodegen:
        import decode.projection._
        ${(for (i <- 1 to 22) yield {
 
-        s"""trait Monad${i}TypeLevel[M1[${(for (_ <- 1 to i) yield '_').mkString(','.toString)}]] {
+        s"""trait Monad${i}TypeLevel[M1[${repeat(i)(_ => '_'.toString).mkString(dot1)}]] {
 
-         def mImpl[M2[_ <: DataHList]]: FunctionMTypeHList[M2]
+        def mImpl[M2[_ <: DataHList]]: FunctionMTypeHList[M2]
 
-         // def zip[@for(i1 <- 1 to i) { IA@{i1} , } @for(i1 <- 1 to i - 1) { IB@{i1} , } IB@{i}](m1: M1[@for(i1 <- 1 to i - 1) { IA@{i1} , } IA@{i}], m2: M1[@for(i1 <- 1 to i - 1) { IB@{i1} , } IB@{i}]): M1[@for(i1 <- 1 to i - 1) { (IA@{i1}, IB@{i1}) , } (IA@{i}, IB@{i})]
-}
-"""
+        def zip[
+          ${repeat(i)(i => "IA" + i).mkString(dot1) +
+            ',' +
+            repeat(i)(i => "IB" + i).mkString(dot1)}](
+          m1: M1[${repeat(i)(i => "IA" + i).mkString(dot1)}],
+          m2: M1[${repeat(i)(i => "IB" + i).mkString(dot1)}]
+        ): M1[${repeat(i)(i => s"(IA$i, IB$i)").mkString(dot1)}]
+
+      }
+    """
       }).mkString}
        """
 
