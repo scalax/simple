@@ -8,6 +8,16 @@ trait CompatLabelledInstalled[F[_[_]]] {
 
 object CompatLabelledInstalled {
 
+  import java.time._
+  import io.circe._
+  given Encoder[LocalDateTime] = CodecI.localdatetimeEncoder
+
+  println(implicitly[Encoder[LocalDateTime]])
+  println(implicitly[Encoder[LocalDateTime]])
+  println(implicitly[Encoder[LocalDateTime]])
+  println(implicitly[Encoder[LocalDateTime]])
+  println(implicitly[Encoder[LocalDateTime]])
+
   type ToNamed[_] = String
 
   class DerivedApply[F[_[_]]] {
