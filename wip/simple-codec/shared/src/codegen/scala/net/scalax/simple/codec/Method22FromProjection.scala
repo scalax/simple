@@ -1,4 +1,4 @@
-package net.scalax.simple.codec
+/*package net.scalax.simple.codec
 
 import decode.projection._
 
@@ -11628,3 +11628,4 @@ trait Monad22TypeLevel[M1[_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 
   )(mImpl[MSelfFrom].zero)
 
 }
+ */

@@ -28,3 +28,15 @@ object LabelledInstalled {
   def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]
 
 }
+
+import java.time._
+import io.circe._
+
+trait AA {
+
+  def localdatetimeEncoder: Encoder[LocalDateTime] = Encoder.encodeLocalDateTimeWithFormatter(fmt)
+  val fmt                                          = format.DateTimeFormatter.ofPattern("yyyy-MM-dd MM:mm:ss")
+
+}
+
+object CodecI extends AA
