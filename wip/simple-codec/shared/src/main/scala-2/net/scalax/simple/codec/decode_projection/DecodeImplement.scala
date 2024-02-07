@@ -64,3 +64,11 @@ class DataHListUnit extends DataHList {
   override type DataTail    = DataHListUnit
   override type UpToF[F[_]] = DataHListUnit
 }
+
+trait ItemModelFuncion[X <: TypeHList] {
+  def u[T]: X#FillT[T]
+}
+
+trait FunctionModel[F[_[_]]] {
+  def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(mx: ItemModelFuncion[X]): M2[X#FillF[F]]
+}

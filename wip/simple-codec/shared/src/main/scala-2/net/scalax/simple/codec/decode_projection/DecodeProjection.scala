@@ -4,6 +4,8 @@ package decode.projection
 trait TypeHList {
   type TypeHead[_]
   type TypeTail <: TypeHList
+  type FillT[T] <: DataHList
+  type FillF[F[_[_]]] <: DataHList
 }
 
 trait ZeroInstance
@@ -14,8 +16,10 @@ object ZeroInstance {
 }
 
 trait ZeroTypeHList extends TypeHList {
-  override type TypeHead[_] = ZeroInstance
-  override type TypeTail    = ZeroTypeHList
+  override type TypeHead[_]    = ZeroInstance
+  override type TypeTail       = ZeroTypeHList
+  override type FillT[T]       = DataHListZero
+  override type FillF[F[_[_]]] = DataHListZero
 }
 
 trait InstanceHList[T <: TypeHList] {
