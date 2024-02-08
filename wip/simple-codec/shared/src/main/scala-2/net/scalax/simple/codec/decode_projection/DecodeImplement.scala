@@ -1,6 +1,8 @@
 package net.scalax.simple.codec
 package decode.projection
 
+import shapeless._
+
 trait DecodeImplement {
   def implemention[THList <: TypeHList, DHList <: DataHList, M1[_ <: TypeHList]](m: M1[THList]): String
 }
@@ -71,4 +73,18 @@ trait ItemModelFuncion[X <: TypeHList] {
 
 trait FunctionModel[F[_[_]]] {
   def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(mx: ItemModelFuncion[X]): M2[X#FillF[F]]
+}
+
+object FunctionModel {
+  trait FunctionModelImpl[F[_[_]] <: HList] {
+    def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(mx: ItemModelFuncion[X]): M2[X#FillF[F]]
+  }
+
+  def append[F[_[_]] <: HList, UX](
+    tail: FunctionModelImpl[F]
+  ): FunctionModelImpl[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1] = new FunctionModelImpl[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1] {
+    override def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(
+      mx: ItemModelFuncion[X]
+    ): M2[X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]] = ???
+  }
 }
