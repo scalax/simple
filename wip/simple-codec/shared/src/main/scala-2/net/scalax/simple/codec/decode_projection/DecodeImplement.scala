@@ -67,24 +67,40 @@ class DataHListUnit extends DataHList {
   override type UpToF[F[_]] = DataHListUnit
 }
 
-trait ItemModelFuncion[X <: TypeHList] {
-  def u[T]: X#FillT[T]
+trait ItemModelFuncion[X <: TypeHList, M[_ <: DataHList]] {
+  def u[T]: M[X#FillT[T]]
 }
 
 trait FunctionModel[F[_[_]]] {
-  def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(mx: ItemModelFuncion[X]): M2[X#FillF[F]]
+  def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(mx: ItemModelFuncion[X, M2]): M2[X#FillF[F]]
 }
 
 object FunctionModel {
   trait FunctionModelImpl[F[_[_]] <: HList] {
-    def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(mx: ItemModelFuncion[X]): M2[X#FillF[F]]
+    def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(mx: ItemModelFuncion[X, M2]): M2[X#FillF[F]]
   }
 
   def append[F[_[_]] <: HList, UX](
     tail: FunctionModelImpl[F]
   ): FunctionModelImpl[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1] = new FunctionModelImpl[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1] {
     override def toM[X <: TypeHList, M2[_ <: DataHList]](m: FunctionMTypeHList[M2])(
-      mx: ItemModelFuncion[X]
-    ): M2[X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]] = ???
+      mx: ItemModelFuncion[X, M2]
+    ): M2[X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]] = {
+      val model1: M2[X#FillF[F]]                            = tail.toM(m)(mx)
+      val model2: M2[ZipTypeHList[X#FillT[UX], X#FillF[F]]] = m.zip(mx.u[UX], model1)
+      val dFuncType: DFuncType[ZipTypeHList[X#FillT[UX], X#FillF[F]], X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]] =
+        new DFuncType[ZipTypeHList[X#FillT[UX], X#FillF[F]], X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]] {
+          override def funcitonIn1
+            : ((X#FillT[UX]#DataType, X#FillF[F]#DataType)) => X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]#DataType = ???
+          override def funcitonIn2
+            : X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]#DataType => (X#FillT[UX]#DataType, X#FillF[F]#DataType) = ???
+          override def dataTail: DFuncType[ZipTypeHList[X#FillT[UX]#DataTail, X#FillF[F]#DataTail], X#FillF[
+            ({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1
+          ]#DataTail] = ???
+        }
+      val model3: M2[ZipTypeHList[X#FillT[UX], X#FillF[F]]] => M2[X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]] =
+        m.map[ZipTypeHList[X#FillT[UX], X#FillF[F]], X#FillF[({ type U1[T1[_]] = T1[UX] :: F[T1] })#U1]](dFuncType)
+      model3(model2)
+    }
   }
 }
