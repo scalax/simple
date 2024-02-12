@@ -15,6 +15,17 @@ object ZeroInstance {
   }
 }
 
+trait HelpTrait[T] {
+  type DataType = T
+}
+
+trait PositiveTypeHList[UF[_], Tail <: TypeHList] extends TypeHList {
+  override type TypeHead[XX]   = UF[XX]
+  override type TypeTail       = Tail
+  override type FillT[T]       = DataHListPositive[UF[T], Tail#FillT[T]]
+  override type FillF[F[_[_]]] = DataHListPositive[F[UF], Tail#FillF[F]]
+}
+
 trait ZeroTypeHList extends TypeHList {
   override type TypeHead[_]    = ZeroInstance
   override type TypeTail       = ZeroTypeHList
