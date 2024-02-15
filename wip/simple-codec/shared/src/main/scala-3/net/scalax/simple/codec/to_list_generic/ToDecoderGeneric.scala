@@ -2,12 +2,12 @@ package net.scalax.simple.codec
 package to_list_generic
 
 trait ToDecoderGeneric[F[_[_]]] {
-  def toHList[M1[_], M2[_, _], M3[_]](monad: MonadAdd[M2])(func: ToDecoderGeneric.FuncImpl[M1, M2, M3]): M2[F[M1], F[M3]]
+  def toHList[M1[_], M2[_], M3[_, _]](monad: MonadAdd[M3])(func: ToDecoderGeneric.FuncImpl[M3, M1, M2]): M3[F[M1], F[M2]]
 }
 
 object ToDecoderGeneric {
   type IdImpl[T] = T
-  trait FuncImpl[M1[_], M2[_, _], M3[_]] {
+  trait FuncImpl[M2[_, _], M1[_], M3[_]] {
     def apply[T]: M2[M1[T], M3[T]]
   }
 
@@ -17,13 +17,13 @@ object ToDecoderGeneric {
   }
 
   trait HListFuncMapGeneric[Source1, Target1, Target2, M1[_], M2[_, _], M3[_]] {
-    def output(monad: MonadAdd[M2])(func: FuncImpl[M1, M2, M3]): M2[Target1, Target2]
+    def output(monad: MonadAdd[M2])(func: FuncImpl[M2, M1, M3]): M2[Target1, Target2]
   }
   object HListFuncMapGeneric {
     private def instanceAny(count: Int): HListFuncMapGeneric[Tuple, Tuple, Tuple, [x] =>> Any, [x1, x2] =>> Any, [x] =>> Any] =
       new HListFuncMapGeneric[Tuple, Tuple, Tuple, [x] =>> Any, [x, X] =>> Any, [x] =>> Any] {
         self =>
-        override def output(o: MonadAdd[[x1, x2] =>> Any])(func: FuncImpl[[x] =>> Any, [x1, x2] =>> Any, [x] =>> Any]): Any = if (
+        override def output(o: MonadAdd[[x1, x2] =>> Any])(func: FuncImpl[[x1, x2] =>> Any, [x] =>> Any, [x] =>> Any]): Any = if (
           count > 0
         ) {
           val tail   = instanceAny(count - 1)
@@ -40,7 +40,7 @@ object ToDecoderGeneric {
           )
         } else {
           new HListFuncMapGeneric[EmptyTuple, EmptyTuple, EmptyTuple, [x] =>> Any, [x1, x2] =>> Any, [x] =>> Any] {
-            override def output(o: MonadAdd[[x1, x2] =>> Any])(func: FuncImpl[[x] =>> Any, [x1, x2] =>> Any, [x] =>> Any]): Any =
+            override def output(o: MonadAdd[[x1, x2] =>> Any])(func: FuncImpl[[x1, x2] =>> Any, [x] =>> Any, [x] =>> Any]): Any =
               o.to(o.zero)(
                 _ => EmptyTuple,
                 _ => EmptyTuple
@@ -96,7 +96,7 @@ object ToDecoderGeneric {
         M2,
         M3
       ]
-    ): MonadAdd[M2] => FuncImpl[M1, M2, M3] => M2[F[M1], F[M3]] = { monad => func =>
+    ): MonadAdd[M2] => FuncImpl[M2, M1, M3] => M2[F[M1], F[M3]] = { monad => func =>
       monad.to(genericFunc(HListFuncMapGenericGen[Source1, M1, M2, M3]).output(monad)(func))(
         simpleGeneric2.from,
         simpleGeneric3.from
@@ -105,8 +105,8 @@ object ToDecoderGeneric {
   }
 
   trait Impl[F[_[_]]] extends ToDecoderGeneric[F] {
-    def impl[M1[_], M2[_, _], M3[_]]: SimpleFuncion1Impl[F, M1, M2, M3] => (MonadAdd[M2] => FuncImpl[M1, M2, M3] => M2[F[M1], F[M3]])
-    override def toHList[M1[_], M2[_, _], M3[_]](monad: MonadAdd[M2])(func: FuncImpl[M1, M2, M3]): M2[F[M1], F[M3]] =
+    def impl[M1[_], M2[_, _], M3[_]]: SimpleFuncion1Impl[F, M1, M2, M3] => (MonadAdd[M2] => FuncImpl[M2, M1, M3] => M2[F[M1], F[M3]])
+    override def toHList[M1[_], M3[_], M2[_, _]](monad: MonadAdd[M2])(func: FuncImpl[M2, M1, M3]): M2[F[M1], F[M3]] =
       impl[M1, M2, M3](SimpleFuncion1Impl[F, M1, M2, M3])(monad)(func)
   }
 }

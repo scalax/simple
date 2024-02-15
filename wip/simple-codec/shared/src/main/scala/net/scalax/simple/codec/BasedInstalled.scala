@@ -60,7 +60,7 @@ object BasedInstalled {
           t1: F[T1]
         ): F[TOut] = {
           type M1[S, T] = S => T
-          val func1Impl: ToDecoderGeneric.FuncImpl[T1, M1, TOut] = new ToDecoderGeneric.FuncImpl[T1, M1, TOut] {
+          val func1Impl: ToDecoderGeneric.FuncImpl[M1, T1, TOut] = new ToDecoderGeneric.FuncImpl[M1, T1, TOut] {
             override def apply[T]: T1[T] => TOut[T] = func[T]
           }
           val monadImpl: MonadAdd[M1] = new MonadAdd[M1] {
@@ -69,7 +69,7 @@ object BasedInstalled {
               in2(m1(out1(sModel)))
             override def zero: Unit => Unit = identity
           }
-          decode.toHList[T1, M1, TOut](monadImpl)(func1Impl)(t1)
+          decode.toHList[T1, TOut, M1](monadImpl)(func1Impl)(t1)
         }
       }
 

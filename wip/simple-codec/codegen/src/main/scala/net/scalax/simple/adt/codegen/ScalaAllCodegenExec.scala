@@ -11,10 +11,16 @@ object ScalaAllCodegenExec:
 
     val List(rootString) = arr.to(List)
     val rootPath         = Paths.get(rootString)
-    val writePath1       = rootPath.resolve(Paths.get("net", "scalax", "simple", "codec"))
-    val writePath2       = writePath1.resolve("impl")
+
+    val writePath1 = rootPath.resolve(Paths.get("scala", "net", "scalax", "simple", "codec"))
+    val writePath2 = writePath1.resolve("impl")
     Files.createDirectories(writePath1)
     Files.createDirectories(writePath2)
+
+    val scala2Rooot1 = rootPath.resolve(Paths.get("scala-2", "net", "scalax", "simple", "codec"))
+    val scala2Rooot2 = scala2Rooot1.resolve("impl")
+    Files.createDirectories(scala2Rooot1)
+    Files.createDirectories(scala2Rooot2)
 
     locally(EmptyTuple.match
       case _ =>
@@ -78,10 +84,20 @@ object ScalaAllCodegenExec:
 
     locally(EmptyTuple.match
       case _ =>
-        val filePath = writePath1.resolve("Method22FromProjection.scala")
+        val filePath = scala2Rooot2.resolve("Method22FromProjection.scala")
         Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
           case writer =>
             val linerContent: String = text.PreCodegen.text1
+            writer.println(linerContent)
+        )
+    )
+
+    locally(EmptyTuple.match
+      case _ =>
+        val filePath = scala2Rooot2.resolve("Methond50Compat11.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent: String = net.scalax.simple.adt.codegen_text1.Codegen50Text2.render
             writer.println(linerContent)
         )
     )

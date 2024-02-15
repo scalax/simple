@@ -7,7 +7,7 @@ val codegenPackageName = "net.scalax.simple.codec.codegen"
 
 val scalaAllRunMainInputStr = settingKey[String]("scalaAllRunMainInputStr")
 scalaAllRunMainInputStr := {
-  val projectRoot = rootCodegenPath.value / "scala"
+  val projectRoot = rootCodegenPath.value
   projectRoot.getAbsoluteFile.toString
 }
 
