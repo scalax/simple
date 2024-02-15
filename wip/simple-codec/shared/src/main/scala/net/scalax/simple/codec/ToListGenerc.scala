@@ -57,7 +57,7 @@ object ToListGeneric {
           }
         }
 
-        val u = o1.toHList1[({ type U1[NI] = TA })#U1, ({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1](
+        val u = o1.toHList1[({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1](
           monadImpl[TA]
         )(func)
 

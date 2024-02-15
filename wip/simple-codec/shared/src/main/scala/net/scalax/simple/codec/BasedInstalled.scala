@@ -69,7 +69,7 @@ object BasedInstalled {
               in2(m1(out1(sModel)))
             override def zero: Unit => Unit = identity
           }
-          decode.toHList[T1, TOut, M1](monadImpl)(func1Impl)(t1)
+          decode.toHList[M1, T1, TOut](monadImpl)(func1Impl)(t1)
         }
       }
 

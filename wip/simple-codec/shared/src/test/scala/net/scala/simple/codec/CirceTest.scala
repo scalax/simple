@@ -77,12 +77,12 @@ object xxbb1 extends IOApp {
   lazy val deco2_1_1: ToDecoderGeneric[FAlias] = new ToDecoderGeneric[FAlias] {
     private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode
 
-    override def toHList[M1[_], M3[_], M2[_, _]](
+    override def toHList[M2[_, _], M1[_], M3[_]](
       monad: MonadAdd[M2]
     )(
       func: ToDecoderGeneric.FuncImpl[M2, M1, M3]
     ): M2[CatName[({ type U1[X] = M1[String] })#U1], CatName[({ type U1[X] = M3[String] })#U1]] =
-      toDecoderCatName.toHList[({ type U1[X] = M1[String] })#U1, ({ type U1[X] = M3[String] })#U1, M2](monad)(
+      toDecoderCatName.toHList[M2, ({ type U1[X] = M1[String] })#U1, ({ type U1[X] = M3[String] })#U1](monad)(
         new ToDecoderGeneric.FuncImpl[M2, ({ type U1[X] = M1[String] })#U1, ({ type U1[X] = M3[String] })#U1] {
           override def apply[T]: M2[M1[String], M3[String]] = func[String]
         }
@@ -91,10 +91,10 @@ object xxbb1 extends IOApp {
   lazy val deco2_1_2: ToDecoderGeneric1[FAlias] = new ToDecoderGeneric1[FAlias] {
     private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode1
 
-    override def toHList1[M1[_], M2[_]](
+    override def toHList1[M2[_], M1[_]](
       monad: MonadAdd1[M2]
     )(func: ToDecoderGeneric1.FuncImpl1[M1, M2]): M2[CatName[({ type U1[X] = M1[String] })#U1]] =
-      toDecoderCatName.toHList1[({ type U1[X] = M1[String] })#U1, M2](monad)(
+      toDecoderCatName.toHList1[M2, ({ type U1[X] = M1[String] })#U1](monad)(
         new ToDecoderGeneric1.FuncImpl1[({ type U1[X] = M1[String] })#U1, M2] {
           override def apply[T]: M2[M1[String]] = func[String]
         }

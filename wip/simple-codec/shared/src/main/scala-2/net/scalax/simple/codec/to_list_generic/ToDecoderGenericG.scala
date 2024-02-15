@@ -1,13 +1,19 @@
-package net.scalax.simple.codec
-package to_list_generic
+package net.scalax.simple.codec.to_list_generic
 
 import shapeless._
 
-trait ToDecoderGeneric1[F[_[_]]] {
-  def toHList1[M2[_], M1[_]](monad: MonadAdd1[M2])(func: ToDecoderGeneric1.FuncImpl1[M1, M2]): M2[F[M1]]
+trait Mabc[M1[_[_], _[_]]]
+
+trait ToABCCode[M1[_[_[_]], _[_]], S1[_]] {
+  // type IdM[XT[_], T] = XT
+  // def apply[T]: M1[IdM, S1]
 }
 
-object ToDecoderGeneric1 {
+trait Hcc[F[_[_]]] {
+  def toHList1[M2[_[_[_]], _[_]], M1[_]] /*(monad: Mabc[M2])(func: ToDecoderGeneric1.FuncImpl1[M1, M2])*/: M2[F, M1]
+}
+
+object Hcc {
 
   type IdImpl[T] = T
 
@@ -15,7 +21,7 @@ object ToDecoderGeneric1 {
     def apply[T]: M2[M1[T]]
   }
 
-  trait HListFuncMapGenericX[Source1, Target1, M1[_], M2[_]] {
+  /*trait HListFuncMapGenericX[Source1, Target1, M1[_], M2[_]] {
     def output(monad: MonadAdd1[M2])(func: FuncImpl1[M1, M2]): M2[Target1]
   }
   object HListFuncMapGenericX {
@@ -77,5 +83,5 @@ object ToDecoderGeneric1 {
     def impl[M1[_], M2[_]]: SimpleFuncion1Impl[F, M1, M2] => (MonadAdd1[M2] => FuncImpl1[M1, M2] => M2[F[M1]])
     override def toHList1[M2[_], M1[_]](monad: MonadAdd1[M2])(func: FuncImpl1[M1, M2]): M2[F[M1]] =
       impl[M1, M2](new SimpleFuncion1Impl[F, M1, M2])(monad)(func)
-  }
+  }*/
 }

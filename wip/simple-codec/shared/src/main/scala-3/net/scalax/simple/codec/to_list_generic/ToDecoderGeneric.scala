@@ -2,7 +2,7 @@ package net.scalax.simple.codec
 package to_list_generic
 
 trait ToDecoderGeneric[F[_[_]]] {
-  def toHList[M1[_], M2[_], M3[_, _]](monad: MonadAdd[M3])(func: ToDecoderGeneric.FuncImpl[M3, M1, M2]): M3[F[M1], F[M2]]
+  def toHList[M3[_, _], M1[_], M2[_]](monad: MonadAdd[M3])(func: ToDecoderGeneric.FuncImpl[M3, M1, M2]): M3[F[M1], F[M2]]
 }
 
 object ToDecoderGeneric {
@@ -106,7 +106,7 @@ object ToDecoderGeneric {
 
   trait Impl[F[_[_]]] extends ToDecoderGeneric[F] {
     def impl[M1[_], M2[_, _], M3[_]]: SimpleFuncion1Impl[F, M1, M2, M3] => (MonadAdd[M2] => FuncImpl[M2, M1, M3] => M2[F[M1], F[M3]])
-    override def toHList[M1[_], M3[_], M2[_, _]](monad: MonadAdd[M2])(func: FuncImpl[M2, M1, M3]): M2[F[M1], F[M3]] =
+    override def toHList[M2[_, _], M1[_], M3[_]](monad: MonadAdd[M2])(func: FuncImpl[M2, M1, M3]): M2[F[M1], F[M3]] =
       impl[M1, M2, M3](SimpleFuncion1Impl[F, M1, M2, M3])(monad)(func)
   }
 }
