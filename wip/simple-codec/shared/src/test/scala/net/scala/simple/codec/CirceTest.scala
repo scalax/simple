@@ -78,7 +78,7 @@ object xxbb1 extends IOApp {
     private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode
 
     override def toHList[M2[_, _], M1[_], M3[_]](
-      monad: MonadAdd[M2]
+      monad: MonadAdd1111[M2]
     )(
       func: ToDecoderGeneric.FuncImpl[M2, M1, M3]
     ): M2[CatName[({ type U1[X] = M1[String] })#U1], CatName[({ type U1[X] = M3[String] })#U1]] =

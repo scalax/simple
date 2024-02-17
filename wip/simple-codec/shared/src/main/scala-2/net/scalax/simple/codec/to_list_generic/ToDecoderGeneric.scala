@@ -3,6 +3,8 @@ package to_list_generic
 
 import shapeless._
 
+import net.scalax.simple.codec.{MonadAdd1111 => MonadAdd}
+
 trait ToDecoderGeneric[F[_[_]]] {
   def toHList[M3[_, _], M1[_], M2[_]](monad: MonadAdd[M3])(func: ToDecoderGeneric.FuncImpl[M3, M1, M2]): M3[F[M1], F[M2]]
 }

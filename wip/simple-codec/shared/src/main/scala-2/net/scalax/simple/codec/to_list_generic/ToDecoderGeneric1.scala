@@ -12,7 +12,7 @@ object ToDecoderGeneric1 {
   def fromGeneric2[F[_[_]]](generic2: ToDecoderGeneric[F], modelStr: F[StrImpl]): ToDecoderGeneric1[F] = new ToDecoderGeneric1[F] {
     def toHList1[M2[_], M1[_]](monad: MonadAdd1[M2])(func: ToDecoderGeneric1.FuncImpl1[M1, M2]): M2[F[M1]] = {
       type X[A, B] = A => M2[B]
-      val mAdd: MonadAdd[X] = new MonadAdd[X] {
+      val mAdd: MonadAdd1111[X] = new MonadAdd1111[X] {
         override def zip[A, B, S, T](ma: A => M2[B], ms: S => M2[T]): ((A, S)) => M2[(B, T)] = { t =>
           val t1 = ma(t._1)
           val t2 = ms(t._2)

@@ -61,7 +61,7 @@ object BasedInstalled {
           val func1Impl: ToDecoderGeneric.FuncImpl[M1, T1, TOut] = new ToDecoderGeneric.FuncImpl[M1, T1, TOut] {
             override def apply[T]: T1[T] => TOut[T] = func[T]
           }
-          val monadImpl: MonadAdd[M1] = new MonadAdd[M1] {
+          val monadImpl: MonadAdd1111[M1] = new MonadAdd1111[M1] {
             override def zip[A, B, S, T](ma: A => B, ms: S => T): Tuple2[A, S] => Tuple2[B, T] = t => ma(t._1) -> ms(t._2)
             override def to[A, B, S, T](m1: A => B)(in1: A => S, in2: B => T)(out1: S => A, out2: T => B): S => T = sModel =>
               in2(m1(out1(sModel)))
