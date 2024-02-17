@@ -9,7 +9,29 @@ trait ToDecoderGeneric1[F[_[_]]] {
 
 object ToDecoderGeneric1 {
 
-  type IdImpl[T] = T
+  def fromGeneric2[F[_[_]]](generic2: ToDecoderGeneric[F], modelStr: F[StrImpl]): ToDecoderGeneric1[F] = new ToDecoderGeneric1[F] {
+    def toHList1[M2[_], M1[_]](monad: MonadAdd1[M2])(func: ToDecoderGeneric1.FuncImpl1[M1, M2]): M2[F[M1]] = {
+      type X[A, B] = A => M2[B]
+      val mAdd: MonadAdd[X] = new MonadAdd[X] {
+        override def zip[A, B, S, T](ma: A => M2[B], ms: S => M2[T]): ((A, S)) => M2[(B, T)] = { t =>
+          val t1 = ma(t._1)
+          val t2 = ms(t._2)
+          monad.zip(t1, t2)
+        }
+        override def to[A, B, S, T](m1: A => M2[B])(in1: A => S, in2: B => T)(in3: S => A, in4: T => B): S => M2[T] = s =>
+          monad.to[B, T](m1(in3(s)))(in2)(in4)
+        override def zero: Unit => M2[Unit] = _ => monad.zero
+      }
+      val funcImpl: ToDecoderGeneric.FuncImpl[X, StrImpl, M1] = new ToDecoderGeneric.FuncImpl[X, StrImpl, M1] {
+        override def apply[T]: StrImpl[T] => M2[M1[T]] = _ => func[T]
+      }
+      val to = generic2.toHList[X, StrImpl, M1](mAdd)(funcImpl)
+      to(modelStr)
+    }
+  }
+
+  type IdImpl[T]  = T
+  type StrImpl[T] = String
 
   trait FuncImpl1[M1[_], M2[_]] {
     def apply[T]: M2[M1[T]]
