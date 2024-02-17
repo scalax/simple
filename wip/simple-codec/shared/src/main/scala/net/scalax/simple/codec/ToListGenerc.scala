@@ -40,10 +40,7 @@ object ToListGeneric {
 
     def fromOther(o1: ToDecoderGeneric1[F]): ToListGeneric[F] = new ToListGeneric[F] {
       override def toList[TA](input: F[({ type U1[_] = TA })#U1]): List[TA] = {
-        val func = new ToDecoderGeneric1.FuncImpl1[
-          ({ type U1[NI] = TA })#U1,
-          ({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1
-        ] {
+        val func = new ToDecoderGeneric1.FuncImpl1[({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1] {
           override def apply[T]: MonadAddImpl1[TA, TA] = new MonadAddImpl1[TA, TA] {
             override def toList(model: TA): List[TA] => List[TA] = l => model :: l
           }

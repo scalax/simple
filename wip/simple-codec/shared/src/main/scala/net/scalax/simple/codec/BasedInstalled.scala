@@ -1,13 +1,13 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric1}
+import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric1, ToDecoderGeneric2222}
 import net.scalax.simple.codec.unzip_generic.Func50GenericImpl
 
 trait BasedInstalled[F[_[_]]] {
   def labelled: LabelledInstalled[F]
-  def funcion50: Function50Generic[F]
   def decode: ToDecoderGeneric[F]
   def decode1: ToDecoderGeneric1[F]
+  def decode2222: ToDecoderGeneric2222[F]
 }
 
 object BasedInstalled {
@@ -15,23 +15,24 @@ object BasedInstalled {
   class DerivedApply[F[_[_]]] {
     def derived(
       compatLabelledInstalled: CompatLabelledInstalled[F],
-      mapper: Function50Generic[F],
-      decode: ToDecoderGeneric[F]
+      decode: ToDecoderGeneric[F],
+      decode2222: ToDecoderGeneric2222[F]
     ): BasedInstalled[F] = {
-      val l1 = LabelledInstalled[F].derived(compatLabelledInstalled, mapper)
-      derived(l1, mapper, decode)
+      val l1 = LabelledInstalled[F].derived(compatLabelledInstalled)
+      derived(l1, decode, decode2222)
     }
 
     def derived(
       labelledInstalled: LabelledInstalled[F],
-      mapper: Function50Generic[F],
-      decode: ToDecoderGeneric[F]
+      decode: ToDecoderGeneric[F],
+      decode2222: ToDecoderGeneric2222[F]
     ): BasedInstalled[F] = {
-      val l1          = labelledInstalled
-      val decodeImpl  = decode
-      val decode1Impl = ToDecoderGeneric1.fromGeneric2[F](decode, labelledInstalled.model)
+      val l1             = labelledInstalled
+      val decodeImpl     = decode
+      val decode1Impl    = ToDecoderGeneric1.fromGeneric2[F](decode, labelledInstalled.model)
+      val decode2222Impl = decode2222
 
-      val func50_1: Func50GenericImpl[F] = new Func50GenericImpl[F] {
+      /*val func50_1: Func50GenericImpl[F] = new Func50GenericImpl[F] {
         override def function0[T[_]](func1: Function0Apply[T]): F[T] = mapper.function0[T](func1)
         override def function2[S[_], T[_], U[_]](func1: Function2Apply[S, T, U])(f1: F[S], f2: F[T]): F[U] = {
           /*trait TMImpl[MX1[_], MX2[_]] {
@@ -69,13 +70,13 @@ object BasedInstalled {
           }
           decode.toHList[M1, T1, TOut](monadImpl)(func1Impl)(t1)
         }
-      }
+      }*/
 
       new BasedInstalled[F] {
-        override def labelled: LabelledInstalled[F]  = l1
-        override def funcion50: Function50Generic[F] = mapper
-        override def decode: ToDecoderGeneric[F]     = decodeImpl
-        override def decode1: ToDecoderGeneric1[F]   = decode1Impl
+        override def labelled: LabelledInstalled[F]      = l1
+        override def decode: ToDecoderGeneric[F]         = decodeImpl
+        override def decode1: ToDecoderGeneric1[F]       = decode1Impl
+        override def decode2222: ToDecoderGeneric2222[F] = decode2222Impl
       }
     }
   }

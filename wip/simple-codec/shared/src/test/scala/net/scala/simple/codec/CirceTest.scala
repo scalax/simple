@@ -6,7 +6,7 @@ import io.circe.syntax._
 import cats.effect._
 import net.scalax.simple.codec
 import net.scalax.simple.codec.LabelledInstalled.ToNamed
-import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric1, ToListGeneric}
+import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric1, ToDecoderGeneric2222, ToListGeneric}
 import net.scalax.simple.codec.unzip_generic.{Func50Generic, Func50GenericImpl}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
@@ -51,12 +51,13 @@ object xxbb1 extends IOApp {
     CompatLabelledInstalled[CatName].derived(simpleGen1[CompatLabelledInstalled.ToNamed].generic)
 
   lazy val deco1_1: ToDecoderGeneric[CatName] = new ToDecoderGeneric.Impl[CatName] {
-    override def impl[M1[_], M2[_, _], M3[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M1].generic, simpleGen1[M3].generic)(_.generic)
+    override def impl[M1[_, _], M2[_], M3[_]] =
+      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic)(_.generic)
   }
-  /*lazy val deco2_1: ToDecoderGeneric1[CatName] = new ToDecoderGeneric1.Impl[CatName] {
-    override def impl[M1[_], M2[_]] = _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M1].generic)(_.generic)
-  }*/
+  lazy val deco2_1: ToDecoderGeneric2222[CatName] = new ToDecoderGeneric2222.Impl[CatName] {
+    override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
+      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
+  }
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
   lazy val li11: LabelledInstalled[FAlias] = LabelledInstalled[FAlias].instance(implicitly[BasedInstalled[CatName]].labelled.model)
@@ -88,18 +89,27 @@ object xxbb1 extends IOApp {
         }
       )
   }
-  /*lazy val deco2_1_2: ToDecoderGeneric1[FAlias] = new ToDecoderGeneric1[FAlias] {
-    private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode1
+  lazy val deco2_1_2: ToDecoderGeneric2222[FAlias] = new ToDecoderGeneric2222[FAlias] {
+    private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode2222
 
-    override def toHList1[M2[_], M1[_]](
-      monad: MonadAdd1[M2]
-    )(func: ToDecoderGeneric1.FuncImpl1[M1, M2]): M2[CatName[({ type U1[X] = M1[String] })#U1]] =
-      toDecoderCatName.toHList1[M2, ({ type U1[X] = M1[String] })#U1](monad)(
-        new ToDecoderGeneric1.FuncImpl1[({ type U1[X] = M1[String] })#U1, M2] {
-          override def apply[T]: M2[M1[String]] = func[String]
+    override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](
+      monad: MonadAdd[M1]
+    )(
+      func: ToDecoderGeneric2222.FuncImpl[M1, M2, M3, M4]
+    ): M1[CatName[({ type U1[X] = M2[String] })#U1], CatName[({ type U1[X] = M3[String] })#U1], CatName[({ type U1[X] = M4[String] })#U1]] =
+      toDecoderCatName.toHList[M1, ({ type U1[X] = M2[String] })#U1, ({ type U1[X] = M3[String] })#U1, ({ type U1[X] = M4[String] })#U1](
+        monad
+      )(
+        new ToDecoderGeneric2222.FuncImpl[
+          M1,
+          ({ type U1[X] = M2[String] })#U1,
+          ({ type U1[X] = M3[String] })#U1,
+          ({ type U1[X] = M4[String] })#U1
+        ] {
+          override def apply[T]: M1[M2[String], M3[String], M4[String]] = func[String]
         }
       )
-  }*/
+  }
 
   implicit lazy val modelEncoder: FillIdentity[CatName, Encoder] =
     FillIdentity[CatName, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
@@ -107,8 +117,8 @@ object xxbb1 extends IOApp {
     FillIdentity[CatName, EncoderAux].derived2(simpleGen1[EncoderAux].generic)(_.generic)
 
   implicit lazy val basedInstalled1: BasedInstalled[CatName] =
-    BasedInstalled[CatName].derived(compatLabelledInstalled, im111, deco1_1)
-  implicit lazy val basedInstalled2: BasedInstalled[FAlias] = BasedInstalled[FAlias].derived(li11, gen11, deco2_1_1)
+    BasedInstalled[CatName].derived(compatLabelledInstalled, im111, deco1_1, deco2_1)
+  implicit lazy val basedInstalled2: BasedInstalled[FAlias] = BasedInstalled[FAlias].derived(li11, gen11, deco2_1_1, deco2_1_2)
 
   implicit lazy val li1222: FillIdentity[FAlias, Encoder] =
     FillIdentity[FAlias, Encoder].derived2(simpleGen1[EncoderAux].generic)(_.generic)
