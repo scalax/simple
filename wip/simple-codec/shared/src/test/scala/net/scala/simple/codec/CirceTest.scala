@@ -54,9 +54,9 @@ object xxbb1 extends IOApp {
     override def impl[M1[_], M2[_, _], M3[_]] =
       _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M1].generic, simpleGen1[M3].generic)(_.generic)
   }
-  lazy val deco2_1: ToDecoderGeneric1[CatName] = new ToDecoderGeneric1.Impl[CatName] {
+  /*lazy val deco2_1: ToDecoderGeneric1[CatName] = new ToDecoderGeneric1.Impl[CatName] {
     override def impl[M1[_], M2[_]] = _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M1].generic)(_.generic)
-  }
+  }*/
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
   lazy val li11: LabelledInstalled[FAlias] = LabelledInstalled[FAlias].instance(implicitly[BasedInstalled[CatName]].labelled.model)
@@ -88,7 +88,7 @@ object xxbb1 extends IOApp {
         }
       )
   }
-  lazy val deco2_1_2: ToDecoderGeneric1[FAlias] = new ToDecoderGeneric1[FAlias] {
+  /*lazy val deco2_1_2: ToDecoderGeneric1[FAlias] = new ToDecoderGeneric1[FAlias] {
     private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode1
 
     override def toHList1[M2[_], M1[_]](
@@ -99,7 +99,7 @@ object xxbb1 extends IOApp {
           override def apply[T]: M2[M1[String]] = func[String]
         }
       )
-  }
+  }*/
 
   implicit lazy val modelEncoder: FillIdentity[CatName, Encoder] =
     FillIdentity[CatName, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
@@ -107,8 +107,8 @@ object xxbb1 extends IOApp {
     FillIdentity[CatName, EncoderAux].derived2(simpleGen1[EncoderAux].generic)(_.generic)
 
   implicit lazy val basedInstalled1: BasedInstalled[CatName] =
-    BasedInstalled[CatName].derived(compatLabelledInstalled, im111, deco1_1, deco2_1)
-  implicit lazy val basedInstalled2: BasedInstalled[FAlias] = BasedInstalled[FAlias].derived(li11, gen11, deco2_1_1, deco2_1_2)
+    BasedInstalled[CatName].derived(compatLabelledInstalled, im111, deco1_1)
+  implicit lazy val basedInstalled2: BasedInstalled[FAlias] = BasedInstalled[FAlias].derived(li11, gen11, deco2_1_1)
 
   implicit lazy val li1222: FillIdentity[FAlias, Encoder] =
     FillIdentity[FAlias, Encoder].derived2(simpleGen1[EncoderAux].generic)(_.generic)

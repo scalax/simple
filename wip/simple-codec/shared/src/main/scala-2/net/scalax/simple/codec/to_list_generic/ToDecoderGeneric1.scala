@@ -96,8 +96,8 @@ object ToDecoderGeneric1 {
   }
 
   trait Impl[F[_[_]]] extends ToDecoderGeneric1[F] {
-    def impl[M1[_], M2[_]]: SimpleFuncion1Impl[F, M1, M2] => (MonadAdd1[M2] => FuncImpl1[M1, M2] => M2[F[M1]])
+    def impl11[M1[_], M2[_]]: SimpleFuncion1Impl[F, M1, M2] => (MonadAdd1[M2] => FuncImpl1[M1, M2] => M2[F[M1]])
     override def toHList1[M2[_], M1[_]](monad: MonadAdd1[M2])(func: FuncImpl1[M1, M2]): M2[F[M1]] =
-      impl[M1, M2](new SimpleFuncion1Impl[F, M1, M2])(monad)(func)
+      impl11[M1, M2](new SimpleFuncion1Impl[F, M1, M2])(monad)(func)
   }
 }

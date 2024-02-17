@@ -16,22 +16,20 @@ object BasedInstalled {
     def derived(
       compatLabelledInstalled: CompatLabelledInstalled[F],
       mapper: Function50Generic[F],
-      decode: ToDecoderGeneric[F],
-      decode1: ToDecoderGeneric1[F]
+      decode: ToDecoderGeneric[F]
     ): BasedInstalled[F] = {
       val l1 = LabelledInstalled[F].derived(compatLabelledInstalled, mapper)
-      derived(l1, mapper, decode, decode1)
+      derived(l1, mapper, decode)
     }
 
     def derived(
       labelledInstalled: LabelledInstalled[F],
       mapper: Function50Generic[F],
-      decode: ToDecoderGeneric[F],
-      decode1: ToDecoderGeneric1[F]
+      decode: ToDecoderGeneric[F]
     ): BasedInstalled[F] = {
       val l1          = labelledInstalled
       val decodeImpl  = decode
-      val decode1Impl = decode1
+      val decode1Impl = ToDecoderGeneric1.fromGeneric2[F](decode, labelledInstalled.model)
 
       val func50_1: Func50GenericImpl[F] = new Func50GenericImpl[F] {
         override def function0[T[_]](func1: Function0Apply[T]): F[T] = mapper.function0[T](func1)
