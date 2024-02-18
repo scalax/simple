@@ -24,7 +24,7 @@ object Codegen50Text2:
 
   def trait1: String = "222"
 
-  def render: String =
+  def render_not_use: String =
     s"""
         trait CompatFunction50[M[${repeat50_dot(_ => '_'.charString)}], ${repeat50_dot(i => s"Param$i[_]")}] {
           def model[T]: M[${repeat50_dot(i => s"Param$i[T]")}]

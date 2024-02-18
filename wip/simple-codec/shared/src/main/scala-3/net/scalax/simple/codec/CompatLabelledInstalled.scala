@@ -3,31 +3,26 @@ package net.scalax.simple.codec
 import net.scalax.simple.codec.generic.SimpleName
 
 trait CompatLabelledInstalled[F[_[_]]] {
-  def model: F[CompatLabelledInstalled.ToNamed]
+  def model: F[CompatLabelledInstalled.CompatNamed]
 }
 
 object CompatLabelledInstalled {
 
-  import java.time._
-  import io.circe._
-  given Encoder[LocalDateTime] = CodecI.localdatetimeEncoder
+  type CompatType     = String
+  type CompatNamed[_] = CompatType
 
-  println(implicitly[Encoder[LocalDateTime]])
-  println(implicitly[Encoder[LocalDateTime]])
-  println(implicitly[Encoder[LocalDateTime]])
-  println(implicitly[Encoder[LocalDateTime]])
-  println(implicitly[Encoder[LocalDateTime]])
-
-  type ToNamed[_] = String
+  def compatToString(n: CompatType): String = n
 
   class DerivedApply[F[_[_]]] {
-    def derived[HTypeTemp](labelled: SimpleName[F[ToNamed], HTypeTemp] with SimpleFrom[F[ToNamed], HTypeTemp]): CompatLabelledInstalled[F] =
+    def derived[HTypeTemp](
+      labelled: SimpleName[F[CompatNamed], HTypeTemp] with SimpleFrom[F[CompatNamed], HTypeTemp]
+    ): CompatLabelledInstalled[F] =
       instance(labelled.from(labelled.names))
 
-    def instance(model: F[ToNamed]): CompatLabelledInstalled[F] = {
+    def instance(model: F[CompatNamed]): CompatLabelledInstalled[F] = {
       val model1 = model
       new CompatLabelledInstalled[F] {
-        override val model: F[ToNamed] = model1
+        override val model: F[CompatNamed] = model1
       }
     }
 

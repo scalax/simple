@@ -13,7 +13,9 @@ object ToListGeneric {
     def toList(model: ModelType): List[ProType] => List[ProType]
   }
 
-  def monadImpl[Protype]: MonadAdd1[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] =
+  def monadImpl[Protype]: MonadAdd1[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] = {
+    val identityFunction: List[Protype] => List[Protype] = identity
+
     new MonadAdd1[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] {
       override def zip[U, X](
         m1: MonadAddImpl1[Protype, U],
@@ -30,10 +32,10 @@ object ToListGeneric {
           override def toList(model: X): List[Protype] => List[Protype] = param.toList(n(model))
         }
       override val zero: MonadAddImpl1[Protype, Unit] = new MonadAddImpl1[Protype, Unit] {
-        private val identityFunction: List[Protype] => List[Protype]     = identity _
         override def toList(model: Unit): List[Protype] => List[Protype] = identityFunction
       }
     }
+  }
 
   class ToListGenericApply[F[_[_]]] {
     def derived(basedInstalled: BasedInstalled[F]): ToListGeneric[F] = fromOther(basedInstalled.decode1)
