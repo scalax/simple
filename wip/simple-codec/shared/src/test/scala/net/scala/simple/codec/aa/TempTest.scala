@@ -7,8 +7,6 @@ import cats.effect._
 import cats.~>
 import net.scalax.simple.codec.{CompatLabelledInstalled, FillIdentity, IOApp1, LabelledInstalled}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.unzip_generic.Func50Generic
-import codec.Function50Generic
 import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToListGeneric}
 
 case class CatNameScala11[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
@@ -23,17 +21,11 @@ object TempTest11 extends IOApp_1 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatNameScala11, I].derived
 
-  implicit val im111: Function50Generic[CatNameScala11] = new Func50Generic.Impl[CatNameScala11] {
-    override def impl1[In1[_]] = _.derived2(simpleGen1[cats.Id].generic, simpleGen1[In1].generic)(_.generic)
-    override def impl2[In1[_], In2[_], In3[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[In1].generic, simpleGen1[In2].generic, simpleGen1[In3].generic)(_.generic)
-  }
-
   implicit val im1: CompatLabelledInstalled[CatNameScala11] =
-    CompatLabelledInstalled[CatNameScala11].derived(simpleGen1[CompatLabelledInstalled.ToNamed].generic)
-  val deco1: ToDecoderGeneric[CatNameScala11] = new ToDecoderGeneric.Impl[CatNameScala11] {
-    override def impl[M1[_], M2[_, _], M3[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M1].generic, simpleGen1[M3].generic)(_.generic)
+    CompatLabelledInstalled[CatNameScala11].derived(simpleGen1[CompatLabelledInstalled.CompatNamed].generic)
+  implicit val deco1: ToDecoderGeneric[CatNameScala11] = new ToDecoderGeneric.Impl[CatNameScala11] {
+    override def impl[M1[_, _], M2[_], M3[_]] =
+      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic)(_.generic)
   }
   implicit val userNamedGeneric1: LabelledInstalled[CatNameScala11] = LabelledInstalled[CatNameScala11].derived
   implicit val im3: FillIdentity[CatNameScala11, Encoder] =

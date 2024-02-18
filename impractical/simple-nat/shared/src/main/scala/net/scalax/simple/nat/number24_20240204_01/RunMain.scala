@@ -3,7 +3,7 @@ package number24
 
 object RunTest1 {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val jinzhi: jinzhi = jinzhi0
     println(jinzhi.append("Jackie"))
     println(jinzhi.append("Jackie").append(2))

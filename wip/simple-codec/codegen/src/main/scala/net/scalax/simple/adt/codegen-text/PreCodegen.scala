@@ -56,7 +56,7 @@ object PreCodegen:
       s"new DFuncTypeImpl[$start1, $start2](ia$times, ib$times, ${mapInstance(times + 1)(max)(start1 + "#DataTail", start2 + "#DataTail")})"
     else "DFuncTypeZero"
 
-  def text1: String =
+  def text1_not_use: String =
     s"""
       package net.scalax.simple.codec
 
