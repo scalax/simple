@@ -51,17 +51,17 @@ object CirceModelSample {
   def encoder[U[_]](implicit typeEncoder: Encoder[U[Int]], basedInstalled: BasedInstalled[UserAbsAlias[U]#F1]): Encoder[UserAbs[Id, U]] = {
     val nameProp   = basedInstalled.labelled.model
     val enProps    = implicitly[FillIdentity[UserAbsAlias[U]#F1, Encoder]].model
-    val funcAction = basedInstalled.funcion50
     val toListFunc = ToListGeneric[UserAbsAlias[U]#F1].derived(basedInstalled)
 
     Encoder.instance { u =>
-      val tempModel = funcAction.function3(new Function3Apply[Id, LabelledInstalled.ToNamed, Encoder, NamedJsonAny] {
+      /*val tempModel = funcAction.function3(new Function3Apply[Id, LabelledInstalled.ToNamed, Encoder, NamedJsonAny] {
         override def apply[X](i1: X, i2: String, i3: Encoder[X]): (String, Json) = i2 -> i3(i1)
       })(u, nameProp, enProps)
 
       val modelCol = toListFunc.toList[(String, Json)](tempModel)
 
-      Json.fromJsonObject(JsonObject.fromIterable(modelCol))
+      Json.fromJsonObject(JsonObject.fromIterable(modelCol))*/
+      ???
     }
   }
 

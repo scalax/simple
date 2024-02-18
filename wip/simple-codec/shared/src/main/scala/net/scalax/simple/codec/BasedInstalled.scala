@@ -18,7 +18,7 @@ object BasedInstalled {
       decode: ToDecoderGeneric[F],
       decode2222: ToDecoderGeneric2222[F]
     ): BasedInstalled[F] = {
-      val l1 = LabelledInstalled[F].derived(compatLabelledInstalled)
+      val l1 = LabelledInstalled[F].derived(compatLabelledInstalled, decode)
       derived(l1, decode, decode2222)
     }
 
