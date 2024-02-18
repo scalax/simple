@@ -17,9 +17,9 @@ object LabelledInstalled {
     }
 
   class DerivedApply[F[_[_]]] {
-    def derived(implicit compatLabelledInstalled: CompatLabelledInstalled[F], mapper: ToDecoderGeneric[F]): LabelledInstalled[F] = {
-      val mapG: MapGenerc[F] = MapGenerc[F].fromInstance(mapper)
-      val ins                = mapG.map(compatMapper)(compatLabelledInstalled.model)
+    def derived(implicit basedInstalled: BasedInstalled[F]): LabelledInstalled[F] = {
+      val mapG: MapGenerc[F] = MapGenerc[F].derived(basedInstalled)
+      val ins                = mapG.map(compatMapper)(basedInstalled.labelled)
       instance(ins)
     }
 

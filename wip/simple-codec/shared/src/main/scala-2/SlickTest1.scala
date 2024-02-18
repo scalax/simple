@@ -54,10 +54,10 @@ object Model2 {
   }
 
   implicit def basedInstalled[U[_]]: BasedInstalled[UserAbsAlias[U]#F1] =
-    BasedInstalled[UserAbsAlias[U]#F1].derived(userNamedGenericPrepare[U], deco1_1[U], deco1_2[U])
+    BasedInstalled[UserAbsAlias[U]#F1].derived(userNamedGenericPrepare[U].model, deco1_1[U], deco1_2[U])
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
-  def userNamed[U[_]]: UserAbs[StrAny, U] = implicitly[BasedInstalled[UserAbsAlias[U]#F1]].labelled
+  def userNamed[U[_]]: UserAbs[StrAny, U] = LabelledInstalled[UserAbsAlias[U]#F1].derived.model
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
