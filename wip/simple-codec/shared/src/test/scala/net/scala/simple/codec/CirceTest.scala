@@ -16,17 +16,16 @@ trait IOApp1 {
 object xxbb1 extends IOApp {
 
   def encodeModel[F[_[_]]](implicit
-    g: FillIdentity[F, Encoder],
+    g: F[Encoder],
     g1: BasedInstalled[F]
   ): Encoder[F[cats.Id]] = {
     val toList: ToListGeneric[F]  = ToListGeneric[F].derived(g1)
     val zipGeneric: ZipGeneric[F] = ZipGeneric[F].derived(g1)
     val mapGenerc: MapGenerc[F]   = MapGenerc[F].derived(g1)
-    val gModel: F[Encoder]        = g.model
     val labelledInstalled         = g1.labelled
 
     Encoder.instance[F[cats.Id]] { m =>
-      val zip1 = zipGeneric.zip(m, gModel)
+      val zip1 = zipGeneric.zip(m, g)
       val map1 = mapGenerc.map[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[T1] = Json })#U1](
         new MapGenerc.MapImpl[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[T1] = Json })#U1] {
           override def map[X1]: ((X1, Encoder[X1])) => Json = s => s._2(s._1)
@@ -39,16 +38,15 @@ object xxbb1 extends IOApp {
   }
 
   def decodeModel[F[_[_]]](implicit
-    g: FillIdentity[F, Decoder],
+    g: F[Decoder],
     g1: BasedInstalled[F]
   ): Decoder[F[cats.Id]] = {
     val zipGeneric: ZipGeneric[F]   = ZipGeneric[F].derived(g1)
     val mapGenerc: MapGenerc[F]     = MapGenerc[F].derived(g1)
-    val gModel: F[Decoder]          = g.model
     val labelledInstalled           = g1.labelled
     val decode: ToDecoderGeneric[F] = ToDecoderGeneric[F].derived(g1)
 
-    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](labelledInstalled, gModel)
+    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](labelledInstalled, g)
     val map1 = mapGenerc.map[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1](
       new MapGenerc.MapImpl[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
         override def map[X1]: ((String, Decoder[X1])) => HCursor => Decoder.Result[X1] =
@@ -118,15 +116,15 @@ object xxbb1 extends IOApp {
       )
   }
 
-  implicit lazy val modelEncoder: FillIdentity[CatName, Encoder] =
-    FillIdentity[CatName, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
-  implicit lazy val modelDecoder: FillIdentity[CatName, Decoder] =
-    FillIdentity[CatName, Decoder].derived2(simpleGen1[Decoder].generic)(_.generic)
+  implicit lazy val modelEncoder: CatName[Encoder] =
+    FillIdentity[CatName, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic).model
+  implicit lazy val modelDecoder: CatName[Decoder] =
+    FillIdentity[CatName, Decoder].derived2(simpleGen1[Decoder].generic)(_.generic).model
 
-  implicit lazy val li1222Encoder: FillIdentity[FAlias, Encoder] =
-    FillIdentity[FAlias, Encoder].derived2(simpleGen1[EncoderAux].generic)(_.generic)
-  implicit lazy val li1222Decoder: FillIdentity[FAlias, Decoder] =
-    FillIdentity[FAlias, Decoder].derived2(simpleGen1[DecoderAux].generic)(_.generic)
+  implicit lazy val li1222Encoder: FAlias[Encoder] =
+    FillIdentity[FAlias, Encoder].derived2(simpleGen1[EncoderAux].generic)(_.generic).model
+  implicit lazy val li1222Decoder: FAlias[Decoder] =
+    FillIdentity[FAlias, Decoder].derived2(simpleGen1[DecoderAux].generic)(_.generic).model
 
   implicit lazy val basedInstalled1: BasedInstalled[CatName] =
     BasedInstalled[CatName].derived(compatLabelledInstalled.model, deco2_1)
