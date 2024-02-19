@@ -42,22 +42,16 @@ object Model2 {
   def userNamedGenericPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
     CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.CompatNamed].generic)
 
-  def deco1_1[U[_]]: ToDecoderGeneric[UserAbsAlias[U]#F1] = new ToDecoderGeneric.Impl[UserAbsAlias[U]#F1] {
-    override def impl[M1[_, _], M2[_], M3[_]] =
-      _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M2].generic, simpleGen1[U, M3].generic)(
-        _.generic
-      )
-  }
   def deco1_2[U[_]]: ToDecoderGeneric2222[UserAbsAlias[U]#F1] = new ToDecoderGeneric2222.Impl[UserAbsAlias[U]#F1] {
     override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
       _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M2].generic, simpleGen1[U, M3].generic, simpleGen1[U, M4].generic)(_.generic)
   }
 
   implicit def basedInstalled[U[_]]: BasedInstalled[UserAbsAlias[U]#F1] =
-    BasedInstalled[UserAbsAlias[U]#F1].derived(userNamedGenericPrepare[U].model, deco1_1[U], deco1_2[U])
+    BasedInstalled[UserAbsAlias[U]#F1].derived(userNamedGenericPrepare[U].model, deco1_2[U])
 
   // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
-  def userNamed[U[_]]: UserAbs[StrAny, U] = LabelledInstalled[UserAbsAlias[U]#F1].derived.model
+  def userNamed[U[_]]: UserAbs[StrAny, U] = implicitly[BasedInstalled[UserAbsAlias[U]#F1]].labelled
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {

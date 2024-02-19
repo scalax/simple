@@ -1,7 +1,5 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.ToDecoderGeneric
-
 trait LabelledInstalled[F[_[_]]] {
   def model: F[LabelledInstalled.Named]
 }
@@ -17,11 +15,13 @@ object LabelledInstalled {
     }
 
   class DerivedApply[F[_[_]]] {
-    def derived(implicit basedInstalled: BasedInstalled[F]): LabelledInstalled[F] = {
+    def fromInstance(m: F[CompatLabelledInstalled.CompatNamed], t: MapGenerc[F]): LabelledInstalled[F] = instance(t.map(compatMapper)(m))
+
+    /*def derived(implicit basedInstalled: BasedInstalled[F]): LabelledInstalled[F] = {
       val mapG: MapGenerc[F] = MapGenerc[F].derived(basedInstalled)
       val ins                = mapG.map(compatMapper)(basedInstalled.labelled)
       instance(ins)
-    }
+    }*/
 
     def instance(model: F[Named]): LabelledInstalled[F] = {
       val model1 = model

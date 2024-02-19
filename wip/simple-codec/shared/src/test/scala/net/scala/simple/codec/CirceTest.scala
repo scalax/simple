@@ -19,11 +19,11 @@ object xxbb1 extends IOApp {
     g: FillIdentity[F, Encoder],
     g1: BasedInstalled[F]
   ): Encoder[F[cats.Id]] = {
-    val toList: ToListGeneric[F]                = ToListGeneric[F].derived(g1)
-    val zipGeneric: ZipGeneric[F]               = ZipGeneric[F].derived(g1)
-    val mapGenerc: MapGenerc[F]                 = MapGenerc[F].derived(g1)
-    val gModel: F[Encoder]                      = g.model
-    val labelledInstalled: LabelledInstalled[F] = LabelledInstalled[F].derived(g1)
+    val toList: ToListGeneric[F]  = ToListGeneric[F].derived(g1)
+    val zipGeneric: ZipGeneric[F] = ZipGeneric[F].derived(g1)
+    val mapGenerc: MapGenerc[F]   = MapGenerc[F].derived(g1)
+    val gModel: F[Encoder]        = g.model
+    val labelledInstalled         = g1.labelled
 
     Encoder.instance[F[cats.Id]] { m =>
       val zip1 = zipGeneric.zip(m, gModel)
@@ -32,7 +32,7 @@ object xxbb1 extends IOApp {
           override def map[X1]: ((X1, Encoder[X1])) => Json = s => s._2(s._1)
         }
       )(zip1)
-      val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](labelledInstalled.model, map1)
+      val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](labelledInstalled, map1)
       val list1 = toList.toList[(String, Json)](zip2)
       Json.fromJsonObject(JsonObject.fromIterable(list1))
     }
@@ -42,12 +42,13 @@ object xxbb1 extends IOApp {
     g: FillIdentity[F, Decoder],
     g1: BasedInstalled[F]
   ): Decoder[F[cats.Id]] = {
-    val zipGeneric: ZipGeneric[F]               = ZipGeneric[F].derived(g1)
-    val mapGenerc: MapGenerc[F]                 = MapGenerc[F].derived(g1)
-    val gModel: F[Decoder]                      = g.model
-    val labelledInstalled: LabelledInstalled[F] = LabelledInstalled[F].derived(g1)
+    val zipGeneric: ZipGeneric[F]   = ZipGeneric[F].derived(g1)
+    val mapGenerc: MapGenerc[F]     = MapGenerc[F].derived(g1)
+    val gModel: F[Decoder]          = g.model
+    val labelledInstalled           = g1.labelled
+    val decode: ToDecoderGeneric[F] = ToDecoderGeneric[F].derived(g1)
 
-    val zip1 = zipGeneric.zip(labelledInstalled.model, gModel)
+    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](labelledInstalled, gModel)
     val map1 = mapGenerc.map[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1](
       new MapGenerc.MapImpl[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
         override def map[X1]: ((String, Decoder[X1])) => HCursor => Decoder.Result[X1] =
@@ -73,7 +74,7 @@ object xxbb1 extends IOApp {
         override def apply[T]: (HCursor => Decoder.Result[T]) => Decoder.Result[T] = s => s(hCursor)
       }
     def contextWith(hCursor: HCursor): F[({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] => Decoder.Result[F[cats.Id]] = {
-      g1.decode.toHList[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id](monadAdd)(toDecoder(hCursor))
+      decode.toHList[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id](monadAdd)(toDecoder(hCursor))
     }
 
     Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
@@ -88,10 +89,6 @@ object xxbb1 extends IOApp {
   lazy val compatLabelledInstalled: CompatLabelledInstalled[CatName] =
     CompatLabelledInstalled[CatName].derived(simpleGen1[CompatLabelledInstalled.CompatNamed].generic)
 
-  lazy val deco1_1: ToDecoderGeneric[CatName] = new ToDecoderGeneric.Impl[CatName] {
-    override def impl[M1[_, _], M2[_], M3[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic)(_.generic)
-  }
   lazy val deco2_1: ToDecoderGeneric2222[CatName] = new ToDecoderGeneric2222.Impl[CatName] {
     override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
       _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
@@ -99,20 +96,6 @@ object xxbb1 extends IOApp {
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
 
-  lazy val deco2_1_1: ToDecoderGeneric[FAlias] = new ToDecoderGeneric[FAlias] {
-    private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode
-
-    override def toHList[M2[_, _], M1[_], M3[_]](
-      monad: MonadAdd1111[M2]
-    )(
-      func: ToDecoderGeneric.FuncImpl[M2, M1, M3]
-    ): M2[CatName[({ type U1[X] = M1[String] })#U1], CatName[({ type U1[X] = M3[String] })#U1]] =
-      toDecoderCatName.toHList[M2, ({ type U1[X] = M1[String] })#U1, ({ type U1[X] = M3[String] })#U1](monad)(
-        new ToDecoderGeneric.FuncImpl[M2, ({ type U1[X] = M1[String] })#U1, ({ type U1[X] = M3[String] })#U1] {
-          override def apply[T]: M2[M1[String], M3[String]] = func[String]
-        }
-      )
-  }
   lazy val deco2_1_2: ToDecoderGeneric2222[FAlias] = new ToDecoderGeneric2222[FAlias] {
     private val toDecoderCatName = implicitly[BasedInstalled[CatName]].decode2222
 
@@ -146,9 +129,9 @@ object xxbb1 extends IOApp {
     FillIdentity[FAlias, Decoder].derived2(simpleGen1[DecoderAux].generic)(_.generic)
 
   implicit lazy val basedInstalled1: BasedInstalled[CatName] =
-    BasedInstalled[CatName].derived(compatLabelledInstalled.model, deco1_1, deco2_1)
+    BasedInstalled[CatName].derived(compatLabelledInstalled.model, deco2_1)
   implicit lazy val basedInstalled2: BasedInstalled[FAlias] =
-    BasedInstalled[FAlias].derived(compatLabelledInstalled.model, deco2_1_1, deco2_1_2)
+    BasedInstalled[FAlias].derived(compatLabelledInstalled.model, deco2_1_2)
 
   implicit lazy val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel
   implicit lazy val caseClassDecoder: Decoder[CatName[cats.Id]]             = decodeModel
@@ -163,7 +146,7 @@ object xxbb1 extends IOApp {
     namexu = "jerokwjoe收代理费加沃尔"
   )
 
-  val namedModel: CatName[EncoderModelAux] = LabelledInstalled[FAlias].derived.model
+  val namedModel: CatName[EncoderModelAux] = implicitly[BasedInstalled[FAlias]].labelled
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {
