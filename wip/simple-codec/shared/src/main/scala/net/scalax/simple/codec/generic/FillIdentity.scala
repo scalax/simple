@@ -19,10 +19,6 @@ object FillIdentity {
   }
 
   class DerivedApply[F[_[_]], I[_], Poly] {
-    /*object law {
-      def apply[Model >: ModelMode <: ModelMode]: DerivedApply[F, I, Model] = new DerivedApply[F, I, Model]
-    }*/
-
     def derived2[H1](generic1: SimpleFrom[F[I], H1]): InnerApply2[F, I, H1, Poly] = new InnerApply2[F, I, H1, Poly](generic1)
 
     def instance(model: F[I]): FillIdentity[F, I] = {
@@ -36,10 +32,7 @@ object FillIdentity {
   }
 
   class InnerApply2[F[_[_]], I[_], H1, P](simpleFrom: SimpleFrom[F[I], H1]) {
-    def apply(f: FillIdentityGeneric[H1, P] => utils.impl.FillerId[H1, P]): FillIdentity[F, I] =
-      new FillIdentity[F, I] {
-        override val model: F[I] = simpleFrom.from(f(FillIdentityGeneric[H1, P]).value)
-      }
+    def apply(f: FillIdentityGeneric[H1, P] => utils.impl.FillerId[H1, P]): F[I] = simpleFrom.from(f(FillIdentityGeneric[H1, P]).value)
   }
 
   def applyPoly[F[_[_]], I[_], Poly]: DerivedApply[F, I, Poly]             = new DerivedApply[F, I, Poly]

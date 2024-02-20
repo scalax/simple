@@ -1,9 +1,5 @@
 package net.scalax.simple.codec
 
-trait LabelledInstalled[F[_[_]]] {
-  def model: F[LabelledInstalled.Named]
-}
-
 object LabelledInstalled {
 
   type Named[_] = String
@@ -15,22 +11,10 @@ object LabelledInstalled {
     }
 
   class DerivedApply[F[_[_]]] {
-    def fromInstance(m: F[CompatLabelledInstalled.CompatNamed], t: MapGenerc[F]): LabelledInstalled[F] = instance(t.map(compatMapper)(m))
-
-    /*def derived(implicit basedInstalled: BasedInstalled[F]): LabelledInstalled[F] = {
-      val mapG: MapGenerc[F] = MapGenerc[F].derived(basedInstalled)
-      val ins                = mapG.map(compatMapper)(basedInstalled.labelled)
-      instance(ins)
-    }*/
-
-    def instance(model: F[Named]): LabelledInstalled[F] = {
-      val model1 = model
-      new LabelledInstalled[F] {
-        override val model: F[Named] = model1
-      }
+    def derived(implicit m: BasedInstalled[F]): F[Named] = {
+      val mapper = MapGenerc[F].derived(m)
+      mapper.map(compatMapper)(m.labelled)
     }
-
-    def summon(implicit model: LabelledInstalled[F]): LabelledInstalled[F] = model
   }
 
   def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]

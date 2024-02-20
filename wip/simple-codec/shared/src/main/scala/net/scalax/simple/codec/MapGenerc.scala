@@ -1,6 +1,6 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric2222}
+import net.scalax.simple.codec.to_list_generic.ToDecoderGeneric
 
 trait MapGenerc[F[_[_]]] {
   def map[S[_], T[_]](input: MapGenerc.MapImpl[S, T]): F[S] => F[T]

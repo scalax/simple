@@ -29,9 +29,9 @@ object Model2 {
   type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
   type OptsFromCol[T]  = Seq[compatAlias.ColumnOptions => ColumnOption[T]]
 
-  def userTypedTypeGeneric[U[_]](implicit tt12: TypedType[U[Int]]): FillIdentity[UserAbsAlias[U]#F1, TypedType] =
+  def userTypedTypeGeneric[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
     FillIdentity[UserAbsAlias[U]#F1, TypedType].derived2(simpleGen1[U, TypedType].generic)(_.generic)
-  def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = userTypedTypeGeneric[U].model
+  def userTypedType[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = userTypedTypeGeneric[U]
 
   class UserAbsAlias[U[_]] {
     type F1[E1[_]] = UserAbs[E1, U]
@@ -39,7 +39,7 @@ object Model2 {
 
   def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].law[UserAbs[I, U]].derived
 
-  def userNamedGenericPrepare[U[_]]: CompatLabelledInstalled[UserAbsAlias[U]#F1] =
+  def userNamedGenericPrepare[U[_]]: UserAbs[CompatLabelledInstalled.CompatNamed, U] =
     CompatLabelledInstalled[UserAbsAlias[U]#F1].derived(simpleGen1[U, CompatLabelledInstalled.CompatNamed].generic)
 
   def deco1_2[U[_]]: ToDecoderGeneric2222[UserAbsAlias[U]#F1] = new ToDecoderGeneric2222.Impl[UserAbsAlias[U]#F1] {
@@ -48,10 +48,9 @@ object Model2 {
   }
 
   implicit def basedInstalled[U[_]]: BasedInstalled[UserAbsAlias[U]#F1] =
-    BasedInstalled[UserAbsAlias[U]#F1].derived(userNamedGenericPrepare[U].model, deco1_2[U])
+    BasedInstalled[UserAbsAlias[U]#F1].derived(userNamedGenericPrepare[U], deco1_2[U])
 
-  // def userNamed[U[_]]: UserAbs[StrAny, U] = UserAbs[StrAny, U](id = "id", first = "first", last = "last")
-  def userNamed[U[_]]: UserAbs[StrAny, U] = implicitly[BasedInstalled[UserAbsAlias[U]#F1]].labelled
+  def userNamed[U[_]]: UserAbs[StrAny, U] = LabelledInstalled[UserAbsAlias[U]#F1].derived
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
