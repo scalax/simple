@@ -99,7 +99,7 @@ object xxbb1 extends IOApp {
   implicit lazy val modelDecoder: CatName[Decoder] =
     FillIdentity[CatName, Decoder].derived2(simpleGen1[Decoder].generic)(_.generic)
 
-  lazy val simpleFillE: SimpleFill[CatName] = SimpleFill[CatName].derived
+  lazy val simpleFillE: SimpleFill[FAlias] = SimpleFill[FAlias].derived
   implicit lazy val li1222Encoder: FAlias[Encoder] =
     simpleFillE.fill[({ type E[T] = Encoder[String] })#E](new SimpleFill.FillI[({ type E[T] = Encoder[String] })#E] {
       override def fill[T]: Encoder[String] = Encoder[String]
