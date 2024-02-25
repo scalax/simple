@@ -73,6 +73,24 @@ object utils {
     "德里格的预知"   -> 抗性.zero
   )
 
+  val 巴罗霍尔姆: Vector[(String, 抗性)] = Vector(
+    "温迪戈的命息粉末" -> 抗性.zero,
+    "温迪戈的血气粉末" -> 抗性.zero.copy(流血抗性 = 15),
+    "温迪戈的魂香粉末" -> 抗性.zero.copy(活力抗性 = 15)
+  )
+
+  val 巫登沼泽女巫团: Vector[(String, 抗性)] = Vector(
+    "女巫团的守护粉末" -> 抗性.zero.copy(火焰抗性 = 9, 冰冷抗性 = 9, 闪电抗性 = 9),
+    "女巫团的血腥灰烬" -> 抗性.zero.copy(流血抗性 = 10),
+    "女巫团的黑色灰烬" -> 抗性.zero.copy(混乱抗性 = 10, 穿刺抗性 = 10)
+  )
+
+  val 放逐者: Vector[(String, 抗性)] = Vector(
+    "放逐者的元素平衡"   -> 抗性.zero.copy(火焰抗性 = 12, 冰冷抗性 = 12),
+    "放逐者的天空卫士粉末" -> 抗性.zero.copy(冰冷抗性 = 12, 闪电抗性 = 12),
+    "放逐者的守护之力"   -> 抗性.zero.copy(虚化抗性 = 10)
+  )
+
   @tailrec
   def count(
     fumo_sum: Vector[(String, 抗性)],
