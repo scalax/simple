@@ -6,28 +6,41 @@ import ghdmzsk._
 
 object 乘除 {
 
-  lazy val 被乘数分子: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
-        被乘数分子.inputGHDMZSK(() => tail().inputGHDMZSK(other))
+  trait Num1 {
+    def pre1: ghdmzsk
+  }
+  trait Num2 {
+    def pre2: ghdmzsk
+  }
+
+  val 被乘数分子: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(taiInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(otherInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num1 {
+          override def pre1: ghdmzsk = tail()
+          override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
+            otherInput().inputGHDMZSK(() => tail().inputGHDMZSK(other))
+          }
+        }
       }
     }
   }
 
-  lazy val `被乘数分母/乘数分母`: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
-        other().inputGHDMZSK(tail)
+  val `被乘数分母/乘数分母`: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(taiInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(otherInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num2 {
+          override def pre2: ghdmzsk = tail()
+          override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
+            (other().inputGHDMZSK(tail)).inputGHDMZSK(otherInput)
+          }
+        }
       }
     }
   }
 
-  lazy val 乘数分子: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
-        `被乘数分母/乘数分母`.inputGHDMZSK(() => tail().inputGHDMZSK(other))
-      }
-    }
-  }
+  lazy val numInput1: ghdmzsk = 被乘数分子.inputGHDMZSK(() => numInput2)
+
+  lazy val numInput2: ghdmzsk = `被乘数分母/乘数分母`.inputGHDMZSK(() => numInput1)
 
 }
