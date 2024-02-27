@@ -10,23 +10,22 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val data: ADTData[AdtNatPositive[ParamType => I1, AdtNatZero], S]
   ) {
 
-    private def adtApply[X: Adt.CoProducts1[*, I1]](t: X): Adt.CoProduct1[I1] = {
-      Adt.CoProduct1[I1](t)
-    }
+    private val adtApply = Adt.CoProduct1[I1]
 
-    def apply(param: ParamType): ADTData[AdtNatPositive[I1, AdtNatZero], S] = new extra1(data).fold(s => adtApply(s.apply(param)))
+    def apply(param: ParamType): Adt.CoProduct1[I1] =
+      new extra1(data).fold(s => adtApply(s(param)))
+
   }
 
   implicit class extraFunctionAdt2[ParamType, I1, I2, S <: ADTStatus](
     private val data: ADTData[AdtNatPositive[ParamType => I2, AdtNatPositive[ParamType => I1, AdtNatZero]], S]
   ) {
 
-    private def adtApply[X: Adt.CoProducts2[*, I1, I2]](t: X): Adt.CoProduct2[I1, I2] = {
-      Adt.CoProduct2[I1, I2](t)
-    }
+    private val adtApply = Adt.CoProduct2[I1, I2]
 
-    def apply(param: ParamType): ADTData[AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]], S] =
-      new extra2(data).fold(s => adtApply(s.apply(param)), s => adtApply(s.apply(param)))
+    def apply(param: ParamType): Adt.CoProduct2[I1, I2] =
+      new extra2(data).fold(s => adtApply(s(param)), s => adtApply(s(param)))
+
   }
 
   implicit class extraFunctionAdt3[ParamType, I1, I2, I3, S <: ADTStatus](
@@ -36,12 +35,11 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts3[*, I1, I2, I3]](t: X): Adt.CoProduct3[I1, I2, I3] = {
-      Adt.CoProduct3[I1, I2, I3](t)
-    }
+    private val adtApply = Adt.CoProduct3[I1, I2, I3]
 
-    def apply(param: ParamType): ADTData[AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]], S] =
-      new extra3(data).fold(s => adtApply(s.apply(param)), s => adtApply(s.apply(param)), s => adtApply(s.apply(param)))
+    def apply(param: ParamType): Adt.CoProduct3[I1, I2, I3] =
+      new extra3(data).fold(s => adtApply(s(param)), s => adtApply(s(param)), s => adtApply(s(param)))
+
   }
 
   implicit class extraFunctionAdt4[ParamType, I1, I2, I3, I4, S <: ADTStatus](
@@ -51,17 +49,11 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ], S]
   ) {
 
-    private def adtApply[X: Adt.CoProducts4[*, I1, I2, I3, I4]](t: X): Adt.CoProduct4[I1, I2, I3, I4] = {
-      Adt.CoProduct4[I1, I2, I3, I4](t)
-    }
+    private val adtApply = Adt.CoProduct4[I1, I2, I3, I4]
 
-    def apply(param: ParamType): ADTData[AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]], S] =
-      new extra4(data).fold(
-        s => adtApply(s.apply(param)),
-        s => adtApply(s.apply(param)),
-        s => adtApply(s.apply(param)),
-        s => adtApply(s.apply(param))
-      )
+    def apply(param: ParamType): Adt.CoProduct4[I1, I2, I3, I4] =
+      new extra4(data).fold(s => adtApply(s(param)), s => adtApply(s(param)), s => adtApply(s(param)), s => adtApply(s(param)))
+
   }
 
   implicit class extraFunctionAdt5[ParamType, I1, I2, I3, I4, I5, S <: ADTStatus](
@@ -74,20 +66,17 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts5[*, I1, I2, I3, I4, I5]](t: X): Adt.CoProduct5[I1, I2, I3, I4, I5] = {
-      Adt.CoProduct5[I1, I2, I3, I4, I5](t)
-    }
+    private val adtApply = Adt.CoProduct5[I1, I2, I3, I4, I5]
 
-    def apply(
-      param: ParamType
-    ): ADTData[AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]], S] =
+    def apply(param: ParamType): Adt.CoProduct5[I1, I2, I3, I4, I5] =
       new extra5(data).fold(
-        s => adtApply(s.apply(param)),
-        s => adtApply(s.apply(param)),
-        s => adtApply(s.apply(param)),
-        s => adtApply(s.apply(param)),
-        s => adtApply(s.apply(param))
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
       )
+
   }
 
   implicit class extraFunctionAdt6[ParamType, I1, I2, I3, I4, I5, I6, S <: ADTStatus](
@@ -103,21 +92,18 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts6[*, I1, I2, I3, I4, I5, I6]](t: X): Adt.CoProduct6[I1, I2, I3, I4, I5, I6] = {
-      Adt.CoProduct6[I1, I2, I3, I4, I5, I6](t)
-    }
+    private val adtApply = Adt.CoProduct6[I1, I2, I3, I4, I5, I6]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[I6, AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]],
-      S
-    ] = new extra6(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct6[I1, I2, I3, I4, I5, I6] =
+      new extra6(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt7[ParamType, I1, I2, I3, I4, I5, I6, I7, S <: ADTStatus](
@@ -136,22 +122,19 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts7[*, I1, I2, I3, I4, I5, I6, I7]](t: X): Adt.CoProduct7[I1, I2, I3, I4, I5, I6, I7] = {
-      Adt.CoProduct7[I1, I2, I3, I4, I5, I6, I7](t)
-    }
+    private val adtApply = Adt.CoProduct7[I1, I2, I3, I4, I5, I6, I7]
 
-    def apply(param: ParamType): ADTData[AdtNatPositive[
-      I7,
-      AdtNatPositive[I6, AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]]
-    ], S] = new extra7(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct7[I1, I2, I3, I4, I5, I6, I7] =
+      new extra7(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt8[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, S <: ADTStatus](
@@ -173,26 +156,20 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts8[*, I1, I2, I3, I4, I5, I6, I7, I8]](t: X): Adt.CoProduct8[I1, I2, I3, I4, I5, I6, I7, I8] = {
-      Adt.CoProduct8[I1, I2, I3, I4, I5, I6, I7, I8](t)
-    }
+    private val adtApply = Adt.CoProduct8[I1, I2, I3, I4, I5, I6, I7, I8]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[I8, AdtNatPositive[
-        I7,
-        AdtNatPositive[I6, AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]]
-      ]],
-      S
-    ] = new extra8(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct8[I1, I2, I3, I4, I5, I6, I7, I8] =
+      new extra8(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt9[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: ADTStatus](
@@ -217,32 +194,21 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts9[*, I1, I2, I3, I4, I5, I6, I7, I8, I9]](
-      t: X
-    ): Adt.CoProduct9[I1, I2, I3, I4, I5, I6, I7, I8, I9] = {
-      Adt.CoProduct9[I1, I2, I3, I4, I5, I6, I7, I8, I9](t)
-    }
+    private val adtApply = Adt.CoProduct9[I1, I2, I3, I4, I5, I6, I7, I8, I9]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I9,
-        AdtNatPositive[I8, AdtNatPositive[
-          I7,
-          AdtNatPositive[I6, AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]]
-        ]]
-      ],
-      S
-    ] = new extra9(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct9[I1, I2, I3, I4, I5, I6, I7, I8, I9] =
+      new extra9(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt10[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: ADTStatus](
@@ -270,36 +236,22 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts10[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]](
-      t: X
-    ): Adt.CoProduct10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = {
-      Adt.CoProduct10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10](t)
-    }
+    private val adtApply = Adt.CoProduct10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I10,
-        AdtNatPositive[
-          I9,
-          AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-            I6,
-            AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-          ]]]
-        ]
-      ],
-      S
-    ] = new extra10(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] =
+      new extra10(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt11[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: ADTStatus](
@@ -330,40 +282,23 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts11[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]](
-      t: X
-    ): Adt.CoProduct11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = {
-      Adt.CoProduct11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11](t)
-    }
+    private val adtApply = Adt.CoProduct11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I11,
-        AdtNatPositive[
-          I10,
-          AdtNatPositive[
-            I9,
-            AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-              I6,
-              AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-            ]]]
-          ]
-        ]
-      ],
-      S
-    ] = new extra11(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] =
+      new extra11(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt12[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: ADTStatus](
@@ -397,44 +332,24 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts12[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]](
-      t: X
-    ): Adt.CoProduct12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = {
-      Adt.CoProduct12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12](t)
-    }
+    private val adtApply = Adt.CoProduct12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I12,
-        AdtNatPositive[
-          I11,
-          AdtNatPositive[
-            I10,
-            AdtNatPositive[
-              I9,
-              AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                I6,
-                AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-              ]]]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra12(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] =
+      new extra12(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt13[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: ADTStatus](
@@ -471,48 +386,25 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts13[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]](
-      t: X
-    ): Adt.CoProduct13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = {
-      Adt.CoProduct13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13](t)
-    }
+    private val adtApply = Adt.CoProduct13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I13,
-        AdtNatPositive[
-          I12,
-          AdtNatPositive[
-            I11,
-            AdtNatPositive[
-              I10,
-              AdtNatPositive[
-                I9,
-                AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                  I6,
-                  AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-                ]]]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra13(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] =
+      new extra13(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt14[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: ADTStatus](
@@ -552,52 +444,26 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts14[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]](
-      t: X
-    ): Adt.CoProduct14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = {
-      Adt.CoProduct14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14](t)
-    }
+    private val adtApply = Adt.CoProduct14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I14,
-        AdtNatPositive[
-          I13,
-          AdtNatPositive[
-            I12,
-            AdtNatPositive[
-              I11,
-              AdtNatPositive[
-                I10,
-                AdtNatPositive[
-                  I9,
-                  AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                    I6,
-                    AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-                  ]]]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra14(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] =
+      new extra14(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt15[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: ADTStatus](
@@ -640,56 +506,27 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts15[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]](
-      t: X
-    ): Adt.CoProduct15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = {
-      Adt.CoProduct15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15](t)
-    }
+    private val adtApply = Adt.CoProduct15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I15,
-        AdtNatPositive[
-          I14,
-          AdtNatPositive[
-            I13,
-            AdtNatPositive[
-              I12,
-              AdtNatPositive[
-                I11,
-                AdtNatPositive[
-                  I10,
-                  AdtNatPositive[
-                    I9,
-                    AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                      I6,
-                      AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-                    ]]]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra15(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] =
+      new extra15(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt16[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: ADTStatus](
@@ -735,60 +572,28 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts16[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]](
-      t: X
-    ): Adt.CoProduct16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = {
-      Adt.CoProduct16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16](t)
-    }
+    private val adtApply = Adt.CoProduct16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I16,
-        AdtNatPositive[
-          I15,
-          AdtNatPositive[
-            I14,
-            AdtNatPositive[
-              I13,
-              AdtNatPositive[
-                I12,
-                AdtNatPositive[
-                  I11,
-                  AdtNatPositive[
-                    I10,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                        I6,
-                        AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-                      ]]]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra16(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] =
+      new extra16(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt17[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: ADTStatus](
@@ -837,64 +642,29 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts17[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]](
-      t: X
-    ): Adt.CoProduct17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = {
-      Adt.CoProduct17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17](t)
-    }
+    private val adtApply = Adt.CoProduct17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I17,
-        AdtNatPositive[
-          I16,
-          AdtNatPositive[
-            I15,
-            AdtNatPositive[
-              I14,
-              AdtNatPositive[
-                I13,
-                AdtNatPositive[
-                  I12,
-                  AdtNatPositive[
-                    I11,
-                    AdtNatPositive[
-                      I10,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                          I6,
-                          AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-                        ]]]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra17(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] =
+      new extra17(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt18[
@@ -967,68 +737,30 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts18[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]](
-      t: X
-    ): Adt.CoProduct18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = {
-      Adt.CoProduct18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18](t)
-    }
+    private val adtApply = Adt.CoProduct18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I18,
-        AdtNatPositive[
-          I17,
-          AdtNatPositive[
-            I16,
-            AdtNatPositive[
-              I15,
-              AdtNatPositive[
-                I14,
-                AdtNatPositive[
-                  I13,
-                  AdtNatPositive[
-                    I12,
-                    AdtNatPositive[
-                      I11,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I9,
-                          AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                            I6,
-                            AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-                          ]]]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra18(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
+      new extra18(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt19[
@@ -1105,72 +837,31 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts19[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]](
-      t: X
-    ): Adt.CoProduct19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = {
-      Adt.CoProduct19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19](t)
-    }
+    private val adtApply = Adt.CoProduct19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I19,
-        AdtNatPositive[
-          I18,
-          AdtNatPositive[
-            I17,
-            AdtNatPositive[
-              I16,
-              AdtNatPositive[
-                I15,
-                AdtNatPositive[
-                  I14,
-                  AdtNatPositive[
-                    I13,
-                    AdtNatPositive[
-                      I12,
-                      AdtNatPositive[
-                        I11,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I9,
-                            AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[
-                              I6,
-                              AdtNatPositive[I5, AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]]
-                            ]]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra19(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(param: ParamType): Adt.CoProduct19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
+      new extra19(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt20[
@@ -1251,76 +942,34 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[X: Adt.CoProducts20[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]](
-      t: X
-    ): Adt.CoProduct20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = {
-      Adt.CoProduct20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20](t)
-    }
+    private val adtApply = Adt.CoProduct20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I20,
-        AdtNatPositive[
-          I19,
-          AdtNatPositive[
-            I18,
-            AdtNatPositive[
-              I17,
-              AdtNatPositive[
-                I16,
-                AdtNatPositive[
-                  I15,
-                  AdtNatPositive[
-                    I14,
-                    AdtNatPositive[
-                      I13,
-                      AdtNatPositive[
-                        I12,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I10,
-                            AdtNatPositive[
-                              I9,
-                              AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[I6, AdtNatPositive[
-                                I5,
-                                AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]
-                              ]]]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra20(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(
+      param: ParamType
+    ): Adt.CoProduct20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
+      new extra20(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt21[
@@ -1405,80 +1054,35 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[
-      X: Adt.CoProducts21[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
-    ](t: X): Adt.CoProduct21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = {
-      Adt.CoProduct21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21](t)
-    }
+    private val adtApply = Adt.CoProduct21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I21,
-        AdtNatPositive[
-          I20,
-          AdtNatPositive[
-            I19,
-            AdtNatPositive[
-              I18,
-              AdtNatPositive[
-                I17,
-                AdtNatPositive[
-                  I16,
-                  AdtNatPositive[
-                    I15,
-                    AdtNatPositive[
-                      I14,
-                      AdtNatPositive[
-                        I13,
-                        AdtNatPositive[
-                          I12,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I10,
-                              AdtNatPositive[
-                                I9,
-                                AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[I6, AdtNatPositive[
-                                  I5,
-                                  AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]
-                                ]]]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra21(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(
+      param: ParamType
+    ): Adt.CoProduct21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
+      new extra21(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
   implicit class extraFunctionAdt22[
@@ -1567,84 +1171,37 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     ]
   ) {
 
-    private def adtApply[
-      X: Adt.CoProducts22[*, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22]
-    ](t: X): Adt.CoProduct22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = {
-      Adt.CoProduct22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22](t)
-    }
+    private val adtApply =
+      Adt.CoProduct22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22]
 
-    def apply(param: ParamType): ADTData[
-      AdtNatPositive[
-        I22,
-        AdtNatPositive[
-          I21,
-          AdtNatPositive[
-            I20,
-            AdtNatPositive[
-              I19,
-              AdtNatPositive[
-                I18,
-                AdtNatPositive[
-                  I17,
-                  AdtNatPositive[
-                    I16,
-                    AdtNatPositive[
-                      I15,
-                      AdtNatPositive[
-                        I14,
-                        AdtNatPositive[
-                          I13,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[
-                              I11,
-                              AdtNatPositive[
-                                I10,
-                                AdtNatPositive[
-                                  I9,
-                                  AdtNatPositive[I8, AdtNatPositive[I7, AdtNatPositive[I6, AdtNatPositive[
-                                    I5,
-                                    AdtNatPositive[I4, AdtNatPositive[I3, AdtNatPositive[I2, AdtNatPositive[I1, AdtNatZero]]]]
-                                  ]]]]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      S
-    ] = new extra22(data).fold(
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param)),
-      s => adtApply(s.apply(param))
-    )
+    def apply(
+      param: ParamType
+    ): Adt.CoProduct22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
+      new extra22(data).fold(
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param)),
+        s => adtApply(s(param))
+      )
+
   }
 
 }
