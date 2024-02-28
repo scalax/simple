@@ -12,7 +12,8 @@ object CodePre1:
   }
 
   def adtFunnctionDataType(max: Int)(i: Int): String =
-    if i < max then s"AdtNatPositive[ParamType => I${max - i}, ${adtFunnctionDataType(max)(i + 1)}]" else "AdtNatZero"
+    if i < max then s"AdtNatPositive[Adt.Context[ParamType, I${max - i}, Poly${max - i}], ${adtFunnctionDataType(max)(i + 1)}]"
+    else "AdtNatZero"
 
   def adtDataType(max: Int)(i: Int): String = if i < max then s"AdtNatPositive[I${max - i}, ${adtDataType(max)(i + 1)}]" else "AdtNatZero"
 
@@ -26,14 +27,14 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait ADTPassedFunctionImpl extends ADTPassedFunction {
   ${repeatBlank(22)(i1 =>
-                          s"""implicit class extraFunctionAdt$i1[ParamType, ${repeat(i1)(i2 => s"I$i2")(
+                          s"""implicit class extraFunctionAdt$i1[ParamType, ${repeat(i1)(i2 => s"I$i2, Poly$i2")(
                               ','.toString
                             )}, S <: ADTStatus](private val data: ADTData[${adtFunnctionDataType(i1)(0)}, S]) {
 
     private val adtApply = Adt.CoProduct$i1[${repeat(i1)(i2 => s"I$i2")(','.toString)}]
 
     def apply(param: ParamType): Adt.CoProduct$i1[${repeat(i1)(i2 => s"I$i2")(','.toString)}] =
-      new extra$i1(data).fold(${repeat(i1)(_ => "s => adtApply(s(param))")(','.toString)})
+      new extra$i1(data).fold(${repeat(i1)(_ => "s => adtApply(s.input(param))")(','.toString)})
 
   }
 
