@@ -14,33 +14,25 @@ object 乘除 {
   }
 
   val 被乘数分子: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(taiInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(taiInput: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num1 {
+      override def pre1: ghdmzsk = taiInput()
       override def inputGHDMZSK(otherInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num1 {
-          override def pre1: ghdmzsk = tail()
-          override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
-            otherInput().inputGHDMZSK(() => tail().inputGHDMZSK(other))
-          }
-        }
+        override def inputGHDMZSK(counterTail: () => ghdmzsk): ghdmzsk =
+          counterTail().inputGHDMZSK(() => taiInput().inputGHDMZSK(otherInput).inputGHDMZSK(counterTail))
       }
     }
   }
 
   val `被乘数分母/乘数分母`: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(taiInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(taiInput: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num2 {
+      override def pre2: ghdmzsk = taiInput()
       override def inputGHDMZSK(otherInput: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num2 {
-          override def pre2: ghdmzsk = tail()
-          override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = {
-            (other().inputGHDMZSK(tail)).inputGHDMZSK(otherInput)
-          }
+        override def inputGHDMZSK(counterTail: () => ghdmzsk): ghdmzsk = {
+          val c = if (counterTail() eq 被乘数分子) `被乘数分母/乘数分母` else 被乘数分子
+          otherInput().inputGHDMZSK(taiInput).inputGHDMZSK(() => c)
         }
       }
     }
   }
-
-  lazy val numInput1: ghdmzsk = 被乘数分子.inputGHDMZSK(() => numInput2)
-
-  lazy val numInput2: ghdmzsk = `被乘数分母/乘数分母`.inputGHDMZSK(() => numInput1)
 
 }
