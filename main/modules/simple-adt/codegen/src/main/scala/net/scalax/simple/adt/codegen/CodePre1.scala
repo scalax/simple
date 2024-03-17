@@ -25,7 +25,7 @@ import Adt.{Status => ADTStatus}
 import temp._
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
-trait ADTPassedFunctionImpl extends ADTPassedFunction {
+trait ADTPassedFunctionImpl {
   ${repeatBlank(22)(i1 =>
                           s"""implicit class extraFunctionAdt$i1[ParamType, ${repeat(i1)(i2 => s"I$i2, Poly$i2")(
                               ','.toString
@@ -34,7 +34,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct$i1[${repeat(i1)(i2 => s"I$i2")(','.toString)}]
 
     def apply(param: ParamType): Adt.CoProduct$i1[${repeat(i1)(i2 => s"I$i2")(','.toString)}] =
-      new extra$i1(data).fold(${repeat(i1)(_ => "s => adtApply(s.input(param))")(','.toString)})
+      new ADTStatus.Passed.extra$i1(data).fold(${repeat(i1)(_ => "s => adtApply(s.input(param))")(','.toString)})
 
   }
 

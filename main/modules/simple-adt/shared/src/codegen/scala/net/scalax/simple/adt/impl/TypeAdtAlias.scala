@@ -9,26 +9,26 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtAlias {
 
-  type CoProducts1[A, I1]                   = TypeAdtApply[A, AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed]
+  type CoProducts1[A, I1]                   = TypeAdtApply[A, AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed.type]
   type CoProductsX1[A, ST <: ADTStatus, I1] = TypeAdtApply[A, AdtNatPositive[I1, AdtNatZero], ST]
 
-  type CoProducts2[A, I1, I2]                   = TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed]
+  type CoProducts2[A, I1, I2]                   = TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type]
   type CoProductsX2[A, ST <: ADTStatus, I1, I2] = TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ST]
 
   type CoProducts3[A, I1, I2, I3] =
-    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed]
+    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type]
   type CoProductsX3[A, ST <: ADTStatus, I1, I2, I3] =
     TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ST]
 
   type CoProducts4[A, I1, I2, I3, I4] =
-    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed]
+    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type]
   type CoProductsX4[A, ST <: ADTStatus, I1, I2, I3, I4] =
     TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ST]
 
   type CoProducts5[A, I1, I2, I3, I4, I5] = TypeAdtApply[
     A,
     AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX5[A, ST <: ADTStatus, I1, I2, I3, I4, I5] =
     TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ST]
@@ -36,7 +36,7 @@ trait TypeAdtAlias {
   type CoProducts6[A, I1, I2, I3, I4, I5, I6] = TypeAdtApply[
     A,
     AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX6[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6] = TypeAdtApply[
     A,
@@ -50,7 +50,7 @@ trait TypeAdtAlias {
       I1,
       AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX7[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[A, AdtNatPositive[
     I1,
@@ -63,7 +63,7 @@ trait TypeAdtAlias {
       I2,
       AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
     ]],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX8[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply[
     A,
@@ -83,7 +83,7 @@ trait TypeAdtAlias {
         AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
       ]]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX9[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply[
     A,
@@ -109,7 +109,7 @@ trait TypeAdtAlias {
         ]]]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX10[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply[
     A,
@@ -141,7 +141,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX11[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply[
     A,
@@ -179,7 +179,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX12[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply[
     A,
@@ -226,7 +226,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX13[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply[
     A,
@@ -282,7 +282,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX14[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply[
     A,
@@ -344,7 +344,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX15[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply[
     A,
@@ -412,7 +412,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX16[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply[
     A,
@@ -486,7 +486,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX17[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply[
     A,
@@ -566,7 +566,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX18[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply[
     A,
@@ -652,7 +652,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX19[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
     TypeAdtApply[
@@ -745,7 +745,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX20[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
     TypeAdtApply[
@@ -844,7 +844,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX21[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
     TypeAdtApply[
@@ -949,7 +949,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed
+    ADTStatus.Passed.type
   ]
   type CoProductsX22[
     A,

@@ -17,7 +17,7 @@ import zio.test.Assertion._
 object TestCase3 extends ZIOSpecDefault {
 
   def inputAdtData[S <: Adt.Status, T: Encoder: Adt.CoProductsX2[*, S, Int, Option[Int]]](t: T)(implicit
-    cv: S <:< Adt.Status.NotFinished
+    cv: S <:< Adt.Status.NotFinished.type
   ): Json =
     t.asJson
 

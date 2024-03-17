@@ -5,7 +5,7 @@ import Adt.{Status => ADTStatus}
 import temp._
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
-trait ADTPassedFunctionImpl extends ADTPassedFunction {
+trait ADTPassedFunctionImpl {
   implicit class extraFunctionAdt1[ParamType, I1, Poly1, S <: ADTStatus](
     private val data: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, Poly1], AdtNatZero], S]
   ) {
@@ -13,7 +13,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct1[I1]
 
     def apply(param: ParamType): Adt.CoProduct1[I1] =
-      new extra1(data).fold(s => adtApply(s.input(param)))
+      new ADTStatus.Passed.extra1(data).fold(s => adtApply(s.input(param)))
 
   }
 
@@ -27,7 +27,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct2[I1, I2]
 
     def apply(param: ParamType): Adt.CoProduct2[I1, I2] =
-      new extra2(data).fold(s => adtApply(s.input(param)), s => adtApply(s.input(param)))
+      new ADTStatus.Passed.extra2(data).fold(s => adtApply(s.input(param)), s => adtApply(s.input(param)))
 
   }
 
@@ -44,7 +44,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct3[I1, I2, I3]
 
     def apply(param: ParamType): Adt.CoProduct3[I1, I2, I3] =
-      new extra3(data).fold(s => adtApply(s.input(param)), s => adtApply(s.input(param)), s => adtApply(s.input(param)))
+      new ADTStatus.Passed.extra3(data).fold(s => adtApply(s.input(param)), s => adtApply(s.input(param)), s => adtApply(s.input(param)))
 
   }
 
@@ -64,12 +64,8 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct4[I1, I2, I3, I4]
 
     def apply(param: ParamType): Adt.CoProduct4[I1, I2, I3, I4] =
-      new extra4(data).fold(
-        s => adtApply(s.input(param)),
-        s => adtApply(s.input(param)),
-        s => adtApply(s.input(param)),
-        s => adtApply(s.input(param))
-      )
+      new ADTStatus.Passed.extra4(data)
+        .fold(s => adtApply(s.input(param)), s => adtApply(s.input(param)), s => adtApply(s.input(param)), s => adtApply(s.input(param)))
 
   }
 
@@ -92,7 +88,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct5[I1, I2, I3, I4, I5]
 
     def apply(param: ParamType): Adt.CoProduct5[I1, I2, I3, I4, I5] =
-      new extra5(data).fold(
+      new ADTStatus.Passed.extra5(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -124,7 +120,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct6[I1, I2, I3, I4, I5, I6]
 
     def apply(param: ParamType): Adt.CoProduct6[I1, I2, I3, I4, I5, I6] =
-      new extra6(data).fold(
+      new ADTStatus.Passed.extra6(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -160,7 +156,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct7[I1, I2, I3, I4, I5, I6, I7]
 
     def apply(param: ParamType): Adt.CoProduct7[I1, I2, I3, I4, I5, I6, I7] =
-      new extra7(data).fold(
+      new ADTStatus.Passed.extra7(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -219,7 +215,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct8[I1, I2, I3, I4, I5, I6, I7, I8]
 
     def apply(param: ParamType): Adt.CoProduct8[I1, I2, I3, I4, I5, I6, I7, I8] =
-      new extra8(data).fold(
+      new ADTStatus.Passed.extra8(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -284,7 +280,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct9[I1, I2, I3, I4, I5, I6, I7, I8, I9]
 
     def apply(param: ParamType): Adt.CoProduct9[I1, I2, I3, I4, I5, I6, I7, I8, I9] =
-      new extra9(data).fold(
+      new ADTStatus.Passed.extra9(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -355,7 +351,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]
 
     def apply(param: ParamType): Adt.CoProduct10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] =
-      new extra10(data).fold(
+      new ADTStatus.Passed.extra10(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -432,7 +428,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]
 
     def apply(param: ParamType): Adt.CoProduct11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] =
-      new extra11(data).fold(
+      new ADTStatus.Passed.extra11(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -515,7 +511,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]
 
     def apply(param: ParamType): Adt.CoProduct12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] =
-      new extra12(data).fold(
+      new ADTStatus.Passed.extra12(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -604,7 +600,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]
 
     def apply(param: ParamType): Adt.CoProduct13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] =
-      new extra13(data).fold(
+      new ADTStatus.Passed.extra13(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -699,7 +695,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
 
     def apply(param: ParamType): Adt.CoProduct14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] =
-      new extra14(data).fold(
+      new ADTStatus.Passed.extra14(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -800,7 +796,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]
 
     def apply(param: ParamType): Adt.CoProduct15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] =
-      new extra15(data).fold(
+      new ADTStatus.Passed.extra15(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -907,7 +903,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]
 
     def apply(param: ParamType): Adt.CoProduct16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] =
-      new extra16(data).fold(
+      new ADTStatus.Passed.extra16(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -1020,7 +1016,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]
 
     def apply(param: ParamType): Adt.CoProduct17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] =
-      new extra17(data).fold(
+      new ADTStatus.Passed.extra17(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -1139,7 +1135,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]
 
     def apply(param: ParamType): Adt.CoProduct18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
-      new extra18(data).fold(
+      new ADTStatus.Passed.extra18(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -1264,7 +1260,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     private val adtApply = Adt.CoProduct19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
 
     def apply(param: ParamType): Adt.CoProduct19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
-      new extra19(data).fold(
+      new ADTStatus.Passed.extra19(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -1397,7 +1393,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     def apply(
       param: ParamType
     ): Adt.CoProduct20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
-      new extra20(data).fold(
+      new ADTStatus.Passed.extra20(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -1536,7 +1532,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     def apply(
       param: ParamType
     ): Adt.CoProduct21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
-      new extra21(data).fold(
+      new ADTStatus.Passed.extra21(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
@@ -1682,7 +1678,7 @@ trait ADTPassedFunctionImpl extends ADTPassedFunction {
     def apply(
       param: ParamType
     ): Adt.CoProduct22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
-      new extra22(data).fold(
+      new ADTStatus.Passed.extra22(data).fold(
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
         s => adtApply(s.input(param)),
