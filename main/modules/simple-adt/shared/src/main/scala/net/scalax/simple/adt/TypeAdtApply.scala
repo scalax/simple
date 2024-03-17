@@ -13,14 +13,14 @@ import net.scalax.simple.adt.nat.AdtNat
   * @since 2022/08/28
   *   02:48
   */
-/*class TypeAdtApply[Input, Sum <: AdtNat, ST <: ADTStatus](val value: Input => ADTData[Sum, ST]) extends AnyVal
+class TypeAdtApply[Input, Sum <: AdtNat, ST <: ADTStatus](val value: Input => ADTData[Sum, ST]) extends AnyVal
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
   implicit def identityImplicit[S <: AdtNat, ST <: ADTStatus]: TypeAdtApply[ADTData[S, ST], S, ST] =
     new TypeAdtApply[ADTData[S, ST], S, ST](identity)
-}*/
+}
 
-object ADTDataFunctionFetch  {
+object ADTFunctionImplicitFetch {
 
   import net.scalax.simple.adt.nat.{AdtNatPositive, AdtNatZero}
 
@@ -42,10 +42,10 @@ object ADTDataFunctionFetch  {
   trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtNat, AdtConvertPoly, ST <: ADTStatus](implicit
       adtConvert: TypeAdt.Context[A, B, AdtConvertPoly],
-      tailMapping: TypeAdtApply[A, Tail, ST]
-    ): TypeAdtApply[A, AdtNatPositive[TypeAdt.Adapter[B, AdtConvertPoly], Tail], ADTStatus.Passed.type] = {
+      tailMapping: ADTData[Tail, ST]
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = {
       val adtConvertImpl = Helper.adapterContext(adtConvert)
-      new TypeAdtApply(i => ADTData.success(adtConvertImpl.input(i), tailMapping.value(i)))
+      ADTData.success(adtConvertImpl, tailMapping)
     }
   }
 

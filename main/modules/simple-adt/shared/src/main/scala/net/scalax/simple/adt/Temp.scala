@@ -17,8 +17,8 @@ trait ADTData[+N <: AdtNat, S <: Status] extends ToGHDMZSK {
 }
 
 object ADTData {
-  def success[D, T <: AdtNat, S <: Status](data: D, tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], Status.Passed.type] =
-    new ADTData[AdtNatPositive[D, T], Status.Passed.type] {
+  def success[D, T <: AdtNat, S <: Status](data: D, tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] =
+    new ADTData[AdtNatPositive[D, T], S] {
       override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(data).inputGHDMZSK(() => tail.toGHDMZSK)
     }
   def empty[D, T <: AdtNat, S <: Status](tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
