@@ -40,7 +40,7 @@ object IsFinishAndNothing {
 }
 
 trait ApplyFactory[N <: AdtNat] {
-  def apply[D, S <: Status](d: D)(implicit v: TypeAdtApply[D, N, S]): ADTData[N, S] = v.value(d)
+  def apply[D <: AdtNat, S <: Status](d: D)(implicit v: ADTData[D, S]): ADTData[N, S] = d
 }
 
 object ApplyFactory {

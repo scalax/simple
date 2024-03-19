@@ -9,104 +9,308 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtAlias {
 
-  type CoProducts1[A, I1]                   = TypeAdtApply[A, AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed.type]
-  type CoProductsX1[A, ST <: ADTStatus, I1] = TypeAdtApply[A, AdtNatPositive[I1, AdtNatZero], ST]
+  type CoProducts1[A, I1] = ADTData[AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatZero], ADTStatus.Passed.type]
+  type CoProductsX1[A, ST <: ADTStatus, I1] = TypeAdtApply[A, AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatZero], ST]
 
-  type CoProducts2[A, I1, I2]                   = TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type]
-  type CoProductsX2[A, ST <: ADTStatus, I1, I2] = TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ST]
-
-  type CoProducts3[A, I1, I2, I3] =
-    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type]
-  type CoProductsX3[A, ST <: ADTStatus, I1, I2, I3] =
-    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ST]
-
-  type CoProducts4[A, I1, I2, I3, I4] =
-    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type]
-  type CoProductsX4[A, ST <: ADTStatus, I1, I2, I3, I4] =
-    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ST]
-
-  type CoProducts5[A, I1, I2, I3, I4, I5] = TypeAdtApply[
-    A,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
+  type CoProducts2[A, I1, I2] = ADTData[
+    AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatZero]],
     ADTStatus.Passed.type
   ]
-  type CoProductsX5[A, ST <: ADTStatus, I1, I2, I3, I4, I5] =
-    TypeAdtApply[A, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ST]
-
-  type CoProducts6[A, I1, I2, I3, I4, I5, I6] = TypeAdtApply[
+  type CoProductsX2[A, ST <: ADTStatus, I1, I2] = TypeAdtApply[
     A,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
+    AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatZero]],
+    ST
+  ]
+
+  type CoProducts3[A, I1, I2, I3] = ADTData[
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatZero]]
+    ],
+    ADTStatus.Passed.type
+  ]
+  type CoProductsX3[A, ST <: ADTStatus, I1, I2, I3] = TypeAdtApply[
+    A,
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatZero]]
+    ],
+    ST
+  ]
+
+  type CoProducts4[A, I1, I2, I3, I4] = ADTData[
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I4, DefaultAdtContext.type], AdtNatZero]]
+      ]
+    ],
+    ADTStatus.Passed.type
+  ]
+  type CoProductsX4[A, ST <: ADTStatus, I1, I2, I3, I4] = TypeAdtApply[
+    A,
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I4, DefaultAdtContext.type], AdtNatZero]]
+      ]
+    ],
+    ST
+  ]
+
+  type CoProducts5[A, I1, I2, I3, I4, I5] = ADTData[
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[Adt.Context[A, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I5, DefaultAdtContext.type], AdtNatZero]]
+        ]
+      ]
+    ],
+    ADTStatus.Passed.type
+  ]
+  type CoProductsX5[A, ST <: ADTStatus, I1, I2, I3, I4, I5] = TypeAdtApply[
+    A,
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[Adt.Context[A, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I5, DefaultAdtContext.type], AdtNatZero]]
+        ]
+      ]
+    ],
+    ST
+  ]
+
+  type CoProducts6[A, I1, I2, I3, I4, I5, I6] = ADTData[
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[Adt.Context[A, I6, DefaultAdtContext.type], AdtNatZero]
+            ]
+          ]
+        ]
+      ]
+    ],
     ADTStatus.Passed.type
   ]
   type CoProductsX6[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6] = TypeAdtApply[
     A,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[Adt.Context[A, I6, DefaultAdtContext.type], AdtNatZero]
+            ]
+          ]
+        ]
+      ]
+    ],
     ST
   ]
 
-  type CoProducts7[A, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[
-    A,
+  type CoProducts7[A, I1, I2, I3, I4, I5, I6, I7] = ADTData[
     AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[Adt.Context[A, I7, DefaultAdtContext.type], AdtNatZero]
+              ]
+            ]
+          ]
+        ]
+      ]
     ],
     ADTStatus.Passed.type
   ]
-  type CoProductsX7[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[A, AdtNatPositive[
-    I1,
-    AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
-  ], ST]
-
-  type CoProducts8[A, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply[
+  type CoProductsX7[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[
     A,
-    AdtNatPositive[I1, AdtNatPositive[
-      I2,
-      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-    ]],
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[Adt.Context[A, I7, DefaultAdtContext.type], AdtNatZero]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ST
+  ]
+
+  type CoProducts8[A, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[Adt.Context[A, I8, DefaultAdtContext.type], AdtNatZero]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
     ADTStatus.Passed.type
   ]
   type CoProductsX8[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply[
     A,
-    AdtNatPositive[I1, AdtNatPositive[
-      I2,
-      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-    ]],
+    AdtNatPositive[
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[Adt.Context[A, I8, DefaultAdtContext.type], AdtNatZero]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
     ST
   ]
 
-  type CoProducts9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply[
-    A,
+  type CoProducts9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
     AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[
-        I3,
-        AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-      ]]
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[Adt.Context[A, I9, DefaultAdtContext.type], AdtNatZero]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
     ],
     ADTStatus.Passed.type
   ]
   type CoProductsX9[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[
-        I3,
-        AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-      ]]
+      Adt.Context[A, I1, DefaultAdtContext.type],
+      AdtNatPositive[
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[Adt.Context[A, I9, DefaultAdtContext.type], AdtNatZero]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
     ],
     ST
   ]
 
-  type CoProducts10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply[
-    A,
+  type CoProducts10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-          I5,
-          AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-        ]]]
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[Adt.Context[A, I10, DefaultAdtContext.type], AdtNatZero]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ]
     ],
     ADTStatus.Passed.type
@@ -114,30 +318,65 @@ trait TypeAdtAlias {
   type CoProductsX10[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-          I5,
-          AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-        ]]]
+        Adt.Context[A, I2, DefaultAdtContext.type],
+        AdtNatPositive[
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[Adt.Context[A, I10, DefaultAdtContext.type], AdtNatZero]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ]
     ],
     ST
   ]
 
-  type CoProducts11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply[
-    A,
+  type CoProducts11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
-          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-            I6,
-            AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-          ]]]
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[Adt.Context[A, I11, DefaultAdtContext.type], AdtNatZero]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
         ]
       ]
     ],
@@ -146,35 +385,70 @@ trait TypeAdtAlias {
   type CoProductsX11[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
-          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-            I6,
-            AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-          ]]]
+          Adt.Context[A, I3, DefaultAdtContext.type],
+          AdtNatPositive[
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[Adt.Context[A, I11, DefaultAdtContext.type], AdtNatZero]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
         ]
       ]
     ],
     ST
   ]
 
-  type CoProducts12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply[
-    A,
+  type CoProducts12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
-            AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-              I7,
-              AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-            ]]]
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[Adt.Context[A, I12, DefaultAdtContext.type], AdtNatZero]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
           ]
         ]
       ]
@@ -184,17 +458,35 @@ trait TypeAdtAlias {
   type CoProductsX12[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
-            AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-              I7,
-              AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-            ]]]
+            Adt.Context[A, I4, DefaultAdtContext.type],
+            AdtNatPositive[
+              Adt.Context[A, I5, DefaultAdtContext.type],
+              AdtNatPositive[
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[Adt.Context[A, I12, DefaultAdtContext.type], AdtNatZero]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
           ]
         ]
       ]
@@ -202,24 +494,38 @@ trait TypeAdtAlias {
     ST
   ]
 
-  type CoProducts13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply[
-    A,
+  type CoProducts13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[
-                  I8,
-                  AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                ]]
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[Adt.Context[A, I13, DefaultAdtContext.type], AdtNatZero]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
               ]
             ]
           ]
@@ -231,21 +537,36 @@ trait TypeAdtAlias {
   type CoProductsX13[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[
-                  I8,
-                  AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                ]]
+                Adt.Context[A, I6, DefaultAdtContext.type],
+                AdtNatPositive[
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[Adt.Context[A, I13, DefaultAdtContext.type], AdtNatZero]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
               ]
             ]
           ]
@@ -255,26 +576,40 @@ trait TypeAdtAlias {
     ST
   ]
 
-  type CoProducts14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply[
-    A,
+  type CoProducts14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
-                  AdtNatPositive[I8, AdtNatPositive[
-                    I9,
-                    AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                  ]]
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[Adt.Context[A, I14, DefaultAdtContext.type], AdtNatZero]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
                 ]
               ]
             ]
@@ -287,23 +622,38 @@ trait TypeAdtAlias {
   type CoProductsX14[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
-                  AdtNatPositive[I8, AdtNatPositive[
-                    I9,
-                    AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                  ]]
+                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  AdtNatPositive[
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[Adt.Context[A, I14, DefaultAdtContext.type], AdtNatZero]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
                 ]
               ]
             ]
@@ -314,28 +664,42 @@ trait TypeAdtAlias {
     ST
   ]
 
-  type CoProducts15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply[
-    A,
+  type CoProducts15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[
-                      I10,
-                      AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                    ]]
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[Adt.Context[A, I15, DefaultAdtContext.type], AdtNatZero]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -349,25 +713,40 @@ trait TypeAdtAlias {
   type CoProductsX15[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[
-                      I10,
-                      AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                    ]]
+                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    AdtNatPositive[
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[Adt.Context[A, I15, DefaultAdtContext.type], AdtNatZero]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -379,30 +758,44 @@ trait TypeAdtAlias {
     ST
   ]
 
-  type CoProducts16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply[
-    A,
+  type CoProducts16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[
-                        I11,
-                        AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]
-                      ]]
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[Adt.Context[A, I16, DefaultAdtContext.type], AdtNatZero]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
                     ]
                   ]
                 ]
@@ -417,27 +810,42 @@ trait TypeAdtAlias {
   type CoProductsX16[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[
-                        I11,
-                        AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]
-                      ]]
+                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      AdtNatPositive[
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[Adt.Context[A, I16, DefaultAdtContext.type], AdtNatZero]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
                     ]
                   ]
                 ]
@@ -450,32 +858,46 @@ trait TypeAdtAlias {
     ST
   ]
 
-  type CoProducts17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply[
-    A,
+  type CoProducts17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                          I13,
-                          AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                        ]]]
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[Adt.Context[A, I17, DefaultAdtContext.type], AdtNatZero]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
                       ]
                     ]
                   ]
@@ -491,29 +913,44 @@ trait TypeAdtAlias {
   type CoProductsX17[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                          I13,
-                          AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                        ]]]
+                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        AdtNatPositive[
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[Adt.Context[A, I17, DefaultAdtContext.type], AdtNatZero]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
                       ]
                     ]
                   ]
@@ -527,34 +964,48 @@ trait TypeAdtAlias {
     ST
   ]
 
-  type CoProducts18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply[
-    A,
+  type CoProducts18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
+                        Adt.Context[A, I10, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I11,
-                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                            I14,
-                            AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                          ]]]
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      AdtNatPositive[Adt.Context[A, I18, DefaultAdtContext.type], AdtNatZero]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
                         ]
                       ]
                     ]
@@ -571,31 +1022,46 @@ trait TypeAdtAlias {
   type CoProductsX18[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
+                        Adt.Context[A, I10, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I11,
-                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                            I14,
-                            AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                          ]]]
+                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          AdtNatPositive[
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      AdtNatPositive[Adt.Context[A, I18, DefaultAdtContext.type], AdtNatZero]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
                         ]
                       ]
                     ]
@@ -610,36 +1076,50 @@ trait TypeAdtAlias {
     ST
   ]
 
-  type CoProducts19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = TypeAdtApply[
-    A,
+  type CoProducts19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
+                        Adt.Context[A, I10, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I11,
+                          Adt.Context[A, I11, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I12,
-                            AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                              I15,
-                              AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                            ]]]
+                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            AdtNatPositive[
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I18, DefaultAdtContext.type],
+                                        AdtNatPositive[Adt.Context[A, I19, DefaultAdtContext.type], AdtNatZero]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
                           ]
                         ]
                       ]
@@ -658,33 +1138,48 @@ trait TypeAdtAlias {
     TypeAdtApply[
       A,
       AdtNatPositive[
-        I1,
+        Adt.Context[A, I1, DefaultAdtContext.type],
         AdtNatPositive[
-          I2,
+          Adt.Context[A, I2, DefaultAdtContext.type],
           AdtNatPositive[
-            I3,
+            Adt.Context[A, I3, DefaultAdtContext.type],
             AdtNatPositive[
-              I4,
+              Adt.Context[A, I4, DefaultAdtContext.type],
               AdtNatPositive[
-                I5,
+                Adt.Context[A, I5, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I6,
+                  Adt.Context[A, I6, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I7,
+                    Adt.Context[A, I7, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I8,
+                      Adt.Context[A, I8, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I9,
+                        Adt.Context[A, I9, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I10,
+                          Adt.Context[A, I10, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I11,
+                            Adt.Context[A, I11, DefaultAdtContext.type],
                             AdtNatPositive[
-                              I12,
-                              AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                                I15,
-                                AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                              ]]]
+                              Adt.Context[A, I12, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I13, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I14, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I15, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I16, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I17, DefaultAdtContext.type],
+                                        AdtNatPositive[
+                                          Adt.Context[A, I18, DefaultAdtContext.type],
+                                          AdtNatPositive[Adt.Context[A, I19, DefaultAdtContext.type], AdtNatZero]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
                             ]
                           ]
                         ]
@@ -700,38 +1195,52 @@ trait TypeAdtAlias {
       ST
     ]
 
-  type CoProducts20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = TypeAdtApply[
-    A,
+  type CoProducts20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
+                        Adt.Context[A, I10, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I11,
+                          Adt.Context[A, I11, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I12,
+                            Adt.Context[A, I12, DefaultAdtContext.type],
                             AdtNatPositive[
-                              I13,
-                              AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                I16,
-                                AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                              ]]]
+                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              AdtNatPositive[
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I18, DefaultAdtContext.type],
+                                        AdtNatPositive[
+                                          Adt.Context[A, I19, DefaultAdtContext.type],
+                                          AdtNatPositive[Adt.Context[A, I20, DefaultAdtContext.type], AdtNatZero]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
                             ]
                           ]
                         ]
@@ -751,35 +1260,50 @@ trait TypeAdtAlias {
     TypeAdtApply[
       A,
       AdtNatPositive[
-        I1,
+        Adt.Context[A, I1, DefaultAdtContext.type],
         AdtNatPositive[
-          I2,
+          Adt.Context[A, I2, DefaultAdtContext.type],
           AdtNatPositive[
-            I3,
+            Adt.Context[A, I3, DefaultAdtContext.type],
             AdtNatPositive[
-              I4,
+              Adt.Context[A, I4, DefaultAdtContext.type],
               AdtNatPositive[
-                I5,
+                Adt.Context[A, I5, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I6,
+                  Adt.Context[A, I6, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I7,
+                    Adt.Context[A, I7, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I8,
+                      Adt.Context[A, I8, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I9,
+                        Adt.Context[A, I9, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I10,
+                          Adt.Context[A, I10, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I11,
+                            Adt.Context[A, I11, DefaultAdtContext.type],
                             AdtNatPositive[
-                              I12,
+                              Adt.Context[A, I12, DefaultAdtContext.type],
                               AdtNatPositive[
-                                I13,
-                                AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                  I16,
-                                  AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                                ]]]
+                                Adt.Context[A, I13, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I14, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I15, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I16, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I17, DefaultAdtContext.type],
+                                        AdtNatPositive[
+                                          Adt.Context[A, I18, DefaultAdtContext.type],
+                                          AdtNatPositive[
+                                            Adt.Context[A, I19, DefaultAdtContext.type],
+                                            AdtNatPositive[Adt.Context[A, I20, DefaultAdtContext.type], AdtNatZero]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
                               ]
                             ]
                           ]
@@ -796,40 +1320,54 @@ trait TypeAdtAlias {
       ST
     ]
 
-  type CoProducts21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = TypeAdtApply[
-    A,
+  type CoProducts21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
+                        Adt.Context[A, I10, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I11,
+                          Adt.Context[A, I11, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I12,
+                            Adt.Context[A, I12, DefaultAdtContext.type],
                             AdtNatPositive[
-                              I13,
+                              Adt.Context[A, I13, DefaultAdtContext.type],
                               AdtNatPositive[
-                                I14,
-                                AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                  I17,
-                                  AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                ]]]
+                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                AdtNatPositive[
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I18, DefaultAdtContext.type],
+                                        AdtNatPositive[
+                                          Adt.Context[A, I19, DefaultAdtContext.type],
+                                          AdtNatPositive[
+                                            Adt.Context[A, I20, DefaultAdtContext.type],
+                                            AdtNatPositive[Adt.Context[A, I21, DefaultAdtContext.type], AdtNatZero]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
                               ]
                             ]
                           ]
@@ -850,37 +1388,52 @@ trait TypeAdtAlias {
     TypeAdtApply[
       A,
       AdtNatPositive[
-        I1,
+        Adt.Context[A, I1, DefaultAdtContext.type],
         AdtNatPositive[
-          I2,
+          Adt.Context[A, I2, DefaultAdtContext.type],
           AdtNatPositive[
-            I3,
+            Adt.Context[A, I3, DefaultAdtContext.type],
             AdtNatPositive[
-              I4,
+              Adt.Context[A, I4, DefaultAdtContext.type],
               AdtNatPositive[
-                I5,
+                Adt.Context[A, I5, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I6,
+                  Adt.Context[A, I6, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I7,
+                    Adt.Context[A, I7, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I8,
+                      Adt.Context[A, I8, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I9,
+                        Adt.Context[A, I9, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I10,
+                          Adt.Context[A, I10, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I11,
+                            Adt.Context[A, I11, DefaultAdtContext.type],
                             AdtNatPositive[
-                              I12,
+                              Adt.Context[A, I12, DefaultAdtContext.type],
                               AdtNatPositive[
-                                I13,
+                                Adt.Context[A, I13, DefaultAdtContext.type],
                                 AdtNatPositive[
-                                  I14,
-                                  AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                    I17,
-                                    AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                  ]]]
+                                  Adt.Context[A, I14, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I15, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I16, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I17, DefaultAdtContext.type],
+                                        AdtNatPositive[
+                                          Adt.Context[A, I18, DefaultAdtContext.type],
+                                          AdtNatPositive[
+                                            Adt.Context[A, I19, DefaultAdtContext.type],
+                                            AdtNatPositive[
+                                              Adt.Context[A, I20, DefaultAdtContext.type],
+                                              AdtNatPositive[Adt.Context[A, I21, DefaultAdtContext.type], AdtNatZero]
+                                            ]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
                                 ]
                               ]
                             ]
@@ -898,42 +1451,56 @@ trait TypeAdtAlias {
       ST
     ]
 
-  type CoProducts22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = TypeAdtApply[
-    A,
+  type CoProducts22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = ADTData[
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
+                        Adt.Context[A, I10, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I11,
+                          Adt.Context[A, I11, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I12,
+                            Adt.Context[A, I12, DefaultAdtContext.type],
                             AdtNatPositive[
-                              I13,
+                              Adt.Context[A, I13, DefaultAdtContext.type],
                               AdtNatPositive[
-                                I14,
+                                Adt.Context[A, I14, DefaultAdtContext.type],
                                 AdtNatPositive[
-                                  I15,
-                                  AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                    I18,
-                                    AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                  ]]]
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I18, DefaultAdtContext.type],
+                                        AdtNatPositive[
+                                          Adt.Context[A, I19, DefaultAdtContext.type],
+                                          AdtNatPositive[
+                                            Adt.Context[A, I20, DefaultAdtContext.type],
+                                            AdtNatPositive[
+                                              Adt.Context[A, I21, DefaultAdtContext.type],
+                                              AdtNatPositive[Adt.Context[A, I22, DefaultAdtContext.type], AdtNatZero]
+                                            ]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
                                 ]
                               ]
                             ]
@@ -979,39 +1546,54 @@ trait TypeAdtAlias {
   ] = TypeAdtApply[
     A,
     AdtNatPositive[
-      I1,
+      Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[
-        I2,
+        Adt.Context[A, I2, DefaultAdtContext.type],
         AdtNatPositive[
-          I3,
+          Adt.Context[A, I3, DefaultAdtContext.type],
           AdtNatPositive[
-            I4,
+            Adt.Context[A, I4, DefaultAdtContext.type],
             AdtNatPositive[
-              I5,
+              Adt.Context[A, I5, DefaultAdtContext.type],
               AdtNatPositive[
-                I6,
+                Adt.Context[A, I6, DefaultAdtContext.type],
                 AdtNatPositive[
-                  I7,
+                  Adt.Context[A, I7, DefaultAdtContext.type],
                   AdtNatPositive[
-                    I8,
+                    Adt.Context[A, I8, DefaultAdtContext.type],
                     AdtNatPositive[
-                      I9,
+                      Adt.Context[A, I9, DefaultAdtContext.type],
                       AdtNatPositive[
-                        I10,
+                        Adt.Context[A, I10, DefaultAdtContext.type],
                         AdtNatPositive[
-                          I11,
+                          Adt.Context[A, I11, DefaultAdtContext.type],
                           AdtNatPositive[
-                            I12,
+                            Adt.Context[A, I12, DefaultAdtContext.type],
                             AdtNatPositive[
-                              I13,
+                              Adt.Context[A, I13, DefaultAdtContext.type],
                               AdtNatPositive[
-                                I14,
+                                Adt.Context[A, I14, DefaultAdtContext.type],
                                 AdtNatPositive[
-                                  I15,
-                                  AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                    I18,
-                                    AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                  ]]]
+                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  AdtNatPositive[
+                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    AdtNatPositive[
+                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      AdtNatPositive[
+                                        Adt.Context[A, I18, DefaultAdtContext.type],
+                                        AdtNatPositive[
+                                          Adt.Context[A, I19, DefaultAdtContext.type],
+                                          AdtNatPositive[
+                                            Adt.Context[A, I20, DefaultAdtContext.type],
+                                            AdtNatPositive[
+                                              Adt.Context[A, I21, DefaultAdtContext.type],
+                                              AdtNatPositive[Adt.Context[A, I22, DefaultAdtContext.type], AdtNatZero]
+                                            ]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
                                 ]
                               ]
                             ]

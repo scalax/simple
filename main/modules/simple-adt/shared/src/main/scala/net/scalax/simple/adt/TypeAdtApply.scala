@@ -20,11 +20,11 @@ object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
     new TypeAdtApply[ADTData[S, ST], S, ST](identity)
 }
 
-object ADTFunctionImplicitFetch {
+object ADTFunctionImplicitFetch extends impl.TypeAdtImplicitOptsPolyHigher {
 
   import net.scalax.simple.adt.nat.{AdtNatPositive, AdtNatZero}
 
-  private object Helper {
+  /*private object Helper {
     def adapterContext[A, B, AdtConvertPoly](
       c: TypeAdt.Context[A, B, AdtConvertPoly]
     ): TypeAdt.Context[A, TypeAdt.Adapter[B, AdtConvertPoly], AdtConvertPoly] =
@@ -37,35 +37,58 @@ object ADTFunctionImplicitFetch {
 
     def failedValueImpl[T]: TypeAdtApply[T, AdtNatZero, ADTStatus.NotFinished.type] =
       failedValue.asInstanceOf[TypeAdtApply[T, AdtNatZero, ADTStatus.NotFinished.type]]
-  }
+  }*/
 
-  trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
+  /*trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtNat, AdtConvertPoly, ST <: ADTStatus](implicit
       adtConvert: TypeAdt.Context[A, B, AdtConvertPoly],
       tailMapping: ADTData[Tail, ST]
-    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = {
-      val adtConvertImpl = Helper.adapterContext(adtConvert)
-      ADTData.success(adtConvertImpl, tailMapping)
-    }
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = ADTData.success(adtConvert, tailMapping)
   }
 
   trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
     @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtNat, ST <: ADTStatus](implicit
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type],
-      tailMapping: TypeAdtApply[A, Tail, ST]
-    ): TypeAdtApply[A, AdtNatPositive[B, Tail], ADTStatus.Passed.type] = new TypeAdtApply(i =>
-      ADTData.success(adtConvert.input(i), tailMapping.value(i))
-    )
+      tailMapping: ADTData[Tail, ST]
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, DefaultAdtContext.type], Tail], ST] = ADTData.success(adtConvert, tailMapping)
   }
 
   trait HListTypeAdtPositiveLower2 extends LowerLevelPoly {
     @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: AdtNat, ST <: ADTStatus](implicit
-      tailMapping: TypeAdtApply[A, Tail, ST]
-    ): TypeAdtApply[A, AdtNatPositive[B, Tail], ST] = new TypeAdtApply(i => ADTData.empty(tailMapping.value(i)))
+      tailMapping: ADTData[Tail, ST]
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, DefaultAdtContext.type], Tail], ST] = ADTData.empty(tailMapping)
   }
 
   trait LowerLevelPoly {
     implicit def adtFailedResult[I]: TypeAdtApply[I, AdtNatZero, ADTStatus.NotFinished.type] = Helper.failedValueImpl
+  }*/
+
+}
+
+package impl {
+  import net.scalax.simple.adt.nat.{AdtNatPositive, AdtNatZero}
+
+  trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
+    @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtNat, AdtConvertPoly, ST <: ADTStatus](implicit
+      adtConvert: TypeAdt.Context[A, B, AdtConvertPoly],
+      tailMapping: ADTData[Tail, ST]
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = ADTData.success(adtConvert, tailMapping)
   }
 
+  trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
+    @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtNat, ST <: ADTStatus](implicit
+      adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type],
+      tailMapping: ADTData[Tail, ST]
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, DefaultAdtContext.type], Tail], ST] = ADTData.success(adtConvert, tailMapping)
+  }
+
+  trait HListTypeAdtPositiveLower2 extends LowerLevelPoly {
+    @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: AdtNat, ST <: ADTStatus](implicit
+      tailMapping: ADTData[Tail, ST]
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, DefaultAdtContext.type], Tail], ST] = ADTData.empty(tailMapping)
+  }
+
+  trait LowerLevelPoly {
+    implicit val adtFailedResult: ADTData[AdtNatZero, ADTStatus.NotFinished.type] = ADTData.zero(IsFinishAndNothing.value(null))
+  }
 }
