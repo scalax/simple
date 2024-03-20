@@ -7,7 +7,7 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtRuntimeApply {
 
-  def CoProduct1[
+  /*def CoProduct1[
     I1
   ]: CoProduct1Apply[
     I1
@@ -1333,6 +1333,6 @@ trait TypeAdtRuntimeApply {
         ]
       ]
     ]
-  ]
+  ]*/
 
 }

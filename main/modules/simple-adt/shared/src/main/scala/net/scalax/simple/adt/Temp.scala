@@ -39,15 +39,15 @@ object IsFinishAndNothing {
   def value(obj: Any): IsFinishAndNothing = new IsFinishAndNothing(obj)
 }
 
-trait ApplyFactory[N <: AdtNat] {
-  def apply[D <: AdtNat, S <: Status](d: D)(implicit v: ADTData[D, S]): ADTData[N, S] = d
+trait ApplyFactory[N[_] <: AdtNat] {
+  def apply[D, S <: Status](d: D)(implicit v: ADTData[N[D], S]): ADTData[N[D], S] = v
 }
 
 object ApplyFactory {
-  private val any: ApplyFactory[AdtNat] = new ApplyFactory[AdtNat] {
+  private val any: ApplyFactory[({ type F1[_] = AdtNat })#F1] = new ApplyFactory[({ type F1[_] = AdtNat })#F1] {
     //
   }
-  private def factoryApply[N <: AdtNat]: ApplyFactory[N] = any.asInstanceOf[ApplyFactory[N]]
+  private def factoryApply[N[_] <: AdtNat]: ApplyFactory[N] = any.asInstanceOf[ApplyFactory[N]]
 
-  def build[N <: AdtNat]: ApplyFactory[N] = factoryApply
+  def build[N[_] <: AdtNat]: ApplyFactory[N] = factoryApply
 }
