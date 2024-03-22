@@ -41,7 +41,7 @@ object ScalaAllCodegenExec:
     locally {
       val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtRuntimeApplyScalaAll().body
+        val linerContent = CodePre2.text1
         writer.println(linerContent)
       }
     }
