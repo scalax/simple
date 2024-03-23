@@ -39,8 +39,9 @@ object IsFinishAndNothing {
   def value(obj: Any): IsFinishAndNothing = new IsFinishAndNothing(obj)
 }
 
-trait ApplyFactory[N[_] <: AdtNat] {
-  def apply[D, S <: Status](d: D)(implicit v: ADTData[N[D], S]): ADTData[N[D], S] = v
+trait ApplyFactory[N1[_] <: AdtNat, N2 <: AdtNat] {
+  protected def cv[D, S <: Status]: (D, ADTData[N1[D], S]) => ADTData[N2, S]
+  def apply[D, S <: Status](d: D)(implicit v: ADTData[N1[D], S]): ADTData[N2, S] = cv(d, v)
 }
 
 object ApplyFactory {
