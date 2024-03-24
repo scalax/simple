@@ -17,16 +17,17 @@ trait ADTData[+N <: AdtNat, S <: Status] extends ToGHDMZSK {
 }
 
 object ADTData {
-  def success[D, T <: AdtNat, S <: Status](data: D, tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], Status.Passed] =
-    new ADTData[AdtNatPositive[D, T], Status.Passed] {
+  def success[D, T <: AdtNat, S <: Status](data: D, tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] =
+    new ADTData[AdtNatPositive[D, T], S] {
       override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(data).inputGHDMZSK(() => tail.toGHDMZSK)
     }
   def empty[D, T <: AdtNat, S <: Status](tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
     override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1Impl1.inputGHDMZSK(() => tail.toGHDMZSK)
   }
-  def zero(isFinishAndNothing: IsFinishAndNothing): ADTData[AdtNatZero, Status.NotFinished] = new ADTData[AdtNatZero, Status.NotFinished] {
-    override lazy val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(isFinishAndNothing).inputGHDMZSK(() => zero(isFinishAndNothing).toGHDMZSK)
-  }
+  def zero(isFinishAndNothing: IsFinishAndNothing): ADTData[AdtNatZero, Status.NotFinished.type] =
+    new ADTData[AdtNatZero, Status.NotFinished.type] {
+      override lazy val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(isFinishAndNothing).inputGHDMZSK(() => zero(isFinishAndNothing).toGHDMZSK)
+    }
 }
 
 final class IsFinishAndNothing(@(transient @param) obj: Any) {
@@ -38,15 +39,16 @@ object IsFinishAndNothing {
   def value(obj: Any): IsFinishAndNothing = new IsFinishAndNothing(obj)
 }
 
-trait ApplyFactory[N <: AdtNat] {
-  def apply[D, S <: Status](d: D)(implicit v: TypeAdtApply[D, N, S]): ADTData[N, S] = v.value(d)
+trait ApplyFactory[N1[_] <: AdtNat, N2 <: AdtNat] {
+  protected def cv[D, S <: Status]: (D, ADTData[N1[D], S]) => ADTData[N2, S]
+  def apply[D, S <: Status](d: D)(implicit v: ADTData[N1[D], S]): ADTData[N2, S] = cv(d, v)
 }
 
 object ApplyFactory {
-  private val any: ApplyFactory[AdtNat] = new ApplyFactory[AdtNat] {
+  private val any: ApplyFactory[({ type F1[_] = AdtNat })#F1] = new ApplyFactory[({ type F1[_] = AdtNat })#F1] {
     //
   }
-  private def factoryApply[N <: AdtNat]: ApplyFactory[N] = any.asInstanceOf[ApplyFactory[N]]
+  private def factoryApply[N[_] <: AdtNat]: ApplyFactory[N] = any.asInstanceOf[ApplyFactory[N]]
 
-  def build[N <: AdtNat]: ApplyFactory[N] = factoryApply
+  def build[N[_] <: AdtNat]: ApplyFactory[N] = factoryApply
 }

@@ -2,6 +2,9 @@ package net.scalax.simple
 package adt
 package impl
 
+import net.scalax.simple.adt.nat.AdtNat
+import net.scalax.simple.adt.temp.ADTData
+
 object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel with TypeAdtAliasModelUnapply {
 
   class Adapter[Target, Poly](val value: Target)
@@ -23,10 +26,17 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel 
   sealed trait Status
 
   object Status {
-    class Passed      extends Status
-    object Passed     extends ADTPassedFunction
-    class NotFinished extends Status
-    object NotFinished
+    object Passed      extends Status with ADTPassedFunction
+    object NotFinished extends Status
   }
+
+  object ADTDataMutiply extends Status {
+    implicit class ADTDataExtra1[T <: AdtNat, S <: Status](val data: ADTData[T, S]) extends AnyVal {
+      def lockSubClass[U <: S]: ADTData[T, U with ADTDataMutiply.type] = data.asInstanceOf[ADTData[T, U with ADTDataMutiply.type]]
+      def changeImplement[U]: ADTData[T, U with ADTDataMutiply.type]   = data.asInstanceOf[ADTData[T, U with ADTDataMutiply.type]]
+    }
+  }
+
+  object FunctionApply extends Status with ADTPassedFunctionImpl
 
 }

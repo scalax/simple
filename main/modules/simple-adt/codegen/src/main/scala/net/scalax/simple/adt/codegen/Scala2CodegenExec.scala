@@ -14,13 +14,25 @@ object Scala2CodegenExec:
     val writePath        = rootPath.resolve(Paths.get("net", "scalax", "simple", "adt", "impl"))
     Files.createDirectories(writePath)
 
-    locally {
-      val filePath = writePath.resolve("ADTPassedFunction.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.ADTPassedFunction().body
-        writer.println(linerContent)
-      }
-    }
+    locally(().match
+      case _ =>
+        val filePath = writePath.resolve("ADTPassedFunction.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.nat.adt.codegen.txt.ADTPassedFunction().body
+            writer.println(linerContent)
+        )
+    )
+
+    locally(().match
+      case _ =>
+        val filePath = writePath.resolve("ADTPassedFunctionExtra.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = net.scalax.simple.adt.codegen.CodePre1.text1
+            writer.println(linerContent)
+        )
+    )
 
   end main
 

@@ -38,7 +38,7 @@ object ToListGeneric {
   }
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: BasedInstalled[F]): ToListGeneric[F] = fromOther(basedInstalled.decode1)
+    def derived(basedInstalled: BasedInstalled[F]): ToListGeneric[F] = fromOther(ToDecoderGeneric1[F].derived(basedInstalled))
 
     def fromOther(o1: ToDecoderGeneric1[F]): ToListGeneric[F] = new ToListGeneric[F] {
       override def toList[TA](input: F[({ type U1[_] = TA })#U1]): List[TA] = {

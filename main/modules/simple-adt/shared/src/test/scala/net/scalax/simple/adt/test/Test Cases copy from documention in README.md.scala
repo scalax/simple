@@ -224,7 +224,7 @@ object `Test Cases copy from documention in README.md` {
     import io.circe.syntax._
 
     def inputAdtData[S <: Adt.Status, T: Encoder: Adt.CoProductsX2[*, S, Int, Option[Int]]](t: T)(implicit
-      cv: S <:< Adt.Status.NotFinished
+      cv: S <:< Adt.Status.NotFinished.type
     ): Json = t.asJson
 
     // inputAdtData(None)              // Compile Failed
