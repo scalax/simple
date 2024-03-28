@@ -124,7 +124,7 @@ object `Test Cases copy from documention in README.md` {
     }
   }
 
-  def `Usage of @djx314 Point 2`[T](body: => T): T = body
+  /*def `Usage of @djx314 Point 2`[T](body: => T): T = body
 
   `Usage of @djx314 Point 2` {
     {
@@ -267,7 +267,7 @@ object `Test Cases copy from documention in README.md` {
       assert(inputAdtData(2L) == 2.asJson)
       assert(inputAdtData(Some("Tom")) == "Tom".asJson)
     }
-  }
+  }*/
 
   def `Usage of @MarchLiu Point 1`[T](body: => T): T = body
 

@@ -9,17 +9,21 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtAlias {
 
-  type CoProducts1[A, I1] = ADTData[AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatZero], ADTStatus.Passed.type]
-  type CoProductsX1[A, ST <: ADTStatus, I1] = TypeAdtApply[A, AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatZero], ST]
+  type CoProducts1[A, I1] = ADTData[
+    AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatZero],
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
+  ]
+  type CoProductsX1[A, ST <: ADTStatus, I1] =
+    TypeAdtApply[A, AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatZero], ST with ADTFunctionImplicitFetch.type]
 
   type CoProducts2[A, I1, I2] = ADTData[
     AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatZero]],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX2[A, ST <: ADTStatus, I1, I2] = TypeAdtApply[
     A,
     AdtNatPositive[Adt.Context[A, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatZero]],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts3[A, I1, I2, I3] = ADTData[
@@ -27,7 +31,7 @@ trait TypeAdtAlias {
       Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatZero]]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX3[A, ST <: ADTStatus, I1, I2, I3] = TypeAdtApply[
     A,
@@ -35,7 +39,7 @@ trait TypeAdtAlias {
       Adt.Context[A, I1, DefaultAdtContext.type],
       AdtNatPositive[Adt.Context[A, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatZero]]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts4[A, I1, I2, I3, I4] = ADTData[
@@ -46,7 +50,7 @@ trait TypeAdtAlias {
         AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I4, DefaultAdtContext.type], AdtNatZero]]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX4[A, ST <: ADTStatus, I1, I2, I3, I4] = TypeAdtApply[
     A,
@@ -57,7 +61,7 @@ trait TypeAdtAlias {
         AdtNatPositive[Adt.Context[A, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[A, I4, DefaultAdtContext.type], AdtNatZero]]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts5[A, I1, I2, I3, I4, I5] = ADTData[
@@ -71,7 +75,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX5[A, ST <: ADTStatus, I1, I2, I3, I4, I5] = TypeAdtApply[
     A,
@@ -85,7 +89,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts6[A, I1, I2, I3, I4, I5, I6] = ADTData[
@@ -105,7 +109,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX6[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6] = TypeAdtApply[
     A,
@@ -125,7 +129,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts7[A, I1, I2, I3, I4, I5, I6, I7] = ADTData[
@@ -148,7 +152,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX7[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[
     A,
@@ -171,7 +175,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts8[A, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
@@ -197,7 +201,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX8[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply[
     A,
@@ -223,7 +227,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
@@ -252,7 +256,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX9[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply[
     A,
@@ -281,7 +285,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
@@ -313,7 +317,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX10[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply[
     A,
@@ -345,7 +349,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
@@ -380,7 +384,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX11[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply[
     A,
@@ -415,7 +419,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
@@ -453,7 +457,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX12[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply[
     A,
@@ -491,7 +495,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
@@ -532,7 +536,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX13[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply[
     A,
@@ -573,7 +577,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
@@ -617,7 +621,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX14[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply[
     A,
@@ -661,7 +665,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
@@ -708,7 +712,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX15[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply[
     A,
@@ -755,7 +759,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
@@ -805,7 +809,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX16[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply[
     A,
@@ -855,7 +859,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
@@ -908,7 +912,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX17[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply[
     A,
@@ -961,7 +965,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
@@ -1017,7 +1021,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX18[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply[
     A,
@@ -1073,7 +1077,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
@@ -1132,7 +1136,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX19[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
     TypeAdtApply[
@@ -1192,7 +1196,7 @@ trait TypeAdtAlias {
           ]
         ]
       ],
-      ST
+      ST with ADTFunctionImplicitFetch.type
     ]
 
   type CoProducts20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
@@ -1254,7 +1258,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX20[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
     TypeAdtApply[
@@ -1317,7 +1321,7 @@ trait TypeAdtAlias {
           ]
         ]
       ],
-      ST
+      ST with ADTFunctionImplicitFetch.type
     ]
 
   type CoProducts21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ADTData[
@@ -1382,7 +1386,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX21[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
     TypeAdtApply[
@@ -1448,7 +1452,7 @@ trait TypeAdtAlias {
           ]
         ]
       ],
-      ST
+      ST with ADTFunctionImplicitFetch.type
     ]
 
   type CoProducts22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = ADTData[
@@ -1516,7 +1520,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
   type CoProductsX22[
     A,
@@ -1609,7 +1613,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST
+    ST with ADTFunctionImplicitFetch.type
   ]
 
 }

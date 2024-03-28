@@ -71,13 +71,14 @@ package impl {
   trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtNat, AdtConvertPoly, ST <: ADTStatus](implicit
       adtConvert: TypeAdt.Context[A, B, AdtConvertPoly]
-    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ADTStatus.Passed.type] = ADTData.success(adtConvert, null)
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST with ADTStatus.Passed.type] =
+      ADTData.success(adtConvert, null)
   }
 
   trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
     @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: AdtNat, ST <: ADTStatus](implicit
       adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type]
-    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, DefaultAdtContext.type], Tail], ADTStatus.Passed.type] =
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, DefaultAdtContext.type], Tail], ST with ADTStatus.Passed.type] =
       ADTData.success(adtConvert, null)
   }
 
@@ -88,6 +89,7 @@ package impl {
   }
 
   trait LowerLevelPoly {
-    implicit val adtFailedResult: ADTData[AdtNatZero, ADTStatus.NotFinished.type] = ADTData.zero(IsFinishAndNothing.value(null))
+    implicit def adtFailedResult[ST <: ADTStatus]: ADTData[AdtNatZero, ST with ADTStatus.NotFinished.type] =
+      ADTData.zero[ST](IsFinishAndNothing.value(null))
   }
 }
