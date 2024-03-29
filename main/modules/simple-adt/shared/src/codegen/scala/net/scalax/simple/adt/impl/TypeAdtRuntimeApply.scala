@@ -1,7 +1,7 @@
 package net.scalax.simple.adt
 package impl
 
-import Adt.{Status => ADTStatus}
+import Adt.{FunctionApply, Status => ADTStatus}
 import temp._
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
@@ -15,8 +15,7 @@ trait TypeAdtRuntimeApply {
       a: ParamType,
       b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatZero], S with ADTFunctionImplicitFetch.type]
     ): ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed.type] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt1(b)(a)
     }
   }
   type CoProduct1Apply[I1] = ApplyFactory[
@@ -43,8 +42,7 @@ trait TypeAdtRuntimeApply {
         S with ADTFunctionImplicitFetch.type
       ]
     ): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt2(b)(a)
     }
   }
   type CoProduct2Apply[I1, I2] = ApplyFactory[
@@ -82,8 +80,7 @@ trait TypeAdtRuntimeApply {
         S with ADTFunctionImplicitFetch.type
       ]
     ): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt3(b)(a)
     }
   }
   type CoProduct3Apply[I1, I2, I3] = ApplyFactory[
@@ -130,8 +127,7 @@ trait TypeAdtRuntimeApply {
         S with ADTFunctionImplicitFetch.type
       ]
     ): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt4(b)(a)
     }
   }
   type CoProduct4Apply[I1, I2, I3, I4] = ApplyFactory[
@@ -190,8 +186,7 @@ trait TypeAdtRuntimeApply {
       AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt5(b)(a)
     }
   }
   type CoProduct5Apply[I1, I2, I3, I4, I5] = ApplyFactory[
@@ -259,8 +254,7 @@ trait TypeAdtRuntimeApply {
       AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt6(b)(a)
     }
   }
   type CoProduct6Apply[I1, I2, I3, I4, I5, I6] = ApplyFactory[
@@ -343,8 +337,7 @@ trait TypeAdtRuntimeApply {
       ]],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt7(b)(a)
     }
   }
   type CoProduct7Apply[I1, I2, I3, I4, I5, I6, I7] = ApplyFactory[
@@ -439,8 +432,7 @@ trait TypeAdtRuntimeApply {
       ]],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt8(b)(a)
     }
   }
   type CoProduct8Apply[I1, I2, I3, I4, I5, I6, I7, I8] = ApplyFactory[
@@ -550,8 +542,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt9(b)(a)
     }
   }
   type CoProduct9Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9] = ApplyFactory[
@@ -679,8 +670,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt10(b)(a)
     }
   }
   type CoProduct10Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ApplyFactory[
@@ -827,8 +817,7 @@ trait TypeAdtRuntimeApply {
         ],
         ADTStatus.Passed.type
       ] = {
-        1
-        ???
+        new FunctionApply.extraFunctionAdt11(b)(a)
       }
     }
   type CoProduct11Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ApplyFactory[
@@ -993,8 +982,7 @@ trait TypeAdtRuntimeApply {
         ],
         ADTStatus.Passed.type
       ] = {
-        1
-        ???
+        new FunctionApply.extraFunctionAdt12(b)(a)
       }
     }
   type CoProduct12Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ApplyFactory[
@@ -1183,8 +1171,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt13(b)(a)
     }
   }
   type CoProduct13Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ApplyFactory[
@@ -1394,8 +1381,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt14(b)(a)
     }
   }
   type CoProduct14Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ApplyFactory[
@@ -1623,8 +1609,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt15(b)(a)
     }
   }
   type CoProduct15Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ApplyFactory[
@@ -1870,8 +1855,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt16(b)(a)
     }
   }
   type CoProduct16Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ApplyFactory[
@@ -2135,8 +2119,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt17(b)(a)
     }
   }
   type CoProduct17Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ApplyFactory[
@@ -2418,8 +2401,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt18(b)(a)
     }
   }
   type CoProduct18Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ApplyFactory[
@@ -2719,8 +2701,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt19(b)(a)
     }
   }
   type CoProduct19Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ApplyFactory[
@@ -3038,8 +3019,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt20(b)(a)
     }
   }
   type CoProduct20Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ApplyFactory[
@@ -3375,8 +3355,7 @@ trait TypeAdtRuntimeApply {
       ],
       ADTStatus.Passed.type
     ] = {
-      1
-      ???
+      new FunctionApply.extraFunctionAdt21(b)(a)
     }
   }
   type CoProduct21Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ApplyFactory[
@@ -3731,8 +3710,7 @@ trait TypeAdtRuntimeApply {
         ],
         ADTStatus.Passed.type
       ] = {
-        1
-        ???
+        new FunctionApply.extraFunctionAdt22(b)(a)
       }
     }
   type CoProduct22Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = ApplyFactory[

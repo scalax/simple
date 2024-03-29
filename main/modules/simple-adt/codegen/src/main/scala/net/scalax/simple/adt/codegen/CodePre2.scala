@@ -21,7 +21,7 @@ object CodePre2:
 package net.scalax.simple.adt
 package impl
 
-import Adt.{Status => ADTStatus}
+import Adt.{Status => ADTStatus, FunctionApply}
 import temp._
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
@@ -35,8 +35,7 @@ trait TypeAdtRuntimeApply {
     s"""
       def CoProduct$i1[$parameterString]:  CoProduct${i1}Apply[$parameterString] = new ApplyFactory[$typeFunction, $dataTypeString] {
         override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): ADTData[$dataTypeString, ADTStatus.Passed.type] = {
-1
-???
+          new FunctionApply.extraFunctionAdt$i1(b)(a)
         }
       }
       type CoProduct${i1}Apply[$parameterString] = ApplyFactory[$typeFunction, $dataTypeString]
