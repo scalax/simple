@@ -36,9 +36,7 @@ trait ADTPassedFunctionImpl {
     private val adtApply = Adt.CoProduct$i1[${repeat(i1)(i2 => s"I$i2")(','.toString)}]
 
     def apply(param: ParamType): $str1 =
-      new ADTStatus.Passed.extra$i1(data).fold(${repeat(i1)(i2 =>
-                              s"s => adtApply[I$i2, ADTStatus.Passed.type](s.input(param): I$i2): $str1"
-                            )(
+      new ADTStatus.Passed.extra$i1(data).fold(${repeat(i1)(i2 => s"s => adtApply.option$i2(s.input(param): I$i2): $str1")(
                               ','.toString
                             )})
 

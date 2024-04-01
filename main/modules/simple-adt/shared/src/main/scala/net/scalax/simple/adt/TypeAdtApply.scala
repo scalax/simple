@@ -29,7 +29,7 @@ package impl {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: AdtNat, AdtConvertPoly, ST <: ADTStatus](implicit
       adtConvert: TypeAdt.Context[A, B, AdtConvertPoly]
     ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST with ADTStatus.Passed.type] =
-      ADTData.success(adtConvert, null)
+      ADTData.success(adtConvert)
   }
 
   /*trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {

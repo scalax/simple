@@ -5,6 +5,7 @@ import net.scalax.simple.adt.implemention.ADTGHDMZSK
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import impl.Adt.{Status => ADTStatus}
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import core._
 
 import scala.annotation.meta.param
 
@@ -17,16 +18,17 @@ trait ADTData[+N <: AdtNat, S <: ADTStatus] extends ToGHDMZSK {
 }
 
 object ADTData {
-  def success[D, T <: AdtNat, S <: ADTStatus](data: D, tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] =
-    new ADTData[AdtNatPositive[D, T], S] {
-      override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(data).inputGHDMZSK(() => tail.toGHDMZSK)
-    }
-  def empty[D, T <: AdtNat, S <: ADTStatus](tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
-    override val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1Impl1.inputGHDMZSK(() => tail.toGHDMZSK)
+  def success[D, T <: AdtNat, S <: ADTStatus](data: D): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
+    override val toGHDMZSK: ghdmzsk = TakeProduct.CoProduct.zero(data)
   }
+
+  def empty[D, T <: AdtNat, S <: ADTStatus](tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
+    override val toGHDMZSK: ghdmzsk = TakeProduct.CoProduct.positive.inputGHDMZSK(() => tail.toGHDMZSK)
+  }
+
   def zero[ST <: ADTStatus](isFinishAndNothing: IsFinishAndNothing): ADTData[AdtNatZero, ST with ADTStatus.NotFinished.type] =
     new ADTData[AdtNatZero, ST with ADTStatus.NotFinished.type] {
-      override lazy val toGHDMZSK: ghdmzsk = ADTGHDMZSK.a1VImpl(isFinishAndNothing).inputGHDMZSK(() => zero(isFinishAndNothing).toGHDMZSK)
+      override lazy val toGHDMZSK: ghdmzsk = TakeProduct.CoProduct.zero(isFinishAndNothing)
     }
 }
 

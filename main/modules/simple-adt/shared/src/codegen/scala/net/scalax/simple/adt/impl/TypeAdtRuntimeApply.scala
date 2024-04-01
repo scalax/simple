@@ -1,3834 +1,507 @@
+
 package net.scalax.simple.adt
 package impl
 
-import Adt.{FunctionApply, Status => ADTStatus}
+import Adt.{Status => ADTStatus, FunctionApply}
 import temp._
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtRuntimeApply {
-
-  def CoProduct1[I1]: CoProduct1Apply[I1] = new ApplyFactory[
-    ({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatZero] })#F1,
-    AdtNatPositive[I1, AdtNatZero]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatZero], S with ADTFunctionImplicitFetch.type]
-    ): ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed.type] = {
-      new FunctionApply.extraFunctionAdt1(b)(a)
-    }
-  }
-  type CoProduct1Apply[I1] = ApplyFactory[
-    ({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatZero] })#F1,
-    AdtNatPositive[I1, AdtNatZero]
-  ]
-
-  def CoProduct2[I1, I2]: CoProduct2Apply[I1, I2] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatZero]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatZero]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type] = {
-      new FunctionApply.extraFunctionAdt2(b)(a)
-    }
-  }
-  type CoProduct2Apply[I1, I2] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatZero]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]]
-  ]
-
-  def CoProduct3[I1, I2, I3]: CoProduct3Apply[I1, I2, I3] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatZero]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatZero]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type] = {
-      new FunctionApply.extraFunctionAdt3(b)(a)
-    }
-  }
-  type CoProduct3Apply[I1, I2, I3] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatZero]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]]
-  ]
-
-  def CoProduct4[I1, I2, I3, I4]: CoProduct4Apply[I1, I2, I3, I4] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatZero]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatZero]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type] = {
-      new FunctionApply.extraFunctionAdt4(b)(a)
-    }
-  }
-  type CoProduct4Apply[I1, I2, I3, I4] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatZero]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]]
-  ]
-
-  def CoProduct5[I1, I2, I3, I4, I5]: CoProduct5Apply[I1, I2, I3, I4, I5] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatZero]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatZero]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt5(b)(a)
-    }
-  }
-  type CoProduct5Apply[I1, I2, I3, I4, I5] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatZero]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]]
-  ]
-
-  def CoProduct6[I1, I2, I3, I4, I5, I6]: CoProduct6Apply[I1, I2, I3, I4, I5, I6] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatZero]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatZero]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt6(b)(a)
-    }
-  }
-  type CoProduct6Apply[I1, I2, I3, I4, I5, I6] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatZero]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]]
-  ]
-
-  def CoProduct7[I1, I2, I3, I4, I5, I6, I7]: CoProduct7Apply[I1, I2, I3, I4, I5, I6, I7] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatZero]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatZero]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[I1, AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]
-      ]],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt7(b)(a)
-    }
-  }
-  type CoProduct7Apply[I1, I2, I3, I4, I5, I6, I7] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatZero]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
-    ]
-  ]
-
-  def CoProduct8[I1, I2, I3, I4, I5, I6, I7, I8]: CoProduct8Apply[I1, I2, I3, I4, I5, I6, I7, I8] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatZero]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[
-      I2,
-      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-    ]]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatZero]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[I1, AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-      ]],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt8(b)(a)
-    }
-  }
-  type CoProduct8Apply[I1, I2, I3, I4, I5, I6, I7, I8] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatZero]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[I1, AdtNatPositive[
-      I2,
-      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-    ]]
-  ]
-
-  def CoProduct9[I1, I2, I3, I4, I5, I6, I7, I8, I9]: CoProduct9Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatZero]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[
-        I3,
-        AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-      ]]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatZero]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[I2, AdtNatPositive[
-          I3,
-          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-        ]]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt9(b)(a)
-    }
-  }
-  type CoProduct9Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatZero]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[
-        I3,
-        AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-      ]]
-    ]
-  ]
-
-  def CoProduct10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]: CoProduct10Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatZero]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-          I5,
-          AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-        ]]]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatZero]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-            I5,
-            AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-          ]]]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt10(b)(a)
-    }
-  }
-  type CoProduct10Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatZero]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-          I5,
-          AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-        ]]]
-      ]
-    ]
-  ]
-
-  def CoProduct11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]: CoProduct11Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] =
-    new ApplyFactory[
-      ({
-        type F1[ParamType] = AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatZero]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      })#F1,
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-              I6,
-              AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-            ]]]
-          ]
-        ]
-      ]
-    ] {
-      override protected def cv[ParamType, S <: ADTStatus](
-        a: ParamType,
-        b: ADTData[
-          AdtNatPositive[
-            Adt.Context[ParamType, I1, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I2, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I3, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                              AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatZero]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ],
-          S with ADTFunctionImplicitFetch.type
-        ]
-      ): ADTData[
-        AdtNatPositive[
-          I1,
-          AdtNatPositive[
-            I2,
-            AdtNatPositive[
-              I3,
-              AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-              ]]]
-            ]
-          ]
-        ],
-        ADTStatus.Passed.type
-      ] = {
-        new FunctionApply.extraFunctionAdt11(b)(a)
+  
+      def CoProduct1[I1]:  CoProduct1Apply[I1] = new CoProduct1Apply[I1] {
+        //
       }
-    }
-  type CoProduct11Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatZero]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-            I6,
-            AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-          ]]]
-        ]
-      ]
-    ]
-  ]
 
-  def CoProduct12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]: CoProduct12Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] =
-    new ApplyFactory[
-      ({
-        type F1[ParamType] = AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatZero]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      })#F1,
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-                I7,
-                AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-              ]]]
-            ]
-          ]
-        ]
-      ]
-    ] {
-      override protected def cv[ParamType, S <: ADTStatus](
-        a: ParamType,
-        b: ADTData[
-          AdtNatPositive[
-            Adt.Context[ParamType, I1, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I2, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I3, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                                AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatZero]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ],
-          S with ADTFunctionImplicitFetch.type
-        ]
-      ): ADTData[
-        AdtNatPositive[
-          I1,
-          AdtNatPositive[
-            I2,
-            AdtNatPositive[
-              I3,
-              AdtNatPositive[
-                I4,
-                AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-                  I7,
-                  AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-                ]]]
-              ]
-            ]
-          ]
-        ],
-        ADTStatus.Passed.type
-      ] = {
-        new FunctionApply.extraFunctionAdt12(b)(a)
+      trait CoProduct1Apply[I1] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatZero] })#F1, AdtNatPositive[I1, AdtNatZero]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed.type] = ADTData.success(iData, null)
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatZero], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt1(b)(a)
+        }
       }
-    }
-  type CoProduct12Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatZero]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-              I7,
-              AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-            ]]]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]
-    : CoProduct13Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatZero]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[
-                  I8,
-                  AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                ]]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatZero]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[I7, AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                  ]]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt13(b)(a)
-    }
-  }
-  type CoProduct13Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatZero]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[
-                  I8,
-                  AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                ]]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
-    : CoProduct14Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatZero]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[I8, AdtNatPositive[
-                    I9,
-                    AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                  ]]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatZero]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[I8, AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                    ]]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt14(b)(a)
-    }
-  }
-  type CoProduct14Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatZero]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[I8, AdtNatPositive[
-                    I9,
-                    AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                  ]]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]
-    : CoProduct15Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatZero]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[
-                      I10,
-                      AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                    ]]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatZero]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[I9, AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                      ]]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt15(b)(a)
-    }
-  }
-  type CoProduct15Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatZero]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[
-                      I10,
-                      AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                    ]]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]
-    : CoProduct16Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatZero]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[
-                        I11,
-                        AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]
-                      ]]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                      AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatZero]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[
-                          I12,
-                          AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]
-                        ]]]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt16(b)(a)
-    }
-  }
-  type CoProduct16Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatZero]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[
-                        I11,
-                        AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]
-                      ]]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]
-    : CoProduct17Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatZero]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                          I13,
-                          AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                        ]]]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                        AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatZero]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                            I13,
-                            AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                          ]]]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt17(b)(a)
-    }
-  }
-  type CoProduct17Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatZero]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                          I13,
-                          AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                        ]]]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]
-    : CoProduct18Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatZero]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                            I14,
-                            AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                          ]]]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                          AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatZero]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                              I14,
-                              AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                            ]]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt18(b)(a)
-    }
-  }
-  type CoProduct18Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatZero]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                            I14,
-                            AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                          ]]]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
-    : CoProduct19Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                          AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatZero]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                              I15,
-                              AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                            ]]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                            AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatZero]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                                I15,
-                                AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                              ]]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt19(b)(a)
-    }
-  }
-  type CoProduct19Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                          AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatZero]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                              I15,
-                              AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                            ]]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]
-    : CoProduct20Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                            AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatZero]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[
-                              I13,
-                              AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                I16,
-                                AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                              ]]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                            AdtNatPositive[
-                                              Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                              AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatZero]
-                                            ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[
-                                I13,
-                                AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                  I16,
-                                  AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                                ]]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt20(b)(a)
-    }
-  }
-  type CoProduct20Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                            AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatZero]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[
-                              I13,
-                              AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                I16,
-                                AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                              ]]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
-    : CoProduct21Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = new ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                            AdtNatPositive[
-                                              Adt.Context[ParamType, I20, DefaultAdtContext.type],
-                                              AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatZero]
-                                            ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[
-                              I13,
-                              AdtNatPositive[
-                                I14,
-                                AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                  I17,
-                                  AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                ]]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ] {
-    override protected def cv[ParamType, S <: ADTStatus](
-      a: ParamType,
-      b: ADTData[
-        AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                            AdtNatPositive[
-                                              Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                              AdtNatPositive[
-                                                Adt.Context[ParamType, I20, DefaultAdtContext.type],
-                                                AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatZero]
-                                              ]
-                                            ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S with ADTFunctionImplicitFetch.type
-      ]
-    ): ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[
-                                I13,
-                                AdtNatPositive[
-                                  I14,
-                                  AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                    I17,
-                                    AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                  ]]]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      ADTStatus.Passed.type
-    ] = {
-      new FunctionApply.extraFunctionAdt21(b)(a)
-    }
-  }
-  type CoProduct21Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                            AdtNatPositive[
-                                              Adt.Context[ParamType, I20, DefaultAdtContext.type],
-                                              AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatZero]
-                                            ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[
-                              I13,
-                              AdtNatPositive[
-                                I14,
-                                AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                  I17,
-                                  AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                ]]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
-
-  def CoProduct22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22]
-    : CoProduct22Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
-    new ApplyFactory[
-      ({
-        type F1[ParamType] = AdtNatPositive[
-          Adt.Context[ParamType, I1, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I2, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I3, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                            AdtNatPositive[
-                                              Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                              AdtNatPositive[
-                                                Adt.Context[ParamType, I20, DefaultAdtContext.type],
-                                                AdtNatPositive[
-                                                  Adt.Context[ParamType, I21, DefaultAdtContext.type],
-                                                  AdtNatPositive[Adt.Context[ParamType, I22, DefaultAdtContext.type], AdtNatZero]
-                                                ]
-                                              ]
-                                            ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      })#F1,
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[
-                                I13,
-                                AdtNatPositive[
-                                  I14,
-                                  AdtNatPositive[
-                                    I15,
-                                    AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                      I18,
-                                      AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                    ]]]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ] {
-      override protected def cv[ParamType, S <: ADTStatus](
-        a: ParamType,
-        b: ADTData[
-          AdtNatPositive[
-            Adt.Context[ParamType, I1, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I2, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I3, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I4, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                            AdtNatPositive[
-                                              Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                              AdtNatPositive[
-                                                Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                                AdtNatPositive[
-                                                  Adt.Context[ParamType, I20, DefaultAdtContext.type],
-                                                  AdtNatPositive[
-                                                    Adt.Context[ParamType, I21, DefaultAdtContext.type],
-                                                    AdtNatPositive[Adt.Context[ParamType, I22, DefaultAdtContext.type], AdtNatZero]
-                                                  ]
-                                                ]
-                                              ]
-                                            ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ],
-          S with ADTFunctionImplicitFetch.type
-        ]
-      ): ADTData[
-        AdtNatPositive[
-          I1,
-          AdtNatPositive[
-            I2,
-            AdtNatPositive[
-              I3,
-              AdtNatPositive[
-                I4,
-                AdtNatPositive[
-                  I5,
-                  AdtNatPositive[
-                    I6,
-                    AdtNatPositive[
-                      I7,
-                      AdtNatPositive[
-                        I8,
-                        AdtNatPositive[
-                          I9,
-                          AdtNatPositive[
-                            I10,
-                            AdtNatPositive[
-                              I11,
-                              AdtNatPositive[
-                                I12,
-                                AdtNatPositive[
-                                  I13,
-                                  AdtNatPositive[
-                                    I14,
-                                    AdtNatPositive[
-                                      I15,
-                                      AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                        I18,
-                                        AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                      ]]]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        ADTStatus.Passed.type
-      ] = {
-        new FunctionApply.extraFunctionAdt22(b)(a)
+    
+      def CoProduct2[I1,I2]:  CoProduct2Apply[I1,I2] = new CoProduct2Apply[I1,I2] {
+        //
       }
-    }
-  type CoProduct22Apply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = ApplyFactory[
-    ({
-      type F1[ParamType] = AdtNatPositive[
-        Adt.Context[ParamType, I1, DefaultAdtContext.type],
-        AdtNatPositive[
-          Adt.Context[ParamType, I2, DefaultAdtContext.type],
-          AdtNatPositive[
-            Adt.Context[ParamType, I3, DefaultAdtContext.type],
-            AdtNatPositive[
-              Adt.Context[ParamType, I4, DefaultAdtContext.type],
-              AdtNatPositive[
-                Adt.Context[ParamType, I5, DefaultAdtContext.type],
-                AdtNatPositive[
-                  Adt.Context[ParamType, I6, DefaultAdtContext.type],
-                  AdtNatPositive[
-                    Adt.Context[ParamType, I7, DefaultAdtContext.type],
-                    AdtNatPositive[
-                      Adt.Context[ParamType, I8, DefaultAdtContext.type],
-                      AdtNatPositive[
-                        Adt.Context[ParamType, I9, DefaultAdtContext.type],
-                        AdtNatPositive[
-                          Adt.Context[ParamType, I10, DefaultAdtContext.type],
-                          AdtNatPositive[
-                            Adt.Context[ParamType, I11, DefaultAdtContext.type],
-                            AdtNatPositive[
-                              Adt.Context[ParamType, I12, DefaultAdtContext.type],
-                              AdtNatPositive[
-                                Adt.Context[ParamType, I13, DefaultAdtContext.type],
-                                AdtNatPositive[
-                                  Adt.Context[ParamType, I14, DefaultAdtContext.type],
-                                  AdtNatPositive[
-                                    Adt.Context[ParamType, I15, DefaultAdtContext.type],
-                                    AdtNatPositive[
-                                      Adt.Context[ParamType, I16, DefaultAdtContext.type],
-                                      AdtNatPositive[
-                                        Adt.Context[ParamType, I17, DefaultAdtContext.type],
-                                        AdtNatPositive[
-                                          Adt.Context[ParamType, I18, DefaultAdtContext.type],
-                                          AdtNatPositive[
-                                            Adt.Context[ParamType, I19, DefaultAdtContext.type],
-                                            AdtNatPositive[
-                                              Adt.Context[ParamType, I20, DefaultAdtContext.type],
-                                              AdtNatPositive[
-                                                Adt.Context[ParamType, I21, DefaultAdtContext.type],
-                                                AdtNatPositive[Adt.Context[ParamType, I22, DefaultAdtContext.type], AdtNatZero]
-                                              ]
-                                            ]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    })#F1,
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[
-                              I13,
-                              AdtNatPositive[
-                                I14,
-                                AdtNatPositive[
-                                  I15,
-                                  AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                    I18,
-                                    AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                  ]]]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
-    ]
-  ]
 
+      trait CoProduct2Apply[I1,I2] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatZero]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatZero]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt2(b)(a)
+        }
+      }
+    
+      def CoProduct3[I1,I2,I3]:  CoProduct3Apply[I1,I2,I3] = new CoProduct3Apply[I1,I2,I3] {
+        //
+      }
+
+      trait CoProduct3Apply[I1,I2,I3] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatZero]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatZero]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt3(b)(a)
+        }
+      }
+    
+      def CoProduct4[I1,I2,I3,I4]:  CoProduct4Apply[I1,I2,I3,I4] = new CoProduct4Apply[I1,I2,I3,I4] {
+        //
+      }
+
+      trait CoProduct4Apply[I1,I2,I3,I4] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatZero]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatZero]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt4(b)(a)
+        }
+      }
+    
+      def CoProduct5[I1,I2,I3,I4,I5]:  CoProduct5Apply[I1,I2,I3,I4,I5] = new CoProduct5Apply[I1,I2,I3,I4,I5] {
+        //
+      }
+
+      trait CoProduct5Apply[I1,I2,I3,I4,I5] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatZero]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatZero]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt5(b)(a)
+        }
+      }
+    
+      def CoProduct6[I1,I2,I3,I4,I5,I6]:  CoProduct6Apply[I1,I2,I3,I4,I5,I6] = new CoProduct6Apply[I1,I2,I3,I4,I5,I6] {
+        //
+      }
+
+      trait CoProduct6Apply[I1,I2,I3,I4,I5,I6] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatZero]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatZero]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt6(b)(a)
+        }
+      }
+    
+      def CoProduct7[I1,I2,I3,I4,I5,I6,I7]:  CoProduct7Apply[I1,I2,I3,I4,I5,I6,I7] = new CoProduct7Apply[I1,I2,I3,I4,I5,I6,I7] {
+        //
+      }
+
+      trait CoProduct7Apply[I1,I2,I3,I4,I5,I6,I7] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatZero]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatZero]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt7(b)(a)
+        }
+      }
+    
+      def CoProduct8[I1,I2,I3,I4,I5,I6,I7,I8]:  CoProduct8Apply[I1,I2,I3,I4,I5,I6,I7,I8] = new CoProduct8Apply[I1,I2,I3,I4,I5,I6,I7,I8] {
+        //
+      }
+
+      trait CoProduct8Apply[I1,I2,I3,I4,I5,I6,I7,I8] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatZero]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatZero]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt8(b)(a)
+        }
+      }
+    
+      def CoProduct9[I1,I2,I3,I4,I5,I6,I7,I8,I9]:  CoProduct9Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9] = new CoProduct9Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9] {
+        //
+      }
+
+      trait CoProduct9Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatZero]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatZero]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt9(b)(a)
+        }
+      }
+    
+      def CoProduct10[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10]:  CoProduct10Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10] = new CoProduct10Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10] {
+        //
+      }
+
+      trait CoProduct10Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatZero]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatZero]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt10(b)(a)
+        }
+      }
+    
+      def CoProduct11[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11]:  CoProduct11Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11] = new CoProduct11Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11] {
+        //
+      }
+
+      trait CoProduct11Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt11(b)(a)
+        }
+      }
+    
+      def CoProduct12[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12]:  CoProduct12Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12] = new CoProduct12Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12] {
+        //
+      }
+
+      trait CoProduct12Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt12(b)(a)
+        }
+      }
+    
+      def CoProduct13[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13]:  CoProduct13Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13] = new CoProduct13Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13] {
+        //
+      }
+
+      trait CoProduct13Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt13(b)(a)
+        }
+      }
+    
+      def CoProduct14[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14]:  CoProduct14Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14] = new CoProduct14Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14] {
+        //
+      }
+
+      trait CoProduct14Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt14(b)(a)
+        }
+      }
+    
+      def CoProduct15[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15]:  CoProduct15Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15] = new CoProduct15Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15] {
+        //
+      }
+
+      trait CoProduct15Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt15(b)(a)
+        }
+      }
+    
+      def CoProduct16[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16]:  CoProduct16Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16] = new CoProduct16Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16] {
+        //
+      }
+
+      trait CoProduct16Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+def option16(iData: I16): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt16(b)(a)
+        }
+      }
+    
+      def CoProduct17[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17]:  CoProduct17Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17] = new CoProduct17Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17] {
+        //
+      }
+
+      trait CoProduct17Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+def option16(iData: I16): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))
+def option17(iData: I17): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt17(b)(a)
+        }
+      }
+    
+      def CoProduct18[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18]:  CoProduct18Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18] = new CoProduct18Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18] {
+        //
+      }
+
+      trait CoProduct18Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+def option16(iData: I16): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))
+def option17(iData: I17): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))
+def option18(iData: I18): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt18(b)(a)
+        }
+      }
+    
+      def CoProduct19[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19]:  CoProduct19Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19] = new CoProduct19Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19] {
+        //
+      }
+
+      trait CoProduct19Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+def option16(iData: I16): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))
+def option17(iData: I17): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))
+def option18(iData: I18): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))
+def option19(iData: I19): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt19(b)(a)
+        }
+      }
+    
+      def CoProduct20[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20]:  CoProduct20Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20] = new CoProduct20Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20] {
+        //
+      }
+
+      trait CoProduct20Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+def option16(iData: I16): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))
+def option17(iData: I17): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))
+def option18(iData: I18): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))
+def option19(iData: I19): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))))
+def option20(iData: I20): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt20(b)(a)
+        }
+      }
+    
+      def CoProduct21[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21]:  CoProduct21Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21] = new CoProduct21Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21] {
+        //
+      }
+
+      trait CoProduct21Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+def option16(iData: I16): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))
+def option17(iData: I17): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))
+def option18(iData: I18): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))
+def option19(iData: I19): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))))
+def option20(iData: I20): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))))
+def option21(iData: I21): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt21(b)(a)
+        }
+      }
+    
+      def CoProduct22[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21,I22]:  CoProduct22Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21,I22] = new CoProduct22Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21,I22] {
+        //
+      }
+
+      trait CoProduct22Apply[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21,I22] extends ApplyFactory[({ type F1[ParamType] = AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I22, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]]]]] })#F1, AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]]] {
+        def option1(iData: I1): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.success(iData, null)
+def option2(iData: I2): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.success(iData, null))
+def option3(iData: I3): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.success(iData, null)))
+def option4(iData: I4): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))
+def option5(iData: I5): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))
+def option6(iData: I6): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))
+def option7(iData: I7): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))
+def option8(iData: I8): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))
+def option9(iData: I9): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))
+def option10(iData: I10): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))
+def option11(iData: I11): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))
+def option12(iData: I12): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))
+def option13(iData: I13): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))
+def option14(iData: I14): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))
+def option15(iData: I15): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))
+def option16(iData: I16): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))
+def option17(iData: I17): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))
+def option18(iData: I18): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))
+def option19(iData: I19): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))))
+def option20(iData: I20): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))))
+def option21(iData: I21): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null)))))))))))))))))))))
+def option22(iData: I22): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.empty(ADTData.success(iData, null))))))))))))))))))))))
+
+        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I22, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
+          new FunctionApply.extraFunctionAdt22(b)(a)
+        }
+      }
+    
 }
+
