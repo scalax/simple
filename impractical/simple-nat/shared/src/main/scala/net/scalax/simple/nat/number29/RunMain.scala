@@ -3,7 +3,6 @@ package nat
 package number29
 
 import scala.annotation.tailrec
-
 import ghdmzsk._
 
 object RunTest1 {
@@ -75,7 +74,7 @@ object RunTest1 {
   def count(num: () => ghdmzsk, except1: BigDecimal, except2: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
     countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1 / except2, printlnSum = printlnSum, speed = speed)
 
-  def main1(arr: Array[String]): Unit = {
+  def main(arr: Array[String]): Unit = {
     println('3'.toString * 1000)
 
     val 分子1: Long = 123
@@ -115,6 +114,7 @@ object RunTest1 {
 
     val result4: () => ghdmzsk = () => result2().inputGHDMZSK(result1).inputGHDMZSK(() => 乘除1.被乘数分子).inputGHDMZSK(() => 乘除1.被乘数分母)
     count(result4, except1 = except6, except2 = except5, printlnSum = 18, speed = 30000000)
+
   }
 
 }

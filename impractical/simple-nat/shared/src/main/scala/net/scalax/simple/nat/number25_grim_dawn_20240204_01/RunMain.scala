@@ -3,7 +3,7 @@ package number25_grim_dawn_20240204_01
 
 object RunTest1 {
 
-  def main(arr: Array[String]): Unit = locally {
+  def main1(arr: Array[String]): Unit = locally {
 
     val resultPre = utils.count(
       fumo_sum = utils.fumoSum,
