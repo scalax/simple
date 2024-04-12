@@ -2,6 +2,7 @@ package net.scalax.simple.codec
 package to_list_generic
 
 import shapeless._
+import utils._
 
 trait ToDecoderGeneric2222[F[_[_]]] {
   def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: MonadAdd[M1])(
@@ -21,40 +22,19 @@ object ToDecoderGeneric2222 {
     def output(monad: MonadAdd[M1])(func: FuncImpl[M1, M2, M3, M4]): M1[Target1, Target2, Target3]
   }
   object HListFuncMapGeneric {
+    private val appender: HListUtils[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] =
+      new HListUtils[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] {
+        override def appendData[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
+        override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head     = dataList.head
+        override def takeTail[Head, Tail <: HList](dataList: Head :: Tail): Tail     = dataList.tail
+        override val takeZero: HNil                                                  = HNil
+      }
+
     implicit def implicit1[T1, Source1 <: HList, HL1 <: HList, HL2 <: HList, HL3 <: HList, M1[_, _, _], M2[_], M3[_], M4[_]](implicit
       tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1, M2, M3, M4]
-    ): HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] =
-      new HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] {
-        override def output(o: MonadAdd[M1])(func: FuncImpl[M1, M2, M3, M4]): M1[M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3] = {
-          val tailM1: M1[HL1, HL2, HL3]                             = tail.output(o)(func)
-          val headM1: M1[M2[T1], M3[T1], M4[T1]]                    = func[T1]
-          val zipM: M1[(HL1, M2[T1]), (HL2, M3[T1]), (HL3, M4[T1])] = o.zip(tailM1, headM1)
+    ): HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] = appender.append(tail)
 
-          o.to(zipM)(
-            in1 = t => t._2 :: t._1,
-            in2 = t => t._2 :: t._1,
-            in3 = t => t._2 :: t._1
-          )(
-            in4 = t => (t.tail, t.head),
-            in5 = t => (t.tail, t.head),
-            in6 = t => (t.tail, t.head)
-          )
-        }
-      }
-
-    implicit def implicit2[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] =
-      new HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] {
-        override def output(o: MonadAdd[M1])(func: FuncImpl[M1, M2, M3, M4]): M1[HNil, HNil, HNil] =
-          o.to(o.zero)(
-            _ => HNil: HNil,
-            _ => HNil: HNil,
-            _ => HNil: HNil
-          )(
-            _ => (),
-            _ => (),
-            _ => ()
-          )
-      }
+    implicit def implicit2[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] = appender.zero
   }
 
   trait HListFuncMapGenericGen[Source1, M1[_, _, _], M2[_], M3[_], M4[_]] {

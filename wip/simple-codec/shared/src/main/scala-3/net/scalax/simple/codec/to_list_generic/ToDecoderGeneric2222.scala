@@ -1,6 +1,8 @@
 package net.scalax.simple.codec
 package to_list_generic
 
+import utils._
+
 trait ToDecoderGeneric2222[F[_[_]]] {
   def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: MonadAdd[M1])(
     func: ToDecoderGeneric2222.FuncImpl[M1, M2, M3, M4]
@@ -22,40 +24,23 @@ object ToDecoderGeneric2222 {
     def output(monad: MonadAdd[M1])(func: FuncImpl[M1, M2, M3, M4]): M1[Target1, Target2, Target3]
   }
   object HListFuncMapGeneric {
+    private val appender: HListUtils[Tuple, ({ type Ad[Head, TU <: Tuple] = Head *: TU })#Ad, EmptyTuple] =
+      new HListUtils[Tuple, ({ type Ad[Head, TU <: Tuple] = Head *: TU })#Ad, EmptyTuple] {
+        override def appendData[Head, Tail <: Tuple](h: Head, t: Tail): Head *: Tail = h *: t
+        override def takeHead[Head, Tail <: Tuple](dataList: Head *: Tail): Head     = dataList.head
+        override def takeTail[Head, Tail <: Tuple](dataList: Head *: Tail): Tail     = dataList.tail
+        override val takeZero: EmptyTuple                                            = EmptyTuple
+      }
+
     private def instanceAny(
       count: Int
-    ): HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2, x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any] =
-      new HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2, x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any] {
-        self =>
-        override def output(
-          o: MonadAdd[[x1, x2, x3] =>> Any]
-        )(func: FuncImpl[[x1, x2, x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any]): Any = if (count > 0) {
-          val tail   = instanceAny(count - 1)
-          val tailM1 = tail.output(o)(func)
-          val headM1 = func[Any]
-          val zipM   = o.zip(tailM1, headM1)
-
-          o.to(zipM)(
-            in1 = t => t.asInstanceOf[Tuple2[_, _]]._2 *: t.asInstanceOf[Tuple2[_, _]]._1.asInstanceOf[Tuple],
-            in2 = t => t.asInstanceOf[Tuple2[_, _]]._2 *: t.asInstanceOf[Tuple2[_, _]]._1.asInstanceOf[Tuple],
-            in3 = t => t.asInstanceOf[Tuple2[_, _]]._2 *: t.asInstanceOf[Tuple2[_, _]]._1.asInstanceOf[Tuple]
-          )(
-            in4 = t => (t.asInstanceOf[Any *: Tuple].tail, t.asInstanceOf[Any *: Tuple].head),
-            in5 = t => (t.asInstanceOf[Any *: Tuple].tail, t.asInstanceOf[Any *: Tuple].head),
-            in6 = t => (t.asInstanceOf[Any *: Tuple].tail, t.asInstanceOf[Any *: Tuple].head)
-          )
-        } else {
-          o.to(o.zero)(
-            _ => EmptyTuple,
-            _ => EmptyTuple,
-            _ => EmptyTuple
-          )(
-            _ => (),
-            _ => (),
-            _ => ()
-          )
-        }
-      }
+    ): HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2, x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any] = if (count > 0)
+      appender
+        .append(instanceAny(count - 1))
+        .asInstanceOf[HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2, x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any]]
+    else
+      appender.zero.asInstanceOf[HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2,
+      x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any]]
 
     def instance[Source1 <: Tuple, M1[_, _, _], M2[_], M3[_], M4[_]](using
       v: ValueOf[Tuple.Size[Source1]]
