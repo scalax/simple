@@ -19,10 +19,11 @@ object ToDecoderGeneric2222 {
   }
 
   trait HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1[_, _, _], M2[_], M3[_], M4[_]] {
+    def size: Int
     def output(monad: MonadAdd[M1])(func: FuncImpl[M1, M2, M3, M4]): M1[Target1, Target2, Target3]
   }
   object HListFuncMapGeneric {
-    private val appender: HListUtils[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] =
+    val appender: HListUtils[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] =
       new HListUtils[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] {
         override def appendData[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
         override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head     = dataList.head
@@ -32,9 +33,12 @@ object ToDecoderGeneric2222 {
 
     implicit def implicit1[T1, Source1 <: HList, HL1 <: HList, HL2 <: HList, HL3 <: HList, M1[_, _, _], M2[_], M3[_], M4[_]](implicit
       tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1, M2, M3, M4]
-    ): HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] = appender.append(tail)
+    ): HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] = HListUtilsImpl
+      .get(tail.size + 1)
+      .asInstanceOf[HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4]]
 
-    implicit def implicit2[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] = appender.zero
+    implicit def implicit2[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] =
+      HListUtilsImpl.get(0).asInstanceOf[HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4]]
   }
 
   trait HListFuncMapGenericGen[Source1, M1[_, _, _], M2[_], M3[_], M4[_]] {

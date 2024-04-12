@@ -26,6 +26,8 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
       M3,
       M4
     ] {
+      override def size: Int = tail.size + 1
+
       override def output(o: MonadAdd[M1])(
         func: ToDecoderGeneric2222.FuncImpl[M1, M2, M3, M4]
       ): M1[AppendablePositive[M2[T1], HL1], AppendablePositive[M3[T1], HL2], AppendablePositive[M4[T1], HL3]] = {
@@ -47,6 +49,8 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
 
   def zero[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[AppendZero, AppendZero, AppendZero, AppendZero, M1, M2, M3, M4] =
     new HListFuncMapGeneric[AppendZero, AppendZero, AppendZero, AppendZero, M1, M2, M3, M4] {
+      override def size: Int = 0
+
       override def output(o: MonadAdd[M1])(func: ToDecoderGeneric2222.FuncImpl[M1, M2, M3, M4]): M1[AppendZero, AppendZero, AppendZero] =
         o.to(o.zero)(
           _ => takeZero: AppendZero,
@@ -58,4 +62,35 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
           (_: AppendZero) => ()
         )
     }
+}
+
+object HListUtilsImpl {
+  type X2[P1 <: Any, P2 <: Any]            = Any
+  type X3[P1 <: Any, P2 <: Any, P3 <: Any] = Any
+  type X1[P1 <: Any]                       = Any
+
+  type AnyFuncGeneric = HListFuncMapGeneric[Any, Any, Any, Any, X3, X1, X1, X1]
+  type Utils          = HListUtils[Any, X2, Any]
+
+  private var list: List[AnyFuncGeneric] = List.empty
+
+  def get(i: Int): AnyFuncGeneric = {
+    val appender = HListFuncMapGeneric.appender.asInstanceOf[Utils]
+
+    if (list.size <= i) {
+      this.synchronized {
+        while (list.size <= i) {
+          if (list.isEmpty) {
+            list = List(appender.zero)
+          } else {
+            val newModel: AnyFuncGeneric = appender.append(list.last)
+            list = list ::: newModel :: List.empty
+          }
+        }
+      }
+    }
+
+    list(i)
+  }
+
 }

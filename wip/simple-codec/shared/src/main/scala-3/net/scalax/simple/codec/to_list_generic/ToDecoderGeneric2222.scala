@@ -21,10 +21,12 @@ object ToDecoderGeneric2222 {
   }
 
   trait HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1[_, _, _], M2[_], M3[_], M4[_]] {
+    def size: Int
+
     def output(monad: MonadAdd[M1])(func: FuncImpl[M1, M2, M3, M4]): M1[Target1, Target2, Target3]
   }
   object HListFuncMapGeneric {
-    private val appender: HListUtils[Tuple, ({ type Ad[Head, TU <: Tuple] = Head *: TU })#Ad, EmptyTuple] =
+    val appender: HListUtils[Tuple, ({ type Ad[Head, TU <: Tuple] = Head *: TU })#Ad, EmptyTuple] =
       new HListUtils[Tuple, ({ type Ad[Head, TU <: Tuple] = Head *: TU })#Ad, EmptyTuple] {
         override def appendData[Head, Tail <: Tuple](h: Head, t: Tail): Head *: Tail = h *: t
         override def takeHead[Head, Tail <: Tuple](dataList: Head *: Tail): Head     = dataList.head
@@ -32,20 +34,22 @@ object ToDecoderGeneric2222 {
         override val takeZero: EmptyTuple                                            = EmptyTuple
       }
 
-    private def instanceAny(
-      count: Int
-    ): HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2, x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any] = if (count > 0)
-      appender
-        .append(instanceAny(count - 1))
-        .asInstanceOf[HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2, x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any]]
-    else
-      appender.zero.asInstanceOf[HListFuncMapGeneric[Tuple, Tuple, Tuple, Tuple, [x1, x2,
-      x3] =>> Any, [x] =>> Any, [x] =>> Any, [x] =>> Any]]
-
     def instance[Source1 <: Tuple, M1[_, _, _], M2[_], M3[_], M4[_]](using
       v: ValueOf[Tuple.Size[Source1]]
     ): HListFuncMapGeneric[Source1, MatchTuple1[Source1, M2], MatchTuple1[Source1, M3], MatchTuple1[Source1, M4], M1, M2, M3, M4] =
-      instanceAny(summon[ValueOf[Tuple.Size[Source1]]].value).asInstanceOf
+      HListUtilsImpl
+        .get(v.value)
+        .asInstanceOf[HListFuncMapGeneric[
+          Source1,
+          MatchTuple1[Source1, M2],
+          MatchTuple1[Source1, M3],
+          MatchTuple1[Source1, M4],
+          M1,
+          M2,
+          M3,
+          M4
+        ]]
+
   }
 
   trait HListFuncMapGenericGen[Source1 <: Tuple, M1[_, _, _], M2[_], M3[_], M4[_]] {
