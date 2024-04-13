@@ -1,20 +1,17 @@
-package net.scalax.simple
-package codec
+package net.scalax.simple.codec
 
-import shapeless._
 import to_list_generic._
 
 trait NamedImplicit[T] {
-  def names: HList
+  def cv: T <:< Product
 }
 
 object NamedImplicit {
   type Named[_] = String
 
-  implicit def getImplicit[T](implicit named: DefaultSymbolicLabelling.Aux[T, _ <: HList]): NamedImplicit[T] =
-    new NamedImplicit[T] {
-      override val names: HList = named.apply()
-    }
+  implicit def getImplicit[T <: Product]: NamedImplicit[T] = new NamedImplicit[T] {
+    override val cv: T <:< Product = implicitly
+  }
 
   private val toNamed: ToDecoderGeneric1.FuncImpl1[({ type T1[U] = List[String] => (List[String], U) })#T1, ({ type T1[_] = String })#T1] =
     new ToDecoderGeneric1.FuncImpl1[({ type T1[U] = List[String] => (List[String], U) })#T1, ({ type T1[_] = String })#T1] {
@@ -43,12 +40,13 @@ object NamedImplicit {
     }
 
   def toNamedModel[F[_[_]]](m: ToDecoderGeneric2222[F], n: NamedImplicit[F[Named]]): F[Named] = {
-    def toList(l: HList): List[String] = l match {
-      case s: shapeless.::[_, HList] => s.head.asInstanceOf[Symbol].name :: toList(s.tail)
-      case HNil                      => List.empty
+    val simpleFill: SimpleFill[F] = SimpleFill[F].derived1(m)
+    val fill = new SimpleFill.FillI[Named] {
+      override def fill[T]: String = "Empty"
     }
+    val model = simpleFill.fill[Named](fill)
 
-    val names: List[String] = toList(n.names)
+    val names: List[String] = n.cv(model).productElementNames.to(List)
 
     val de1: ToDecoderGeneric[F]  = ToDecoderGeneric[F].fromInstance(m)
     val de2: ToDecoderGeneric1[F] = ToDecoderGeneric1[F].fromInstance(de1)

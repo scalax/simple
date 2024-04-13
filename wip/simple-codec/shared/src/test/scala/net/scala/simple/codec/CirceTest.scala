@@ -17,12 +17,13 @@ object xxbb1 extends IOApp {
 
   def encodeModel[F[_[_]]](implicit
     g: F[Encoder],
-    g1: BasedInstalled[F]
+    g1: BasedInstalled[F],
+    named: NamedImplicit[F[LabelledInstalled.Named]]
   ): Encoder[F[cats.Id]] = {
     val toList: ToListGeneric[F]  = ToListGeneric[F].derived(g1)
     val zipGeneric: ZipGeneric[F] = ZipGeneric[F].derived(g1)
     val mapGenerc: MapGenerc[F]   = MapGenerc[F].derived(g1)
-    val labelledInstalled         = LabelledInstalled[F].derived(g1)
+    val labelledInstalled         = LabelledInstalled[F].derived(g1, named)
 
     Encoder.instance[F[cats.Id]] { m =>
       val zip1 = zipGeneric.zip(m, g)
@@ -39,11 +40,12 @@ object xxbb1 extends IOApp {
 
   def decodeModel[F[_[_]]](implicit
     g: F[Decoder],
-    g1: BasedInstalled[F]
+    g1: BasedInstalled[F],
+    named: NamedImplicit[F[LabelledInstalled.Named]]
   ): Decoder[F[cats.Id]] = {
     val zipGeneric: ZipGeneric[F]   = ZipGeneric[F].derived(g1)
     val mapGenerc: MapGenerc[F]     = MapGenerc[F].derived(g1)
-    val labelledInstalled           = LabelledInstalled[F].derived(g1)
+    val labelledInstalled           = LabelledInstalled[F].derived(g1, named)
     val decode: ToDecoderGeneric[F] = ToDecoderGeneric[F].derived(g1)
 
     val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](labelledInstalled, g)

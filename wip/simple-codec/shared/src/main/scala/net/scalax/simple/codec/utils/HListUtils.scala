@@ -3,6 +3,7 @@ package utils
 
 import net.scalax.simple.codec.to_list_generic.ToDecoderGeneric2222
 import ToDecoderGeneric2222.HListFuncMapGeneric
+import scala.collection.compat._
 
 trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendable, AppendZero <: Appendable] {
   def appendData[Head, Tail <: Appendable](h: Head, t: Tail): AppendablePositive[Head, Tail]
@@ -26,7 +27,7 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
       M3,
       M4
     ] {
-      override def size: Int = tail.size + 1
+      override val size: Int = tail.size + 1
 
       override def output(o: MonadAdd[M1])(
         func: ToDecoderGeneric2222.FuncImpl[M1, M2, M3, M4]
@@ -72,25 +73,32 @@ object HListUtilsImpl {
   type AnyFuncGeneric = HListFuncMapGeneric[Any, Any, Any, Any, X3, X1, X1, X1]
   type Utils          = HListUtils[Any, X2, Any]
 
-  private var list: List[AnyFuncGeneric] = List.empty
+  private var arr: Array[AnyFuncGeneric] = Array.empty
 
   def get(i: Int): AnyFuncGeneric = {
-    val appender = HListFuncMapGeneric.appender.asInstanceOf[Utils]
+    if (arr.length <= i) {
+      val appender = HListFuncMapGeneric.appender.asInstanceOf[Utils]
 
-    if (list.size <= i) {
       this.synchronized {
-        while (list.size <= i) {
-          if (list.isEmpty) {
-            list = List(appender.zero)
-          } else {
-            val newModel: AnyFuncGeneric = appender.append(list.last)
-            list = list ::: newModel :: List.empty
+        if (arr.length <= i) {
+          var tempList: List[AnyFuncGeneric] = arr.to(List).reverse
+
+          while (tempList.size <= i) {
+            if (tempList.isEmpty) {
+              tempList = List(appender.zero)
+            } else {
+              val newModel: AnyFuncGeneric = appender.append(tempList.head)
+              tempList = newModel :: tempList
+            }
           }
+
+          arr = tempList.reverse.to(Array)
         }
+
       }
     }
 
-    list(i)
+    arr(i)
   }
 
 }
