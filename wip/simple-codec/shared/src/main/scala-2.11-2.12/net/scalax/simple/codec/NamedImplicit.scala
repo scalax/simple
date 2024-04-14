@@ -50,8 +50,8 @@ object NamedImplicit {
 
     val names: List[String] = toList(n.names)
 
-    val de1: ToDecoderGeneric[F]  = ToDecoderGeneric[F].fromInstance(m)
-    val de2: ToDecoderGeneric1[F] = ToDecoderGeneric1[F].fromInstance(de1)
+    val de1: ToDecoderGeneric[F]  = ToDecoderGeneric[F].derived(m)
+    val de2: ToDecoderGeneric1[F] = ToDecoderGeneric1[F].derived(de1)
 
     val func = de2.toHList1[({ type T1[U] = List[String] => (List[String], U) })#T1, ({ type T1[_] = String })#T1](monadAdd)(toNamed)
 

@@ -40,7 +40,7 @@ object NamedImplicit {
     }
 
   def toNamedModel[F[_[_]]](m: ToDecoderGeneric2222[F], n: NamedImplicit[F[Named]]): F[Named] = {
-    val simpleFill: SimpleFill[F] = SimpleFill[F].derived1(m)
+    val simpleFill: SimpleFill[F] = SimpleFill[F].derived(m)
     val fill = new SimpleFill.FillI[Named] {
       override def fill[T]: String = "Empty"
     }
@@ -48,8 +48,8 @@ object NamedImplicit {
 
     val names: List[String] = n.cv(model).productElementNames.to(List)
 
-    val de1: ToDecoderGeneric[F]  = ToDecoderGeneric[F].fromInstance(m)
-    val de2: ToDecoderGeneric1[F] = ToDecoderGeneric1[F].fromInstance(de1)
+    val de1: ToDecoderGeneric[F]  = ToDecoderGeneric[F].derived(m)
+    val de2: ToDecoderGeneric1[F] = ToDecoderGeneric1[F].derived(de1)
 
     val func = de2.toHList1[({ type T1[U] = List[String] => (List[String], U) })#T1, ({ type T1[_] = String })#T1](monadAdd)(toNamed)
 

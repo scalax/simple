@@ -1,15 +1,11 @@
 package net.scalax.simple.codec.generic
 
-import net.scalax.simple.codec.{SimpleFrom, SimpleFromGeneric, SimpleTo, SimpleToGeneric}
-import shapeless.{DefaultSymbolicLabelling, Generic}
+import net.scalax.simple.codec.{SimpleFrom, SimpleTo}
+import shapeless.Generic
 
-trait SimpleFromTo[Model, Target, NameTarget]
-    extends SimpleFrom[Model, Target]
-    with SimpleTo[Model, Target]
-    with SimpleName[Model, NameTarget] {
+trait SimpleFromTo[Model, Target, NameTarget] extends SimpleFrom[Model, Target] with SimpleTo[Model, Target] {
   override def from(t: Target): Model
   override def to(t: Model): Target
-  override def names: NameTarget
 }
 
 trait SimpleFromProduct[F[_[_]], I[_]] {
@@ -33,18 +29,15 @@ object SimpleFromProduct {
       //
     }
 
-    def derived[H, N1](implicit
-      g: Generic.Aux[ModelType, H],
-      d1: DefaultSymbolicLabelling.Aux[ModelType, N1]
-    ): SimpleFromProduct.Aux[F, I, H, N1] = new SimpleFromProduct[F, I] {
+    def derived[H, N1](implicit g: Generic.Aux[ModelType, H]): SimpleFromProduct.Aux[F, I, H, N1] = new SimpleFromProduct[F, I] {
       override type Target     = H
       override type NameTarget = N1
       override val generic: SimpleFromTo[F[I], Target, N1] = new SimpleFromTo[F[I], Target, N1] {
         override def from(t: H): F[I] = g.from(t)
         override def to(t: F[I]): H   = g.to(t)
-        override val names: N1        = d1.apply()
       }
     }
+
   }
 
   class ApplyImpl2[F[_[_]], I[_]] extends ApplyImpl1[F, I, F[I]]

@@ -17,7 +17,7 @@ object xxbb1 extends IOApp {
 
   def encodeModel[F[_[_]]](implicit
     g: F[Encoder],
-    g1: BasedInstalled[F],
+    g1: ToDecoderGeneric2222[F],
     named: NamedImplicit[F[LabelledInstalled.Named]]
   ): Encoder[F[cats.Id]] = {
     val toList: ToListGeneric[F]  = ToListGeneric[F].derived(g1)
@@ -40,7 +40,7 @@ object xxbb1 extends IOApp {
 
   def decodeModel[F[_[_]]](implicit
     g: F[Decoder],
-    g1: BasedInstalled[F],
+    g1: ToDecoderGeneric2222[F],
     named: NamedImplicit[F[LabelledInstalled.Named]]
   ): Decoder[F[cats.Id]] = {
     val zipGeneric: ZipGeneric[F]   = ZipGeneric[F].derived(g1)
@@ -86,10 +86,10 @@ object xxbb1 extends IOApp {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
-  lazy val compatLabelledInstalled: CatName[CompatLabelledInstalled.CompatNamed] =
-    CompatLabelledInstalled[CatName].derived(simpleGen1[CompatLabelledInstalled.CompatNamed].generic)
+  /*lazy val compatLabelledInstalled: CatName[CompatLabelledInstalled.CompatNamed] =
+    CompatLabelledInstalled[CatName].derived(simpleGen1[CompatLabelledInstalled.CompatNamed].generic)*/
 
-  lazy val deco2_1: ToDecoderGeneric2222[CatName] = new ToDecoderGeneric2222.Impl[CatName] {
+  implicit lazy val deco2_1: ToDecoderGeneric2222[CatName] = new ToDecoderGeneric2222.Impl[CatName] {
     override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
       _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
   }
@@ -111,9 +111,9 @@ object xxbb1 extends IOApp {
       override def fill[T]: Decoder[String] = Decoder[String]
     })
 
-  implicit lazy val basedInstalled1: BasedInstalled[CatName] =
-    BasedInstalled[CatName].derived(compatLabelledInstalled, deco2_1)
-  implicit lazy val basedInstalled2: BasedInstalled[FAlias] = ToItera[CatName].derived.to[String]
+  /*implicit lazy val basedInstalled1: BasedInstalled[CatName] =
+    BasedInstalled[CatName].derived(compatLabelledInstalled, deco2_1)*/
+  implicit lazy val basedInstalled2: ToDecoderGeneric2222[FAlias] = ToItera[CatName].derived.to[String]
 
   implicit lazy val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel
   implicit lazy val caseClassDecoder: Decoder[CatName[cats.Id]]             = decodeModel

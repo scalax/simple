@@ -9,9 +9,7 @@ trait ZipGeneric[F[_[_]]] {
 object ZipGeneric {
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: BasedInstalled[F]): ZipGeneric[F] = fromInstance(basedInstalled.decode2222)
-
-    def fromInstance(o1: ToDecoderGeneric2222[F]): ZipGeneric[F] = new ZipGeneric[F] {
+    def derived(o1: ToDecoderGeneric2222[F]): ZipGeneric[F] = new ZipGeneric[F] {
       override def zip[S[_], T[_]](input1: F[S], input2: F[T]): F[({ type X1[U1] = (S[U1], T[U1]) })#X1] = {
         type MA[A, B, C] = (A, B) => C
         val func = new MonadAdd[MA] {

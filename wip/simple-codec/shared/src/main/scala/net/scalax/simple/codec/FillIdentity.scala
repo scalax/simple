@@ -12,10 +12,10 @@ object SimpleFill {
   }
 
   class ApplyImpl[F[_[_]]] {
-    def derived1(implicit basedInstalled: ToDecoderGeneric2222[F]): SimpleFill[F] = new SimpleFill[F] {
+    def derived(implicit basedInstalled: ToDecoderGeneric2222[F]): SimpleFill[F] = new SimpleFill[F] {
       override def fill[S[_]](t: SimpleFill.FillI[S]): F[S] = {
-        val genericImpl = ToDecoderGeneric[F].fromInstance(basedInstalled)
-        val generic1    = ToDecoderGeneric1[F].fromInstance(genericImpl)
+        val genericImpl = ToDecoderGeneric[F].derived(basedInstalled)
+        val generic1    = ToDecoderGeneric1[F].derived(genericImpl)
 
         generic1.toHList1[({ type Id[T] = T })#Id, S](new MonadAdd1[({ type Id[T] = T })#Id] {
           override def zip[A, B](ma: A, ms: B): (A, B)               = (ma, ms)
@@ -27,7 +27,7 @@ object SimpleFill {
       }
     }
 
-    def derived(implicit basedInstalled: BasedInstalled[F]): SimpleFill[F] = new SimpleFill[F] {
+    /*def derived(implicit basedInstalled: BasedInstalled[F]): SimpleFill[F] = new SimpleFill[F] {
       override def fill[S[_]](t: SimpleFill.FillI[S]): F[S] = {
         val generic1 = ToDecoderGeneric1[F].derived(basedInstalled)
         generic1.toHList1[({ type Id[T] = T })#Id, S](new MonadAdd1[({ type Id[T] = T })#Id] {
@@ -38,7 +38,7 @@ object SimpleFill {
           override def apply[T]: S[T] = t.fill[T]
         })
       }
-    }
+    }*/
   }
 
   def apply[F[_[_]]]: ApplyImpl[F] = new ApplyImpl[F]

@@ -14,9 +14,7 @@ object ToDecoderGeneric {
   def apply[F[_[_]]]: ApplyImpl[F] = new ApplyImpl[F]
 
   class ApplyImpl[F[_[_]]] {
-    def derived(basedInstalled: BasedInstalled[F]): ToDecoderGeneric[F] = fromInstance(basedInstalled.decode2222)
-
-    def fromInstance(generic3: ToDecoderGeneric2222[F]): ToDecoderGeneric[F] = new ToDecoderGeneric[F] {
+    def derived(generic3: ToDecoderGeneric2222[F]): ToDecoderGeneric[F] = new ToDecoderGeneric[F] {
       def toHList[M1[_, _], M2[_], M3[_]](monad: MonadAdd1111[M1])(func: ToDecoderGeneric.FuncImpl[M1, M2, M3]): M1[F[M2], F[M3]] = {
         type X[A, B, C] = M1[B, C]
 
