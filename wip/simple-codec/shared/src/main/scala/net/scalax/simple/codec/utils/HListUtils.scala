@@ -73,32 +73,34 @@ object HListUtilsImpl {
   type AnyFuncGeneric = HListFuncMapGeneric[Any, Any, Any, Any, X3, X1, X1, X1]
   type Utils          = HListUtils[Any, X2, Any]
 
-  private var arr: Array[AnyFuncGeneric] = Array.empty
+  private var arrImpl: Array[AnyFuncGeneric] = Array.empty
+  private var list: List[AnyFuncGeneric]     = List.empty
 
   def get(i: Int): AnyFuncGeneric = {
-    if (arr.length <= i) {
-      val appender = HListFuncMapGeneric.appender.asInstanceOf[Utils]
+    if (list.length <= i) {
 
       this.synchronized {
-        if (arr.length <= i) {
-          var tempList: List[AnyFuncGeneric] = arr.to(List).reverse
 
-          while (tempList.size <= i) {
-            if (tempList.isEmpty) {
-              tempList = List(appender.zero)
+        val appender = HListFuncMapGeneric.appender.asInstanceOf[Utils]
+
+        if (list.length <= i) {
+          while (list.size <= i) {
+            if (list.isEmpty) {
+              list = List(appender.zero)
             } else {
-              val newModel: AnyFuncGeneric = appender.append(tempList.head)
-              tempList = newModel :: tempList
+              val newModel: AnyFuncGeneric = appender.append(list.head)
+              list = newModel :: list
             }
           }
 
-          arr = tempList.reverse.to(Array)
+          arrImpl = list.reverse.to(Array)
         }
 
       }
+
     }
 
-    arr(i)
+    arrImpl(i)
   }
 
 }
