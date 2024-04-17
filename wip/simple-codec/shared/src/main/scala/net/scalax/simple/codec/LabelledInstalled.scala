@@ -1,19 +1,24 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.ToDecoderGeneric2222
+import net.scalax.simple.codec.to_list_generic.SimpleProduct
+
+trait LabelledInstalled[F[_[_]]] {
+  def labelled: F[LabelledInstalled.Named]
+}
 
 object LabelledInstalled {
 
   type Named[_] = String
 
-  /*private val compatFunc: CompatLabelledInstalled.CompatType => String = CompatLabelledInstalled.compatToString
-  private val compatMapper: MapGenerc.MapImpl[CompatLabelledInstalled.CompatNamed, Named] =
-    new MapGenerc.MapImpl[CompatLabelledInstalled.CompatNamed, Named] {
-      override def map[U]: CompatLabelledInstalled.CompatType => String = compatFunc
-    }*/
-
   class DerivedApply[F[_[_]]] {
-    def derived(implicit m: ToDecoderGeneric2222[F], n: NamedImplicit[F[Named]]): F[Named] = NamedImplicit.toNamedModel[F](m, n)
+    def derived(implicit m: SimpleProduct.Appender[F], n: NamedImplicit[F[NamedImplicit.Named]]): LabelledInstalled[F] =
+      new LabelledInstalled[F] {
+        override val labelled: F[Named] = {
+          val listString                   = n.input[F](implicitly[F[NamedImplicit.Named] =:= F[NamedImplicit.Named]], m)
+          val fromList: FromListGeneric[F] = FromListGeneric[F].derived(m)
+          fromList.fromList(listString)
+        }
+      }
   }
 
   def apply[F[_[_]]]: DerivedApply[F] = new DerivedApply[F]

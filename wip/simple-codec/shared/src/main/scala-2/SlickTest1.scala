@@ -2,7 +2,7 @@ package net.scalax.simple.codec
 package aa
 
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.to_list_generic.ToDecoderGeneric2222
+import net.scalax.simple.codec.to_list_generic.SimpleProduct
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.MySQLProfile.api._
 import slick.lifted.ProvenShape
@@ -39,12 +39,12 @@ object Model2 {
 
   def simpleGen1[U[_], I[_]] = SimpleFromProduct[UserAbsAlias[U]#F1, I].derived
 
-  implicit def deco1_2[U[_]]: ToDecoderGeneric2222[UserAbsAlias[U]#F1] = new ToDecoderGeneric2222.Impl[UserAbsAlias[U]#F1] {
+  implicit def deco1_2[U[_]]: SimpleProduct.Appender[UserAbsAlias[U]#F1] = new SimpleProduct.Appender.Impl[UserAbsAlias[U]#F1] {
     override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
       _.derived2(simpleGen1[U, cats.Id].generic, simpleGen1[U, M2].generic, simpleGen1[U, M3].generic, simpleGen1[U, M4].generic)(_.generic)
   }
 
-  def userNamed[U[_]]: UserAbs[StrAny, U] = LabelledInstalled[UserAbsAlias[U]#F1].derived
+  def userNamed[U[_]]: LabelledInstalled[UserAbsAlias[U]#F1] = LabelledInstalled[UserAbsAlias[U]#F1].derived
 
   def userOptImpl[U[_]]: UserAbs[OptsFromCol, U] = UserAbs[OptsFromCol, U](Seq.empty, Seq.empty, Seq.empty)
   def userOpt[U[_]]: UserAbs[OptsFromCol, U] = {
@@ -54,7 +54,7 @@ object Model2 {
   }
 
   def userRepImpl[U[_]](implicit tt12: TypedType[U[Int]]): UserAbs[RepFromTable, U] = {
-    val l1 = userNamed[U]
+    val l1 = userNamed[U].labelled
     val l2 = userOpt[U]
     val l3 = userTypedType[U]
     UserAbs[RepFromTable, U](

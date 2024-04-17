@@ -13,10 +13,10 @@ object ToListGeneric {
     def toList(model: ModelType): List[ProType] => List[ProType]
   }
 
-  def monadImpl[Protype]: MonadAdd1[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] = {
+  def monadImpl[Protype]: SimpleProduct1.AppendMonad[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] = {
     val identityFunction: List[Protype] => List[Protype] = identity
 
-    new MonadAdd1[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] {
+    new SimpleProduct1.AppendMonad[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] {
       override def zip[U, X](
         m1: MonadAddImpl1[Protype, U],
         m2: MonadAddImpl1[Protype, X]
@@ -38,13 +38,11 @@ object ToListGeneric {
   }
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: ToDecoderGeneric2222[F]): ToListGeneric[F] = fromOther(
-      ToDecoderGeneric1[F].derived(ToDecoderGeneric[F].derived(basedInstalled))
-    )
+    def derived(basedInstalled: SimpleProduct.Appender[F]): ToListGeneric[F] = fromOther(SimpleProduct1.Appender[F].derived(basedInstalled))
 
-    def fromOther(o1: ToDecoderGeneric1[F]): ToListGeneric[F] = new ToListGeneric[F] {
+    def fromOther(o1: SimpleProduct1.Appender[F]): ToListGeneric[F] = new ToListGeneric[F] {
       override def toList[TA](input: F[({ type U1[_] = TA })#U1]): List[TA] = {
-        val func = new ToDecoderGeneric1.FuncImpl1[({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1] {
+        val func = new SimpleProduct1.TypeGen[({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1] {
           override def apply[T]: MonadAddImpl1[TA, TA] = new MonadAddImpl1[TA, TA] {
             override def toList(model: TA): List[TA] => List[TA] = l => model :: l
           }

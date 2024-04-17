@@ -4,7 +4,7 @@ package codec
 import io.circe._
 import io.circe.syntax._
 import cats.effect._
-import net.scalax.simple.codec.to_list_generic.{ToDecoderGeneric, ToDecoderGeneric2222, ToListGeneric}
+import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
@@ -17,7 +17,7 @@ object xxbb1 extends IOApp {
 
   def encodeModel[F[_[_]]](implicit
     g: F[Encoder],
-    g1: ToDecoderGeneric2222[F],
+    g1: SimpleProduct.Appender[F],
     named: NamedImplicit[F[LabelledInstalled.Named]]
   ): Encoder[F[cats.Id]] = {
     val toList: ToListGeneric[F]  = ToListGeneric[F].derived(g1)
@@ -28,11 +28,11 @@ object xxbb1 extends IOApp {
     Encoder.instance[F[cats.Id]] { m =>
       val zip1 = zipGeneric.zip(m, g)
       val map1 = mapGenerc.map[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[T1] = Json })#U1](
-        new MapGenerc.MapImpl[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[T1] = Json })#U1] {
+        new MapGenerc.MapFunction[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[T1] = Json })#U1] {
           override def map[X1]: ((X1, Encoder[X1])) => Json = s => s._2(s._1)
         }
       )(zip1)
-      val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](labelledInstalled, map1)
+      val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](labelledInstalled.labelled, map1)
       val list1 = toList.toList[(String, Json)](zip2)
       Json.fromJsonObject(JsonObject.fromIterable(list1))
     }
@@ -40,24 +40,24 @@ object xxbb1 extends IOApp {
 
   def decodeModel[F[_[_]]](implicit
     g: F[Decoder],
-    g1: ToDecoderGeneric2222[F],
+    g1: SimpleProduct.Appender[F],
     named: NamedImplicit[F[LabelledInstalled.Named]]
   ): Decoder[F[cats.Id]] = {
-    val zipGeneric: ZipGeneric[F]   = ZipGeneric[F].derived(g1)
-    val mapGenerc: MapGenerc[F]     = MapGenerc[F].derived(g1)
-    val labelledInstalled           = LabelledInstalled[F].derived(g1, named)
-    val decode: ToDecoderGeneric[F] = ToDecoderGeneric[F].derived(g1)
+    val zipGeneric: ZipGeneric[F]          = ZipGeneric[F].derived(g1)
+    val mapGenerc: MapGenerc[F]            = MapGenerc[F].derived(g1)
+    val labelledInstalled                  = LabelledInstalled[F].derived(g1, named)
+    val decode: SimpleProduct2.Appender[F] = SimpleProduct2.Appender[F].derived(g1)
 
-    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](labelledInstalled, g)
+    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](labelledInstalled.labelled, g)
     val map1 = mapGenerc.map[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1](
-      new MapGenerc.MapImpl[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
+      new MapGenerc.MapFunction[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
         override def map[X1]: ((String, Decoder[X1])) => HCursor => Decoder.Result[X1] =
           (nameDecoder: (String, Decoder[X1])) => (hcursor: HCursor) => hcursor.downField(nameDecoder._1).as(nameDecoder._2)
       }
     )(zip1)
 
     type Func[A, B] = A => Decoder.Result[B]
-    val monadAdd: MonadAdd1111[Func] = new MonadAdd1111[Func] {
+    val monadAdd: SimpleProduct2.AppendMonad[Func] = new SimpleProduct2.AppendMonad[Func] {
       override def zip[A, B, S, T](ma: A => Decoder.Result[B], ms: S => Decoder.Result[T]): ((A, S)) => Decoder.Result[(B, T)] = as =>
         for {
           b <- ma(as._1).right
@@ -69,8 +69,8 @@ object xxbb1 extends IOApp {
       override def zero: Unit => Decoder.Result[Unit] = s => Right(s)
     }
 
-    def toDecoder(hCursor: HCursor): ToDecoderGeneric.FuncImpl[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id] =
-      new ToDecoderGeneric.FuncImpl[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id] {
+    def toDecoder(hCursor: HCursor): SimpleProduct2.TypeGen[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id] =
+      new SimpleProduct2.TypeGen[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id] {
         override def apply[T]: (HCursor => Decoder.Result[T]) => Decoder.Result[T] = s => s(hCursor)
       }
     def contextWith(hCursor: HCursor): F[({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] => Decoder.Result[F[cats.Id]] = {
@@ -86,10 +86,7 @@ object xxbb1 extends IOApp {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
-  /*lazy val compatLabelledInstalled: CatName[CompatLabelledInstalled.CompatNamed] =
-    CompatLabelledInstalled[CatName].derived(simpleGen1[CompatLabelledInstalled.CompatNamed].generic)*/
-
-  implicit lazy val deco2_1: ToDecoderGeneric2222[CatName] = new ToDecoderGeneric2222.Impl[CatName] {
+  implicit lazy val deco2_1: SimpleProduct.Appender[CatName] = new SimpleProduct.Appender.Impl[CatName] {
     override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
       _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
   }
@@ -101,19 +98,23 @@ object xxbb1 extends IOApp {
   implicit lazy val modelDecoder: CatName[Decoder] =
     FillIdentity[CatName, Decoder].derived2(simpleGen1[Decoder].generic)(_.generic)
 
-  lazy val simpleFillE: SimpleFill[FAlias] = SimpleFill[FAlias].derived
-  implicit lazy val li1222Encoder: FAlias[Encoder] =
+  implicit def li1222Encoder(implicit v: SimpleProduct.Appender[FAlias]): FAlias[Encoder] = {
+    val simpleFillE: SimpleFill[FAlias] = SimpleFill[FAlias].derived(v)
+
     simpleFillE.fill[({ type E[T] = Encoder[String] })#E](new SimpleFill.FillI[({ type E[T] = Encoder[String] })#E] {
       override def fill[T]: Encoder[String] = Encoder[String]
     })
-  implicit lazy val li1222Decoder: FAlias[Decoder] =
+  }
+
+  implicit def li1222Decoder(implicit v: SimpleProduct.Appender[FAlias]): FAlias[Decoder] = {
+    val simpleFillE: SimpleFill[FAlias] = SimpleFill[FAlias].derived(v)
+
     simpleFillE.fill[({ type E[T] = Decoder[String] })#E](new SimpleFill.FillI[({ type E[T] = Decoder[String] })#E] {
       override def fill[T]: Decoder[String] = Decoder[String]
     })
+  }
 
-  /*implicit lazy val basedInstalled1: BasedInstalled[CatName] =
-    BasedInstalled[CatName].derived(compatLabelledInstalled, deco2_1)*/
-  implicit lazy val basedInstalled2: ToDecoderGeneric2222[FAlias] = ToItera[CatName].derived.to[String]
+  implicit lazy val basedInstalled2: SimpleProduct.Appender[FAlias] = ToItera[CatName].derived.to[String]
 
   implicit lazy val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel
   implicit lazy val caseClassDecoder: Decoder[CatName[cats.Id]]             = decodeModel
@@ -128,7 +129,7 @@ object xxbb1 extends IOApp {
     namexu = "jerokwjoe收代理费加沃尔"
   )
 
-  val namedModel: CatName[EncoderModelAux] = LabelledInstalled[FAlias].derived
+  val namedModel: CatName[EncoderModelAux] = LabelledInstalled[FAlias].derived.labelled
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {

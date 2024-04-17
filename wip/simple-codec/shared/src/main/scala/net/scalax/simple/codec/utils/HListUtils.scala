@@ -1,8 +1,7 @@
 package net.scalax.simple.codec
 package utils
 
-import net.scalax.simple.codec.to_list_generic.ToDecoderGeneric2222
-import ToDecoderGeneric2222.HListFuncMapGeneric
+import net.scalax.simple.codec.to_list_generic.SimpleProduct
 import scala.collection.compat._
 
 trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendable, AppendZero <: Appendable] {
@@ -12,12 +11,12 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
   def takeZero: AppendZero
 
   def append[T1, Source1 <: Appendable, HL1 <: Appendable, HL2 <: Appendable, HL3 <: Appendable, M1[_, _, _], M2[_], M3[_], M4[_]](
-    tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1, M2, M3, M4]
-  ): HListFuncMapGeneric[AppendablePositive[T1, Source1], AppendablePositive[M2[T1], HL1], AppendablePositive[
+    tail: SimpleProduct.Appender.HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1, M2, M3, M4]
+  ): SimpleProduct.Appender.HListFuncMapGeneric[AppendablePositive[T1, Source1], AppendablePositive[M2[T1], HL1], AppendablePositive[
     M3[T1],
     HL2
   ], AppendablePositive[M4[T1], HL3], M1, M2, M3, M4] =
-    new HListFuncMapGeneric[
+    new SimpleProduct.Appender.HListFuncMapGeneric[
       AppendablePositive[T1, Source1],
       AppendablePositive[M2[T1], HL1],
       AppendablePositive[M3[T1], HL2],
@@ -29,8 +28,8 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
     ] {
       override val size: Int = tail.size + 1
 
-      override def output(o: MonadAdd[M1])(
-        func: ToDecoderGeneric2222.FuncImpl[M1, M2, M3, M4]
+      override def output(o: SimpleProduct.AppendMonad[M1])(
+        func: SimpleProduct.TypeGen[M1, M2, M3, M4]
       ): M1[AppendablePositive[M2[T1], HL1], AppendablePositive[M3[T1], HL2], AppendablePositive[M4[T1], HL3]] = {
         val tailM1: M1[HL1, HL2, HL3]                             = tail.output(o)(func)
         val headM1: M1[M2[T1], M3[T1], M4[T1]]                    = func[T1]
@@ -48,11 +47,14 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
       }
     }
 
-  def zero[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[AppendZero, AppendZero, AppendZero, AppendZero, M1, M2, M3, M4] =
-    new HListFuncMapGeneric[AppendZero, AppendZero, AppendZero, AppendZero, M1, M2, M3, M4] {
-      override def size: Int = 0
+  def zero[M1[_, _, _], M2[_], M3[_], M4[_]]
+    : SimpleProduct.Appender.HListFuncMapGeneric[AppendZero, AppendZero, AppendZero, AppendZero, M1, M2, M3, M4] =
+    new SimpleProduct.Appender.HListFuncMapGeneric[AppendZero, AppendZero, AppendZero, AppendZero, M1, M2, M3, M4] {
+      override val size: Int = 0
 
-      override def output(o: MonadAdd[M1])(func: ToDecoderGeneric2222.FuncImpl[M1, M2, M3, M4]): M1[AppendZero, AppendZero, AppendZero] =
+      override def output(
+        o: SimpleProduct.AppendMonad[M1]
+      )(func: SimpleProduct.TypeGen[M1, M2, M3, M4]): M1[AppendZero, AppendZero, AppendZero] =
         o.to(o.zero)(
           _ => takeZero: AppendZero,
           _ => takeZero: AppendZero,
@@ -70,7 +72,7 @@ object HListUtilsImpl {
   type X3[P1 <: Any, P2 <: Any, P3 <: Any] = Any
   type X1[P1 <: Any]                       = Any
 
-  type AnyFuncGeneric = HListFuncMapGeneric[Any, Any, Any, Any, X3, X1, X1, X1]
+  type AnyFuncGeneric = SimpleProduct.Appender.HListFuncMapGeneric[Any, Any, Any, Any, X3, X1, X1, X1]
   type Utils          = HListUtils[Any, X2, Any]
 
   private var arrImpl: Array[AnyFuncGeneric] = Array.empty
@@ -81,7 +83,7 @@ object HListUtilsImpl {
 
       this.synchronized {
 
-        val appender = HListFuncMapGeneric.appender.asInstanceOf[Utils]
+        val appender = SimpleProduct.Appender.HListFuncMapGeneric.appender.asInstanceOf[Utils]
 
         if (list.length <= i) {
           while (list.size <= i) {
