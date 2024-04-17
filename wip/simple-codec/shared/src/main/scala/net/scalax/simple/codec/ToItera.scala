@@ -1,4 +1,5 @@
 package net.scalax.simple.codec
+
 import net.scalax.simple.codec.to_list_generic.SimpleProduct
 
 trait ToItera[F[_[_]]] {

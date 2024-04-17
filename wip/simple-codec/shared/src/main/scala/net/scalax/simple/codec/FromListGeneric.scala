@@ -21,10 +21,10 @@ object FromListGeneric {
         ma: List[ItType] => (List[ItType], A),
         ms: List[ItType] => (List[ItType], B)
       ): List[ItType] => (List[ItType], (A, B)) = { l =>
-        val ra = ma(l)
-        val rb = ms(ra._1)
+        val rb = ms(l)
+        val ra = ma(rb._1)
 
-        (rb._1, (ra._2, rb._2))
+        (ra._1, (ra._2, rb._2))
       }
 
       override def to[A, B](m1: List[ItType] => (List[ItType], A))(in1: A => B)(out1: B => A): List[ItType] => (List[ItType], B) = { l =>
