@@ -37,11 +37,11 @@ object FromListGeneric {
     }
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: SimpleProduct.Appender[F]): FromListGeneric[F] = fromOther(
+    def derived(basedInstalled: SimpleProduct.Appender[F]): FromListGeneric[F] = fromInstance(
       SimpleProduct1.Appender[F].derived(basedInstalled)
     )
 
-    def fromOther(o1: SimpleProduct1.Appender[F]): FromListGeneric[F] = new FromListGeneric[F] {
+    def fromInstance(o1: SimpleProduct1.Appender[F]): FromListGeneric[F] = new FromListGeneric[F] {
       override def fromList[TA](input: List[TA]): F[({ type U1[_] = TA })#U1] = {
         val u = o1.toHList1[({ type ModelF[M] = List[TA] => (List[TA], M) })#ModelF, ({ type T1[_] = TA })#T1](monadAdd)(toNamed[TA])
         u(input)._2

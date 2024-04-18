@@ -11,7 +11,7 @@ object LabelledInstalled {
   type Named[_] = String
 
   class DerivedApply[F[_[_]]] {
-    def derived(implicit m: SimpleProduct.Appender[F], n: NamedImplicit[F[NamedImplicit.Named]]): LabelledInstalled[F] =
+    def derived(m: SimpleProduct.Appender[F], n: NamedImplicit[F[NamedImplicit.Named]]): LabelledInstalled[F] =
       new LabelledInstalled[F] {
         override val labelled: F[Named] = {
           val listString                   = n.input[F](implicitly[F[NamedImplicit.Named] =:= F[NamedImplicit.Named]], m)
