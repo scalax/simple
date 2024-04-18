@@ -13,7 +13,7 @@ trait IOApp1 {
   def run(args: List[String]): IO[ExitCode]
 }
 
-object xxbb1 extends IOApp {
+object xxbb1 extends IOApp1 {
 
   def encodeModel[F[_[_]]](implicit
     g: F[Encoder],
@@ -129,7 +129,7 @@ object xxbb1 extends IOApp {
     namexu = "jerokwjoe收代理费加沃尔"
   )
 
-  val namedModel: CatName[EncoderModelAux] = LabelledInstalled[FAlias].derived.labelled
+  val namedModel: CatName[EncoderModelAux] = LabelledInstalled[FAlias].derived(basedInstalled2, implicitly).labelled
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {
