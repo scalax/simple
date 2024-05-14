@@ -9,26 +9,36 @@ import core._
 
 import scala.annotation.meta.param
 
-trait ToGHDMZSK {
-  def toGHDMZSK: ghdmzsk
+trait ToGHDMZSK[+N <: AdtNat] {
+  def toGHDMZSK: N
 }
 
-trait ADTData[+N <: AdtNat, S <: ADTStatus] extends ToGHDMZSK {
-  override def toGHDMZSK: ghdmzsk
+trait ADTData[+N <: AdtNat, S <: ADTStatus] extends ToGHDMZSK[N] {
+  override def toGHDMZSK: N
 }
 
 object ADTData {
-  def success[D, T <: AdtNat, S <: ADTStatus](data: D): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
-    override val toGHDMZSK: ghdmzsk = TakeProduct.CoProduct.zero(data)
+  def success[D, T <: AdtNat, S <: ADTStatus](data: D): ADTData[AdtNatPositive[D, T], S] = {
+    val data1 = data
+
+    new ADTData[AdtNatPositive[D, T], S] {
+      override val toGHDMZSK: AdtNatPositive[D, T] = new AdtNatPositive[D, T] {
+        override def data: Either[D, T] = Left(data1)
+      }
+    }
   }
 
-  def empty[D, T <: AdtNat, S <: ADTStatus](tail: ADTData[T, S]): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
-    override val toGHDMZSK: ghdmzsk = TakeProduct.CoProduct.positive.inputGHDMZSK(() => tail.toGHDMZSK)
+  def copyTail[D, T <: AdtNat, S <: ADTStatus](tail: T): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
+    override val toGHDMZSK: AdtNatPositive[D, T] = new AdtNatPositive[D, T] {
+      override def data: Either[D, T] = Right(tail)
+    }
   }
 
   def zero[ST <: ADTStatus](isFinishAndNothing: IsFinishAndNothing): ADTData[AdtNatZero, ST with ADTStatus.NotFinished.type] =
     new ADTData[AdtNatZero, ST with ADTStatus.NotFinished.type] {
-      override lazy val toGHDMZSK: ghdmzsk = TakeProduct.CoProduct.zero(isFinishAndNothing)
+      override lazy val toGHDMZSK: AdtNatZero = new AdtNatZero {
+        //
+      }
     }
 }
 

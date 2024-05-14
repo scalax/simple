@@ -42,7 +42,7 @@ package impl {
   trait HListTypeAdtPositiveLower1 extends LowerLevelPoly {
     @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: AdtNat, AdtConvertPoly, ST <: ADTStatus](implicit
       tailMapping: ADTData[Tail, ST]
-    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = ADTData.empty(tailMapping)
+    ): ADTData[AdtNatPositive[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = ADTData.copyTail(tailMapping.toGHDMZSK)
   }
 
   trait LowerLevelPoly {
