@@ -15,15 +15,14 @@ trait IOApp1 {
 
 object xxbb1 extends IOApp {
 
-  def encodeModel[F[_[_]]](implicit
+  def encodeModelImpl[F[_[_]]](implicit
     g: F[Encoder],
     g1: SimpleProduct.Appender[F],
-    named: NamedImplicit[F[LabelledInstalled.Named]]
+    named: F[LabelledInstalled.Named]
   ): Encoder[F[cats.Id]] = {
     val toList: ToListByTheSameTypeGeneric[F] = ToListByTheSameTypeGeneric[F].derived(g1)
     val zipGeneric: ZipGeneric[F]             = ZipGeneric[F].derived(g1)
     val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(g1)
-    val labelledInstalled                     = LabelledInstalled[F].derived(g1, named)
 
     Encoder.instance[F[cats.Id]] { m =>
       val zip1 = zipGeneric.zip(m, g)
@@ -32,23 +31,31 @@ object xxbb1 extends IOApp {
           override def map[X1]: ((X1, Encoder[X1])) => Json = s => s._2(s._1)
         }
       )(zip1)
-      val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](labelledInstalled.labelled, map1)
+      val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](named, map1)
       val list1 = toList.toListByTheSameType[(String, Json)](zip2)
       Json.fromJsonObject(JsonObject.fromIterable(list1))
     }
   }
 
-  def decodeModel[F[_[_]]](implicit
-    g: F[Decoder],
+  def encodeModel[F[_[_]]](implicit
+    g: F[Encoder],
     g1: SimpleProduct.Appender[F],
     named: NamedImplicit[F[LabelledInstalled.Named]]
+  ): Encoder[F[cats.Id]] = {
+    val labelledInstalled = LabelledInstalled[F].derived(g1, named)
+    encodeModelImpl(g, g1, labelledInstalled.labelled)
+  }
+
+  def decodeModelImpl[F[_[_]]](implicit
+    g: F[Decoder],
+    g1: SimpleProduct.Appender[F],
+    named: F[LabelledInstalled.Named]
   ): Decoder[F[cats.Id]] = {
     val zipGeneric: ZipGeneric[F]          = ZipGeneric[F].derived(g1)
     val mapGenerc: MapGenerc[F]            = MapGenerc[F].derived(g1)
-    val labelledInstalled                  = LabelledInstalled[F].derived(g1, named)
     val decode: SimpleProduct2.Appender[F] = SimpleProduct2.Appender[F].derived(g1)
 
-    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](labelledInstalled.labelled, g)
+    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](named, g)
     val map1 = mapGenerc.map[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1](
       new MapGenerc.MapFunction[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
         override def map[X1]: ((String, Decoder[X1])) => HCursor => Decoder.Result[X1] =
@@ -78,6 +85,15 @@ object xxbb1 extends IOApp {
     }
 
     Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
+  }
+
+  def decodeModel[F[_[_]]](implicit
+    g: F[Decoder],
+    g1: SimpleProduct.Appender[F],
+    named: NamedImplicit[F[LabelledInstalled.Named]]
+  ): Decoder[F[cats.Id]] = {
+    val labelledInstalled = LabelledInstalled[F].derived(g1, named)
+    decodeModelImpl(g, g1, labelledInstalled.labelled)
   }
 
   type EncoderAux[_]      = Encoder[String]

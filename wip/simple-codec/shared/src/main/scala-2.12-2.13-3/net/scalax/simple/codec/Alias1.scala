@@ -1,4 +1,4 @@
-package net.scalax.simple.codec
+/*package net.scalax.simple.codec
 
 import slick.jdbc.JdbcProfile
 
@@ -9,3 +9,4 @@ class SlickCompatAlias[V <: JdbcProfile](val profile: V) {
 object SlickCompatAlias {
   def build[V <: JdbcProfile](implicit p: V): SlickCompatAlias[p.type] = new SlickCompatAlias(profile = p)
 }
+ */
