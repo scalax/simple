@@ -4,7 +4,7 @@ package codec
 import io.circe._
 import io.circe.syntax._
 import cats.effect._
-import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListGeneric}
+import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
@@ -13,17 +13,17 @@ trait IOApp1 {
   def run(args: List[String]): IO[ExitCode]
 }
 
-object xxbb1 extends IOApp1 {
+object xxbb1 extends IOApp {
 
   def encodeModel[F[_[_]]](implicit
     g: F[Encoder],
     g1: SimpleProduct.Appender[F],
     named: NamedImplicit[F[LabelledInstalled.Named]]
   ): Encoder[F[cats.Id]] = {
-    val toList: ToListGeneric[F]  = ToListGeneric[F].derived(g1)
-    val zipGeneric: ZipGeneric[F] = ZipGeneric[F].derived(g1)
-    val mapGenerc: MapGenerc[F]   = MapGenerc[F].derived(g1)
-    val labelledInstalled         = LabelledInstalled[F].derived(g1, named)
+    val toList: ToListByTheSameTypeGeneric[F] = ToListByTheSameTypeGeneric[F].derived(g1)
+    val zipGeneric: ZipGeneric[F]             = ZipGeneric[F].derived(g1)
+    val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(g1)
+    val labelledInstalled                     = LabelledInstalled[F].derived(g1, named)
 
     Encoder.instance[F[cats.Id]] { m =>
       val zip1 = zipGeneric.zip(m, g)
@@ -33,7 +33,7 @@ object xxbb1 extends IOApp1 {
         }
       )(zip1)
       val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](labelledInstalled.labelled, map1)
-      val list1 = toList.toList[(String, Json)](zip2)
+      val list1 = toList.toListByTheSameType[(String, Json)](zip2)
       Json.fromJsonObject(JsonObject.fromIterable(list1))
     }
   }

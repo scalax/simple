@@ -2,11 +2,11 @@ package net.scalax.simple.codec
 
 import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct1}
 
-trait FromListGeneric[F[_[_]]] {
-  def fromList[TA](input: List[TA]): F[({ type U1[_] = TA })#U1]
+trait FromListByTheSameTypeGeneric[F[_[_]]] {
+  def fromListByTheSameType[TA]: List[TA] => F[({ type U1[_] = TA })#U1]
 }
 
-object FromListGeneric {
+object FromListByTheSameTypeGeneric {
 
   type IdImpl[T] = T
 
@@ -37,14 +37,14 @@ object FromListGeneric {
     }
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: SimpleProduct.Appender[F]): FromListGeneric[F] = fromInstance(
+    def derived(basedInstalled: SimpleProduct.Appender[F]): FromListByTheSameTypeGeneric[F] = fromInstance(
       SimpleProduct1.Appender[F].derived(basedInstalled)
     )
 
-    def fromInstance(o1: SimpleProduct1.Appender[F]): FromListGeneric[F] = new FromListGeneric[F] {
-      override def fromList[TA](input: List[TA]): F[({ type U1[_] = TA })#U1] = {
+    def fromInstance(o1: SimpleProduct1.Appender[F]): FromListByTheSameTypeGeneric[F] = new FromListByTheSameTypeGeneric[F] {
+      override def fromListByTheSameType[TA]: List[TA] => F[({ type U1[_] = TA })#U1] = { u1 =>
         val u = o1.toHList1[({ type ModelF[M] = List[TA] => (List[TA], M) })#ModelF, ({ type T1[_] = TA })#T1](monadAdd)(toNamed[TA])
-        u(input)._2
+        u(u1)._2
       }
     }
   }

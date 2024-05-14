@@ -14,9 +14,9 @@ object LabelledInstalled {
     def derived(m: SimpleProduct.Appender[F], n: NamedImplicit[F[NamedImplicit.Named]]): LabelledInstalled[F] =
       new LabelledInstalled[F] {
         override val labelled: F[Named] = {
-          val listString                   = n.input[F](implicitly[F[NamedImplicit.Named] =:= F[NamedImplicit.Named]], m)
-          val fromList: FromListGeneric[F] = FromListGeneric[F].derived(m)
-          fromList.fromList(listString)
+          val listString                                = n.input[F](implicitly[F[NamedImplicit.Named] =:= F[NamedImplicit.Named]], m)
+          val fromList: FromListByTheSameTypeGeneric[F] = FromListByTheSameTypeGeneric[F].derived(m)
+          fromList.fromListByTheSameType(listString)
         }
       }
   }

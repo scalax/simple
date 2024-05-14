@@ -76,7 +76,7 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
 object Runner1 {
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val p = slick.jdbc.MySQLProfile
 
     val newModel: Model2[cats.Id] = new Model2[cats.Id](p)

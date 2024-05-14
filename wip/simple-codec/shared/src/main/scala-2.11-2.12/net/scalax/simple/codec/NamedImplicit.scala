@@ -18,9 +18,11 @@ object NamedImplicit {
     }
 
   private def toNamedModel[F[_[_]]](n: HList): List[String] = {
+    def addToList(t: List[String], n: String): List[String] = n :: t
+
     def toList(l: HList): List[String] = l match {
-      case s: shapeless.::[_, HList] => s.head.asInstanceOf[Symbol].name :: toList(s.tail)
-      case HNil                      => List.empty
+      case (s: Symbol) :: tail => addToList(toList(tail), s.name)
+      case HNil                => List.empty
     }
 
     toList(n)
