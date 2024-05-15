@@ -9,7 +9,7 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait ADTPassedFunction {
 
-  implicit class extra1[I1, S <: ADTStatus](private val data: ADTData[AdtNatPositive[I1, AdtNatZero], S]) {
+  /*implicit class extra1[I1, S <: ADTStatus](private val data: ADTData[AdtNatPositive[I1, AdtNatZero], S]) {
     def fold[D](
       func1: I1 => D
     ): D = {
@@ -1505,6 +1505,6 @@ trait ADTPassedFunction {
         .asInstanceOf[Any => D]
       funcInstance(dataInstance)
     }
-  }
+  }*/
 
 }

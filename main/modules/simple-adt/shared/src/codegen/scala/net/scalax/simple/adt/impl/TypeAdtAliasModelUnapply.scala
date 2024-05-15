@@ -10,7 +10,7 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtAliasModelUnapply {
 
-  object CoProduct1 {
+  /*object CoProduct1 {
     def unapply[I1, S <: ADTStatus](data: ADTData[AdtNatPositive[I1, AdtNat], S]): Option[I1] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
       val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options1GHDMZSK)
@@ -769,5 +769,5 @@ package impl {
 
     val options22GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options21GHDMZSK)
 
-  }
+  }*/
 }

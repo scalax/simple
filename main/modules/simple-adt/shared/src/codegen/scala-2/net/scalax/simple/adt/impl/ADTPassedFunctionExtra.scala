@@ -6,7 +6,7 @@ import temp._
 import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait ADTPassedFunctionImpl {
-  implicit class extraFunctionAdt1[ParamType, I1, Poly1, S <: ADTStatus](
+  /*implicit class extraFunctionAdt1[ParamType, I1, Poly1, S <: ADTStatus](
     private val data: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, Poly1], AdtNatZero], S]
   ) {
 
@@ -3769,6 +3769,6 @@ trait ADTPassedFunctionImpl {
           ]
       )
 
-  }
+  }*/
 
 }
