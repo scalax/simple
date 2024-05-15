@@ -53,11 +53,6 @@ object SimpleCoProductImpl {
       ], HL3]]] = {
         val tailM1 = tail.output(o)
 
-        tailM1 match {
-          case Left(noModel)    =>
-          case Right(dataModel) =>
-        }
-
         val r2 = for (t <- tailM1.left) yield t[T1]
         val r3 = o.either(r2)
 
