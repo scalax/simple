@@ -28,7 +28,7 @@ object SimpleCoProductImpl {
   }
 
   def append[T1, Source1 <: AdtNat, HL1 <: AdtNat, HL2 <: AdtNat, HL3 <: AdtNat, M1Context[_, _, _], M2[_], M3[_], M4[_]](
-    tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1Context, M2, M3, M4]
+    tail: Either[SimpleCoProduct.TypeGen[M1Context, M2, M3, M4], HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1Context, M2, M3, M4]]
   ): HListFuncMapGeneric[AdtNatPositive[T1, Source1], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
     M3[T1],
     HL2
@@ -51,8 +51,8 @@ object SimpleCoProductImpl {
       ], AdtNatPositive[M4[
         T1
       ], HL3]] = {
-        val tailM1: M1Context[HL1, HL2, HL3]                                                = tail.output(o)
-        val zipM1: M1Context[Either[M2[T1], HL1], Either[M3[T1], HL2], Either[M4[T1], HL3]] = ???
+        val tailM1: M1Context[Either[M2[T1], HL1], Either[M3[T1], HL2], Either[M4[T1], HL3]] =
+          o.either(tail.left.map(t1 => t1[T1]).map(t2 => t2.output(o)))
 
         o.to[Either[M2[T1], HL1], Either[
           M3[T1],
@@ -64,7 +64,7 @@ object SimpleCoProductImpl {
           HL2
         ], AdtNatPositive[M4[
           T1
-        ], HL3]](zipM1)(
+        ], HL3]](tailM1)(
           (t1: Either[M2[T1], HL1]) =>
             new AdtNatPositive[M2[T1], HL1] {
               override def data: Either[M2[T1], HL1] = t1
