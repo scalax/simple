@@ -8,7 +8,7 @@ import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtRuntimeApply {
   
-      /*def CoProduct1[I1]:  CoProduct1Apply[I1] = new CoProduct1Apply[I1] {
+      def CoProduct1[I1]:  CoProduct1Apply[I1] = new CoProduct1Apply[I1] {
         //
       }
 
@@ -501,7 +501,7 @@ def option22(iData: I22): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPo
         override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[AdtNatPositive[Adt.Context[ParamType, I1, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I2, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I3, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I4, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I5, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I6, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I7, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I8, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I9, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I10, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I11, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I12, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I13, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I14, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I15, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I16, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I17, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I18, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I19, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I20, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I21, DefaultAdtContext.type], AdtNatPositive[Adt.Context[ParamType, I22, DefaultAdtContext.type], AdtNatZero]]]]]]]]]]]]]]]]]]]]]], S with ADTFunctionImplicitFetch.type]): ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]]]]]]]]]]]]]]]]]]], ADTStatus.Passed.type] = {
           new FunctionApply.extraFunctionAdt22(b)(a)
         }
-      }*/
+      }
     
 }
 
