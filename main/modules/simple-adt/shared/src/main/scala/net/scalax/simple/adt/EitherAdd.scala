@@ -24,7 +24,7 @@ object SimpleCoProduct {
 object SimpleCoProductImpl {
 
   trait HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1[_, _, _], M2[_], M3[_], M4[_]] {
-    def output(monad: SimpleCoProduct.AppendMonad[M1]): Either[SimpleCoProduct.TypeGen[M1, M2, M3, M4], M1[Target1, Target2, Target3]]
+    def output(monad: SimpleCoProduct.AppendMonad[M1]): M1[Target1, Target2, Target3]
   }
 
   def append[T1, Source1 <: AdtNat, HL1 <: AdtNat, HL2 <: AdtNat, HL3 <: AdtNat, M1Context[_, _, _], M2[_], M3[_], M4[_]](
@@ -45,39 +45,39 @@ object SimpleCoProductImpl {
     ] {
       override def output(
         o: SimpleCoProduct.AppendMonad[M1Context]
-      ): Either[SimpleCoProduct.TypeGen[M1Context, M2, M3, M4], M1Context[AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+      ): M1Context[AdtNatPositive[M2[T1], HL1], AdtNatPositive[
         M3[T1],
         HL2
       ], AdtNatPositive[M4[
         T1
-      ], HL3]]] = {
-        val tailM1 = tail.output(o)
+      ], HL3]] = {
+        val tailM1: M1Context[HL1, HL2, HL3]                                                = tail.output(o)
+        val zipM1: M1Context[Either[M2[T1], HL1], Either[M3[T1], HL2], Either[M4[T1], HL3]] = ???
 
-        val r2 = for (t <- tailM1.left) yield t[T1]
-        val r3 = o.either(r2)
-
-        o.to[Either[M2[T1], HL1], Either[M3[T1], HL2], Either[M4[T1], HL3], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+        o.to[Either[M2[T1], HL1], Either[
+          M3[T1],
+          HL2
+        ], Either[M4[
+          T1
+        ], HL3], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
           M3[T1],
           HL2
         ], AdtNatPositive[M4[
           T1
-        ], HL3]](r3)(
+        ], HL3]](zipM1)(
           (t1: Either[M2[T1], HL1]) =>
             new AdtNatPositive[M2[T1], HL1] {
               override def data: Either[M2[T1], HL1] = t1
             },
-          (t2: Either[M3[T1], HL2]) =>
+          (t1: Either[M3[T1], HL2]) =>
             new AdtNatPositive[M3[T1], HL2] {
-              override def data: Either[M3[T1], HL2] = t2
+              override def data: Either[M3[T1], HL2] = t1
             },
-          (t3: Either[M4[T1], HL3]) =>
+          (t1: Either[M4[T1], HL3]) =>
             new AdtNatPositive[M4[T1], HL3] {
-              override def data: Either[M4[T1], HL3] = t3
+              override def data: Either[M4[T1], HL3] = t1
             }
         )(_.data, _.data, _.data)
-          .aa
-
-        ???
       }
     }
 
