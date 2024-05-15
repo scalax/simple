@@ -1,7 +1,7 @@
 package net.scalax.simple
 package adt
 
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive}
 
 object SimpleCoProduct {
 
