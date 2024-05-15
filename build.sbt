@@ -23,15 +23,10 @@ lazy val adtJS: Project               = adt.js dependsOn (`adt-implementionJS`, 
 val `adt-codegen/file` = `adt/file` / "codegen"
 val `adt-codegen`      = project in `adt-codegen/file`
 
-val `adt-ghdmzsk/file`    = `adt/file` / "ghdmzsk"
-val `adt-ghdmzsk`         = crossProject(JSPlatform, JVMPlatform) in `adt-ghdmzsk/file`
-lazy val `adt-ghdmzskJVM` = `adt-ghdmzsk`.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
-lazy val `adt-ghdmzskJS`  = `adt-ghdmzsk`.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
-
 val `adt-implemention/file`    = `adt/file` / "implemention"
 val `adt-implemention`         = crossProject(JSPlatform, JVMPlatform) in `adt-implemention/file`
-lazy val `adt-implementionJVM` = `adt-implemention`.jvm dependsOn (`adt-ghdmzskJVM`, `test-commonJVM` % Test) aggregate `adt-ghdmzskJVM`
-lazy val `adt-implementionJS`  = `adt-implemention`.js dependsOn (`adt-ghdmzskJS`, `test-commonJS`    % Test) aggregate `adt-ghdmzskJS`
+lazy val `adt-implementionJVM` = `adt-implemention`.jvm dependsOn (`ghdmzskJVM`, `test-commonJVM` % Test) aggregate `ghdmzskJVM`
+lazy val `adt-implementionJS`  = `adt-implemention`.js dependsOn (`ghdmzskJS`, `test-commonJS`    % Test) aggregate `ghdmzskJS`
 
 val `list/file`  = `wip/file` / "simple-list"
 val list         = crossProject(JSPlatform, JVMPlatform) in `list/file`
@@ -51,7 +46,7 @@ lazy val codecJS  = codec.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) ag
 val `codec-codegen/file` = `codec/file` / "codegen"
 val `codec-codegen`      = project in `codec-codegen/file`
 
-val `codec-slick/file`    = `codec/file` / "simple-codec-slick"
+val `codec-slick/file` = `codec/file` / "simple-codec-slick"
 lazy val `codec-slick` = project in `codec-slick/file` dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
 
 val `nat/file`  = `impractical/file` / "simple-nat"

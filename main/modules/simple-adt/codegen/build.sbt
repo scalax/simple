@@ -42,7 +42,7 @@ codegenImpl := {
 
 val scalaInnerRunMainInputStr = settingKey[String]("scalaInnerRunMainInputStr")
 scalaInnerRunMainInputStr := {
-  val projectRoot = rootCodegenPath.value / ".." / ".." / ".." / "shared" / "src" / "codegen" / "scala"
+  val projectRoot = rootCodegenPath.value / ".." / ".." / ".." / "implemention" / "shared" / "src" / "codegen" / "scala"
   projectRoot.getAbsoluteFile.toString
 }
 
