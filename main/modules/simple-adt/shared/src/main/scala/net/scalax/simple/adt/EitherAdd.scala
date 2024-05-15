@@ -1,7 +1,7 @@
 package net.scalax.simple
 package adt
 
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive}
+import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 object SimpleCoProduct {
 
@@ -23,13 +23,65 @@ object SimpleCoProduct {
 
 object SimpleCoProductImpl {
 
-  def append[TCurrent <: AdtNat, FADT[_[_]] <: AdtNat](
-    tail: SimpleCoProduct.Appender[FADT]
-  ): SimpleCoProduct.Appender[({ type F1[UF1[_]] = AdtNatPositive[TCurrent, FADT[UF1]] })#F1] =
-    new SimpleCoProduct.Appender[({ type F1[UF1[_]] = AdtNatPositive[TCurrent, FADT[UF1]] })#F1] {
-      override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: SimpleCoProduct.AppendMonad[M1])(
-        func: SimpleCoProduct.TypeGen[M1, M2, M3, M4]
-      ): M1[AdtNatPositive[TCurrent, FADT[M2]], AdtNatPositive[TCurrent, FADT[M3]], AdtNatPositive[TCurrent, FADT[M4]]] = {
+  trait HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1[_, _, _], M2[_], M3[_], M4[_]] {
+    def output(monad: SimpleCoProduct.AppendMonad[M1]): Either[SimpleCoProduct.TypeGen[M1, M2, M3, M4], M1[Target1, Target2, Target3]]
+  }
+
+  def append[T1, Source1 <: AdtNat, HL1 <: AdtNat, HL2 <: AdtNat, HL3 <: AdtNat, M1Context[_, _, _], M2[_], M3[_], M4[_]](
+    tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1Context, M2, M3, M4]
+  ): HListFuncMapGeneric[AdtNatPositive[T1, Source1], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+    M3[T1],
+    HL2
+  ], AdtNatPositive[M4[T1], HL3], M1Context, M2, M3, M4] =
+    new HListFuncMapGeneric[
+      AdtNatPositive[T1, Source1],
+      AdtNatPositive[M2[T1], HL1],
+      AdtNatPositive[M3[T1], HL2],
+      AdtNatPositive[M4[T1], HL3],
+      M1Context,
+      M2,
+      M3,
+      M4
+    ] {
+      override def output(
+        o: SimpleCoProduct.AppendMonad[M1Context]
+      ): Either[SimpleCoProduct.TypeGen[M1Context, M2, M3, M4], M1Context[AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+        M3[T1],
+        HL2
+      ], AdtNatPositive[M4[
+        T1
+      ], HL3]]] = {
+        val tailM1 = tail.output(o)
+
+        tailM1 match {
+          case Left(noModel)    =>
+          case Right(dataModel) =>
+        }
+
+        val r2 = for (t <- tailM1.left) yield t[T1]
+        val r3 = o.either(r2)
+
+        o.to[Either[M2[T1], HL1], Either[M3[T1], HL2], Either[M4[T1], HL3], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+          M3[T1],
+          HL2
+        ], AdtNatPositive[M4[
+          T1
+        ], HL3]](r3)(
+          (t1: Either[M2[T1], HL1]) =>
+            new AdtNatPositive[M2[T1], HL1] {
+              override def data: Either[M2[T1], HL1] = t1
+            },
+          (t2: Either[M3[T1], HL2]) =>
+            new AdtNatPositive[M3[T1], HL2] {
+              override def data: Either[M3[T1], HL2] = t2
+            },
+          (t3: Either[M4[T1], HL3]) =>
+            new AdtNatPositive[M4[T1], HL3] {
+              override def data: Either[M4[T1], HL3] = t3
+            }
+        )(_.data, _.data, _.data)
+          .aa
+
         ???
       }
     }
