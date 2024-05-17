@@ -27,6 +27,59 @@ object SimpleCoProductImpl {
     def output(monad: SimpleCoProduct.AppendMonad[M1]): M1[Target1, Target2, Target3]
   }
 
+  def appendImpl[T1, Source1 <: AdtNat, HL1 <: AdtNat, HL2 <: AdtNat, HL3 <: AdtNat, M1Context[_, _, _], M2[_], M3[_], M4[_]](
+    tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1Context, M2, M3, M4]
+  ): HListFuncMapGeneric[AdtNatPositive[T1, Source1], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+    M3[T1],
+    HL2
+  ], AdtNatPositive[M4[T1], HL3], M1Context, M2, M3, M4] =
+    new HListFuncMapGeneric[
+      AdtNatPositive[T1, Source1],
+      AdtNatPositive[M2[T1], HL1],
+      AdtNatPositive[M3[T1], HL2],
+      AdtNatPositive[M4[T1], HL3],
+      M1Context,
+      M2,
+      M3,
+      M4
+    ] {
+      override def output(
+        o: SimpleCoProduct.AppendMonad[M1Context]
+      ): M1Context[AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+        M3[T1],
+        HL2
+      ], AdtNatPositive[M4[
+        T1
+      ], HL3]] = {
+        val tailM1: M1Context[Either[M2[T1], HL1], Either[M3[T1], HL2], Either[M4[T1], HL3]] = o.either(Right(tail.output(o)))
+
+        o.to[Either[M2[T1], HL1], Either[
+          M3[T1],
+          HL2
+        ], Either[M4[
+          T1
+        ], HL3], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
+          M3[T1],
+          HL2
+        ], AdtNatPositive[M4[
+          T1
+        ], HL3]](tailM1)(
+          (t1: Either[M2[T1], HL1]) =>
+            new AdtNatPositive[M2[T1], HL1] {
+              override def data: Either[M2[T1], HL1] = t1
+            },
+          (t1: Either[M3[T1], HL2]) =>
+            new AdtNatPositive[M3[T1], HL2] {
+              override def data: Either[M3[T1], HL2] = t1
+            },
+          (t1: Either[M4[T1], HL3]) =>
+            new AdtNatPositive[M4[T1], HL3] {
+              override def data: Either[M4[T1], HL3] = t1
+            }
+        )(_.data, _.data, _.data)
+      }
+    }
+
   def append[T1, Source1 <: AdtNat, HL1 <: AdtNat, HL2 <: AdtNat, HL3 <: AdtNat, M1Context[_, _, _], M2[_], M3[_], M4[_]](
     tail: Either[SimpleCoProduct.TypeGen[M1Context, M2, M3, M4], HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1Context, M2, M3, M4]]
   ): HListFuncMapGeneric[AdtNatPositive[T1, Source1], AdtNatPositive[M2[T1], HL1], AdtNatPositive[
@@ -52,7 +105,7 @@ object SimpleCoProductImpl {
         T1
       ], HL3]] = {
         val tailM1: M1Context[Either[M2[T1], HL1], Either[M3[T1], HL2], Either[M4[T1], HL3]] =
-          o.either(tail.left.map(t1 => t1[T1]).map(t2 => t2.output(o)))
+          o.either(tail.left.map(t1 => t1[T1]).right.map(t2 => t2.output(o)))
 
         o.to[Either[M2[T1], HL1], Either[
           M3[T1],

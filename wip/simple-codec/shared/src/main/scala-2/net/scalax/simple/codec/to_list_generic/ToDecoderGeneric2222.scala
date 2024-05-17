@@ -39,12 +39,9 @@ object SimpleProduct {
 
       implicit def implicit1[T1, Source1 <: HList, HL1 <: HList, HL2 <: HList, HL3 <: HList, M1[_, _, _], M2[_], M3[_], M4[_]](implicit
         tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1, M2, M3, M4]
-      ): HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] = HListUtilsImpl
-        .get(tail.size + 1)
-        .asInstanceOf[HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4]]
+      ): HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] = appender.append(tail)
 
-      implicit def implicit2[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] =
-        HListUtilsImpl.get(0).asInstanceOf[HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4]]
+      implicit def implicit2[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] = appender.zero
     }
 
     trait HListFuncMapGenericGen[Source1, M1[_, _, _], M2[_], M3[_], M4[_]] {
