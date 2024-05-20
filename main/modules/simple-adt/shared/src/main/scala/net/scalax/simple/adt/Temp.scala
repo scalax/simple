@@ -49,7 +49,7 @@ object IsFinishAndNothing {
   def value(obj: Any): IsFinishAndNothing = new IsFinishAndNothing(obj)
 }
 
-trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
+trait ApplyFactory[N1[_] <: RuntimeNat, InstanceBuild[_] <: RuntimeNat, N2 <: RuntimeNat] {
   protected def cv[D, T <: ADTStatus](a: D, b: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): ADTData[N2, ADTStatus.Passed.type]
   def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): ADTData[N2, ADTStatus.Passed.type] =
     cv[D, T](d, v)

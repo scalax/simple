@@ -21,6 +21,8 @@ object CodePre4:
 
   def repeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: I$u1 => D")
 
+  def lawRepeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: Adt.Context[ParamType, I$u1, Poly$u1] => D")
+
   val text4: String = s"""
 package net.scalax.simple.adt
 package impl
@@ -40,6 +42,8 @@ trait ADTPassedFunction {
                             )}, SImpl]) {
 
     def fold[D](${repeatParameter(i)}): D = ???
+
+    def lawFold[D](${lawRepeatParameter(i)}): D = ???
 
 }
 

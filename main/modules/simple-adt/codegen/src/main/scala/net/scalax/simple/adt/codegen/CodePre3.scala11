@@ -1,4 +1,4 @@
-package net.scalax.simple.adt.codegen
+/*package net.scalax.simple.adt.codegen
 
 object CodePre3:
 
@@ -48,3 +48,4 @@ trait ADTPassedFunctionImpl {
 """.stripMargin
 
 end CodePre3
+ */

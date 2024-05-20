@@ -3,7 +3,6 @@ package adt
 
 import temp._
 import impl.Adt.{Status => ADTStatus}
-import net.scalax.simple.adt.nat.AdtNat
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 /** TODO
@@ -17,14 +16,13 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 class TypeAdtApply[Input, Sum <: RuntimeNat, ST <: ADTStatus](val value: Input => ghdmzsk) extends AnyVal
 
 object TypeAdtApply extends impl.TypeAdtImplicitOptsPolyHigher {
-  /*implicit def identityImplicit[S <: AdtNat, ST <: ADTStatus]: TypeAdtApply[ADTData[S, ST], S, ST] =
-    new TypeAdtApply[ADTData[S, ST], S, ST](identity)*/
+  implicit def identityImplicit[S <: RuntimeNat, ST <: ADTStatus]: TypeAdtApply[ADTData[S, ST], S, ST] =
+    new TypeAdtApply[ADTData[S, ST], S, ST](???)
 }
 
 object ADTFunctionImplicitFetch extends impl.TypeAdtImplicitOptsPolyHigher
 
 package impl {
-  import net.scalax.simple.adt.nat.{AdtNatPositive, AdtNatZero}
 
   trait TypeAdtImplicitOptsPolyHigher extends HListTypeAdtPositiveLower1 {
     @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: RuntimeNat, AdtConvertPoly, ST <: ADTStatus](implicit
