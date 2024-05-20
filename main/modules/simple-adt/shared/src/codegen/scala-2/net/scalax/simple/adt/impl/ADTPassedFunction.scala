@@ -2,251 +2,172 @@ package net.scalax.simple.adt
 package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import implemention.ADTGHDMZSK
 import temp._
 import Adt.{Status => ADTStatus}
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 
 trait ADTPassedFunction {
 
-  implicit class extra1[I1, S <: ADTStatus](private val data: ADTData[AdtNatPositive[I1, AdtNatZero], S]) {
-    def fold[D](
-      func1: I1 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
-  }
-
-  implicit class extra2[I1, I2, S <: ADTStatus](private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], S]) {
-    def fold[D](
-      func1: I1 => D,
-      func2: I2 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
-  }
-
-  implicit class extra3[I1, I2, I3, S <: ADTStatus](
-    private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], S]
+  implicit class extra1[ParamType, I1, Poly1, SImpl <: ADTStatus](
+    data1: ADTData[RuntimeData[Adt.Context[ParamType, I1, Poly1], RuntimeZero], SImpl]
   ) {
-    def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+
+    def fold[D](func1: I1 => D): D = ???
+
   }
 
-  implicit class extra4[I1, I2, I3, I4, S <: ADTStatus](
-    private val data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], S]
+  implicit class extra2[ParamType, I1, I2, Poly1, Poly2, SImpl <: ADTStatus](
+    data2: ADTData[RuntimeData[Adt.Context[ParamType, I1, Poly1], RuntimeData[Adt.Context[ParamType, I2, Poly2], RuntimeZero]], SImpl]
   ) {
-    def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+
+    def fold[D](func1: I1 => D, func2: I2 => D): D = ???
+
   }
 
-  implicit class extra5[I1, I2, I3, I4, I5, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
-      S
+  implicit class extra3[ParamType, I1, I2, I3, Poly1, Poly2, Poly3, SImpl <: ADTStatus](
+    data3: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[Adt.Context[ParamType, I2, Poly2], RuntimeData[Adt.Context[ParamType, I3, Poly3], RuntimeZero]]
+      ],
+      SImpl
     ]
   ) {
-    def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+
+    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D): D = ???
+
   }
 
-  implicit class extra6[I1, I2, I3, I4, I5, I6, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
-      S
+  implicit class extra4[ParamType, I1, I2, I3, I4, Poly1, Poly2, Poly3, Poly4, SImpl <: ADTStatus](
+    data4: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[Adt.Context[ParamType, I3, Poly3], RuntimeData[Adt.Context[ParamType, I4, Poly4], RuntimeZero]]
+        ]
+      ],
+      SImpl
     ]
   ) {
-    def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+
+    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D): D = ???
+
   }
 
-  implicit class extra7[I1, I2, I3, I4, I5, I6, I7, S <: ADTStatus](
-    private val data: ADTData[AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
-    ], S]
-  ) {
-    def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
-  }
-
-  implicit class extra8[I1, I2, I3, I4, I5, I6, I7, I8, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[I1, AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-      ]],
-      S
+  implicit class extra5[ParamType, I1, I2, I3, I4, I5, Poly1, Poly2, Poly3, Poly4, Poly5, SImpl <: ADTStatus](
+    data5: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[Adt.Context[ParamType, I4, Poly4], RuntimeData[Adt.Context[ParamType, I5, Poly5], RuntimeZero]]
+          ]
+        ]
+      ],
+      SImpl
     ]
   ) {
+
+    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D): D = ???
+
+  }
+
+  implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, Poly1, Poly2, Poly3, Poly4, Poly5, Poly6, SImpl <: ADTStatus](
+    data6: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[Adt.Context[ParamType, I5, Poly5], RuntimeData[Adt.Context[ParamType, I6, Poly6], RuntimeZero]]
+            ]
+          ]
+        ]
+      ],
+      SImpl
+    ]
+  ) {
+
+    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D): D = ???
+
+  }
+
+  implicit class extra7[ParamType, I1, I2, I3, I4, I5, I6, I7, Poly1, Poly2, Poly3, Poly4, Poly5, Poly6, Poly7, SImpl <: ADTStatus](
+    data7: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[Adt.Context[ParamType, I6, Poly6], RuntimeData[Adt.Context[ParamType, I7, Poly7], RuntimeZero]]
+              ]
+            ]
+          ]
+        ]
+      ],
+      SImpl
+    ]
+  ) {
+
+    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D, func7: I7 => D): D = ???
+
+  }
+
+  implicit class extra8[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    SImpl <: ADTStatus
+  ](
+    data8: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[Adt.Context[ParamType, I7, Poly7], RuntimeData[Adt.Context[ParamType, I8, Poly8], RuntimeZero]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      SImpl
+    ]
+  ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -256,46 +177,59 @@ trait ADTPassedFunction {
       func6: I6 => D,
       func7: I7 => D,
       func8: I8 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra9[I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[I2, AdtNatPositive[
-          I3,
-          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-        ]]
+  implicit class extra9[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    SImpl <: ADTStatus
+  ](
+    data9: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[Adt.Context[ParamType, I8, Poly8], RuntimeData[Adt.Context[ParamType, I9, Poly9], RuntimeZero]]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -306,50 +240,64 @@ trait ADTPassedFunction {
       func7: I7 => D,
       func8: I8 => D,
       func9: I9 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-            I5,
-            AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-          ]]]
+  implicit class extra10[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    SImpl <: ADTStatus
+  ](
+    data10: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[Adt.Context[ParamType, I9, Poly9], RuntimeData[Adt.Context[ParamType, I10, Poly10], RuntimeZero]]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -361,54 +309,69 @@ trait ADTPassedFunction {
       func8: I8 => D,
       func9: I9 => D,
       func10: I10 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-              I6,
-              AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-            ]]]
+  implicit class extra11[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    SImpl <: ADTStatus
+  ](
+    data11: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[Adt.Context[ParamType, I10, Poly10], RuntimeData[Adt.Context[ParamType, I11, Poly11], RuntimeZero]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -421,58 +384,74 @@ trait ADTPassedFunction {
       func9: I9 => D,
       func10: I10 => D,
       func11: I11 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-                I7,
-                AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-              ]]]
+  implicit class extra12[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    SImpl <: ADTStatus
+  ](
+    data12: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[Adt.Context[ParamType, I11, Poly11], RuntimeData[Adt.Context[ParamType, I12, Poly12], RuntimeZero]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
             ]
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -486,65 +465,79 @@ trait ADTPassedFunction {
       func10: I10 => D,
       func11: I11 => D,
       func12: I12 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[I7, AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                  ]]
+  implicit class extra13[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    SImpl <: ADTStatus
+  ](
+    data13: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[Adt.Context[ParamType, I12, Poly12], RuntimeData[Adt.Context[ParamType, I13, Poly13], RuntimeZero]]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
                 ]
               ]
             ]
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -559,59 +552,73 @@ trait ADTPassedFunction {
       func11: I11 => D,
       func12: I12 => D,
       func13: I13 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[I8, AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                    ]]
+  implicit class extra14[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    SImpl <: ADTStatus
+  ](
+    data14: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[Adt.Context[ParamType, I12, Poly12], RuntimeData[
+                              Adt.Context[ParamType, I13, Poly13],
+                              RuntimeData[Adt.Context[ParamType, I14, Poly14], RuntimeZero]
+                            ]]
+                          ]
+                        ]
+                      ]
+                    ]
                   ]
                 ]
               ]
@@ -619,9 +626,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -637,62 +645,77 @@ trait ADTPassedFunction {
       func12: I12 => D,
       func13: I13 => D,
       func14: I14 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[I9, AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                      ]]
+  implicit class extra15[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    SImpl <: ADTStatus
+  ](
+    data15: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[Adt.Context[ParamType, I13, Poly13], RuntimeData[
+                                Adt.Context[ParamType, I14, Poly14],
+                                RuntimeData[Adt.Context[ParamType, I15, Poly15], RuntimeZero]
+                              ]]
+                            ]
+                          ]
+                        ]
+                      ]
                     ]
                   ]
                 ]
@@ -701,9 +724,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -720,65 +744,81 @@ trait ADTPassedFunction {
       func13: I13 => D,
       func14: I14 => D,
       func15: I15 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[
-                          I12,
-                          AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]
-                        ]]]
+  implicit class extra16[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    Poly16,
+    SImpl <: ADTStatus
+  ](
+    data16: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[
+                                Adt.Context[ParamType, I13, Poly13],
+                                RuntimeData[Adt.Context[ParamType, I14, Poly14], RuntimeData[
+                                  Adt.Context[ParamType, I15, Poly15],
+                                  RuntimeData[Adt.Context[ParamType, I16, Poly16], RuntimeZero]
+                                ]]
+                              ]
+                            ]
+                          ]
+                        ]
                       ]
                     ]
                   ]
@@ -788,9 +828,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -808,68 +849,85 @@ trait ADTPassedFunction {
       func14: I14 => D,
       func15: I15 => D,
       func16: I16 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15,
-        func16
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                            I13,
-                            AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                          ]]]
+  implicit class extra17[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    Poly16,
+    Poly17,
+    SImpl <: ADTStatus
+  ](
+    data17: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[
+                                Adt.Context[ParamType, I13, Poly13],
+                                RuntimeData[
+                                  Adt.Context[ParamType, I14, Poly14],
+                                  RuntimeData[Adt.Context[ParamType, I15, Poly15], RuntimeData[
+                                    Adt.Context[ParamType, I16, Poly16],
+                                    RuntimeData[Adt.Context[ParamType, I17, Poly17], RuntimeZero]
+                                  ]]
+                                ]
+                              ]
+                            ]
+                          ]
                         ]
                       ]
                     ]
@@ -880,9 +938,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -901,71 +960,89 @@ trait ADTPassedFunction {
       func15: I15 => D,
       func16: I16 => D,
       func17: I17 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15,
-        func16,
-        func17
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                              I14,
-                              AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                            ]]]
+  implicit class extra18[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    Poly16,
+    Poly17,
+    Poly18,
+    SImpl <: ADTStatus
+  ](
+    data18: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[
+                                Adt.Context[ParamType, I13, Poly13],
+                                RuntimeData[
+                                  Adt.Context[ParamType, I14, Poly14],
+                                  RuntimeData[
+                                    Adt.Context[ParamType, I15, Poly15],
+                                    RuntimeData[Adt.Context[ParamType, I16, Poly16], RuntimeData[
+                                      Adt.Context[ParamType, I17, Poly17],
+                                      RuntimeData[Adt.Context[ParamType, I18, Poly18], RuntimeZero]
+                                    ]]
+                                  ]
+                                ]
+                              ]
+                            ]
                           ]
                         ]
                       ]
@@ -977,9 +1054,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -999,74 +1077,93 @@ trait ADTPassedFunction {
       func16: I16 => D,
       func17: I17 => D,
       func18: I18 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15,
-        func16,
-        func17,
-        func18
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                                I15,
-                                AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                              ]]]
+  implicit class extra19[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    Poly16,
+    Poly17,
+    Poly18,
+    Poly19,
+    SImpl <: ADTStatus
+  ](
+    data19: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[
+                                Adt.Context[ParamType, I13, Poly13],
+                                RuntimeData[
+                                  Adt.Context[ParamType, I14, Poly14],
+                                  RuntimeData[
+                                    Adt.Context[ParamType, I15, Poly15],
+                                    RuntimeData[
+                                      Adt.Context[ParamType, I16, Poly16],
+                                      RuntimeData[Adt.Context[ParamType, I17, Poly17], RuntimeData[
+                                        Adt.Context[ParamType, I18, Poly18],
+                                        RuntimeData[Adt.Context[ParamType, I19, Poly19], RuntimeZero]
+                                      ]]
+                                    ]
+                                  ]
+                                ]
+                              ]
                             ]
                           ]
                         ]
@@ -1079,9 +1176,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -1102,77 +1200,97 @@ trait ADTPassedFunction {
       func17: I17 => D,
       func18: I18 => D,
       func19: I19 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15,
-        func16,
-        func17,
-        func18,
-        func19
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[
-                                I13,
-                                AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                  I16,
-                                  AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                                ]]]
+  implicit class extra20[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    Poly16,
+    Poly17,
+    Poly18,
+    Poly19,
+    Poly20,
+    SImpl <: ADTStatus
+  ](
+    data20: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[
+                                Adt.Context[ParamType, I13, Poly13],
+                                RuntimeData[
+                                  Adt.Context[ParamType, I14, Poly14],
+                                  RuntimeData[
+                                    Adt.Context[ParamType, I15, Poly15],
+                                    RuntimeData[
+                                      Adt.Context[ParamType, I16, Poly16],
+                                      RuntimeData[
+                                        Adt.Context[ParamType, I17, Poly17],
+                                        RuntimeData[Adt.Context[ParamType, I18, Poly18], RuntimeData[
+                                          Adt.Context[ParamType, I19, Poly19],
+                                          RuntimeData[Adt.Context[ParamType, I20, Poly20], RuntimeZero]
+                                        ]]
+                                      ]
+                                    ]
+                                  ]
+                                ]
                               ]
                             ]
                           ]
@@ -1186,9 +1304,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -1210,80 +1329,101 @@ trait ADTPassedFunction {
       func18: I18 => D,
       func19: I19 => D,
       func20: I20 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15,
-        func16,
-        func17,
-        func18,
-        func19,
-        func20
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
-  implicit class extra21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: ADTStatus](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[
-                                I13,
-                                AdtNatPositive[
-                                  I14,
-                                  AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                    I17,
-                                    AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                  ]]]
+  implicit class extra21[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    Poly16,
+    Poly17,
+    Poly18,
+    Poly19,
+    Poly20,
+    Poly21,
+    SImpl <: ADTStatus
+  ](
+    data21: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[
+                                Adt.Context[ParamType, I13, Poly13],
+                                RuntimeData[
+                                  Adt.Context[ParamType, I14, Poly14],
+                                  RuntimeData[
+                                    Adt.Context[ParamType, I15, Poly15],
+                                    RuntimeData[
+                                      Adt.Context[ParamType, I16, Poly16],
+                                      RuntimeData[
+                                        Adt.Context[ParamType, I17, Poly17],
+                                        RuntimeData[
+                                          Adt.Context[ParamType, I18, Poly18],
+                                          RuntimeData[Adt.Context[ParamType, I19, Poly19], RuntimeData[
+                                            Adt.Context[ParamType, I20, Poly20],
+                                            RuntimeData[Adt.Context[ParamType, I21, Poly21], RuntimeZero]
+                                          ]]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
                                 ]
                               ]
                             ]
@@ -1298,9 +1438,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -1323,48 +1464,12 @@ trait ADTPassedFunction {
       func19: I19 => D,
       func20: I20 => D,
       func21: I21 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15,
-        func16,
-        func17,
-        func18,
-        func19,
-        func20,
-        func21
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
   implicit class extra22[
+    ParamType,
     I1,
     I2,
     I3,
@@ -1387,43 +1492,77 @@ trait ADTPassedFunction {
     I20,
     I21,
     I22,
-    S <: ADTStatus
+    Poly1,
+    Poly2,
+    Poly3,
+    Poly4,
+    Poly5,
+    Poly6,
+    Poly7,
+    Poly8,
+    Poly9,
+    Poly10,
+    Poly11,
+    Poly12,
+    Poly13,
+    Poly14,
+    Poly15,
+    Poly16,
+    Poly17,
+    Poly18,
+    Poly19,
+    Poly20,
+    Poly21,
+    Poly22,
+    SImpl <: ADTStatus
   ](
-    private val data: ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[
-                                I13,
-                                AdtNatPositive[
-                                  I14,
-                                  AdtNatPositive[
-                                    I15,
-                                    AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                      I18,
-                                      AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                    ]]]
+    data22: ADTData[
+      RuntimeData[
+        Adt.Context[ParamType, I1, Poly1],
+        RuntimeData[
+          Adt.Context[ParamType, I2, Poly2],
+          RuntimeData[
+            Adt.Context[ParamType, I3, Poly3],
+            RuntimeData[
+              Adt.Context[ParamType, I4, Poly4],
+              RuntimeData[
+                Adt.Context[ParamType, I5, Poly5],
+                RuntimeData[
+                  Adt.Context[ParamType, I6, Poly6],
+                  RuntimeData[
+                    Adt.Context[ParamType, I7, Poly7],
+                    RuntimeData[
+                      Adt.Context[ParamType, I8, Poly8],
+                      RuntimeData[
+                        Adt.Context[ParamType, I9, Poly9],
+                        RuntimeData[
+                          Adt.Context[ParamType, I10, Poly10],
+                          RuntimeData[
+                            Adt.Context[ParamType, I11, Poly11],
+                            RuntimeData[
+                              Adt.Context[ParamType, I12, Poly12],
+                              RuntimeData[
+                                Adt.Context[ParamType, I13, Poly13],
+                                RuntimeData[
+                                  Adt.Context[ParamType, I14, Poly14],
+                                  RuntimeData[
+                                    Adt.Context[ParamType, I15, Poly15],
+                                    RuntimeData[
+                                      Adt.Context[ParamType, I16, Poly16],
+                                      RuntimeData[
+                                        Adt.Context[ParamType, I17, Poly17],
+                                        RuntimeData[
+                                          Adt.Context[ParamType, I18, Poly18],
+                                          RuntimeData[
+                                            Adt.Context[ParamType, I19, Poly19],
+                                            RuntimeData[Adt.Context[ParamType, I20, Poly20], RuntimeData[
+                                              Adt.Context[ParamType, I21, Poly21],
+                                              RuntimeData[Adt.Context[ParamType, I22, Poly22], RuntimeZero]
+                                            ]]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
                                   ]
                                 ]
                               ]
@@ -1439,9 +1578,10 @@ trait ADTPassedFunction {
           ]
         ]
       ],
-      S
+      SImpl
     ]
   ) {
+
     def fold[D](
       func1: I1 => D,
       func2: I2 => D,
@@ -1465,46 +1605,8 @@ trait ADTPassedFunction {
       func20: I20 => D,
       func21: I21 => D,
       func22: I22 => D
-    ): D = {
-      val adtDataGHDMZSK = data.toGHDMZSK
-      val dataInstance: Any = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.findADTData)
-        .inputGHDMZSK(() => ADTGHDMZSK.identityGhdmzsk)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-      val funcs = List(
-        func1,
-        func2,
-        func3,
-        func4,
-        func5,
-        func6,
-        func7,
-        func8,
-        func9,
-        func10,
-        func11,
-        func12,
-        func13,
-        func14,
-        func15,
-        func16,
-        func17,
-        func18,
-        func19,
-        func20,
-        func21,
-        func22
-      )
-      val listFunc: ghdmzsk = TypeAdtGetter.fromList(funcs.asInstanceOf[List[Any => Any]])
-      val funcInstance = adtDataGHDMZSK
-        .inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutInputFunctionByADTList)
-        .inputGHDMZSK(() => listFunc)
-        .asInstanceOf[ADTGHDMZSK.GetValue]
-        .value
-        .asInstanceOf[Any => D]
-      funcInstance(dataInstance)
-    }
+    ): D = ???
+
   }
 
 }

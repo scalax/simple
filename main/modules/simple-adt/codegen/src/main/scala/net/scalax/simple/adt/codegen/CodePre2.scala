@@ -12,10 +12,10 @@ object CodePre2:
   }
 
   def adtFunnctionDataType(max: Int)(i: Int): String =
-    if i <= max then s"AdtNatPositive[Adt.Context[ParamType, I$i, DefaultAdtContext.type], ${adtFunnctionDataType(max)(i + 1)}]"
-    else "AdtNatZero"
+    if i <= max then s"RuntimeData[Adt.Context[ParamType, I$i, DefaultAdtContext.type], ${adtFunnctionDataType(max)(i + 1)}]"
+    else "RuntimeZero"
 
-  def adtDataType(max: Int)(i: Int): String = if i <= max then s"AdtNatPositive[I$i, ${adtDataType(max)(i + 1)}]" else "AdtNatZero"
+  def adtDataType(max: Int)(i: Int): String = if i <= max then s"RuntimeData[I$i, ${adtDataType(max)(i + 1)}]" else "RuntimeZero"
 
   def optionString(index: Int): String = if (index > 0) s"ADTData.empty(${optionString(index - 1)})" else "ADTData.success(iData, null)"
 
@@ -25,7 +25,7 @@ package impl
 
 import Adt.{Status => ADTStatus, FunctionApply}
 import temp._
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 
 trait TypeAdtRuntimeApply {
   ${repeatBlank(22) { i1 =>
@@ -41,7 +41,7 @@ trait TypeAdtRuntimeApply {
 
       trait CoProduct${i1}Apply[$parameterString] extends ApplyFactory[$typeFunction, $dataTypeString] {
         ${repeat(i1) { i2 =>
-          s"def option$i2(iData: I$i2): ADTData[$dataTypeString, ADTStatus.Passed.type] = ${optionString(i2 - 1)}"
+          s"def option$i2(iData: I$i2): ADTData[$dataTypeString, ADTStatus.Passed.type] = ??? // ${optionString(i2 - 1)}"
         }('\n'.toString)}
 
         override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): ADTData[$dataTypeString, ADTStatus.Passed.type] = {

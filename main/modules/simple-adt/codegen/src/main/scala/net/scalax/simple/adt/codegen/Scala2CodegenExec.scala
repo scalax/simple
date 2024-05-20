@@ -19,7 +19,7 @@ object Scala2CodegenExec:
         val filePath = writePath.resolve("ADTPassedFunction.scala")
         Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
           case writer =>
-            val linerContent = net.scalax.simple.nat.adt.codegen.txt.ADTPassedFunction().body
+            val linerContent = CodePre4.text4
             writer.println(linerContent)
         )
     )

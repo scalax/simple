@@ -3,13 +3,11 @@ package net.scalax.simple
 package adt
 package impl
 
-import implemention._
 import temp._
 import Adt.{Status => ADTStatus}
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 @ADT22Parameter(min: Int, max: Int) = {
-    @if(min < max) { AdtNatPositive[Adt.Context[A, I@{min}, DefaultAdtContext.type], @ADT22Parameter(min + 1, max)] } else { AdtNatZero }
+    @if(min < max) { RuntimeData[Adt.Context[A, I@{min}, DefaultAdtContext.type], @ADT22Parameter(min + 1, max)] } else { RuntimeZero }
 }
 
 @TypeParameter22(i: Int) = {

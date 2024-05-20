@@ -23,7 +23,7 @@ package impl
 
 import Adt.{Status => ADTStatus}
 import temp._
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 
 trait ADTPassedFunctionImpl {
   ${repeatBlank(22)(i1 =>

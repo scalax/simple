@@ -2,215 +2,264 @@ package net.scalax.simple
 package adt
 package impl
 
-import implemention.ADTGHDMZSK
 import temp._
 import Adt.{Status => ADTStatus}
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 
 trait TypeAdtAliasModelUnapply {
 
   object CoProduct1 {
-    def unapply[I1, S <: ADTStatus](data: ADTData[AdtNatPositive[I1, AdtNat], S]): Option[I1] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options1GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I1])
-        case _                      => Option.empty
-      }
+    def unapply[I1, S <: ADTStatus](data: ADTData[RuntimeZero, S]): Option[I1] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options1GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I1])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct2 {
-    def unapply[I1, I2, S <: ADTStatus](data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNat]], S]): Option[I2] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options2GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I2])
-        case _                      => Option.empty
-      }
+    def unapply[I1, I2, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeZero], S]): Option[I2] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options2GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I2])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct3 {
-    def unapply[I1, I2, I3, S <: ADTStatus](
-      data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNat]]], S]
-    ): Option[I3] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options3GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I3])
-        case _                      => Option.empty
-      }
+    def unapply[I1, I2, I3, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], S]): Option[I3] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options3GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I3])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct4 {
     def unapply[I1, I2, I3, I4, S <: ADTStatus](
-      data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNat]]]], S]
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], S]
     ): Option[I4] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options4GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I4])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options4GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I4])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct5 {
     def unapply[I1, I2, I3, I4, I5, S <: ADTStatus](
-      data: ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNat]]]]], S]
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], S]
     ): Option[I5] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options5GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I5])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options5GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I5])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct6 {
     def unapply[I1, I2, I3, I4, I5, I6, S <: ADTStatus](
-      data: ADTData[
-        AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNat]]]]]],
-        S
-      ]
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], S]
     ): Option[I6] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options6GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I6])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options6GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I6])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct7 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, S <: ADTStatus](
-      data: ADTData[AdtNatPositive[
-        I1,
-        AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNat]]]]]]
-      ], S]
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]], S]
     ): Option[I7] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options7GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I7])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options7GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I7])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct8 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[I1, AdtNatPositive[
-          I2,
-          AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNat]]]]]]
-        ]],
+        RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
         S
       ]
     ): Option[I8] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options8GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I8])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options8GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I8])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct9 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: ADTStatus](
-      data: ADTData[
-        AdtNatPositive[
-          I1,
-          AdtNatPositive[I2, AdtNatPositive[
-            I3,
-            AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNat]]]]]]
-          ]]
-        ],
-        S
-      ]
+      data: ADTData[RuntimeData[
+        I1,
+        RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
+      ], S]
     ): Option[I9] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options9GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I9])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options9GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I9])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct10 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
-          I1,
-          AdtNatPositive[
-            I2,
-            AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-              I5,
-              AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNat]]]]]
-            ]]]
-          ]
-        ],
+        RuntimeData[I1, RuntimeData[
+          I2,
+          RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
+        ]],
         S
       ]
     ): Option[I10] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options10GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I10])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options10GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I10])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct11 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
-            I2,
-            AdtNatPositive[
-              I3,
-              AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNat]]]]]
-              ]]]
-            ]
-          ]
+          RuntimeData[I2, RuntimeData[I3, RuntimeData[
+            I4,
+            RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeZero]]]]]]
+          ]]]
         ],
         S
       ]
     ): Option[I11] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options11GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I11])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options11GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I11])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
   object CoProduct12 {
     def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[I3, RuntimeData[I4, RuntimeData[
+              I5,
+              RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeZero]]]]]]
+            ]]]
+          ]
+        ],
+        S
+      ]
+    ): Option[I12] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options12GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I12])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
+    }
+  }
+
+  object CoProduct13 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: ADTStatus](
+      data: ADTData[
+        RuntimeData[
+          I1,
+          RuntimeData[
+            I2,
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[I4, RuntimeData[I5, RuntimeData[
+                I6,
+                RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeZero]]]]]]
+              ]]]
+            ]
+          ]
+        ],
+        S
+      ]
+    ): Option[I13] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options13GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I13])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
+    }
+  }
+
+  object CoProduct14 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: ADTStatus](
+      data: ADTData[
+        RuntimeData[
+          I1,
+          RuntimeData[
+            I2,
+            RuntimeData[
+              I3,
+              RuntimeData[
                 I4,
-                AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
+                RuntimeData[I5, RuntimeData[I6, RuntimeData[
                   I7,
-                  AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNat]]]]]
+                  RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeZero]]]]]]
                 ]]]
               ]
             ]
@@ -218,32 +267,34 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I12] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options12GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I12])
-        case _                      => Option.empty
-      }
+    ): Option[I14] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options14GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I14])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct13 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: ADTStatus](
+  object CoProduct15 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[
+                  RuntimeData[I6, RuntimeData[I7, RuntimeData[
                     I8,
-                    AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNat]]]]]
+                    RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeZero]]]]]]
                   ]]]
                 ]
               ]
@@ -252,35 +303,37 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I13] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options13GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I13])
-        case _                      => Option.empty
-      }
+    ): Option[I15] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options15GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I15])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct14 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: ADTStatus](
+  object CoProduct16 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[
+                  RuntimeData[
                     I6,
-                    AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNat]]]]]
-                    ]]]
+                    RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[
+                      I10,
+                      RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeZero]]]]]
+                    ]]]]
                   ]
                 ]
               ]
@@ -289,37 +342,39 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I14] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options14GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I14])
-        case _                      => Option.empty
-      }
+    ): Option[I16] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options16GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I16])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct15 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: ADTStatus](
+  object CoProduct17 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[
+                  RuntimeData[
                     I6,
-                    AdtNatPositive[
+                    RuntimeData[
                       I7,
-                      AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNat]]]]]
-                      ]]]
+                      RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[
+                        I11,
+                        RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeZero]]]]]
+                      ]]]]
                     ]
                   ]
                 ]
@@ -329,39 +384,44 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I15] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options15GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I15])
-        case _                      => Option.empty
-      }
+    ): Option[I17] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options17GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I17])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct16 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: ADTStatus](
+  object CoProduct18 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[
+                  RuntimeData[
                     I6,
-                    AdtNatPositive[
+                    RuntimeData[
                       I7,
-                      AdtNatPositive[
+                      RuntimeData[
                         I8,
-                        AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[
-                          I11,
-                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNat]]]]]
-                        ]]]
+                        RuntimeData[
+                          I9,
+                          RuntimeData[I10, RuntimeData[I11, RuntimeData[
+                            I12,
+                            RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeZero]]]]]
+                          ]]]
+                        ]
                       ]
                     ]
                   ]
@@ -372,42 +432,44 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I16] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options16GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I16])
-        case _                      => Option.empty
-      }
+    ): Option[I18] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options18GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I18])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct17 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: ADTStatus](
+  object CoProduct19 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[
+                  RuntimeData[
                     I6,
-                    AdtNatPositive[
+                    RuntimeData[
                       I7,
-                      AdtNatPositive[
+                      RuntimeData[
                         I8,
-                        AdtNatPositive[
+                        RuntimeData[
                           I9,
-                          AdtNatPositive[
+                          RuntimeData[
                             I10,
-                            AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
+                            RuntimeData[I11, RuntimeData[I12, RuntimeData[
                               I13,
-                              AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNat]]]]
+                              RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeZero]]]]]
                             ]]]
                           ]
                         ]
@@ -421,44 +483,46 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I17] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options17GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I17])
-        case _                      => Option.empty
-      }
+    ): Option[I19] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options19GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I19])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct18 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: ADTStatus](
+  object CoProduct20 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[
+                  RuntimeData[
                     I6,
-                    AdtNatPositive[
+                    RuntimeData[
                       I7,
-                      AdtNatPositive[
+                      RuntimeData[
                         I8,
-                        AdtNatPositive[
+                        RuntimeData[
                           I9,
-                          AdtNatPositive[
+                          RuntimeData[
                             I10,
-                            AdtNatPositive[
+                            RuntimeData[
                               I11,
-                              AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
+                              RuntimeData[I12, RuntimeData[I13, RuntimeData[
                                 I14,
-                                AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNat]]]]
+                                RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeZero]]]]]
                               ]]]
                             ]
                           ]
@@ -473,46 +537,48 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I18] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options18GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I18])
-        case _                      => Option.empty
-      }
+    ): Option[I20] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options20GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I20])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct19 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: ADTStatus](
+  object CoProduct21 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[
+                  RuntimeData[
                     I6,
-                    AdtNatPositive[
+                    RuntimeData[
                       I7,
-                      AdtNatPositive[
+                      RuntimeData[
                         I8,
-                        AdtNatPositive[
+                        RuntimeData[
                           I9,
-                          AdtNatPositive[
+                          RuntimeData[
                             I10,
-                            AdtNatPositive[
+                            RuntimeData[
                               I11,
-                              AdtNatPositive[
+                              RuntimeData[
                                 I12,
-                                AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
+                                RuntimeData[I13, RuntimeData[I14, RuntimeData[
                                   I15,
-                                  AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNat]]]]
+                                  RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]
                                 ]]]
                               ]
                             ]
@@ -528,48 +594,50 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I19] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options19GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I19])
-        case _                      => Option.empty
-      }
+    ): Option[I21] = {
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options21GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I21])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
-  object CoProduct20 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: ADTStatus](
+  object CoProduct22 {
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22, S <: ADTStatus](
       data: ADTData[
-        AdtNatPositive[
+        RuntimeData[
           I1,
-          AdtNatPositive[
+          RuntimeData[
             I2,
-            AdtNatPositive[
+            RuntimeData[
               I3,
-              AdtNatPositive[
+              RuntimeData[
                 I4,
-                AdtNatPositive[
+                RuntimeData[
                   I5,
-                  AdtNatPositive[
+                  RuntimeData[
                     I6,
-                    AdtNatPositive[
+                    RuntimeData[
                       I7,
-                      AdtNatPositive[
+                      RuntimeData[
                         I8,
-                        AdtNatPositive[
+                        RuntimeData[
                           I9,
-                          AdtNatPositive[
+                          RuntimeData[
                             I10,
-                            AdtNatPositive[
+                            RuntimeData[
                               I11,
-                              AdtNatPositive[
+                              RuntimeData[
                                 I12,
-                                AdtNatPositive[
+                                RuntimeData[
                                   I13,
-                                  AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
+                                  RuntimeData[I14, RuntimeData[I15, RuntimeData[
                                     I16,
-                                    AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNat]]]]
+                                    RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeZero]]]]]
                                   ]]]
                                 ]
                               ]
@@ -586,138 +654,15 @@ trait TypeAdtAliasModelUnapply {
         ],
         S
       ]
-    ): Option[I20] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options20GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I20])
-        case _                      => Option.empty
-      }
-    }
-  }
-
-  object CoProduct21 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: ADTStatus](
-      data: ADTData[
-        AdtNatPositive[
-          I1,
-          AdtNatPositive[
-            I2,
-            AdtNatPositive[
-              I3,
-              AdtNatPositive[
-                I4,
-                AdtNatPositive[
-                  I5,
-                  AdtNatPositive[
-                    I6,
-                    AdtNatPositive[
-                      I7,
-                      AdtNatPositive[
-                        I8,
-                        AdtNatPositive[
-                          I9,
-                          AdtNatPositive[
-                            I10,
-                            AdtNatPositive[
-                              I11,
-                              AdtNatPositive[
-                                I12,
-                                AdtNatPositive[
-                                  I13,
-                                  AdtNatPositive[
-                                    I14,
-                                    AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                      I17,
-                                      AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNat]]]]
-                                    ]]]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S
-      ]
-    ): Option[I21] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options21GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I21])
-        case _                      => Option.empty
-      }
-    }
-  }
-
-  object CoProduct22 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22, S <: ADTStatus](
-      data: ADTData[
-        AdtNatPositive[
-          I1,
-          AdtNatPositive[
-            I2,
-            AdtNatPositive[
-              I3,
-              AdtNatPositive[
-                I4,
-                AdtNatPositive[
-                  I5,
-                  AdtNatPositive[
-                    I6,
-                    AdtNatPositive[
-                      I7,
-                      AdtNatPositive[
-                        I8,
-                        AdtNatPositive[
-                          I9,
-                          AdtNatPositive[
-                            I10,
-                            AdtNatPositive[
-                              I11,
-                              AdtNatPositive[
-                                I12,
-                                AdtNatPositive[
-                                  I13,
-                                  AdtNatPositive[
-                                    I14,
-                                    AdtNatPositive[
-                                      I15,
-                                      AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                        I18,
-                                        AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNat]]]]
-                                      ]]]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        S
-      ]
     ): Option[I22] = {
-      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-      val model: ghdmzsk        = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options22GHDMZSK)
-      model match {
-        case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I22])
-        case _                      => Option.empty
-      }
+      // val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
+      // val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options22GHDMZSK)
+      // model match {
+      //     case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I22])
+      //     case _ => Option.empty
+      // }
+
+      Option.empty
     }
   }
 
@@ -725,49 +670,49 @@ trait TypeAdtAliasModelUnapply {
 
 package impl {
   object TypeAdtAliasModelUnapplyGhdmzsk {
-    val options1GHDMZSK: ghdmzsk = ADTGHDMZSK.zeroPositive
+    val options1GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.zeroPositive
 
-    val options2GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options1GHDMZSK)
+    val options2GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options1GHDMZSK)
 
-    val options3GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options2GHDMZSK)
+    val options3GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options2GHDMZSK)
 
-    val options4GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options3GHDMZSK)
+    val options4GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options3GHDMZSK)
 
-    val options5GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options4GHDMZSK)
+    val options5GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options4GHDMZSK)
 
-    val options6GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options5GHDMZSK)
+    val options6GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options5GHDMZSK)
 
-    val options7GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options6GHDMZSK)
+    val options7GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options6GHDMZSK)
 
-    val options8GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options7GHDMZSK)
+    val options8GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options7GHDMZSK)
 
-    val options9GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options8GHDMZSK)
+    val options9GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options8GHDMZSK)
 
-    val options10GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options9GHDMZSK)
+    val options10GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options9GHDMZSK)
 
-    val options11GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options10GHDMZSK)
+    val options11GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options10GHDMZSK)
 
-    val options12GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options11GHDMZSK)
+    val options12GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options11GHDMZSK)
 
-    val options13GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options12GHDMZSK)
+    val options13GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options12GHDMZSK)
 
-    val options14GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options13GHDMZSK)
+    val options14GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options13GHDMZSK)
 
-    val options15GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options14GHDMZSK)
+    val options15GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options14GHDMZSK)
 
-    val options16GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options15GHDMZSK)
+    val options16GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options15GHDMZSK)
 
-    val options17GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options16GHDMZSK)
+    val options17GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options16GHDMZSK)
 
-    val options18GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options17GHDMZSK)
+    val options18GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options17GHDMZSK)
 
-    val options19GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options18GHDMZSK)
+    val options19GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options18GHDMZSK)
 
-    val options20GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options19GHDMZSK)
+    val options20GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options19GHDMZSK)
 
-    val options21GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options20GHDMZSK)
+    val options21GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options20GHDMZSK)
 
-    val options22GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options21GHDMZSK)
+    val options22GHDMZSK: ghdmzsk = ??? // ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options21GHDMZSK)
 
   }
 }

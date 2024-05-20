@@ -1,9 +1,8 @@
 package net.scalax.simple.adt
 
-import net.scalax.simple.adt.implemention.ADTGHDMZSK
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
-object TypeAdtGetter {
+/*object TypeAdtGetter {
   def fromList(list: List[Any => Any]): ghdmzsk = {
     def fromGhdmzsk(l: List[Any => Any]): ghdmzsk = {
       if (l.isEmpty) {
@@ -16,4 +15,4 @@ object TypeAdtGetter {
 
     fromGhdmzsk(list)
   }
-}
+}*/

@@ -1,43 +1,41 @@
 package net.scalax.simple.adt
 package temp
 
-import net.scalax.simple.adt.implemention.ADTGHDMZSK
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import impl.Adt.{Status => ADTStatus}
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
-import core._
 
 import scala.annotation.meta.param
 
-trait ToGHDMZSK[+N <: AdtNat] {
-  def toGHDMZSK: N
+trait ToGHDMZSK[+N <: RuntimeNat] {
+  def toGHDMZSK: ghdmzsk
 }
 
-trait ADTData[+N <: AdtNat, S <: ADTStatus] extends ToGHDMZSK[N] {
-  override def toGHDMZSK: N
+trait ADTData[+N <: RuntimeNat, S <: ADTStatus] extends ToGHDMZSK[N] {
+  override def toGHDMZSK: ghdmzsk
 }
 
 object ADTData {
-  def success[D, T <: AdtNat, S <: ADTStatus](data: D): ADTData[AdtNatPositive[D, T], S] = {
+  def success[D, T <: RuntimeNat, S <: ADTStatus](data: D): ADTData[RuntimeData[D, T], S] = {
     val data1 = data
 
-    new ADTData[AdtNatPositive[D, T], S] {
-      override val toGHDMZSK: AdtNatPositive[D, T] = new AdtNatPositive[D, T] {
-        override def data: Either[D, T] = Left(data1)
+    new ADTData[RuntimeData[D, T], S] {
+      override val toGHDMZSK: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = ???
       }
     }
   }
 
-  def copyTail[D, T <: AdtNat, S <: ADTStatus](tail: T): ADTData[AdtNatPositive[D, T], S] = new ADTData[AdtNatPositive[D, T], S] {
-    override val toGHDMZSK: AdtNatPositive[D, T] = new AdtNatPositive[D, T] {
-      override def data: Either[D, T] = Right(tail)
+  def copyTail[D, T <: RuntimeNat, S <: ADTStatus](tailGHDMZSK: ghdmzsk): ADTData[RuntimeData[D, T], S] =
+    new ADTData[RuntimeData[D, T], S] {
+      override val toGHDMZSK: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = ???
+      }
     }
-  }
 
-  def zero[ST <: ADTStatus](isFinishAndNothing: IsFinishAndNothing): ADTData[AdtNatZero, ST with ADTStatus.NotFinished.type] =
-    new ADTData[AdtNatZero, ST with ADTStatus.NotFinished.type] {
-      override lazy val toGHDMZSK: AdtNatZero = new AdtNatZero {
-        //
+  def zero[ST <: ADTStatus](isFinishAndNothing: IsFinishAndNothing): ADTData[RuntimeZero, ST with ADTStatus.NotFinished.type] =
+    new ADTData[RuntimeZero, ST with ADTStatus.NotFinished.type] {
+      override lazy val toGHDMZSK: ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = ???
       }
     }
 }
@@ -51,7 +49,7 @@ object IsFinishAndNothing {
   def value(obj: Any): IsFinishAndNothing = new IsFinishAndNothing(obj)
 }
 
-trait ApplyFactory[N1[_] <: AdtNat, N2 <: AdtNat] {
+trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
   protected def cv[D, T <: ADTStatus](a: D, b: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): ADTData[N2, ADTStatus.Passed.type]
   def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): ADTData[N2, ADTStatus.Passed.type] =
     cv[D, T](d, v)

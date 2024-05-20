@@ -2,6 +2,8 @@
 package net.scalax.simple.adt
 package impl
 
+/**
+
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import implemention.ADTGHDMZSK
 import temp._
@@ -48,3 +50,5 @@ trait ADTPassedFunction {
     }
 
 }
+
+*/
