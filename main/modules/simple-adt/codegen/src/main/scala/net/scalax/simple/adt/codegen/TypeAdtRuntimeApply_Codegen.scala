@@ -15,13 +15,10 @@ object CodePre2:
     if i <= max then s"RuntimeData[Adt.Context[ParamType, I$i, DefaultAdtContext.type], ${adtFunnctionDataType(max)(i + 1)}]"
     else "RuntimeZero"
 
-  def adtInstanceDataType(max: Int)(i: Int): String =
-    if i <= max then s"RuntimeData[I$i, ${adtInstanceDataType(max)(i + 1)}]"
-    else "RuntimeZero"
-
   def adtDataType(max: Int)(i: Int): String = if i <= max then s"RuntimeData[I$i, ${adtDataType(max)(i + 1)}]" else "RuntimeZero"
 
-  def optionString(index: Int): String = if (index > 0) s"ADTData.empty(${optionString(index - 1)})" else "ADTData.success(iData, null)"
+  def optionString(index: Int): String =
+    if (index > 0) s"ADTData.copyTail(${optionString(index - 1)}.toGHDMZSK)" else "ADTData.success(iData)"
 
   val text1: String = s"""
 package net.scalax.simple.adt
@@ -37,21 +34,18 @@ trait TypeAdtRuntimeApply {
 
       val pamateterFunctionType: String = adtFunnctionDataType(i1)(1)
 
-      val pamateterInstanceType: String = adtInstanceDataType(i1)(1)
-
       val dataTypeString: String = adtDataType(i1)(1)
 
-      val typeFunction     = s"({ type F1[ParamType] = $pamateterFunctionType })#F1"
-      val instanceFunction = s"({ type F1[ParamType] = $pamateterInstanceType })#F1"
+      val typeFunction = s"({ type F1[ParamType] = $pamateterFunctionType })#F1"
 
       s"""
       def CoProduct$i1[$parameterString]:  CoProduct${i1}Apply[$parameterString] = new CoProduct${i1}Apply[$parameterString] {
         //
       }
 
-      trait CoProduct${i1}Apply[$parameterString] extends ApplyFactory[$typeFunction, $instanceFunction, $dataTypeString] {
+      trait CoProduct${i1}Apply[$parameterString] extends ApplyFactory[$typeFunction, $dataTypeString] {
         ${repeat(i1) { i2 =>
-          s"def option$i2(iData: I$i2): ADTData[$dataTypeString, ADTStatus.Passed.type] = ??? // ${optionString(i2 - 1)}"
+          s"def option$i2(iData: I$i2): ADTData[$dataTypeString, ADTStatus.Passed.type] = ${optionString(i2 - 1)}"
         }('\n'.toString)}
 
         override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): ADTData[$dataTypeString, ADTStatus.Passed.type] = {

@@ -5,58 +5,159 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
 import Adt.{Status => ADTStatus}
 import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
+import builder.{coproducter, producter_build}
 
 trait ADTPassedFunction {
 
-  implicit class extra1[ParamType, I1, Poly1, SImpl <: ADTStatus](data1: ADTData[RuntimeZero, SImpl]) {
+  implicit class extra1[ParamType, I1, Poly1, SImpl <: ADTStatus](data1: ADTData[RuntimeData[I1, RuntimeZero], SImpl]) {
 
-    def fold[D](func1: I1 => D): D = ???
+    def fold[D](func1: I1 => D): D = {
+      val func_link: ghdmzsk = producter_build.appended(func1).inputGHDMZSK(() => producter_build.zero)
+
+      TypeAdtGetter.getFromFunction(data1.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
-  implicit class extra2[ParamType, I1, I2, Poly1, Poly2, SImpl <: ADTStatus](data2: ADTData[RuntimeData[I1, RuntimeZero], SImpl]) {
+  implicit class extra2[ParamType, I1, I2, Poly1, Poly2, SImpl <: ADTStatus](
+    data2: ADTData[RuntimeData[I2, RuntimeData[I1, RuntimeZero]], SImpl]
+  ) {
 
-    def fold[D](func1: I1 => D, func2: I2 => D): D = ???
+    def fold[D](func2: I2 => D, func1: I1 => D): D = {
+      val func_link: ghdmzsk =
+        producter_build.appended(func1).inputGHDMZSK(() => producter_build.appended(func2).inputGHDMZSK(() => producter_build.zero))
+
+      TypeAdtGetter.getFromFunction(data2.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
   implicit class extra3[ParamType, I1, I2, I3, Poly1, Poly2, Poly3, SImpl <: ADTStatus](
-    data3: ADTData[RuntimeData[I2, RuntimeData[I1, RuntimeZero]], SImpl]
+    data3: ADTData[RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]], SImpl]
   ) {
 
-    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D): D = ???
+    def fold[D](func3: I3 => D, func2: I2 => D, func1: I1 => D): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build.appended(func2).inputGHDMZSK(() => producter_build.appended(func3).inputGHDMZSK(() => producter_build.zero))
+        )
+
+      TypeAdtGetter.getFromFunction(data3.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
   implicit class extra4[ParamType, I1, I2, I3, I4, Poly1, Poly2, Poly3, Poly4, SImpl <: ADTStatus](
-    data4: ADTData[RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]], SImpl]
+    data4: ADTData[RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]], SImpl]
   ) {
 
-    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D): D = ???
+    def fold[D](func4: I4 => D, func3: I3 => D, func2: I2 => D, func1: I1 => D): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build.appended(func3).inputGHDMZSK(() => producter_build.appended(func4).inputGHDMZSK(() => producter_build.zero))
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data4.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
   implicit class extra5[ParamType, I1, I2, I3, I4, I5, Poly1, Poly2, Poly3, Poly4, Poly5, SImpl <: ADTStatus](
-    data5: ADTData[RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]], SImpl]
+    data5: ADTData[RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]], SImpl]
   ) {
 
-    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D): D = ???
+    def fold[D](func5: I5 => D, func4: I4 => D, func3: I3 => D, func2: I2 => D, func1: I1 => D): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() => producter_build.appended(func5).inputGHDMZSK(() => producter_build.zero))
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data5.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
   implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, Poly1, Poly2, Poly3, Poly4, Poly5, Poly6, SImpl <: ADTStatus](
-    data6: ADTData[RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]], SImpl]
+    data6: ADTData[RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]], SImpl]
   ) {
 
-    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D): D = ???
+    def fold[D](func6: I6 => D, func5: I5 => D, func4: I4 => D, func3: I3 => D, func2: I2 => D, func1: I1 => D): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() => producter_build.appended(func6).inputGHDMZSK(() => producter_build.zero))
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data6.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
   implicit class extra7[ParamType, I1, I2, I3, I4, I5, I6, I7, Poly1, Poly2, Poly3, Poly4, Poly5, Poly6, Poly7, SImpl <: ADTStatus](
-    data7: ADTData[RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]], SImpl]
+    data7: ADTData[
+      RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]],
+      SImpl
+    ]
   ) {
 
-    def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D, func7: I7 => D): D = ???
+    def fold[D](func7: I7 => D, func6: I6 => D, func5: I5 => D, func4: I4 => D, func3: I3 => D, func2: I2 => D, func1: I1 => D): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() => producter_build.appended(func7).inputGHDMZSK(() => producter_build.zero))
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data7.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -80,22 +181,52 @@ trait ADTPassedFunction {
     Poly8,
     SImpl <: ADTStatus
   ](
-    data8: ADTData[
-      RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]],
-      SImpl
-    ]
+    data8: ADTData[RuntimeData[
+      I8,
+      RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
+    ], SImpl]
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
+      func8: I8 => D,
       func7: I7 => D,
-      func8: I8 => D
-    ): D = ???
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() => producter_build.appended(func8).inputGHDMZSK(() => producter_build.zero))
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data8.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -121,23 +252,60 @@ trait ADTPassedFunction {
     Poly9,
     SImpl <: ADTStatus
   ](
-    data9: ADTData[RuntimeData[
-      I8,
-      RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
-    ], SImpl]
+    data9: ADTData[
+      RuntimeData[I9, RuntimeData[
+        I8,
+        RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
+      ]],
+      SImpl
+    ]
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
+      func9: I9 => D,
       func8: I8 => D,
-      func9: I9 => D
-    ): D = ???
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() => producter_build.appended(func9).inputGHDMZSK(() => producter_build.zero))
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data9.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -166,26 +334,67 @@ trait ADTPassedFunction {
     SImpl <: ADTStatus
   ](
     data10: ADTData[
-      RuntimeData[I9, RuntimeData[
-        I8,
-        RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
-      ]],
+      RuntimeData[
+        I10,
+        RuntimeData[I9, RuntimeData[
+          I8,
+          RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
+        ]]
+      ],
       SImpl
     ]
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
+      func10: I10 => D,
       func9: I9 => D,
-      func10: I10 => D
-    ): D = ???
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() => producter_build.appended(func10).inputGHDMZSK(() => producter_build.zero))
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data10.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -217,29 +426,74 @@ trait ADTPassedFunction {
   ](
     data11: ADTData[
       RuntimeData[
-        I10,
-        RuntimeData[I9, RuntimeData[
-          I8,
-          RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
-        ]]
+        I11,
+        RuntimeData[
+          I10,
+          RuntimeData[I9, RuntimeData[I8, RuntimeData[
+            I7,
+            RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+          ]]]
+        ]
       ],
       SImpl
     ]
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
+      func11: I11 => D,
       func10: I10 => D,
-      func11: I11 => D
-    ): D = ???
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() => producter_build.appended(func11).inputGHDMZSK(() => producter_build.zero))
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data11.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -273,13 +527,16 @@ trait ADTPassedFunction {
   ](
     data12: ADTData[
       RuntimeData[
-        I11,
+        I12,
         RuntimeData[
-          I10,
-          RuntimeData[I9, RuntimeData[I8, RuntimeData[
-            I7,
-            RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-          ]]]
+          I11,
+          RuntimeData[
+            I10,
+            RuntimeData[I9, RuntimeData[I8, RuntimeData[
+              I7,
+              RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+            ]]]
+          ]
         ]
       ],
       SImpl
@@ -287,19 +544,67 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
+      func12: I12 => D,
       func11: I11 => D,
-      func12: I12 => D
-    ): D = ???
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build.appended(func12).inputGHDMZSK(() => producter_build.zero)
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data12.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -335,15 +640,18 @@ trait ADTPassedFunction {
   ](
     data13: ADTData[
       RuntimeData[
-        I12,
+        I13,
         RuntimeData[
-          I11,
+          I12,
           RuntimeData[
-            I10,
-            RuntimeData[I9, RuntimeData[I8, RuntimeData[
-              I7,
-              RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-            ]]]
+            I11,
+            RuntimeData[
+              I10,
+              RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                I7,
+                RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+              ]]]
+            ]
           ]
         ]
       ],
@@ -352,20 +660,72 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
+      func13: I13 => D,
       func12: I12 => D,
-      func13: I13 => D
-    ): D = ???
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build.appended(func13).inputGHDMZSK(() => producter_build.zero)
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data13.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -403,17 +763,20 @@ trait ADTPassedFunction {
   ](
     data14: ADTData[
       RuntimeData[
-        I13,
+        I14,
         RuntimeData[
-          I12,
+          I13,
           RuntimeData[
-            I11,
+            I12,
             RuntimeData[
-              I10,
-              RuntimeData[I9, RuntimeData[I8, RuntimeData[
-                I7,
-                RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-              ]]]
+              I11,
+              RuntimeData[
+                I10,
+                RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                  I7,
+                  RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                ]]]
+              ]
             ]
           ]
         ]
@@ -423,21 +786,77 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
+      func14: I14 => D,
       func13: I13 => D,
-      func14: I14 => D
-    ): D = ???
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build.appended(func14).inputGHDMZSK(() => producter_build.zero)
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data14.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -477,19 +896,22 @@ trait ADTPassedFunction {
   ](
     data15: ADTData[
       RuntimeData[
-        I14,
+        I15,
         RuntimeData[
-          I13,
+          I14,
           RuntimeData[
-            I12,
+            I13,
             RuntimeData[
-              I11,
+              I12,
               RuntimeData[
-                I10,
-                RuntimeData[I9, RuntimeData[I8, RuntimeData[
-                  I7,
-                  RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-                ]]]
+                I11,
+                RuntimeData[
+                  I10,
+                  RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                    I7,
+                    RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                  ]]]
+                ]
               ]
             ]
           ]
@@ -500,22 +922,82 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
+      func15: I15 => D,
       func14: I14 => D,
-      func15: I15 => D
-    ): D = ???
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build.appended(func15).inputGHDMZSK(() => producter_build.zero)
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data15.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -557,21 +1039,24 @@ trait ADTPassedFunction {
   ](
     data16: ADTData[
       RuntimeData[
-        I15,
+        I16,
         RuntimeData[
-          I14,
+          I15,
           RuntimeData[
-            I13,
+            I14,
             RuntimeData[
-              I12,
+              I13,
               RuntimeData[
-                I11,
+                I12,
                 RuntimeData[
-                  I10,
-                  RuntimeData[I9, RuntimeData[I8, RuntimeData[
-                    I7,
-                    RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-                  ]]]
+                  I11,
+                  RuntimeData[
+                    I10,
+                    RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                      I7,
+                      RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                    ]]]
+                  ]
                 ]
               ]
             ]
@@ -583,23 +1068,87 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
-      func14: I14 => D,
+      func16: I16 => D,
       func15: I15 => D,
-      func16: I16 => D
-    ): D = ???
+      func14: I14 => D,
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build
+                                                                .appended(func15)
+                                                                .inputGHDMZSK(() =>
+                                                                  producter_build.appended(func16).inputGHDMZSK(() => producter_build.zero)
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data16.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -643,23 +1192,26 @@ trait ADTPassedFunction {
   ](
     data17: ADTData[
       RuntimeData[
-        I16,
+        I17,
         RuntimeData[
-          I15,
+          I16,
           RuntimeData[
-            I14,
+            I15,
             RuntimeData[
-              I13,
+              I14,
               RuntimeData[
-                I12,
+                I13,
                 RuntimeData[
-                  I11,
+                  I12,
                   RuntimeData[
-                    I10,
-                    RuntimeData[I9, RuntimeData[I8, RuntimeData[
-                      I7,
-                      RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-                    ]]]
+                    I11,
+                    RuntimeData[
+                      I10,
+                      RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                        I7,
+                        RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                      ]]]
+                    ]
                   ]
                 ]
               ]
@@ -672,24 +1224,94 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
-      func14: I14 => D,
-      func15: I15 => D,
+      func17: I17 => D,
       func16: I16 => D,
-      func17: I17 => D
-    ): D = ???
+      func15: I15 => D,
+      func14: I14 => D,
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build
+                                                                .appended(func15)
+                                                                .inputGHDMZSK(() =>
+                                                                  producter_build
+                                                                    .appended(func16)
+                                                                    .inputGHDMZSK(() =>
+                                                                      producter_build
+                                                                        .appended(func17)
+                                                                        .inputGHDMZSK(() => producter_build.zero)
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data17.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -735,25 +1357,28 @@ trait ADTPassedFunction {
   ](
     data18: ADTData[
       RuntimeData[
-        I17,
+        I18,
         RuntimeData[
-          I16,
+          I17,
           RuntimeData[
-            I15,
+            I16,
             RuntimeData[
-              I14,
+              I15,
               RuntimeData[
-                I13,
+                I14,
                 RuntimeData[
-                  I12,
+                  I13,
                   RuntimeData[
-                    I11,
+                    I12,
                     RuntimeData[
-                      I10,
-                      RuntimeData[I9, RuntimeData[I8, RuntimeData[
-                        I7,
-                        RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-                      ]]]
+                      I11,
+                      RuntimeData[
+                        I10,
+                        RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                          I7,
+                          RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                        ]]]
+                      ]
                     ]
                   ]
                 ]
@@ -767,25 +1392,99 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
-      func14: I14 => D,
-      func15: I15 => D,
-      func16: I16 => D,
+      func18: I18 => D,
       func17: I17 => D,
-      func18: I18 => D
-    ): D = ???
+      func16: I16 => D,
+      func15: I15 => D,
+      func14: I14 => D,
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build
+                                                                .appended(func15)
+                                                                .inputGHDMZSK(() =>
+                                                                  producter_build
+                                                                    .appended(func16)
+                                                                    .inputGHDMZSK(() =>
+                                                                      producter_build
+                                                                        .appended(func17)
+                                                                        .inputGHDMZSK(() =>
+                                                                          producter_build
+                                                                            .appended(func18)
+                                                                            .inputGHDMZSK(() => producter_build.zero)
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data18.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -833,27 +1532,30 @@ trait ADTPassedFunction {
   ](
     data19: ADTData[
       RuntimeData[
-        I18,
+        I19,
         RuntimeData[
-          I17,
+          I18,
           RuntimeData[
-            I16,
+            I17,
             RuntimeData[
-              I15,
+              I16,
               RuntimeData[
-                I14,
+                I15,
                 RuntimeData[
-                  I13,
+                  I14,
                   RuntimeData[
-                    I12,
+                    I13,
                     RuntimeData[
-                      I11,
+                      I12,
                       RuntimeData[
-                        I10,
-                        RuntimeData[I9, RuntimeData[I8, RuntimeData[
-                          I7,
-                          RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
-                        ]]]
+                        I11,
+                        RuntimeData[
+                          I10,
+                          RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
+                            I6,
+                            RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
+                          ]]]]
+                        ]
                       ]
                     ]
                   ]
@@ -868,26 +1570,104 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
-      func14: I14 => D,
-      func15: I15 => D,
-      func16: I16 => D,
-      func17: I17 => D,
+      func19: I19 => D,
       func18: I18 => D,
-      func19: I19 => D
-    ): D = ???
+      func17: I17 => D,
+      func16: I16 => D,
+      func15: I15 => D,
+      func14: I14 => D,
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build
+                                                                .appended(func15)
+                                                                .inputGHDMZSK(() =>
+                                                                  producter_build
+                                                                    .appended(func16)
+                                                                    .inputGHDMZSK(() =>
+                                                                      producter_build
+                                                                        .appended(func17)
+                                                                        .inputGHDMZSK(() =>
+                                                                          producter_build
+                                                                            .appended(func18)
+                                                                            .inputGHDMZSK(() =>
+                                                                              producter_build
+                                                                                .appended(func19)
+                                                                                .inputGHDMZSK(() => producter_build.zero)
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data19.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -937,29 +1717,32 @@ trait ADTPassedFunction {
   ](
     data20: ADTData[
       RuntimeData[
-        I19,
+        I20,
         RuntimeData[
-          I18,
+          I19,
           RuntimeData[
-            I17,
+            I18,
             RuntimeData[
-              I16,
+              I17,
               RuntimeData[
-                I15,
+                I16,
                 RuntimeData[
-                  I14,
+                  I15,
                   RuntimeData[
-                    I13,
+                    I14,
                     RuntimeData[
-                      I12,
+                      I13,
                       RuntimeData[
-                        I11,
+                        I12,
                         RuntimeData[
-                          I10,
-                          RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
-                            I6,
-                            RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
-                          ]]]]
+                          I11,
+                          RuntimeData[
+                            I10,
+                            RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
+                              I6,
+                              RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
+                            ]]]]
+                          ]
                         ]
                       ]
                     ]
@@ -975,27 +1758,109 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
-      func14: I14 => D,
-      func15: I15 => D,
-      func16: I16 => D,
-      func17: I17 => D,
-      func18: I18 => D,
+      func20: I20 => D,
       func19: I19 => D,
-      func20: I20 => D
-    ): D = ???
+      func18: I18 => D,
+      func17: I17 => D,
+      func16: I16 => D,
+      func15: I15 => D,
+      func14: I14 => D,
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build
+                                                                .appended(func15)
+                                                                .inputGHDMZSK(() =>
+                                                                  producter_build
+                                                                    .appended(func16)
+                                                                    .inputGHDMZSK(() =>
+                                                                      producter_build
+                                                                        .appended(func17)
+                                                                        .inputGHDMZSK(() =>
+                                                                          producter_build
+                                                                            .appended(func18)
+                                                                            .inputGHDMZSK(() =>
+                                                                              producter_build
+                                                                                .appended(func19)
+                                                                                .inputGHDMZSK(() =>
+                                                                                  producter_build
+                                                                                    .appended(func20)
+                                                                                    .inputGHDMZSK(() => producter_build.zero)
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data20.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -1047,31 +1912,34 @@ trait ADTPassedFunction {
   ](
     data21: ADTData[
       RuntimeData[
-        I20,
+        I21,
         RuntimeData[
-          I19,
+          I20,
           RuntimeData[
-            I18,
+            I19,
             RuntimeData[
-              I17,
+              I18,
               RuntimeData[
-                I16,
+                I17,
                 RuntimeData[
-                  I15,
+                  I16,
                   RuntimeData[
-                    I14,
+                    I15,
                     RuntimeData[
-                      I13,
+                      I14,
                       RuntimeData[
-                        I12,
+                        I13,
                         RuntimeData[
-                          I11,
+                          I12,
                           RuntimeData[
-                            I10,
-                            RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
-                              I6,
-                              RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
-                            ]]]]
+                            I11,
+                            RuntimeData[
+                              I10,
+                              RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
+                                I6,
+                                RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
+                              ]]]]
+                            ]
                           ]
                         ]
                       ]
@@ -1088,28 +1956,114 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
-      func14: I14 => D,
-      func15: I15 => D,
-      func16: I16 => D,
-      func17: I17 => D,
-      func18: I18 => D,
-      func19: I19 => D,
+      func21: I21 => D,
       func20: I20 => D,
-      func21: I21 => D
-    ): D = ???
+      func19: I19 => D,
+      func18: I18 => D,
+      func17: I17 => D,
+      func16: I16 => D,
+      func15: I15 => D,
+      func14: I14 => D,
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build
+                                                                .appended(func15)
+                                                                .inputGHDMZSK(() =>
+                                                                  producter_build
+                                                                    .appended(func16)
+                                                                    .inputGHDMZSK(() =>
+                                                                      producter_build
+                                                                        .appended(func17)
+                                                                        .inputGHDMZSK(() =>
+                                                                          producter_build
+                                                                            .appended(func18)
+                                                                            .inputGHDMZSK(() =>
+                                                                              producter_build
+                                                                                .appended(func19)
+                                                                                .inputGHDMZSK(() =>
+                                                                                  producter_build
+                                                                                    .appended(func20)
+                                                                                    .inputGHDMZSK(() =>
+                                                                                      producter_build
+                                                                                        .appended(func21)
+                                                                                        .inputGHDMZSK(() => producter_build.zero)
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data21.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 
@@ -1163,33 +2117,36 @@ trait ADTPassedFunction {
   ](
     data22: ADTData[
       RuntimeData[
-        I21,
+        I22,
         RuntimeData[
-          I20,
+          I21,
           RuntimeData[
-            I19,
+            I20,
             RuntimeData[
-              I18,
+              I19,
               RuntimeData[
-                I17,
+                I18,
                 RuntimeData[
-                  I16,
+                  I17,
                   RuntimeData[
-                    I15,
+                    I16,
                     RuntimeData[
-                      I14,
+                      I15,
                       RuntimeData[
-                        I13,
+                        I14,
                         RuntimeData[
-                          I12,
+                          I13,
                           RuntimeData[
-                            I11,
+                            I12,
                             RuntimeData[
-                              I10,
-                              RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
-                                I6,
-                                RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
-                              ]]]]
+                              I11,
+                              RuntimeData[
+                                I10,
+                                RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
+                                  I6,
+                                  RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
+                                ]]]]
+                              ]
                             ]
                           ]
                         ]
@@ -1207,29 +2164,119 @@ trait ADTPassedFunction {
   ) {
 
     def fold[D](
-      func1: I1 => D,
-      func2: I2 => D,
-      func3: I3 => D,
-      func4: I4 => D,
-      func5: I5 => D,
-      func6: I6 => D,
-      func7: I7 => D,
-      func8: I8 => D,
-      func9: I9 => D,
-      func10: I10 => D,
-      func11: I11 => D,
-      func12: I12 => D,
-      func13: I13 => D,
-      func14: I14 => D,
-      func15: I15 => D,
-      func16: I16 => D,
-      func17: I17 => D,
-      func18: I18 => D,
-      func19: I19 => D,
-      func20: I20 => D,
+      func22: I22 => D,
       func21: I21 => D,
-      func22: I22 => D
-    ): D = ???
+      func20: I20 => D,
+      func19: I19 => D,
+      func18: I18 => D,
+      func17: I17 => D,
+      func16: I16 => D,
+      func15: I15 => D,
+      func14: I14 => D,
+      func13: I13 => D,
+      func12: I12 => D,
+      func11: I11 => D,
+      func10: I10 => D,
+      func9: I9 => D,
+      func8: I8 => D,
+      func7: I7 => D,
+      func6: I6 => D,
+      func5: I5 => D,
+      func4: I4 => D,
+      func3: I3 => D,
+      func2: I2 => D,
+      func1: I1 => D
+    ): D = {
+      val func_link: ghdmzsk = producter_build
+        .appended(func1)
+        .inputGHDMZSK(() =>
+          producter_build
+            .appended(func2)
+            .inputGHDMZSK(() =>
+              producter_build
+                .appended(func3)
+                .inputGHDMZSK(() =>
+                  producter_build
+                    .appended(func4)
+                    .inputGHDMZSK(() =>
+                      producter_build
+                        .appended(func5)
+                        .inputGHDMZSK(() =>
+                          producter_build
+                            .appended(func6)
+                            .inputGHDMZSK(() =>
+                              producter_build
+                                .appended(func7)
+                                .inputGHDMZSK(() =>
+                                  producter_build
+                                    .appended(func8)
+                                    .inputGHDMZSK(() =>
+                                      producter_build
+                                        .appended(func9)
+                                        .inputGHDMZSK(() =>
+                                          producter_build
+                                            .appended(func10)
+                                            .inputGHDMZSK(() =>
+                                              producter_build
+                                                .appended(func11)
+                                                .inputGHDMZSK(() =>
+                                                  producter_build
+                                                    .appended(func12)
+                                                    .inputGHDMZSK(() =>
+                                                      producter_build
+                                                        .appended(func13)
+                                                        .inputGHDMZSK(() =>
+                                                          producter_build
+                                                            .appended(func14)
+                                                            .inputGHDMZSK(() =>
+                                                              producter_build
+                                                                .appended(func15)
+                                                                .inputGHDMZSK(() =>
+                                                                  producter_build
+                                                                    .appended(func16)
+                                                                    .inputGHDMZSK(() =>
+                                                                      producter_build
+                                                                        .appended(func17)
+                                                                        .inputGHDMZSK(() =>
+                                                                          producter_build
+                                                                            .appended(func18)
+                                                                            .inputGHDMZSK(() =>
+                                                                              producter_build
+                                                                                .appended(func19)
+                                                                                .inputGHDMZSK(() =>
+                                                                                  producter_build
+                                                                                    .appended(func20)
+                                                                                    .inputGHDMZSK(() =>
+                                                                                      producter_build
+                                                                                        .appended(func21)
+                                                                                        .inputGHDMZSK(() =>
+                                                                                          producter_build
+                                                                                            .appended(func22)
+                                                                                            .inputGHDMZSK(() => producter_build.zero)
+                                                                                        )
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+      TypeAdtGetter.getFromFunction(data22.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
   }
 

@@ -1,6 +1,6 @@
 package net.scalax.simple.adt.codegen
 
-object CodePre4:
+object ADTPassedFunctionCodegen:
 
   def repeatBlank(count: Int)(text: Int => String): String = {
     repeat(count)(text)("")
@@ -13,15 +13,13 @@ object CodePre4:
 
   def repeatDot(count: Int)(text: Int => String): String = repeat(count)(text)(','.toString)
 
-  /*def adtFunnctionDataType(max: Int)(i: Int): String =
-    if i <= max then s"RuntimeData[Adt.Context[ParamType, I$i, Poly$i], ${adtFunnctionDataType(max)(i + 1)}]"
-    else "RuntimeZero"*/
-
   def adtDataType(max: Int)(i: Int): String = if i < max then s"RuntimeData[I${max - i}, ${adtDataType(max)(i + 1)}]" else "RuntimeZero"
 
-  def repeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: I$u1 => D")
+  def repeatParameter(i: Int): String = repeatDot(i)(u1 => s"func${i - u1 + 1}: I${i - u1 + 1} => D")
 
-  // def lawRepeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: Adt.Context[ParamType, I$u1, Poly$u1] => D")
+  def lawRepeatParameter(max: Int)(i: Int): String =
+    if (i < max) s"producter_build.appended(func${i + 1}).inputGHDMZSK(() => ${lawRepeatParameter(max)(i + 1)})"
+    else "producter_build.zero"
 
   val text4: String = s"""
 package net.scalax.simple.adt
@@ -31,17 +29,22 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
 import Adt.{Status => ADTStatus}
 import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
+import builder.{coproducter, producter_build}
 
 trait ADTPassedFunction {
 
   ${repeatBlank(22)(i =>
                           s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ${repeatDot(i)(u1 =>
                               s"Poly$u1"
-                            )}, SImpl <: ADTStatus](data$i: ADTData[${adtDataType(i)(
+                            )}, SImpl <: ADTStatus](data$i: ADTData[${adtDataType(i + 1)(
                               1
                             )}, SImpl]) {
 
-    def fold[D](${repeatParameter(i)}): D = ???
+    def fold[D](${repeatParameter(i)}): D = {
+      val func_link: ghdmzsk = ${lawRepeatParameter(i)(0)}
+
+      TypeAdtGetter.getFromFunction(data$i.toGHDMZSK, func_link).asInstanceOf[D]
+    }
 
 }
 
@@ -51,4 +54,4 @@ trait ADTPassedFunction {
 }
 """.stripMargin
 
-end CodePre4
+end ADTPassedFunctionCodegen
