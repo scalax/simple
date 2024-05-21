@@ -9,21 +9,16 @@ import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 import builder.{coproducter, producter_build, DataTaker}
 
 trait TypeAdtAliasModelUnapply {
-
   object CoProduct1 {
-    def unapply[I1, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options2GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
-
-      dataInstance match {
-        case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
-        case _             => None
-      }
+    def unapply[I1, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = data.toGHDMZSK match {
+      case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
+      case _             => None
     }
   }
 
   object CoProduct2 {
     def unapply[I1, I2, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeNat]], S]): Option[I2] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options3GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options1GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I2])
@@ -34,7 +29,7 @@ trait TypeAdtAliasModelUnapply {
 
   object CoProduct3 {
     def unapply[I1, I2, I3, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeNat]]], S]): Option[I3] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options4GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options2GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I3])
@@ -47,7 +42,7 @@ trait TypeAdtAliasModelUnapply {
     def unapply[I1, I2, I3, I4, S <: ADTStatus](
       data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeNat]]]], S]
     ): Option[I4] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options5GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options3GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I4])
@@ -60,7 +55,7 @@ trait TypeAdtAliasModelUnapply {
     def unapply[I1, I2, I3, I4, I5, S <: ADTStatus](
       data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeNat]]]]], S]
     ): Option[I5] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options6GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options4GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I5])
@@ -73,7 +68,7 @@ trait TypeAdtAliasModelUnapply {
     def unapply[I1, I2, I3, I4, I5, I6, S <: ADTStatus](
       data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeNat]]]]]], S]
     ): Option[I6] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options7GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options5GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I6])
@@ -89,7 +84,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I7] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options8GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options6GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I7])
@@ -105,7 +100,7 @@ trait TypeAdtAliasModelUnapply {
         RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeNat]]]]]]]
       ], S]
     ): Option[I8] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options9GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options7GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I8])
@@ -124,7 +119,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I9] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options10GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options8GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I9])
@@ -146,7 +141,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I10] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options11GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options9GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I10])
@@ -171,7 +166,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I11] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options12GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options10GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I11])
@@ -199,7 +194,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I12] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options13GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options11GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I12])
@@ -230,7 +225,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I13] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options14GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options12GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I13])
@@ -264,7 +259,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I14] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options15GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options13GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I14])
@@ -301,7 +296,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I15] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options16GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options14GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I15])
@@ -341,7 +336,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I16] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options17GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options15GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I16])
@@ -384,7 +379,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I17] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options18GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options16GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I17])
@@ -433,7 +428,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I18] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options19GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options17GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I18])
@@ -485,7 +480,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I19] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options20GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options18GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I19])
@@ -540,7 +535,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I20] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options21GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options19GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I20])
@@ -598,7 +593,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I21] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options22GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options20GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I21])
@@ -659,7 +654,7 @@ trait TypeAdtAliasModelUnapply {
         S
       ]
     ): Option[I22] = {
-      val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options23GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+      val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options21GHDMZSK)
 
       dataInstance match {
         case dt: DataTaker => Some(dt.data.asInstanceOf[I22])

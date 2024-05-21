@@ -16,10 +16,17 @@ import builder.{coproducter, producter_build, DataTaker}
 @TypeParameters22(i: Int) = { @for(u <- 1 to i) { @if(u > 1) { , } I@{u} } }
 
 trait TypeAdtAliasModelUnapply {
-    @for(i <- 1 to 22) {
+    object CoProduct1 {
+        def unapply[I1, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = data.toGHDMZSK match {
+            case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
+            case _ => None
+        }
+    }
+
+    @for(i <- 2 to 22) {
         object CoProduct@{i} {
             def unapply[@TypeParameters22(i), S <: ADTStatus](data: ADTData[@ADT22Parameter(0, i), S]): Option[I@{i}] = {
-                val dataInstance: ghdmzsk = impl.TypeAdtAliasModelUnapplyGhdmzsk.options@{i + 1}GHDMZSK.inputGHDMZSK(() => data.toGHDMZSK)
+                val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options@{i - 1}GHDMZSK)
 
                 dataInstance match {
                   case dt: DataTaker => Some(dt.data.asInstanceOf[I@{i}])

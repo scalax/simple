@@ -48,8 +48,12 @@ trait TypeAdtRuntimeApply {
           s"def option$i2(iData: I$i2): ADTData[$dataTypeString, ADTStatus.Passed.type] = ${optionString(i2 - 1)}"
         }('\n'.toString)}
 
-        override protected def cv[ParamType, S <: ADTStatus](a: ParamType, b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): ADTData[$dataTypeString, ADTStatus.Passed.type] = {
-          new FunctionApply.extraFunctionAdt$i1(b)(a)
+        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): Adt.Status.Passed.extra$i1[ParamType, ${repeat(
+          i1
+        )(i3 => s"I$i3")(','.toString)}, ${repeat(i1)(i3 => "DefaultAdtContext.type")(','.toString)}, ADTStatus.Passed.type] = {
+          new Adt.Status.Passed.extra$i1(new Adt.Status.Passed.extra$i1(b).fold(${repeat(i1)(i3 => s"t => option$i3(t.input(a))")(
+          ','.toString
+        )}))
         }
       }
     """
