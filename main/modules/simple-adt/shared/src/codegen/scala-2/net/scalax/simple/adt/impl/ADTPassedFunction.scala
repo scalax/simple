@@ -8,163 +8,55 @@ import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 
 trait ADTPassedFunction {
 
-  implicit class extra1[ParamType, I1, Poly1, SImpl <: ADTStatus](
-    data1: ADTData[RuntimeData[Adt.Context[ParamType, I1, Poly1], RuntimeZero], SImpl]
-  ) {
+  implicit class extra1[ParamType, I1, Poly1, SImpl <: ADTStatus](data1: ADTData[RuntimeZero, SImpl]) {
 
     def fold[D](func1: I1 => D): D = ???
 
-    def lawFold[D](func1: Adt.Context[ParamType, I1, Poly1] => D): D = ???
-
   }
 
-  implicit class extra2[ParamType, I1, I2, Poly1, Poly2, SImpl <: ADTStatus](
-    data2: ADTData[RuntimeData[Adt.Context[ParamType, I1, Poly1], RuntimeData[Adt.Context[ParamType, I2, Poly2], RuntimeZero]], SImpl]
-  ) {
+  implicit class extra2[ParamType, I1, I2, Poly1, Poly2, SImpl <: ADTStatus](data2: ADTData[RuntimeData[I1, RuntimeZero], SImpl]) {
 
     def fold[D](func1: I1 => D, func2: I2 => D): D = ???
-
-    def lawFold[D](func1: Adt.Context[ParamType, I1, Poly1] => D, func2: Adt.Context[ParamType, I2, Poly2] => D): D = ???
 
   }
 
   implicit class extra3[ParamType, I1, I2, I3, Poly1, Poly2, Poly3, SImpl <: ADTStatus](
-    data3: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[Adt.Context[ParamType, I2, Poly2], RuntimeData[Adt.Context[ParamType, I3, Poly3], RuntimeZero]]
-      ],
-      SImpl
-    ]
+    data3: ADTData[RuntimeData[I2, RuntimeData[I1, RuntimeZero]], SImpl]
   ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D): D = ???
 
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D
-    ): D = ???
-
   }
 
   implicit class extra4[ParamType, I1, I2, I3, I4, Poly1, Poly2, Poly3, Poly4, SImpl <: ADTStatus](
-    data4: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[Adt.Context[ParamType, I3, Poly3], RuntimeData[Adt.Context[ParamType, I4, Poly4], RuntimeZero]]
-        ]
-      ],
-      SImpl
-    ]
+    data4: ADTData[RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]], SImpl]
   ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D): D = ???
 
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D
-    ): D = ???
-
   }
 
   implicit class extra5[ParamType, I1, I2, I3, I4, I5, Poly1, Poly2, Poly3, Poly4, Poly5, SImpl <: ADTStatus](
-    data5: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[Adt.Context[ParamType, I4, Poly4], RuntimeData[Adt.Context[ParamType, I5, Poly5], RuntimeZero]]
-          ]
-        ]
-      ],
-      SImpl
-    ]
+    data5: ADTData[RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]], SImpl]
   ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D): D = ???
 
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D
-    ): D = ???
-
   }
 
   implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, Poly1, Poly2, Poly3, Poly4, Poly5, Poly6, SImpl <: ADTStatus](
-    data6: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[Adt.Context[ParamType, I5, Poly5], RuntimeData[Adt.Context[ParamType, I6, Poly6], RuntimeZero]]
-            ]
-          ]
-        ]
-      ],
-      SImpl
-    ]
+    data6: ADTData[RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]], SImpl]
   ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D): D = ???
 
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D
-    ): D = ???
-
   }
 
   implicit class extra7[ParamType, I1, I2, I3, I4, I5, I6, I7, Poly1, Poly2, Poly3, Poly4, Poly5, Poly6, Poly7, SImpl <: ADTStatus](
-    data7: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[Adt.Context[ParamType, I6, Poly6], RuntimeData[Adt.Context[ParamType, I7, Poly7], RuntimeZero]]
-              ]
-            ]
-          ]
-        ]
-      ],
-      SImpl
-    ]
+    data7: ADTData[RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]], SImpl]
   ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D, func7: I7 => D): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D
-    ): D = ???
 
   }
 
@@ -189,25 +81,7 @@ trait ADTPassedFunction {
     SImpl <: ADTStatus
   ](
     data8: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[Adt.Context[ParamType, I7, Poly7], RuntimeData[Adt.Context[ParamType, I8, Poly8], RuntimeZero]]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
+      RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]],
       SImpl
     ]
   ) {
@@ -221,17 +95,6 @@ trait ADTPassedFunction {
       func6: I6 => D,
       func7: I7 => D,
       func8: I8 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D
     ): D = ???
 
   }
@@ -258,31 +121,10 @@ trait ADTPassedFunction {
     Poly9,
     SImpl <: ADTStatus
   ](
-    data9: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[Adt.Context[ParamType, I8, Poly8], RuntimeData[Adt.Context[ParamType, I9, Poly9], RuntimeZero]]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
-      SImpl
-    ]
+    data9: ADTData[RuntimeData[
+      I8,
+      RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
+    ], SImpl]
   ) {
 
     def fold[D](
@@ -295,18 +137,6 @@ trait ADTPassedFunction {
       func7: I7 => D,
       func8: I8 => D,
       func9: I9 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D
     ): D = ???
 
   }
@@ -336,31 +166,10 @@ trait ADTPassedFunction {
     SImpl <: ADTStatus
   ](
     data10: ADTData[
-      RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[Adt.Context[ParamType, I9, Poly9], RuntimeData[Adt.Context[ParamType, I10, Poly10], RuntimeZero]]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
-      ],
+      RuntimeData[I9, RuntimeData[
+        I8,
+        RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
+      ]],
       SImpl
     ]
   ) {
@@ -376,19 +185,6 @@ trait ADTPassedFunction {
       func8: I8 => D,
       func9: I9 => D,
       func10: I10 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D
     ): D = ???
 
   }
@@ -421,32 +217,11 @@ trait ADTPassedFunction {
   ](
     data11: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
-        RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[Adt.Context[ParamType, I10, Poly10], RuntimeData[Adt.Context[ParamType, I11, Poly11], RuntimeZero]]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
+        I10,
+        RuntimeData[I9, RuntimeData[
+          I8,
+          RuntimeData[I7, RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]]
+        ]]
       ],
       SImpl
     ]
@@ -464,20 +239,6 @@ trait ADTPassedFunction {
       func9: I9 => D,
       func10: I10 => D,
       func11: I11 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D
     ): D = ???
 
   }
@@ -512,34 +273,13 @@ trait ADTPassedFunction {
   ](
     data12: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I11,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
-          RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[Adt.Context[ParamType, I11, Poly11], RuntimeData[Adt.Context[ParamType, I12, Poly12], RuntimeZero]]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
+          I10,
+          RuntimeData[I9, RuntimeData[I8, RuntimeData[
+            I7,
+            RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+          ]]]
         ]
       ],
       SImpl
@@ -559,21 +299,6 @@ trait ADTPassedFunction {
       func10: I10 => D,
       func11: I11 => D,
       func12: I12 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D
     ): D = ???
 
   }
@@ -610,36 +335,15 @@ trait ADTPassedFunction {
   ](
     data13: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I12,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I11,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
-            RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[Adt.Context[ParamType, I12, Poly12], RuntimeData[Adt.Context[ParamType, I13, Poly13], RuntimeZero]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
+            I10,
+            RuntimeData[I9, RuntimeData[I8, RuntimeData[
+              I7,
+              RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+            ]]]
           ]
         ]
       ],
@@ -661,22 +365,6 @@ trait ADTPassedFunction {
       func11: I11 => D,
       func12: I12 => D,
       func13: I13 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D
     ): D = ???
 
   }
@@ -715,38 +403,17 @@ trait ADTPassedFunction {
   ](
     data14: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I13,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I12,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I11,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
-              RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[Adt.Context[ParamType, I12, Poly12], RuntimeData[
-                              Adt.Context[ParamType, I13, Poly13],
-                              RuntimeData[Adt.Context[ParamType, I14, Poly14], RuntimeZero]
-                            ]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
+              I10,
+              RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                I7,
+                RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+              ]]]
             ]
           ]
         ]
@@ -770,23 +437,6 @@ trait ADTPassedFunction {
       func12: I12 => D,
       func13: I13 => D,
       func14: I14 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D
     ): D = ???
 
   }
@@ -827,40 +477,19 @@ trait ADTPassedFunction {
   ](
     data15: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I14,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I13,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I12,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I11,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
-                RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[Adt.Context[ParamType, I13, Poly13], RuntimeData[
-                                Adt.Context[ParamType, I14, Poly14],
-                                RuntimeData[Adt.Context[ParamType, I15, Poly15], RuntimeZero]
-                              ]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
+                I10,
+                RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                  I7,
+                  RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                ]]]
               ]
             ]
           ]
@@ -886,24 +515,6 @@ trait ADTPassedFunction {
       func13: I13 => D,
       func14: I14 => D,
       func15: I15 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D
     ): D = ???
 
   }
@@ -946,42 +557,21 @@ trait ADTPassedFunction {
   ](
     data16: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I15,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I14,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I13,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I12,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
+                I11,
                 RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
-                  RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[
-                                Adt.Context[ParamType, I13, Poly13],
-                                RuntimeData[Adt.Context[ParamType, I14, Poly14], RuntimeData[
-                                  Adt.Context[ParamType, I15, Poly15],
-                                  RuntimeData[Adt.Context[ParamType, I16, Poly16], RuntimeZero]
-                                ]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
+                  I10,
+                  RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                    I7,
+                    RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                  ]]]
                 ]
               ]
             ]
@@ -1009,25 +599,6 @@ trait ADTPassedFunction {
       func14: I14 => D,
       func15: I15 => D,
       func16: I16 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D,
-      func16: Adt.Context[ParamType, I16, Poly16] => D
     ): D = ???
 
   }
@@ -1072,44 +643,23 @@ trait ADTPassedFunction {
   ](
     data17: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I16,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I15,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I14,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I13,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
+                I12,
                 RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
+                  I11,
                   RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
-                    RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[
-                                Adt.Context[ParamType, I13, Poly13],
-                                RuntimeData[
-                                  Adt.Context[ParamType, I14, Poly14],
-                                  RuntimeData[Adt.Context[ParamType, I15, Poly15], RuntimeData[
-                                    Adt.Context[ParamType, I16, Poly16],
-                                    RuntimeData[Adt.Context[ParamType, I17, Poly17], RuntimeZero]
-                                  ]]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
+                    I10,
+                    RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                      I7,
+                      RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                    ]]]
                   ]
                 ]
               ]
@@ -1139,26 +689,6 @@ trait ADTPassedFunction {
       func15: I15 => D,
       func16: I16 => D,
       func17: I17 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D,
-      func16: Adt.Context[ParamType, I16, Poly16] => D,
-      func17: Adt.Context[ParamType, I17, Poly17] => D
     ): D = ???
 
   }
@@ -1205,46 +735,25 @@ trait ADTPassedFunction {
   ](
     data18: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I17,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I16,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I15,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I14,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
+                I13,
                 RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
+                  I12,
                   RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
+                    I11,
                     RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
-                      RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[
-                                Adt.Context[ParamType, I13, Poly13],
-                                RuntimeData[
-                                  Adt.Context[ParamType, I14, Poly14],
-                                  RuntimeData[
-                                    Adt.Context[ParamType, I15, Poly15],
-                                    RuntimeData[Adt.Context[ParamType, I16, Poly16], RuntimeData[
-                                      Adt.Context[ParamType, I17, Poly17],
-                                      RuntimeData[Adt.Context[ParamType, I18, Poly18], RuntimeZero]
-                                    ]]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
+                      I10,
+                      RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                        I7,
+                        RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                      ]]]
                     ]
                   ]
                 ]
@@ -1276,27 +785,6 @@ trait ADTPassedFunction {
       func16: I16 => D,
       func17: I17 => D,
       func18: I18 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D,
-      func16: Adt.Context[ParamType, I16, Poly16] => D,
-      func17: Adt.Context[ParamType, I17, Poly17] => D,
-      func18: Adt.Context[ParamType, I18, Poly18] => D
     ): D = ???
 
   }
@@ -1345,48 +833,27 @@ trait ADTPassedFunction {
   ](
     data19: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I18,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I17,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I16,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I15,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
+                I14,
                 RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
+                  I13,
                   RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
+                    I12,
                     RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
+                      I11,
                       RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
-                        RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[
-                                Adt.Context[ParamType, I13, Poly13],
-                                RuntimeData[
-                                  Adt.Context[ParamType, I14, Poly14],
-                                  RuntimeData[
-                                    Adt.Context[ParamType, I15, Poly15],
-                                    RuntimeData[
-                                      Adt.Context[ParamType, I16, Poly16],
-                                      RuntimeData[Adt.Context[ParamType, I17, Poly17], RuntimeData[
-                                        Adt.Context[ParamType, I18, Poly18],
-                                        RuntimeData[Adt.Context[ParamType, I19, Poly19], RuntimeZero]
-                                      ]]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
+                        I10,
+                        RuntimeData[I9, RuntimeData[I8, RuntimeData[
+                          I7,
+                          RuntimeData[I6, RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]]
+                        ]]]
                       ]
                     ]
                   ]
@@ -1420,28 +887,6 @@ trait ADTPassedFunction {
       func17: I17 => D,
       func18: I18 => D,
       func19: I19 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D,
-      func16: Adt.Context[ParamType, I16, Poly16] => D,
-      func17: Adt.Context[ParamType, I17, Poly17] => D,
-      func18: Adt.Context[ParamType, I18, Poly18] => D,
-      func19: Adt.Context[ParamType, I19, Poly19] => D
     ): D = ???
 
   }
@@ -1492,50 +937,29 @@ trait ADTPassedFunction {
   ](
     data20: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I19,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I18,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I17,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I16,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
+                I15,
                 RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
+                  I14,
                   RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
+                    I13,
                     RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
+                      I12,
                       RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
+                        I11,
                         RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
-                          RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[
-                                Adt.Context[ParamType, I13, Poly13],
-                                RuntimeData[
-                                  Adt.Context[ParamType, I14, Poly14],
-                                  RuntimeData[
-                                    Adt.Context[ParamType, I15, Poly15],
-                                    RuntimeData[
-                                      Adt.Context[ParamType, I16, Poly16],
-                                      RuntimeData[
-                                        Adt.Context[ParamType, I17, Poly17],
-                                        RuntimeData[Adt.Context[ParamType, I18, Poly18], RuntimeData[
-                                          Adt.Context[ParamType, I19, Poly19],
-                                          RuntimeData[Adt.Context[ParamType, I20, Poly20], RuntimeZero]
-                                        ]]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
+                          I10,
+                          RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
+                            I6,
+                            RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
+                          ]]]]
                         ]
                       ]
                     ]
@@ -1571,29 +995,6 @@ trait ADTPassedFunction {
       func18: I18 => D,
       func19: I19 => D,
       func20: I20 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D,
-      func16: Adt.Context[ParamType, I16, Poly16] => D,
-      func17: Adt.Context[ParamType, I17, Poly17] => D,
-      func18: Adt.Context[ParamType, I18, Poly18] => D,
-      func19: Adt.Context[ParamType, I19, Poly19] => D,
-      func20: Adt.Context[ParamType, I20, Poly20] => D
     ): D = ???
 
   }
@@ -1646,52 +1047,31 @@ trait ADTPassedFunction {
   ](
     data21: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I20,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I19,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I18,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I17,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
+                I16,
                 RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
+                  I15,
                   RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
+                    I14,
                     RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
+                      I13,
                       RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
+                        I12,
                         RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
+                          I11,
                           RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
-                            RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[
-                                Adt.Context[ParamType, I13, Poly13],
-                                RuntimeData[
-                                  Adt.Context[ParamType, I14, Poly14],
-                                  RuntimeData[
-                                    Adt.Context[ParamType, I15, Poly15],
-                                    RuntimeData[
-                                      Adt.Context[ParamType, I16, Poly16],
-                                      RuntimeData[
-                                        Adt.Context[ParamType, I17, Poly17],
-                                        RuntimeData[
-                                          Adt.Context[ParamType, I18, Poly18],
-                                          RuntimeData[Adt.Context[ParamType, I19, Poly19], RuntimeData[
-                                            Adt.Context[ParamType, I20, Poly20],
-                                            RuntimeData[Adt.Context[ParamType, I21, Poly21], RuntimeZero]
-                                          ]]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
-                            ]
+                            I10,
+                            RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
+                              I6,
+                              RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
+                            ]]]]
                           ]
                         ]
                       ]
@@ -1729,30 +1109,6 @@ trait ADTPassedFunction {
       func19: I19 => D,
       func20: I20 => D,
       func21: I21 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D,
-      func16: Adt.Context[ParamType, I16, Poly16] => D,
-      func17: Adt.Context[ParamType, I17, Poly17] => D,
-      func18: Adt.Context[ParamType, I18, Poly18] => D,
-      func19: Adt.Context[ParamType, I19, Poly19] => D,
-      func20: Adt.Context[ParamType, I20, Poly20] => D,
-      func21: Adt.Context[ParamType, I21, Poly21] => D
     ): D = ???
 
   }
@@ -1807,54 +1163,33 @@ trait ADTPassedFunction {
   ](
     data22: ADTData[
       RuntimeData[
-        Adt.Context[ParamType, I1, Poly1],
+        I21,
         RuntimeData[
-          Adt.Context[ParamType, I2, Poly2],
+          I20,
           RuntimeData[
-            Adt.Context[ParamType, I3, Poly3],
+            I19,
             RuntimeData[
-              Adt.Context[ParamType, I4, Poly4],
+              I18,
               RuntimeData[
-                Adt.Context[ParamType, I5, Poly5],
+                I17,
                 RuntimeData[
-                  Adt.Context[ParamType, I6, Poly6],
+                  I16,
                   RuntimeData[
-                    Adt.Context[ParamType, I7, Poly7],
+                    I15,
                     RuntimeData[
-                      Adt.Context[ParamType, I8, Poly8],
+                      I14,
                       RuntimeData[
-                        Adt.Context[ParamType, I9, Poly9],
+                        I13,
                         RuntimeData[
-                          Adt.Context[ParamType, I10, Poly10],
+                          I12,
                           RuntimeData[
-                            Adt.Context[ParamType, I11, Poly11],
+                            I11,
                             RuntimeData[
-                              Adt.Context[ParamType, I12, Poly12],
-                              RuntimeData[
-                                Adt.Context[ParamType, I13, Poly13],
-                                RuntimeData[
-                                  Adt.Context[ParamType, I14, Poly14],
-                                  RuntimeData[
-                                    Adt.Context[ParamType, I15, Poly15],
-                                    RuntimeData[
-                                      Adt.Context[ParamType, I16, Poly16],
-                                      RuntimeData[
-                                        Adt.Context[ParamType, I17, Poly17],
-                                        RuntimeData[
-                                          Adt.Context[ParamType, I18, Poly18],
-                                          RuntimeData[
-                                            Adt.Context[ParamType, I19, Poly19],
-                                            RuntimeData[Adt.Context[ParamType, I20, Poly20], RuntimeData[
-                                              Adt.Context[ParamType, I21, Poly21],
-                                              RuntimeData[Adt.Context[ParamType, I22, Poly22], RuntimeZero]
-                                            ]]
-                                          ]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
-                                ]
-                              ]
+                              I10,
+                              RuntimeData[I9, RuntimeData[I8, RuntimeData[I7, RuntimeData[
+                                I6,
+                                RuntimeData[I5, RuntimeData[I4, RuntimeData[I3, RuntimeData[I2, RuntimeData[I1, RuntimeZero]]]]]
+                              ]]]]
                             ]
                           ]
                         ]
@@ -1894,31 +1229,6 @@ trait ADTPassedFunction {
       func20: I20 => D,
       func21: I21 => D,
       func22: I22 => D
-    ): D = ???
-
-    def lawFold[D](
-      func1: Adt.Context[ParamType, I1, Poly1] => D,
-      func2: Adt.Context[ParamType, I2, Poly2] => D,
-      func3: Adt.Context[ParamType, I3, Poly3] => D,
-      func4: Adt.Context[ParamType, I4, Poly4] => D,
-      func5: Adt.Context[ParamType, I5, Poly5] => D,
-      func6: Adt.Context[ParamType, I6, Poly6] => D,
-      func7: Adt.Context[ParamType, I7, Poly7] => D,
-      func8: Adt.Context[ParamType, I8, Poly8] => D,
-      func9: Adt.Context[ParamType, I9, Poly9] => D,
-      func10: Adt.Context[ParamType, I10, Poly10] => D,
-      func11: Adt.Context[ParamType, I11, Poly11] => D,
-      func12: Adt.Context[ParamType, I12, Poly12] => D,
-      func13: Adt.Context[ParamType, I13, Poly13] => D,
-      func14: Adt.Context[ParamType, I14, Poly14] => D,
-      func15: Adt.Context[ParamType, I15, Poly15] => D,
-      func16: Adt.Context[ParamType, I16, Poly16] => D,
-      func17: Adt.Context[ParamType, I17, Poly17] => D,
-      func18: Adt.Context[ParamType, I18, Poly18] => D,
-      func19: Adt.Context[ParamType, I19, Poly19] => D,
-      func20: Adt.Context[ParamType, I20, Poly20] => D,
-      func21: Adt.Context[ParamType, I21, Poly21] => D,
-      func22: Adt.Context[ParamType, I22, Poly22] => D
     ): D = ???
 
   }

@@ -2,7 +2,6 @@ package net.scalax.simple
 package adt
 package impl
 
-import net.scalax.simple.adt.nat.AdtNat
 import net.scalax.simple.adt.temp.ADTData
 
 object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel with TypeAdtAliasModelUnapply {

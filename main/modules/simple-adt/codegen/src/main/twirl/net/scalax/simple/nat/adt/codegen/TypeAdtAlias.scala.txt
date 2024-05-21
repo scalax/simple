@@ -11,7 +11,7 @@ import Adt.{Status => ADTStatus}
 }
 
 @ADT22ParameterSimple(min: Int, max: Int) = {
-    @if(min < max) { I@{min}, @ADT22ParameterSimple(min + 1, max)] } else { RuntimeZero }
+    @if(min < max) { RuntimeData[I@{min}, @ADT22ParameterSimple(min + 1, max)] } else { RuntimeZero }
 }
 
 @TypeParameter22(i: Int) = {
@@ -21,6 +21,7 @@ import Adt.{Status => ADTStatus}
 trait TypeAdtAlias {
     @for(i <- 1 to 22) {
         type CoProducts@{i}[A, @TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ADTStatus.Passed.type with ADTFunctionImplicitFetch.type]
-        type CoProductsX@{i}[A, ST <: ADTStatus, @TypeParameter22(i)] = TypeAdtApply[A, @ADT22Parameter(1, i + 1), @ADT22ParameterSimple(1, i + 1), ST with ADTFunctionImplicitFetch.type]
+
+        type CoProductsX@{i}[A, ST <: ADTStatus, @TypeParameter22(i)] = TypeAdtApply[A, @ADT22Parameter(1, i + 1), ST with ADTFunctionImplicitFetch.type]
     }
 }

@@ -17,7 +17,7 @@ object ScalaAllCodegenExec:
     locally {
       val filePath = writePath.resolve("TypeAdtAlias.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasScalaAll().body
+        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAlias().body
         writer.println(linerContent)
       }
     }
@@ -33,7 +33,7 @@ object ScalaAllCodegenExec:
     locally {
       val filePath = writePath.resolve("TypeAdtAliasModel.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasModelScalaAll().body
+        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtAliasModel().body
         writer.println(linerContent)
       }
     }

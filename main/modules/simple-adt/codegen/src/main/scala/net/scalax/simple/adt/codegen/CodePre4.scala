@@ -13,15 +13,15 @@ object CodePre4:
 
   def repeatDot(count: Int)(text: Int => String): String = repeat(count)(text)(','.toString)
 
-  def adtFunnctionDataType(max: Int)(i: Int): String =
+  /*def adtFunnctionDataType(max: Int)(i: Int): String =
     if i <= max then s"RuntimeData[Adt.Context[ParamType, I$i, Poly$i], ${adtFunnctionDataType(max)(i + 1)}]"
-    else "RuntimeZero"
+    else "RuntimeZero"*/
 
   def adtDataType(max: Int)(i: Int): String = if i < max then s"RuntimeData[I${max - i}, ${adtDataType(max)(i + 1)}]" else "RuntimeZero"
 
   def repeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: I$u1 => D")
 
-  def lawRepeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: Adt.Context[ParamType, I$u1, Poly$u1] => D")
+  // def lawRepeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: Adt.Context[ParamType, I$u1, Poly$u1] => D")
 
   val text4: String = s"""
 package net.scalax.simple.adt
@@ -37,13 +37,11 @@ trait ADTPassedFunction {
   ${repeatBlank(22)(i =>
                           s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ${repeatDot(i)(u1 =>
                               s"Poly$u1"
-                            )}, SImpl <: ADTStatus](data$i: ADTData[${adtFunnctionDataType(i)(
+                            )}, SImpl <: ADTStatus](data$i: ADTData[${adtDataType(i)(
                               1
                             )}, SImpl]) {
 
     def fold[D](${repeatParameter(i)}): D = ???
-
-    def lawFold[D](${lawRepeatParameter(i)}): D = ???
 
 }
 
