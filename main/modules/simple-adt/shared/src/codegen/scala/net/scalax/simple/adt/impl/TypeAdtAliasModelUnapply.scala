@@ -10,9 +10,13 @@ import builder.{coproducter, producter_build, DataTaker}
 
 trait TypeAdtAliasModelUnapply {
   object CoProduct1 {
-    def unapply[I1, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = data.toGHDMZSK match {
-      case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
-      case _             => None
+    def unapply[I1, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = {
+      println(data.toGHDMZSK)
+
+      data.toGHDMZSK match {
+        case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
+        case _             => None
+      }
     }
   }
 

@@ -21,6 +21,8 @@ object ADTPassedFunctionCodegen:
     if (i < max) s"producter_build.appended(func${i + 1}).inputGHDMZSK(() => ${lawRepeatParameter(max)(i + 1)})"
     else "producter_build.zero"
 
+  def typeStr(count: Int) = s"ADTData[${adtDataType(count)(1)}, SImpl]"
+
   val text4: String = s"""
 package net.scalax.simple.adt
 package impl
@@ -36,9 +38,9 @@ trait ADTPassedFunction {
   ${repeatBlank(22)(i =>
                           s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ${repeatDot(i)(u1 =>
                               s"Poly$u1"
-                            )}, SImpl <: ADTStatus](data$i: ADTData[${adtDataType(i + 1)(
-                              1
-                            )}, SImpl]) {
+                            )}, SImpl <: ADTStatus](data$i: ${typeStr(i + 1)}) extends ${typeStr(i + 1)} {
+
+    override def toGHDMZSK: ghdmzsk = data$i.toGHDMZSK
 
     def fold[D](${repeatParameter(i)}): D = {
       val func_link: ghdmzsk = ${lawRepeatParameter(i)(0)}

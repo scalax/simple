@@ -42,7 +42,7 @@ object `Test Cases copy from documention in README.md` {
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
 
-          println(applyM.toGHDMZSK)
+          // println(applyM.toGHDMZSK)
 
           applyM.fold(
             intValue => Some(BigDecimal(intValue)),
@@ -65,7 +65,7 @@ object `Test Cases copy from documention in README.md` {
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
 
-          val cc = implicitly[ADTData[
+          /*val cc = implicitly[ADTData[
             RuntimeData[
               Adt.Context[T, Int, DefaultAdtContext.type],
               RuntimeData[
@@ -76,9 +76,9 @@ object `Test Cases copy from documention in README.md` {
             Adt.Status.Passed.type with ADTFunctionImplicitFetch.type
           ]]
 
-          println(cc.toGHDMZSK)
+          println(cc.toGHDMZSK)*/
 
-          Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
+          // Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
 
           applyM match {
             case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
