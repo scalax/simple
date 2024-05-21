@@ -52,21 +52,20 @@ object `Test Cases copy from documention in README.md` {
         assert(inputAdtDataSimple("error number") == None)
       }
 
-      /*{
+      {
         // simple-adt match case style
         import net.scalax.simple.adt.{TypeAdt => Adt}
         import scala.util.Try
 
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
+
           Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
+
           applyM match {
             case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
             case Adt.CoProduct2(strValue)    => Try(BigDecimal(strValue)).toOption
             case Adt.CoProduct3(doubleValue) => Some(BigDecimal(doubleValue))
-            case Adt.CoProduct4(empty)       => empty.matchErrorAndThrowException // Keep safe for API changed
-            case Adt.CoProduct5(empty)       => empty.matchErrorAndThrowException
-            case Adt.CoProduct6(empty)       => empty.matchErrorAndThrowException
           }
         }
 
@@ -74,7 +73,7 @@ object `Test Cases copy from documention in README.md` {
         assert(inputAdtDataSimple("6").get == BigDecimal("6"))
         assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
         assert(inputAdtDataSimple("error number") == None)
-      }*/
+      }
     }
   }
 

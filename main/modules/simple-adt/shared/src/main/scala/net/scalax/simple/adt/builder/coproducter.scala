@@ -20,6 +20,10 @@ object coproducter {
     }
   }
 
+  val failedOrOnlyTaker: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = other()
+  }
+
   val appender: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(other: () => ghdmzsk): ghdmzsk = other().inputGHDMZSK(tail)
