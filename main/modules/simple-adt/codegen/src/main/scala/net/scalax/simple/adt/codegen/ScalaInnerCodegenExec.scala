@@ -19,7 +19,7 @@ object ScalaInnerCodegenExec:
         val filePath = writePath.resolve("ABC.scala")
         Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
           case writer =>
-            val linerContent = net.scalax.simple.nat.adt.codegen.txt.ADTPassedFunction().body
+            val linerContent = "package net.scalax.simple.nat.not_used"
             writer.println(linerContent)
         )
     )

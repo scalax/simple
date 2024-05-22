@@ -36,6 +36,4 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel 
     }
   }
 
-  object FunctionApply extends Status with ADTPassedFunctionImpl
-
 }

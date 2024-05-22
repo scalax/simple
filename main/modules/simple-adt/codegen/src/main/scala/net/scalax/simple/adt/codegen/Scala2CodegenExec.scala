@@ -24,7 +24,7 @@ object Scala2CodegenExec:
         )
     )
 
-    locally(().match
+    /*locally(().match
       case _ =>
         val filePath = writePath.resolve("ADTPassedFunctionExtra.scala")
         Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
@@ -32,7 +32,7 @@ object Scala2CodegenExec:
             val linerContent = net.scalax.simple.adt.codegen.CodePre1.text1
             writer.println(linerContent)
         )
-    )
+    )*/
 
   end main
 

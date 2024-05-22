@@ -24,7 +24,7 @@ object CodePre2:
 package net.scalax.simple.adt
 package impl
 
-import Adt.{Status => ADTStatus, FunctionApply}
+import Adt.{Status => ADTStatus}
 import temp._
 import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 
@@ -45,7 +45,7 @@ trait TypeAdtRuntimeApply {
 
       trait CoProduct${i1}Apply[$parameterString] extends ApplyFactory[$typeFunction, $dataTypeString] {
         ${repeat(i1) { i2 =>
-          s"def option$i2(iData: I$i2): ADTData[$dataTypeString, ADTStatus.Passed.type] = ${optionString(i2 - 1)}"
+          s"def option$i2(iData: I$i2): this.NatModelType = ${optionString(i2 - 1)}"
         }('\n'.toString)}
 
          override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): ADTData[$dataTypeString, ADTStatus.Passed.type] = {
