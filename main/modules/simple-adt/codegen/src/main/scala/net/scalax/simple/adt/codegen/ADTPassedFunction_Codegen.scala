@@ -38,9 +38,7 @@ trait ADTPassedFunction {
   ${repeatBlank(22)(i =>
                           s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ${repeatDot(i)(u1 =>
                               s"Poly$u1"
-                            )}, SImpl <: ADTStatus](data$i: ${typeStr(i + 1)}) extends ${typeStr(i + 1)} {
-
-    override def toGHDMZSK: ghdmzsk = data$i.toGHDMZSK
+                            )}, SImpl <: ADTStatus](data$i: ${typeStr(i + 1)}) {
 
     def fold[D](${repeatParameter(i)}): D = {
       val func_link: ghdmzsk = ${lawRepeatParameter(i)(0)}

@@ -9,10 +9,7 @@ import builder.{coproducter, producter_build}
 
 trait ADTPassedFunction {
 
-  implicit class extra1[ParamType, I1, Poly1, SImpl <: ADTStatus](data1: ADTData[RuntimeData[I1, RuntimeZero], SImpl])
-      extends ADTData[RuntimeData[I1, RuntimeZero], SImpl] {
-
-    override def toGHDMZSK: ghdmzsk = data1.toGHDMZSK
+  implicit class extra1[ParamType, I1, Poly1, SImpl <: ADTStatus](data1: ADTData[RuntimeData[I1, RuntimeZero], SImpl]) {
 
     def fold[D](func1: I1 => D): D = {
       val func_link: ghdmzsk = producter_build.appended(func1).inputGHDMZSK(() => producter_build.zero)
@@ -24,9 +21,7 @@ trait ADTPassedFunction {
 
   implicit class extra2[ParamType, I1, I2, Poly1, Poly2, SImpl <: ADTStatus](
     data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], SImpl]
-  ) extends ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], SImpl] {
-
-    override def toGHDMZSK: ghdmzsk = data2.toGHDMZSK
+  ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D): D = {
       val func_link: ghdmzsk =
@@ -39,9 +34,7 @@ trait ADTPassedFunction {
 
   implicit class extra3[ParamType, I1, I2, I3, Poly1, Poly2, Poly3, SImpl <: ADTStatus](
     data3: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], SImpl]
-  ) extends ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], SImpl] {
-
-    override def toGHDMZSK: ghdmzsk = data3.toGHDMZSK
+  ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -57,9 +50,7 @@ trait ADTPassedFunction {
 
   implicit class extra4[ParamType, I1, I2, I3, I4, Poly1, Poly2, Poly3, Poly4, SImpl <: ADTStatus](
     data4: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], SImpl]
-  ) extends ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], SImpl] {
-
-    override def toGHDMZSK: ghdmzsk = data4.toGHDMZSK
+  ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -79,9 +70,7 @@ trait ADTPassedFunction {
 
   implicit class extra5[ParamType, I1, I2, I3, I4, I5, Poly1, Poly2, Poly3, Poly4, Poly5, SImpl <: ADTStatus](
     data5: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], SImpl]
-  ) extends ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], SImpl] {
-
-    override def toGHDMZSK: ghdmzsk = data5.toGHDMZSK
+  ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -107,12 +96,7 @@ trait ADTPassedFunction {
 
   implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, Poly1, Poly2, Poly3, Poly4, Poly5, Poly6, SImpl <: ADTStatus](
     data6: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]], SImpl]
-  ) extends ADTData[
-        RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data6.toGHDMZSK
+  ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -145,12 +129,7 @@ trait ADTPassedFunction {
       RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data7.toGHDMZSK
+  ) {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D, func7: I7 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -206,12 +185,7 @@ trait ADTPassedFunction {
       I1,
       RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
     ], SImpl]
-  ) extends ADTData[RuntimeData[
-        I1,
-        RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
-      ], SImpl] {
-
-    override def toGHDMZSK: ghdmzsk = data8.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -285,15 +259,7 @@ trait ADTPassedFunction {
       ]],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[I1, RuntimeData[
-          I2,
-          RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
-        ]],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data9.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -377,18 +343,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[I2, RuntimeData[I3, RuntimeData[
-            I4,
-            RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeZero]]]]]]
-          ]]]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data10.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -482,21 +437,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[I3, RuntimeData[I4, RuntimeData[
-              I5,
-              RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeZero]]]]]]
-            ]]]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data11.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -600,24 +541,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[I4, RuntimeData[I5, RuntimeData[
-                I6,
-                RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeZero]]]]]]
-              ]]]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data12.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -733,27 +657,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[I5, RuntimeData[I6, RuntimeData[
-                  I7,
-                  RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeZero]]]]]]
-                ]]]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data13.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -879,30 +783,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[I6, RuntimeData[I7, RuntimeData[
-                    I8,
-                    RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeZero]]]]]]
-                  ]]]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data14.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -1038,33 +919,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[
-                      I10,
-                      RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeZero]]]]]
-                    ]]]]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data15.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -1210,36 +1065,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[
-                      I7,
-                      RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[
-                        I11,
-                        RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeZero]]]]]
-                      ]]]]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data16.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -1398,42 +1224,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[
-                      I7,
-                      RuntimeData[
-                        I8,
-                        RuntimeData[
-                          I9,
-                          RuntimeData[I10, RuntimeData[I11, RuntimeData[
-                            I12,
-                            RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeZero]]]]]
-                          ]]]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data17.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -1604,45 +1395,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[
-                      I7,
-                      RuntimeData[
-                        I8,
-                        RuntimeData[
-                          I9,
-                          RuntimeData[
-                            I10,
-                            RuntimeData[I11, RuntimeData[I12, RuntimeData[
-                              I13,
-                              RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeZero]]]]]
-                            ]]]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data18.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -1823,48 +1576,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[
-                      I7,
-                      RuntimeData[
-                        I8,
-                        RuntimeData[
-                          I9,
-                          RuntimeData[
-                            I10,
-                            RuntimeData[
-                              I11,
-                              RuntimeData[I12, RuntimeData[I13, RuntimeData[
-                                I14,
-                                RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeZero]]]]]
-                              ]]]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data19.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -2055,51 +1767,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[
-                      I7,
-                      RuntimeData[
-                        I8,
-                        RuntimeData[
-                          I9,
-                          RuntimeData[
-                            I10,
-                            RuntimeData[
-                              I11,
-                              RuntimeData[
-                                I12,
-                                RuntimeData[I13, RuntimeData[I14, RuntimeData[
-                                  I15,
-                                  RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]
-                                ]]]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data20.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -2300,54 +1968,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[
-                      I7,
-                      RuntimeData[
-                        I8,
-                        RuntimeData[
-                          I9,
-                          RuntimeData[
-                            I10,
-                            RuntimeData[
-                              I11,
-                              RuntimeData[
-                                I12,
-                                RuntimeData[
-                                  I13,
-                                  RuntimeData[I14, RuntimeData[I15, RuntimeData[
-                                    I16,
-                                    RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeZero]]]]]
-                                  ]]]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data21.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
@@ -2558,57 +2179,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) extends ADTData[
-        RuntimeData[
-          I1,
-          RuntimeData[
-            I2,
-            RuntimeData[
-              I3,
-              RuntimeData[
-                I4,
-                RuntimeData[
-                  I5,
-                  RuntimeData[
-                    I6,
-                    RuntimeData[
-                      I7,
-                      RuntimeData[
-                        I8,
-                        RuntimeData[
-                          I9,
-                          RuntimeData[
-                            I10,
-                            RuntimeData[
-                              I11,
-                              RuntimeData[
-                                I12,
-                                RuntimeData[
-                                  I13,
-                                  RuntimeData[
-                                    I14,
-                                    RuntimeData[I15, RuntimeData[I16, RuntimeData[
-                                      I17,
-                                      RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeData[I22, RuntimeZero]]]]]
-                                    ]]]
-                                  ]
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ],
-        SImpl
-      ] {
-
-    override def toGHDMZSK: ghdmzsk = data22.toGHDMZSK
+  ) {
 
     def fold[D](
       func1: I1 => D,
