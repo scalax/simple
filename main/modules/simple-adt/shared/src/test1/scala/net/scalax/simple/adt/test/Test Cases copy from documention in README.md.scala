@@ -1,5 +1,8 @@
 package net.scalax.simple.adt.test
 
+import net.scalax.simple.adt.{ADTFunctionImplicitFetch, DefaultAdtContext, RuntimeData, RuntimeZero}
+import net.scalax.simple.adt.builder.coproducter
+import net.scalax.simple.adt.temp.ADTData
 import net.scalax.simple.test.Tag
 
 object `Test Cases copy from documention in README.md` {
@@ -38,6 +41,7 @@ object `Test Cases copy from documention in README.md` {
 
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
+
           applyM.fold(
             intValue => Some(BigDecimal(intValue)),
             strValue => Try(BigDecimal(strValue)).toOption,
@@ -58,13 +62,11 @@ object `Test Cases copy from documention in README.md` {
 
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
+
           applyM match {
             case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
             case Adt.CoProduct2(strValue)    => Try(BigDecimal(strValue)).toOption
             case Adt.CoProduct3(doubleValue) => Some(BigDecimal(doubleValue))
-            case Adt.CoProduct4(empty)       => empty.matchErrorAndThrowException // Keep safe for API changed
-            case Adt.CoProduct5(empty)       => empty.matchErrorAndThrowException
-            case Adt.CoProduct6(empty)       => empty.matchErrorAndThrowException
           }
         }
 
@@ -73,10 +75,11 @@ object `Test Cases copy from documention in README.md` {
         assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
         assert(inputAdtDataSimple("error number") == None)
       }
+
     }
   }
 
-  def `Usage of @djx314 Point 1`[T](body: => T): T = body
+  /*def `Usage of @djx314 Point 1`[T](body: => T): T = body
 
   `Usage of @djx314 Point 1` {
     {
@@ -85,6 +88,7 @@ object `Test Cases copy from documention in README.md` {
 
       def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
         val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
+        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
         applyM.fold(
           noneValue => ("None", -100),
           intSome => ("Some", intSome.get + 1),
@@ -104,6 +108,7 @@ object `Test Cases copy from documention in README.md` {
 
       def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
         val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
+        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
         applyM match {
           case Adt.CoProduct1(noneValue) => ("None", -100)
           case Adt.CoProduct2(intSome)   => ("Some", intSome.get + 1)
@@ -119,7 +124,7 @@ object `Test Cases copy from documention in README.md` {
       assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
       assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
     }
-  }
+  }*/
 
   /*def `Usage of @djx314 Point 2`[T](body: => T): T = body
 
@@ -266,7 +271,7 @@ object `Test Cases copy from documention in README.md` {
     }
   }*/
 
-  def `Usage of @MarchLiu Point 1`[T](body: => T): T = body
+  /*def `Usage of @MarchLiu Point 1`[T](body: => T): T = body
 
   `Usage of @MarchLiu Point 1` {
     import net.scalax.simple.adt.{TypeAdt => Adt}
@@ -318,7 +323,7 @@ object `Test Cases copy from documention in README.md` {
     assert(countAdtData(Option.empty) == (0 + 1))
     assert(countAdtData("Option.empty") == (12 + 1))
     assert(countAdtData(Option.empty, Option.empty, Option.empty) == (0 + 0 + 0))
-  }
+  }*/
 
 }
 

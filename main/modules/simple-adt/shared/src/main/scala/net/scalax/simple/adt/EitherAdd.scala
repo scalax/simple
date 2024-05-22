@@ -1,7 +1,8 @@
 package net.scalax.simple
 package adt
 
+import net.scalax.simple.adt.temp.IsFinishAndNothing
+
 sealed trait RuntimeNat
-trait RuntimeNatPositive[+T <: RuntimeNat] extends RuntimeNat
-trait RuntimeData[+Data, +T <: RuntimeNat] extends RuntimeNatPositive[T]
-class RuntimeZero                          extends RuntimeNatPositive[RuntimeZero]
+trait RuntimeData[+Data, +T <: RuntimeNat] extends RuntimeNat
+class RuntimeZero                          extends RuntimeData[IsFinishAndNothing, RuntimeZero]
