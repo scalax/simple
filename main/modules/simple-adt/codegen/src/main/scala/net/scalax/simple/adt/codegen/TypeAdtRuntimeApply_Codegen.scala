@@ -2,6 +2,16 @@ package net.scalax.simple.adt.codegen
 
 object CodePre2:
 
+  case class pathCodegen(index: Int) {
+
+    val text: String = s"def option$index(iData: I$index): this.NatModelType = ${optionString(index - 1).text}"
+
+    case class optionString(index: Int) {
+      val text: String = if (index > 0) s"ADTData.copyTail(${optionString(index - 1).text})" else "ADTData.success(iData)"
+    }
+
+  }
+
   def repeatBlank(count: Int)(text: Int => String): String = {
     repeat(count)(text)("")
   }
@@ -17,19 +27,16 @@ object CodePre2:
 
   def adtDataType(max: Int)(i: Int): String = if i <= max then s"RuntimeData[I$i, ${adtDataType(max)(i + 1)}]" else "RuntimeZero"
 
-  def optionString(index: Int): String =
-    if (index > 0) s"ADTData.copyTail(${optionString(index - 1)}.toGHDMZSK)" else "ADTData.success(iData)"
-
   val text1: String = s"""
-package net.scalax.simple.adt
-package impl
+  package net.scalax.simple.adt
+  package impl
 
-import Adt.{Status => ADTStatus}
-import temp._
-import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
+  import Adt.{Status => ADTStatus}
+  import temp._
+  import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 
-trait TypeAdtRuntimeApply {
-  ${repeatBlank(22) { i1 =>
+  trait TypeAdtRuntimeApply {
+    ${repeatBlank(22) { i1 =>
       val parameterString: String = repeat(i1)(i2 => s"I$i2")(','.toString)
 
       val pamateterFunctionType: String = adtFunnctionDataType(i1)(1)
@@ -39,23 +46,21 @@ trait TypeAdtRuntimeApply {
       val typeFunction = s"({ type F1[ParamType] = $pamateterFunctionType })#F1"
 
       s"""
-      def CoProduct$i1[$parameterString]:  CoProduct${i1}Apply[$parameterString] = new CoProduct${i1}Apply[$parameterString] {
-        //
-      }
-
-      trait CoProduct${i1}Apply[$parameterString] extends ApplyFactory[$typeFunction, $dataTypeString] {
-        ${repeat(i1) { i2 =>
-          s"def option$i2(iData: I$i2): this.NatModelType = ${optionString(i2 - 1)}"
-        }('\n'.toString)}
-
-         override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): ADTData[$dataTypeString, ADTStatus.Passed.type] = {
-            new Adt.Status.Passed.extra$i1(b).fold(${repeat(i1)(i3 => s"t => option$i3(t.input(a))")(','.toString)})
+        def CoProduct$i1[$parameterString]:  CoProduct${i1}Apply[$parameterString] = new CoProduct${i1}Apply[$parameterString] {
+          //
         }
-      }
-    """
+
+        trait CoProduct${i1}Apply[$parameterString] extends ApplyFactory[$typeFunction, $dataTypeString] {
+          ${repeat(i1) { i2 => pathCodegen(i2).text }('\n'.toString)}
+
+           override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): ADTData[$dataTypeString, ADTStatus.Passed.type] = {
+              new Adt.Status.Passed.extra$i1(b).fold(${repeat(i1)(i3 => s"t => option$i3(t.input(a))")(','.toString)})
+          }
+        }
+      """
 
     }}
-}
-"""
+  }
+  """
 
 end CodePre2

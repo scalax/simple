@@ -20,9 +20,9 @@ object ADTData {
     override val toGHDMZSK: ghdmzsk = builder.coproducter.success(data)
   }
 
-  def copyTail[D, T <: RuntimeNat, S <: ADTStatus](tailGHDMZSK: ghdmzsk): ADTData[RuntimeData[D, T], S] =
+  def copyTail[D, T <: RuntimeNat, S <: ADTStatus](tailGHDMZSK: ADTData[T, S]): ADTData[RuntimeData[D, T], S] =
     new ADTData[RuntimeData[D, T], S] {
-      override val toGHDMZSK: ghdmzsk = builder.coproducter.appender.inputGHDMZSK(() => tailGHDMZSK)
+      override val toGHDMZSK: ghdmzsk = builder.coproducter.appender.inputGHDMZSK(() => tailGHDMZSK.toGHDMZSK)
     }
 
   def zero[ST <: ADTStatus](isFinishAndNothing: IsFinishAndNothing): ADTData[RuntimeZero, ST with ADTStatus.NotFinished.type] =
@@ -43,7 +43,6 @@ object IsFinishAndNothing {
 }
 
 trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
-  /*protected def cv[D, T <: ADTStatus](a: D, b: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): ADTData[N2, ADTStatus.Passed.type]*/
   type NatModelType = ADTData[N2, ADTStatus.Passed.type]
 
   def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): ADTData[N2, ADTStatus.Passed.type]

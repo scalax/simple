@@ -31,17 +31,10 @@ package impl {
       ADTData.success(adtConvert)
   }
 
-  /*trait HListTypeAdtPositiveLower1 extends HListTypeAdtPositiveLower2 {
-    @inline implicit def hlistTypeAdtPositiveImplicit2[A, B, Tail <: RuntimeNat, ST <: ADTStatus](implicit
-      adtConvert: TypeAdt.Context[A, B, DefaultAdtContext.type]
-    ): ADTData[RuntimeData[TypeAdt.Context[A, B, DefaultAdtContext.type], Tail], ST with ADTStatus.Passed.type] =
-      ADTData.success(adtConvert)
-  }*/
-
   trait HListTypeAdtPositiveLower2 extends LowerLevelPoly {
     @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: RuntimeNat, AdtConvertPoly, ST <: ADTStatus](implicit
       tailMapping: ADTData[Tail, ST]
-    ): ADTData[RuntimeData[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = ADTData.copyTail(tailGHDMZSK = tailMapping.toGHDMZSK)
+    ): ADTData[RuntimeData[TypeAdt.Context[A, B, AdtConvertPoly], Tail], ST] = ADTData.copyTail(tailMapping)
   }
 
   trait LowerLevelPoly {
