@@ -13,9 +13,9 @@ object ADTPassedFunctionCodegen:
 
   def repeatDot(count: Int)(text: Int => String): String = repeat(count)(text)(','.toString)
 
-  def adtDataType(max: Int)(i: Int): String = if i < max then s"RuntimeData[I${max - i}, ${adtDataType(max)(i + 1)}]" else "RuntimeZero"
+  def adtDataType(max: Int)(i: Int): String = if i < max then s"RuntimeData[I$i, ${adtDataType(max)(i + 1)}]" else "RuntimeZero"
 
-  def repeatParameter(i: Int): String = repeatDot(i)(u1 => s"func${i - u1 + 1}: I${i - u1 + 1} => D")
+  def repeatParameter(i: Int): String = repeatDot(i)(u1 => s"func$u1: I$u1 => D")
 
   def lawRepeatParameter(max: Int)(i: Int): String =
     if (i < max) s"producter_build.appended(func${i + 1}).inputGHDMZSK(() => ${lawRepeatParameter(max)(i + 1)})"

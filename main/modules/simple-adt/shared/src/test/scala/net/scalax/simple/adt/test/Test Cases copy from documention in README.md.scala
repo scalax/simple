@@ -42,8 +42,6 @@ object `Test Cases copy from documention in README.md` {
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
 
-          // println(applyM.toGHDMZSK)
-
           applyM.fold(
             intValue => Some(BigDecimal(intValue)),
             strValue => Try(BigDecimal(strValue)).toOption,
@@ -65,21 +63,6 @@ object `Test Cases copy from documention in README.md` {
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
 
-          /*val cc = implicitly[ADTData[
-            RuntimeData[
-              Adt.Context[T, Int, DefaultAdtContext.type],
-              RuntimeData[
-                Adt.Context[T, String, DefaultAdtContext.type],
-                RuntimeData[Adt.Context[T, Double, DefaultAdtContext.type], RuntimeZero]
-              ]
-            ],
-            Adt.Status.Passed.type with ADTFunctionImplicitFetch.type
-          ]]
-
-          println(cc.toGHDMZSK)*/
-
-          // Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
-
           applyM match {
             case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
             case Adt.CoProduct2(strValue)    => Try(BigDecimal(strValue)).toOption
@@ -88,10 +71,11 @@ object `Test Cases copy from documention in README.md` {
         }
 
         assert(inputAdtDataSimple(2).get == BigDecimal("2"))
-        /*assert(inputAdtDataSimple("6").get == BigDecimal("6"))
+        assert(inputAdtDataSimple("6").get == BigDecimal("6"))
         assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
-        assert(inputAdtDataSimple("error number") == None)*/
+        assert(inputAdtDataSimple("error number") == None)
       }
+
     }
   }
 

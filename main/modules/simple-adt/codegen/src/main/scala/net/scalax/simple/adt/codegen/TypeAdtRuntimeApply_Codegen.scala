@@ -50,7 +50,7 @@ trait TypeAdtRuntimeApply {
 
          def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$pamateterFunctionType, S with ADTFunctionImplicitFetch.type]): Adt.Status.Passed.extra$i1[ParamType, ${repeat(
           i1
-        )(i3 => s"I${i1 - i3 + 1}")(','.toString)}, ${repeat(i1)(i3 => "DefaultAdtContext.type")(','.toString)}, ADTStatus.Passed.type] = {
+        )(i3 => s"I$i3")(','.toString)}, ${repeat(i1)(i3 => "DefaultAdtContext.type")(','.toString)}, ADTStatus.Passed.type] = {
           new Adt.Status.Passed.extra$i1(new Adt.Status.Passed.extra$i1(b).fold(${repeat(i1)(i3 => s"t => option$i3(t.input(a))")(
           ','.toString
         )}))
