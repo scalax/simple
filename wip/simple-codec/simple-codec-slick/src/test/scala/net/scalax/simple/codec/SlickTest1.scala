@@ -68,15 +68,15 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   }
 
   object TableUserAbs {
-    implicit class TableUserAbsTableImpl(tb: TableUserAbs)
-        extends UserAbs[Rep, U](id = tb.__tableInnserRep.id, first = tb.__tableInnserRep.first, last = tb.__tableInnserRep.last)
+    import scala.language.implicitConversions
+    implicit def TableUserAbsTableImpl(tb: TableUserAbs): UserAbs[Rep, U] = tb.__tableInnserRep
   }
 
 }
 
 object Runner1 {
 
-  def main1(arr: Array[String]): Unit = {
+  def main(arr: Array[String]): Unit = {
     val p = slick.jdbc.MySQLProfile
 
     val newModel: Model2[cats.Id] = new Model2[cats.Id](p)
