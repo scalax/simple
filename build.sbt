@@ -49,6 +49,9 @@ val `codec-codegen`      = project in `codec-codegen/file`
 val `codec-slick/file` = `codec/file` / "simple-codec-slick"
 lazy val `codec-slick` = project in `codec-slick/file` dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
 
+val `codec-circe/file` = `codec/file` / "simple-codec-circe"
+lazy val `codec-circe` = project in `codec-circe/file` dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
+
 val `nat/file`  = `impractical/file` / "simple-nat"
 val nat         = crossProject(JSPlatform, JVMPlatform) in `nat/file`
 lazy val natJVM = nat.jvm
