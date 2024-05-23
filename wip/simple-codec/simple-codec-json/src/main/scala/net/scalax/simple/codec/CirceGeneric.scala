@@ -31,15 +31,6 @@ object CirceGeneric {
     }
   }
 
-  def encodeModel[F[_[_]]](implicit
-    g: F[Encoder],
-    g1: SimpleProduct.Appender[F],
-    named: NamedImplicit[F[LabelledInstalled.Named]]
-  ): Encoder[F[cats.Id]] = {
-    val labelledInstalled = LabelledInstalled[F].derived(g1, named)
-    encodeModelImpl(g, g1, labelledInstalled.labelled)
-  }
-
   def decodeModelImpl[F[_[_]]](implicit
     g: F[Decoder],
     g1: SimpleProduct.Appender[F],
@@ -49,7 +40,7 @@ object CirceGeneric {
     val mapGenerc: MapGenerc[F]            = MapGenerc[F].derived(g1)
     val decode: SimpleProduct2.Appender[F] = SimpleProduct2.Appender[F].derived(g1)
 
-    val zip1 = zipGeneric.zip[EncoderModelAux, Decoder](named, g)
+    val zip1 = zipGeneric.zip[LabelledInstalled.Named, Decoder](named, g)
     val map1 = mapGenerc.map[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1](
       new MapGenerc.MapFunction[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
         override def map[X1]: ((String, Decoder[X1])) => HCursor => Decoder.Result[X1] =
@@ -80,18 +71,5 @@ object CirceGeneric {
 
     Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
   }
-
-  def decodeModel[F[_[_]]](implicit
-    g: F[Decoder],
-    g1: SimpleProduct.Appender[F],
-    named: NamedImplicit[F[LabelledInstalled.Named]]
-  ): Decoder[F[cats.Id]] = {
-    val labelledInstalled = LabelledInstalled[F].derived(g1, named)
-    decodeModelImpl(g, g1, labelledInstalled.labelled)
-  }
-
-  type EncoderAux[_]      = Encoder[String]
-  type DecoderAux[_]      = Decoder[String]
-  type EncoderModelAux[_] = String
 
 }

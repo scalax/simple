@@ -1,6 +1,4 @@
-package net.scalax.simple
-package codec
-package aa
+package net.scalax.simple.codec
 
 import io.circe._
 import io.circe.syntax._
@@ -8,15 +6,11 @@ import cats.effect._
 import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
-import CirceGeneric._
+import CirceGeneric2._
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
-object CirceText extends IOApp {
-
-  type EncoderAux[_]      = Encoder[String]
-  type DecoderAux[_]      = Decoder[String]
-  type EncoderModelAux[_] = String
+object CirceText2 extends IOApp {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
@@ -26,11 +20,6 @@ object CirceText extends IOApp {
   }
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
-
-  implicit lazy val modelEncoder: CatName[Encoder] =
-    FillIdentity[CatName, Encoder].derived2(simpleGen1[Encoder].generic)(_.generic)
-  implicit lazy val modelDecoder: CatName[Decoder] =
-    FillIdentity[CatName, Decoder].derived2(simpleGen1[Decoder].generic)(_.generic)
 
   implicit def li1222Encoder(implicit v: SimpleProduct.Appender[FAlias]): FAlias[Encoder] = {
     val simpleFillE: SimpleFill[FAlias] = SimpleFill[FAlias].derived(v)
@@ -50,29 +39,15 @@ object CirceText extends IOApp {
 
   implicit lazy val basedInstalled2: SimpleProduct.Appender[FAlias] = ToItera[CatName].derived.to[String]
 
-  implicit lazy val caseClassEncoder: Encoder[CatName[cats.Id]]             = encodeModel
-  implicit lazy val caseClassDecoder: Decoder[CatName[cats.Id]]             = decodeModel
-  implicit lazy val caseClassNameEncoder: Encoder[CatName[EncoderModelAux]] = encodeModel[FAlias]
-  implicit lazy val caseClassNameDecoder: Decoder[CatName[EncoderModelAux]] = decodeModel[FAlias]
+  implicit lazy val caseClassNameEncoder: Encoder[CatName[LabelledInstalled.Named]] = encodeModel[FAlias]
+  implicit lazy val caseClassNameDecoder: Decoder[CatName[LabelledInstalled.Named]] = decodeModel[FAlias]
 
-  val modelInstance: CatName[cats.Id] = CatName[cats.Id](
-    name = 8594,
-    str = Option("sdfwerwfweher迷雾日哦"),
-    uClass = Option.empty,
-    name11 = "xxiwerwjkl",
-    namexu = "jerokwjoe收代理费加沃尔"
-  )
-
-  val namedModel: CatName[EncoderModelAux] = LabelledInstalled[FAlias].derived(basedInstalled2, implicitly).labelled
+  val namedModel: CatName[LabelledInstalled.Named] = LabelledInstalled[FAlias].derived(basedInstalled2, implicitly).labelled
 
   final override def run(args: List[String]): IO[ExitCode] = {
     for {
-      _ <- IO(println(modelInstance.asJson.spaces2))
       _ <- IO(println(namedModel.asJson.spaces2))
-      _ <- IO(println(parser.parse(modelInstance.asJson.spaces2).right.flatMap(_.as[CatName[cats.Id]])))
-      _ <- IO(println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[cats.Id]])))
-      _ <- IO(println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[EncoderModelAux]])))
-      _ <- IO(println(parser.parse(modelInstance.asJson.spaces2).right.flatMap(_.as[CatName[EncoderModelAux]])))
+      _ <- IO(println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[LabelledInstalled.Named]])))
     } yield {
       //
     }

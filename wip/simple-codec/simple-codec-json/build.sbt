@@ -1,5 +1,5 @@
 scalaVersion := scalaV.v213
-name         := "simple-codec-circe"
+name         := "simple-codec-json"
 
 enableZIOTest := true
 
