@@ -7,7 +7,7 @@ import temp._
 import Adt.{Status => ADTStatus}
 
 @ADT22Parameter(min: Int, max: Int) = {
-    @if(min < max) { RuntimeData[Adt.Context[A, I@{min}], @ADT22Parameter(min + 1, max)] } else { RuntimeZero }
+    @if(min < max) { RuntimeData[AdtFunction[A, I@{min}], @ADT22Parameter(min + 1, max)] } else { RuntimeZero }
 }
 
 @ADT22ParameterSimple(min: Int, max: Int) = {

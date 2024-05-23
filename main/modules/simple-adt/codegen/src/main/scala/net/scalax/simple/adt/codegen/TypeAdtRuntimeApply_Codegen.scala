@@ -23,7 +23,7 @@ object CodePre2:
     // ===
 
     // ===
-    lazy val param5 = DataTypeString(i => s"Adt.Context[ParamType, I$i]")(1).text
+    lazy val param5 = DataTypeString(i => s"AdtFunction[ParamType, I$i]")(1).text
     // ===
 
     // ===

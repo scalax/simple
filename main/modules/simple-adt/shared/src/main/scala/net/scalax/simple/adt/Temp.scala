@@ -6,12 +6,8 @@ import impl.Adt.{Status => ADTStatus}
 
 import scala.annotation.meta.param
 
-trait ToGHDMZSK[+N <: RuntimeNat] {
+trait ADTData[+N <: RuntimeNat, S <: ADTStatus] {
   def toGHDMZSK: ghdmzsk
-}
-
-trait ADTData[+N <: RuntimeNat, S <: ADTStatus] extends ToGHDMZSK[N] {
-  override def toGHDMZSK: ghdmzsk
 }
 
 object ADTData {
@@ -46,5 +42,5 @@ trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
   type NatModelType            = ADTData[N2, ADTStatus.Passed.type]
   type NatModelTypeFunction[D] = N1[D]
 
-  def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): NatModelType
+  def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[NatModelTypeFunction[D], T with ADTFunctionImplicitFetch.type]): NatModelType
 }
