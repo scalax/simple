@@ -2,47 +2,38 @@ package net.scalax.simple.adt.codegen
 
 object CodePre2:
 
-  case class ParameterString(index: Int) {
-    val text: String = if (index > 1) s"${ParameterString(index - 1).text}, I$index" else "I1"
-  }
-
   case class CoProductXApplyCodegen(index: Int) {
-
-    val param1 = ParameterString(index).text
+    self1 =>
+    // ===
+    case class ParameterString(typeFunc: Int => String)(index: Int) {
+      self2 =>
+      val text: String = if (index > 1) s"${ParameterString(typeFunc)(index - 1).text}, ${typeFunc(self2.index)}" else typeFunc(1)
+    }
+    val param1 = ParameterString(i => s"I$i")(index).text
+    // ===
 
     // ===
-    case class DataTypeString(max: Int) {
-      self =>
-      val text: String = textImpl(1)
-
-      private def textImpl(index: Int): String =
-        if (index <= max) s"RuntimeData[I$index, ${self.textImpl(index + 1)}]" else "RuntimeZero"
+    case class DataTypeString(typeFunc: Int => String)(index: Int) {
+      self2 =>
+      val text: String =
+        if (self2.index <= self1.index) s"RuntimeData[${typeFunc(self2.index)}, ${DataTypeString(typeFunc)(self2.index + 1).text}]"
+        else "RuntimeZero"
     }
-    val param3 = DataTypeString(index).text
+    val param3 = DataTypeString(i => s"I$i")(1).text
+    // ===
+
+    // ===
+    lazy val param5 = DataTypeString(i => s"Adt.Context[ParamType, I$i, DefaultAdtContext.type]")(1).text
     // ===
 
     // ===
     case class ApplyStrCodegen(index: Int) {
       val text: String =
-        s"""override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$param5, S with ADTFunctionImplicitFetch.type]): ADTData[${DataTypeString(
-            index
-          ).text}, ADTStatus.Passed.type] = {
+        s"""override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$param5, S with ADTFunctionImplicitFetch.type]): ADTData[$param3, ADTStatus.Passed.type] = {
            new Adt.Status.Passed.extra$index(b).fold(${repeat(index)(i3 => s"t => option$i3(t.input(a))")(','.toString)})
          }"""
     }
     lazy val param4: String = ApplyStrCodegen(index).text
-    // ===
-
-    // ===
-    case class AdtFunnctionDataType(max: Int) {
-      self =>
-      def text(ParamType: String): String = textImpl(ParamType)(1)
-
-      private def textImpl(ParamType: String)(index: Int): String =
-        if (index <= max) s"RuntimeData[Adt.Context[$ParamType, I$index, DefaultAdtContext.type], ${self.textImpl(ParamType)(index + 1)}]"
-        else "RuntimeZero"
-    }
-    lazy val param5 = AdtFunnctionDataType(index).text("ParamType")
     // ===
 
     // ===
@@ -63,7 +54,15 @@ object CodePre2:
 
       lazy val param6 = s"({ type F1[ParamType] = $param5 })#F1"
 
-      s"""trait CoProduct${index}Apply[$param1] extends ApplyFactory[$param6, $param3] {
+      lazy val param7 = s"CoProduct$index[${param1}]"
+      lazy val param8 = s"CoProduct${index}Apply[${param1}]"
+
+      s"""
+      def $param7:  $param8 = new $param8 {
+        //
+      }
+
+      trait $param8 extends ApplyFactory[$param6, $param3] {
 
         ${option22Codegen(index).text}
 
@@ -91,21 +90,7 @@ object CodePre2:
   import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 
   trait TypeAdtRuntimeApply {
-    ${repeatBlank(22) { i1 =>
-      s"""
-        def CoProduct$i1[${ParameterString(i1).text}]:  CoProduct${i1}Apply[${ParameterString(
-          i1
-        ).text}] = new CoProduct${i1}Apply[${ParameterString(
-          i1
-        ).text}] {
-          //
-        }
-
-         ${CoProductXApplyCodegen(i1).text}
-
-      """
-
-    }}
+    ${repeatBlank(22)(i1 => CoProductXApplyCodegen(i1).text)}
   }
   """
 
