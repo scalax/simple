@@ -45,6 +45,7 @@ object CodePre2:
     lazy val param5 = AdtFunnctionDataType(index).text("ParamType")
     // ===
 
+    // ===
     case class option22Codegen(index: Int) {
       val text: String = if (index > 0) option22Codegen(index - 1).text + '\n'.toString + pathCodegen(index).text else ""
 
@@ -56,6 +57,7 @@ object CodePre2:
         }
       }
     }
+    // ===
 
     val text: String = {
 
