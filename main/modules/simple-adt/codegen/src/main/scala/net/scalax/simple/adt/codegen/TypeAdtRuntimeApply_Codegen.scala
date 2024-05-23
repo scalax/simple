@@ -2,18 +2,18 @@ package net.scalax.simple.adt.codegen
 
 object CodePre2:
 
-  case class CoProductXApplyCodegen(index: Int) {
+  case class CoProductXApplyCodegen(val index: Int) {
     self1 =>
     // ===
-    case class ParameterString(typeFunc: Int => String)(index: Int) {
+    class ParameterString(typeFunc: Int => String)(val index: Int) {
       self2 =>
-      val text: String = if (index > 1) s"${ParameterString(typeFunc)(index - 1).text}, ${typeFunc(self2.index)}" else typeFunc(1)
+      val text: String = if (index > 1) s"${ParameterString(typeFunc)(self2.index - 1).text} ${typeFunc(self2.index)}" else typeFunc(1)
     }
-    val param1 = ParameterString(i => s"I$i")(index).text
+    class param1(override val index: Int) extends ParameterString(i => if (i > 1) s", I$i" else s"I$i")(index)
     // ===
 
     // ===
-    case class DataTypeString(typeFunc: Int => String)(index: Int) {
+    case class DataTypeString(typeFunc: Int => String)(val index: Int) {
       self2 =>
       val text: String =
         if (self2.index <= self1.index) s"RuntimeData[${typeFunc(self2.index)}, ${DataTypeString(typeFunc)(self2.index + 1).text}]"
@@ -27,18 +27,22 @@ object CodePre2:
     // ===
 
     // ===
-    case class ApplyStrCodegen(index: Int) {
-      val text: String =
+    class ApplyStrCodegen(val index: Int) {
+      self2 =>
+      lazy val text: String =
         s"""override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$param5, S with ADTFunctionImplicitFetch.type]): ADTData[$param3, ADTStatus.Passed.type] = {
-           new Adt.Status.Passed.extra$index(b).fold(${repeat(index)(i3 => s"t => option$i3(t.input(a))")(','.toString)})
+           new Adt.Status.Passed.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
          }"""
+
+      class FoldStrFuncs(override val index: Int)
+          extends ParameterString(i => if (i > 1) s", t => option$i(t.input(a))" else s"t => option$i(t.input(a))")(index)
     }
-    lazy val param4: String = ApplyStrCodegen(index).text
     // ===
 
     // ===
-    case class option22Codegen(index: Int) {
-      val text: String = if (index > 0) option22Codegen(index - 1).text + '\n'.toString + pathCodegen(index).text else ""
+    class OptionXCodegen(val index: Int) {
+      self2 =>
+      val text: String = if (self2.index > 0) OptionXCodegen(self2.index - 1).text + '\n'.toString + pathCodegen(self2.index).text else ""
 
       case class pathCodegen(index: Int) {
         val text: String = s"def option$index(iData: I$index): this.NatModelType = ${optionPathCodegen(index - 1).text}"
@@ -54,8 +58,8 @@ object CodePre2:
 
       lazy val param6 = s"({ type F1[ParamType] = $param5 })#F1"
 
-      lazy val param7 = s"CoProduct$index[${param1}]"
-      lazy val param8 = s"CoProduct${index}Apply[${param1}]"
+      lazy val param7 = s"CoProduct$index[${param1(self1.index).text}]"
+      lazy val param8 = s"CoProduct${index}Apply[${param1(self1.index).text}]"
 
       s"""
       def $param7:  $param8 = new $param8 {
@@ -64,9 +68,9 @@ object CodePre2:
 
       trait $param8 extends ApplyFactory[$param6, $param3] {
 
-        ${option22Codegen(index).text}
+        ${OptionXCodegen(self1.index).text}
 
-        $param4
+        ${ApplyStrCodegen(self1.index).text}
 
       }"""
     }
