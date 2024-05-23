@@ -43,7 +43,8 @@ object IsFinishAndNothing {
 }
 
 trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
-  type NatModelType = ADTData[N2, ADTStatus.Passed.type]
+  type NatModelType            = ADTData[N2, ADTStatus.Passed.type]
+  type NatModelTypeFunction[D] = N1[D]
 
-  def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): ADTData[N2, ADTStatus.Passed.type]
+  def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[N1[D], T with ADTFunctionImplicitFetch.type]): NatModelType
 }

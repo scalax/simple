@@ -7,87 +7,61 @@ import Adt.{Status => ADTStatus}
 
 trait TypeAdtAlias {
 
-  type CoProducts1[A, I1] =
-    ADTData[RuntimeData[Adt.Context[A, I1, DefaultAdtContext.type], RuntimeZero], ADTStatus.Passed.type with ADTFunctionImplicitFetch.type]
+  type CoProducts1[A, I1] = ADTData[RuntimeData[Adt.Context[A, I1], RuntimeZero], ADTStatus.Passed.type with ADTFunctionImplicitFetch.type]
 
-  type CoProductsX1[A, ST <: ADTStatus, I1] =
-    TypeAdtApply[A, RuntimeData[Adt.Context[A, I1, DefaultAdtContext.type], RuntimeZero], ST with ADTFunctionImplicitFetch.type]
+  type CoProductsX1[A, ST <: ADTStatus, I1] = ADTData[RuntimeData[Adt.Context[A, I1], RuntimeZero], ST with ADTFunctionImplicitFetch.type]
 
   type CoProducts2[A, I1, I2] = ADTData[
-    RuntimeData[Adt.Context[A, I1, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I2, DefaultAdtContext.type], RuntimeZero]],
+    RuntimeData[Adt.Context[A, I1], RuntimeData[Adt.Context[A, I2], RuntimeZero]],
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX2[A, ST <: ADTStatus, I1, I2] = TypeAdtApply[
-    A,
-    RuntimeData[Adt.Context[A, I1, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I2, DefaultAdtContext.type], RuntimeZero]],
-    ST with ADTFunctionImplicitFetch.type
-  ]
+  type CoProductsX2[A, ST <: ADTStatus, I1, I2] =
+    ADTData[RuntimeData[Adt.Context[A, I1], RuntimeData[Adt.Context[A, I2], RuntimeZero]], ST with ADTFunctionImplicitFetch.type]
 
   type CoProducts3[A, I1, I2, I3] = ADTData[
-    RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
-      RuntimeData[Adt.Context[A, I2, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I3, DefaultAdtContext.type], RuntimeZero]]
-    ],
+    RuntimeData[Adt.Context[A, I1], RuntimeData[Adt.Context[A, I2], RuntimeData[Adt.Context[A, I3], RuntimeZero]]],
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX3[A, ST <: ADTStatus, I1, I2, I3] = TypeAdtApply[
-    A,
-    RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
-      RuntimeData[Adt.Context[A, I2, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I3, DefaultAdtContext.type], RuntimeZero]]
-    ],
+  type CoProductsX3[A, ST <: ADTStatus, I1, I2, I3] = ADTData[
+    RuntimeData[Adt.Context[A, I1], RuntimeData[Adt.Context[A, I2], RuntimeData[Adt.Context[A, I3], RuntimeZero]]],
     ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts4[A, I1, I2, I3, I4] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
-      RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
-        RuntimeData[Adt.Context[A, I3, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I4, DefaultAdtContext.type], RuntimeZero]]
-      ]
+      Adt.Context[A, I1],
+      RuntimeData[Adt.Context[A, I2], RuntimeData[Adt.Context[A, I3], RuntimeData[Adt.Context[A, I4], RuntimeZero]]]
     ],
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX4[A, ST <: ADTStatus, I1, I2, I3, I4] = TypeAdtApply[
-    A,
+  type CoProductsX4[A, ST <: ADTStatus, I1, I2, I3, I4] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
-      RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
-        RuntimeData[Adt.Context[A, I3, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I4, DefaultAdtContext.type], RuntimeZero]]
-      ]
+      Adt.Context[A, I1],
+      RuntimeData[Adt.Context[A, I2], RuntimeData[Adt.Context[A, I3], RuntimeData[Adt.Context[A, I4], RuntimeZero]]]
     ],
     ST with ADTFunctionImplicitFetch.type
   ]
 
   type CoProducts5[A, I1, I2, I3, I4, I5] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
-        RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
-          RuntimeData[Adt.Context[A, I4, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I5, DefaultAdtContext.type], RuntimeZero]]
-        ]
+        Adt.Context[A, I2],
+        RuntimeData[Adt.Context[A, I3], RuntimeData[Adt.Context[A, I4], RuntimeData[Adt.Context[A, I5], RuntimeZero]]]
       ]
     ],
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX5[A, ST <: ADTStatus, I1, I2, I3, I4, I5] = TypeAdtApply[
-    A,
+  type CoProductsX5[A, ST <: ADTStatus, I1, I2, I3, I4, I5] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
-        RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
-          RuntimeData[Adt.Context[A, I4, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I5, DefaultAdtContext.type], RuntimeZero]]
-        ]
+        Adt.Context[A, I2],
+        RuntimeData[Adt.Context[A, I3], RuntimeData[Adt.Context[A, I4], RuntimeData[Adt.Context[A, I5], RuntimeZero]]]
       ]
     ],
     ST with ADTFunctionImplicitFetch.type
@@ -95,33 +69,26 @@ trait TypeAdtAlias {
 
   type CoProducts6[A, I1, I2, I3, I4, I5, I6] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
-          RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
-            RuntimeData[Adt.Context[A, I5, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I6, DefaultAdtContext.type], RuntimeZero]]
-          ]
+          Adt.Context[A, I3],
+          RuntimeData[Adt.Context[A, I4], RuntimeData[Adt.Context[A, I5], RuntimeData[Adt.Context[A, I6], RuntimeZero]]]
         ]
       ]
     ],
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX6[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6] = TypeAdtApply[
-    A,
+  type CoProductsX6[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
-          RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
-            RuntimeData[Adt.Context[A, I5, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I6, DefaultAdtContext.type], RuntimeZero]]
-          ]
+          Adt.Context[A, I3],
+          RuntimeData[Adt.Context[A, I4], RuntimeData[Adt.Context[A, I5], RuntimeData[Adt.Context[A, I6], RuntimeZero]]]
         ]
       ]
     ],
@@ -130,17 +97,14 @@ trait TypeAdtAlias {
 
   type CoProducts7[A, I1, I2, I3, I4, I5, I6, I7] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
-            RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
-              RuntimeData[Adt.Context[A, I6, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I7, DefaultAdtContext.type], RuntimeZero]]
-            ]
+            Adt.Context[A, I4],
+            RuntimeData[Adt.Context[A, I5], RuntimeData[Adt.Context[A, I6], RuntimeData[Adt.Context[A, I7], RuntimeZero]]]
           ]
         ]
       ]
@@ -148,20 +112,16 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX7[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply[
-    A,
+  type CoProductsX7[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
-            RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
-              RuntimeData[Adt.Context[A, I6, DefaultAdtContext.type], RuntimeData[Adt.Context[A, I7, DefaultAdtContext.type], RuntimeZero]]
-            ]
+            Adt.Context[A, I4],
+            RuntimeData[Adt.Context[A, I5], RuntimeData[Adt.Context[A, I6], RuntimeData[Adt.Context[A, I7], RuntimeZero]]]
           ]
         ]
       ]
@@ -171,22 +131,16 @@ trait TypeAdtAlias {
 
   type CoProducts8[A, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
-              RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
-                RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
-                  RuntimeData[Adt.Context[A, I8, DefaultAdtContext.type], RuntimeZero]
-                ]
-              ]
+              Adt.Context[A, I5],
+              RuntimeData[Adt.Context[A, I6], RuntimeData[Adt.Context[A, I7], RuntimeData[Adt.Context[A, I8], RuntimeZero]]]
             ]
           ]
         ]
@@ -195,25 +149,18 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX8[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply[
-    A,
+  type CoProductsX8[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
-              RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
-                RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
-                  RuntimeData[Adt.Context[A, I8, DefaultAdtContext.type], RuntimeZero]
-                ]
-              ]
+              Adt.Context[A, I5],
+              RuntimeData[Adt.Context[A, I6], RuntimeData[Adt.Context[A, I7], RuntimeData[Adt.Context[A, I8], RuntimeZero]]]
             ]
           ]
         ]
@@ -224,24 +171,18 @@ trait TypeAdtAlias {
 
   type CoProducts9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
-                RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
-                  RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
-                    RuntimeData[Adt.Context[A, I9, DefaultAdtContext.type], RuntimeZero]
-                  ]
-                ]
+                Adt.Context[A, I6],
+                RuntimeData[Adt.Context[A, I7], RuntimeData[Adt.Context[A, I8], RuntimeData[Adt.Context[A, I9], RuntimeZero]]]
               ]
             ]
           ]
@@ -251,27 +192,20 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX9[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply[
-    A,
+  type CoProductsX9[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
-                RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
-                  RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
-                    RuntimeData[Adt.Context[A, I9, DefaultAdtContext.type], RuntimeZero]
-                  ]
-                ]
+                Adt.Context[A, I6],
+                RuntimeData[Adt.Context[A, I7], RuntimeData[Adt.Context[A, I8], RuntimeData[Adt.Context[A, I9], RuntimeZero]]]
               ]
             ]
           ]
@@ -283,26 +217,20 @@ trait TypeAdtAlias {
 
   type CoProducts10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
-                  RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
-                    RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
-                      RuntimeData[Adt.Context[A, I10, DefaultAdtContext.type], RuntimeZero]
-                    ]
-                  ]
+                  Adt.Context[A, I7],
+                  RuntimeData[Adt.Context[A, I8], RuntimeData[Adt.Context[A, I9], RuntimeData[Adt.Context[A, I10], RuntimeZero]]]
                 ]
               ]
             ]
@@ -313,29 +241,22 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX10[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply[
-    A,
+  type CoProductsX10[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
-                  RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
-                    RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
-                      RuntimeData[Adt.Context[A, I10, DefaultAdtContext.type], RuntimeZero]
-                    ]
-                  ]
+                  Adt.Context[A, I7],
+                  RuntimeData[Adt.Context[A, I8], RuntimeData[Adt.Context[A, I9], RuntimeData[Adt.Context[A, I10], RuntimeZero]]]
                 ]
               ]
             ]
@@ -348,28 +269,22 @@ trait TypeAdtAlias {
 
   type CoProducts11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
-                    RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
-                      RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
-                        RuntimeData[Adt.Context[A, I11, DefaultAdtContext.type], RuntimeZero]
-                      ]
-                    ]
+                    Adt.Context[A, I8],
+                    RuntimeData[Adt.Context[A, I9], RuntimeData[Adt.Context[A, I10], RuntimeData[Adt.Context[A, I11], RuntimeZero]]]
                   ]
                 ]
               ]
@@ -381,31 +296,24 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX11[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply[
-    A,
+  type CoProductsX11[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
-                    RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
-                      RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
-                        RuntimeData[Adt.Context[A, I11, DefaultAdtContext.type], RuntimeZero]
-                      ]
-                    ]
+                    Adt.Context[A, I8],
+                    RuntimeData[Adt.Context[A, I9], RuntimeData[Adt.Context[A, I10], RuntimeData[Adt.Context[A, I11], RuntimeZero]]]
                   ]
                 ]
               ]
@@ -419,30 +327,24 @@ trait TypeAdtAlias {
 
   type CoProducts12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
-                      RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
-                        RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[Adt.Context[A, I12, DefaultAdtContext.type], RuntimeZero]
-                        ]
-                      ]
+                      Adt.Context[A, I9],
+                      RuntimeData[Adt.Context[A, I10], RuntimeData[Adt.Context[A, I11], RuntimeData[Adt.Context[A, I12], RuntimeZero]]]
                     ]
                   ]
                 ]
@@ -455,33 +357,26 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX12[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply[
-    A,
+  type CoProductsX12[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
-                      RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
-                        RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[Adt.Context[A, I12, DefaultAdtContext.type], RuntimeZero]
-                        ]
-                      ]
+                      Adt.Context[A, I9],
+                      RuntimeData[Adt.Context[A, I10], RuntimeData[Adt.Context[A, I11], RuntimeData[Adt.Context[A, I12], RuntimeZero]]]
                     ]
                   ]
                 ]
@@ -496,32 +391,26 @@ trait TypeAdtAlias {
 
   type CoProducts13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
-                        RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[Adt.Context[A, I13, DefaultAdtContext.type], RuntimeZero]
-                          ]
-                        ]
+                        Adt.Context[A, I10],
+                        RuntimeData[Adt.Context[A, I11], RuntimeData[Adt.Context[A, I12], RuntimeData[Adt.Context[A, I13], RuntimeZero]]]
                       ]
                     ]
                   ]
@@ -535,35 +424,28 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX13[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply[
-    A,
+  type CoProductsX13[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
-                        RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[Adt.Context[A, I13, DefaultAdtContext.type], RuntimeZero]
-                          ]
-                        ]
+                        Adt.Context[A, I10],
+                        RuntimeData[Adt.Context[A, I11], RuntimeData[Adt.Context[A, I12], RuntimeData[Adt.Context[A, I13], RuntimeZero]]]
                       ]
                     ]
                   ]
@@ -579,34 +461,28 @@ trait TypeAdtAlias {
 
   type CoProducts14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[Adt.Context[A, I14, DefaultAdtContext.type], RuntimeZero]
-                            ]
-                          ]
+                          Adt.Context[A, I11],
+                          RuntimeData[Adt.Context[A, I12], RuntimeData[Adt.Context[A, I13], RuntimeData[Adt.Context[A, I14], RuntimeZero]]]
                         ]
                       ]
                     ]
@@ -621,37 +497,30 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX14[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply[
-    A,
+  type CoProductsX14[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[Adt.Context[A, I14, DefaultAdtContext.type], RuntimeZero]
-                            ]
-                          ]
+                          Adt.Context[A, I11],
+                          RuntimeData[Adt.Context[A, I12], RuntimeData[Adt.Context[A, I13], RuntimeData[Adt.Context[A, I14], RuntimeZero]]]
                         ]
                       ]
                     ]
@@ -668,37 +537,31 @@ trait TypeAdtAlias {
 
   type CoProducts15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[Adt.Context[A, I15, DefaultAdtContext.type], RuntimeZero]
-                              ]
-                            ]
-                          ]
+                          Adt.Context[A, I11],
+                          RuntimeData[Adt.Context[A, I12], RuntimeData[
+                            Adt.Context[A, I13],
+                            RuntimeData[Adt.Context[A, I14], RuntimeData[Adt.Context[A, I15], RuntimeZero]]
+                          ]]
                         ]
                       ]
                     ]
@@ -713,40 +576,33 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX15[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply[
-    A,
+  type CoProductsX15[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
-                          RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[Adt.Context[A, I15, DefaultAdtContext.type], RuntimeZero]
-                              ]
-                            ]
-                          ]
+                          Adt.Context[A, I11],
+                          RuntimeData[Adt.Context[A, I12], RuntimeData[
+                            Adt.Context[A, I13],
+                            RuntimeData[Adt.Context[A, I14], RuntimeData[Adt.Context[A, I15], RuntimeZero]]
+                          ]]
                         ]
                       ]
                     ]
@@ -763,39 +619,33 @@ trait TypeAdtAlias {
 
   type CoProducts16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
-                                  RuntimeData[Adt.Context[A, I16, DefaultAdtContext.type], RuntimeZero]
-                                ]
-                              ]
-                            ]
+                            Adt.Context[A, I12],
+                            RuntimeData[Adt.Context[A, I13], RuntimeData[
+                              Adt.Context[A, I14],
+                              RuntimeData[Adt.Context[A, I15], RuntimeData[Adt.Context[A, I16], RuntimeZero]]
+                            ]]
                           ]
                         ]
                       ]
@@ -811,42 +661,35 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX16[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply[
-    A,
+  type CoProductsX16[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
-                            RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
-                                  RuntimeData[Adt.Context[A, I16, DefaultAdtContext.type], RuntimeZero]
-                                ]
-                              ]
-                            ]
+                            Adt.Context[A, I12],
+                            RuntimeData[Adt.Context[A, I13], RuntimeData[
+                              Adt.Context[A, I14],
+                              RuntimeData[Adt.Context[A, I15], RuntimeData[Adt.Context[A, I16], RuntimeZero]]
+                            ]]
                           ]
                         ]
                       ]
@@ -864,41 +707,35 @@ trait TypeAdtAlias {
 
   type CoProducts17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
-                                  RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
-                                    RuntimeData[Adt.Context[A, I17, DefaultAdtContext.type], RuntimeZero]
-                                  ]
-                                ]
-                              ]
+                              Adt.Context[A, I13],
+                              RuntimeData[Adt.Context[A, I14], RuntimeData[
+                                Adt.Context[A, I15],
+                                RuntimeData[Adt.Context[A, I16], RuntimeData[Adt.Context[A, I17], RuntimeZero]]
+                              ]]
                             ]
                           ]
                         ]
@@ -915,44 +752,37 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX17[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply[
-    A,
+  type CoProductsX17[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
-                              RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
-                                  RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
-                                    RuntimeData[Adt.Context[A, I17, DefaultAdtContext.type], RuntimeZero]
-                                  ]
-                                ]
-                              ]
+                              Adt.Context[A, I13],
+                              RuntimeData[Adt.Context[A, I14], RuntimeData[
+                                Adt.Context[A, I15],
+                                RuntimeData[Adt.Context[A, I16], RuntimeData[Adt.Context[A, I17], RuntimeZero]]
+                              ]]
                             ]
                           ]
                         ]
@@ -971,43 +801,37 @@ trait TypeAdtAlias {
 
   type CoProducts18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
-                                  RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
-                                    RuntimeData[
-                                      Adt.Context[A, I17, DefaultAdtContext.type],
-                                      RuntimeData[Adt.Context[A, I18, DefaultAdtContext.type], RuntimeZero]
-                                    ]
-                                  ]
-                                ]
+                                Adt.Context[A, I14],
+                                RuntimeData[Adt.Context[A, I15], RuntimeData[
+                                  Adt.Context[A, I16],
+                                  RuntimeData[Adt.Context[A, I17], RuntimeData[Adt.Context[A, I18], RuntimeZero]]
+                                ]]
                               ]
                             ]
                           ]
@@ -1025,46 +849,39 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX18[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply[
-    A,
+  type CoProductsX18[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
-                                RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
-                                  RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
-                                    RuntimeData[
-                                      Adt.Context[A, I17, DefaultAdtContext.type],
-                                      RuntimeData[Adt.Context[A, I18, DefaultAdtContext.type], RuntimeZero]
-                                    ]
-                                  ]
-                                ]
+                                Adt.Context[A, I14],
+                                RuntimeData[Adt.Context[A, I15], RuntimeData[
+                                  Adt.Context[A, I16],
+                                  RuntimeData[Adt.Context[A, I17], RuntimeData[Adt.Context[A, I18], RuntimeZero]]
+                                ]]
                               ]
                             ]
                           ]
@@ -1084,45 +901,39 @@ trait TypeAdtAlias {
 
   type CoProducts19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                Adt.Context[A, I14],
                                 RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
-                                  RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
-                                    RuntimeData[
-                                      Adt.Context[A, I17, DefaultAdtContext.type],
-                                      RuntimeData[
-                                        Adt.Context[A, I18, DefaultAdtContext.type],
-                                        RuntimeData[Adt.Context[A, I19, DefaultAdtContext.type], RuntimeZero]
-                                      ]
-                                    ]
-                                  ]
+                                  Adt.Context[A, I15],
+                                  RuntimeData[Adt.Context[A, I16], RuntimeData[
+                                    Adt.Context[A, I17],
+                                    RuntimeData[Adt.Context[A, I18], RuntimeData[Adt.Context[A, I19], RuntimeZero]]
+                                  ]]
                                 ]
                               ]
                             ]
@@ -1141,50 +952,41 @@ trait TypeAdtAlias {
     ADTStatus.Passed.type with ADTFunctionImplicitFetch.type
   ]
 
-  type CoProductsX19[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
-    TypeAdtApply[
-      A,
+  type CoProductsX19[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
+    RuntimeData[
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I1, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I2, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I3, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I4, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I5, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I6, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I7, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I8, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I9, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I10, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I11, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I12, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I13, DefaultAdtContext.type],
+                                Adt.Context[A, I14],
                                 RuntimeData[
-                                  Adt.Context[A, I14, DefaultAdtContext.type],
-                                  RuntimeData[
-                                    Adt.Context[A, I15, DefaultAdtContext.type],
-                                    RuntimeData[
-                                      Adt.Context[A, I16, DefaultAdtContext.type],
-                                      RuntimeData[
-                                        Adt.Context[A, I17, DefaultAdtContext.type],
-                                        RuntimeData[
-                                          Adt.Context[A, I18, DefaultAdtContext.type],
-                                          RuntimeData[Adt.Context[A, I19, DefaultAdtContext.type], RuntimeZero]
-                                        ]
-                                      ]
-                                    ]
-                                  ]
+                                  Adt.Context[A, I15],
+                                  RuntimeData[Adt.Context[A, I16], RuntimeData[
+                                    Adt.Context[A, I17],
+                                    RuntimeData[Adt.Context[A, I18], RuntimeData[Adt.Context[A, I19], RuntimeZero]]
+                                  ]]
                                 ]
                               ]
                             ]
@@ -1198,53 +1000,48 @@ trait TypeAdtAlias {
             ]
           ]
         ]
-      ],
-      ST with ADTFunctionImplicitFetch.type
-    ]
+      ]
+    ],
+    ST with ADTFunctionImplicitFetch.type
+  ]
 
   type CoProducts20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                Adt.Context[A, I14],
                                 RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  Adt.Context[A, I15],
                                   RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
-                                    RuntimeData[
-                                      Adt.Context[A, I17, DefaultAdtContext.type],
-                                      RuntimeData[
-                                        Adt.Context[A, I18, DefaultAdtContext.type],
-                                        RuntimeData[
-                                          Adt.Context[A, I19, DefaultAdtContext.type],
-                                          RuntimeData[Adt.Context[A, I20, DefaultAdtContext.type], RuntimeZero]
-                                        ]
-                                      ]
-                                    ]
+                                    Adt.Context[A, I16],
+                                    RuntimeData[Adt.Context[A, I17], RuntimeData[
+                                      Adt.Context[A, I18],
+                                      RuntimeData[Adt.Context[A, I19], RuntimeData[Adt.Context[A, I20], RuntimeZero]]
+                                    ]]
                                   ]
                                 ]
                               ]
@@ -1265,50 +1062,43 @@ trait TypeAdtAlias {
   ]
 
   type CoProductsX20[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
-    TypeAdtApply[
-      A,
+    ADTData[
       RuntimeData[
-        Adt.Context[A, I1, DefaultAdtContext.type],
+        Adt.Context[A, I1],
         RuntimeData[
-          Adt.Context[A, I2, DefaultAdtContext.type],
+          Adt.Context[A, I2],
           RuntimeData[
-            Adt.Context[A, I3, DefaultAdtContext.type],
+            Adt.Context[A, I3],
             RuntimeData[
-              Adt.Context[A, I4, DefaultAdtContext.type],
+              Adt.Context[A, I4],
               RuntimeData[
-                Adt.Context[A, I5, DefaultAdtContext.type],
+                Adt.Context[A, I5],
                 RuntimeData[
-                  Adt.Context[A, I6, DefaultAdtContext.type],
+                  Adt.Context[A, I6],
                   RuntimeData[
-                    Adt.Context[A, I7, DefaultAdtContext.type],
+                    Adt.Context[A, I7],
                     RuntimeData[
-                      Adt.Context[A, I8, DefaultAdtContext.type],
+                      Adt.Context[A, I8],
                       RuntimeData[
-                        Adt.Context[A, I9, DefaultAdtContext.type],
+                        Adt.Context[A, I9],
                         RuntimeData[
-                          Adt.Context[A, I10, DefaultAdtContext.type],
+                          Adt.Context[A, I10],
                           RuntimeData[
-                            Adt.Context[A, I11, DefaultAdtContext.type],
+                            Adt.Context[A, I11],
                             RuntimeData[
-                              Adt.Context[A, I12, DefaultAdtContext.type],
+                              Adt.Context[A, I12],
                               RuntimeData[
-                                Adt.Context[A, I13, DefaultAdtContext.type],
+                                Adt.Context[A, I13],
                                 RuntimeData[
-                                  Adt.Context[A, I14, DefaultAdtContext.type],
+                                  Adt.Context[A, I14],
                                   RuntimeData[
-                                    Adt.Context[A, I15, DefaultAdtContext.type],
+                                    Adt.Context[A, I15],
                                     RuntimeData[
-                                      Adt.Context[A, I16, DefaultAdtContext.type],
-                                      RuntimeData[
-                                        Adt.Context[A, I17, DefaultAdtContext.type],
-                                        RuntimeData[
-                                          Adt.Context[A, I18, DefaultAdtContext.type],
-                                          RuntimeData[
-                                            Adt.Context[A, I19, DefaultAdtContext.type],
-                                            RuntimeData[Adt.Context[A, I20, DefaultAdtContext.type], RuntimeZero]
-                                          ]
-                                        ]
-                                      ]
+                                      Adt.Context[A, I16],
+                                      RuntimeData[Adt.Context[A, I17], RuntimeData[
+                                        Adt.Context[A, I18],
+                                        RuntimeData[Adt.Context[A, I19], RuntimeData[Adt.Context[A, I20], RuntimeZero]]
+                                      ]]
                                     ]
                                   ]
                                 ]
@@ -1330,49 +1120,43 @@ trait TypeAdtAlias {
 
   type CoProducts21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                Adt.Context[A, I14],
                                 RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  Adt.Context[A, I15],
                                   RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    Adt.Context[A, I16],
                                     RuntimeData[
-                                      Adt.Context[A, I17, DefaultAdtContext.type],
-                                      RuntimeData[
-                                        Adt.Context[A, I18, DefaultAdtContext.type],
-                                        RuntimeData[
-                                          Adt.Context[A, I19, DefaultAdtContext.type],
-                                          RuntimeData[
-                                            Adt.Context[A, I20, DefaultAdtContext.type],
-                                            RuntimeData[Adt.Context[A, I21, DefaultAdtContext.type], RuntimeZero]
-                                          ]
-                                        ]
-                                      ]
+                                      Adt.Context[A, I17],
+                                      RuntimeData[Adt.Context[A, I18], RuntimeData[
+                                        Adt.Context[A, I19],
+                                        RuntimeData[Adt.Context[A, I20], RuntimeData[Adt.Context[A, I21], RuntimeZero]]
+                                      ]]
                                     ]
                                   ]
                                 ]
@@ -1394,52 +1178,45 @@ trait TypeAdtAlias {
   ]
 
   type CoProductsX21[A, ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
-    TypeAdtApply[
-      A,
+    ADTData[
       RuntimeData[
-        Adt.Context[A, I1, DefaultAdtContext.type],
+        Adt.Context[A, I1],
         RuntimeData[
-          Adt.Context[A, I2, DefaultAdtContext.type],
+          Adt.Context[A, I2],
           RuntimeData[
-            Adt.Context[A, I3, DefaultAdtContext.type],
+            Adt.Context[A, I3],
             RuntimeData[
-              Adt.Context[A, I4, DefaultAdtContext.type],
+              Adt.Context[A, I4],
               RuntimeData[
-                Adt.Context[A, I5, DefaultAdtContext.type],
+                Adt.Context[A, I5],
                 RuntimeData[
-                  Adt.Context[A, I6, DefaultAdtContext.type],
+                  Adt.Context[A, I6],
                   RuntimeData[
-                    Adt.Context[A, I7, DefaultAdtContext.type],
+                    Adt.Context[A, I7],
                     RuntimeData[
-                      Adt.Context[A, I8, DefaultAdtContext.type],
+                      Adt.Context[A, I8],
                       RuntimeData[
-                        Adt.Context[A, I9, DefaultAdtContext.type],
+                        Adt.Context[A, I9],
                         RuntimeData[
-                          Adt.Context[A, I10, DefaultAdtContext.type],
+                          Adt.Context[A, I10],
                           RuntimeData[
-                            Adt.Context[A, I11, DefaultAdtContext.type],
+                            Adt.Context[A, I11],
                             RuntimeData[
-                              Adt.Context[A, I12, DefaultAdtContext.type],
+                              Adt.Context[A, I12],
                               RuntimeData[
-                                Adt.Context[A, I13, DefaultAdtContext.type],
+                                Adt.Context[A, I13],
                                 RuntimeData[
-                                  Adt.Context[A, I14, DefaultAdtContext.type],
+                                  Adt.Context[A, I14],
                                   RuntimeData[
-                                    Adt.Context[A, I15, DefaultAdtContext.type],
+                                    Adt.Context[A, I15],
                                     RuntimeData[
-                                      Adt.Context[A, I16, DefaultAdtContext.type],
+                                      Adt.Context[A, I16],
                                       RuntimeData[
-                                        Adt.Context[A, I17, DefaultAdtContext.type],
-                                        RuntimeData[
-                                          Adt.Context[A, I18, DefaultAdtContext.type],
-                                          RuntimeData[
-                                            Adt.Context[A, I19, DefaultAdtContext.type],
-                                            RuntimeData[
-                                              Adt.Context[A, I20, DefaultAdtContext.type],
-                                              RuntimeData[Adt.Context[A, I21, DefaultAdtContext.type], RuntimeZero]
-                                            ]
-                                          ]
-                                        ]
+                                        Adt.Context[A, I17],
+                                        RuntimeData[Adt.Context[A, I18], RuntimeData[
+                                          Adt.Context[A, I19],
+                                          RuntimeData[Adt.Context[A, I20], RuntimeData[Adt.Context[A, I21], RuntimeZero]]
+                                        ]]
                                       ]
                                     ]
                                   ]
@@ -1462,51 +1239,45 @@ trait TypeAdtAlias {
 
   type CoProducts22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                Adt.Context[A, I14],
                                 RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  Adt.Context[A, I15],
                                   RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    Adt.Context[A, I16],
                                     RuntimeData[
-                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      Adt.Context[A, I17],
                                       RuntimeData[
-                                        Adt.Context[A, I18, DefaultAdtContext.type],
-                                        RuntimeData[
-                                          Adt.Context[A, I19, DefaultAdtContext.type],
-                                          RuntimeData[
-                                            Adt.Context[A, I20, DefaultAdtContext.type],
-                                            RuntimeData[
-                                              Adt.Context[A, I21, DefaultAdtContext.type],
-                                              RuntimeData[Adt.Context[A, I22, DefaultAdtContext.type], RuntimeZero]
-                                            ]
-                                          ]
-                                        ]
+                                        Adt.Context[A, I18],
+                                        RuntimeData[Adt.Context[A, I19], RuntimeData[
+                                          Adt.Context[A, I20],
+                                          RuntimeData[Adt.Context[A, I21], RuntimeData[Adt.Context[A, I22], RuntimeZero]]
+                                        ]]
                                       ]
                                     ]
                                   ]
@@ -1553,54 +1324,47 @@ trait TypeAdtAlias {
     I20,
     I21,
     I22
-  ] = TypeAdtApply[
-    A,
+  ] = ADTData[
     RuntimeData[
-      Adt.Context[A, I1, DefaultAdtContext.type],
+      Adt.Context[A, I1],
       RuntimeData[
-        Adt.Context[A, I2, DefaultAdtContext.type],
+        Adt.Context[A, I2],
         RuntimeData[
-          Adt.Context[A, I3, DefaultAdtContext.type],
+          Adt.Context[A, I3],
           RuntimeData[
-            Adt.Context[A, I4, DefaultAdtContext.type],
+            Adt.Context[A, I4],
             RuntimeData[
-              Adt.Context[A, I5, DefaultAdtContext.type],
+              Adt.Context[A, I5],
               RuntimeData[
-                Adt.Context[A, I6, DefaultAdtContext.type],
+                Adt.Context[A, I6],
                 RuntimeData[
-                  Adt.Context[A, I7, DefaultAdtContext.type],
+                  Adt.Context[A, I7],
                   RuntimeData[
-                    Adt.Context[A, I8, DefaultAdtContext.type],
+                    Adt.Context[A, I8],
                     RuntimeData[
-                      Adt.Context[A, I9, DefaultAdtContext.type],
+                      Adt.Context[A, I9],
                       RuntimeData[
-                        Adt.Context[A, I10, DefaultAdtContext.type],
+                        Adt.Context[A, I10],
                         RuntimeData[
-                          Adt.Context[A, I11, DefaultAdtContext.type],
+                          Adt.Context[A, I11],
                           RuntimeData[
-                            Adt.Context[A, I12, DefaultAdtContext.type],
+                            Adt.Context[A, I12],
                             RuntimeData[
-                              Adt.Context[A, I13, DefaultAdtContext.type],
+                              Adt.Context[A, I13],
                               RuntimeData[
-                                Adt.Context[A, I14, DefaultAdtContext.type],
+                                Adt.Context[A, I14],
                                 RuntimeData[
-                                  Adt.Context[A, I15, DefaultAdtContext.type],
+                                  Adt.Context[A, I15],
                                   RuntimeData[
-                                    Adt.Context[A, I16, DefaultAdtContext.type],
+                                    Adt.Context[A, I16],
                                     RuntimeData[
-                                      Adt.Context[A, I17, DefaultAdtContext.type],
+                                      Adt.Context[A, I17],
                                       RuntimeData[
-                                        Adt.Context[A, I18, DefaultAdtContext.type],
-                                        RuntimeData[
-                                          Adt.Context[A, I19, DefaultAdtContext.type],
-                                          RuntimeData[
-                                            Adt.Context[A, I20, DefaultAdtContext.type],
-                                            RuntimeData[
-                                              Adt.Context[A, I21, DefaultAdtContext.type],
-                                              RuntimeData[Adt.Context[A, I22, DefaultAdtContext.type], RuntimeZero]
-                                            ]
-                                          ]
-                                        ]
+                                        Adt.Context[A, I18],
+                                        RuntimeData[Adt.Context[A, I19], RuntimeData[
+                                          Adt.Context[A, I20],
+                                          RuntimeData[Adt.Context[A, I21], RuntimeData[Adt.Context[A, I22], RuntimeZero]]
+                                        ]]
                                       ]
                                     ]
                                   ]

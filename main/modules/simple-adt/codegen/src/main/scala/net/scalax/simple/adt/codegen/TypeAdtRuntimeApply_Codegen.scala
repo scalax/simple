@@ -23,14 +23,14 @@ object CodePre2:
     // ===
 
     // ===
-    lazy val param5 = DataTypeString(i => s"Adt.Context[ParamType, I$i, DefaultAdtContext.type]")(1).text
+    lazy val param5 = DataTypeString(i => s"Adt.Context[ParamType, I$i]")(1).text
     // ===
 
     // ===
     class ApplyStrCodegen(val index: Int) {
       self2 =>
       lazy val text: String =
-        s"""override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[$param5, S with ADTFunctionImplicitFetch.type]): ADTData[$param3, ADTStatus.Passed.type] = {
+        s"""override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
            new Adt.Status.Passed.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
          }"""
 
