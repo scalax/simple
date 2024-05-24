@@ -21,11 +21,9 @@ object ADTData {
       override val toGHDMZSK: ghdmzsk = builder.coproducter.appender.inputGHDMZSK(() => tailGHDMZSK.toGHDMZSK)
     }
 
-  def zero[ST <: ADTStatus](isFinishAndNothing: IsFinishAndNothing): ADTData[RuntimeZero, ST with ADTStatus.NotFinished.type] =
-    new ADTData[RuntimeZero, ST with ADTStatus.NotFinished.type] {
-      override lazy val toGHDMZSK: ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = ???
-      }
+  def zero[In, ST <: ADTStatus]: ADTData[RuntimeZero, ST] =
+    new ADTData[RuntimeZero, ST] {
+      override lazy val toGHDMZSK: ghdmzsk = builder.coproducter.success(AdtFunction.defalutValue[In])
     }
 }
 

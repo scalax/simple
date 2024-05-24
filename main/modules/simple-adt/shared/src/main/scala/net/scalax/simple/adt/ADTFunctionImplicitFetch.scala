@@ -24,15 +24,10 @@ package impl {
       ADTData.success(adtConvert)
   }
 
-  trait HListTypeAdtPositiveLower2 extends LowerLevelPoly {
+  trait HListTypeAdtPositiveLower2 {
     @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: RuntimeNat, ST <: ADTStatus](implicit
       tailMapping: ADTData[Tail, ST]
     ): ADTData[RuntimeData[AdtFunction[A, B], Tail], ST] = ADTData.copyTail(tailMapping)
-  }
-
-  trait LowerLevelPoly {
-    implicit def adtFailedResult[ST <: ADTStatus]: ADTData[RuntimeZero, ST with ADTStatus.NotFinished.type] =
-      ADTData.zero[ST](IsFinishAndNothing.value(null))
   }
 
 }
