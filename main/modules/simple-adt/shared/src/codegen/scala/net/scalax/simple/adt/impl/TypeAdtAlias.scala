@@ -6,25 +6,23 @@ import temp._
 
 trait TypeAdtAlias {
 
-  type CoProducts1[A, I1] =
-    ADTData[RuntimeData[AdtFunction[A, I1], RuntimeZero], AdtExtension.Passed.type with ADTFunctionImplicitFetch.type]
-  type CoProductsX1[A, ST <: AdtExtension, I1] =
-    ADTData[RuntimeData[AdtFunction[A, I1], RuntimeZero], ST with ADTFunctionImplicitFetch.type]
+  type CoProducts1[A, I1] = ADTData[RuntimeData[AdtFunction[A, I1], RuntimeZero], AdtExtension.Passed.type with ADTTypeParameterFetch.type]
+  type CoProductsX1[A, ST <: AdtExtension, I1] = ADTData[RuntimeData[AdtFunction[A, I1], RuntimeZero], ST with ADTTypeParameterFetch.type]
 
   type CoProducts2[A, I1, I2] = ADTData[
     RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeZero]],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX2[A, ST <: AdtExtension, I1, I2] =
-    ADTData[RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeZero]], ST with ADTFunctionImplicitFetch.type]
+    ADTData[RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeZero]], ST with ADTTypeParameterFetch.type]
 
   type CoProducts3[A, I1, I2, I3] = ADTData[
     RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeZero]]],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX3[A, ST <: AdtExtension, I1, I2, I3] = ADTData[
     RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeZero]]],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts4[A, I1, I2, I3, I4] = ADTData[
@@ -32,14 +30,14 @@ trait TypeAdtAlias {
       AdtFunction[A, I1],
       RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeZero]]]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX4[A, ST <: AdtExtension, I1, I2, I3, I4] = ADTData[
     RuntimeData[
       AdtFunction[A, I1],
       RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeZero]]]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts5[A, I1, I2, I3, I4, I5] = ADTData[
@@ -50,7 +48,7 @@ trait TypeAdtAlias {
         RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeData[AdtFunction[A, I5], RuntimeZero]]]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX5[A, ST <: AdtExtension, I1, I2, I3, I4, I5] = ADTData[
     RuntimeData[
@@ -60,7 +58,7 @@ trait TypeAdtAlias {
         RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeData[AdtFunction[A, I5], RuntimeZero]]]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts6[A, I1, I2, I3, I4, I5, I6] = ADTData[
@@ -74,7 +72,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX6[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6] = ADTData[
     RuntimeData[
@@ -87,7 +85,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts7[A, I1, I2, I3, I4, I5, I6, I7] = ADTData[
@@ -104,7 +102,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX7[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7] = ADTData[
     RuntimeData[
@@ -120,7 +118,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts8[A, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
@@ -140,7 +138,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX8[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
     RuntimeData[
@@ -159,7 +157,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
@@ -182,7 +180,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX9[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
     RuntimeData[
@@ -204,7 +202,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
@@ -230,7 +228,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX10[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
     RuntimeData[
@@ -255,7 +253,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
@@ -284,7 +282,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX11[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
     RuntimeData[
@@ -312,7 +310,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
@@ -344,7 +342,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX12[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
     RuntimeData[
@@ -375,7 +373,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
@@ -410,7 +408,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX13[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
     RuntimeData[
@@ -444,7 +442,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
@@ -482,7 +480,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX14[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
     RuntimeData[
@@ -519,7 +517,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
@@ -560,7 +558,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX15[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
     RuntimeData[
@@ -600,7 +598,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
@@ -644,7 +642,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX16[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
     RuntimeData[
@@ -687,7 +685,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
@@ -734,7 +732,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX17[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
     RuntimeData[
@@ -780,7 +778,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
@@ -830,7 +828,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX18[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
     RuntimeData[
@@ -879,7 +877,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
@@ -932,7 +930,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX19[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
     RuntimeData[
@@ -984,7 +982,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
@@ -1040,7 +1038,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX20[A, ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
     ADTData[
@@ -1096,7 +1094,7 @@ trait TypeAdtAlias {
           ]
         ]
       ],
-      ST with ADTFunctionImplicitFetch.type
+      ST with ADTTypeParameterFetch.type
     ]
 
   type CoProducts21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ADTData[
@@ -1155,7 +1153,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX21[
     A,
@@ -1237,7 +1235,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
   type CoProducts22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = ADTData[
@@ -1299,7 +1297,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    AdtExtension.Passed.type with ADTFunctionImplicitFetch.type
+    AdtExtension.Passed.type with ADTTypeParameterFetch.type
   ]
   type CoProductsX22[
     A,
@@ -1385,7 +1383,7 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    ST with ADTFunctionImplicitFetch.type
+    ST with ADTTypeParameterFetch.type
   ]
 
 }

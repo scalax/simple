@@ -30,7 +30,7 @@ object CodePre2:
     class ApplyStrCodegen(val index: Int) {
       self2 =>
       lazy val text: String =
-        s"""override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+        s"""override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTTypeParameterFetch.type]): NatModelType = {
            new AdtExtension.Passed.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
          }"""
 
