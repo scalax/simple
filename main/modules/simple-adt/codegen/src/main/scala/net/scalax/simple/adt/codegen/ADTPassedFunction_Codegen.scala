@@ -23,7 +23,8 @@ object ADTPassedFunctionCodegen:
 
   def typeStr(count: Int) = s"ADTData[${adtDataType(count)(1)}, SImpl]"
 
-  val text4: String = s"""
+  val text4: String =
+    s"""
 package net.scalax.simple.adt
 package impl
 
@@ -36,9 +37,7 @@ import builder.{coproducter, producter_build}
 trait ADTPassedFunction {
 
   ${repeatBlank(22)(i =>
-                          s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ${repeatDot(i)(u1 =>
-                              s"Poly$u1"
-                            )}, SImpl <: ADTStatus](data$i: ${typeStr(i + 1)}) {
+        s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, SImpl <: ADTStatus](data$i: ${typeStr(i + 1)}) {
 
     def fold[D](${repeatParameter(i)}): D = {
       val func_link: ghdmzsk = ${lawRepeatParameter(i)(0)}
@@ -49,7 +48,7 @@ trait ADTPassedFunction {
 }
 
 """
-                        )}
+      )}
 
 }
 """.stripMargin
