@@ -26,17 +26,18 @@ object ADTPassedFunctionCodegen:
   val text4: String =
     s"""
 package net.scalax.simple.adt
-package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
 import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 import builder.{coproducter, producter_build}
 
-trait ADTPassedFunction {
+object ADTPassedFunction extends AdtExtension {
 
   ${repeatBlank(22)(i =>
-        s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, SImpl <: AdtExtension](data$i: ${typeStr(i + 1)}) {
+        s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, SImpl <: AdtExtension](private val data$i: ${typeStr(
+            i + 1
+          )}) extends AnyVal {
 
     def fold[D](${repeatParameter(i)}): D = {
       val func_link: ghdmzsk = ${lawRepeatParameter(i)(0)}

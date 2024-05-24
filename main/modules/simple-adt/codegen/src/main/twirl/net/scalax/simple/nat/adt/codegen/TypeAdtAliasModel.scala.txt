@@ -15,7 +15,7 @@ import temp._
 
 trait TypeAdtAliasModel {
     @for(i <- 1 to 22) {
-        type CoProduct@{i}[@TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), AdtExtension.Passed.type]
+        type CoProduct@{i}[@TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ADTPassedFunction.type]
         type CoProductX@{i}[ST <: AdtExtension, @TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ST]
     }
 }

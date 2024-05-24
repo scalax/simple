@@ -12,7 +12,7 @@ package adt
 object ADTTypeParameterFetch extends AdtExtension with impl.HListTypeAdtPositiveLower2 {
   @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: RuntimeNat, ST <: AdtExtension](implicit
     adtConvert: AdtFunction[A, B]
-  ): ADTData[RuntimeData[AdtFunction[A, B], Tail], ST with AdtExtension.Passed.type] =
+  ): ADTData[RuntimeData[AdtFunction[A, B], Tail], ST with ADTPassedFunction.type] =
     ADTData.success(adtConvert)
 }
 

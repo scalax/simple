@@ -4,7 +4,7 @@ package temp
 import net.scalax.simple.adt.AdtExtension
 
 trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
-  type NatModelType            = ADTData[N2, AdtExtension.Passed.type]
+  type NatModelType            = ADTData[N2, ADTPassedFunction.type]
   type NatModelTypeFunction[D] = N1[D]
 
   trait InstanceGet[D1Type] {

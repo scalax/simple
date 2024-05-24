@@ -1,14 +1,14 @@
 package net.scalax.simple.adt
-package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
 import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 import builder.{coproducter, producter_build}
 
-trait ADTPassedFunction {
+object ADTPassedFunction extends AdtExtension {
 
-  implicit class extra1[ParamType, I1, SImpl <: AdtExtension](data1: ADTData[RuntimeData[I1, RuntimeZero], SImpl]) {
+  implicit class extra1[ParamType, I1, SImpl <: AdtExtension](private val data1: ADTData[RuntimeData[I1, RuntimeZero], SImpl])
+      extends AnyVal {
 
     def fold[D](func1: I1 => D): D = {
       val func_link: ghdmzsk = producter_build.appended(func1).inputGHDMZSK(() => producter_build.zero)
@@ -18,7 +18,9 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra2[ParamType, I1, I2, SImpl <: AdtExtension](data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], SImpl]) {
+  implicit class extra2[ParamType, I1, I2, SImpl <: AdtExtension](
+    private val data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], SImpl]
+  ) extends AnyVal {
 
     def fold[D](func1: I1 => D, func2: I2 => D): D = {
       val func_link: ghdmzsk =
@@ -30,8 +32,8 @@ trait ADTPassedFunction {
   }
 
   implicit class extra3[ParamType, I1, I2, I3, SImpl <: AdtExtension](
-    data3: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], SImpl]
-  ) {
+    private val data3: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], SImpl]
+  ) extends AnyVal {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -46,8 +48,8 @@ trait ADTPassedFunction {
   }
 
   implicit class extra4[ParamType, I1, I2, I3, I4, SImpl <: AdtExtension](
-    data4: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], SImpl]
-  ) {
+    private val data4: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], SImpl]
+  ) extends AnyVal {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -66,8 +68,8 @@ trait ADTPassedFunction {
   }
 
   implicit class extra5[ParamType, I1, I2, I3, I4, I5, SImpl <: AdtExtension](
-    data5: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], SImpl]
-  ) {
+    private val data5: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], SImpl]
+  ) extends AnyVal {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -92,8 +94,11 @@ trait ADTPassedFunction {
   }
 
   implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, SImpl <: AdtExtension](
-    data6: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]], SImpl]
-  ) {
+    private val data6: ADTData[
+      RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]],
+      SImpl
+    ]
+  ) extends AnyVal {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -122,11 +127,11 @@ trait ADTPassedFunction {
   }
 
   implicit class extra7[ParamType, I1, I2, I3, I4, I5, I6, I7, SImpl <: AdtExtension](
-    data7: ADTData[
+    private val data7: ADTData[
       RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](func1: I1 => D, func2: I2 => D, func3: I3 => D, func4: I4 => D, func5: I5 => D, func6: I6 => D, func7: I7 => D): D = {
       val func_link: ghdmzsk = producter_build
@@ -159,11 +164,11 @@ trait ADTPassedFunction {
   }
 
   implicit class extra8[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, SImpl <: AdtExtension](
-    data8: ADTData[RuntimeData[
+    private val data8: ADTData[RuntimeData[
       I1,
       RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
     ], SImpl]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -209,14 +214,14 @@ trait ADTPassedFunction {
   }
 
   implicit class extra9[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, SImpl <: AdtExtension](
-    data9: ADTData[
+    private val data9: ADTData[
       RuntimeData[I1, RuntimeData[
         I2,
         RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
       ]],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -267,7 +272,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra10[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, SImpl <: AdtExtension](
-    data10: ADTData[
+    private val data10: ADTData[
       RuntimeData[
         I1,
         RuntimeData[I2, RuntimeData[I3, RuntimeData[
@@ -277,7 +282,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -333,7 +338,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra11[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, SImpl <: AdtExtension](
-    data11: ADTData[
+    private val data11: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -346,7 +351,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -407,7 +412,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra12[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, SImpl <: AdtExtension](
-    data12: ADTData[
+    private val data12: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -423,7 +428,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -491,7 +496,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra13[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, SImpl <: AdtExtension](
-    data13: ADTData[
+    private val data13: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -510,7 +515,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -583,7 +588,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra14[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, SImpl <: AdtExtension](
-    data14: ADTData[
+    private val data14: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -605,7 +610,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -683,7 +688,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra15[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, SImpl <: AdtExtension](
-    data15: ADTData[
+    private val data15: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -708,7 +713,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -791,7 +796,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra16[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, SImpl <: AdtExtension](
-    data16: ADTData[
+    private val data16: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -819,7 +824,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -907,7 +912,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra17[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, SImpl <: AdtExtension](
-    data17: ADTData[
+    private val data17: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -941,7 +946,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -1036,7 +1041,7 @@ trait ADTPassedFunction {
   }
 
   implicit class extra18[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, SImpl <: AdtExtension](
-    data18: ADTData[
+    private val data18: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -1073,7 +1078,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -1195,7 +1200,7 @@ trait ADTPassedFunction {
     I19,
     SImpl <: AdtExtension
   ](
-    data19: ADTData[
+    private val data19: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -1235,7 +1240,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -1363,7 +1368,7 @@ trait ADTPassedFunction {
     I20,
     SImpl <: AdtExtension
   ](
-    data20: ADTData[
+    private val data20: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -1406,7 +1411,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -1540,7 +1545,7 @@ trait ADTPassedFunction {
     I21,
     SImpl <: AdtExtension
   ](
-    data21: ADTData[
+    private val data21: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -1586,7 +1591,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
@@ -1726,7 +1731,7 @@ trait ADTPassedFunction {
     I22,
     SImpl <: AdtExtension
   ](
-    data22: ADTData[
+    private val data22: ADTData[
       RuntimeData[
         I1,
         RuntimeData[
@@ -1775,7 +1780,7 @@ trait ADTPassedFunction {
       ],
       SImpl
     ]
-  ) {
+  ) extends AnyVal {
 
     def fold[D](
       func1: I1 => D,
