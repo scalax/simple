@@ -3,13 +3,12 @@ package impl
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
-import Adt.{Status => ADTStatus}
 import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 import builder.{coproducter, producter_build}
 
 trait ADTPassedFunction {
 
-  implicit class extra1[ParamType, I1, SImpl <: ADTStatus](data1: ADTData[RuntimeData[I1, RuntimeZero], SImpl]) {
+  implicit class extra1[ParamType, I1, SImpl <: AdtExtension](data1: ADTData[RuntimeData[I1, RuntimeZero], SImpl]) {
 
     def fold[D](func1: I1 => D): D = {
       val func_link: ghdmzsk = producter_build.appended(func1).inputGHDMZSK(() => producter_build.zero)
@@ -19,7 +18,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra2[ParamType, I1, I2, SImpl <: ADTStatus](data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], SImpl]) {
+  implicit class extra2[ParamType, I1, I2, SImpl <: AdtExtension](data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], SImpl]) {
 
     def fold[D](func1: I1 => D, func2: I2 => D): D = {
       val func_link: ghdmzsk =
@@ -30,7 +29,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra3[ParamType, I1, I2, I3, SImpl <: ADTStatus](
+  implicit class extra3[ParamType, I1, I2, I3, SImpl <: AdtExtension](
     data3: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], SImpl]
   ) {
 
@@ -46,7 +45,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra4[ParamType, I1, I2, I3, I4, SImpl <: ADTStatus](
+  implicit class extra4[ParamType, I1, I2, I3, I4, SImpl <: AdtExtension](
     data4: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], SImpl]
   ) {
 
@@ -66,7 +65,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra5[ParamType, I1, I2, I3, I4, I5, SImpl <: ADTStatus](
+  implicit class extra5[ParamType, I1, I2, I3, I4, I5, SImpl <: AdtExtension](
     data5: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], SImpl]
   ) {
 
@@ -92,7 +91,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, SImpl <: ADTStatus](
+  implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, SImpl <: AdtExtension](
     data6: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]], SImpl]
   ) {
 
@@ -122,7 +121,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra7[ParamType, I1, I2, I3, I4, I5, I6, I7, SImpl <: ADTStatus](
+  implicit class extra7[ParamType, I1, I2, I3, I4, I5, I6, I7, SImpl <: AdtExtension](
     data7: ADTData[
       RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
       SImpl
@@ -159,7 +158,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra8[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, SImpl <: ADTStatus](
+  implicit class extra8[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, SImpl <: AdtExtension](
     data8: ADTData[RuntimeData[
       I1,
       RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
@@ -209,7 +208,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra9[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, SImpl <: ADTStatus](
+  implicit class extra9[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, SImpl <: AdtExtension](
     data9: ADTData[
       RuntimeData[I1, RuntimeData[
         I2,
@@ -267,7 +266,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra10[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, SImpl <: ADTStatus](
+  implicit class extra10[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, SImpl <: AdtExtension](
     data10: ADTData[
       RuntimeData[
         I1,
@@ -333,7 +332,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra11[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, SImpl <: ADTStatus](
+  implicit class extra11[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, SImpl <: AdtExtension](
     data11: ADTData[
       RuntimeData[
         I1,
@@ -407,7 +406,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra12[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, SImpl <: ADTStatus](
+  implicit class extra12[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, SImpl <: AdtExtension](
     data12: ADTData[
       RuntimeData[
         I1,
@@ -491,7 +490,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra13[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, SImpl <: ADTStatus](
+  implicit class extra13[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, SImpl <: AdtExtension](
     data13: ADTData[
       RuntimeData[
         I1,
@@ -583,7 +582,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra14[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, SImpl <: ADTStatus](
+  implicit class extra14[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, SImpl <: AdtExtension](
     data14: ADTData[
       RuntimeData[
         I1,
@@ -683,7 +682,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra15[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, SImpl <: ADTStatus](
+  implicit class extra15[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, SImpl <: AdtExtension](
     data15: ADTData[
       RuntimeData[
         I1,
@@ -791,7 +790,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra16[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, SImpl <: ADTStatus](
+  implicit class extra16[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, SImpl <: AdtExtension](
     data16: ADTData[
       RuntimeData[
         I1,
@@ -907,7 +906,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra17[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, SImpl <: ADTStatus](
+  implicit class extra17[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, SImpl <: AdtExtension](
     data17: ADTData[
       RuntimeData[
         I1,
@@ -1036,7 +1035,7 @@ trait ADTPassedFunction {
 
   }
 
-  implicit class extra18[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, SImpl <: ADTStatus](
+  implicit class extra18[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, SImpl <: AdtExtension](
     data18: ADTData[
       RuntimeData[
         I1,
@@ -1194,7 +1193,7 @@ trait ADTPassedFunction {
     I17,
     I18,
     I19,
-    SImpl <: ADTStatus
+    SImpl <: AdtExtension
   ](
     data19: ADTData[
       RuntimeData[
@@ -1362,7 +1361,7 @@ trait ADTPassedFunction {
     I18,
     I19,
     I20,
-    SImpl <: ADTStatus
+    SImpl <: AdtExtension
   ](
     data20: ADTData[
       RuntimeData[
@@ -1539,7 +1538,7 @@ trait ADTPassedFunction {
     I19,
     I20,
     I21,
-    SImpl <: ADTStatus
+    SImpl <: AdtExtension
   ](
     data21: ADTData[
       RuntimeData[
@@ -1725,7 +1724,7 @@ trait ADTPassedFunction {
     I20,
     I21,
     I22,
-    SImpl <: ADTStatus
+    SImpl <: AdtExtension
   ](
     data22: ADTData[
       RuntimeData[

@@ -3,21 +3,20 @@ package adt
 package impl
 
 import temp._
-import Adt.{Status => ADTStatus}
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 import builder.{coproducter, producter_build, DataTaker}
 
 trait TypeAdtAliasModelUnapply {
   object CoProduct1 {
-    def unapply[I1, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = data.toGHDMZSK match {
+    def unapply[I1, S <: AdtExtension](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = data.toGHDMZSK match {
       case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
       case _             => None
     }
   }
 
   object CoProduct2 {
-    def unapply[I1, I2, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeNat]], S]): Option[I2] = {
+    def unapply[I1, I2, S <: AdtExtension](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeNat]], S]): Option[I2] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options1GHDMZSK)
 
       dataInstance match {
@@ -28,7 +27,9 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct3 {
-    def unapply[I1, I2, I3, S <: ADTStatus](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeNat]]], S]): Option[I3] = {
+    def unapply[I1, I2, I3, S <: AdtExtension](
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeNat]]], S]
+    ): Option[I3] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options2GHDMZSK)
 
       dataInstance match {
@@ -39,7 +40,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct4 {
-    def unapply[I1, I2, I3, I4, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, S <: AdtExtension](
       data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeNat]]]], S]
     ): Option[I4] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options3GHDMZSK)
@@ -52,7 +53,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct5 {
-    def unapply[I1, I2, I3, I4, I5, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, S <: AdtExtension](
       data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeNat]]]]], S]
     ): Option[I5] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options4GHDMZSK)
@@ -65,7 +66,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct6 {
-    def unapply[I1, I2, I3, I4, I5, I6, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, S <: AdtExtension](
       data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeNat]]]]]], S]
     ): Option[I6] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options5GHDMZSK)
@@ -78,7 +79,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct7 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, S <: AdtExtension](
       data: ADTData[
         RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeNat]]]]]]],
         S
@@ -94,7 +95,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct8 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, S <: AdtExtension](
       data: ADTData[RuntimeData[
         I1,
         RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeNat]]]]]]]
@@ -110,7 +111,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct9 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: AdtExtension](
       data: ADTData[
         RuntimeData[I1, RuntimeData[
           I2,
@@ -129,7 +130,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct10 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -151,7 +152,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct11 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -176,7 +177,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct12 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -204,7 +205,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct13 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -235,7 +236,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct14 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -269,7 +270,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct15 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -306,7 +307,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct16 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -346,7 +347,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct17 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -389,7 +390,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct18 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -438,7 +439,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct19 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -490,7 +491,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct20 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -545,7 +546,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct21 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -603,7 +604,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct22 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22, S <: ADTStatus](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22, S <: AdtExtension](
       data: ADTData[
         RuntimeData[
           I1,

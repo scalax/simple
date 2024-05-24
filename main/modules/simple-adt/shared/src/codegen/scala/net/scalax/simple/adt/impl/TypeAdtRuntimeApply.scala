@@ -2,7 +2,6 @@
   package net.scalax.simple.adt
   package impl
 
-  import Adt.{Status => ADTStatus}
   import temp._
   import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 
@@ -17,8 +16,8 @@
         
 def option1(iData: I1): this.NatModelType = ADTData.success(iData)
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra1(b).fold(t => option1(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra1(b).fold(t => option1(t.adtFunctionApply(a)))
          }
 
       }
@@ -32,8 +31,8 @@ def option1(iData: I1): this.NatModelType = ADTData.success(iData)
 def option1(iData: I1): this.NatModelType = ADTData.success(iData)
 def option2(iData: I2): this.NatModelType = ADTData.copyTail(ADTData.success(iData))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra2(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra2(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)))
          }
 
       }
@@ -48,8 +47,8 @@ def option1(iData: I1): this.NatModelType = ADTData.success(iData)
 def option2(iData: I2): this.NatModelType = ADTData.copyTail(ADTData.success(iData))
 def option3(iData: I3): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra3(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra3(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)))
          }
 
       }
@@ -65,8 +64,8 @@ def option2(iData: I2): this.NatModelType = ADTData.copyTail(ADTData.success(iDa
 def option3(iData: I3): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))
 def option4(iData: I4): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra4(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra4(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)))
          }
 
       }
@@ -83,8 +82,8 @@ def option3(iData: I3): this.NatModelType = ADTData.copyTail(ADTData.copyTail(AD
 def option4(iData: I4): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))
 def option5(iData: I5): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra5(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra5(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)))
          }
 
       }
@@ -102,8 +101,8 @@ def option4(iData: I4): this.NatModelType = ADTData.copyTail(ADTData.copyTail(AD
 def option5(iData: I5): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))
 def option6(iData: I6): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra6(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra6(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)))
          }
 
       }
@@ -122,8 +121,8 @@ def option5(iData: I5): this.NatModelType = ADTData.copyTail(ADTData.copyTail(AD
 def option6(iData: I6): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))
 def option7(iData: I7): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra7(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra7(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)))
          }
 
       }
@@ -143,8 +142,8 @@ def option6(iData: I6): this.NatModelType = ADTData.copyTail(ADTData.copyTail(AD
 def option7(iData: I7): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))
 def option8(iData: I8): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra8(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra8(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)))
          }
 
       }
@@ -165,8 +164,8 @@ def option7(iData: I7): this.NatModelType = ADTData.copyTail(ADTData.copyTail(AD
 def option8(iData: I8): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))
 def option9(iData: I9): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra9(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra9(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)))
          }
 
       }
@@ -188,8 +187,8 @@ def option8(iData: I8): this.NatModelType = ADTData.copyTail(ADTData.copyTail(AD
 def option9(iData: I9): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))
 def option10(iData: I10): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra10(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra10(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)))
          }
 
       }
@@ -212,8 +211,8 @@ def option9(iData: I9): this.NatModelType = ADTData.copyTail(ADTData.copyTail(AD
 def option10(iData: I10): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))
 def option11(iData: I11): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra11(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra11(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)))
          }
 
       }
@@ -237,8 +236,8 @@ def option10(iData: I10): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option11(iData: I11): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))
 def option12(iData: I12): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra12(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra12(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)))
          }
 
       }
@@ -263,8 +262,8 @@ def option11(iData: I11): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option12(iData: I12): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))
 def option13(iData: I13): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra13(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra13(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)))
          }
 
       }
@@ -290,8 +289,8 @@ def option12(iData: I12): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option13(iData: I13): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))
 def option14(iData: I14): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra14(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra14(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)))
          }
 
       }
@@ -318,8 +317,8 @@ def option13(iData: I13): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option14(iData: I14): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))
 def option15(iData: I15): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra15(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra15(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)))
          }
 
       }
@@ -347,8 +346,8 @@ def option14(iData: I14): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option15(iData: I15): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))
 def option16(iData: I16): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra16(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra16(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)))
          }
 
       }
@@ -377,8 +376,8 @@ def option15(iData: I15): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option16(iData: I16): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))))
 def option17(iData: I17): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra17(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra17(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)))
          }
 
       }
@@ -408,8 +407,8 @@ def option16(iData: I16): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option17(iData: I17): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))))
 def option18(iData: I18): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra18(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra18(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)))
          }
 
       }
@@ -440,8 +439,8 @@ def option17(iData: I17): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option18(iData: I18): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))))))
 def option19(iData: I19): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra19(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra19(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)))
          }
 
       }
@@ -473,8 +472,8 @@ def option18(iData: I18): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option19(iData: I19): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))))))
 def option20(iData: I20): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra20(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)) , t => option20(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra20(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)) , t => option20(t.adtFunctionApply(a)))
          }
 
       }
@@ -507,8 +506,8 @@ def option19(iData: I19): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option20(iData: I20): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))))))))
 def option21(iData: I21): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra21(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)) , t => option20(t.adtFunctionApply(a)) , t => option21(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra21(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)) , t => option20(t.adtFunctionApply(a)) , t => option21(t.adtFunctionApply(a)))
          }
 
       }
@@ -542,8 +541,8 @@ def option20(iData: I20): this.NatModelType = ADTData.copyTail(ADTData.copyTail(
 def option21(iData: I21): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))))))))))))))))))))
 def option22(iData: I22): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.copyTail(ADTData.success(iData))))))))))))))))))))))
 
-        override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra22(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)) , t => option20(t.adtFunctionApply(a)) , t => option21(t.adtFunctionApply(a)) , t => option22(t.adtFunctionApply(a)))
+        override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra22(b).fold(t => option1(t.adtFunctionApply(a)) , t => option2(t.adtFunctionApply(a)) , t => option3(t.adtFunctionApply(a)) , t => option4(t.adtFunctionApply(a)) , t => option5(t.adtFunctionApply(a)) , t => option6(t.adtFunctionApply(a)) , t => option7(t.adtFunctionApply(a)) , t => option8(t.adtFunctionApply(a)) , t => option9(t.adtFunctionApply(a)) , t => option10(t.adtFunctionApply(a)) , t => option11(t.adtFunctionApply(a)) , t => option12(t.adtFunctionApply(a)) , t => option13(t.adtFunctionApply(a)) , t => option14(t.adtFunctionApply(a)) , t => option15(t.adtFunctionApply(a)) , t => option16(t.adtFunctionApply(a)) , t => option17(t.adtFunctionApply(a)) , t => option18(t.adtFunctionApply(a)) , t => option19(t.adtFunctionApply(a)) , t => option20(t.adtFunctionApply(a)) , t => option21(t.adtFunctionApply(a)) , t => option22(t.adtFunctionApply(a)))
          }
 
       }

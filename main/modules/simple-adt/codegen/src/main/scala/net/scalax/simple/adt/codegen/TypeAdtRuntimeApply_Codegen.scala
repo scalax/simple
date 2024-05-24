@@ -30,8 +30,8 @@ object CodePre2:
     class ApplyStrCodegen(val index: Int) {
       self2 =>
       lazy val text: String =
-        s"""override def apply[ParamType, S <: ADTStatus](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
-           new Adt.Status.Passed.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
+        s"""override def apply[ParamType, S <: AdtExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], S with ADTFunctionImplicitFetch.type]): NatModelType = {
+           new AdtExtension.Passed.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
          }"""
 
       class FoldStrFuncs(override val index: Int)
@@ -91,7 +91,6 @@ object CodePre2:
   package net.scalax.simple.adt
   package impl
 
-  import Adt.{Status => ADTStatus}
   import temp._
   import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 

@@ -3,39 +3,34 @@ package adt
 package impl
 
 import temp._
-import Adt.{Status => ADTStatus}
 
 trait TypeAdtAliasModel {
 
   type CoProduct1[
     I1
-  ] = ADTData[RuntimeData[I1, RuntimeZero], ADTStatus.Passed.type]
-
-  type CoProductX1[ST <: ADTStatus, I1] = ADTData[RuntimeData[I1, RuntimeZero], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeZero], AdtExtension.Passed.type]
+  type CoProductX1[ST <: AdtExtension, I1] = ADTData[RuntimeData[I1, RuntimeZero], ST]
 
   type CoProduct2[
     I1,
     I2
-  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ADTStatus.Passed.type]
-
-  type CoProductX2[ST <: ADTStatus, I1, I2] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], AdtExtension.Passed.type]
+  type CoProductX2[ST <: AdtExtension, I1, I2] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ST]
 
   type CoProduct3[
     I1,
     I2,
     I3
-  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], ADTStatus.Passed.type]
-
-  type CoProductX3[ST <: ADTStatus, I1, I2, I3] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], AdtExtension.Passed.type]
+  type CoProductX3[ST <: AdtExtension, I1, I2, I3] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], ST]
 
   type CoProduct4[
     I1,
     I2,
     I3,
     I4
-  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], ADTStatus.Passed.type]
-
-  type CoProductX4[ST <: ADTStatus, I1, I2, I3, I4] =
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], AdtExtension.Passed.type]
+  type CoProductX4[ST <: AdtExtension, I1, I2, I3, I4] =
     ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], ST]
 
   type CoProduct5[
@@ -44,9 +39,8 @@ trait TypeAdtAliasModel {
     I3,
     I4,
     I5
-  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], ADTStatus.Passed.type]
-
-  type CoProductX5[ST <: ADTStatus, I1, I2, I3, I4, I5] =
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], AdtExtension.Passed.type]
+  type CoProductX5[ST <: AdtExtension, I1, I2, I3, I4, I5] =
     ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], ST]
 
   type CoProduct6[
@@ -58,10 +52,9 @@ trait TypeAdtAliasModel {
     I6
   ] = ADTData[
     RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX6[ST <: ADTStatus, I1, I2, I3, I4, I5, I6] =
+  type CoProductX6[ST <: AdtExtension, I1, I2, I3, I4, I5, I6] =
     ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]], ST]
 
   type CoProduct7[
@@ -74,10 +67,9 @@ trait TypeAdtAliasModel {
     I7
   ] = ADTData[
     RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX7[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = ADTData[
+  type CoProductX7[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7] = ADTData[
     RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
     ST
   ]
@@ -96,10 +88,9 @@ trait TypeAdtAliasModel {
       I1,
       RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX8[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[RuntimeData[
+  type CoProductX8[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[RuntimeData[
     I1,
     RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
   ], ST]
@@ -119,10 +110,9 @@ trait TypeAdtAliasModel {
       I2,
       RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
     ]],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX9[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
+  type CoProductX9[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
     RuntimeData[I1, RuntimeData[
       I2,
       RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
@@ -149,10 +139,9 @@ trait TypeAdtAliasModel {
         RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeZero]]]]]]]
       ]]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX10[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
+  type CoProductX10[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[I2, RuntimeData[
@@ -186,10 +175,9 @@ trait TypeAdtAliasModel {
         ]]]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX11[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
+  type CoProductX11[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -230,10 +218,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX12[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
+  type CoProductX12[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -281,10 +268,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX13[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
+  type CoProductX13[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -339,10 +325,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX14[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
+  type CoProductX14[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -404,10 +389,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX15[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
+  type CoProductX15[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -476,10 +460,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX16[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
+  type CoProductX16[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -558,10 +541,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX17[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
+  type CoProductX17[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -650,10 +632,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX18[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
+  type CoProductX18[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -749,10 +730,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX19[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
+  type CoProductX19[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
     RuntimeData[
       I1,
       RuntimeData[
@@ -855,38 +835,39 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX20[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
-    RuntimeData[
-      I1,
+  type CoProductX20[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
+    ADTData[
       RuntimeData[
-        I2,
+        I1,
         RuntimeData[
-          I3,
+          I2,
           RuntimeData[
-            I4,
+            I3,
             RuntimeData[
-              I5,
+              I4,
               RuntimeData[
-                I6,
+                I5,
                 RuntimeData[
-                  I7,
+                  I6,
                   RuntimeData[
-                    I8,
+                    I7,
                     RuntimeData[
-                      I9,
+                      I8,
                       RuntimeData[
-                        I10,
+                        I9,
                         RuntimeData[
-                          I11,
+                          I10,
                           RuntimeData[
-                            I12,
-                            RuntimeData[I13, RuntimeData[I14, RuntimeData[
-                              I15,
-                              RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]
-                            ]]]
+                            I11,
+                            RuntimeData[
+                              I12,
+                              RuntimeData[I13, RuntimeData[I14, RuntimeData[
+                                I15,
+                                RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]
+                              ]]]
+                            ]
                           ]
                         ]
                       ]
@@ -897,10 +878,9 @@ trait TypeAdtAliasModel {
             ]
           ]
         ]
-      ]
-    ],
-    ST
-  ]
+      ],
+      ST
+    ]
 
   type CoProduct21[
     I1,
@@ -968,10 +948,9 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX21[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
+  type CoProductX21[ST <: AdtExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
     ADTData[
       RuntimeData[
         I1,
@@ -1089,44 +1068,65 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    AdtExtension.Passed.type
   ]
-
-  type CoProductX22[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
-    ADTData[
+  type CoProductX22[
+    ST <: AdtExtension,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    I22
+  ] = ADTData[
+    RuntimeData[
+      I1,
       RuntimeData[
-        I1,
+        I2,
         RuntimeData[
-          I2,
+          I3,
           RuntimeData[
-            I3,
+            I4,
             RuntimeData[
-              I4,
+              I5,
               RuntimeData[
-                I5,
+                I6,
                 RuntimeData[
-                  I6,
+                  I7,
                   RuntimeData[
-                    I7,
+                    I8,
                     RuntimeData[
-                      I8,
+                      I9,
                       RuntimeData[
-                        I9,
+                        I10,
                         RuntimeData[
-                          I10,
+                          I11,
                           RuntimeData[
-                            I11,
+                            I12,
                             RuntimeData[
-                              I12,
+                              I13,
                               RuntimeData[
-                                I13,
-                                RuntimeData[
-                                  I14,
-                                  RuntimeData[I15, RuntimeData[I16, RuntimeData[
-                                    I17,
-                                    RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeData[I22, RuntimeZero]]]]]
-                                  ]]]
-                                ]
+                                I14,
+                                RuntimeData[I15, RuntimeData[I16, RuntimeData[
+                                  I17,
+                                  RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeData[I22, RuntimeZero]]]]]
+                                ]]]
                               ]
                             ]
                           ]
@@ -1139,8 +1139,9 @@ trait TypeAdtAliasModel {
             ]
           ]
         ]
-      ],
-      ST
-    ]
+      ]
+    ],
+    ST
+  ]
 
 }

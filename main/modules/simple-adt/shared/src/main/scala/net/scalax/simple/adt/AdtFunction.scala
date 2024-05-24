@@ -1,6 +1,7 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 
-import net.scalax.simple.adt.temp.IsFinishAndNothing
+import temp.IsFinishAndNothing
 
 trait AdtFunction[-In, +Out] extends Any {
   def adtFunctionApply(t: In): Out

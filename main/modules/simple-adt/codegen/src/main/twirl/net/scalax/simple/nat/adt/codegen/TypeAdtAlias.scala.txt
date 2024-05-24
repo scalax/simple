@@ -4,7 +4,6 @@ package adt
 package impl
 
 import temp._
-import Adt.{Status => ADTStatus}
 
 @ADT22Parameter(min: Int, max: Int) = {
     @if(min < max) { RuntimeData[AdtFunction[A, I@{min}], @ADT22Parameter(min + 1, max)] } else { RuntimeZero }
@@ -20,8 +19,7 @@ import Adt.{Status => ADTStatus}
 
 trait TypeAdtAlias {
     @for(i <- 1 to 22) {
-        type CoProducts@{i}[A, @TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ADTStatus.Passed.type with ADTFunctionImplicitFetch.type]
-
-        type CoProductsX@{i}[A, ST <: ADTStatus, @TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ST with ADTFunctionImplicitFetch.type]
+        type CoProducts@{i}[A, @TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), AdtExtension.Passed.type with ADTFunctionImplicitFetch.type]
+        type CoProductsX@{i}[A, ST <: AdtExtension, @TypeParameter22(i)] = ADTData[@ADT22Parameter(1, i + 1), ST with ADTFunctionImplicitFetch.type]
     }
 }
