@@ -333,10 +333,10 @@ object `Test Cases copy from documention in README.md` {
       funcApplyM.fold(
         func1 =>
           for (tItem <- inputList) yield {
-            val tempVar: Option[Int] = func1.input(tItem)
+            val tempVar: Option[Int] = func1.adtFunctionApply(tItem)
             tempVar.map(_ + 100).getOrElse(-100)
           },
-        func2 => for (tItem <- inputList) yield func2.input(tItem).length
+        func2 => for (tItem <- inputList) yield func2.adtFunctionApply(tItem).length
       )
     }
 

@@ -35,7 +35,9 @@ object CodePre2:
          }"""
 
       class FoldStrFuncs(override val index: Int)
-          extends ParameterString(i => if (i > 1) s", t => option$i(t.input(a))" else s"t => option$i(t.input(a))")(index)
+          extends ParameterString(i => if (i > 1) s", t => option$i(t.adtFunctionApply(a))" else s"t => option$i(t.adtFunctionApply(a))")(
+            index
+          )
     }
     // ===
 
