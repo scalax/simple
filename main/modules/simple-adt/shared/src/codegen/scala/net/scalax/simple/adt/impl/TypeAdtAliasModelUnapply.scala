@@ -9,14 +9,14 @@ import builder.{coproducter, producter_build, DataTaker}
 
 trait TypeAdtAliasModelUnapply {
   object CoProduct1 {
-    def unapply[I1, S <: AdtExtension](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = data.toGHDMZSK match {
+    def unapply[I1, ADTExtension](data: ADTData[RuntimeData[I1, RuntimeNat], ADTExtension]): Option[I1] = data.toGHDMZSK match {
       case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
       case _             => None
     }
   }
 
   object CoProduct2 {
-    def unapply[I1, I2, S <: AdtExtension](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeNat]], S]): Option[I2] = {
+    def unapply[I1, I2, ADTExtension](data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeNat]], ADTExtension]): Option[I2] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options1GHDMZSK)
 
       dataInstance match {
@@ -27,8 +27,8 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct3 {
-    def unapply[I1, I2, I3, S <: AdtExtension](
-      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeNat]]], S]
+    def unapply[I1, I2, I3, ADTExtension](
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeNat]]], ADTExtension]
     ): Option[I3] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options2GHDMZSK)
 
@@ -40,8 +40,8 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct4 {
-    def unapply[I1, I2, I3, I4, S <: AdtExtension](
-      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeNat]]]], S]
+    def unapply[I1, I2, I3, I4, ADTExtension](
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeNat]]]], ADTExtension]
     ): Option[I4] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options3GHDMZSK)
 
@@ -53,8 +53,8 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct5 {
-    def unapply[I1, I2, I3, I4, I5, S <: AdtExtension](
-      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeNat]]]]], S]
+    def unapply[I1, I2, I3, I4, I5, ADTExtension](
+      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeNat]]]]], ADTExtension]
     ): Option[I5] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options4GHDMZSK)
 
@@ -66,8 +66,11 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct6 {
-    def unapply[I1, I2, I3, I4, I5, I6, S <: AdtExtension](
-      data: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeNat]]]]]], S]
+    def unapply[I1, I2, I3, I4, I5, I6, ADTExtension](
+      data: ADTData[
+        RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeNat]]]]]],
+        ADTExtension
+      ]
     ): Option[I6] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options5GHDMZSK)
 
@@ -79,10 +82,10 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct7 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, ADTExtension](
       data: ADTData[
         RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeNat]]]]]]],
-        S
+        ADTExtension
       ]
     ): Option[I7] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options6GHDMZSK)
@@ -95,11 +98,14 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct8 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, S <: AdtExtension](
-      data: ADTData[RuntimeData[
-        I1,
-        RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeNat]]]]]]]
-      ], S]
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, ADTExtension](
+      data: ADTData[
+        RuntimeData[
+          I1,
+          RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeNat]]]]]]]
+        ],
+        ADTExtension
+      ]
     ): Option[I8] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options7GHDMZSK)
 
@@ -111,13 +117,13 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct9 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, ADTExtension](
       data: ADTData[
         RuntimeData[I1, RuntimeData[
           I2,
           RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeNat]]]]]]]
         ]],
-        S
+        ADTExtension
       ]
     ): Option[I9] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options8GHDMZSK)
@@ -130,7 +136,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct10 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -139,7 +145,7 @@ trait TypeAdtAliasModelUnapply {
             RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeNat]]]]]]
           ]]]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I10] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options9GHDMZSK)
@@ -152,7 +158,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct11 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -164,7 +170,7 @@ trait TypeAdtAliasModelUnapply {
             ]]]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I11] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options10GHDMZSK)
@@ -177,7 +183,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct12 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -192,7 +198,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I12] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options11GHDMZSK)
@@ -205,7 +211,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct13 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -223,7 +229,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I13] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options12GHDMZSK)
@@ -236,7 +242,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct14 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -257,7 +263,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I14] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options13GHDMZSK)
@@ -270,7 +276,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct15 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -294,7 +300,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I15] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options14GHDMZSK)
@@ -307,7 +313,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct16 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -334,7 +340,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I16] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options15GHDMZSK)
@@ -347,7 +353,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct17 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -377,7 +383,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I17] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options16GHDMZSK)
@@ -390,7 +396,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct18 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -426,7 +432,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I18] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options17GHDMZSK)
@@ -439,7 +445,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct19 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -478,7 +484,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I19] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options18GHDMZSK)
@@ -491,7 +497,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct20 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -533,7 +539,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I20] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options19GHDMZSK)
@@ -546,7 +552,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct21 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -591,7 +597,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I21] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options20GHDMZSK)
@@ -604,7 +610,7 @@ trait TypeAdtAliasModelUnapply {
   }
 
   object CoProduct22 {
-    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22, S <: AdtExtension](
+    def unapply[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22, ADTExtension](
       data: ADTData[
         RuntimeData[
           I1,
@@ -652,7 +658,7 @@ trait TypeAdtAliasModelUnapply {
             ]
           ]
         ],
-        S
+        ADTExtension
       ]
     ): Option[I22] = {
       val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options21GHDMZSK)

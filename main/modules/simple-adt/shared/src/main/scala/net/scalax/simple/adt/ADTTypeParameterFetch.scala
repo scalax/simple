@@ -9,19 +9,19 @@ package adt
   * @since 2022/08/28
   *   02:48
   */
-object ADTTypeParameterFetch extends AdtExtension with impl.HListTypeAdtPositiveLower2 {
-  @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: RuntimeNat, ST <: AdtExtension](implicit
+object ADTTypeParameterFetch extends impl.HListTypeAdtPositiveLower2 {
+  @inline implicit def hlistTypeAdtPositiveImplicit1[A, B, Tail <: RuntimeNat, ADTExtension](implicit
     adtConvert: AdtFunction[A, B]
-  ): ADTData[RuntimeData[AdtFunction[A, B], Tail], ST with ADTPassedFunction.type] =
+  ): ADTData[RuntimeData[AdtFunction[A, B], Tail], ADTExtension with ADTPassedFunction.type] =
     ADTData.success(adtConvert)
 }
 
 package impl {
 
   trait HListTypeAdtPositiveLower2 {
-    @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: RuntimeNat, ST <: AdtExtension](implicit
-      tailMapping: ADTData[Tail, ST]
-    ): ADTData[RuntimeData[AdtFunction[A, B], Tail], ST] = ADTData.copyTail(tailMapping)
+    @inline implicit def hlistTypeMappingPositiveImplicitLower[A, B, Tail <: RuntimeNat, ADTExtension](implicit
+      tailMapping: ADTData[Tail, ADTExtension]
+    ): ADTData[RuntimeData[AdtFunction[A, B], Tail], ADTExtension] = ADTData.copyTail(tailMapping)
   }
 
 }

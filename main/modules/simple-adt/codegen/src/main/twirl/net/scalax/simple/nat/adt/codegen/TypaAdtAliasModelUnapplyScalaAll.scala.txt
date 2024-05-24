@@ -16,7 +16,7 @@ import builder.{coproducter, producter_build, DataTaker}
 
 trait TypeAdtAliasModelUnapply {
     object CoProduct1 {
-        def unapply[I1, S <: AdtExtension](data: ADTData[RuntimeData[I1, RuntimeNat], S]): Option[I1] = data.toGHDMZSK match {
+        def unapply[I1, ADTExtension](data: ADTData[RuntimeData[I1, RuntimeNat], ADTExtension]): Option[I1] = data.toGHDMZSK match {
             case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
             case _ => None
         }
@@ -24,7 +24,7 @@ trait TypeAdtAliasModelUnapply {
 
     @for(i <- 2 to 22) {
         object CoProduct@{i} {
-            def unapply[@TypeParameters22(i), S <: AdtExtension](data: ADTData[@ADT22Parameter(0, i), S]): Option[I@{i}] = {
+            def unapply[@TypeParameters22(i), ADTExtension](data: ADTData[@ADT22Parameter(0, i), ADTExtension]): Option[I@{i}] = {
                 val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options@{i - 1}GHDMZSK)
 
                 dataInstance match {

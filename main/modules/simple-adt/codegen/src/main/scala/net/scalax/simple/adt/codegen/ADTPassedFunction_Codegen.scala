@@ -21,7 +21,7 @@ object ADTPassedFunctionCodegen:
     if (i < max) s"producter_build.appended(func${i + 1}).inputGHDMZSK(() => ${lawRepeatParameter(max)(i + 1)})"
     else "producter_build.zero"
 
-  def typeStr(count: Int) = s"ADTData[${adtDataType(count)(1)}, SImpl]"
+  def typeStr(count: Int) = s"ADTData[${adtDataType(count)(1)}, ADTExtension]"
 
   val text4: String =
     s"""
@@ -32,10 +32,10 @@ import temp._
 import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 import builder.{coproducter, producter_build}
 
-object ADTPassedFunction extends AdtExtension {
+object ADTPassedFunction {
 
   ${repeatBlank(22)(i =>
-        s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, SImpl <: AdtExtension](private val data$i: ${typeStr(
+        s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ADTExtension](private val data$i: ${typeStr(
             i + 1
           )}) extends AnyVal {
 
