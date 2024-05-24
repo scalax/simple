@@ -1,8 +1,6 @@
 package net.scalax.simple
 package adt
 
-import temp.IsFinishAndNothing
-
 trait AdtFunction[-In, +Out] extends Any {
   def adtFunctionApply(t: In): Out
 }

@@ -3,17 +3,6 @@ package temp
 
 import net.scalax.simple.adt.AdtExtension
 
-import scala.annotation.meta.param
-
-final class IsFinishAndNothing(@(transient @param) obj: Any) {
-  def default[T](t: => T): T               = t
-  def isEnded: IsFinishAndNothing          = this
-  def matchErrorAndThrowException: Nothing = throw new MatchError(obj)
-}
-object IsFinishAndNothing {
-  def value(obj: Any): IsFinishAndNothing = new IsFinishAndNothing(obj)
-}
-
 trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
   type NatModelType            = ADTData[N2, AdtExtension.Passed.type]
   type NatModelTypeFunction[D] = N1[D]
