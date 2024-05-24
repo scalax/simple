@@ -42,5 +42,14 @@ trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
   type NatModelType            = ADTData[N2, ADTStatus.Passed.type]
   type NatModelTypeFunction[D] = N1[D]
 
+  trait InstanceGet[D1Type] {
+    def instance[T <: ADTStatus](implicit
+      v: ADTData[NatModelTypeFunction[D1Type], T with ADTFunctionImplicitFetch.type]
+    ): ADTData[NatModelTypeFunction[D1Type], T with ADTFunctionImplicitFetch.type] = v
+  }
+
   def apply[D, T <: ADTStatus](d: D)(implicit v: ADTData[NatModelTypeFunction[D], T with ADTFunctionImplicitFetch.type]): NatModelType
+  def typeOnly[D]: InstanceGet[D] = new InstanceGet[D] {
+    //
+  }
 }

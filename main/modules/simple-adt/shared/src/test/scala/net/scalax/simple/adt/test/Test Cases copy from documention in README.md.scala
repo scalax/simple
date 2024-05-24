@@ -320,6 +320,30 @@ object `Test Cases copy from documention in README.md` {
     assert(countAdtData(Option.empty, Option.empty, Option.empty) == (0 + 0 + 0))
   }
 
+  def `Usage of @MarchLiu Point 3`[T](body: => T): T = body
+
+  `Usage of @MarchLiu Point 3` {
+    import net.scalax.simple.adt.{TypeAdt => Adt}
+
+    def countAdtData[T: Adt.CoProducts2[*, Option[Int], String]](t: T*): List[Int] = {
+      val funcApplyM = Adt.CoProduct2[Option[Int], String].typeOnly[T].instance
+
+      val inputList = t.to(List)
+
+      funcApplyM.fold(
+        func1 =>
+          for (tItem <- inputList) yield {
+            val tempVar: Option[Int] = func1.input(tItem)
+            tempVar.map(_ + 100).getOrElse(-100)
+          },
+        func2 => for (tItem <- inputList) yield func2.input(tItem).length
+      )
+    }
+
+    assert(countAdtData("abc", "aabbcc", "aabbbcc") == List("abc".length, "aabbcc".length, "aabbbcc".length))
+    assert(countAdtData(Some(2), Some(3), Option.empty) == List(102, 103, -100))
+  }
+
 }
 
 import zio._

@@ -13,11 +13,4 @@ object Adt extends TypeAdtAlias with TypeAdtRuntimeApply with TypeAdtAliasModel 
     object NotFinished extends Status
   }
 
-  object ADTDataMutiply extends Status {
-    implicit class ADTDataExtra1[T <: RuntimeNat, S <: Status](val data: ADTData[T, S]) extends AnyVal {
-      def lockSubClass[U <: S]: ADTData[T, U with ADTDataMutiply.type] = data.asInstanceOf[ADTData[T, U with ADTDataMutiply.type]]
-      def changeImplement[U]: ADTData[T, U with ADTDataMutiply.type]   = data.asInstanceOf[ADTData[T, U with ADTDataMutiply.type]]
-    }
-  }
-
 }
