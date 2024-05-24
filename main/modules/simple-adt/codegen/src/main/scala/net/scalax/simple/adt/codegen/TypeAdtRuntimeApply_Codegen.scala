@@ -31,7 +31,7 @@ object CodePre2:
       self2 =>
       lazy val text: String =
         s"""override def apply[ParamType, ADTExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], ADTExtension with ADTTypeParameterFetch.type]): NatModelType = {
-           new ADTPassedFunction.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
+           ADTPassedFunction.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
          }"""
 
       class FoldStrFuncs(override val index: Int)
