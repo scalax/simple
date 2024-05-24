@@ -1,6 +1,7 @@
 package net.scalax.simple.adt.test
 
 import net.scalax.simple.test.Tag
+import scala.collection.compat._
 
 object `Test Cases copy from documention in README.md` {
 
