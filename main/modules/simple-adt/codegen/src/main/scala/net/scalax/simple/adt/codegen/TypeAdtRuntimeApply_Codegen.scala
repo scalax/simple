@@ -31,11 +31,11 @@ class CodePre2(val isScala3: Boolean) {
       self2 =>
       lazy val text: String =
         s"""override def apply[ParamType, ADTExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], ADTExtension with ADTTypeParameterFetch.type]): NatModelType = {
-           ${
-            if (isScala3)
-              s"new ADTPassedFunction.extra(b).fold(Tuple${self2.index}(${FoldStrFuncs(self2.index).text}))"
-            else
-              s"new ADTPassedFunction.extra$index(b).fold(${FoldStrFuncs(self2.index).text})"
+           ${val str1 = if (isScala3) s"new ADTPassedFunction.extra(b)" else s"new ADTPassedFunction.extra$index(b)"
+
+          val str2 = if (index == 1) s"Tuple1(${FoldStrFuncs(self2.index).text})" else FoldStrFuncs(self2.index).text
+
+          s"$str1.fold($str2)"
           }
          }"""
 

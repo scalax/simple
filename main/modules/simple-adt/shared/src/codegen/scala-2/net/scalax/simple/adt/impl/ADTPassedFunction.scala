@@ -5,18 +5,7 @@ import temp._
 import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 import builder.{coproducter, producter_build}
 
-object ADTPassedFunction {
-
-  implicit class extra1[ParamType, I1, ADTExtension](private val data1: ADTData[RuntimeData[I1, RuntimeZero], ADTExtension])
-      extends AnyVal {
-
-    def fold[D](func1: I1 => D): D = {
-      val func_link: ghdmzsk = producter_build.appended(func1).inputGHDMZSK(() => producter_build.zero)
-
-      TypeAdtGetter.getFromFunction(data1.toGHDMZSK, func_link).asInstanceOf[D]
-    }
-
-  }
+object ADTPassedFunction extends ADTPassedFunctionImpl1 {
 
   implicit class extra2[ParamType, I1, I2, ADTExtension](
     private val data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ADTExtension]

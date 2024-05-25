@@ -32,9 +32,11 @@ import temp._
 import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 import builder.{coproducter, producter_build}
 
-object ADTPassedFunction {
+object ADTPassedFunction extends ADTPassedFunctionImpl1 {
 
-  ${repeatBlank(22)(i =>
+  ${repeatBlank(21) { i1 =>
+        val i = i1 + 1
+
         s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ADTExtension](private val data$i: ${typeStr(
             i + 1
           )}) extends AnyVal {
@@ -48,7 +50,7 @@ object ADTPassedFunction {
 }
 
 """
-      )}
+      }}
 
 }
 """.stripMargin
