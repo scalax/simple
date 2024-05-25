@@ -1,8 +1,8 @@
 package net.scalax.simple.adt.codegen
 
-object CodePre2:
+class CodePre2(val isScala3: Boolean) {
 
-  case class CoProductXApplyCodegen(val index: Int) {
+  class CoProductXApplyCodegen(val index: Int) {
     self1 =>
     // ===
     class ParameterString(typeFunc: Int => String)(val index: Int) {
@@ -31,7 +31,12 @@ object CodePre2:
       self2 =>
       lazy val text: String =
         s"""override def apply[ParamType, ADTExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], ADTExtension with ADTTypeParameterFetch.type]): NatModelType = {
-           ADTPassedFunction.extra$index(b).fold(${FoldStrFuncs(self2.index).text})
+           ${
+            if (isScala3)
+              s"new ADTPassedFunction.extra(b).fold(Tuple${self2.index}(${FoldStrFuncs(self2.index).text}))"
+            else
+              s"new ADTPassedFunction.extra$index(b).fold(${FoldStrFuncs(self2.index).text})"
+          }
          }"""
 
       class FoldStrFuncs(override val index: Int)
@@ -87,7 +92,7 @@ object CodePre2:
     textVector1.mkString(str)
   }
 
-  val text1: String = s"""
+  val text: String = s"""
   package net.scalax.simple.adt
   package impl
 
@@ -99,4 +104,4 @@ object CodePre2:
   }
   """
 
-end CodePre2
+}

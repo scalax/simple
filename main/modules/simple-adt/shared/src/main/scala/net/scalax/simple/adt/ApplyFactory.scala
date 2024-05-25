@@ -12,6 +12,7 @@ trait ApplyFactory[N1[_] <: RuntimeNat, N2 <: RuntimeNat] {
   }
 
   def apply[D, ADTExtension](d: D)(implicit v: ADTData[NatModelTypeFunction[D], ADTExtension with ADTTypeParameterFetch.type]): NatModelType
+
   def typeOnly[D]: InstanceGet[D] = new InstanceGet[D] {
     //
   }

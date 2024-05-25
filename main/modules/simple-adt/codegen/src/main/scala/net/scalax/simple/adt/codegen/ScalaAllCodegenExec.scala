@@ -38,14 +38,6 @@ object ScalaAllCodegenExec:
       }
     }
 
-    locally {
-      val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = CodePre2.text1
-        writer.println(linerContent)
-      }
-    }
-
   end main
 
 end ScalaAllCodegenExec

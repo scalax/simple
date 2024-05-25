@@ -1,35 +1,33 @@
 package net.scalax.simple.adt
-package impl
 package utils
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import implemention.ADTGHDMZSK
 import temp._
-import Adt.{Status => ADTStatus}
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
+import builder.{coproducter, producter_build}
 
-trait GenericUtilInstance:
+object GenericUtil:
 
   trait SimpleHList
   class SimpleHListPositive[T, Tail <: SimpleHList] extends SimpleHList
   class SimpleHListZero                             extends SimpleHList
 
-  type SimpleHListAux[N <: AdtNat, O <: SimpleHList] = SimpleHListFromAdtNat[N]:
-    type Out = O
-  end SimpleHListAux
+  trait MapType[N <: RuntimeNat, SH <: SimpleHList]
 
-  trait SimpleHListFromAdtNat[N <: AdtNat]:
-    type Out <: SimpleHList
-  end SimpleHListFromAdtNat
+  object SimpleHList extends ImplementionFor1 {
+    implicit val zero: MapType[RuntimeZero, SimpleHListZero] = new MapType[RuntimeZero, SimpleHListZero] {
+      //
+    }
+  }
 
-  object SimpleHListFromAdtNat extends SimpleHListFromAdtNatImplicit1:
-    inline given SimpleHListAux[AdtNatZero, SimpleHListZero] = null
-  end SimpleHListFromAdtNat
+  trait ImplementionFor1 {
+    implicit def positive[Data, N <: RuntimeNat, SH <: SimpleHList](implicit
+      s: MapType[N, SH]
+    ): MapType[RuntimeData[Data, N], SimpleHListPositive[Data, SH]] =
+      new MapType[RuntimeData[Data, N], SimpleHListPositive[Data, SH]] {
+        //
 
-  trait SimpleHListFromAdtNatImplicit1:
-    inline given [Data, T <: AdtNat, O <: SimpleHList](using
-      inline t1: SimpleHListAux[T, O]
-    ): SimpleHListAux[AdtNatPositive[Data, T], SimpleHListPositive[Data, O]] = null
-  end SimpleHListFromAdtNatImplicit1
+      }
+  }
 
-end GenericUtilInstance
+end GenericUtil
