@@ -3,37 +3,35 @@ package adt
 package impl
 
 import temp._
-import Adt.{Status => ADTStatus}
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
 
 trait TypeAdtAliasModel {
 
   type CoProduct1[
     I1
-  ] = ADTData[AdtNatPositive[I1, AdtNatZero], ADTStatus.Passed.type]
-  type CoProductX1[ST <: ADTStatus, I1] = ADTData[AdtNatPositive[I1, AdtNatZero], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeZero], ADTPassedFunction.type]
+  type CoProductX1[ADTExtension, I1] = ADTData[RuntimeData[I1, RuntimeZero], ADTExtension]
 
   type CoProduct2[
     I1,
     I2
-  ] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ADTStatus.Passed.type]
-  type CoProductX2[ST <: ADTStatus, I1, I2] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatZero]], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ADTPassedFunction.type]
+  type CoProductX2[ADTExtension, I1, I2] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ADTExtension]
 
   type CoProduct3[
     I1,
     I2,
     I3
-  ] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ADTStatus.Passed.type]
-  type CoProductX3[ST <: ADTStatus, I1, I2, I3] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatZero]]], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], ADTPassedFunction.type]
+  type CoProductX3[ADTExtension, I1, I2, I3] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], ADTExtension]
 
   type CoProduct4[
     I1,
     I2,
     I3,
     I4
-  ] = ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ADTStatus.Passed.type]
-  type CoProductX4[ST <: ADTStatus, I1, I2, I3, I4] =
-    ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatZero]]]], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], ADTPassedFunction.type]
+  type CoProductX4[ADTExtension, I1, I2, I3, I4] =
+    ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], ADTExtension]
 
   type CoProduct5[
     I1,
@@ -41,12 +39,9 @@ trait TypeAdtAliasModel {
     I3,
     I4,
     I5
-  ] = ADTData[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]],
-    ADTStatus.Passed.type
-  ]
-  type CoProductX5[ST <: ADTStatus, I1, I2, I3, I4, I5] =
-    ADTData[AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatZero]]]]], ST]
+  ] = ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], ADTPassedFunction.type]
+  type CoProductX5[ADTExtension, I1, I2, I3, I4, I5] =
+    ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], ADTExtension]
 
   type CoProduct6[
     I1,
@@ -56,13 +51,11 @@ trait TypeAdtAliasModel {
     I5,
     I6
   ] = ADTData[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
-    ADTStatus.Passed.type
+    RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]],
+    ADTPassedFunction.type
   ]
-  type CoProductX6[ST <: ADTStatus, I1, I2, I3, I4, I5, I6] = ADTData[
-    AdtNatPositive[I1, AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatZero]]]]]],
-    ST
-  ]
+  type CoProductX6[ADTExtension, I1, I2, I3, I4, I5, I6] =
+    ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]], ADTExtension]
 
   type CoProduct7[
     I1,
@@ -73,16 +66,13 @@ trait TypeAdtAliasModel {
     I6,
     I7
   ] = ADTData[
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
-    ],
-    ADTStatus.Passed.type
+    RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
+    ADTPassedFunction.type
   ]
-  type CoProductX7[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7] = ADTData[AdtNatPositive[
-    I1,
-    AdtNatPositive[I2, AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatZero]]]]]]
-  ], ST]
+  type CoProductX7[ADTExtension, I1, I2, I3, I4, I5, I6, I7] = ADTData[
+    RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
+    ADTExtension
+  ]
 
   type CoProduct8[
     I1,
@@ -94,18 +84,18 @@ trait TypeAdtAliasModel {
     I7,
     I8
   ] = ADTData[
-    AdtNatPositive[I1, AdtNatPositive[
-      I2,
-      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-    ]],
-    ADTStatus.Passed.type
+    RuntimeData[
+      I1,
+      RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
+    ],
+    ADTPassedFunction.type
   ]
-  type CoProductX8[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
-    AdtNatPositive[I1, AdtNatPositive[
-      I2,
-      AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatZero]]]]]]
-    ]],
-    ST
+  type CoProductX8[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
+    RuntimeData[
+      I1,
+      RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
+    ],
+    ADTExtension
   ]
 
   type CoProduct9[
@@ -119,24 +109,18 @@ trait TypeAdtAliasModel {
     I8,
     I9
   ] = ADTData[
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[
-        I3,
-        AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-      ]]
-    ],
-    ADTStatus.Passed.type
+    RuntimeData[I1, RuntimeData[
+      I2,
+      RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
+    ]],
+    ADTPassedFunction.type
   ]
-  type CoProductX9[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
-    AdtNatPositive[
-      I1,
-      AdtNatPositive[I2, AdtNatPositive[
-        I3,
-        AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatZero]]]]]]
-      ]]
-    ],
-    ST
+  type CoProductX9[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
+    RuntimeData[I1, RuntimeData[
+      I2,
+      RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
+    ]],
+    ADTExtension
   ]
 
   type CoProduct10[
@@ -151,30 +135,24 @@ trait TypeAdtAliasModel {
     I9,
     I10
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-          I5,
-          AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-        ]]]
-      ]
+      RuntimeData[I2, RuntimeData[
+        I3,
+        RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeZero]]]]]]]
+      ]]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX10[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
-    AdtNatPositive[
+  type CoProductX10[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
-        I2,
-        AdtNatPositive[I3, AdtNatPositive[I4, AdtNatPositive[
-          I5,
-          AdtNatPositive[I6, AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatZero]]]]]
-        ]]]
-      ]
+      RuntimeData[I2, RuntimeData[
+        I3,
+        RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeZero]]]]]]]
+      ]]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct11[
@@ -190,36 +168,30 @@ trait TypeAdtAliasModel {
     I10,
     I11
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-            I6,
-            AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-          ]]]
-        ]
+        RuntimeData[I3, RuntimeData[I4, RuntimeData[
+          I5,
+          RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeZero]]]]]]
+        ]]]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX11[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
-    AdtNatPositive[
+  type CoProductX11[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
-          I3,
-          AdtNatPositive[I4, AdtNatPositive[I5, AdtNatPositive[
-            I6,
-            AdtNatPositive[I7, AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatZero]]]]]
-          ]]]
-        ]
+        RuntimeData[I3, RuntimeData[I4, RuntimeData[
+          I5,
+          RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeZero]]]]]]
+        ]]]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct12[
@@ -236,42 +208,36 @@ trait TypeAdtAliasModel {
     I11,
     I12
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-              I7,
-              AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-            ]]]
-          ]
+          RuntimeData[I4, RuntimeData[I5, RuntimeData[
+            I6,
+            RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeZero]]]]]]
+          ]]]
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX12[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
-    AdtNatPositive[
+  type CoProductX12[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
-            I4,
-            AdtNatPositive[I5, AdtNatPositive[I6, AdtNatPositive[
-              I7,
-              AdtNatPositive[I8, AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatZero]]]]]
-            ]]]
-          ]
+          RuntimeData[I4, RuntimeData[I5, RuntimeData[
+            I6,
+            RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeZero]]]]]]
+          ]]]
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct13[
@@ -289,54 +255,42 @@ trait TypeAdtAliasModel {
     I12,
     I13
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[
-                  I8,
-                  AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                ]]
-              ]
-            ]
+            RuntimeData[I5, RuntimeData[I6, RuntimeData[
+              I7,
+              RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeZero]]]]]]
+            ]]]
           ]
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX13[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
-    AdtNatPositive[
+  type CoProductX13[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
-              I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[I7, AdtNatPositive[
-                  I8,
-                  AdtNatPositive[I9, AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatZero]]]]]
-                ]]
-              ]
-            ]
+            RuntimeData[I5, RuntimeData[I6, RuntimeData[
+              I7,
+              RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeZero]]]]]]
+            ]]]
           ]
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct14[
@@ -355,60 +309,48 @@ trait TypeAdtAliasModel {
     I13,
     I14
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[I8, AdtNatPositive[
-                    I9,
-                    AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                  ]]
-                ]
-              ]
+              RuntimeData[I6, RuntimeData[I7, RuntimeData[
+                I8,
+                RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeZero]]]]]]
+              ]]]
             ]
           ]
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX14[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
-    AdtNatPositive[
+  type CoProductX14[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
-                I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[I8, AdtNatPositive[
-                    I9,
-                    AdtNatPositive[I10, AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatZero]]]]]
-                  ]]
-                ]
-              ]
+              RuntimeData[I6, RuntimeData[I7, RuntimeData[
+                I8,
+                RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeZero]]]]]]
+              ]]]
             ]
           ]
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct15[
@@ -428,66 +370,54 @@ trait TypeAdtAliasModel {
     I14,
     I15
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[
-                      I10,
-                      AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                    ]]
-                  ]
-                ]
+                RuntimeData[I7, RuntimeData[I8, RuntimeData[
+                  I9,
+                  RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeZero]]]]]]
+                ]]]
               ]
             ]
           ]
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX15[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
-    AdtNatPositive[
+  type CoProductX15[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
-                  I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[I9, AdtNatPositive[
-                      I10,
-                      AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatZero]]]]]
-                    ]]
-                  ]
-                ]
+                RuntimeData[I7, RuntimeData[I8, RuntimeData[
+                  I9,
+                  RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeZero]]]]]]
+                ]]]
               ]
             ]
           ]
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct16[
@@ -508,30 +438,24 @@ trait TypeAdtAliasModel {
     I15,
     I16
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[
-                        I11,
-                        AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]
-                      ]]
-                    ]
-                  ]
+                  RuntimeData[I8, RuntimeData[I9, RuntimeData[
+                    I10,
+                    RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeZero]]]]]]
+                  ]]]
                 ]
               ]
             ]
@@ -539,33 +463,27 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX16[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
-    AdtNatPositive[
+  type CoProductX16[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
-                    I8,
-                    AdtNatPositive[
-                      I9,
-                      AdtNatPositive[I10, AdtNatPositive[
-                        I11,
-                        AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatZero]]]]]
-                      ]]
-                    ]
-                  ]
+                  RuntimeData[I8, RuntimeData[I9, RuntimeData[
+                    I10,
+                    RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeZero]]]]]]
+                  ]]]
                 ]
               ]
             ]
@@ -573,7 +491,7 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct17[
@@ -595,31 +513,28 @@ trait TypeAdtAliasModel {
     I16,
     I17
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                          I13,
-                          AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                        ]]]
-                      ]
+                      RuntimeData[I10, RuntimeData[I11, RuntimeData[
+                        I12,
+                        RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeZero]]]]]
+                      ]]]
                     ]
                   ]
                 ]
@@ -629,34 +544,31 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX17[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
-    AdtNatPositive[
+  type CoProductX17[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
-                        I10,
-                        AdtNatPositive[I11, AdtNatPositive[I12, AdtNatPositive[
-                          I13,
-                          AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatZero]]]]
-                        ]]]
-                      ]
+                      RuntimeData[I10, RuntimeData[I11, RuntimeData[
+                        I12,
+                        RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeZero]]]]]
+                      ]]]
                     ]
                   ]
                 ]
@@ -666,7 +578,7 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct18[
@@ -689,33 +601,30 @@ trait TypeAdtAliasModel {
     I17,
     I18
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                            I14,
-                            AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                          ]]]
-                        ]
+                        RuntimeData[I11, RuntimeData[I12, RuntimeData[
+                          I13,
+                          RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeZero]]]]]
+                        ]]]
                       ]
                     ]
                   ]
@@ -726,36 +635,33 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX18[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
-    AdtNatPositive[
+  type CoProductX18[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
-                          I11,
-                          AdtNatPositive[I12, AdtNatPositive[I13, AdtNatPositive[
-                            I14,
-                            AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatZero]]]]
-                          ]]]
-                        ]
+                        RuntimeData[I11, RuntimeData[I12, RuntimeData[
+                          I13,
+                          RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeZero]]]]]
+                        ]]]
                       ]
                     ]
                   ]
@@ -766,7 +672,7 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct19[
@@ -790,35 +696,32 @@ trait TypeAdtAliasModel {
     I18,
     I19
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
+                        RuntimeData[
                           I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                              I15,
-                              AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                            ]]]
-                          ]
+                          RuntimeData[I12, RuntimeData[I13, RuntimeData[
+                            I14,
+                            RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeZero]]]]]
+                          ]]]
                         ]
                       ]
                     ]
@@ -830,38 +733,35 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX19[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
-    AdtNatPositive[
+  type CoProductX19[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
+                        RuntimeData[
                           I11,
-                          AdtNatPositive[
-                            I12,
-                            AdtNatPositive[I13, AdtNatPositive[I14, AdtNatPositive[
-                              I15,
-                              AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatZero]]]]
-                            ]]]
-                          ]
+                          RuntimeData[I12, RuntimeData[I13, RuntimeData[
+                            I14,
+                            RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeZero]]]]]
+                          ]]]
                         ]
                       ]
                     ]
@@ -873,7 +773,7 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct20[
@@ -898,37 +798,34 @@ trait TypeAdtAliasModel {
     I19,
     I20
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
+                        RuntimeData[
                           I11,
-                          AdtNatPositive[
+                          RuntimeData[
                             I12,
-                            AdtNatPositive[
-                              I13,
-                              AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                I16,
-                                AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                              ]]]
-                            ]
+                            RuntimeData[I13, RuntimeData[I14, RuntimeData[
+                              I15,
+                              RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]
+                            ]]]
                           ]
                         ]
                       ]
@@ -941,40 +838,37 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX20[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
-    AdtNatPositive[
+  type CoProductX20[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
+                        RuntimeData[
                           I11,
-                          AdtNatPositive[
+                          RuntimeData[
                             I12,
-                            AdtNatPositive[
-                              I13,
-                              AdtNatPositive[I14, AdtNatPositive[I15, AdtNatPositive[
-                                I16,
-                                AdtNatPositive[I17, AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatZero]]]]
-                              ]]]
-                            ]
+                            RuntimeData[I13, RuntimeData[I14, RuntimeData[
+                              I15,
+                              RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]
+                            ]]]
                           ]
                         ]
                       ]
@@ -987,7 +881,7 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ST
+    ADTExtension
   ]
 
   type CoProduct21[
@@ -1013,39 +907,36 @@ trait TypeAdtAliasModel {
     I20,
     I21
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
+                        RuntimeData[
                           I11,
-                          AdtNatPositive[
+                          RuntimeData[
                             I12,
-                            AdtNatPositive[
+                            RuntimeData[
                               I13,
-                              AdtNatPositive[
-                                I14,
-                                AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                  I17,
-                                  AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                ]]]
-                              ]
+                              RuntimeData[I14, RuntimeData[I15, RuntimeData[
+                                I16,
+                                RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeZero]]]]]
+                              ]]]
                             ]
                           ]
                         ]
@@ -1059,44 +950,39 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX21[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
-    ADTData[
-      AdtNatPositive[
-        I1,
-        AdtNatPositive[
-          I2,
-          AdtNatPositive[
-            I3,
-            AdtNatPositive[
-              I4,
-              AdtNatPositive[
-                I5,
-                AdtNatPositive[
-                  I6,
-                  AdtNatPositive[
-                    I7,
-                    AdtNatPositive[
-                      I8,
-                      AdtNatPositive[
-                        I9,
-                        AdtNatPositive[
-                          I10,
-                          AdtNatPositive[
-                            I11,
-                            AdtNatPositive[
-                              I12,
-                              AdtNatPositive[
-                                I13,
-                                AdtNatPositive[
-                                  I14,
-                                  AdtNatPositive[I15, AdtNatPositive[I16, AdtNatPositive[
-                                    I17,
-                                    AdtNatPositive[I18, AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatZero]]]]
-                                  ]]]
-                                ]
-                              ]
+  type CoProductX21[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ADTData[
+    RuntimeData[
+      I1,
+      RuntimeData[
+        I2,
+        RuntimeData[
+          I3,
+          RuntimeData[
+            I4,
+            RuntimeData[
+              I5,
+              RuntimeData[
+                I6,
+                RuntimeData[
+                  I7,
+                  RuntimeData[
+                    I8,
+                    RuntimeData[
+                      I9,
+                      RuntimeData[
+                        I10,
+                        RuntimeData[
+                          I11,
+                          RuntimeData[
+                            I12,
+                            RuntimeData[
+                              I13,
+                              RuntimeData[I14, RuntimeData[I15, RuntimeData[
+                                I16,
+                                RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeZero]]]]]
+                              ]]]
                             ]
                           ]
                         ]
@@ -1108,9 +994,10 @@ trait TypeAdtAliasModel {
             ]
           ]
         ]
-      ],
-      ST
-    ]
+      ]
+    ],
+    ADTExtension
+  ]
 
   type CoProduct22[
     I1,
@@ -1136,41 +1023,38 @@ trait TypeAdtAliasModel {
     I21,
     I22
   ] = ADTData[
-    AdtNatPositive[
+    RuntimeData[
       I1,
-      AdtNatPositive[
+      RuntimeData[
         I2,
-        AdtNatPositive[
+        RuntimeData[
           I3,
-          AdtNatPositive[
+          RuntimeData[
             I4,
-            AdtNatPositive[
+            RuntimeData[
               I5,
-              AdtNatPositive[
+              RuntimeData[
                 I6,
-                AdtNatPositive[
+                RuntimeData[
                   I7,
-                  AdtNatPositive[
+                  RuntimeData[
                     I8,
-                    AdtNatPositive[
+                    RuntimeData[
                       I9,
-                      AdtNatPositive[
+                      RuntimeData[
                         I10,
-                        AdtNatPositive[
+                        RuntimeData[
                           I11,
-                          AdtNatPositive[
+                          RuntimeData[
                             I12,
-                            AdtNatPositive[
+                            RuntimeData[
                               I13,
-                              AdtNatPositive[
+                              RuntimeData[
                                 I14,
-                                AdtNatPositive[
-                                  I15,
-                                  AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                    I18,
-                                    AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                  ]]]
-                                ]
+                                RuntimeData[I15, RuntimeData[I16, RuntimeData[
+                                  I17,
+                                  RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeData[I22, RuntimeZero]]]]]
+                                ]]]
                               ]
                             ]
                           ]
@@ -1185,45 +1069,42 @@ trait TypeAdtAliasModel {
         ]
       ]
     ],
-    ADTStatus.Passed.type
+    ADTPassedFunction.type
   ]
-  type CoProductX22[ST <: ADTStatus, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
+  type CoProductX22[ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
     ADTData[
-      AdtNatPositive[
+      RuntimeData[
         I1,
-        AdtNatPositive[
+        RuntimeData[
           I2,
-          AdtNatPositive[
+          RuntimeData[
             I3,
-            AdtNatPositive[
+            RuntimeData[
               I4,
-              AdtNatPositive[
+              RuntimeData[
                 I5,
-                AdtNatPositive[
+                RuntimeData[
                   I6,
-                  AdtNatPositive[
+                  RuntimeData[
                     I7,
-                    AdtNatPositive[
+                    RuntimeData[
                       I8,
-                      AdtNatPositive[
+                      RuntimeData[
                         I9,
-                        AdtNatPositive[
+                        RuntimeData[
                           I10,
-                          AdtNatPositive[
+                          RuntimeData[
                             I11,
-                            AdtNatPositive[
+                            RuntimeData[
                               I12,
-                              AdtNatPositive[
+                              RuntimeData[
                                 I13,
-                                AdtNatPositive[
+                                RuntimeData[
                                   I14,
-                                  AdtNatPositive[
-                                    I15,
-                                    AdtNatPositive[I16, AdtNatPositive[I17, AdtNatPositive[
-                                      I18,
-                                      AdtNatPositive[I19, AdtNatPositive[I20, AdtNatPositive[I21, AdtNatPositive[I22, AdtNatZero]]]]
-                                    ]]]
-                                  ]
+                                  RuntimeData[I15, RuntimeData[I16, RuntimeData[
+                                    I17,
+                                    RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeData[I22, RuntimeZero]]]]]
+                                  ]]]
                                 ]
                               ]
                             ]
@@ -1238,7 +1119,7 @@ trait TypeAdtAliasModel {
           ]
         ]
       ],
-      ST
+      ADTExtension
     ]
 
 }

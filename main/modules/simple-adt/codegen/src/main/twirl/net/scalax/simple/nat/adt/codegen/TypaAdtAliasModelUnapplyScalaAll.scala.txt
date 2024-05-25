@@ -3,27 +3,33 @@ package net.scalax.simple
 package adt
 package impl
 
-import implemention.ADTGHDMZSK
 import temp._
-import Adt.{Status => ADTStatus}
 import net.scalax.simple.ghdmzsk.ghdmzsk
-import net.scalax.simple.adt.nat.{AdtNat, AdtNatPositive, AdtNatZero}
+import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
+import builder.{coproducter, producter_build, DataTaker}
 
 @ADT22Parameter(min: Int, max: Int) = {
-    @if(min < max) { AdtNatPositive[I@{min}, @ADT22Parameter(min + 1, max)] } else { AdtNatPositive[I@{max}, AdtNat] }
+    @if(min < max) { RuntimeData[I@{min + 1}, @ADT22Parameter(min + 1, max)] } else { RuntimeNat }
 }
 
 @TypeParameters22(i: Int) = { @for(u <- 1 to i) { @if(u > 1) { , } I@{u} } }
 
 trait TypeAdtAliasModelUnapply {
-    @for(i <- 1 to 22) {
+    object CoProduct1 {
+        def unapply[I1, ADTExtension](data: ADTData[RuntimeData[I1, RuntimeNat], ADTExtension]): Option[I1] = data.toGHDMZSK match {
+            case dt: DataTaker => Some(dt.data.asInstanceOf[I1])
+            case _ => None
+        }
+    }
+
+    @for(i <- 2 to 22) {
         object CoProduct@{i} {
-            def unapply[@TypeParameters22(i), S <: ADTStatus](data: ADTData[@ADT22Parameter(1, i), S]): Option[I@{i}] = {
-                val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => ADTGHDMZSK.TakePropertyUtils.cutADTListByIndex)
-                val model: ghdmzsk = dataInstance.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options@{i}GHDMZSK)
-                model match {
-                    case u: ADTGHDMZSK.GetValue => Some(u.value.asInstanceOf[I@{i}])
-                    case _ => Option.empty
+            def unapply[@TypeParameters22(i), ADTExtension](data: ADTData[@ADT22Parameter(0, i), ADTExtension]): Option[I@{i}] = {
+                val dataInstance: ghdmzsk = data.toGHDMZSK.inputGHDMZSK(() => impl.TypeAdtAliasModelUnapplyGhdmzsk.options@{i - 1}GHDMZSK)
+
+                dataInstance match {
+                  case dt: DataTaker => Some(dt.data.asInstanceOf[I@{i}])
+                  case _ => None
                 }
             }
         }
@@ -32,9 +38,9 @@ trait TypeAdtAliasModelUnapply {
 
 package impl {
     object TypeAdtAliasModelUnapplyGhdmzsk {
-        val options1GHDMZSK: ghdmzsk = ADTGHDMZSK.zeroPositive
-        @for(i <- 2 to 22) {
-            val options@{i}GHDMZSK: ghdmzsk = ADTGHDMZSK.tempPositive.inputGHDMZSK(() => options@{i - 1}GHDMZSK)
+        val options1GHDMZSK: ghdmzsk = coproducter.failedOrOnlyTaker
+        @for(i <- 2 to 25) {
+            val options@{i}GHDMZSK: ghdmzsk = coproducter.appender.inputGHDMZSK(() => options@{i - 1}GHDMZSK)
         }
     }
 }

@@ -14,6 +14,14 @@ object Scala3CodegenExec:
     val writePath        = rootPath.resolve(Paths.get("net", "scalax", "simple", "adt", "impl"))
     Files.createDirectories(writePath)
 
+    locally {
+      val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent = CodePre2(isScala3 = true).text
+        writer.println(linerContent)
+      }
+    }
+
   end main
 
 end Scala3CodegenExec

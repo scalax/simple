@@ -40,6 +40,21 @@ codegenImpl := {
   (Compile / runMain).inputTaskValue.partialInput(s" $scalaAllRunMainClass").partialInput(s" ${scalaAllRunMainInputStr.value}").evaluated
 }
 
+val scalaInnerRunMainInputStr = settingKey[String]("scalaInnerRunMainInputStr")
+scalaInnerRunMainInputStr := {
+  val projectRoot = rootCodegenPath.value / ".." / ".." / ".." / "implemention" / "shared" / "src" / "codegen" / "scala"
+  projectRoot.getAbsoluteFile.toString
+}
+
+val scalaInnerRunMainClass = s"$codegenPackageName.ScalaInnerCodegenExec"
+codegenImpl := {
+  codegenImpl.evaluated
+  (Compile / runMain).inputTaskValue
+    .partialInput(s" $scalaInnerRunMainClass")
+    .partialInput(s" ${scalaInnerRunMainInputStr.value}")
+    .evaluated
+}
+
 val preGenMainClass = s"$codegenPackageName.PreCodegen"
 preCodegenImpl := (Compile / runMain).inputTaskValue
   .partialInput(s" $preGenMainClass")

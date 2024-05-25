@@ -1,6 +1,7 @@
 package net.scalax.simple.adt.test
 
 import net.scalax.simple.test.Tag
+import scala.collection.compat._
 
 object `Test Cases copy from documention in README.md` {
 
@@ -58,7 +59,6 @@ object `Test Cases copy from documention in README.md` {
 
         def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
           val applyM = Adt.CoProduct3[Int, String, Double](t)
-          Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
           applyM match {
             case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
             case Adt.CoProduct2(strValue)    => Try(BigDecimal(strValue)).toOption
@@ -86,7 +86,6 @@ object `Test Cases copy from documention in README.md` {
 
       def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
         val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
-        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
         applyM.fold(
           noneValue => ("None", -100),
           intSome => ("Some", intSome.get + 1),
@@ -106,7 +105,6 @@ object `Test Cases copy from documention in README.md` {
 
       def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
         val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
-        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
         applyM match {
           case Adt.CoProduct1(noneValue) => ("None", -100)
           case Adt.CoProduct2(intSome)   => ("Some", intSome.get + 1)
@@ -121,151 +119,6 @@ object `Test Cases copy from documention in README.md` {
       assert(inputAdtData(Option(2)) == ("Option", 2 + 2))
       assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
       assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
-    }
-  }
-
-  def `Usage of @djx314 Point 2`[T](body: => T): T = body
-
-  `Usage of @djx314 Point 2` {
-    {
-      // simple-adt common style
-      import net.scalax.simple.adt.{TypeAdt => Adt}
-      import io.circe._
-      import io.circe.syntax._
-
-      def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
-        val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
-        applyM.fold(
-          noneValue => "Null Tag".asJson,
-          intOpt => intOpt.map(_ + 1).asJson,
-          { case Adt.Adapter(encoder) => encoder(t) }
-        )
-      }
-
-      assert(inputAdtData(None) == "Null Tag".asJson)
-      assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-      // Match Encoder[String] by Type Class matching.
-      assert(inputAdtData("My Name") == "My Name".asJson)
-      // Match Encoder[JsonObject] by Type Class matching.
-      assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
-    }
-
-    {
-      // simple-adt match case style
-      import net.scalax.simple.adt.{TypeAdt => Adt}
-      import io.circe._
-      import io.circe.syntax._
-
-      def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
-        val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
-        Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]]]) // Confirm Type
-        applyM match {
-          case Adt.CoProduct1(noneValue)            => "Null Tag".asJson
-          case Adt.CoProduct2(intOpt)               => intOpt.map(_ + 1).asJson
-          case Adt.CoProduct3(Adt.Adapter(encoder)) => encoder(t)
-          case Adt.CoProduct4(empty)                => empty.matchErrorAndThrowException // Keep safe for API changed
-          case Adt.CoProduct5(empty)                => empty.matchErrorAndThrowException
-          case Adt.CoProduct6(empty)                => empty.matchErrorAndThrowException
-        }
-      }
-
-      assert(inputAdtData(None) == "Null Tag".asJson)
-      assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-      // Match Encoder[String] by Type Class matching.
-      assert(inputAdtData("My Name") == "My Name".asJson)
-      // Match Encoder[JsonObject] by Type Class matching.
-      assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
-    }
-  }
-
-  def `Usage of @djx314 Point 3`[T](body: => T): T = body
-
-  `Usage of @djx314 Point 3` {
-    import net.scalax.simple.adt.{TypeAdt => Adt}
-    import io.circe._
-    import io.circe.syntax._
-
-    trait WithEncoder {
-      type T
-      def model: T
-      def encode: Encoder[T]
-    }
-
-    object WithEncoder {
-      def apply[U](t: U)(en: Encoder[U]): WithEncoder = new WithEncoder {
-        override type T = U
-        override def model: U           = t
-        override def encode: Encoder[U] = en
-      }
-    }
-
-    def inputAdtData[T: Adt.CoProducts4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder]](t: T): Json = {
-      val applyM = Adt.CoProduct4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder](t)
-      applyM.fold(
-        noneValue => "Null Tag".asJson,
-        intOpt => intOpt.map(_ + 1).asJson,
-        { case Adt.Adapter(encoder) => encoder(t) },
-        withEncoder => withEncoder.encode(withEncoder.model)
-      )
-    }
-
-    assert(inputAdtData(None) == "Null Tag".asJson)
-    assert(inputAdtData(Some(2)) == (2 + 1).asJson)
-    assert(inputAdtData(JsonObject.empty.asJson) == Map.empty[String, String].asJson)
-    // Bypass compiler judgment
-    assert(inputAdtData(WithEncoder("My Name")(Encoder[String].contramap(t => t + " appended"))) == "My Name appended".asJson)
-  }
-
-  def `Usage of @djx314 Point 4`[T](body: => T): T = body
-
-  `Usage of @djx314 Point 4` {
-    import net.scalax.simple.adt.{TypeAdt => Adt}
-    import io.circe._
-    import io.circe.syntax._
-
-    def inputAdtData[S <: Adt.Status, T: Encoder: Adt.CoProductsX2[*, S, Int, Option[Int]]](t: T)(implicit
-      cv: S <:< Adt.Status.NotFinished.type
-    ): Json = t.asJson
-
-    // inputAdtData(None)              // Compile Failed
-    // inputAdtData(??? : Some[Int])   // Compile Failed
-    // inputAdtData(??? : Option[Int]) // Compile Failed
-    // inputAdtData(2)                 // Compile Failed
-
-    assert(inputAdtData(2L) == 2.asJson)
-    assert(inputAdtData(Some("Tom")) == "Tom".asJson)
-  }
-
-  def `Usage of @djx314 Point 5`[T](body: => T): T = body
-
-  `Usage of @djx314 Point 5` {
-
-    {
-      import net.scalax.simple.adt.{TypeAdt => Adt}
-      import io.circe.{Encoder, Json}
-      import io.circe.syntax._
-
-      def inputAdtData[S <: Adt.Status, T: Encoder: Adt.CoProductsX2[*, S, Int, Option[Int]]](t: T): Json = {
-        val applyM = Adt.CoProduct2[Int, Option[Int]](t)
-        Tag.assertType(Tag(applyM), Tag[Adt.CoProductX2[S, Int, Option[Int]]]) // Confirm Type
-        applyM match {
-          case Adt.CoProduct1(intData) => (intData + 10000).asJson
-          case Adt.CoProduct2(optData) =>
-            val opt = for (intData <- optData) yield intData + 20000
-            opt.asJson
-          case Adt.CoProduct3(other) => other.default(t.asJson) // For match failed
-          case Adt.CoProduct4(other) => other.default(t.asJson)
-          case Adt.CoProduct5(other) => other.default(t.asJson)
-          case Adt.CoProduct6(other) => other.default(t.asJson)
-        }
-      }
-
-      assert(inputAdtData(None) == None.asJson)
-      assert(inputAdtData(Some(5): Some[Int]) == (5 + 20000).asJson)
-      assert(inputAdtData(Some(8): Option[Int]) == (8 + 20000).asJson)
-      assert(inputAdtData(2) == (2 + 10000).asJson)
-      assert(inputAdtData(2L) == 2.asJson)
-      assert(inputAdtData(Some("Tom")) == "Tom".asJson)
     }
   }
 
@@ -321,6 +174,30 @@ object `Test Cases copy from documention in README.md` {
     assert(countAdtData(Option.empty) == (0 + 1))
     assert(countAdtData("Option.empty") == (12 + 1))
     assert(countAdtData(Option.empty, Option.empty, Option.empty) == (0 + 0 + 0))
+  }
+
+  def `Usage of @MarchLiu Point 3`[T](body: => T): T = body
+
+  `Usage of @MarchLiu Point 3` {
+    import net.scalax.simple.adt.{TypeAdt => Adt}
+
+    def countAdtData[T: Adt.CoProducts2[*, Option[Int], String]](t: T*): List[Int] = {
+      val funcApplyM = Adt.CoProduct2[Option[Int], String].typeOnly[T].instance
+
+      val inputList = t.to(List)
+
+      funcApplyM.fold(
+        func1 =>
+          for (tItem <- inputList) yield {
+            val tempVar: Option[Int] = func1.adtFunctionApply(tItem)
+            tempVar.map(_ + 100).getOrElse(-100)
+          },
+        func2 => for (tItem <- inputList) yield func2.adtFunctionApply(tItem).length
+      )
+    }
+
+    assert(countAdtData("abc", "aabbcc", "aabbbcc") == List("abc".length, "aabbcc".length, "aabbbcc".length))
+    assert(countAdtData(Some(2), Some(3), Option.empty) == List(102, 103, -100))
   }
 
 }
