@@ -14,27 +14,20 @@ object Scala2CodegenExec:
     val writePath        = rootPath.resolve(Paths.get("net", "scalax", "simple", "adt", "impl"))
     Files.createDirectories(writePath)
 
-    locally {
-      val filePath = writePath.resolve("InnerTypeAdtClass.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.InnerTypeAdtClassScala2().body
-        writer.println(linerContent)
-      }
-    }
-
-    // disabled
-    /*locally { () =>
-      val filePath = writePath.resolve("HelperIOImplicit.scala")
-      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8)) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.HelperIOImplicitScala2().body
-        writer.println(linerContent)
-      }
-    }*/
+    locally(().match
+      case _ =>
+        val filePath = writePath.resolve("ADTPassedFunction.scala")
+        Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
+          case writer =>
+            val linerContent = ADTPassedFunctionCodegen.text4
+            writer.println(linerContent)
+        )
+    )
 
     locally {
       val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = net.scalax.simple.nat.adt.codegen.txt.TypeAdtRuntimeApplyScala2().body
+        val linerContent = CodePre2(isScala3 = false).text
         writer.println(linerContent)
       }
     }

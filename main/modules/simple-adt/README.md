@@ -24,9 +24,9 @@ scalacOptions += "-Ykind-projector"
 
 ### Common Usage
 ``` scala
+// sealed trait style
 import scala.util.Try
 
-// sealed trait style
 sealed trait AdtData
 case class IntAdtData(intValue: Int)           extends AdtData
 case class StringAdtData(strValue: String)     extends AdtData
@@ -42,11 +42,15 @@ assert(inputAdtDataSealedTrait(IntAdtData(2)).get == BigDecimal("2"))
 assert(inputAdtDataSealedTrait(StringAdtData("6")).get == BigDecimal("6"))
 assert(inputAdtDataSealedTrait(DoubleAdtData(2.3620)).get == BigDecimal("2.362"))
 assert(inputAdtDataSealedTrait(StringAdtData("error number")) == None)
-
-// simple-adt style
+```
+``` scala
+// simple-adt common style
 import net.scalax.simple.adt.{TypeAdt => Adt}
-def inputAdtDataSimple[T: Adt.Options3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
-  val applyM = Adt.Options3[Int, String, Double](t)
+import scala.util.Try
+
+def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
+  val applyM = Adt.CoProduct3[Int, String, Double](t)
+  Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
   applyM.fold(
     intValue => Some(BigDecimal(intValue)),
     strValue => Try(BigDecimal(strValue)).toOption,
@@ -60,14 +64,40 @@ assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
 assert(inputAdtDataSimple("error number") == None)
 ```
 
+``` scala
+// simple-adt match case style
+import net.scalax.simple.adt.{TypeAdt => Adt}
+import scala.util.Try
+
+def inputAdtDataSimple[T: Adt.CoProducts3[*, Int, String, Double]](t: T): Option[BigDecimal] = {
+  val applyM = Adt.CoProduct3[Int, String, Double](t)
+  Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[Int, String, Double]]) // Confirm Type
+  applyM match {
+    case Adt.CoProduct1(intValue)    => Some(BigDecimal(intValue))
+    case Adt.CoProduct2(strValue)    => Try(BigDecimal(strValue)).toOption
+    case Adt.CoProduct3(doubleValue) => Some(BigDecimal(doubleValue))
+    case Adt.CoProduct4(empty)       => empty.matchErrorAndThrowException // Keep safe for API changed
+    case Adt.CoProduct5(empty)       => empty.matchErrorAndThrowException
+    case Adt.CoProduct6(empty)       => empty.matchErrorAndThrowException
+  }
+}
+
+assert(inputAdtDataSimple(2).get == BigDecimal("2"))
+assert(inputAdtDataSimple("6").get == BigDecimal("6"))
+assert(inputAdtDataSimple(2.3620).get == BigDecimal("2.362"))
+assert(inputAdtDataSimple("error number") == None)
+```
+
 ### Usage of [@djx314](https://github.com/djx314)
 #### Point 1
-Match type by `Adt.OptionsX`(The type will be match first if it's declaring first).
+Match type by `Adt.CoProductsX`(The type will be match first if it's declaring first).
 ``` scala
+// simple-adt common style
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
-def inputAdtData[T: Adt.Options3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
-  val applyM = Adt.Options3[None.type, Some[Int], Option[Int]](t)
+def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
+  val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
+  Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
   applyM.fold(
     noneValue => ("None", -100),
     intSome => ("Some", intSome.get + 1),
@@ -81,20 +111,72 @@ assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
 assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
 ```
 
+``` scala
+// simple-adt match case style
+import net.scalax.simple.adt.{TypeAdt => Adt}
+
+def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): (String, Int) = {
+  val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
+  Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Some[Int], Option[Int]]]) // Confirm Type
+  applyM match {
+    case Adt.CoProduct1(noneValue) => ("None", -100)
+    case Adt.CoProduct2(intSome)   => ("Some", intSome.get + 1)
+    case Adt.CoProduct3(intOpt)    => ("Option", intOpt.map(_ + 2).getOrElse(-500))
+    case Adt.CoProduct4(empty)     => empty.matchErrorAndThrowException // Keep safe for API changed
+    case Adt.CoProduct5(empty)     => empty.matchErrorAndThrowException
+    case Adt.CoProduct6(empty)     => empty.matchErrorAndThrowException
+  }
+}
+
+assert(inputAdtData(None) == ("None", -100))
+assert(inputAdtData(Option(2)) == ("Option", 2 + 2))
+assert(inputAdtData(Some(2)) == ("Some", 2 + 1))
+assert(inputAdtData(Option.empty[Int]) == ("Option", -500))
+```
+
 #### Point 2
 Match type with Type Class.
 ``` scala
+// simple-adt common style
 import net.scalax.simple.adt.{TypeAdt => Adt}
 import io.circe._
 import io.circe.syntax._
 
-def inputAdtData[T: Adt.Options3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
-  val applyM = Adt.Options3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
+def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
+  val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
+  Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]]]) // Confirm Type
   applyM.fold(
     noneValue => "Null Tag".asJson,
     intOpt => intOpt.map(_ + 1).asJson,
     { case Adt.Adapter(encoder) => encoder(t) }
   )
+}
+
+assert(inputAdtData(None) == "Null Tag".asJson)
+assert(inputAdtData(Some(2)) == (2 + 1).asJson)
+// Match Encoder[String] by Type Class matching.
+assert(inputAdtData("My Name") == "My Name".asJson)
+// Match Encoder[JsonObject] by Type Class matching.
+assert(inputAdtData(JsonObject.empty) == Map.empty[String, String].asJson)
+```
+
+``` scala
+// simple-adt match case style
+import net.scalax.simple.adt.{TypeAdt => Adt}
+import io.circe._
+import io.circe.syntax._
+
+def inputAdtData[T: Adt.CoProducts3[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]]]](t: T): Json = {
+  val applyM = Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]](t)
+  Tag.assertType(Tag(applyM), Tag[Adt.CoProduct3[None.type, Option[Int], Adt.Implicitly[Encoder[T]]]]) // Confirm Type
+  applyM match {
+    case Adt.CoProduct1(noneValue)            => "Null Tag".asJson
+    case Adt.CoProduct2(intOpt)               => intOpt.map(_ + 1).asJson
+    case Adt.CoProduct3(Adt.Adapter(encoder)) => encoder(t)
+    case Adt.CoProduct4(empty)                => empty.matchErrorAndThrowException // Keep safe for API changed
+    case Adt.CoProduct5(empty)                => empty.matchErrorAndThrowException
+    case Adt.CoProduct6(empty)                => empty.matchErrorAndThrowException
+  }
 }
 
 assert(inputAdtData(None) == "Null Tag".asJson)
@@ -126,8 +208,8 @@ object WithEncoder {
   }
 }
 
-def inputAdtData[T: Adt.Options4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder]](t: T): Json = {
-  val applyM = Adt.Options4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder](t)
+def inputAdtData[T: Adt.CoProducts4[*, None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder]](t: T): Json = {
+  val applyM = Adt.CoProducts4[None.type, Option[Int], Adt.Implicitly[Encoder[T]], WithEncoder](t)
   applyM.fold(
     noneValue => "Null Tag".asJson,
     intOpt => intOpt.map(_ + 1).asJson,
@@ -150,7 +232,7 @@ import net.scalax.simple.adt.{TypeAdt => Adt}
 import io.circe._
 import io.circe.syntax._
 
-def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json =
+def inputAdtData[S <: Adt.Status, T: Encoder: Adt.CoProductsX2[*, S, Int, Option[Int]]](t: T)(implicit cv: S <:< Adt.Status.Failed): Json =
   t.asJson
 
 // inputAdtData(None)              // Compile Failed
@@ -158,6 +240,36 @@ def inputAdtData[S <: Adt.Status, T: Encoder: Adt.OptionsX2[*, S, Int, Option[In
 // inputAdtData(??? : Option[Int]) // Compile Failed
 // inputAdtData(2)                 // Compile Failed
 
+assert(inputAdtData(2L) == 2.asJson)
+assert(inputAdtData(Some("Tom")) == "Tom".asJson)
+```
+
+#### Point 5
+Usage of `match case` style only.
+``` scala
+import net.scalax.simple.adt.{TypeAdt => Adt}
+import io.circe.{Encoder, Json}
+import io.circe.syntax._
+
+def inputAdtData[S <: Adt.Status, T: Encoder: Adt.CoProductsX2[*, S, Int, Option[Int]]](t: T): Json = {
+  val applyM = Adt.CoProducts2[Int, Option[Int]](t)
+  applyM: Adt.CoProductX2[S, Int, Option[Int]] // Confirm Type
+  applyM match {
+    case Adt.CoProduct1(intData) => (intData + 10000).asJson
+    case Adt.CoProduct2(optData) =>
+      val opt = for (intData <- optData) yield intData + 20000
+      opt.asJson
+    case Adt.CoProduct3(other) => other.default(t.asJson) // For match failed
+    case Adt.CoProduct4(other) => other.default(t.asJson)
+    case Adt.CoProduct5(other) => other.default(t.asJson)
+    case Adt.CoProduct6(other) => other.default(t.asJson)
+  }
+}
+
+assert(inputAdtData(None) == None.asJson)
+assert(inputAdtData(Some(5): Some[Int]) == (5 + 20000).asJson)
+assert(inputAdtData(Some(8): Option[Int]) == (8 + 20000).asJson)
+assert(inputAdtData(2) == (2 + 10000).asJson)
 assert(inputAdtData(2L) == 2.asJson)
 assert(inputAdtData(Some("Tom")) == "Tom".asJson)
 ```
@@ -170,10 +282,10 @@ Match type for parameter list.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
-type Options3F[F[_], T, T1, T2, T3] = Adt.Options3[F[T], T1, T2, T3]
+type Options3F[F[_], T, T1, T2, T3] = Adt.CoProducts3[F[T], T1, T2, T3]
 
 def inputAdtData[T: Options3F[Seq, *, Seq[String], Seq[Int], Seq[Option[Long]]]](t: T*): Seq[Long] = {
-  val applyM = Adt.Options3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
+  val applyM = Adt.CoProducts3[Seq[String], Seq[Int], Seq[Option[Long]]](t)
   applyM.fold(
     stringSeq => stringSeq.map(t => t.length.toLong),
     intSeq => intSeq.map(t => t.toLong),
@@ -191,11 +303,11 @@ Match one type twice to do different things.
 ``` scala
 import net.scalax.simple.adt.{TypeAdt => Adt}
 
-type Options2F[F[_], T, T1, T2] = Adt.Options2[F[T], T1, T2]
+type Options2F[F[_], T, T1, T2] = Adt.CoProducts2[F[T], T1, T2]
 
-def countAdtData[T: Options2F[Seq, *, Seq[Option[Int]], Seq[String]]: Adt.Options2[*, Option[Int], String]](t: T*): Int = {
-  def applyMSeq       = Adt.Options2[Seq[Option[Int]], Seq[String]](t)
-  def applyM(elem: T) = Adt.Options2[Option[Int], String](elem)
+def countAdtData[T: Options2F[Seq, *, Seq[Option[Int]], Seq[String]]: Adt.CoProducts2[*, Option[Int], String]](t: T*): Int = {
+  def applyMSeq       = Adt.CoProducts2[Seq[Option[Int]], Seq[String]](t)
+  def applyM(elem: T) = Adt.CoProducts2[Option[Int], String](elem)
 
   t.size match {
     case 0 => applyMSeq.fold(emptyOptIntSeq => -100, emptyStringSeq => -500)

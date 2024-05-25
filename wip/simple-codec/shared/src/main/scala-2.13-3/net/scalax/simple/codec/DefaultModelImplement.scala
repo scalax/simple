@@ -1,6 +1,5 @@
-package net.scalax.simple
-package codec
+package net.scalax.simple.codec
 
 object DefaultModelImplement {
-  implicit def aaII[PolyInstance, T](implicit v: => T): ModelImplement[PolyInstance, T] = new ModelImplement[PolyInstance, T](v)
+  implicit def aaII[P, T](implicit v: => T): ModelImplement[P, T] = new ModelImplement[P, T](v)
 }

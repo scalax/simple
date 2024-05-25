@@ -1,11 +1,13 @@
 package net.scalax.simple.adt
 
-trait TypeAdtGetter {
-  def executeFunction: Any => Any
-}
+import net.scalax.simple.adt.builder.DataTaker
+import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object TypeAdtGetter {
-  def apply(func: Any => Any): TypeAdtGetter = new TypeAdtGetter {
-    override val executeFunction: Any => Any = func
+  def getFromFunction(ghdFromADTData: ghdmzsk, ghdFromFunctionList: ghdmzsk): Any = {
+    val function1: Any => Any = ghdFromADTData.inputGHDMZSK(() => ghdFromFunctionList).asInstanceOf[DataTaker].data.asInstanceOf[Any => Any]
+    val data1                 = ghdFromADTData.inputGHDMZSK(() => ghdFromADTData).asInstanceOf[DataTaker].data
+
+    function1(data1)
   }
 }

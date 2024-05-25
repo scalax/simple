@@ -1,15 +1,16 @@
 package net.scalax.simple.nat.group01.number_01
 
+import net.scalax.simple.core.App_1
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
 import scala.annotation.tailrec
 
-object `喵_Number_01` extends App {
+object `喵_Number_01` extends App_1 {
 
-  def genNumber(c: Int): (ghdmzsk, ghdmzsk, ghdmzsk) = {
-    lazy val (n1Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number1S, zero = Number.number1T, count = c - 1)
-    lazy val (n2Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number3S, zero = Number.number1T, count = c)
-    lazy val (n3Pos, _): (ghdmzsk, ghdmzsk) = Number.genNumberImpl(positive = Number.number3S, zero = Number.number3T, count = c)
+  def genNumber(c: Int): (() => ghdmzsk, () => ghdmzsk, () => ghdmzsk) = {
+    lazy val (n1Pos, _) = Number.genNumberImpl(positive = Number.number1S, zero = Number.number1T, count = c - 1)
+    lazy val (n2Pos, _) = Number.genNumberImpl(positive = Number.number3S, zero = Number.number1T, count = c)
+    lazy val (n3Pos, _) = Number.genNumberImpl(positive = Number.number3S, zero = Number.number3T, count = c)
 
     (n1Pos, n2Pos, n3Pos)
   }
@@ -20,7 +21,7 @@ object `喵_Number_01` extends App {
     var length2: Long   = 0
 
     val (n1, n2, n3) = genNumber(except)
-    val gen          = () => n1(() => n3)
+    val gen          = () => n1().inputGHDMZSK(n3)
 
     @tailrec
     def countImpl(num: () => ghdmzsk, needConitie: Long): Unit = {
@@ -53,9 +54,9 @@ object `喵_Number_01` extends App {
     val (g1, g2)       = count(except = i, i1 = i1)
     val i2: BigDecimal = BigDecimal(i1 - 1)
     val r: BigDecimal  = BigDecimal(g1) / BigDecimal(g2)
-    println(g1, g2)
-    println(i, s"$i ^ 2 - 1", r)
-    assert((i2 - r).abs < BigDecimal("0.001"))
+    println((g1, g2))
+    println((i, s"$i ^ 2 - 1", r))
+    assert(((i2 - r).abs < BigDecimal("0.001")))
   }
 
 }

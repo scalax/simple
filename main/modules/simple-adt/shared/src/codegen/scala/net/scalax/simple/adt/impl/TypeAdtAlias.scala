@@ -1,309 +1,227 @@
-package net.scalax.simple.adt
+package net.scalax.simple
+package adt
 package impl
+
+import temp._
 
 trait TypeAdtAlias {
 
-  type Options1[A, I1]                        = TypeAdtApply.Aux[A, AdtAlias.AdtAppend[I1, AdtAlias.AdtZero], Adt.Status.Passed]
-  type OptionsX1[A, Status <: Adt.Status, I1] = TypeAdtApply.Aux[A, AdtAlias.AdtAppend[I1, AdtAlias.AdtZero], Status]
+  type CoProducts1[A, I1] = ADTData[RuntimeData[AdtFunction[A, I1], RuntimeZero], ADTPassedFunction.type with ADTTypeParameterFetch.type]
+  type CoProductsX1[A, ADTExtension, I1] =
+    ADTData[RuntimeData[AdtFunction[A, I1], RuntimeZero], ADTExtension with ADTTypeParameterFetch.type]
 
-  type Options2[A, I1, I2] = TypeAdtApply.Aux[A, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtZero]], Adt.Status.Passed]
-  type OptionsX2[A, Status <: Adt.Status, I1, I2] =
-    TypeAdtApply.Aux[A, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtZero]], Status]
-
-  type Options3[A, I1, I2, I3] =
-    TypeAdtApply.Aux[A, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtZero]]], Adt.Status.Passed]
-  type OptionsX3[A, Status <: Adt.Status, I1, I2, I3] =
-    TypeAdtApply.Aux[A, AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtZero]]], Status]
-
-  type Options4[A, I1, I2, I3, I4] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtZero]]]],
-    Adt.Status.Passed
+  type CoProducts2[A, I1, I2] = ADTData[
+    RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeZero]],
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX4[A, Status <: Adt.Status, I1, I2, I3, I4] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtZero]]]],
-    Status
+  type CoProductsX2[A, ADTExtension, I1, I2] =
+    ADTData[RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeZero]], ADTExtension with ADTTypeParameterFetch.type]
+
+  type CoProducts3[A, I1, I2, I3] = ADTData[
+    RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeZero]]],
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
+  ]
+  type CoProductsX3[A, ADTExtension, I1, I2, I3] = ADTData[
+    RuntimeData[AdtFunction[A, I1], RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeZero]]],
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options5[A, I1, I2, I3, I4, I5] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtZero]]]]
+  type CoProducts4[A, I1, I2, I3, I4] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeZero]]]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX5[A, Status <: Adt.Status, I1, I2, I3, I4, I5] = TypeAdtApply.Aux[A, AdtAlias.AdtAppend[
-    I1,
-    AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtZero]]]]
-  ], Status]
-
-  type Options6[A, I1, I2, I3, I4, I5, I6] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[
-      I2,
-      AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtZero]]]]
-    ]],
-    Adt.Status.Passed
-  ]
-  type OptionsX6[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[I1, AdtAlias.AdtAppend[
-      I2,
-      AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtZero]]]]
-    ]],
-    Status
-  ]
-
-  type Options7[A, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[
-        I3,
-        AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtZero]]]]
-      ]]
+  type CoProductsX4[A, ADTExtension, I1, I2, I3, I4] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[AdtFunction[A, I2], RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeZero]]]
     ],
-    Adt.Status.Passed
-  ]
-  type OptionsX7[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[I2, AdtAlias.AdtAppend[
-        I3,
-        AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtZero]]]]
-      ]]
-    ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options8[A, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[
-          I4,
-          AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtZero]]]]
-        ]]
+  type CoProducts5[A, I1, I2, I3, I4, I5] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeData[AdtFunction[A, I5], RuntimeZero]]]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX8[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[I3, AdtAlias.AdtAppend[
-          I4,
-          AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtZero]]]]
-        ]]
+  type CoProductsX5[A, ADTExtension, I1, I2, I3, I4, I5] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[AdtFunction[A, I3], RuntimeData[AdtFunction[A, I4], RuntimeData[AdtFunction[A, I5], RuntimeZero]]]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[
-            I5,
-            AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtZero]]]]
-          ]]
+  type CoProducts6[A, I1, I2, I3, I4, I5, I6] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[AdtFunction[A, I4], RuntimeData[AdtFunction[A, I5], RuntimeData[AdtFunction[A, I6], RuntimeZero]]]
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX9[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[I4, AdtAlias.AdtAppend[
-            I5,
-            AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtZero]]]]
-          ]]
+  type CoProductsX6[A, ADTExtension, I1, I2, I3, I4, I5, I6] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[AdtFunction[A, I4], RuntimeData[AdtFunction[A, I5], RuntimeData[AdtFunction[A, I6], RuntimeZero]]]
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[
-              I6,
-              AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtZero]]]]
-            ]]
+  type CoProducts7[A, I1, I2, I3, I4, I5, I6, I7] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[AdtFunction[A, I5], RuntimeData[AdtFunction[A, I6], RuntimeData[AdtFunction[A, I7], RuntimeZero]]]
           ]
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX10[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[I5, AdtAlias.AdtAppend[
-              I6,
-              AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtZero]]]]
-            ]]
+  type CoProductsX7[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[AdtFunction[A, I5], RuntimeData[AdtFunction[A, I6], RuntimeData[AdtFunction[A, I7], RuntimeZero]]]
           ]
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[
-                I7,
-                AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtZero]]]]
-              ]]
+  type CoProducts8[A, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[AdtFunction[A, I6], RuntimeData[AdtFunction[A, I7], RuntimeData[AdtFunction[A, I8], RuntimeZero]]]
             ]
           ]
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX11[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[I6, AdtAlias.AdtAppend[
-                I7,
-                AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtZero]]]]
-              ]]
+  type CoProductsX8[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[AdtFunction[A, I6], RuntimeData[AdtFunction[A, I7], RuntimeData[AdtFunction[A, I8], RuntimeZero]]]
             ]
           ]
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[
-                  I8,
-                  AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtZero]]]]
-                ]]
+  type CoProducts9[A, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[AdtFunction[A, I7], RuntimeData[AdtFunction[A, I8], RuntimeData[AdtFunction[A, I9], RuntimeZero]]]
               ]
             ]
           ]
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX12[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[I7, AdtAlias.AdtAppend[
-                  I8,
-                  AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtZero]]]]
-                ]]
+  type CoProductsX9[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[AdtFunction[A, I7], RuntimeData[AdtFunction[A, I8], RuntimeData[AdtFunction[A, I9], RuntimeZero]]]
               ]
             ]
           ]
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[
-                    I9,
-                    AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtZero]]]]
-                  ]]
+  type CoProducts10[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[AdtFunction[A, I8], RuntimeData[AdtFunction[A, I9], RuntimeData[AdtFunction[A, I10], RuntimeZero]]]
                 ]
               ]
             ]
@@ -311,28 +229,24 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX13[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[I8, AdtAlias.AdtAppend[
-                    I9,
-                    AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtZero]]]]
-                  ]]
+  type CoProductsX10[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[AdtFunction[A, I8], RuntimeData[AdtFunction[A, I9], RuntimeData[AdtFunction[A, I10], RuntimeZero]]]
                 ]
               ]
             ]
@@ -340,31 +254,27 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[
-                      I10,
-                      AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtZero]]]]
-                    ]]
+  type CoProducts11[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[AdtFunction[A, I9], RuntimeData[AdtFunction[A, I10], RuntimeData[AdtFunction[A, I11], RuntimeZero]]]
                   ]
                 ]
               ]
@@ -373,30 +283,26 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX14[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[I9, AdtAlias.AdtAppend[
-                      I10,
-                      AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtZero]]]]
-                    ]]
+  type CoProductsX11[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[AdtFunction[A, I9], RuntimeData[AdtFunction[A, I10], RuntimeData[AdtFunction[A, I11], RuntimeZero]]]
                   ]
                 ]
               ]
@@ -405,33 +311,29 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[
-                        I11,
-                        AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtZero]]]]
-                      ]]
+  type CoProducts12[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[AdtFunction[A, I10], RuntimeData[AdtFunction[A, I11], RuntimeData[AdtFunction[A, I12], RuntimeZero]]]
                     ]
                   ]
                 ]
@@ -441,32 +343,28 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX15[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[I10, AdtAlias.AdtAppend[
-                        I11,
-                        AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtZero]]]]
-                      ]]
+  type CoProductsX12[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[AdtFunction[A, I10], RuntimeData[AdtFunction[A, I11], RuntimeData[AdtFunction[A, I12], RuntimeZero]]]
                     ]
                   ]
                 ]
@@ -476,35 +374,31 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[
-                          I13,
-                          AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtZero]]]
-                        ]]]
+  type CoProducts13[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[AdtFunction[A, I11], RuntimeData[AdtFunction[A, I12], RuntimeData[AdtFunction[A, I13], RuntimeZero]]]
                       ]
                     ]
                   ]
@@ -515,34 +409,30 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX16[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[I11, AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[
-                          I13,
-                          AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtZero]]]
-                        ]]]
+  type CoProductsX13[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[AdtFunction[A, I11], RuntimeData[AdtFunction[A, I12], RuntimeData[AdtFunction[A, I13], RuntimeZero]]]
                       ]
                     ]
                   ]
@@ -553,37 +443,33 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[
-                            I14,
-                            AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtZero]]]
-                          ]]]
+  type CoProducts14[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[AdtFunction[A, I12], RuntimeData[AdtFunction[A, I13], RuntimeData[AdtFunction[A, I14], RuntimeZero]]]
                         ]
                       ]
                     ]
@@ -595,36 +481,32 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX17[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[I12, AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[
-                            I14,
-                            AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtZero]]]
-                          ]]]
+  type CoProductsX14[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[AdtFunction[A, I12], RuntimeData[AdtFunction[A, I13], RuntimeData[AdtFunction[A, I14], RuntimeZero]]]
                         ]
                       ]
                     ]
@@ -636,39 +518,119 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
 
-  type Options18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[
-                            I12,
-                            AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[
-                              I15,
-                              AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtZero]]]
-                            ]]]
+  type CoProducts15[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[AdtFunction[A, I12], RuntimeData[
+                            AdtFunction[A, I13],
+                            RuntimeData[AdtFunction[A, I14], RuntimeData[AdtFunction[A, I15], RuntimeZero]]
+                          ]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
+  ]
+  type CoProductsX15[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[AdtFunction[A, I12], RuntimeData[
+                            AdtFunction[A, I13],
+                            RuntimeData[AdtFunction[A, I14], RuntimeData[AdtFunction[A, I15], RuntimeZero]]
+                          ]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTExtension with ADTTypeParameterFetch.type
+  ]
+
+  type CoProducts16[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[AdtFunction[A, I13], RuntimeData[
+                              AdtFunction[A, I14],
+                              RuntimeData[AdtFunction[A, I15], RuntimeData[AdtFunction[A, I16], RuntimeZero]]
+                            ]]
                           ]
                         ]
                       ]
@@ -681,40 +643,37 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX18[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] =
-    TypeAdtApply.Aux[
-      A,
-      AdtAlias.AdtAppend[
-        I1,
-        AdtAlias.AdtAppend[
-          I2,
-          AdtAlias.AdtAppend[
-            I3,
-            AdtAlias.AdtAppend[
-              I4,
-              AdtAlias.AdtAppend[
-                I5,
-                AdtAlias.AdtAppend[
-                  I6,
-                  AdtAlias.AdtAppend[
-                    I7,
-                    AdtAlias.AdtAppend[
-                      I8,
-                      AdtAlias.AdtAppend[
-                        I9,
-                        AdtAlias.AdtAppend[
-                          I10,
-                          AdtAlias.AdtAppend[
-                            I11,
-                            AdtAlias.AdtAppend[
-                              I12,
-                              AdtAlias.AdtAppend[I13, AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[
-                                I15,
-                                AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtZero]]]
-                              ]]]
-                            ]
+  type CoProductsX16[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[AdtFunction[A, I13], RuntimeData[
+                              AdtFunction[A, I14],
+                              RuntimeData[AdtFunction[A, I15], RuntimeData[AdtFunction[A, I16], RuntimeZero]]
+                            ]]
                           ]
                         ]
                       ]
@@ -725,42 +684,42 @@ trait TypeAdtAlias {
             ]
           ]
         ]
-      ],
-      Status
-    ]
+      ]
+    ],
+    ADTExtension with ADTTypeParameterFetch.type
+  ]
 
-  type Options19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[
-                            I12,
-                            AdtAlias.AdtAppend[
-                              I13,
-                              AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[
-                                I16,
-                                AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[I19, AdtAlias.AdtZero]]]
-                              ]]]
+  type CoProducts17[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[AdtFunction[A, I14], RuntimeData[
+                                AdtFunction[A, I15],
+                                RuntimeData[AdtFunction[A, I16], RuntimeData[AdtFunction[A, I17], RuntimeZero]]
+                              ]]
                             ]
                           ]
                         ]
@@ -774,42 +733,39 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX19[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] =
-    TypeAdtApply.Aux[
-      A,
-      AdtAlias.AdtAppend[
-        I1,
-        AdtAlias.AdtAppend[
-          I2,
-          AdtAlias.AdtAppend[
-            I3,
-            AdtAlias.AdtAppend[
-              I4,
-              AdtAlias.AdtAppend[
-                I5,
-                AdtAlias.AdtAppend[
-                  I6,
-                  AdtAlias.AdtAppend[
-                    I7,
-                    AdtAlias.AdtAppend[
-                      I8,
-                      AdtAlias.AdtAppend[
-                        I9,
-                        AdtAlias.AdtAppend[
-                          I10,
-                          AdtAlias.AdtAppend[
-                            I11,
-                            AdtAlias.AdtAppend[
-                              I12,
-                              AdtAlias.AdtAppend[
-                                I13,
-                                AdtAlias.AdtAppend[I14, AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[
-                                  I16,
-                                  AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[I19, AdtAlias.AdtZero]]]
-                                ]]]
-                              ]
+  type CoProductsX17[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[AdtFunction[A, I14], RuntimeData[
+                                AdtFunction[A, I15],
+                                RuntimeData[AdtFunction[A, I16], RuntimeData[AdtFunction[A, I17], RuntimeZero]]
+                              ]]
                             ]
                           ]
                         ]
@@ -821,44 +777,44 @@ trait TypeAdtAlias {
             ]
           ]
         ]
-      ],
-      Status
-    ]
+      ]
+    ],
+    ADTExtension with ADTTypeParameterFetch.type
+  ]
 
-  type Options20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[
-                            I12,
-                            AdtAlias.AdtAppend[
-                              I13,
-                              AdtAlias.AdtAppend[
-                                I14,
-                                AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[
-                                  I17,
-                                  AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[I19, AdtAlias.AdtAppend[I20, AdtAlias.AdtZero]]]
-                                ]]]
+  type CoProducts18[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[AdtFunction[A, I15], RuntimeData[
+                                  AdtFunction[A, I16],
+                                  RuntimeData[AdtFunction[A, I17], RuntimeData[AdtFunction[A, I18], RuntimeZero]]
+                                ]]
                               ]
                             ]
                           ]
@@ -873,44 +829,41 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX20[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] =
-    TypeAdtApply.Aux[
-      A,
-      AdtAlias.AdtAppend[
-        I1,
-        AdtAlias.AdtAppend[
-          I2,
-          AdtAlias.AdtAppend[
-            I3,
-            AdtAlias.AdtAppend[
-              I4,
-              AdtAlias.AdtAppend[
-                I5,
-                AdtAlias.AdtAppend[
-                  I6,
-                  AdtAlias.AdtAppend[
-                    I7,
-                    AdtAlias.AdtAppend[
-                      I8,
-                      AdtAlias.AdtAppend[
-                        I9,
-                        AdtAlias.AdtAppend[
-                          I10,
-                          AdtAlias.AdtAppend[
-                            I11,
-                            AdtAlias.AdtAppend[
-                              I12,
-                              AdtAlias.AdtAppend[
-                                I13,
-                                AdtAlias.AdtAppend[
-                                  I14,
-                                  AdtAlias.AdtAppend[I15, AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[
-                                    I17,
-                                    AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[I19, AdtAlias.AdtAppend[I20, AdtAlias.AdtZero]]]
-                                  ]]]
-                                ]
+  type CoProductsX18[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[AdtFunction[A, I15], RuntimeData[
+                                  AdtFunction[A, I16],
+                                  RuntimeData[AdtFunction[A, I17], RuntimeData[AdtFunction[A, I18], RuntimeZero]]
+                                ]]
                               ]
                             ]
                           ]
@@ -923,46 +876,46 @@ trait TypeAdtAlias {
             ]
           ]
         ]
-      ],
-      Status
-    ]
+      ]
+    ],
+    ADTExtension with ADTTypeParameterFetch.type
+  ]
 
-  type Options21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[
-                            I12,
-                            AdtAlias.AdtAppend[
-                              I13,
-                              AdtAlias.AdtAppend[
-                                I14,
-                                AdtAlias.AdtAppend[
-                                  I15,
-                                  AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[
-                                    I18,
-                                    AdtAlias.AdtAppend[I19, AdtAlias.AdtAppend[I20, AdtAlias.AdtAppend[I21, AdtAlias.AdtZero]]]
-                                  ]]]
+  type CoProducts19[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[
+                                  AdtFunction[A, I15],
+                                  RuntimeData[AdtFunction[A, I16], RuntimeData[
+                                    AdtFunction[A, I17],
+                                    RuntimeData[AdtFunction[A, I18], RuntimeData[AdtFunction[A, I19], RuntimeZero]]
+                                  ]]
                                 ]
                               ]
                             ]
@@ -978,46 +931,43 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX21[A, Status <: Adt.Status, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
-    TypeAdtApply.Aux[
-      A,
-      AdtAlias.AdtAppend[
-        I1,
-        AdtAlias.AdtAppend[
-          I2,
-          AdtAlias.AdtAppend[
-            I3,
-            AdtAlias.AdtAppend[
-              I4,
-              AdtAlias.AdtAppend[
-                I5,
-                AdtAlias.AdtAppend[
-                  I6,
-                  AdtAlias.AdtAppend[
-                    I7,
-                    AdtAlias.AdtAppend[
-                      I8,
-                      AdtAlias.AdtAppend[
-                        I9,
-                        AdtAlias.AdtAppend[
-                          I10,
-                          AdtAlias.AdtAppend[
-                            I11,
-                            AdtAlias.AdtAppend[
-                              I12,
-                              AdtAlias.AdtAppend[
-                                I13,
-                                AdtAlias.AdtAppend[
-                                  I14,
-                                  AdtAlias.AdtAppend[
-                                    I15,
-                                    AdtAlias.AdtAppend[I16, AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[
-                                      I18,
-                                      AdtAlias.AdtAppend[I19, AdtAlias.AdtAppend[I20, AdtAlias.AdtAppend[I21, AdtAlias.AdtZero]]]
-                                    ]]]
-                                  ]
+  type CoProductsX19[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[
+                                  AdtFunction[A, I15],
+                                  RuntimeData[AdtFunction[A, I16], RuntimeData[
+                                    AdtFunction[A, I17],
+                                    RuntimeData[AdtFunction[A, I18], RuntimeData[AdtFunction[A, I19], RuntimeZero]]
+                                  ]]
                                 ]
                               ]
                             ]
@@ -1031,48 +981,48 @@ trait TypeAdtAlias {
             ]
           ]
         ]
-      ],
-      Status
-    ]
+      ]
+    ],
+    ADTExtension with ADTTypeParameterFetch.type
+  ]
 
-  type Options22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[
-                            I12,
-                            AdtAlias.AdtAppend[
-                              I13,
-                              AdtAlias.AdtAppend[
-                                I14,
-                                AdtAlias.AdtAppend[
-                                  I15,
-                                  AdtAlias.AdtAppend[
-                                    I16,
-                                    AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[
-                                      I19,
-                                      AdtAlias.AdtAppend[I20, AdtAlias.AdtAppend[I21, AdtAlias.AdtAppend[I22, AdtAlias.AdtZero]]]
-                                    ]]]
+  type CoProducts20[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[
+                                  AdtFunction[A, I15],
+                                  RuntimeData[
+                                    AdtFunction[A, I16],
+                                    RuntimeData[AdtFunction[A, I17], RuntimeData[
+                                      AdtFunction[A, I18],
+                                      RuntimeData[AdtFunction[A, I19], RuntimeData[AdtFunction[A, I20], RuntimeZero]]
+                                    ]]
                                   ]
                                 ]
                               ]
@@ -1089,71 +1039,45 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Adt.Status.Passed
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
   ]
-  type OptionsX22[
-    A,
-    Status <: Adt.Status,
-    I1,
-    I2,
-    I3,
-    I4,
-    I5,
-    I6,
-    I7,
-    I8,
-    I9,
-    I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15,
-    I16,
-    I17,
-    I18,
-    I19,
-    I20,
-    I21,
-    I22
-  ] = TypeAdtApply.Aux[
-    A,
-    AdtAlias.AdtAppend[
-      I1,
-      AdtAlias.AdtAppend[
-        I2,
-        AdtAlias.AdtAppend[
-          I3,
-          AdtAlias.AdtAppend[
-            I4,
-            AdtAlias.AdtAppend[
-              I5,
-              AdtAlias.AdtAppend[
-                I6,
-                AdtAlias.AdtAppend[
-                  I7,
-                  AdtAlias.AdtAppend[
-                    I8,
-                    AdtAlias.AdtAppend[
-                      I9,
-                      AdtAlias.AdtAppend[
-                        I10,
-                        AdtAlias.AdtAppend[
-                          I11,
-                          AdtAlias.AdtAppend[
-                            I12,
-                            AdtAlias.AdtAppend[
-                              I13,
-                              AdtAlias.AdtAppend[
-                                I14,
-                                AdtAlias.AdtAppend[
-                                  I15,
-                                  AdtAlias.AdtAppend[
-                                    I16,
-                                    AdtAlias.AdtAppend[I17, AdtAlias.AdtAppend[I18, AdtAlias.AdtAppend[
-                                      I19,
-                                      AdtAlias.AdtAppend[I20, AdtAlias.AdtAppend[I21, AdtAlias.AdtAppend[I22, AdtAlias.AdtZero]]]
-                                    ]]]
+  type CoProductsX20[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[
+                                  AdtFunction[A, I15],
+                                  RuntimeData[
+                                    AdtFunction[A, I16],
+                                    RuntimeData[AdtFunction[A, I17], RuntimeData[
+                                      AdtFunction[A, I18],
+                                      RuntimeData[AdtFunction[A, I19], RuntimeData[AdtFunction[A, I20], RuntimeZero]]
+                                    ]]
                                   ]
                                 ]
                               ]
@@ -1170,9 +1094,249 @@ trait TypeAdtAlias {
         ]
       ]
     ],
-    Status
+    ADTExtension with ADTTypeParameterFetch.type
   ]
+
+  type CoProducts21[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[
+                                  AdtFunction[A, I15],
+                                  RuntimeData[
+                                    AdtFunction[A, I16],
+                                    RuntimeData[
+                                      AdtFunction[A, I17],
+                                      RuntimeData[AdtFunction[A, I18], RuntimeData[
+                                        AdtFunction[A, I19],
+                                        RuntimeData[AdtFunction[A, I20], RuntimeData[AdtFunction[A, I21], RuntimeZero]]
+                                      ]]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
+  ]
+  type CoProductsX21[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21] =
+    ADTData[
+      RuntimeData[
+        AdtFunction[A, I1],
+        RuntimeData[
+          AdtFunction[A, I2],
+          RuntimeData[
+            AdtFunction[A, I3],
+            RuntimeData[
+              AdtFunction[A, I4],
+              RuntimeData[
+                AdtFunction[A, I5],
+                RuntimeData[
+                  AdtFunction[A, I6],
+                  RuntimeData[
+                    AdtFunction[A, I7],
+                    RuntimeData[
+                      AdtFunction[A, I8],
+                      RuntimeData[
+                        AdtFunction[A, I9],
+                        RuntimeData[
+                          AdtFunction[A, I10],
+                          RuntimeData[
+                            AdtFunction[A, I11],
+                            RuntimeData[
+                              AdtFunction[A, I12],
+                              RuntimeData[
+                                AdtFunction[A, I13],
+                                RuntimeData[
+                                  AdtFunction[A, I14],
+                                  RuntimeData[
+                                    AdtFunction[A, I15],
+                                    RuntimeData[
+                                      AdtFunction[A, I16],
+                                      RuntimeData[
+                                        AdtFunction[A, I17],
+                                        RuntimeData[AdtFunction[A, I18], RuntimeData[
+                                          AdtFunction[A, I19],
+                                          RuntimeData[AdtFunction[A, I20], RuntimeData[AdtFunction[A, I21], RuntimeZero]]
+                                        ]]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension with ADTTypeParameterFetch.type
+    ]
+
+  type CoProducts22[A, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] = ADTData[
+    RuntimeData[
+      AdtFunction[A, I1],
+      RuntimeData[
+        AdtFunction[A, I2],
+        RuntimeData[
+          AdtFunction[A, I3],
+          RuntimeData[
+            AdtFunction[A, I4],
+            RuntimeData[
+              AdtFunction[A, I5],
+              RuntimeData[
+                AdtFunction[A, I6],
+                RuntimeData[
+                  AdtFunction[A, I7],
+                  RuntimeData[
+                    AdtFunction[A, I8],
+                    RuntimeData[
+                      AdtFunction[A, I9],
+                      RuntimeData[
+                        AdtFunction[A, I10],
+                        RuntimeData[
+                          AdtFunction[A, I11],
+                          RuntimeData[
+                            AdtFunction[A, I12],
+                            RuntimeData[
+                              AdtFunction[A, I13],
+                              RuntimeData[
+                                AdtFunction[A, I14],
+                                RuntimeData[
+                                  AdtFunction[A, I15],
+                                  RuntimeData[
+                                    AdtFunction[A, I16],
+                                    RuntimeData[
+                                      AdtFunction[A, I17],
+                                      RuntimeData[
+                                        AdtFunction[A, I18],
+                                        RuntimeData[AdtFunction[A, I19], RuntimeData[
+                                          AdtFunction[A, I20],
+                                          RuntimeData[AdtFunction[A, I21], RuntimeData[AdtFunction[A, I22], RuntimeZero]]
+                                        ]]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    ADTPassedFunction.type with ADTTypeParameterFetch.type
+  ]
+  type CoProductsX22[A, ADTExtension, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22] =
+    ADTData[
+      RuntimeData[
+        AdtFunction[A, I1],
+        RuntimeData[
+          AdtFunction[A, I2],
+          RuntimeData[
+            AdtFunction[A, I3],
+            RuntimeData[
+              AdtFunction[A, I4],
+              RuntimeData[
+                AdtFunction[A, I5],
+                RuntimeData[
+                  AdtFunction[A, I6],
+                  RuntimeData[
+                    AdtFunction[A, I7],
+                    RuntimeData[
+                      AdtFunction[A, I8],
+                      RuntimeData[
+                        AdtFunction[A, I9],
+                        RuntimeData[
+                          AdtFunction[A, I10],
+                          RuntimeData[
+                            AdtFunction[A, I11],
+                            RuntimeData[
+                              AdtFunction[A, I12],
+                              RuntimeData[
+                                AdtFunction[A, I13],
+                                RuntimeData[
+                                  AdtFunction[A, I14],
+                                  RuntimeData[
+                                    AdtFunction[A, I15],
+                                    RuntimeData[
+                                      AdtFunction[A, I16],
+                                      RuntimeData[
+                                        AdtFunction[A, I17],
+                                        RuntimeData[
+                                          AdtFunction[A, I18],
+                                          RuntimeData[AdtFunction[A, I19], RuntimeData[
+                                            AdtFunction[A, I20],
+                                            RuntimeData[AdtFunction[A, I21], RuntimeData[AdtFunction[A, I22], RuntimeZero]]
+                                          ]]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension with ADTTypeParameterFetch.type
+    ]
 
 }
-
-object TypeAdtAlias extends TypeAdtAlias
