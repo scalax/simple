@@ -20,5 +20,5 @@ taskAA := {
 libraryDependencies ++= libScalax.`scala-collection-compat`.value
 libraryDependencies ++= libScalax.`simple-adt`.value
 libraryDependencies ++= libScalax.`spire`.value
-libraryDependencies += "org.scalanlp"      %% "breeze"        % "2.1.0"
-libraryDependencies += "org.apache.commons" % "commons-math3" % "3.6.1"
+libraryDependencies ++= libScalax.`breeze`.value
+libraryDependencies ++= libScalax.`commons-math3`.value
