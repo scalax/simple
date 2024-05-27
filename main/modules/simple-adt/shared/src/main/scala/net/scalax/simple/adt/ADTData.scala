@@ -18,8 +18,4 @@ object ADTData {
       override val toGHDMZSK: ghdmzsk = builder.coproducter.appender.inputGHDMZSK(() => tailGHDMZSK.toGHDMZSK)
     }
 
-  def zero[In, ADTExtension]: ADTData[RuntimeZero, ADTExtension] =
-    new ADTData[RuntimeZero, ADTExtension] {
-      override lazy val toGHDMZSK: ghdmzsk = builder.coproducter.success(AdtFunction.defalutValue[In])
-    }
 }
