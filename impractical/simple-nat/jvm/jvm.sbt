@@ -7,7 +7,7 @@ run / fork := true
 run / javaOptions += "-Xss5M"
 reStart / javaOptions += "-Xss5M"
 
-crossScalaVersions := Seq(scalaV.v211, scalaV.v212, scalaV.v213, scalaV.v3)
+crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
 val taskAA = inputKey[Unit]("bb")
 

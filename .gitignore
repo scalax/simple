@@ -7,6 +7,7 @@
 **/metals.sbt
 /.vscode/
 /sbt.bat
+/sbt.ps1
 /sbt-launch.jar
 /developAlias.sbt
 /sonatype.sbt
