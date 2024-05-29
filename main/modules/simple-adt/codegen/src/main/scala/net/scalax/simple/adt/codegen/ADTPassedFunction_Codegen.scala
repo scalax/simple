@@ -34,17 +34,15 @@ import builder.{coproducter, producter_build}
 
 object ADTPassedFunction extends ADTPassedFunctionImpl1 {
 
-  ${repeatBlank(21) { i1 =>
-        val i = i1 + 1
-
-        s"""implicit class extra$i[ParamType, ${repeatDot(i)(u1 => s"I$u1")}, ADTExtension](private val data$i: ${typeStr(
-            i + 1
+  ${repeatBlank(22) { i1 =>
+        s"""implicit class extra$i1[ParamType, ${repeatDot(i1)(u1 => s"I$u1")}, ADTExtension](private val data$i1: ${typeStr(
+            i1 + 1
           )}) extends AnyVal {
 
-    def fold[D](${repeatParameter(i)}): D = {
-      val func_link: ghdmzsk = ${lawRepeatParameter(i)(0)}
+    def fold[D](${repeatParameter(i1)}): D = {
+      val func_link: ghdmzsk = ${lawRepeatParameter(i1)(0)}
 
-      TypeAdtGetter.getFromFunction(data$i.toGHDMZSK, func_link).asInstanceOf[D]
+      TypeAdtGetter.getFromFunction(data$i1.toGHDMZSK, func_link).asInstanceOf[D]
     }
 
 }

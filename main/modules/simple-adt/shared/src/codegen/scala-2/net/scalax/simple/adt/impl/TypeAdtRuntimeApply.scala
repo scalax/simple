@@ -17,7 +17,7 @@
 def option1(iData: I1): this.NatModelType = ADTData.success(iData)
 
         override def apply[ParamType](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], ADTPassedFunction.type with ADTTypeParameterFetch.type]): NatModelType = {
-           new ADTPassedFunction.extra1(b).fold(Tuple1(t => option1(t.adtFunctionApply(a))))
+           new ADTPassedFunction.extra1(b).fold(t => option1(t.adtFunctionApply(a)))
          }
 
       }
