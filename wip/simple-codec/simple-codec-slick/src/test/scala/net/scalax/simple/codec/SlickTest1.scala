@@ -6,7 +6,7 @@ import net.scalax.simple.codec.to_list_generic.SimpleProduct
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 import slick.lifted.ProvenShape
-import slickless._
+import net.scalax.slickless.compat._
 
 case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
 
@@ -40,7 +40,7 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
   implicit def deco1_2: SimpleProduct.Appender[F1Alias] = new SimpleProduct.Appender.Impl[F1Alias] {
     override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
+      _.derived2(simpleGen1[Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
   }
 
   def userNamed: LabelledInstalled[F1Alias] = LabelledInstalled[F1Alias].derived(deco1_2, implicitly)
@@ -75,20 +75,22 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 }
 
 object Runner1 {
+  type Id[T] = T
 
   def main(arr: Array[String]): Unit = {
     val p = slick.jdbc.MySQLProfile
 
-    val newModel: Model2[cats.Id] = new Model2[cats.Id](p)
-    val newOpt: Model2[Option]    = new Model2[Option](p)
+    val newModel: Model2[Id]   = new Model2[Id](p)
+    val newOpt: Model2[Option] = new Model2[Option](p)
 
     import p.api._
 
-    object Query1 extends TableQuery(cons => new newModel.TableUserAbs(cons))
-    object Query2 extends TableQuery(cons => new newOpt.TableUserAbs(cons))
+    object Query1 extends TableQuery(cons => new newOpt.TableUserAbs(cons)) {
+      object forInsert extends TableQuery(cons => new newModel.TableUserAbs(cons))
+    }
 
+    println(Query1.forInsert.result.statements)
     println(Query1.result.statements)
-    println(Query2.result.statements)
   }
 
 }
