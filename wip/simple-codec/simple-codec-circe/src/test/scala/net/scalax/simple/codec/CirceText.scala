@@ -4,7 +4,6 @@ package aa
 
 import io.circe._
 import io.circe.syntax._
-import cats.effect._
 import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
@@ -12,7 +11,7 @@ import CirceGeneric2._
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
-object CirceText1 extends IOApp {
+object CirceText1 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
@@ -37,14 +36,10 @@ object CirceText1 extends IOApp {
     namexu = "jerokwjoe收代理费加沃尔"
   )
 
-  final override def run(args: List[String]): IO[ExitCode] = {
-    for {
-      _ <- IO(println(modelInstance.asJson.spaces2))
-      _ <- IO(println(parser.parse(modelInstance.asJson.spaces2).right.flatMap(_.as[CatName[cats.Id]])))
-    } yield {
-      //
-    }
-  }.map(_ => ExitCode.Success)
+  final def main(args: Array[String]): Unit = {
+    println(modelInstance.asJson.spaces2)
+    println(parser.parse(modelInstance.asJson.spaces2).right.flatMap(_.as[CatName[cats.Id]]))
+  }
 
   /** { "name" : 8594, "str" : "sdfwerwfweher迷雾日哦", "uClass" : null, "name11" : "xxiwerwjkl", "namexu" : "jerokwjoe收代理费加沃尔" }
     */

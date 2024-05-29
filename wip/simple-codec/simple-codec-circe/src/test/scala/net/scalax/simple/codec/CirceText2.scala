@@ -2,7 +2,6 @@ package net.scalax.simple.codec
 
 import io.circe._
 import io.circe.syntax._
-import cats.effect._
 import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
@@ -10,7 +9,7 @@ import CirceGeneric2._
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
-object CirceText2 extends IOApp {
+object CirceText2 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
@@ -44,14 +43,10 @@ object CirceText2 extends IOApp {
 
   val namedModel: CatName[LabelledInstalled.Named] = LabelledInstalled[FAlias].derived(basedInstalled2, implicitly).labelled
 
-  final override def run(args: List[String]): IO[ExitCode] = {
-    for {
-      _ <- IO(println(namedModel.asJson.spaces2))
-      _ <- IO(println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[LabelledInstalled.Named]])))
-    } yield {
-      //
-    }
-  }.map(_ => ExitCode.Success)
+  final def main1(args: Array[String]): Unit = {
+    println(namedModel.asJson.spaces2)
+    println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[LabelledInstalled.Named]]))
+  }
 
   /** { "name" : 8594, "str" : "sdfwerwfweher迷雾日哦", "uClass" : null, "name11" : "xxiwerwjkl", "namexu" : "jerokwjoe收代理费加沃尔" }
     */

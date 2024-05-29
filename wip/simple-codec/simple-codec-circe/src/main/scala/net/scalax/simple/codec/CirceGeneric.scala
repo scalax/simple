@@ -3,7 +3,6 @@ package codec
 
 import io.circe._
 import io.circe.syntax._
-import cats.effect._
 import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 
