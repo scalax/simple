@@ -1,8 +1,20 @@
 package net.scalax.simple
 package codec
 
-trait FillIdentity[F[_[_]], I[_]] {
-  def model: F[I]
+import net.scalax.simple.codec.to_list_generic.SimpleProduct
+
+trait FillIdentity[F[_[_]], I[_], Poly] {
+  def toModel(simpeProduct: SimpleProduct.Appender[F]): F[I] = {
+    val mapGenerc: MapGenerc[F] = MapGenerc[F].derived(simpeProduct)
+
+    val mapper = mapGenerc.map(new MapGenerc.MapFunction[({ type Type1[T] = ModelImplement[Poly, I[T]] })#Type1, I] {
+      override def map[X1]: ModelImplement[Poly, I[X1]] => I[X1] = m => m.value
+    })
+
+    mapper(modelImplement)
+  }
+
+  def modelImplement: F[({ type Type1[T] = ModelImplement[Poly, I[T]] })#Type1]
 }
 
 object FillIdentity {
