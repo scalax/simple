@@ -7,16 +7,12 @@ import shapeless3.deriving.*
 
 trait FillerIdPolyCompat:
 
-  given [A1, PolyInstance](using a: => ModelImplement[PolyInstance, A1]): FillerId[A1, PolyInstance] with {
-    override def value: A1 = a.value
+  given [A1](using a: => A1): FillerId[A1] with {
+    override def value: A1 = a
   }
 
-  given [PolyInstance]: FillerId[Unit, PolyInstance] with {
-    override val value: Unit = ()
-  }
-
-  given [A2, PolyInstance](using inst: K0.ProductInstances[[x] =>> FillerId[x, PolyInstance], A2]): FillerId[A2, PolyInstance] with {
-    override def value: A2 = inst.construct([t] => (ma: FillerId[t, PolyInstance]) => ma.value)
+  given [A2](using inst: K0.ProductInstances[[x] =>> FillerId[x], A2]): FillerId[A2] with {
+    override def value: A2 = inst.construct([t] => (ma: FillerId[t]) => ma.value)
   }
 
 end FillerIdPolyCompat

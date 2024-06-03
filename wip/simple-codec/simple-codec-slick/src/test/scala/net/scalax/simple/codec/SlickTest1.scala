@@ -1,6 +1,7 @@
 package net.scalax.simple.codec
 package aa
 
+import net.scalax.simple.codec.DefaultModelImplement
 import net.scalax.simple.codec.generic.SimpleFromProduct
 import net.scalax.simple.codec.to_list_generic.SimpleProduct
 import slick.ast.{ColumnOption, TypedType}
@@ -34,7 +35,9 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   type OptsFromCol[T]  = Seq[commonAlias.SqlColumnOptions => ColumnOption[T]]
 
   def userTypedTypeGeneric(implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
-    FillIdentity[F1Alias, TypedType].derived2(simpleGen1[TypedType].generic)(_.generic)
+    FillIdentity[F1Alias, TypedType]
+      .derived2(simpleGen1[FillIdentity.WithPoly[TypedType, DefaultModelImplement.type]#Type].generic)(_.generic)
+      .model(implicitly)
 
   def simpleGen1[I[_]] = SimpleFromProduct[F1Alias, I].derived
 
