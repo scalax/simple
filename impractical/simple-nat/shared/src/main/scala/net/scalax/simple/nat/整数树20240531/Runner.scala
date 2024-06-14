@@ -14,13 +14,13 @@ object Runner {
     case num2: Num2 => count2(num2)
   }
 
-  def count1(num: Num1): Int = num match {
+  def count1(num: Num1 | Zero1.type): Int = num match {
     case Zero1      => 0
     case Zero2      => 0
     case num1: Num1 => count1(num1.tailImpl1) + count2(num1.tailImpl2) + 1
   }
 
-  def count2(num: Num2): Int = num match {
+  def count2(num: Num2 | Zero2.type): Int = num match {
     case Zero1      => 0
     case Zero2      => 0
     case num2: Num2 => count1(num2.tailImpl1) + count2(num2.tailImpl2) - 1
@@ -31,7 +31,7 @@ object Runner {
       .inputGHDMZSK(() =>
         Num1Impl1
           .inputGHDMZSK(() =>
-            Num1Impl1.inputGHDMZSK(() => Zero1).inputGHDMZSK(() => Num2Impl1.inputGHDMZSK(() => Zero1).inputGHDMZSK(() => Zero2))
+            Num1Impl1.inputGHDMZSK(() => Zero1).inputGHDMZSK(() => Num2Impl1.inputGHDMZSK(() => Zero2).inputGHDMZSK(() => Zero1))
           )
           .inputGHDMZSK(() => Zero2)
       )
@@ -39,6 +39,7 @@ object Runner {
     println(count(num1))
 
     val num2: ghdmzsk = Num2Impl1
+      .inputGHDMZSK(() => Zero2)
       .inputGHDMZSK(() =>
         Num1Impl1
           .inputGHDMZSK(() =>
@@ -48,16 +49,16 @@ object Runner {
                   .inputGHDMZSK(() =>
                     Num1Impl1.inputGHDMZSK(() => Num1Impl1.inputGHDMZSK(() => Zero1).inputGHDMZSK(() => Zero2)).inputGHDMZSK(() => Zero2)
                   )
-                  .inputGHDMZSK(() => Num2Impl1.inputGHDMZSK(() => Zero1).inputGHDMZSK(() => Zero2))
+                  .inputGHDMZSK(() => Num2Impl1.inputGHDMZSK(() => Zero2).inputGHDMZSK(() => Zero1))
               )
               .inputGHDMZSK(() => Zero2)
           )
           .inputGHDMZSK(() => Zero2)
       )
-      .inputGHDMZSK(() => Zero2)
     println(count(num2))
 
     println(count(num1.inputGHDMZSK(() => Zero1).inputGHDMZSK(() => num2)))
+    println(count(num2.inputGHDMZSK(() => Zero2).inputGHDMZSK(() => num1)))
 
     /*val num3: Num1 =
       Num1Impl1(() => zero1, () => Num2Impl1(() => zero1, () => Num2Impl1(() => zero1, () => Num2Impl1(() => zero1, () => zero2))))
