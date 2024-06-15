@@ -49,7 +49,6 @@ object Instance {
     override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk = new ghdmzsk {
       override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk = Num1Impl1.inputGHDMZSK(num1).inputGHDMZSK(num2)
     }
-
   }
 
   lazy val Zero2: ghdmzsk = new ghdmzsk {

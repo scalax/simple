@@ -60,6 +60,9 @@ object Runner {
     println(count(num1.inputGHDMZSK(() => Zero1).inputGHDMZSK(() => num2)))
     println(count(num2.inputGHDMZSK(() => Zero2).inputGHDMZSK(() => num1)))
 
+    println(count(num1.inputGHDMZSK(() => num1).inputGHDMZSK(() => Zero2)))
+    println(count(num2.inputGHDMZSK(() => num2).inputGHDMZSK(() => Zero1)))
+
     /*val num3: Num1 =
       Num1Impl1(() => zero1, () => Num2Impl1(() => zero1, () => Num2Impl1(() => zero1, () => Num2Impl1(() => zero1, () => zero2))))
     println(count(num3))
