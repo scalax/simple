@@ -22,10 +22,8 @@ object Instance {
         override def tailImpl1: Num1 | Zero1.type = tail1().asInstanceOf[Num1 | Zero1.type]
         override def tailImpl2: Num2 | Zero2.type = tail2().asInstanceOf[Num2 | Zero2.type]
 
-        override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk =
-            Num1Impl1.inputGHDMZSK(() => tail1().inputGHDMZSK(num1).inputGHDMZSK(num2)).inputGHDMZSK(tail2)
-        }
+        override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk =
+          Num1Impl1.inputGHDMZSK(() => tail1().inputGHDMZSK(num1)).inputGHDMZSK(tail2)
       }
     }
   }
@@ -37,24 +35,18 @@ object Instance {
         override def tailImpl1: Num1 | Zero1.type = tail1().asInstanceOf[Num1 | Zero1.type]
         override def tailImpl2: Num2 | Zero2.type = tail2().asInstanceOf[Num2 | Zero2.type]
 
-        override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-          override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk =
-            Num2Impl1.inputGHDMZSK(() => tail2().inputGHDMZSK(num2).inputGHDMZSK(num1)).inputGHDMZSK(tail1)
-        }
+        override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk =
+          Num2Impl1.inputGHDMZSK(() => tail2().inputGHDMZSK(num2)).inputGHDMZSK(tail1)
       }
     }
   }
 
   lazy val Zero1: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk = Num1Impl1.inputGHDMZSK(num1).inputGHDMZSK(num2)
-    }
+    override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk = num1()
   }
 
   lazy val Zero2: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk = Num2Impl1.inputGHDMZSK(num2).inputGHDMZSK(num1)
-    }
+    override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk = num2()
   }
 
 }
