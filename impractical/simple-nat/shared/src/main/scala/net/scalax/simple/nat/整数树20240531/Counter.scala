@@ -24,7 +24,7 @@ object Instance {
 
         override def inputGHDMZSK(num1: () => ghdmzsk): ghdmzsk = new ghdmzsk {
           override def inputGHDMZSK(num2: () => ghdmzsk): ghdmzsk =
-            Num1Impl1.inputGHDMZSK(() => tail1().inputGHDMZSK(num1).inputGHDMZSK(num2)).inputGHDMZSK(() => tail2())
+            Num1Impl1.inputGHDMZSK(() => tail1().inputGHDMZSK(num1).inputGHDMZSK(num2)).inputGHDMZSK(tail2)
         }
       }
     }
