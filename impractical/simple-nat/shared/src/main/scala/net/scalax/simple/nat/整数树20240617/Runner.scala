@@ -34,7 +34,6 @@ object Runner {
           .inputGHDMZSK(() => Zero2)
       )
       .inputGHDMZSK(() => Zero2)
-    println(count1(num1))
 
     val num2: ghdmzsk = Num2Impl1
       .inputGHDMZSK(() => Zero2)
@@ -53,17 +52,32 @@ object Runner {
           )
           .inputGHDMZSK(() => Zero2)
       )
-    println(count2(num2))
 
     println("// ===")
-    println(count1(num1.inputGHDMZSK(() => num1)))
-    println(count1(num1.inputGHDMZSK(() => num1).inputGHDMZSK(() => num1)))
-    println(count1(num1.inputGHDMZSK(() => num1).inputGHDMZSK(() => num1).inputGHDMZSK(() => num1)))
+    println(count1(num1)) // 2
+    println(count2(num2)) // 3
 
     println("// ===")
-    println(count2(num2.inputGHDMZSK(() => num2)))
-    println(count2(num2.inputGHDMZSK(() => num2).inputGHDMZSK(() => num2)))
-    println(count2(num2.inputGHDMZSK(() => num2).inputGHDMZSK(() => num2).inputGHDMZSK(() => num2)))
+    println(count1(num1.inputGHDMZSK(() => num1)))                                                   // 4
+    println(count1(num1.inputGHDMZSK(() => num1).inputGHDMZSK(() => num1)))                          // 6
+    println(count1(num1.inputGHDMZSK(() => num1).inputGHDMZSK(() => num1).inputGHDMZSK(() => num1))) // 8
+
+    println("// ===")
+    println(count2(num2.inputGHDMZSK(() => num2)))                                                   // 6
+    println(count2(num2.inputGHDMZSK(() => num2).inputGHDMZSK(() => num2)))                          // 9
+    println(count2(num2.inputGHDMZSK(() => num2).inputGHDMZSK(() => num2).inputGHDMZSK(() => num2))) // 12
+
+    println("// ===")
+    println(count1(num1))                                                                            // 2
+    println(count1(num2))                                                                            // -3
+    println(count1(num1.inputGHDMZSK(() => num2)))                                                   // -1
+    println(count1(num1.inputGHDMZSK(() => num2).inputGHDMZSK(() => num2).inputGHDMZSK(() => num2))) // -7
+
+    println("// ===")
+    println(count2(num1))                                                                                                     // -2
+    println(count2(num2))                                                                                                     // 3
+    println(count2(num2.inputGHDMZSK(() => num1).inputGHDMZSK(() => num2).inputGHDMZSK(() => num2).inputGHDMZSK(() => num1))) // 5
+    println(count2(num2.inputGHDMZSK(() => num1)))                                                                            // 1
 
   }
 
