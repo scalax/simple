@@ -26,7 +26,7 @@ object Runner {
     case num2: Num2 => count1(num2.tailImpl1) + count2(num2.tailImpl2) - 1
   }
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val num1: ghdmzsk = Num1Impl1
       .inputGHDMZSK(() =>
         Num1Impl1
