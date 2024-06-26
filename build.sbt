@@ -69,6 +69,6 @@ lazy val `test-commonJS`: Project               = `test-common`.js
 
 addCommandAlias("adtCodegen", s"; ++${scalaV.v3}; adt-codegen/preCodegenImpl; adt-codegen/codegenImpl")
 addCommandAlias("releaseSimple", "; +adtJVM/test; +adtJS/test; +adtJVM/publishSigned; +adtJS/publishSigned;")
-addCommandAlias("releaseCodecLocal", "; +codecJVM/publishLocal ;")
+addCommandAlias("releaseCodecLocal", "; +codecJVM/publishLocal ; +codecJS/publishLocal ;")
 
 Global / onChangedBuildSource := ReloadOnSourceChanges

@@ -1,7 +1,7 @@
 // scala code override def requires: Plugins = net.scalax.simple.nat.sbt.ProjectKeys
 
 // start setting
-version := "0.0.2-M18"
+version := "0.0.2-M19"
 // end setting
 
 // start setting
