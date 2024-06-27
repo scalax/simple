@@ -24,6 +24,30 @@ object SimpleProduct {
 
     type IdImpl[T] = T
 
+    trait HighTran[F[_[_]], G[_[_]]] {
+      def io[In[_]]: SimpleFrom[F[In], G[In]] with SimpleTo[F[In], G[In]]
+
+      def tran: Appender[F] => Appender[G] = appenderF =>
+        new Appender[G] {
+          override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
+            func: TypeGen[M1, M2, M3, M4]
+          ): M1[G[M2], G[M3], G[M4]] =
+            monad.to[F[M2], F[M3], F[M4], G[M2], G[M3], G[M4]](appenderF.toHList(monad)(func))(io[M2].to, io[M3].to, io[M4].to)(
+              io[M2].from,
+              io[M3].from,
+              io[M4].from
+            )
+        }
+    }
+
+    trait HighFuncMapGeneric[Source1, FU[_[_]]] extends Appender[FU] {
+      def size: Int
+
+      override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
+        func: TypeGen[M1, M2, M3, M4]
+      ): M1[FU[M2], FU[M3], FU[M4]]
+    }
+
     trait HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1[_, _, _], M2[_], M3[_], M4[_]] {
       def size: Int
       def output(monad: AppendMonad[M1])(func: TypeGen[M1, M2, M3, M4]): M1[Target1, Target2, Target3]

@@ -22,7 +22,15 @@ object SimpleProduct {
   }
 
   object Appender {
+
     type IdImpl[X] = X
+
+    trait HighFuncMapGeneric[Source1, FU[_[_]]] extends Appender[FU] {
+      def size: Int
+      override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
+        func: TypeGen[M1, M2, M3, M4]
+      ): M1[FU[M2], FU[M3], FU[M4]]
+    }
 
     type MatchTuple1[T, M1[_]] <: Tuple = T match {
       case h *: tail  => M1[h] *: MatchTuple1[tail, M1]

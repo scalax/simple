@@ -65,6 +65,7 @@ trait HListUtils[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendabl
           (_: AppendZero) => ()
         )
     }
+
 }
 
 object HListUtilsImpl {
