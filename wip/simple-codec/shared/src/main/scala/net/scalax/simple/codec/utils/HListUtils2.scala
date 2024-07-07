@@ -8,18 +8,10 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
   def takeTail[Head, Tail <: Appendable](dataList: AppendablePositive[Head, Tail]): Tail
   def takeZero: AppendZero
 
-  def append[T1, Source1 <: Appendable, HL1[_[_]] <: Appendable](
-    tail: SimpleProduct.Appender.HighFuncMapGeneric[Source1, HL1]
-  ): SimpleProduct.Appender.HighFuncMapGeneric[AppendablePositive[
-    T1,
-    Source1
-  ], ({ type HA[UA[_]] = AppendablePositive[UA[T1], HL1[UA]] })#HA] =
-    new SimpleProduct.Appender.HighFuncMapGeneric[AppendablePositive[
-      T1,
-      Source1
-    ], ({ type HA[UA[_]] = AppendablePositive[UA[T1], HL1[UA]] })#HA] {
-      override val size: Int = tail.size + 1
-
+  def append[T1, HL1[_[_]] <: Appendable](
+    tail: SimpleProduct.Appender[HL1]
+  ): SimpleProduct.Appender[({ type HA[UA[_]] = AppendablePositive[UA[T1], HL1[UA]] })#HA] =
+    new SimpleProduct.Appender[({ type FU[UA[_]] = AppendablePositive[UA[T1], HL1[UA]] })#FU] {
       override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](o: SimpleProduct.AppendMonad[M1])(
         func: SimpleProduct.TypeGen[M1, M2, M3, M4]
       ): M1[AppendablePositive[M2[T1], HL1[M2]], AppendablePositive[M3[T1], HL1[M3]], AppendablePositive[M4[T1], HL1[M4]]] = {
@@ -39,21 +31,19 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
       }
     }
 
-  val zero: SimpleProduct.Appender.HighFuncMapGeneric[AppendZero, ({ type HA[_[_]] = AppendZero })#HA] =
-    new SimpleProduct.Appender.HighFuncMapGeneric[AppendZero, ({ type HA[_[_]] = AppendZero })#HA] {
-      override val size: Int = 0
+  val zero: SimpleProduct.Appender[({ type HA[_[_]] = AppendZero })#HA] = new SimpleProduct.Appender[({ type HA[_[_]] = AppendZero })#HA] {
+    override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](
+      o: SimpleProduct.AppendMonad[M1]
+    )(func: SimpleProduct.TypeGen[M1, M2, M3, M4]): M1[AppendZero, AppendZero, AppendZero] =
+      o.to(o.zero)(
+        _ => takeZero: AppendZero,
+        _ => takeZero: AppendZero,
+        _ => takeZero: AppendZero
+      )(
+        (_: AppendZero) => (),
+        (_: AppendZero) => (),
+        (_: AppendZero) => ()
+      )
+  }
 
-      override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](
-        o: SimpleProduct.AppendMonad[M1]
-      )(func: SimpleProduct.TypeGen[M1, M2, M3, M4]): M1[AppendZero, AppendZero, AppendZero] =
-        o.to(o.zero)(
-          _ => takeZero: AppendZero,
-          _ => takeZero: AppendZero,
-          _ => takeZero: AppendZero
-        )(
-          (_: AppendZero) => (),
-          (_: AppendZero) => (),
-          (_: AppendZero) => ()
-        )
-    }
 }

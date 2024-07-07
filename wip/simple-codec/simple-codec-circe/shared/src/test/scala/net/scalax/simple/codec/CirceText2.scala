@@ -4,8 +4,8 @@ import io.circe._
 import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-
 import CirceGeneric2._
+import net.scalax.simple.codec
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
@@ -13,10 +13,9 @@ object CirceText2 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
-  implicit lazy val deco2_1: SimpleProduct.Appender[CatName] = new SimpleProduct.Appender.Impl[CatName] {
-    override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
-  }
+  implicit val deco2_3: LabelledInstalled[CatName] = LabelledInstalled[CatName].derived
+  implicit val deco2_1: SimpleProduct.Appender[CatName] =
+    SimpleProduct.Appender[CatName].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
 
@@ -37,13 +36,14 @@ object CirceText2 {
   }
 
   implicit lazy val basedInstalled2: SimpleProduct.Appender[FAlias] = ToItera[CatName].derived.to[String]
+  implicit lazy val labelledI2: LabelledInstalled[FAlias] = LabelledInstalled[FAlias].fromOther(implicitly[LabelledInstalled[CatName]].impl)
 
   implicit lazy val caseClassNameEncoder: Encoder[CatName[LabelledInstalled.Named]] = encodeModel[FAlias]
   implicit lazy val caseClassNameDecoder: Decoder[CatName[LabelledInstalled.Named]] = decodeModel[FAlias]
 
-  val namedModel: CatName[LabelledInstalled.Named] = LabelledInstalled[FAlias].derived(basedInstalled2, implicitly).labelled
+  val namedModel: CatName[LabelledInstalled.Named] = implicitly[LabelledInstalled[FAlias]].impl.labelled(implicitly)
 
-  final def main1(args: Array[String]): Unit = {
+  final def main(args: Array[String]): Unit = {
     println(namedModel.asJson.spaces2)
     println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[LabelledInstalled.Named]]))
   }

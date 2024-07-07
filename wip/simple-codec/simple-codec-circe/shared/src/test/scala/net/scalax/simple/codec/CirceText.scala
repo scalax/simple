@@ -6,8 +6,8 @@ import io.circe._
 import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
-
 import CirceGeneric2._
+import net.scalax.simple.codec.to_list_generic.SimpleProduct.Appender
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
@@ -15,10 +15,10 @@ object CirceText1 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
-  implicit lazy val deco2_1: SimpleProduct.Appender[CatName] = new SimpleProduct.Appender.Impl[CatName] {
-    override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
-      _.derived2(simpleGen1[cats.Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
-  }
+  implicit val deco2_3: LabelledInstalled[CatName] = LabelledInstalled[CatName].derived
+
+  implicit val deco2_1: SimpleProduct.Appender[CatName] =
+    SimpleProduct.Appender[CatName].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
 
   implicit lazy val modelEncoder: CatName[Encoder] =
     FillIdentity[CatName, Encoder]
@@ -40,7 +40,7 @@ object CirceText1 {
     namexu = "jerokwjoe收代理费加沃尔"
   )
 
-  final def main(args: Array[String]): Unit = {
+  final def main1(args: Array[String]): Unit = {
     println(modelInstance.asJson.spaces2)
     println(parser.parse(modelInstance.asJson.spaces2).right.flatMap(_.as[CatName[cats.Id]]))
   }

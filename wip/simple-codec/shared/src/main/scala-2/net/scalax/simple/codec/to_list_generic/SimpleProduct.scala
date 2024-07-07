@@ -3,6 +3,7 @@ package to_list_generic
 
 import shapeless._
 import utils._
+import scala.collection.compat._
 
 object SimpleProduct {
 
@@ -22,114 +23,73 @@ object SimpleProduct {
 
   object Appender {
 
-    type IdImpl[T] = T
-
     trait HighTran[F[_[_]], G[_[_]]] {
       def io[In[_]]: SimpleFrom[F[In], G[In]] with SimpleTo[F[In], G[In]]
+    }
 
-      def tran: Appender[F] => Appender[G] = appenderF =>
-        new Appender[G] {
+    object HighTran {
+      def tran[F[_[_]], G[_[_]]](h: HighTran[F, G]): Appender[G] => Appender[F] = appenderF =>
+        new Appender[F] {
           override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
             func: TypeGen[M1, M2, M3, M4]
-          ): M1[G[M2], G[M3], G[M4]] =
-            monad.to[F[M2], F[M3], F[M4], G[M2], G[M3], G[M4]](appenderF.toHList(monad)(func))(io[M2].to, io[M3].to, io[M4].to)(
-              io[M2].from,
-              io[M3].from,
-              io[M4].from
+          ): M1[F[M2], F[M3], F[M4]] =
+            monad.to[G[M2], G[M3], G[M4], F[M2], F[M3], F[M4]](appenderF.toHList(monad)(func))(h.io[M2].from, h.io[M3].from, h.io[M4].from)(
+              h.io[M2].to,
+              h.io[M3].to,
+              h.io[M4].to
             )
         }
     }
 
-    trait HighFuncMapGeneric[Source1, FU[_[_]]] extends Appender[FU] {
-      def size: Int
+    val appender: HListUtils2[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] =
+      new HListUtils2[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] {
+        override def appendData[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
+        override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head     = dataList.head
+        override def takeTail[Head, Tail <: HList](dataList: Head :: Tail): Tail     = dataList.tail
+        override val takeZero: HNil                                                  = HNil
+      }
 
-      override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
-        func: TypeGen[M1, M2, M3, M4]
-      ): M1[FU[M2], FU[M3], FU[M4]]
-    }
+    object GetAppender {
+      type F1[_[_]] <: HList
 
-    trait HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1[_, _, _], M2[_], M3[_], M4[_]] {
-      def size: Int
-      def output(monad: AppendMonad[M1])(func: TypeGen[M1, M2, M3, M4]): M1[Target1, Target2, Target3]
-    }
-    object HListFuncMapGeneric {
-      val appender: HListUtils[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] =
-        new HListUtils[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] {
-          override def appendData[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
-          override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head     = dataList.head
-          override def takeTail[Head, Tail <: HList](dataList: Head :: Tail): Tail     = dataList.tail
-          override val takeZero: HNil                                                  = HNil
+      def get(i: Int): Appender[F1] = {
+        if (i >= appenderList.size) {
+          this.synchronized {
+            while (i >= appenderList.size) {
+              if (appenderList.headOption.isDefined) {
+                appenderList = appender.append(appenderList.head).asInstanceOf[Appender[F1]] :: appenderList
+              } else {
+                appenderList = List(appender.zero.asInstanceOf[Appender[F1]])
+              }
+            }
+
+            appenderArray = appenderList.reverse.to(Array)
+          }
         }
 
-      implicit def implicit1[T1, Source1 <: HList, HL1 <: HList, HL2 <: HList, HL3 <: HList, M1[_, _, _], M2[_], M3[_], M4[_]](implicit
-        tail: HListFuncMapGeneric[Source1, HL1, HL2, HL3, M1, M2, M3, M4]
-      ): HListFuncMapGeneric[T1 :: Source1, M2[T1] :: HL1, M3[T1] :: HL2, M4[T1] :: HL3, M1, M2, M3, M4] = appender.append(tail)
+        appenderArray(i)
+      }
 
-      implicit def implicit2[M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGeneric[HNil, HNil, HNil, HNil, M1, M2, M3, M4] = appender.zero
+      private var appenderList: List[Appender[F1]]   = List.empty
+      private var appenderArray: Array[Appender[F1]] = Array.empty
+
     }
 
-    trait HListFuncMapGenericGen[Source1, M1[_, _, _], M2[_], M3[_], M4[_]] {
-      def generic[Target1, Target2, Target3](implicit
-        i: HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1, M2, M3, M4]
-      ): HListFuncMapGeneric[Source1, Target1, Target2, Target3, M1, M2, M3, M4] = i
-    }
-    object HListFuncMapGenericGen {
-      def apply[Source1, M1[_, _, _], M2[_], M3[_], M4[_]]: HListFuncMapGenericGen[Source1, M1, M2, M3, M4] =
-        new HListFuncMapGenericGen[Source1, M1, M2, M3, M4] {
-          //
-        }
-    }
+    trait FuncInnerApply1[F[_[_]]] {
+      def derived[HList](
+        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], HList] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], HList]
+      )(implicit labelled: LabelledInstalled[F]): Appender[F] = {
+        type H1[_[_]] = HList
 
-    // ===
-    class SimpleFuncion1Impl[F[_[_]], M1[_, _, _], M2[_], M3[_], M4[_]] {
-      self =>
-      def derived2[Source1, Target1, Target2, Target3](
-        simpleTo1: SimpleTo[F[IdImpl], Source1],
-        simpleGeneric2: SimpleFrom[F[M2], Target1] with SimpleTo[F[M2], Target1],
-        simpleGeneric3: SimpleFrom[F[M3], Target2] with SimpleTo[F[M3], Target2],
-        simpleGeneric4: SimpleFrom[F[M4], Target3] with SimpleTo[F[M4], Target3]
-      ): FuncInnerApply1[F, M1, M2, M3, M4, Source1, Target1, Target2, Target3] =
-        new FuncInnerApply1[F, M1, M2, M3, M4, Source1, Target1, Target2, Target3](
-          simpleTo1,
-          simpleGeneric2,
-          simpleGeneric3,
-          simpleGeneric4
-        )
-    }
-
-    class FuncInnerApply1[F[_[_]], M1[_, _, _], M2[_], M3[_], M4[_], Source1, Target1, Target2, Target3](
-      simpleTo1: SimpleTo[F[IdImpl], Source1],
-      simpleGeneric2: SimpleFrom[F[M2], Target1] with SimpleTo[F[M2], Target1],
-      simpleGeneric3: SimpleFrom[F[M3], Target2] with SimpleTo[F[M3], Target2],
-      simpleGeneric4: SimpleFrom[F[M4], Target3] with SimpleTo[F[M4], Target3]
-    ) {
-      def apply(
-        genericFunc: HListFuncMapGenericGen[Source1, M1, M2, M3, M4] => HListFuncMapGeneric[
-          Source1,
-          Target1,
-          Target2,
-          Target3,
-          M1,
-          M2,
-          M3,
-          M4
-        ]
-      ): AppendMonad[M1] => TypeGen[M1, M2, M3, M4] => M1[F[M2], F[M3], F[M4]] = { monad => func =>
-        monad.to(genericFunc(HListFuncMapGenericGen[Source1, M1, M2, M3, M4]).output(monad)(func))(
-          simpleGeneric2.from,
-          simpleGeneric3.from,
-          simpleGeneric4.from
-        )(simpleGeneric2.to, simpleGeneric3.to, simpleGeneric4.to)
+        Appender.HighTran.tran(new HighTran[F, H1] {
+          override def io[In[_]]: SimpleFrom[F[In], HList] with SimpleTo[F[In], HList] = simpleTo.asInstanceOf[SimpleFrom[F[In], HList]
+            with SimpleTo[F[In], HList]]
+        })(GetAppender.get(labelled.impl.modelSize).asInstanceOf[Appender[H1]])
       }
     }
 
-    trait Impl[F[_[_]]] extends Appender[F] {
-      def impl[M1[_, _, _], M2[_], M3[_], M4[_]]
-        : SimpleFuncion1Impl[F, M1, M2, M3, M4] => (AppendMonad[M1] => TypeGen[M1, M2, M3, M4] => M1[F[M2], F[M3], F[M4]])
-      override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
-        func: TypeGen[M1, M2, M3, M4]
-      ): M1[F[M2], F[M3], F[M4]] =
-        impl[M1, M2, M3, M4](new SimpleFuncion1Impl[F, M1, M2, M3, M4])(monad)(func)
+    def apply[F[_[_]]]: FuncInnerApply1[F] = new FuncInnerApply1[F] {
+      //
     }
   }
 

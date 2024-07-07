@@ -1,4 +1,4 @@
-package net.scalax.simple.codec
+/*package net.scalax.simple.codec
 package utils
 
 import net.scalax.simple.codec.to_list_generic.SimpleProduct
@@ -106,4 +106,4 @@ object HListUtilsImpl {
     arrImpl(i)
   }
 
-}
+}*/
