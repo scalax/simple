@@ -9,7 +9,7 @@ trait NamedImplicit[T] {
 }
 
 object NamedImplicit {
-  inline given [T](using e: Mirror.ProductOf[T]): NamedImplicit[T] = new NamedImplicit {
-    override val input: List[String] = constValueTuple[e.MirroredElemLabels].toList.asInstanceOf[List[String]]
+  inline given [T <: Tuple]: NamedImplicit[T] = new NamedImplicit {
+    override val input: List[String] = constValueTuple[T].toList.asInstanceOf[List[String]]
   }
 }

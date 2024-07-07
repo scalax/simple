@@ -15,9 +15,7 @@ object CirceText1 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
-  implicit val deco2_3: LabelledInstalled[CatName] = LabelledInstalled[CatName].derived
-
-  implicit val deco2_1: SimpleProduct.Appender[CatName] =
+  implicit val deco2_1: SimpleProduct.Appender[CatName] with ModelLabelled[CatName] =
     SimpleProduct.Appender[CatName].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
 
   implicit lazy val modelEncoder: CatName[Encoder] =

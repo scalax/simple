@@ -11,10 +11,11 @@ case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[
 
 object CirceText2 {
 
+  type Named[_] = String
+
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
-  implicit val deco2_3: LabelledInstalled[CatName] = LabelledInstalled[CatName].derived
-  implicit val deco2_1: SimpleProduct.Appender[CatName] =
+  implicit val deco2_1: SimpleProduct.Appender[CatName] with ModelLabelled[CatName] =
     SimpleProduct.Appender[CatName].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
@@ -35,17 +36,19 @@ object CirceText2 {
     })
   }
 
-  implicit lazy val basedInstalled2: SimpleProduct.Appender[FAlias] = ToItera[CatName].derived.to[String]
-  implicit lazy val labelledI2: LabelledInstalled[FAlias] = LabelledInstalled[FAlias].fromOther(implicitly[LabelledInstalled[CatName]])
+  implicit lazy val basedInstalled2: SimpleProduct.Appender[FAlias] with ModelLabelled[FAlias] = ToItera[CatName].derived.to[String]
 
-  implicit lazy val caseClassNameEncoder: Encoder[CatName[LabelledInstalled.Named]] = encodeModel[FAlias]
-  implicit lazy val caseClassNameDecoder: Decoder[CatName[LabelledInstalled.Named]] = decodeModel[FAlias]
+  implicit lazy val caseClassNameEncoder: Encoder[CatName[Named]] = encodeModel[FAlias]
+  implicit lazy val caseClassNameDecoder: Decoder[CatName[Named]] = decodeModel[FAlias]
 
-  val namedModel: CatName[LabelledInstalled.Named] = implicitly[LabelledInstalled[FAlias]].fromSimpleProduct(implicitly)
+  val namedModel: CatName[Named] = {
+    val fromList = FromListByTheSameTypeGeneric[FAlias].derived(implicitly)
+    fromList.fromListByTheSameType(implicitly[ModelLabelled[FAlias]].modelLabelled)
+  }
 
   final def main(args: Array[String]): Unit = {
     println(namedModel.asJson.spaces2)
-    println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[LabelledInstalled.Named]]))
+    println(parser.parse(namedModel.asJson.spaces2).right.flatMap(_.as[CatName[Named]]))
   }
 
   /** { "name" : 8594, "str" : "sdfwerwfweher迷雾日哦", "uClass" : null, "name11" : "xxiwerwjkl", "namexu" : "jerokwjoe收代理费加沃尔" }

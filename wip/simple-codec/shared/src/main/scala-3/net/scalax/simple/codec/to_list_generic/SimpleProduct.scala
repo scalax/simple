@@ -3,6 +3,7 @@ package to_list_generic
 
 import utils._
 import scala.collection.compat._
+import net.scalax.simple.codec.generic.SimpleNamed
 
 object SimpleProduct {
 
@@ -76,14 +77,23 @@ object SimpleProduct {
 
     trait FuncInnerApply1[F[_[_]]] {
       def derived[HList](
-        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], HList] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], HList]
-      )(implicit labelled: ModelSize[F]): Appender[F] = {
+        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], HList]
+          with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], HList]
+          with SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]]
+      ): Appender[F] with ModelLabelled[F] = {
         type H1[_[_]] = HList
 
-        Appender.HighTran.tran(new HighTran[F, H1] {
+        val a = Appender.HighTran.tran(new HighTran[F, H1] {
           override def io[In[_]]: SimpleFrom[F[In], HList] with SimpleTo[F[In], HList] = simpleTo.asInstanceOf[SimpleFrom[F[In], HList]
             with SimpleTo[F[In], HList]]
-        })(GetAppender.get(labelled.modelSize).asInstanceOf[Appender[H1]])
+        })(GetAppender.get(simpleTo.labelled.size).asInstanceOf[Appender[H1]])
+
+        new Appender[F] with ModelLabelled[F] {
+          override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
+            func: TypeGen[M1, M2, M3, M4]
+          ): M1[F[M2], F[M3], F[M4]] = a.toHList[M1, M2, M3, M4](monad)(func)
+          override val modelLabelled: List[String] = simpleTo.labelled
+        }
       }
     }
 
