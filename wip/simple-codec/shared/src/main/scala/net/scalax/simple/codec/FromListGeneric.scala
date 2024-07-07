@@ -8,8 +8,6 @@ trait FromListByTheSameTypeGeneric[F[_[_]]] {
 
 object FromListByTheSameTypeGeneric {
 
-  type IdImpl[T] = T
-
   private def toNamed[T]: SimpleProduct1.TypeGen[({ type T1[U] = List[T] => (List[T], U) })#T1, ({ type T1[_] = T })#T1] =
     new SimpleProduct1.TypeGen[({ type T1[U] = List[T] => (List[T], U) })#T1, ({ type T1[_] = T })#T1] {
       override def apply[U]: List[T] => (List[T], T) = l => (l.tail, l.head)

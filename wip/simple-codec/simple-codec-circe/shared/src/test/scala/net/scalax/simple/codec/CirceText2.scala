@@ -36,12 +36,12 @@ object CirceText2 {
   }
 
   implicit lazy val basedInstalled2: SimpleProduct.Appender[FAlias] = ToItera[CatName].derived.to[String]
-  implicit lazy val labelledI2: LabelledInstalled[FAlias] = LabelledInstalled[FAlias].fromOther(implicitly[LabelledInstalled[CatName]].impl)
+  implicit lazy val labelledI2: LabelledInstalled[FAlias] = LabelledInstalled[FAlias].fromOther(implicitly[LabelledInstalled[CatName]])
 
   implicit lazy val caseClassNameEncoder: Encoder[CatName[LabelledInstalled.Named]] = encodeModel[FAlias]
   implicit lazy val caseClassNameDecoder: Decoder[CatName[LabelledInstalled.Named]] = decodeModel[FAlias]
 
-  val namedModel: CatName[LabelledInstalled.Named] = implicitly[LabelledInstalled[FAlias]].impl.labelled(implicitly)
+  val namedModel: CatName[LabelledInstalled.Named] = implicitly[LabelledInstalled[FAlias]].fromSimpleProduct(implicitly)
 
   final def main(args: Array[String]): Unit = {
     println(namedModel.asJson.spaces2)

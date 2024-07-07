@@ -77,13 +77,13 @@ object SimpleProduct {
     trait FuncInnerApply1[F[_[_]]] {
       def derived[HList](
         simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], HList] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], HList]
-      )(implicit labelled: LabelledInstalled[F]): Appender[F] = {
+      )(implicit labelled: ModelSize[F]): Appender[F] = {
         type H1[_[_]] = HList
 
         Appender.HighTran.tran(new HighTran[F, H1] {
           override def io[In[_]]: SimpleFrom[F[In], HList] with SimpleTo[F[In], HList] = simpleTo.asInstanceOf[SimpleFrom[F[In], HList]
             with SimpleTo[F[In], HList]]
-        })(GetAppender.get(labelled.impl.modelSize).asInstanceOf[Appender[H1]])
+        })(GetAppender.get(labelled.modelSize).asInstanceOf[Appender[H1]])
       }
     }
 
