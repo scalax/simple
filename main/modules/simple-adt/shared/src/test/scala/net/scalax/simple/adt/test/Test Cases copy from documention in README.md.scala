@@ -182,7 +182,7 @@ object `Test Cases copy from documention in README.md` {
     import net.scalax.simple.adt.{TypeAdt => Adt}
 
     def countAdtData[T: Adt.CoProducts2[*, Option[Int], String]](t: T*): List[Int] = {
-      val funcApplyM = Adt.CoProduct2[Option[Int], String].typeOnly[T].instance
+      val funcApplyM = Adt.CoProduct2[Option[Int], String].typeOnly[T]
 
       val inputList = t.to(List)
 

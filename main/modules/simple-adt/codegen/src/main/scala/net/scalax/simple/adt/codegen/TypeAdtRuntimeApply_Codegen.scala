@@ -30,12 +30,13 @@ class CodePre2(val isScala3: Boolean) {
     class ApplyStrCodegen(val index: Int) {
       self2 =>
       lazy val text: String =
-        s"""override def apply[ParamType, ADTExtension](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], ADTExtension with ADTTypeParameterFetch.type]): NatModelType = {
-           ${val str1 = if (isScala3) s"new ADTPassedFunction.extra(b)" else s"new ADTPassedFunction.extra$index(b)"
+        s"""override def apply[ParamType](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], ADTPassedFunction.type with ADTTypeParameterFetch.type]): NatModelType = {
+           ${
+            val str1 =
+              if (isScala3) s"new ADTPassedFunction.extra(b).fold.except[NatModelType].apply"
+              else s"new ADTPassedFunction.extra$index(b).fold"
 
-          val str2 = if (index == 1) s"Tuple1(${FoldStrFuncs(self2.index).text})" else FoldStrFuncs(self2.index).text
-
-          s"$str1.fold($str2)"
+            s"$str1(${FoldStrFuncs(self2.index).text})"
           }
          }"""
 

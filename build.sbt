@@ -49,8 +49,10 @@ val `codec-codegen`      = project in `codec-codegen/file`
 val `codec-slick/file` = `codec/file` / "simple-codec-slick"
 lazy val `codec-slick` = project in `codec-slick/file` dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
 
-val `codec-json/file` = `codec/file` / "simple-codec-json"
-lazy val `codec-json` = project in `codec-json/file` dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
+val `codec-circe/file`    = `codec/file` / "simple-codec-circe"
+lazy val `codec-circe`    = crossProject(JSPlatform, JVMPlatform) in `codec-circe/file`
+lazy val `codec-circeJVM` = `codec-circe`.jvm dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
+lazy val `codec-circeJS`  = `codec-circe`.js dependsOn (codecJS, `test-commonJS`    % Test) aggregate codecJS
 
 val `nat/file`  = `impractical/file` / "simple-nat"
 val nat         = crossProject(JSPlatform, JVMPlatform) in `nat/file`
@@ -66,6 +68,7 @@ lazy val `test-commonJS`: Project               = `test-common`.js
 `codec-codegen` / rootCodegenPath := (codecJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
 
 addCommandAlias("adtCodegen", s"; ++${scalaV.v3}; adt-codegen/preCodegenImpl; adt-codegen/codegenImpl")
-addCommandAlias("releaseSimple", "; +adtJVM/publishSigned; +adtJS/publishSigned;")
+addCommandAlias("releaseSimple", "; +adtJVM/test; +adtJS/test; +adtJVM/publishSigned; +adtJS/publishSigned;")
+addCommandAlias("releaseCodecLocal", "; +codecJVM/publishLocal ; +codecJS/publishLocal ;")
 
 Global / onChangedBuildSource := ReloadOnSourceChanges

@@ -6,12 +6,12 @@ package impl
 import shapeless._
 
 trait FillerIdPolyCompat {
-  implicit def implicit1[H1, Tail <: HList, P](implicit h: ModelImplement[P, H1], t: FillerId[Tail, P]): FillerId[H1 :: Tail, P] =
-    new FillerId[H1 :: Tail, P] {
-      override val value: H1 :: Tail = h.value :: t.value
+  implicit def implicit1[H1, Tail <: HList](implicit h: H1, t: FillerId[Tail]): FillerId[H1 :: Tail] =
+    new FillerId[H1 :: Tail] {
+      override val value: H1 :: Tail = h :: t.value
     }
 
-  implicit def implicit2[P]: FillerId[HNil, P] = new FillerId[HNil, P] {
+  implicit val implicit2: FillerId[HNil] = new FillerId[HNil] {
     override val value: HNil = HNil
   }
 }

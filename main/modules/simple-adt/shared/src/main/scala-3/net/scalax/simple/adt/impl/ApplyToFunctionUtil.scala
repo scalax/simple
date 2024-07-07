@@ -24,6 +24,23 @@ object ApplyToFunc:
       val func_link: ghdmzsk = toFuncFold(parameters)
       TypeAdtGetter.getFromFunction(data1.toGHDMZSK, func_link).asInstanceOf[D]
     }
+
+    trait ApplyD[Param <: Tuple, D] {
+      def apply[Func1](using util.TupledFunction[Func1, Param => D]): Func1 = {
+        val func1: Param => D = { od =>
+          val func_link: ghdmzsk = toFuncFold(od)
+          TypeAdtGetter.getFromFunction(data1.toGHDMZSK, func_link).asInstanceOf[D]
+        }
+
+        val tf = summon[util.TupledFunction[Func1, Param => D]]
+
+        tf.untupled(func1)
+      }
+    }
+
+    def except[D]: ApplyD[O[D], D] = new ApplyD[O[D], D] {
+      //
+    }
   end FunctionApplyInstance
 
 end ApplyToFunc

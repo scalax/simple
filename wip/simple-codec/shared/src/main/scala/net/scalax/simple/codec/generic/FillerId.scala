@@ -3,7 +3,7 @@ package codec
 package utils
 package impl
 
-trait FillerId[H, Poly] {
+trait FillerId[H] {
   def value: H
 }
 
