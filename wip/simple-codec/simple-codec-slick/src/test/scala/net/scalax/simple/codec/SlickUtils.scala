@@ -27,15 +27,15 @@ class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: Simpl
       override def fill[T]: Seq[commonAlias.SqlColumnOptions => ColumnOption[T]] = Seq.empty
     })
 
-  def userRep(labelled: LabelledInstalled[F], opt: F[OptsFromCol], typedType: F[TypedType]): slickProfile.Table[_] => F[Rep] = { tb =>
-    val l1 = labelled.labelled
+  def userRep(labelled: ModelLabelled[F], opt: F[OptsFromCol], typedType: F[TypedType]): slickProfile.Table[_] => F[Rep] = { tb =>
+    val l1 = labelled.modelLabelled
     val l2 = opt
     val l3 = typedType
 
     val zipGeneric: ZipGeneric[F] = ZipGeneric[F].derived(appender)
     val mapGeneric: MapGenerc[F]  = MapGenerc[F].derived(appender)
 
-    val zipResult1 = zipGeneric.zip[LabelledInstalled.Named, OptsFromCol](l1, l2)
+    val zipResult1 = zipGeneric.zip[({ type M1[_] = String })#M1, OptsFromCol](l1, l2)
     val zipResult2 =
       zipGeneric.zip[({ type F1[T] = (String, Seq[commonAlias.SqlColumnOptions => ColumnOption[T]]) })#F1, TypedType](zipResult1, l3)
 

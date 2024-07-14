@@ -5,11 +5,11 @@ import scala.deriving.Mirror
 import scala.compiletime.constValueTuple
 
 trait NamedImplicit[T] {
-  def input: List[String]
+  def input: Tuple
 }
 
 object NamedImplicit {
   inline given [T <: Tuple]: NamedImplicit[T] = new NamedImplicit {
-    override val input: List[String] = constValueTuple[T].toList.asInstanceOf[List[String]]
+    override val input: Tuple = constValueTuple[T]
   }
 }

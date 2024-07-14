@@ -41,12 +41,10 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
   def simpleGen1[I[_]] = SimpleFromProduct[F1Alias, I].derived
 
-  implicit def deco1_2: SimpleProduct.Appender[F1Alias] = new SimpleProduct.Appender.Impl[F1Alias] {
-    override def impl[M1[_, _, _], M2[_], M3[_], M4[_]] =
-      _.derived2(simpleGen1[Id].generic, simpleGen1[M2].generic, simpleGen1[M3].generic, simpleGen1[M4].generic)(_.generic)
-  }
+  implicit def deco1_2: SimpleProduct.AppenderImpl[F1Alias] =
+    SimpleProduct.Appender[F1Alias].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
 
-  def userNamed: LabelledInstalled[F1Alias] = LabelledInstalled[F1Alias].derived(deco1_2, implicitly)
+  def userNamed: ModelLabelled[F1Alias] = CompatLabelled.toLabelled[F1Alias](deco1_2, deco1_2)
 
   def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](deco1_2).build(slickProfile).userOptImpl
 

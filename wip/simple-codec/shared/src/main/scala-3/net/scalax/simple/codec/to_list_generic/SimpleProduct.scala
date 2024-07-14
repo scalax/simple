@@ -21,6 +21,12 @@ object SimpleProduct {
     def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(func: TypeGen[M1, M2, M3, M4]): M1[F[M2], F[M3], F[M4]]
   }
 
+  trait AppenderImpl[F[_[_]]] extends Appender[F] with CompatLabelled[F] with ModelSize[F] {
+    override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(func: TypeGen[M1, M2, M3, M4]): M1[F[M2], F[M3], F[M4]]
+    override def modelLabelled: F[CompatLabelled.CompatNamed]
+    override def modelSize: Int
+  }
+
   object Appender {
 
     trait HighTran[F[_[_]], G[_[_]]] {
@@ -28,17 +34,24 @@ object SimpleProduct {
     }
 
     object HighTran {
-      def tran[F[_[_]], G[_[_]]](h: HighTran[F, G]): Appender[G] => Appender[F] = appenderF =>
-        new Appender[F] {
-          override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
-            func: TypeGen[M1, M2, M3, M4]
-          ): M1[F[M2], F[M3], F[M4]] =
-            monad.to[G[M2], G[M3], G[M4], F[M2], F[M3], F[M4]](appenderF.toHList(monad)(func))(h.io[M2].from, h.io[M3].from, h.io[M4].from)(
-              h.io[M2].to,
-              h.io[M3].to,
-              h.io[M4].to
-            )
-        }
+      def tran[F[_[_]], G[_[_]]](h: HighTran[F, G]): (Appender[G], CompatLabelled[F], ModelSize[F]) => AppenderImpl[F] =
+        (appenderF, comF, modelF) =>
+          new AppenderImpl[F] {
+            override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
+              func: TypeGen[M1, M2, M3, M4]
+            ): M1[F[M2], F[M3], F[M4]] =
+              monad.to[G[M2], G[M3], G[M4], F[M2], F[M3], F[M4]](appenderF.toHList(monad)(func))(
+                h.io[M2].from,
+                h.io[M3].from,
+                h.io[M4].from
+              )(
+                h.io[M2].to,
+                h.io[M3].to,
+                h.io[M4].to
+              )
+            override val modelLabelled: F[CompatLabelled.CompatNamed] = comF.modelLabelled
+            override val modelSize: Int                               = modelF.modelSize
+          }
     }
 
     val appender: HListUtils2[Tuple, ({ type Ad[Head, TU <: Tuple] = Head *: TU })#Ad, EmptyTuple] =
@@ -75,29 +88,25 @@ object SimpleProduct {
 
     }
 
-    trait FuncInnerApply1[F[_[_]]] {
-      def derived[HList](
-        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], HList]
-          with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], HList]
+    trait FuncInnerApply1[F[_[_]] <: Product] {
+      def derived(
+        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], _ <: Tuple]
+          with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], _ <: Tuple]
           with SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]]
-      ): Appender[F] with ModelLabelled[F] = {
-        type H1[_[_]] = HList
+      ): AppenderImpl[F] = {
+        type H1[_[_]] = Tuple
 
-        val a = Appender.HighTran.tran(new HighTran[F, H1] {
-          override def io[In[_]]: SimpleFrom[F[In], HList] with SimpleTo[F[In], HList] = simpleTo.asInstanceOf[SimpleFrom[F[In], HList]
-            with SimpleTo[F[In], HList]]
-        })(GetAppender.get(simpleTo.labelled.size).asInstanceOf[Appender[H1]])
+        val compatLabelled = CompatLabelled[F].derived(simpleTo)
+        val modelSize      = ModelSize[F].derived(compatLabelled.modelLabelled.productArity)
 
-        new Appender[F] with ModelLabelled[F] {
-          override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
-            func: TypeGen[M1, M2, M3, M4]
-          ): M1[F[M2], F[M3], F[M4]] = a.toHList[M1, M2, M3, M4](monad)(func)
-          override val modelLabelled: List[String] = simpleTo.labelled
-        }
+        Appender.HighTran.tran(new HighTran[F, H1] {
+          override def io[In[_]]: SimpleFrom[F[In], Tuple] with SimpleTo[F[In], Tuple] =
+            simpleTo.asInstanceOf[SimpleFrom[F[In], Tuple] with SimpleTo[F[In], Tuple]]
+        })(GetAppender.get(simpleTo.labelled.size).asInstanceOf[Appender[H1]], compatLabelled, modelSize)
       }
     }
 
-    def apply[F[_[_]]]: FuncInnerApply1[F] = new FuncInnerApply1[F] {
+    def apply[F[_[_]] <: Product]: FuncInnerApply1[F] = new FuncInnerApply1[F] {
       //
     }
   }

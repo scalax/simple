@@ -1,16 +1,16 @@
 package net.scalax.simple.codec.generic
 
 import net.scalax.simple.codec.{NamedImplicit, SimpleFrom, SimpleTo}
-import shapeless.Generic
+import shapeless.{Generic, HList}
 
 trait SimpleNamed[Model] {
-  def labelled: List[String]
+  def labelled: HList
 }
 
 trait SimpleFromTo[Model, Target, NameTarget] extends SimpleFrom[Model, Target] with SimpleTo[Model, Target] with SimpleNamed[Model] {
   override def from(t: Target): Model
   override def to(t: Model): Target
-  override def labelled: List[String]
+  override def labelled: HList
 }
 
 trait SimpleFromProduct[F[_[_]], I[_]] {
@@ -39,9 +39,9 @@ object SimpleFromProduct {
         override type Target     = H
         override type NameTarget = N1
         override val generic: SimpleFromTo[F[I], Target, N1] = new SimpleFromTo[F[I], Target, N1] {
-          override def from(t: H): F[I]       = g.from(t)
-          override def to(t: F[I]): H         = g.to(t)
-          override val labelled: List[String] = n.input
+          override def from(t: H): F[I] = g.from(t)
+          override def to(t: F[I]): H   = g.to(t)
+          override val labelled: HList  = n.input
         }
       }
 

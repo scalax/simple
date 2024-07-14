@@ -15,7 +15,7 @@ object CirceText2 {
 
   def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
 
-  implicit val deco2_1: SimpleProduct.Appender[CatName] with ModelLabelled[CatName] =
+  implicit val deco2_1: SimpleProduct.AppenderImpl[CatName] =
     SimpleProduct.Appender[CatName].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
@@ -36,14 +36,14 @@ object CirceText2 {
     })
   }
 
-  implicit lazy val basedInstalled2: SimpleProduct.Appender[FAlias] with ModelLabelled[FAlias] = ToItera[CatName].derived.to[String]
+  implicit lazy val basedInstalled2: SimpleProduct.AppenderImpl[FAlias] = ToItera[CatName].derived.to[String]
 
   implicit lazy val caseClassNameEncoder: Encoder[CatName[Named]] = encodeModel[FAlias]
   implicit lazy val caseClassNameDecoder: Decoder[CatName[Named]] = decodeModel[FAlias]
 
   val namedModel: CatName[Named] = {
-    val fromList = FromListByTheSameTypeGeneric[FAlias].derived(implicitly)
-    fromList.fromListByTheSameType(implicitly[ModelLabelled[FAlias]].modelLabelled)
+    val fromList = implicitly[SimpleProduct.AppenderImpl[FAlias]]
+    CompatLabelled.toLabelled(fromList, fromList).modelLabelled
   }
 
   final def main(args: Array[String]): Unit = {

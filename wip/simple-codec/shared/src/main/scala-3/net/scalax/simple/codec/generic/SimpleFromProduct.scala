@@ -4,13 +4,13 @@ import net.scalax.simple.codec.{NamedImplicit, SimpleFrom, SimpleFromGeneric, Si
 import scala.deriving.Mirror
 
 trait SimpleNamed[Model] {
-  def labelled: List[String]
+  def labelled: Tuple
 }
 
 trait SimpleFromTo[Model, Target] extends SimpleFrom[Model, Target] with SimpleTo[Model, Target] with SimpleNamed[Model] {
   override def from(t: Target): Model
   override def to(t: Model): Target
-  override def labelled: List[String]
+  override def labelled: Tuple
 }
 
 trait SimpleFromProduct[F[_[_]], I[_]] {
@@ -33,7 +33,7 @@ object SimpleFromProduct {
         override val generic: SimpleFromTo[F[I], g.MirroredElemTypes] = new SimpleFromTo[F[I], g.MirroredElemTypes] {
           override def from(t: g.MirroredElemTypes): F[I] = SimpleFromGeneric[F[I]].generic.from(t)
           override def to(t: F[I]): g.MirroredElemTypes   = SimpleToGeneric[F[I]].generic.to(t)
-          override val labelled: List[String]             = n.input
+          override val labelled: Tuple                    = n.input
         }
       }
   }
