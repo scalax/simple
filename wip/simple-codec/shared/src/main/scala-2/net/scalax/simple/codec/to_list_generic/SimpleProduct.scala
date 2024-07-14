@@ -32,17 +32,19 @@ object SimpleProduct {
   object Appender {
 
     trait HighTran[F[_[_]], G[_[_]]] {
-      def io[In[_]]: SimpleFrom[F[In], G[In]] with SimpleTo[F[In], G[In]]
+      def io[In[_]]: SimpleFrom[F[In]] with SimpleTo[F[In]]
     }
 
     object HighTran {
-      def tran[F[_[_]], G[_[_]]](h: HighTran[F, G]): (Appender[G], CompatLabelled[F], ModelSize[F]) => AppenderImpl[F] =
+      def tran[F[_[_]]](
+        h: HighTran[F, ({ type GG[_[_]] = HList })#GG]
+      ): (Appender[({ type GG[_[_]] = HList })#GG], CompatLabelled[F], ModelSize[F]) => AppenderImpl[F] =
         (appenderF, comF, modelF) =>
           new AppenderImpl[F] {
             override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
               func: TypeGen[M1, M2, M3, M4]
             ): M1[F[M2], F[M3], F[M4]] =
-              monad.to[G[M2], G[M3], G[M4], F[M2], F[M3], F[M4]](appenderF.toHList(monad)(func))(
+              monad.to[HList, HList, HList, F[M2], F[M3], F[M4]](appenderF.toHList(monad)(func))(
                 h.io[M2].from,
                 h.io[M3].from,
                 h.io[M4].from
@@ -92,18 +94,17 @@ object SimpleProduct {
 
     trait FuncInnerApply1[F[_[_]] <: Product] {
       def derived(
-        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], _ <: HList]
-          with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], _ <: HList]
+        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF]]
+          with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF]]
           with SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]]
       ): AppenderImpl[F] = {
         type H1[_[_]] = HList
 
         val compatLabelled = CompatLabelled[F].derived(simpleTo)
-        val modelSize      = ModelSize[F].derived(compatLabelled.modelLabelled.productArity)
+        val modelSize      = ModelSize[F].derived(simpleTo.labelled.runtimeLength)
 
         Appender.HighTran.tran(new HighTran[F, H1] {
-          override def io[In[_]]: SimpleFrom[F[In], HList] with SimpleTo[F[In], HList] = simpleTo.asInstanceOf[SimpleFrom[F[In], HList]
-            with SimpleTo[F[In], HList]]
+          override def io[In[_]]: SimpleFrom[F[In]] with SimpleTo[F[In]] = simpleTo.asInstanceOf[SimpleFrom[F[In]] with SimpleTo[F[In]]]
         })(GetAppender.get(modelSize.modelSize).asInstanceOf[Appender[H1]], compatLabelled, modelSize)
       }
     }

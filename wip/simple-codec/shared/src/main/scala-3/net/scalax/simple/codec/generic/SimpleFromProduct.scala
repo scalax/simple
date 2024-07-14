@@ -7,48 +7,31 @@ trait SimpleNamed[Model] {
   def labelled: Tuple
 }
 
-trait SimpleFromTo[Model, Target] extends SimpleFrom[Model, Target] with SimpleTo[Model, Target] with SimpleNamed[Model] {
-  override def from(t: Target): Model
-  override def to(t: Model): Target
+trait SimpleFromTo[Model] extends SimpleFrom[Model] with SimpleTo[Model] with SimpleNamed[Model] {
+  override def from(t: Tuple): Model
+  override def to(t: Model): Tuple
   override def labelled: Tuple
 }
 
-trait SimpleFromProduct[F[_[_]], I[_]] {
-  type Target
-  val generic: SimpleFromTo[F[I], Target]
+trait SimpleFromProduct[F[_[_]]] {
+  val generic: SimpleFromTo[F[[x] =>> Any]]
 }
 
 object SimpleFromProduct {
 
-  type Aux[F[_[_]], I[_], To] = SimpleFromProduct[F, I] {
-    type Target = To
+  def apply[F[_[_]] <: Product]: ApplyImpl1[F] = new ApplyImpl1[F] {
+    //
   }
 
-  def apply[F[_[_]] <: Product, I[_]]: ApplyImpl3[F, I] = new ApplyImpl3[F, I]
-
-  trait ApplyImpl1[F[_[_]] <: Product, I[_]] {
-    def derived(using g: Mirror.ProductOf[F[I]], n: NamedImplicit[g.MirroredElemLabels]): SimpleFromProduct.Aux[F, I, g.MirroredElemTypes] =
-      new SimpleFromProduct[F, I] {
-        override type Target = g.MirroredElemTypes
-        override val generic: SimpleFromTo[F[I], g.MirroredElemTypes] = new SimpleFromTo[F[I], g.MirroredElemTypes] {
-          override def from(t: g.MirroredElemTypes): F[I] = SimpleFromGeneric[F[I]].generic.from(t)
-          override def to(t: F[I]): g.MirroredElemTypes   = SimpleToGeneric[F[I]].generic.to(t)
-          override val labelled: Tuple                    = n.input
+  trait ApplyImpl1[F[_[_]] <: Product] {
+    def derived(using g: Mirror.ProductOf[F[[x] =>> Any]], n: NamedImplicit[g.MirroredElemLabels]): SimpleFromProduct[F] =
+      new SimpleFromProduct[F] {
+        override val generic: SimpleFromTo[F[[x] =>> Any]] = new SimpleFromTo[F[[x] =>> Any]] {
+          override def from(t: Tuple): F[[x] =>> Any] = SimpleFromGeneric[F[[x] =>> Any]].generic.from(t.asInstanceOf[g.MirroredElemTypes])
+          override def to(t: F[[x] =>> Any]): Tuple   = SimpleToGeneric[F[[x] =>> Any]].generic.to(t)
+          override val labelled: Tuple                = n.input
         }
       }
   }
-
-  trait ApplyImpl2[F[_[_]] <: Product, I[_], ModelType >: F[I] <: F[I]] extends ApplyImpl1[F, I] {
-    def law[ModelTypeImpl >: ModelType <: ModelType]: ApplyImpl2[F, I, ModelTypeImpl] = new ApplyImpl2[F, I, ModelTypeImpl] {
-      //
-    }
-
-    override def derived(using
-      g: Mirror.ProductOf[ModelType],
-      n: NamedImplicit[g.MirroredElemLabels]
-    ): SimpleFromProduct.Aux[F, I, g.MirroredElemTypes] = super.derived
-  }
-
-  class ApplyImpl3[F[_[_]] <: Product, I[_]] extends ApplyImpl2[F, I, F[I]]
 
 }

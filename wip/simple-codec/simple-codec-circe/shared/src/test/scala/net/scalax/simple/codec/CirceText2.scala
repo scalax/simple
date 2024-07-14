@@ -13,10 +13,9 @@ object CirceText2 {
 
   type Named[_] = String
 
-  def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
+  val simpleGen1 = SimpleFromProduct[CatName].derived
 
-  implicit val deco2_1: SimpleProduct.AppenderImpl[CatName] =
-    SimpleProduct.Appender[CatName].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
+  implicit val deco2_1: SimpleProduct.AppenderImpl[CatName] = SimpleProduct.Appender[CatName].derived(simpleGen1.generic)
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
 

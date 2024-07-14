@@ -16,12 +16,9 @@ object CompatLabelled {
 
   trait Apply[F[_[_]]] {
     def derived(
-      simpleNamed: SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], _ <: Tuple]
+      simpleNamed: SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF]]
     ): CompatLabelled[F] = new CompatLabelled[F] {
-      override val modelLabelled: F[CompatNamed] = simpleNamed
-        .asInstanceOf[SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], Tuple]]
-        .from(simpleNamed.labelled)
-        .asInstanceOf[F[CompatNamed]]
+      override val modelLabelled: F[CompatNamed] = simpleNamed.from(simpleNamed.labelled).asInstanceOf[F[CompatNamed]]
     }
   }
 

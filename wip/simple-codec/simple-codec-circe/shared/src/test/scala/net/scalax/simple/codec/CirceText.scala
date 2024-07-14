@@ -13,19 +13,12 @@ case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[
 
 object CirceText1 {
 
-  def simpleGen1[I[_]] = SimpleFromProduct[CatName, I].derived
+  val simpleGen1 = SimpleFromProduct[CatName].derived
 
-  implicit val deco2_1: SimpleProduct.AppenderImpl[CatName] =
-    SimpleProduct.Appender[CatName].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
+  implicit val deco2_1: SimpleProduct.AppenderImpl[CatName] = SimpleProduct.Appender[CatName].derived(simpleGen1.generic)
 
-  implicit lazy val modelEncoder: CatName[Encoder] =
-    FillIdentity[CatName, Encoder]
-      .derived2(simpleGen1[FillIdentity.WithPoly[Encoder, DefaultModelImplement.type]#Type].generic)(_.generic)
-      .model(implicitly)
-  implicit lazy val modelDecoder: CatName[Decoder] =
-    FillIdentity[CatName, Decoder]
-      .derived2(simpleGen1[FillIdentity.WithPoly[Decoder, DefaultModelImplement.type]#Type].generic)(_.generic)
-      .model(implicitly)
+  implicit lazy val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
+  implicit lazy val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)
 
   implicit lazy val caseClassEncoder: Encoder[CatName[cats.Id]] = encodeModel
   implicit lazy val caseClassDecoder: Decoder[CatName[cats.Id]] = decodeModel

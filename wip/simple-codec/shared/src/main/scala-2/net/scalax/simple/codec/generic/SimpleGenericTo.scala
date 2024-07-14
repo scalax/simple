@@ -1,16 +1,15 @@
 package net.scalax.simple.codec
 
-import shapeless.Generic
+import shapeless.{Generic, HList}
 
-trait SimpleTo[-Model, +HList] {
+trait SimpleTo[-Model] {
   def to(model: Model): HList
 }
 
 trait SimpleToGeneric[Model] {
-  def generic[H](implicit g: Generic.Aux[Model, H]): SimpleTo[Model, H] = new SimpleTo[Model, H] {
-    override def to(h: Model): H = g.to(h)
+  def generic(implicit g: Generic.Aux[Model, _ <: HList]): SimpleTo[Model] = new SimpleTo[Model] {
+    override def to(h: Model): HList = g.asInstanceOf[Generic.Aux[Model, HList]].to(h)
   }
-  def law[ModelImpl >: Model <: Model]: SimpleToGeneric[ModelImpl] = SimpleToGeneric[ModelImpl]
 }
 
 object SimpleToGeneric {

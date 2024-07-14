@@ -35,14 +35,11 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   type OptsFromCol[T]  = Seq[commonAlias.SqlColumnOptions => ColumnOption[T]]
 
   def userTypedTypeGeneric(implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
-    FillIdentity[F1Alias, TypedType]
-      .derived2(simpleGen1[FillIdentity.WithPoly[TypedType, DefaultModelImplement.type]#Type].generic)(_.generic)
-      .model(implicitly)
+    UserAbs[TypedType, U](implicitly, implicitly, implicitly)
 
-  def simpleGen1[I[_]] = SimpleFromProduct[F1Alias, I].derived
+  def simpleGen1 = SimpleFromProduct[F1Alias].derived
 
-  implicit def deco1_2: SimpleProduct.AppenderImpl[F1Alias] =
-    SimpleProduct.Appender[F1Alias].derived(simpleGen1[({ type AnyF[_] = Any })#AnyF].generic)
+  implicit def deco1_2: SimpleProduct.AppenderImpl[F1Alias] = SimpleProduct.Appender[F1Alias].derived(simpleGen1.generic)
 
   def userNamed: ModelLabelled[F1Alias] = CompatLabelled.toLabelled[F1Alias](deco1_2, deco1_2)
 
@@ -62,10 +59,8 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
     private val repModel: slickProfile.Table[_] => UserAbs[Rep, U] = userRep
     private def __tableInnserRep: UserAbs[Rep, U]                  = repModel(self)
 
-    private val generic1 = simpleGen1[Rep].generic
-    private val generic2 = simpleGen1[Id].generic
-
-    override def * : ProvenShape[UserAbs[Id, U]] = generic1.to(__tableInnserRep) <> (generic2.from, generic2.to _ andThen Some.apply)
+    override def * : ProvenShape[UserAbs[Id, U]] =
+      (__tableInnserRep.id, __tableInnserRep.first, __tableInnserRep.last) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
   }
 
   object TableUserAbs {

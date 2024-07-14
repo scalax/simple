@@ -48,7 +48,7 @@ object FillIdentity {
     }
   }
 
-  class DerivedApply[F[_[_]], I[_], Poly] {
+  /*class DerivedApply[F[_[_]], I[_], Poly] {
     def derived2[H1](generic1: SimpleFrom[F[WithPoly[I, Poly]#Type], H1]): InnerApply2[F, I, H1, Poly] =
       new InnerApply2[F, I, H1, Poly](generic1)
 
@@ -62,6 +62,6 @@ object FillIdentity {
   }
 
   def applyPoly[F[_[_]], I[_], Poly]: DerivedApply[F, I, Poly]             = new DerivedApply[F, I, Poly]
-  def apply[F[_[_]], I[_]]: DerivedApply[F, I, DefaultModelImplement.type] = applyPoly[F, I, DefaultModelImplement.type]
+  def apply[F[_[_]], I[_]]: DerivedApply[F, I, DefaultModelImplement.type] = applyPoly[F, I, DefaultModelImplement.type]*/
 
 }
