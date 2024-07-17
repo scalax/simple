@@ -99,7 +99,7 @@ object SimpleProduct {
         type H1[_[_]] = Tuple
 
         val compatLabelled = CompatLabelled[F].derived(simpleTo)
-        val modelSize      = ModelSize[F].derived(simpleTo.labelled.size)
+        val modelSize      = ModelSize[F].caseClass(compatLabelled.modelLabelled)
 
         Appender.HighTran.tran(new HighTran[F, H1] {
           override def io[In[_]]: SimpleFrom[F[In]] with SimpleTo[F[In]] = simpleTo.asInstanceOf[SimpleFrom[F[In]] with SimpleTo[F[In]]]

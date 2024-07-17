@@ -8,9 +8,10 @@ object ModelSize {
 
   class DerivedApply[F[_[_]]] {
 
-    def derived(size: Int): ModelSize[F] = new ModelSize[F] {
-      override val modelSize: Int = size
-    }
+    def caseClass(model: F[CompatLabelled.CompatNamed])(implicit cv: F[CompatLabelled.CompatNamed] <:< Product): ModelSize[F] =
+      new ModelSize[F] {
+        override val modelSize: Int = model.productArity
+      }
 
   }
 
