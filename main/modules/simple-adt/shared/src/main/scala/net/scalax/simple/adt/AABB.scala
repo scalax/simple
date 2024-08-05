@@ -1,5 +1,6 @@
 package net.scalax.simple.adt
 
+import net.scalax.simple.adt.SimpleCoProductImpl.HListFuncMapGeneric
 import net.scalax.simple.adt.builder.DataTaker
 import net.scalax.simple.ghdmzsk.ghdmzsk
 
@@ -73,6 +74,14 @@ object CCDD {
     //
   }
 
-  val bb = cvab[RuntimeData[BigDecimal, RuntimeData[Int, RuntimeData[String, RuntimeData[Option[BigDecimal], RuntimeZero]]]]].fold
+  // val bb = cvab[RuntimeData[BigDecimal, RuntimeData[Int, RuntimeData[String, RuntimeData[Option[BigDecimal], RuntimeZero]]]]].fold
+
+  trait ABDECD[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, X1, X1Append[_, _ <: X1] <: X1, X1Zero <: X1, Q1, Q1Append[
+    _,
+    _ <: Q1
+  ] <: Q1, Q1Zero <: Q1, M[_, _, _]] {
+    def append[A, P <: P1, X <: X1, Q <: Q1](m: M[P, X, Q]): M[P1Append[A, P], X1Append[A, X], Q1Append[A, Q]]
+    def zero: M[P1Zero, X1Zero, Q1Zero]
+  }
 
 }
