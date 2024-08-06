@@ -1,6 +1,8 @@
 package net.scalax.simple.codec
 package to_list_generic
 
+import utils.SimpleP
+
 trait ToListByTheSameTypeGeneric[F[_[_]]] {
   def toListByTheSameType[TA]: F[({ type U1[_] = TA })#U1] => List[TA]
 }
@@ -38,7 +40,7 @@ object ToListByTheSameTypeGeneric {
   }
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: SimpleProduct.Appender[F]): ToListByTheSameTypeGeneric[F] = fromOther(
+    def derived(basedInstalled: SimpleP.Appender[F]): ToListByTheSameTypeGeneric[F] = fromOther(
       SimpleProduct1.Appender[F].derived(basedInstalled)
     )
 

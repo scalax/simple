@@ -1,6 +1,7 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct1}
+import net.scalax.simple.codec.to_list_generic.SimpleProduct1
+import utils.SimpleP
 
 trait IndexModel[F[_[_]]] {
   def model: F[({ type Id[_] = Int })#Id]
@@ -10,7 +11,7 @@ object IndexModel {
 
   class DerivedApply[F[_[_]]] {
 
-    def derived(p: SimpleProduct.Appender[F]): IndexModel[F] = {
+    def derived(p: SimpleP.Appender[F]): IndexModel[F] = {
       val simpleProduct1 = SimpleProduct1.Appender[F].derived(p)
 
       val appendMonad: SimpleProduct1.AppendMonad[({ type IntFunc[t] = Int => (t, Int) })#IntFunc] =

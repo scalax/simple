@@ -1,6 +1,7 @@
 package net.scalax.simple.codec
 
 import to_list_generic._
+import utils.SimpleP
 
 trait ZipGeneric[F[_[_]]] {
   def zip[S[_], T[_]](input1: F[S], input2: F[T]): F[({ type X1[U1] = (S[U1], T[U1]) })#X1]
@@ -9,10 +10,10 @@ trait ZipGeneric[F[_[_]]] {
 object ZipGeneric {
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(o1: SimpleProduct.Appender[F]): ZipGeneric[F] = new ZipGeneric[F] {
+    def derived(o1: SimpleP.Appender[F]): ZipGeneric[F] = new ZipGeneric[F] {
       override def zip[S[_], T[_]](input1: F[S], input2: F[T]): F[({ type X1[U1] = (S[U1], T[U1]) })#X1] = {
         type MA[A, B, C] = (A, B) => C
-        val func = new SimpleProduct.AppendMonad[MA] {
+        val func = new SimpleP.AppendMonad[MA] {
           override def zip[A, B, C, S, T, U](ma: (A, B) => C, ms: (S, T) => U): ((A, S), (B, T)) => (C, U) = (as, bt) =>
             (ma(as._1, bt._1), ms(as._2, bt._2))
           override def to[A, B, C, S, T, U](
@@ -22,7 +23,7 @@ object ZipGeneric {
         }
 
         o1.toHList[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1](func)(
-          new SimpleProduct.TypeGen[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1] {
+          new SimpleP.TypeGen[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1] {
             override def apply[X1]: (S[X1], T[X1]) => (S[X1], T[X1]) = (s, t) => (s, t)
           }
         )(input1, input2)

@@ -1,6 +1,8 @@
 package net.scalax.simple.codec
 package to_list_generic
 
+import utils.SimpleP
+
 object SimpleProduct2 {
 
   trait AppendMonad[M[_, _]] {
@@ -22,11 +24,11 @@ object SimpleProduct2 {
     def apply[F[_[_]]]: ApplyImpl[F] = new ApplyImpl[F]
 
     class ApplyImpl[F[_[_]]] {
-      def derived(generic3: SimpleProduct.Appender[F]): SimpleProduct2.Appender[F] = new SimpleProduct2.Appender[F] {
+      def derived(generic3: SimpleP.Appender[F]): SimpleProduct2.Appender[F] = new SimpleProduct2.Appender[F] {
         def toHList[M1[_, _], M2[_], M3[_]](monad: AppendMonad[M1])(func: TypeGen[M1, M2, M3]): M1[F[M2], F[M3]] = {
           type X[A, B, C] = M1[B, C]
 
-          val mAdd: SimpleProduct.AppendMonad[X] = new SimpleProduct.AppendMonad[X] {
+          val mAdd: SimpleP.AppendMonad[X] = new SimpleP.AppendMonad[X] {
             override def zip[A, B, C, S, T, U](ma: M1[B, C], ms: M1[T, U]): M1[(B, T), (C, U)] = monad.zip(ma, ms)
             override def to[A, B, C, S, T, U](
               m1: M1[B, C]
@@ -34,7 +36,7 @@ object SimpleProduct2 {
             override def zero: M1[Unit, Unit] = monad.zero
           }
 
-          def funcImpl[MMX[_]]: SimpleProduct.TypeGen[X, MMX, M2, M3] = new SimpleProduct.TypeGen[X, MMX, M2, M3] {
+          def funcImpl[MMX[_]]: SimpleP.TypeGen[X, MMX, M2, M3] = new SimpleP.TypeGen[X, MMX, M2, M3] {
             override def apply[T]: M1[M2[T], M3[T]] = func[T]
           }
 

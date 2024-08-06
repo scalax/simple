@@ -1,6 +1,7 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct1}
+import net.scalax.simple.codec.to_list_generic.SimpleProduct1
+import utils.SimpleP
 
 trait SimpleFill[F[_[_]]] {
   def fill[S[_]](t: SimpleFill.FillI[S]): F[S]
@@ -12,7 +13,7 @@ object SimpleFill {
   }
 
   class ApplyImpl[F[_[_]]] {
-    def derived(basedInstalled: SimpleProduct.Appender[F]): SimpleFill[F] = new SimpleFill[F] {
+    def derived(basedInstalled: SimpleP.Appender[F]): SimpleFill[F] = new SimpleFill[F] {
       override def fill[S[_]](t: SimpleFill.FillI[S]): F[S] = {
         val generic1 = SimpleProduct1.Appender[F].derived(basedInstalled)
 

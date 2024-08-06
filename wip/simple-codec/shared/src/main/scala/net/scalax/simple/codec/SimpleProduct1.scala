@@ -1,6 +1,8 @@
 package net.scalax.simple.codec
 package to_list_generic
 
+import utils.SimpleP
+
 object SimpleProduct1 {
 
   trait AppendMonad[M[_]] {
@@ -20,7 +22,7 @@ object SimpleProduct1 {
   object Appender {
 
     class ApplyImpl[F[_[_]]] {
-      def derived(toDecoderGeneric: SimpleProduct.Appender[F]): Appender[F] = derived1(
+      def derived(toDecoderGeneric: SimpleP.Appender[F]): Appender[F] = derived1(
         SimpleProduct2.Appender[F].derived(toDecoderGeneric)
       )
 
