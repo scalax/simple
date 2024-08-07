@@ -32,7 +32,7 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
   def takeTail[Head, Tail <: Appendable](dataList: AppendablePositive[Head, Tail]): Tail
   def takeZero: AppendZero
 
-  def abab[M1[_, _, _], M2[_], M3[_], M4[_]]: SimpleP.ABDECD[
+  def abab[M1[_, _, _], M2[_], M3[_], M4[_]](monad: SimpleP.AppendMonad[M1], typeGen: SimpleP.TypeGen[M1, M2, M3, M4]): SimpleP.ABDECD[
     Appendable,
     ({ type H1[Head, Tail <: Appendable] = AppendablePositive[M2[Head], Tail] })#H1,
     AppendZero,
@@ -42,7 +42,7 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
     Appendable,
     ({ type H1[Head, Tail <: Appendable] = AppendablePositive[M4[Head], Tail] })#H1,
     AppendZero,
-    ({ type MX[A, B, C] = (SimpleP.AppendMonad[M1], SimpleP.TypeGen[M1, M2, M3, M4]) => M1[A, B, C] })#MX
+    M1
   ] =
     new SimpleP.ABDECD[
       Appendable,
@@ -54,19 +54,15 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
       Appendable,
       ({ type H1[Head, Tail <: Appendable] = AppendablePositive[M4[Head], Tail] })#H1,
       AppendZero,
-      ({ type MX[A, B, C] = (SimpleP.AppendMonad[M1], SimpleP.TypeGen[M1, M2, M3, M4]) => M1[A, B, C] })#MX
+      M1
     ] {
       override def append[A, P <: Appendable, X <: Appendable, Q <: Appendable](
-        m: (SimpleP.AppendMonad[M1], SimpleP.TypeGen[M1, M2, M3, M4]) => M1[P, X, Q]
-      ): (
-        SimpleP.AppendMonad[M1],
-        SimpleP.TypeGen[M1, M2, M3, M4]
-      ) => M1[AppendablePositive[M2[A], P], AppendablePositive[M3[A], X], AppendablePositive[M4[A], Q]] = { (o, func) =>
-        val tailM1: M1[P, X, Q]                          = m(o, func)
-        val headM1: M1[M2[A], M3[A], M4[A]]              = func[A]
-        val zipM: M1[(P, M2[A]), (X, M3[A]), (Q, M4[A])] = o.zip(tailM1, headM1)
+        tailM1: M1[P, X, Q]
+      ): M1[AppendablePositive[M2[A], P], AppendablePositive[M3[A], X], AppendablePositive[M4[A], Q]] = {
+        val headM1: M1[M2[A], M3[A], M4[A]]              = typeGen[A]
+        val zipM: M1[(P, M2[A]), (X, M3[A]), (Q, M4[A])] = monad.zip(tailM1, headM1)
 
-        o.to(zipM)(
+        monad.to(zipM)(
           in1 = t => appendData(t._2, t._1),
           in2 = t => appendData(t._2, t._1),
           in3 = t => appendData(t._2, t._1)
@@ -77,17 +73,16 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
         )
       }
 
-      override def zero: (SimpleP.AppendMonad[M1], SimpleP.TypeGen[M1, M2, M3, M4]) => M1[AppendZero, AppendZero, AppendZero] = {
-        (o, func) =>
-          o.to(o.zero)(
-            _ => takeZero: AppendZero,
-            _ => takeZero: AppendZero,
-            _ => takeZero: AppendZero
-          )(
-            (_: AppendZero) => (),
-            (_: AppendZero) => (),
-            (_: AppendZero) => ()
-          )
+      override def zero: M1[AppendZero, AppendZero, AppendZero] = {
+        monad.to(monad.zero)(
+          _ => takeZero: AppendZero,
+          _ => takeZero: AppendZero,
+          _ => takeZero: AppendZero
+        )(
+          (_: AppendZero) => (),
+          (_: AppendZero) => (),
+          (_: AppendZero) => ()
+        )
       }
     }
 
@@ -98,18 +93,16 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
       override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](o: SimpleP.AppendMonad[M1])(
         func: SimpleP.TypeGen[M1, M2, M3, M4]
       ): M1[AppendablePositive[M2[T1], HL1[M2]], AppendablePositive[M3[T1], HL1[M3]], AppendablePositive[M4[T1], HL1[M4]]] = {
-        val c = abab[M1, M2, M3, M4]
-        c.append((x, a) => tail.toHList(x)(a))(o, func)
+        val c      = abab[M1, M2, M3, M4](o, func)
+        val tailM1 = tail.toHList(o)(func)
+        c.append(tailM1)
       }
     }
 
   val zero: SimpleP.Appender[({ type HA[_[_]] = AppendZero })#HA] = new SimpleP.Appender[({ type HA[_[_]] = AppendZero })#HA] {
-    override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](
-      o: SimpleP.AppendMonad[M1]
-    )(func: SimpleP.TypeGen[M1, M2, M3, M4]): M1[AppendZero, AppendZero, AppendZero] = {
-      val c = abab[M1, M2, M3, M4]
-      c.zero(o, func)
-    }
+    override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](o: SimpleP.AppendMonad[M1])(
+      func: SimpleP.TypeGen[M1, M2, M3, M4]
+    ): M1[AppendZero, AppendZero, AppendZero] = abab[M1, M2, M3, M4](o, func).zero
   }
 
 }
