@@ -15,6 +15,11 @@ object SimpleProduct {
     ): M1[F[M2], F[M3], F[M4]]
     override def modelLabelled: F[CompatLabelled.CompatNamed]
     override def modelSize: Int
+
+    def modelSizeF: ModelSize[F]                = this
+    def modelCompatLabelledF: CompatLabelled[F] = this
+    def appenderF: SimpleP.Appender[F]          = this
+    def modelLabelledF: ModelLabelled[F]        = CompatLabelled.toLabelled[F](this, this)
   }
 
   object Appender {
@@ -27,12 +32,12 @@ object SimpleProduct {
       def tran[F[_[_]]](
         h: HighTran[F, ({ type GG[_[_]] = HList })#GG]
       ): (SimpleP.Appender[({ type GG[_[_]] = HList })#GG], CompatLabelled[F], ModelSize[F]) => AppenderImpl[F] =
-        (appenderF, comF, modelF) =>
+        (appenderFImpl, comF, modelF) =>
           new AppenderImpl[F] {
             override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: SimpleP.AppendMonad[M1])(
               func: SimpleP.TypeGen[M1, M2, M3, M4]
             ): M1[F[M2], F[M3], F[M4]] =
-              monad.to[HList, HList, HList, F[M2], F[M3], F[M4]](appenderF.toHList(monad)(func))(
+              monad.to[HList, HList, HList, F[M2], F[M3], F[M4]](appenderFImpl.toHList(monad)(func))(
                 h.io[M2].from,
                 h.io[M3].from,
                 h.io[M4].from
