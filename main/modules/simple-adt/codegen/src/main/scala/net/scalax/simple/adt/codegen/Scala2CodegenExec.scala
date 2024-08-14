@@ -19,7 +19,7 @@ object Scala2CodegenExec:
         val filePath = writePath.resolve("ADTPassedFunction.scala")
         Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name()))(_.match
           case writer =>
-            val linerContent = ADTPassedFunctionCodegen.text4
+            val linerContent: String = ADTPassedFunctionCodegen.text4
             writer.println(linerContent)
         )
     )
@@ -27,7 +27,7 @@ object Scala2CodegenExec:
     locally {
       val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = CodePre2(isScala3 = false).text
+        val linerContent: String = CodePre2(isScala3 = false).text
         writer.println(linerContent)
       }
     }

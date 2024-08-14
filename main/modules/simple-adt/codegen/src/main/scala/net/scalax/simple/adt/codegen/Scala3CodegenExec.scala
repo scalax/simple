@@ -17,7 +17,7 @@ object Scala3CodegenExec:
     locally {
       val filePath = writePath.resolve("TypeAdtRuntimeApply.scala")
       Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
-        val linerContent = CodePre2(isScala3 = true).text
+        val linerContent: String = CodePre2(isScala3 = true).text
         writer.println(linerContent)
       }
     }
