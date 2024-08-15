@@ -44,7 +44,14 @@ object ScalaAllCodegenExec:
         val linerContent: String = net.scalax.simple.adt.codegen.ProductTypeCodegen(22).text
         writer.println(linerContent)
       }
+    }
 
+    locally {
+      val filePath = writePath.resolve("ProductTypeAppender.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent: String = net.scalax.simple.adt.codegen.ProductTypeAppenderCodegen(22).text
+        writer.println(linerContent)
+      }
     }
 
   end main

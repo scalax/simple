@@ -6,7 +6,7 @@ class ProductTypeCodegen(val index: Int) {
   class ProductTypeCodegenDefParam(val index: Int) {
     self2 =>
     val col          = for (i <- 1 to index) yield s"I$i"
-    val text: String = col.mkString("[", ",", "]")
+    val text: String = if (col.isEmpty) col.mkString else col.mkString("[", ",", "]")
   }
 
   class ProductTypeAppender(val index: Int) {
@@ -28,13 +28,13 @@ class ProductTypeCodegen(val index: Int) {
     val text: String = s"type Parameter$index${ProductTypeCodegenDefParam(self5.index).text} = ${ProductTypeAppender(self5.index).text}"
   }
 
-  val preText = for (i <- 1 to self1.index) yield EachProductTypeCodegen(i).text
+  val preText = for (i <- 0 to self1.index) yield EachProductTypeCodegen(i).text
   val text: String = s"""
       package net.scalax.simple.adt
       package utils
 
-      trait ProductTypeCodegen[Append, AppendPositive[_, _ <: Append] <: Append, AppendZero <: Append] {
-        ${preText.mkString("\n")}
+      trait ProductType22[Append, AppendPositive[_, _ <: Append] <: Append, AppendZero <: Append] {
+        ${preText.mkString("\n\n\n")}
       }
     """
 
