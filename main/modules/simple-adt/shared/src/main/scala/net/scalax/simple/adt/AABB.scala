@@ -6,7 +6,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 
 object CCDD {
 
-  trait P1
+  /*trait P1
 
   trait Positive2[T, Tail[_] <: P1, Data] extends P1 {
     def folddd[TD >: Data](f: T => TD): Tail[TD]
@@ -72,7 +72,7 @@ object CCDD {
 
   def cvab[Ty <: RuntimeNat]: CVAB[Ty] = new CVAB[Ty] {
     //
-  }
+  }*/
 
   // val bb = cvab[RuntimeData[BigDecimal, RuntimeData[Int, RuntimeData[String, RuntimeData[Option[BigDecimal], RuntimeZero]]]]].fold
 
@@ -82,6 +82,53 @@ object CCDD {
   ] <: Q1, Q1Zero <: Q1, M[_, _, _]] {
     def append[A, P <: P1, X <: X1, Q <: Q1](m: M[P, X, Q]): M[P1Append[A, P], X1Append[A, X], Q1Append[A, Q]]
     def zero: M[P1Zero, X1Zero, Q1Zero]
+  }
+
+  trait ABCD2[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, X1, X1Append[_, _ <: X1] <: X1, X1Zero <: X1, M2[_, _]]
+      extends ABDECD[P1, P1Append, P1Zero, P1, P1Append, P1Zero, X1, X1Append, X1Zero, ({ type MX[A, B, C] = M2[B, C] })#MX] {
+    def append2[A, P <: P1, X <: X1](m: M2[P, X]): M2[P1Append[A, P], X1Append[A, X]]
+    def zero2: M2[P1Zero, X1Zero]
+
+    final override def append[A, PP <: P1, P2 <: P1, X <: X1](m: M2[P2, X]): M2[P1Append[A, P2], X1Append[A, X]] = append2(m)
+    final override def zero: M2[P1Zero, X1Zero]                                                                  = zero2
+  }
+
+  trait ProductType22AppenderImpl2[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, X1, X1Append[_, _ <: X1] <: X1, X1Zero <: X1, M2[_, _]]
+      extends utils.ProductType22Appender[
+        P1,
+        P1Append,
+        P1Zero,
+        P1,
+        P1Append,
+        P1Zero,
+        X1,
+        X1Append,
+        X1Zero,
+        ({ type MX[A, B, C] = M2[B, C] })#MX
+      ] {
+    override def helper: ABCD2[P1, P1Append, P1Zero, X1, X1Append, X1Zero, M2]
+  }
+
+  trait ABCD1[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, M2[_]]
+      extends ABCD2[P1, P1Append, P1Zero, P1, P1Append, P1Zero, ({ type MX[B, C] = M2[C] })#MX] {
+    def append1[A, P <: P1](m: M2[P]): M2[P1Append[A, P]]
+    def zero1: M2[P1Zero]
+
+    final override def append2[A, PP <: P1, P2 <: P1](m: M2[P2]): M2[P1Append[A, P2]] = append1(m)
+    final override def zero2: M2[P1Zero]                                              = zero1
+  }
+
+  trait ProductType22AppenderImpl1[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, M2[_]]
+      extends ProductType22AppenderImpl2[
+        P1,
+        P1Append,
+        P1Zero,
+        P1,
+        P1Append,
+        P1Zero,
+        ({ type MX[B, C] = M2[C] })#MX
+      ] {
+    override def helper: ABCD1[P1, P1Append, P1Zero, M2]
   }
 
 }

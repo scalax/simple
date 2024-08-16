@@ -19,18 +19,8 @@ trait ProductType22Appender[
   type AP2 = ProductType22[Append2, AppendPositive2, AppendZero2]
   type AP3 = ProductType22[Append3, AppendPositive3, AppendZero3]
 
-  val helper: CCDD.ABDECD[
-    Append1,
-    AppendPositive1,
-    AppendZero1,
-    Append2,
-    AppendPositive2,
-    AppendZero2,
-    Append3,
-    AppendPositive3,
-    AppendZero3,
-    M3
-  ]
+  def helper
+    : CCDD.ABDECD[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, Append3, AppendPositive3, AppendZero3, M3]
 
   def Instance0: M3[
     AP1#Parameter0,
