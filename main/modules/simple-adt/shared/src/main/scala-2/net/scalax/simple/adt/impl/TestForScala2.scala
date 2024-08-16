@@ -1,15 +1,16 @@
-package net.scalax.simple.adt.impl
+package net.scalax.simple.adt
+package impl
 
-trait TestForScala2 {
+import net.scalax.simple.adt.CCDD.ABCD2
+
+object TestForScala2 {
 
   trait Abc[PI, Append[_, _ <: PI] <: PI, Zero <: PI] {
     type AB[I1, I2, I3, I4] = Append[I1, Append[I2, Append[I3, Append[I4, Zero]]]]
     def abc[I1, I2, I3, I4]: AB[I1, I2, I3, I4] = ???
   }
 
-  trait PPAP1
-
-  trait Positive2[Data, Tail[_] <: Any, Result] extends PPAP1 {
+  trait Positive2[Data, Tail[_] <: Any, Result] {
     def apply[TD >: Result](f: Data => TD): Tail[TD]
   }
 
@@ -31,6 +32,43 @@ trait TestForScala2 {
   locally {
     val ee      = dd(t => t.map(_.size).sum)(t => t.toInt + 1)(t => t.getOrElse(55))(t => t.toInt)
     val ff: Int = ee
+  }
+
+  def helperImpl: ABCD2[
+    RuntimeNat,
+    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeZero,
+    Func,
+    ({ type AP[A, B <: Func] = Append11[A, B] })#AP,
+    Zero,
+    ({ type BP[A <: RuntimeNat, B <: Func] = AppendUser[A, B] })#BP
+  ] = ???
+
+  class CurateAppend
+      extends CCDD.ProductType22AppenderImpl2[
+        RuntimeNat,
+        ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+        RuntimeZero,
+        Func,
+        ({ type AP[A, B <: Func] = Append11[A, B] })#AP,
+        Zero,
+        ({ type BP[A <: RuntimeNat, B <: Func] = AppendUser[A, B] })#BP
+      ] {
+    override def helper: ABCD2[
+      RuntimeNat,
+      ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+      RuntimeZero,
+      Func,
+      ({ type AP[A, B <: Func] = Append11[A, B] })#AP,
+      Zero,
+      ({ type BP[A <: RuntimeNat, B <: Func] = AppendUser[A, B] })#BP
+    ] = helperImpl
+  }
+
+  def tempAppend: CurateAppend = new CurateAppend
+
+  trait AppendUser[In <: RuntimeNat, Out <: Func] {
+    def appendUser[ST](in: ADTData[In, ST]): Out#U[Nothing]
   }
 
 }

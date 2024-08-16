@@ -11,7 +11,7 @@ trait ProductType22Appender[
   Append3,
   AppendPositive3[_, _ <: Append3] <: Append3,
   AppendZero3 <: Append3,
-  M3[_, _, _]
+  M3[_ <: Append1, _ <: Append2, _ <: Append3]
 ] {
   productSelf =>
 

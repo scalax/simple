@@ -36,12 +36,12 @@ class CodePre2(val isScala3: Boolean) {
               if (isScala3) s"new ADTPassedFunction.extra(b).fold.except[NatModelType].apply"
               else s"new ADTPassedFunction.extra$index(b).fold"
 
-            s"$str1(${FoldStrFuncs(self2.index).text})"
+            s"$str1${FoldStrFuncs(self2.index).text}"
           }
          }"""
 
       class FoldStrFuncs(override val index: Int)
-          extends ParameterString(i => if (i > 1) s", t => option$i(t.adtFunctionApply(a))" else s"t => option$i(t.adtFunctionApply(a))")(
+          extends ParameterString(i => s"(t => option$i(t.adtFunctionApply(a)))")(
             index
           )
     }

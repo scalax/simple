@@ -37,7 +37,7 @@ class ProductTypeAppenderCodegen(val index: Int) {
         Append1, AppendPositive1[_, _ <: Append1] <: Append1, AppendZero1 <: Append1,
         Append2, AppendPositive2[_, _ <: Append2] <: Append2, AppendZero2 <: Append2,
         Append3, AppendPositive3[_, _ <: Append3] <: Append3, AppendZero3 <: Append3,
-        M3[_, _, _]
+        M3[_ <: Append1, _ <: Append2, _ <: Append3]
       ] {
         productSelf =>
 

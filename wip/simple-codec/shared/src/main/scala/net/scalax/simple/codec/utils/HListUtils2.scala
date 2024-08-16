@@ -19,7 +19,7 @@ object SimpleP {
   trait ABDECD[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, X1, X1Append[_, _ <: X1] <: X1, X1Zero <: X1, Q1, Q1Append[
     _,
     _ <: Q1
-  ] <: Q1, Q1Zero <: Q1, M[_, _, _]] {
+  ] <: Q1, Q1Zero <: Q1, M[_ <: P1, _ <: X1, _ <: Q1]] {
     def append[A, P <: P1, X <: X1, Q <: Q1](m: M[P, X, Q]): M[P1Append[A, P], X1Append[A, X], Q1Append[A, Q]]
     def zero: M[P1Zero, X1Zero, Q1Zero]
   }
@@ -32,7 +32,10 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
   def takeTail[Head, Tail <: Appendable](dataList: AppendablePositive[Head, Tail]): Tail
   def takeZero: AppendZero
 
-  def abab[M1[_, _, _], M2[_], M3[_], M4[_]](monad: SimpleP.AppendMonad[M1], typeGen: SimpleP.TypeGen[M1, M2, M3, M4]): SimpleP.ABDECD[
+  def abab[M1[_, _, _], M2[_], M3[_], M4[_]](
+    monad: SimpleP.AppendMonad[M1],
+    typeGen: SimpleP.TypeGen[M1, M2, M3, M4]
+  ): SimpleP.ABDECD[
     Appendable,
     ({ type H1[Head, Tail <: Appendable] = AppendablePositive[M2[Head], Tail] })#H1,
     AppendZero,
@@ -42,7 +45,7 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
     Appendable,
     ({ type H1[Head, Tail <: Appendable] = AppendablePositive[M4[Head], Tail] })#H1,
     AppendZero,
-    M1
+    ({ type MXX[A <: Appendable, B <: Appendable, C <: Appendable] = M1[A, B, C] })#MXX
   ] =
     new SimpleP.ABDECD[
       Appendable,
@@ -54,7 +57,7 @@ trait HListUtils2[Appendable, AppendablePositive[_, _ <: Appendable] <: Appendab
       Appendable,
       ({ type H1[Head, Tail <: Appendable] = AppendablePositive[M4[Head], Tail] })#H1,
       AppendZero,
-      M1
+      ({ type MXX[A <: Appendable, B <: Appendable, C <: Appendable] = M1[A, B, C] })#MXX
     ] {
       override def append[A, P <: Appendable, X <: Appendable, Q <: Appendable](
         tailM1: M1[P, X, Q]
