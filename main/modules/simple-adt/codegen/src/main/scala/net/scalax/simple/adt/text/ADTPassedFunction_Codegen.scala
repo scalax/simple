@@ -2,7 +2,7 @@ package net.scalax.simple.adt.codegen
 
 object ADTPassedFunctionCodegen:
 
-  class ParamCodegen1(val index: Int) {
+  /*class ParamCodegen1(val index: Int) {
     self2 =>
 
     class InnerParamCodegen2(val index: Int) {
@@ -16,7 +16,7 @@ object ADTPassedFunctionCodegen:
     }
 
     val text: String = self2.InnerParamCodegen2(1).text
-  }
+  }*/
 
   class DefParamCodegen2(val index: Int) {
     self4 =>
@@ -65,18 +65,15 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
           )}) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter$i1${DefParamCodegen2(i1).text}#Result[Nothing] = {
-      val r1 = tempAppend.Instance$i1${DefParamCodegen2(i1).text}
-
-      // r1.appendUser[ADTExtension](data$i1)
-
-      ???
+      val r1 = tempProduct.InstanceImpl$i1${DefParamCodegen2(i1).text}
+      r1.appendUser[ADTExtension](data$i1)
     }
 
-    def fold11[D](${repeatParameter(i1)}): D = {
-      val func_link: ghdmzsk = ${lawRepeatParameter(i1)(0)}
-
-      TypeAdtGetter.getFromFunction(data$i1.toGHDMZSK, func_link).asInstanceOf[D]
-    }
+    // def fold11[D](${repeatParameter(i1)}): D = {
+    //   val func_link: ghdmzsk = ${lawRepeatParameter(i1)(0)}
+    //
+    //   TypeAdtGetter.getFromFunction(data$i1.toGHDMZSK, func_link).asInstanceOf[D]
+    // }
 
 }
 

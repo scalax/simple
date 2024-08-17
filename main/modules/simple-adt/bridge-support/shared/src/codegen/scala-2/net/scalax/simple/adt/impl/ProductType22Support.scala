@@ -18,7 +18,7 @@ trait ProductType22Support[
   type AP1 = ProductType22[Append1, AppendPositive1, AppendZero1]
   type AP2 = ProductType22[Append2, AppendPositive2, AppendZero2]
 
-  def appender: ProductType22Appender[
+  protected def appender: ProductType22Appender[
     Append1,
     AppendPositive1,
     AppendZero1,
@@ -30,7 +30,7 @@ trait ProductType22Support[
     S2Support.Zero,
     M3
   ]
-  def tran: S2Support.M1ToM2[Append1, Append2, M3, M4]
+  protected def tran: S2Support.M1ToM2[Append1, Append2, M3, M4]
 
   def InstanceImpl0: M4[
     AP1#Parameter0,

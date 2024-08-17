@@ -54,8 +54,8 @@ class TranCodegen(val index: Int) {
           type AP1 = ProductType22[Append1, AppendPositive1, AppendZero1]
           type AP2 = ProductType22[Append2, AppendPositive2, AppendZero2]
 
-          def appender: ProductType22Appender[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, S2Support.Func, S2Support.Append11, S2Support.Zero, M3]
-          def tran: S2Support.M1ToM2[Append1, Append2, M3, M4]
+          protected def appender: ProductType22Appender[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, S2Support.Func, S2Support.Append11, S2Support.Zero, M3]
+          protected def tran: S2Support.M1ToM2[Append1, Append2, M3, M4]
 
           ${preText.mkString("\n\n\n")}
         }

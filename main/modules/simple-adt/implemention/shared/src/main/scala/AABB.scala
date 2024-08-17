@@ -49,7 +49,7 @@ object CCDD {
         X1Zero,
         ({ type MX[A <: P1, B <: P1, C <: X1] = M2[B, C] })#MX
       ] {
-    override def helper: ABCD2[P1, P1Append, P1Zero, X1, X1Append, X1Zero, M2]
+    override protected def helper: ABCD2[P1, P1Append, P1Zero, X1, X1Append, X1Zero, M2]
   }
 
   trait ABCD1[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, M2[_ <: P1]]
@@ -71,7 +71,7 @@ object CCDD {
         P1Zero,
         ({ type MX[B <: P1, C <: P1] = M2[C] })#MX
       ] {
-    override def helper: ABCD1[P1, P1Append, P1Zero, M2]
+    override protected def helper: ABCD1[P1, P1Append, P1Zero, M2]
   }
 
 }
