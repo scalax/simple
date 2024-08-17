@@ -55,6 +55,21 @@ codegenImpl := {
     .evaluated
 }
 
+val scalaOuterRunMainInputStr = settingKey[String]("scalaOuterRunMainInputStr")
+scalaOuterRunMainInputStr := {
+  val projectRoot = rootCodegenPath.value / ".." / ".." / ".." / "bridge-support" / "shared" / "src" / "codegen"
+  projectRoot.getAbsoluteFile.toString
+}
+
+val scalaOuterRunMainClass = s"$codegenPackageName.ScalaOuterCodegenExec"
+codegenImpl := {
+  codegenImpl.evaluated
+  (Compile / runMain).inputTaskValue
+    .partialInput(s" $scalaOuterRunMainClass")
+    .partialInput(s" ${scalaOuterRunMainInputStr.value}")
+    .evaluated
+}
+
 val preGenMainClass = s"$codegenPackageName.PreCodegen"
 preCodegenImpl := (Compile / runMain).inputTaskValue
   .partialInput(s" $preGenMainClass")

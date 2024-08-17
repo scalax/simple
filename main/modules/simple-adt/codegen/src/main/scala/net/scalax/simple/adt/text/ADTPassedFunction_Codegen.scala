@@ -64,12 +64,12 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
             i1 + 1
           )}) extends AnyVal {
 
-    type FoldResult[UUVV] = ${ParamCodegen1(i1).text}[UUVV]
-
-    def fold: FoldResult[Nothing] = {
+    def fold: utils.Folder22TypeParam#Parameter$i1${DefParamCodegen2(i1).text}#Result[Nothing] = {
       val r1 = tempAppend.Instance$i1${DefParamCodegen2(i1).text}
 
-      r1.appendUser[ADTExtension](data$i1)
+      // r1.appendUser[ADTExtension](data$i1)
+
+      ???
     }
 
     def fold11[D](${repeatParameter(i1)}): D = {

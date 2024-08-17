@@ -2,10 +2,12 @@ package net.scalax.simple.adt
 package impl
 
 import net.scalax.simple.adt.CCDD.ABCD2
+import net.scalax.simple.adt.support.S2Support
+import utils.ProductType22Support
 
 object TestForScala2 {
 
-  trait Abc[PI, Append[_, _ <: PI] <: PI, Zero <: PI] {
+  /*trait Abc[PI, Append[_, _ <: PI] <: PI, Zero <: PI] {
     type AB[I1, I2, I3, I4] = Append[I1, Append[I2, Append[I3, Append[I4, Zero]]]]
     def abc[I1, I2, I3, I4]: AB[I1, I2, I3, I4] = ???
   }
@@ -32,16 +34,16 @@ object TestForScala2 {
   locally {
     val ee      = dd(t => t.map(_.size).sum)(t => t.toInt + 1)(t => t.getOrElse(55))(t => t.toInt)
     val ff: Int = ee
-  }
+  }*/
 
   def helperImpl: ABCD2[
     RuntimeNat,
     ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
     RuntimeZero,
-    Func,
-    ({ type AP[A, B <: Func] = Append11[A, B] })#AP,
+    S2Support.Func,
+    ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
     Zero,
-    ({ type BP[A <: RuntimeNat, B <: Func] = AppendUser[A, B] })#BP
+    ({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP
   ] = ???
 
   class CurateAppend
@@ -49,23 +51,31 @@ object TestForScala2 {
         RuntimeNat,
         ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
         RuntimeZero,
-        Func,
-        ({ type AP[A, B <: Func] = Append11[A, B] })#AP,
-        Zero,
-        ({ type BP[A <: RuntimeNat, B <: Func] = AppendUser[A, B] })#BP
+        S2Support.Func,
+        ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
+        S2Support.Zero,
+        ({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP
       ] {
     override def helper: ABCD2[
       RuntimeNat,
       ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
       RuntimeZero,
-      Func,
-      ({ type AP[A, B <: Func] = Append11[A, B] })#AP,
-      Zero,
-      ({ type BP[A <: RuntimeNat, B <: Func] = AppendUser[A, B] })#BP
+      S2Support.Func,
+      ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
+      S2Support.Zero,
+      ({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP
     ] = helperImpl
   }
 
   def tempAppend: CurateAppend = new CurateAppend
+
+  def tempProduct: ProductType22Support[ RuntimeNat,
+    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeZero, RuntimeNat,
+    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeZero,S2Support.Func,
+    ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
+    S2Support.Zero,({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP,({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP]
 
   trait AppendUser[In <: RuntimeNat, Out <: Func] {
     def appendUser[ST](in: ADTData[In, ST]): Out#U[Nothing]

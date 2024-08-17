@@ -20,6 +20,11 @@ val adt: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in
 lazy val adtJVM: Project              = adt.jvm dependsOn (`adt-implementionJVM`, `test-commonJVM` % Test) aggregate `adt-implementionJVM`
 lazy val adtJS: Project               = adt.js dependsOn (`adt-implementionJS`, `test-commonJS`    % Test) aggregate `adt-implementionJS`
 
+val `adt-bridge-support/file`                          = `adt/file` / "bridge-support"
+val `adt-bridge-support`: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `adt-bridge-support/file`
+lazy val `adt-bridge-supportJVM`: Project = `adt-bridge-support`.jvm dependsOn (`adt-implementionJVM` % Compile, `test-commonJVM` % Test)
+lazy val `adt-bridge-supportJS`: Project  = `adt-bridge-support`.js dependsOn (`adt-implementionJS`   % Compile, `test-commonJS`  % Test)
+
 val `adt-codegen/file` = `adt/file` / "codegen"
 val `adt-codegen`      = project in `adt-codegen/file`
 
@@ -70,5 +75,7 @@ lazy val `test-commonJS`: Project               = `test-common`.js
 addCommandAlias("adtCodegen", s"; ++${scalaV.v3}; adt-codegen/preCodegenImpl; adt-codegen/codegenImpl")
 addCommandAlias("releaseSimple", "; +adtJVM/test; +adtJS/test; +adtJVM/publishSigned; +adtJS/publishSigned;")
 addCommandAlias("releaseCodecLocal", "; +codecJVM/publishLocal ; +codecJS/publishLocal ;")
+
+addCommandAlias("releaseBridgeLocal", "; +adt-bridge-supportJVM/publishLocal ; +adt-bridge-supportJS/publishLocal ;")
 
 Global / onChangedBuildSource := ReloadOnSourceChanges

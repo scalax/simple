@@ -7,4 +7,6 @@ libraryDependencies ++= libScalax.`kind-projector`.value
 libraryDependencies ++= libScalax.circe.value.map(_ % Test)
 libraryDependencies ++= libScalax.`zio2`.value.map(_ % Test)
 
+libraryDependencies ++= Seq("net.scalax.simple" %% "simple-adt-bridge-support" % inner.CommonUtils.bridgeSupportVersion)
+
 enableZIOTest := true
