@@ -5,6 +5,7 @@ import net.scalax.simple.adt.CCDD.ABCD2
 import net.scalax.simple.adt.support.S3Support
 import net.scalax.simple.adt.support.Product22Support
 import net.scalax.simple.adt.utils.ProductType22Support
+import utils.ResultFolderImpl
 
 object TestForScala3 {
 
@@ -17,6 +18,7 @@ object TestForScala3 {
   }
 
   trait AppendUser[In <: RuntimeNat, Out <: S3Support.Func[?]] extends AppendUserAb[In, [x] =>> TakeInnerFImpl[x, Out]] {
+    def index: Int
     override def appendUser[ST](in: ADTData[In, ST]): TakeInnerF[Out]
   }
 
@@ -40,9 +42,13 @@ object TestForScala3 {
     override def append2[A, P <: RuntimeNat, X <: S3Support.Func[?]](
       m: AppendUser[P, X]
     ): AppendUser[RuntimeData[A, P], S3Support.Append11[A, X]] = new AppendUser[RuntimeData[A, P], S3Support.Append11[A, X]] {
-      override def appendUser[ST](in: ADTData[RuntimeData[A, P], ST]): TakeInnerF[S3Support.Append11[A, X]] = ???
+      override def index: Int = m.index + 1
+      override def appendUser[ST](in: ADTData[RuntimeData[A, P], ST]): TakeInnerF[S3Support.Append11[A, X]] = ResultFolderImpl
+        .init[Any, [x] =>> Any, Any](adtGhdmzsk = in.toGHDMZSK, index = index)
+        .asInstanceOf[TakeInnerF[S3Support.Append11[A, X]]]
     }
     override def zero2: AppendUser[RuntimeZero, S3Support.Zero] = new AppendUser[RuntimeZero, S3Support.Zero] {
+      override def index: Int                                            = 0
       override def appendUser[ST](in: ADTData[RuntimeZero, ST]): Nothing = ???
     }
   }

@@ -77,5 +77,6 @@ addCommandAlias("releaseSimple", "; +adtJVM/test; +adtJS/test; +adtJVM/publishSi
 addCommandAlias("releaseCodecLocal", "; +codecJVM/publishLocal ; +codecJS/publishLocal ;")
 
 addCommandAlias("releaseBridgeLocal", "; +adt-bridge-supportJVM/publishLocal ; +adt-bridge-supportJS/publishLocal ;")
+addCommandAlias("releaseBridge", "; +adt-bridge-supportJVM/publishSigned ; +adt-bridge-supportJS/publishSigned ;")
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
