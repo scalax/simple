@@ -22,7 +22,7 @@ class TranCodegen(val index: Int) {
 
     val text: String =
       s"""
-      def InstanceImpl$index${ParamList(1, self5.index).text}:
+      override def InstanceImpl$index${ParamList(1, self5.index).text}:
         M4[
           AP1#Parameter${self5.index}${ParamList(1, self5.index).text},
           AP2#Parameter${self5.index}${ParamList(1, self5.index).text},

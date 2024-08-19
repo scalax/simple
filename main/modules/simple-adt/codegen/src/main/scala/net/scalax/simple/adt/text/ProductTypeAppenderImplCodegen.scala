@@ -20,7 +20,7 @@ class ProductTypeAppenderImplCodegen(val index: Int) {
     self5 =>
 
     val text: String =
-      s"""def Instance$index${ParamList(1, self5.index).text}:
+      s"""override def Instance$index${ParamList(1, self5.index).text}:
         M3[
           AP1#Parameter${self5.index}${ParamList(1, self5.index).text},
           AP2#Parameter${self5.index}${ParamList(1, self5.index).text},
