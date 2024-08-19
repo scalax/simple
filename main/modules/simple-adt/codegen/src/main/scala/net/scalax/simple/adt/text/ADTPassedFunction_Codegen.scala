@@ -55,7 +55,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
 import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
 import builder.{coproducter, producter_build}
-import net.scalax.simple.adt.impl.TestForScala2._
+import net.scalax.simple.adt.impl.CompatAppend
 
 object ADTPassedFunction extends ADTPassedFunctionImpl1 {
 
@@ -65,7 +65,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
           )}) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter$i1${DefParamCodegen2(i1).text}#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl$i1${DefParamCodegen2(i1).text}
+      val r1 = CompatAppend.compatAppend.InstanceImpl$i1${DefParamCodegen2(i1).text}
       r1.appendUser[ADTExtension](data$i1)
     }
 

@@ -4,7 +4,7 @@ import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
 import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 import builder.{coproducter, producter_build}
-import net.scalax.simple.adt.impl.TestForScala2._
+import net.scalax.simple.adt.impl.CompatAppend
 
 object ADTPassedFunction extends ADTPassedFunctionImpl1 {
 
@@ -12,7 +12,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
       extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter1[I1]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl1[I1]
+      val r1 = CompatAppend.compatAppend.InstanceImpl1[I1]
       r1.appendUser[ADTExtension](data1)
     }
 
@@ -29,7 +29,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter2[I1, I2]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl2[I1, I2]
+      val r1 = CompatAppend.compatAppend.InstanceImpl2[I1, I2]
       r1.appendUser[ADTExtension](data2)
     }
 
@@ -46,7 +46,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter3[I1, I2, I3]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl3[I1, I2, I3]
+      val r1 = CompatAppend.compatAppend.InstanceImpl3[I1, I2, I3]
       r1.appendUser[ADTExtension](data3)
     }
 
@@ -63,7 +63,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter4[I1, I2, I3, I4]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl4[I1, I2, I3, I4]
+      val r1 = CompatAppend.compatAppend.InstanceImpl4[I1, I2, I3, I4]
       r1.appendUser[ADTExtension](data4)
     }
 
@@ -83,7 +83,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter5[I1, I2, I3, I4, I5]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl5[I1, I2, I3, I4, I5]
+      val r1 = CompatAppend.compatAppend.InstanceImpl5[I1, I2, I3, I4, I5]
       r1.appendUser[ADTExtension](data5)
     }
 
@@ -103,7 +103,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter6[I1, I2, I3, I4, I5, I6]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl6[I1, I2, I3, I4, I5, I6]
+      val r1 = CompatAppend.compatAppend.InstanceImpl6[I1, I2, I3, I4, I5, I6]
       r1.appendUser[ADTExtension](data6)
     }
 
@@ -123,7 +123,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter7[I1, I2, I3, I4, I5, I6, I7]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl7[I1, I2, I3, I4, I5, I6, I7]
+      val r1 = CompatAppend.compatAppend.InstanceImpl7[I1, I2, I3, I4, I5, I6, I7]
       r1.appendUser[ADTExtension](data7)
     }
 
@@ -146,7 +146,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter8[I1, I2, I3, I4, I5, I6, I7, I8]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl8[I1, I2, I3, I4, I5, I6, I7, I8]
+      val r1 = CompatAppend.compatAppend.InstanceImpl8[I1, I2, I3, I4, I5, I6, I7, I8]
       r1.appendUser[ADTExtension](data8)
     }
 
@@ -169,7 +169,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter9[I1, I2, I3, I4, I5, I6, I7, I8, I9]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl9[I1, I2, I3, I4, I5, I6, I7, I8, I9]
+      val r1 = CompatAppend.compatAppend.InstanceImpl9[I1, I2, I3, I4, I5, I6, I7, I8, I9]
       r1.appendUser[ADTExtension](data9)
     }
 
@@ -195,7 +195,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]
+      val r1 = CompatAppend.compatAppend.InstanceImpl10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]
       r1.appendUser[ADTExtension](data10)
     }
 
@@ -224,7 +224,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]
+      val r1 = CompatAppend.compatAppend.InstanceImpl11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]
       r1.appendUser[ADTExtension](data11)
     }
 
@@ -256,7 +256,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]
+      val r1 = CompatAppend.compatAppend.InstanceImpl12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]
       r1.appendUser[ADTExtension](data12)
     }
 
@@ -291,7 +291,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]
+      val r1 = CompatAppend.compatAppend.InstanceImpl13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]
       r1.appendUser[ADTExtension](data13)
     }
 
@@ -329,7 +329,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
+      val r1 = CompatAppend.compatAppend.InstanceImpl14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
       r1.appendUser[ADTExtension](data14)
     }
 
@@ -370,7 +370,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]
+      val r1 = CompatAppend.compatAppend.InstanceImpl15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]
       r1.appendUser[ADTExtension](data15)
     }
 
@@ -414,7 +414,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
   ) extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]
+      val r1 = CompatAppend.compatAppend.InstanceImpl16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]
       r1.appendUser[ADTExtension](data16)
     }
 
@@ -465,7 +465,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
 
     def fold
       : utils.Folder22TypeParam#Parameter17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]
+      val r1 = CompatAppend.compatAppend.InstanceImpl17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]
       r1.appendUser[ADTExtension](data17)
     }
 
@@ -520,7 +520,7 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
     def fold: utils.Folder22TypeParam#Parameter18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]#Result[
       Nothing
     ] = {
-      val r1 = tempProduct.InstanceImpl18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]
+      val r1 = CompatAppend.compatAppend.InstanceImpl18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]
       r1.appendUser[ADTExtension](data18)
     }
 
@@ -579,7 +579,8 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
       : utils.Folder22TypeParam#Parameter19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]#Result[
         Nothing
       ] = {
-      val r1 = tempProduct.InstanceImpl19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
+      val r1 =
+        CompatAppend.compatAppend.InstanceImpl19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
       r1.appendUser[ADTExtension](data19)
     }
 
@@ -682,7 +683,8 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
       I19,
       I20
     ]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]
+      val r1 =
+        CompatAppend.compatAppend.InstanceImpl20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]
       r1.appendUser[ADTExtension](data20)
     }
 
@@ -790,7 +792,8 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
       I20,
       I21
     ]#Result[Nothing] = {
-      val r1 = tempProduct.InstanceImpl21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
+      val r1 = CompatAppend.compatAppend
+        .InstanceImpl21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
       r1.appendUser[ADTExtension](data21)
     }
 
@@ -903,8 +906,8 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
       I21,
       I22
     ]#Result[Nothing] = {
-      val r1 =
-        tempProduct.InstanceImpl22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22]
+      val r1 = CompatAppend.compatAppend
+        .InstanceImpl22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22]
       r1.appendUser[ADTExtension](data22)
     }
 

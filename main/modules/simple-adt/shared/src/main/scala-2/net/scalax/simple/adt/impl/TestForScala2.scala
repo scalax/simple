@@ -8,6 +8,10 @@ import net.scalax.simple.adt.utils.ProductType22Support
 
 object TestForScala2 {
 
+  trait AppendUser[In <: RuntimeNat, Out <: S2Support.Func] extends AppendUserAb[In, Out#U] {
+    override def appendUser[ST](in: ADTData[In, ST]): Out#U[Nothing]
+  }
+
   private def helperImpl: ABCD2[
     RuntimeNat,
     RuntimeData,
@@ -58,16 +62,17 @@ object TestForScala2 {
     RuntimeData,
     RuntimeZero,
     ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
-  ] = Product22Support.gen2[
-    RuntimeNat,
-    RuntimeData,
-    RuntimeZero,
-    RuntimeNat,
-    RuntimeData,
-    RuntimeZero,
-    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#MP,
-    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
-  ](helperImpl, tran)
+  ] =
+    Product22Support.gen2[
+      RuntimeNat,
+      RuntimeData,
+      RuntimeZero,
+      RuntimeNat,
+      RuntimeData,
+      RuntimeZero,
+      ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#MP,
+      ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+    ](helperImpl, tran)
 
 }
 
@@ -75,6 +80,14 @@ trait AppendUserAb[In <: RuntimeNat, Out[_] <: Any] {
   def appendUser[ST](in: ADTData[In, ST]): Out[Nothing]
 }
 
-trait AppendUser[In <: RuntimeNat, Out <: S2Support.Func] extends AppendUserAb[In, Out#U] {
-  override def appendUser[ST](in: ADTData[In, ST]): Out#U[Nothing]
+object CompatAppend {
+  val compatAppend: ProductType22Support[
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ] = TestForScala2.tempProduct
 }
