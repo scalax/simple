@@ -5,7 +5,7 @@ import sbt.Keys._
 
 object CommonUtils {
 
-  val bridgeSupportVersion = "0.0.2-temp-v8"
+  val bridgeSupportVersion = "0.0.2-temp-v10"
 
   def genDirectory(sourceFile: File, parVersion: String, isScalaJs: Boolean): Seq[File] = {
     val crossV = CrossVersion.partialVersion(parVersion)

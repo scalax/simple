@@ -1,45 +1,87 @@
-package net.scalax.simple.adt.impl
+package net.scalax.simple.adt
+package impl
 
-trait TestForScala2 {
+import net.scalax.simple.adt.CCDD.ABCD2
+import net.scalax.simple.adt.support.S3Support
+import net.scalax.simple.adt.support.Product22Support
+import net.scalax.simple.adt.utils.ProductType22Support
 
-  trait Abc[PI, Append[_, _ <: PI] <: PI, Zero <: PI] {
-    type AB[I1, I2, I3, I4] = Append[I1, Append[I2, Append[I3, Append[I4, Zero]]]]
-    def abc[I1, I2, I3, I4]: AB[I1, I2, I3, I4] = ???
+object TestForScala2 {
+
+  private def helperImpl: ABCD2[
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    S3Support.Func[_],
+    S3Support.Append11,
+    S3Support.Zero,
+    AppendUser
+  ] = new ABCD2[
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    S3Support.Func[_],
+    S3Support.Append11,
+    S3Support.Zero,
+    AppendUser
+  ] {
+    override def append2[A, P <: RuntimeNat, X <: S3Support.Func[_]](
+      m: AppendUser[P, X]
+    ): AppendUser[RuntimeData[A, P], S3Support.Append11[A, X]] = new AppendUser[RuntimeData[A, P], S3Support.Append11[A, X]] {
+      override def appendUser[ST](in: ADTData[RuntimeData[A, P], ST]): TakeInnerF[S3Support.Append11[A, X]] = ???
+    }
+    override def zero2: AppendUser[RuntimeZero, S3Support.Zero] = new AppendUser[RuntimeZero, S3Support.Zero] {
+      override def appendUser[ST](in: ADTData[RuntimeZero, ST]): Nothing = ???
+    }
   }
 
-  trait PPAP1
-
-  trait Positive2[Data, Tail[_] <: PPAP1, Result] extends PPAP1 {
-    def folddd[TD >: Result](f: Data => TD): Tail[TD]
-    def apply[TD >: Result](f: Data => TD): Tail[TD]
+  private def tran: S3Support.M1ToM2[
+    RuntimeNat,
+    RuntimeNat,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S3Support.Func[_]] = AppendUser[B, C] })#MP,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ] = new S3Support.M1ToM2[
+    RuntimeNat,
+    RuntimeNat,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S3Support.Func[_]] = AppendUser[B, C] })#MP,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ] {
+    override def to[PX1 <: RuntimeNat, PX2 <: RuntimeNat, PX3[_] <: Any](
+      input: AppendUser[PX2, S3Support.Func[PX3]]
+    ): AppendUserAb[PX2, PX3] = new AppendUserAb[PX2, PX3] {
+      override def appendUser[ST](in: ADTData[PX2, ST]): PX3[Nothing] = input.appendUser[ST](in)
+    }
   }
 
-  trait PZero3[Result] extends PPAP1 {
-    def value: Result
-  }
+  def tempProduct: ProductType22Support[
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ] = Product22Support.gen2[
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S3Support.Func[_]] = AppendUser[B, C] })#MP,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ](helperImpl, tran)
 
-  trait Func[U[_] <: PPAP1] {
-    def instance: U[Nothing]
-  }
-  trait Append11[Data, U[_] <: PPAP1] extends Func[[x] =>> Positive2[Data, U, x]]
-  trait Zero                          extends Func[[x] =>> PZero3[x]]
+}
 
-  type MatchAppend[Data, f <: Func[_]] = f match {
-    case Func[u1] => Append11[Data, u1]
-  }
+trait AppendUserAb[In <: RuntimeNat, Out[_] <: Any] extends AppendUser[In, S3Support.Func[Out]] {
+  override def appendUser[ST](in: ADTData[In, ST]): Out[Nothing]
+}
 
-  val CC: Abc[Func[_], [A, B <: Func[_]] =>> MatchAppend[A, B], Zero] = ???
+type TakeInnerF[o <: S3Support.Func[_]] <: Any = o match {
+  case S3Support.Func[u1] => u1[Nothing]
+}
 
-  val dd = CC.abc[List[String], Long, Option[Int], BigDecimal].instance
-
-  locally {
-    val ee      = dd(t => t.map(_.size).sum)(t => t.toInt + 1)(t => t.getOrElse(55))(t => t.toInt)
-    val ff: Int = ee.value
-  }
-
-  locally {
-    val ee      = dd.folddd(t => t.map(_.size).sum).folddd(t => t.toInt + 1).folddd(t => t.getOrElse(55)).folddd(t => t.toInt)
-    val ff: Int = ee.value
-  }
-
+trait AppendUser[In <: RuntimeNat, Out <: S3Support.Func[_]] {
+  def appendUser[ST](in: ADTData[In, ST]): TakeInnerF[Out]
 }
