@@ -34,22 +34,40 @@ object CCDD {
     final override def zero: M2[P1Zero, X1Zero]                                                                  = zero2
   }
 
-  trait ProductType22AppenderImpl2[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, X1, X1Append[_, _ <: X1] <: X1, X1Zero <: X1, M2[
+  type ProductType22AppenderImpl2[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, X1, X1Append[_, _ <: X1] <: X1, X1Zero <: X1, M2[
     _ <: P1,
     _ <: X1
-  ]] extends utils.ProductType22Appender[
-        P1,
-        P1Append,
-        P1Zero,
-        P1,
-        P1Append,
-        P1Zero,
-        X1,
-        X1Append,
-        X1Zero,
-        ({ type MX[A <: P1, B <: P1, C <: X1] = M2[B, C] })#MX
-      ] {
-    override protected def helper: ABCD2[P1, P1Append, P1Zero, X1, X1Append, X1Zero, M2]
+  ]] = utils.ProductType22Appender[
+    P1,
+    P1Append,
+    P1Zero,
+    P1,
+    P1Append,
+    P1Zero,
+    X1,
+    X1Append,
+    X1Zero,
+    ({ type MX[A <: P1, B <: P1, C <: X1] = M2[B, C] })#MX
+  ]
+
+  object ProductType22AppenderImpl2 {
+    def gen[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, X1, X1Append[_, _ <: X1] <: X1, X1Zero <: X1, M2[
+      _ <: P1,
+      _ <: X1
+    ]](
+      a: ABCD2[P1, P1Append, P1Zero, X1, X1Append, X1Zero, M2]
+    ): ProductType22AppenderImpl2[P1, P1Append, P1Zero, X1, X1Append, X1Zero, M2] = utils.ProductType22AppenderGen.gen[
+      P1,
+      P1Append,
+      P1Zero,
+      P1,
+      P1Append,
+      P1Zero,
+      X1,
+      X1Append,
+      X1Zero,
+      ({ type MX[A <: P1, B <: P1, C <: X1] = M2[B, C] })#MX
+    ](a)
   }
 
   trait ABCD1[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, M2[_ <: P1]]
@@ -61,17 +79,31 @@ object CCDD {
     final override def zero2: M2[P1Zero]                                              = zero1
   }
 
-  trait ProductType22AppenderImpl1[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, M2[_ <: P1]]
-      extends ProductType22AppenderImpl2[
-        P1,
-        P1Append,
-        P1Zero,
-        P1,
-        P1Append,
-        P1Zero,
-        ({ type MX[B <: P1, C <: P1] = M2[C] })#MX
-      ] {
-    override protected def helper: ABCD1[P1, P1Append, P1Zero, M2]
+  type ProductType22AppenderImpl1[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, M2[_ <: P1]] = ProductType22AppenderImpl2[
+    P1,
+    P1Append,
+    P1Zero,
+    P1,
+    P1Append,
+    P1Zero,
+    ({ type MX[B <: P1, C <: P1] = M2[C] })#MX
+  ]
+
+  object ProductType22AppenderImpl1 {
+    def gen[P1, P1Append[_, _ <: P1] <: P1, P1Zero <: P1, M2[
+      _ <: P1
+    ]](a: ABCD1[P1, P1Append, P1Zero, M2]): ProductType22AppenderImpl1[P1, P1Append, P1Zero, M2] = utils.ProductType22AppenderGen.gen[
+      P1,
+      P1Append,
+      P1Zero,
+      P1,
+      P1Append,
+      P1Zero,
+      P1,
+      P1Append,
+      P1Zero,
+      ({ type MX[A <: P1, B <: P1, C <: P1] = M2[C] })#MX
+    ](a)
   }
 
 }

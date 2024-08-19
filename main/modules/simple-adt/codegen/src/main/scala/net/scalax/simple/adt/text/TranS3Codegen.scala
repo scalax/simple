@@ -1,6 +1,6 @@
 package net.scalax.simple.adt.codegen.text
 
-class TranCodegen(val index: Int) {
+class TranS3Codegen(val index: Int) {
   self1 =>
 
   class ParamList(val start: Int, val index: Int) {
@@ -30,7 +30,7 @@ class TranCodegen(val index: Int) {
         ] = tran.to[
           AP1#Parameter${self5.index}${ParamList(1, self5.index).text},
           AP2#Parameter${self5.index}${ParamList(1, self5.index).text},
-          S2Support.AP3#Parameter${self5.index}${ParamList(1, self5.index).text}
+          Folder22TypeParam#Parameter${self5.index}${ParamList(1, self5.index).text}#Result
         ](appender.Instance$index${ParamList(1, self5.index).text})
       """
   }
@@ -40,17 +40,17 @@ class TranCodegen(val index: Int) {
     package net.scalax.simple.adt
     package utils
 
-    import support.S2Support
+    import support.S3Support
 
     object Product22Gen {
       def gen[
         Append1, AppendPositive1[_, _ <: Append1] <: Append1, AppendZero1 <: Append1,
         Append2, AppendPositive2[_, _ <: Append2] <: Append2, AppendZero2 <: Append2,
-        M3[_ <: Append1, _ <: Append2, _ <: S2Support.Func],
+        M3[_ <: Append1, _ <: Append2, _ <: S3Support.Func[_]],
         M4[_ <: Append1, _ <: Append2, _[_] <: Any]
       ](
-        appender: ProductType22Appender[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, S2Support.Func, S2Support.Append11, S2Support.Zero, M3],
-        tran: S2Support.M1ToM2[Append1, Append2, M3, M4]
+        appender: ProductType22Appender[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, S3Support.Func[_], S3Support.Append11, S3Support.Zero, M3],
+        tran: S3Support.M1ToM2[Append1, Append2, M3, M4]
       ): ProductType22Support[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, M4] =
         new ProductType22Support[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, M4] {
           ${preText.mkString("\n\n\n")}

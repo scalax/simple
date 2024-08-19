@@ -3,91 +3,71 @@ package impl
 
 import net.scalax.simple.adt.CCDD.ABCD2
 import net.scalax.simple.adt.support.S2Support
+import net.scalax.simple.adt.support.Product22Support
 import net.scalax.simple.adt.utils.ProductType22Support
 
 object TestForScala2 {
 
   private def helperImpl: ABCD2[
     RuntimeNat,
-    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeData,
     RuntimeZero,
     S2Support.Func,
-    ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
+    S2Support.Append11,
     S2Support.Zero,
-    ({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP
-  ] = ???
-
-  private class CurateAppend
-      extends CCDD.ProductType22AppenderImpl2[
-        RuntimeNat,
-        ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
-        RuntimeZero,
-        S2Support.Func,
-        ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
-        S2Support.Zero,
-        ({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP
-      ] {
-    override protected def helper: ABCD2[
-      RuntimeNat,
-      ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
-      RuntimeZero,
-      S2Support.Func,
-      ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
-      S2Support.Zero,
-      ({ type BP[A <: RuntimeNat, B <: S2Support.Func] = AppendUser[A, B] })#BP
-    ] = helperImpl
+    AppendUser
+  ] = new ABCD2[
+    RuntimeNat,
+    RuntimeData,
+    RuntimeZero,
+    S2Support.Func,
+    S2Support.Append11,
+    S2Support.Zero,
+    AppendUser
+  ] {
+    override def append2[A, P <: RuntimeNat, X <: S2Support.Func](
+      m: AppendUser[P, X]
+    ): AppendUser[RuntimeData[A, P], S2Support.Append11[A, X]] = new AppendUser[RuntimeData[A, P], S2Support.Append11[A, X]] {
+      override def appendUser[ST](in: ADTData[RuntimeData[A, P], ST]): ResultFolder[A, X#U, Nothing] = ???
+    }
+    override def zero2: AppendUser[RuntimeZero, S2Support.Zero] = new AppendUser[RuntimeZero, S2Support.Zero] {
+      override def appendUser[ST](in: ADTData[RuntimeZero, ST]): Nothing = ???
+    }
   }
 
-  private def tempAppend: CurateAppend = new CurateAppend
+  private def tran: S2Support.M1ToM2[
+    RuntimeNat,
+    RuntimeNat,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#MP,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ] = new S2Support.M1ToM2[
+    RuntimeNat,
+    RuntimeNat,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#MP,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ] {
+    override def to[PX1 <: RuntimeNat, PX2 <: RuntimeNat, PX3 <: S2Support.Func](input: AppendUser[PX2, PX3]): AppendUserAb[PX2, PX3#U] =
+      input
+  }
 
   def tempProduct: ProductType22Support[
     RuntimeNat,
-    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeData,
     RuntimeZero,
     RuntimeNat,
-    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeData,
     RuntimeZero,
-    ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#BP,
-    ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#BP
-  ] = new ProductType22Support[
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ] = Product22Support.gen2[
     RuntimeNat,
-    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeData,
     RuntimeZero,
     RuntimeNat,
-    ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
+    RuntimeData,
     RuntimeZero,
-    ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#BP,
-    ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#BP
-  ] {
-    override protected def appender: utils.ProductType22Appender[
-      RuntimeNat,
-      ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
-      RuntimeZero,
-      RuntimeNat,
-      ({ type AP[A, B <: RuntimeNat] = RuntimeData[A, B] })#AP,
-      RuntimeZero,
-      S2Support.Func,
-      ({ type AP[A, B <: S2Support.Func] = S2Support.Append11[A, B] })#AP,
-      S2Support.Zero,
-      ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#BP
-    ] = tempAppend
-
-    override protected def tran: S2Support.M1ToM2[
-      RuntimeNat,
-      RuntimeNat,
-      ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#BP,
-      ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#BP
-    ] = new S2Support.M1ToM2[
-      RuntimeNat,
-      RuntimeNat,
-      ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#BP,
-      ({ type BP[A <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#BP
-    ] {
-      override def to[PX <: RuntimeNat, XX <: RuntimeNat, FuncX <: S2Support.Func](
-        input: AppendUser[XX, FuncX]
-      ): AppendUserAb[XX, FuncX#U] = input
-    }
-  }
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C <: S2Support.Func] = AppendUser[B, C] })#MP,
+    ({ type MP[_ <: RuntimeNat, B <: RuntimeNat, C[_] <: Any] = AppendUserAb[B, C] })#MP
+  ](helperImpl, tran)
 
 }
 

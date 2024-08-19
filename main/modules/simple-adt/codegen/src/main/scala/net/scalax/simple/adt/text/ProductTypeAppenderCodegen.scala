@@ -1,4 +1,4 @@
-package net.scalax.simple.adt.codegen
+package net.scalax.simple.adt.codegen.text
 
 class ProductTypeAppenderCodegen(val index: Int) {
   self1 =>
@@ -19,13 +19,13 @@ class ProductTypeAppenderCodegen(val index: Int) {
   class EachProductTypeCodegen(val index: Int) {
     self5 =>
 
-    val text: String =
-      s"""def Instance$index${ParamList(1, self5.index).text}:
-        M3[
-          AP1#Parameter${self5.index}${ParamList(1, self5.index).text},
-          AP2#Parameter${self5.index}${ParamList(1, self5.index).text},
-          AP3#Parameter${self5.index}${ParamList(1, self5.index).text}
-        ] = ${DefValue(self5.index).text}""".stripMargin
+    val text: String = s"""
+      def Instance$index${ParamList(1, self5.index).text}: M3[
+        AP1#Parameter${self5.index}${ParamList(1, self5.index).text},
+        AP2#Parameter${self5.index}${ParamList(1, self5.index).text},
+        AP3#Parameter${self5.index}${ParamList(1, self5.index).text}
+      ]
+    """
   }
 
   val preText = for (i <- 0 to self1.index) yield EachProductTypeCodegen(i).text
@@ -39,13 +39,9 @@ class ProductTypeAppenderCodegen(val index: Int) {
         Append3, AppendPositive3[_, _ <: Append3] <: Append3, AppendZero3 <: Append3,
         M3[_ <: Append1, _ <: Append2, _ <: Append3]
       ] {
-        productSelf =>
-
         type AP1 = ProductType22[Append1, AppendPositive1, AppendZero1]
         type AP2 = ProductType22[Append2, AppendPositive2, AppendZero2]
         type AP3 = ProductType22[Append3, AppendPositive3, AppendZero3]
-
-        protected def helper: CCDD.ABDECD[Append1, AppendPositive1, AppendZero1, Append2, AppendPositive2, AppendZero2, Append3, AppendPositive3, AppendZero3, M3]
 
         ${preText.mkString("\n\n\n")}
       }
