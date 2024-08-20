@@ -1,3 +1,6 @@
+val `simple-adt-bridage-support-version` = "0.0.2-temp-v12"
+val `simple-adt-version`                 = "0.0.2-M20"
+
 scalaVersion := scalaV.v213
 name         := "simple"
 
@@ -14,16 +17,22 @@ val `ghdmzsk/file`                        = `modules/file` / "simple-ghdmzsk"
 val ghdmzsk: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `ghdmzsk/file`
 val ghdmzskJVM: Project                   = ghdmzsk.jvm
 val ghdmzskJS: Project                    = ghdmzsk.js
+ghdmzskJVM / version := `simple-adt-version`
+ghdmzskJS / version  := `simple-adt-version`
 
 val `adt/file`                        = `modules/file` / "simple-adt"
 val adt: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `adt/file`
 lazy val adtJVM: Project              = adt.jvm dependsOn (`adt-implementionJVM`, `test-commonJVM` % Test) aggregate `adt-implementionJVM`
 lazy val adtJS: Project               = adt.js dependsOn (`adt-implementionJS`, `test-commonJS`    % Test) aggregate `adt-implementionJS`
+adtJVM / version := `simple-adt-version`
+adtJS / version  := `simple-adt-version`
 
 val `adt-bridge-support/file`                          = `adt/file` / "bridge-support"
 val `adt-bridge-support`: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `adt-bridge-support/file`
 lazy val `adt-bridge-supportJVM`: Project = `adt-bridge-support`.jvm dependsOn (`adt-implementionJVM` % Compile, `test-commonJVM` % Test)
 lazy val `adt-bridge-supportJS`: Project  = `adt-bridge-support`.js dependsOn (`adt-implementionJS`   % Compile, `test-commonJS`  % Test)
+`adt-bridge-supportJVM` / version := `simple-adt-bridage-support-version`
+`adt-bridge-supportJS` / version  := `simple-adt-bridage-support-version`
 
 val `adt-codegen/file` = `adt/file` / "codegen"
 val `adt-codegen`      = project in `adt-codegen/file`
@@ -32,6 +41,8 @@ val `adt-implemention/file`    = `adt/file` / "implemention"
 val `adt-implemention`         = crossProject(JSPlatform, JVMPlatform) in `adt-implemention/file`
 lazy val `adt-implementionJVM` = `adt-implemention`.jvm dependsOn (`ghdmzskJVM`, `test-commonJVM` % Test) aggregate `ghdmzskJVM`
 lazy val `adt-implementionJS`  = `adt-implemention`.js dependsOn (`ghdmzskJS`, `test-commonJS`    % Test) aggregate `ghdmzskJS`
+`adt-implementionJVM` / version := `simple-adt-version`
+`adt-implementionJS` / version  := `simple-adt-version`
 
 val `list/file`  = `wip/file` / "simple-list"
 val list         = crossProject(JSPlatform, JVMPlatform) in `list/file`

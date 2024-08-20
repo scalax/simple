@@ -96,7 +96,7 @@ scalacOptions ++= {
     case Some((2, scalaMajor)) =>
       val opt1 = if (scalaMajor < 13L) Seq("-language:higherKinds") else Seq.empty
       opt1 ++: Seq("-Ywarn-dead-code")
-    case Some((3, scalaMajor)) => Seq("-Ykind-projector", "-experimental")
+    case Some((3, scalaMajor)) => Seq("-Ykind-projector")
     case _                     => Seq.empty
   }
 }
