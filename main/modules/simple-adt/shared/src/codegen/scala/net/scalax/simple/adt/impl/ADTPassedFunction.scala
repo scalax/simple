@@ -1,15 +1,15 @@
-
 package net.scalax.simple.adt
 
 import net.scalax.simple.ghdmzsk.ghdmzsk
 import temp._
-import net.scalax.simple.adt.{RuntimeNat, RuntimeData, RuntimeZero}
+import net.scalax.simple.adt.{RuntimeData, RuntimeNat, RuntimeZero}
 import builder.{coproducter, producter_build}
 import net.scalax.simple.adt.impl.CompatAppend
 
 object ADTPassedFunction extends ADTPassedFunctionImpl1 {
 
-  implicit class extra1[ParamType, I1, ADTExtension](private val data1: ADTData[RuntimeData[I1, RuntimeZero], ADTExtension]) extends AnyVal {
+  implicit class extra1[ParamType, I1, ADTExtension](private val data1: ADTData[RuntimeData[I1, RuntimeZero], ADTExtension])
+      extends AnyVal {
 
     def fold: utils.Folder22TypeParam#Parameter1[I1]#Result[Nothing] = {
       val r1 = CompatAppend.compatAppend.InstanceImpl1[I1]
@@ -22,12 +22,14 @@ object ADTPassedFunction extends ADTPassedFunctionImpl1 {
     //   TypeAdtGetter.getFromFunction(data1.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra2[ParamType, I1,I2, ADTExtension](private val data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ADTExtension]) extends AnyVal {
+  implicit class extra2[ParamType, I1, I2, ADTExtension](
+    private val data2: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeZero]], ADTExtension]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter2[I1,I2]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl2[I1,I2]
+    def fold: utils.Folder22TypeParam#Parameter2[I1, I2]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl2[I1, I2]
       r1.appendUser[ADTExtension](data2)
     }
 
@@ -37,12 +39,14 @@ implicit class extra2[ParamType, I1,I2, ADTExtension](private val data2: ADTData
     //   TypeAdtGetter.getFromFunction(data2.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra3[ParamType, I1,I2,I3, ADTExtension](private val data3: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], ADTExtension]) extends AnyVal {
+  implicit class extra3[ParamType, I1, I2, I3, ADTExtension](
+    private val data3: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeZero]]], ADTExtension]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter3[I1,I2,I3]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl3[I1,I2,I3]
+    def fold: utils.Folder22TypeParam#Parameter3[I1, I2, I3]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl3[I1, I2, I3]
       r1.appendUser[ADTExtension](data3)
     }
 
@@ -52,12 +56,14 @@ implicit class extra3[ParamType, I1,I2,I3, ADTExtension](private val data3: ADTD
     //   TypeAdtGetter.getFromFunction(data3.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra4[ParamType, I1,I2,I3,I4, ADTExtension](private val data4: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], ADTExtension]) extends AnyVal {
+  implicit class extra4[ParamType, I1, I2, I3, I4, ADTExtension](
+    private val data4: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeZero]]]], ADTExtension]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter4[I1,I2,I3,I4]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl4[I1,I2,I3,I4]
+    def fold: utils.Folder22TypeParam#Parameter4[I1, I2, I3, I4]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl4[I1, I2, I3, I4]
       r1.appendUser[ADTExtension](data4)
     }
 
@@ -67,12 +73,17 @@ implicit class extra4[ParamType, I1,I2,I3,I4, ADTExtension](private val data4: A
     //   TypeAdtGetter.getFromFunction(data4.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra5[ParamType, I1,I2,I3,I4,I5, ADTExtension](private val data5: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra5[ParamType, I1, I2, I3, I4, I5, ADTExtension](
+    private val data5: ADTData[
+      RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeZero]]]]],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter5[I1,I2,I3,I4,I5]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl5[I1,I2,I3,I4,I5]
+    def fold: utils.Folder22TypeParam#Parameter5[I1, I2, I3, I4, I5]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl5[I1, I2, I3, I4, I5]
       r1.appendUser[ADTExtension](data5)
     }
 
@@ -82,12 +93,17 @@ implicit class extra5[ParamType, I1,I2,I3,I4,I5, ADTExtension](private val data5
     //   TypeAdtGetter.getFromFunction(data5.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra6[ParamType, I1,I2,I3,I4,I5,I6, ADTExtension](private val data6: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra6[ParamType, I1, I2, I3, I4, I5, I6, ADTExtension](
+    private val data6: ADTData[
+      RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeZero]]]]]],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter6[I1,I2,I3,I4,I5,I6]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl6[I1,I2,I3,I4,I5,I6]
+    def fold: utils.Folder22TypeParam#Parameter6[I1, I2, I3, I4, I5, I6]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl6[I1, I2, I3, I4, I5, I6]
       r1.appendUser[ADTExtension](data6)
     }
 
@@ -97,12 +113,17 @@ implicit class extra6[ParamType, I1,I2,I3,I4,I5,I6, ADTExtension](private val da
     //   TypeAdtGetter.getFromFunction(data6.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra7[ParamType, I1,I2,I3,I4,I5,I6,I7, ADTExtension](private val data7: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra7[ParamType, I1, I2, I3, I4, I5, I6, I7, ADTExtension](
+    private val data7: ADTData[
+      RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeZero]]]]]]],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter7[I1,I2,I3,I4,I5,I6,I7]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl7[I1,I2,I3,I4,I5,I6,I7]
+    def fold: utils.Folder22TypeParam#Parameter7[I1, I2, I3, I4, I5, I6, I7]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl7[I1, I2, I3, I4, I5, I6, I7]
       r1.appendUser[ADTExtension](data7)
     }
 
@@ -112,12 +133,20 @@ implicit class extra7[ParamType, I1,I2,I3,I4,I5,I6,I7, ADTExtension](private val
     //   TypeAdtGetter.getFromFunction(data7.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra8[ParamType, I1,I2,I3,I4,I5,I6,I7,I8, ADTExtension](private val data8: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra8[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, ADTExtension](
+    private val data8: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeZero]]]]]]]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter8[I1,I2,I3,I4,I5,I6,I7,I8]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl8[I1,I2,I3,I4,I5,I6,I7,I8]
+    def fold: utils.Folder22TypeParam#Parameter8[I1, I2, I3, I4, I5, I6, I7, I8]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl8[I1, I2, I3, I4, I5, I6, I7, I8]
       r1.appendUser[ADTExtension](data8)
     }
 
@@ -127,12 +156,20 @@ implicit class extra8[ParamType, I1,I2,I3,I4,I5,I6,I7,I8, ADTExtension](private 
     //   TypeAdtGetter.getFromFunction(data8.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra9[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9, ADTExtension](private val data9: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra9[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, ADTExtension](
+    private val data9: ADTData[
+      RuntimeData[I1, RuntimeData[
+        I2,
+        RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeZero]]]]]]]
+      ]],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter9[I1,I2,I3,I4,I5,I6,I7,I8,I9]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl9[I1,I2,I3,I4,I5,I6,I7,I8,I9]
+    def fold: utils.Folder22TypeParam#Parameter9[I1, I2, I3, I4, I5, I6, I7, I8, I9]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl9[I1, I2, I3, I4, I5, I6, I7, I8, I9]
       r1.appendUser[ADTExtension](data9)
     }
 
@@ -142,12 +179,23 @@ implicit class extra9[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9, ADTExtension](priva
     //   TypeAdtGetter.getFromFunction(data9.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra10[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10, ADTExtension](private val data10: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeZero]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra10[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, ADTExtension](
+    private val data10: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[I2, RuntimeData[I3, RuntimeData[
+          I4,
+          RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeZero]]]]]]
+        ]]]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter10[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl10[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10]
+    def fold: utils.Folder22TypeParam#Parameter10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl10[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10]
       r1.appendUser[ADTExtension](data10)
     }
 
@@ -157,12 +205,26 @@ implicit class extra10[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10, ADTExtension](
     //   TypeAdtGetter.getFromFunction(data10.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra11[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11, ADTExtension](private val data11: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeZero]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra11[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, ADTExtension](
+    private val data11: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[I3, RuntimeData[I4, RuntimeData[
+            I5,
+            RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeZero]]]]]]
+          ]]]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter11[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl11[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11]
+    def fold: utils.Folder22TypeParam#Parameter11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl11[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11]
       r1.appendUser[ADTExtension](data11)
     }
 
@@ -172,12 +234,29 @@ implicit class extra11[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11, ADTExtensi
     //   TypeAdtGetter.getFromFunction(data11.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra12[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12, ADTExtension](private val data12: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeZero]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra12[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, ADTExtension](
+    private val data12: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[I4, RuntimeData[I5, RuntimeData[
+              I6,
+              RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeZero]]]]]]
+            ]]]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter12[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl12[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12]
+    def fold: utils.Folder22TypeParam#Parameter12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl12[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12]
       r1.appendUser[ADTExtension](data12)
     }
 
@@ -187,12 +266,32 @@ implicit class extra12[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12, ADTExt
     //   TypeAdtGetter.getFromFunction(data12.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra13[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13, ADTExtension](private val data13: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeZero]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra13[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, ADTExtension](
+    private val data13: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[I5, RuntimeData[I6, RuntimeData[
+                I7,
+                RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeZero]]]]]]
+              ]]]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter13[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl13[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13]
+    def fold: utils.Folder22TypeParam#Parameter13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl13[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13]
       r1.appendUser[ADTExtension](data13)
     }
 
@@ -202,12 +301,35 @@ implicit class extra13[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13, AD
     //   TypeAdtGetter.getFromFunction(data13.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra14[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14, ADTExtension](private val data14: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeZero]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra14[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, ADTExtension](
+    private val data14: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[I6, RuntimeData[I7, RuntimeData[
+                  I8,
+                  RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeZero]]]]]]
+                ]]]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter14[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl14[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14]
+    def fold: utils.Folder22TypeParam#Parameter14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl14[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
       r1.appendUser[ADTExtension](data14)
     }
 
@@ -217,12 +339,38 @@ implicit class extra14[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data14.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra15[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15, ADTExtension](private val data15: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeZero]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra15[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, ADTExtension](
+    private val data15: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[I7, RuntimeData[I8, RuntimeData[
+                    I9,
+                    RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeZero]]]]]]
+                  ]]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter15[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl15[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15]
+    def fold: utils.Folder22TypeParam#Parameter15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl15[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15]
       r1.appendUser[ADTExtension](data15)
     }
 
@@ -232,12 +380,41 @@ implicit class extra15[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data15.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra16[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16, ADTExtension](private val data16: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeZero]]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra16[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, ADTExtension](
+    private val data16: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[
+                    I7,
+                    RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[
+                      I11,
+                      RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeZero]]]]]
+                    ]]]]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter16[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl16[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16]
+    def fold: utils.Folder22TypeParam#Parameter16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl16[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16]
       r1.appendUser[ADTExtension](data16)
     }
 
@@ -247,12 +424,48 @@ implicit class extra16[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data16.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra17[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17, ADTExtension](private val data17: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeZero]]]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra17[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, ADTExtension](
+    private val data17: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[
+                    I7,
+                    RuntimeData[
+                      I8,
+                      RuntimeData[
+                        I9,
+                        RuntimeData[I10, RuntimeData[I11, RuntimeData[
+                          I12,
+                          RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeZero]]]]]
+                        ]]]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter17[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl17[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17]
+    def fold
+      : utils.Folder22TypeParam#Parameter17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl17[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17]
       r1.appendUser[ADTExtension](data17)
     }
 
@@ -262,12 +475,52 @@ implicit class extra17[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data17.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra18[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18, ADTExtension](private val data18: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeZero]]]]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra18[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, ADTExtension](
+    private val data18: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[
+                    I7,
+                    RuntimeData[
+                      I8,
+                      RuntimeData[
+                        I9,
+                        RuntimeData[
+                          I10,
+                          RuntimeData[I11, RuntimeData[I12, RuntimeData[
+                            I13,
+                            RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeZero]]]]]
+                          ]]]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter18[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl18[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18]
+    def fold: utils.Folder22TypeParam#Parameter18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]#Result[
+      Nothing
+    ] = {
+      val r1 = CompatAppend.compatAppend.InstanceImpl18[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18]
       r1.appendUser[ADTExtension](data18)
     }
 
@@ -277,12 +530,57 @@ implicit class extra18[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data18.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra19[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19, ADTExtension](private val data19: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeZero]]]]]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra19[ParamType, I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, ADTExtension](
+    private val data19: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[
+                    I7,
+                    RuntimeData[
+                      I8,
+                      RuntimeData[
+                        I9,
+                        RuntimeData[
+                          I10,
+                          RuntimeData[
+                            I11,
+                            RuntimeData[I12, RuntimeData[I13, RuntimeData[
+                              I14,
+                              RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeZero]]]]]
+                            ]]]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter19[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl19[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19]
+    def fold
+      : utils.Folder22TypeParam#Parameter19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]#Result[
+        Nothing
+      ] = {
+      val r1 =
+        CompatAppend.compatAppend.InstanceImpl19[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19]
       r1.appendUser[ADTExtension](data19)
     }
 
@@ -292,12 +590,101 @@ implicit class extra19[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data19.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra20[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20, ADTExtension](private val data20: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra20[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    ADTExtension
+  ](
+    private val data20: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[
+                    I7,
+                    RuntimeData[
+                      I8,
+                      RuntimeData[
+                        I9,
+                        RuntimeData[
+                          I10,
+                          RuntimeData[
+                            I11,
+                            RuntimeData[
+                              I12,
+                              RuntimeData[I13, RuntimeData[I14, RuntimeData[
+                                I15,
+                                RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeZero]]]]]
+                              ]]]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter20[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl20[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20]
+    def fold: utils.Folder22TypeParam#Parameter20[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18,
+      I19,
+      I20
+    ]#Result[Nothing] = {
+      val r1 =
+        CompatAppend.compatAppend.InstanceImpl20[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20]
       r1.appendUser[ADTExtension](data20)
     }
 
@@ -307,12 +694,106 @@ implicit class extra20[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data20.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra21[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21, ADTExtension](private val data21: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeZero]]]]]]]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra21[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    ADTExtension
+  ](
+    private val data21: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[
+                    I7,
+                    RuntimeData[
+                      I8,
+                      RuntimeData[
+                        I9,
+                        RuntimeData[
+                          I10,
+                          RuntimeData[
+                            I11,
+                            RuntimeData[
+                              I12,
+                              RuntimeData[
+                                I13,
+                                RuntimeData[I14, RuntimeData[I15, RuntimeData[
+                                  I16,
+                                  RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeZero]]]]]
+                                ]]]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter21[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl21[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21]
+    def fold: utils.Folder22TypeParam#Parameter21[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18,
+      I19,
+      I20,
+      I21
+    ]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend
+        .InstanceImpl21[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21]
       r1.appendUser[ADTExtension](data21)
     }
 
@@ -322,12 +803,111 @@ implicit class extra21[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data21.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
+  }
 
-implicit class extra22[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21,I22, ADTExtension](private val data22: ADTData[RuntimeData[I1, RuntimeData[I2, RuntimeData[I3, RuntimeData[I4, RuntimeData[I5, RuntimeData[I6, RuntimeData[I7, RuntimeData[I8, RuntimeData[I9, RuntimeData[I10, RuntimeData[I11, RuntimeData[I12, RuntimeData[I13, RuntimeData[I14, RuntimeData[I15, RuntimeData[I16, RuntimeData[I17, RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeData[I22, RuntimeZero]]]]]]]]]]]]]]]]]]]]]], ADTExtension]) extends AnyVal {
+  implicit class extra22[
+    ParamType,
+    I1,
+    I2,
+    I3,
+    I4,
+    I5,
+    I6,
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15,
+    I16,
+    I17,
+    I18,
+    I19,
+    I20,
+    I21,
+    I22,
+    ADTExtension
+  ](
+    private val data22: ADTData[
+      RuntimeData[
+        I1,
+        RuntimeData[
+          I2,
+          RuntimeData[
+            I3,
+            RuntimeData[
+              I4,
+              RuntimeData[
+                I5,
+                RuntimeData[
+                  I6,
+                  RuntimeData[
+                    I7,
+                    RuntimeData[
+                      I8,
+                      RuntimeData[
+                        I9,
+                        RuntimeData[
+                          I10,
+                          RuntimeData[
+                            I11,
+                            RuntimeData[
+                              I12,
+                              RuntimeData[
+                                I13,
+                                RuntimeData[
+                                  I14,
+                                  RuntimeData[I15, RuntimeData[I16, RuntimeData[
+                                    I17,
+                                    RuntimeData[I18, RuntimeData[I19, RuntimeData[I20, RuntimeData[I21, RuntimeData[I22, RuntimeZero]]]]]
+                                  ]]]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      ADTExtension
+    ]
+  ) extends AnyVal {
 
-    def fold: utils.Folder22TypeParam#Parameter22[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21,I22]#Result[Nothing] = {
-      val r1 = CompatAppend.compatAppend.InstanceImpl22[I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15,I16,I17,I18,I19,I20,I21,I22]
+    def fold: utils.Folder22TypeParam#Parameter22[
+      I1,
+      I2,
+      I3,
+      I4,
+      I5,
+      I6,
+      I7,
+      I8,
+      I9,
+      I10,
+      I11,
+      I12,
+      I13,
+      I14,
+      I15,
+      I16,
+      I17,
+      I18,
+      I19,
+      I20,
+      I21,
+      I22
+    ]#Result[Nothing] = {
+      val r1 = CompatAppend.compatAppend
+        .InstanceImpl22[I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14, I15, I16, I17, I18, I19, I20, I21, I22]
       r1.appendUser[ADTExtension](data22)
     }
 
@@ -337,9 +917,6 @@ implicit class extra22[ParamType, I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14
     //   TypeAdtGetter.getFromFunction(data22.toGHDMZSK, func_link).asInstanceOf[D]
     // }
 
-}
-
-
+  }
 
 }
-

@@ -1,5 +1,5 @@
 val `simple-adt-bridage-support-version` = "0.0.2-temp-v12"
-val `simple-adt-version`                 = "0.0.2-M20"
+val `simple-adt-version`                 = "0.0.2-M21"
 
 scalaVersion := scalaV.v213
 name         := "simple"
