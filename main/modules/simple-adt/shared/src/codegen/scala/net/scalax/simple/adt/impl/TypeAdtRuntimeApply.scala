@@ -48,7 +48,7 @@ def option2(iData: I2): this.NatModelType = ADTData.copyTail(ADTData.success(iDa
 def option3(iData: I3): this.NatModelType = ADTData.copyTail(ADTData.copyTail(ADTData.success(iData)))
 
         override def apply[ParamType](a: ParamType)(implicit b: ADTData[this.NatModelTypeFunction[ParamType], ADTPassedFunction.type with ADTTypeParameterFetch.type]): NatModelType = {
-           new ADTPassedFunction.extra3(b).fold(t => option1(t.adtFunctionApply(a))) (t => option2(t.adtFunctionApply(a))) (t => option3(t.adtFunctionApply(a)))
+          new ADTPassedFunction.extra3(b).fold(t => option1(t.adtFunctionApply(a))) (t => option2(t.adtFunctionApply(a))) (t => option3(t.adtFunctionApply(a)))
          }
 
       }
