@@ -5,13 +5,14 @@ import net.scalax.simple.adt.CCDD.ABCD2
 import net.scalax.simple.adt.support.S2Support
 import net.scalax.simple.adt.support.Product22Support
 import net.scalax.simple.adt.utils.ProductType22Support
-import utils.ResultFolderImpl
+import net.scalax.simple.adt.utils.{ResultFolderBuilder, ResultFolderBuilderPositive, ResultFolderBuilderZero}
 
 object TestForScala2 {
 
   trait AppendUser[In <: RuntimeNat, Out <: S2Support.Func] extends AppendUserAb[In, Out#U] {
-    def index: Int
-    override def appendUser[ST](in: ADTData[In, ST]): Out#U[Nothing]
+    def builder: ResultFolderBuilder
+    override def appendUser[ST](in: ADTData[In, ST]): Out#U[Nothing] =
+      builder.toResultFolder(in.toGHDMZSK, ResultFolderBuilder.identityGhdmzsk).asInstanceOf[Out#U[Nothing]]
   }
 
   private def helperImpl: ABCD2[
@@ -34,13 +35,10 @@ object TestForScala2 {
     override def append2[A, P <: RuntimeNat, X <: S2Support.Func](
       m: AppendUser[P, X]
     ): AppendUser[RuntimeData[A, P], S2Support.Append11[A, X]] = new AppendUser[RuntimeData[A, P], S2Support.Append11[A, X]] {
-      override def index: Int = m.index + 1
-      override def appendUser[ST](in: ADTData[RuntimeData[A, P], ST]): ResultFolder[A, X#U, Nothing] =
-        ResultFolderImpl.init[A, X#U, Nothing](adtGhdmzsk = in.toGHDMZSK, index = index)
+      override def builder: ResultFolderBuilder = ResultFolderBuilderPositive(m.builder)
     }
-    override def zero2: AppendUser[RuntimeZero, S2Support.Zero] = new AppendUser[RuntimeZero, S2Support.Zero] {
-      override def index: Int                                            = 0
-      override def appendUser[ST](in: ADTData[RuntimeZero, ST]): Nothing = ???
+    override val zero2: AppendUser[RuntimeZero, S2Support.Zero] = new AppendUser[RuntimeZero, S2Support.Zero] {
+      override val builder: ResultFolderBuilder = ResultFolderBuilderZero
     }
   }
 
