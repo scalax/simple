@@ -1,5 +1,17 @@
 package net.scalax.simple.adt
 
+trait Valued[+T] {
+  def value: T
+}
+
+trait ResultFolderValuedApply[Data, Tail[_] <: Any, Result] extends ResultFolder[Data, Tail, Valued[Result]] {
+  self =>
+
+  def __peotectedValuedApply[TD >: Result](f: Data => TD): Tail[Valued[TD]] = self.apply[Valued[TD]](f)
+
+  override def apply[TD >: Valued[Result]](f: Data => TD): Tail[TD]
+}
+
 trait ResultFolder[Data, Tail[_] <: Any, Result] {
   def apply[TD >: Result](f: Data => TD): Tail[TD]
 }
