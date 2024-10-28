@@ -14,10 +14,12 @@ class FunctionTypeCodegen(val index: Int) {
 
     class ProductTypeAppenderImpl(val index: Int) {
       self4 =>
+      val REAbsText: String = if (self4.index == 1) "Nothing" else s"RE${self4.index - 1}"
+
       val text: String =
         if (self4.index <= self3.index)
-          s"type Result[RE${self4.index}] = ResultFolder[I${self4.index}, ({ ${ProductTypeAppenderImpl(self4.index + 1).text} })#Result, RE${self4.index}]"
-        else s"type Result[RE${self4.index}] = RE${self4.index}"
+          s"type Result[RE${self4.index} >: $REAbsText] = ResultFolder[I${self4.index}, ({ ${ProductTypeAppenderImpl(self4.index + 1).text} })#Result, RE${self4.index}]"
+        else s"type Result[RE${self4.index} >: $REAbsText] = RE${self4.index}"
     }
 
     val text: String = ProductTypeAppenderImpl(1).text

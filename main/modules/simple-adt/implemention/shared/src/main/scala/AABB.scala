@@ -4,15 +4,15 @@ trait Valued[+T] {
   def value: T
 }
 
-trait ResultFolderValuedApply[Data, Tail[_] <: Any, Result] extends ResultFolder[Data, Tail, Valued[Result]] {
+trait ResultFolderValuedApply[Data, Tail[_] <: Any, Result] {
   self =>
 
-  def __peotectedValuedApply[TD >: Result](f: Data => TD): Tail[Valued[TD]] = self.apply[Valued[TD]](f)
+  // def __peotectedValuedApply: ResultFolder[AA]
 
-  override def apply[TD >: Valued[Result]](f: Data => TD): Tail[TD]
+  def apply[TD >: Result](f: Data => TD): Tail[TD]
 }
 
-trait ResultFolder[Data, Tail[_] <: Any, Result] {
+trait ResultFolder[Data, Tail[_ >: Result] <: Any, Result] {
   def apply[TD >: Result](f: Data => TD): Tail[TD]
 }
 
