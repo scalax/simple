@@ -1,5 +1,110 @@
 package net.scalax.simple.adt
 
+import scala.collection.compat._
+import scala.reflect.ClassTag
+
+object TempAppender {
+
+  def buildTemp[T](appender: ListLikeAppender[T], cutNumber: Int): AppendTemp[T] = {
+    val buildAction: BuildAction[T] = new BuildAction[T](listLikeAppender = appender)
+    new buildAction.AppendTempLazyImplZero(cutNumber = cutNumber)
+  }
+
+  type ListLikeAppenderPos[T] = T => T
+
+  trait ListLikeAppender[T] {
+    def zero: T
+    val append: ListLikeAppenderPos[T]
+  }
+
+  object ListLikeAppender {
+    def apply[T](zero: => T, append: ListLikeAppenderPos[T]): ListLikeAppender[T] = {
+      def zero1: T                        = zero
+      val append1: ListLikeAppenderPos[T] = append
+
+      new ListLikeAppender[T] {
+        override def zero: T                        = zero1
+        override val append: ListLikeAppenderPos[T] = append1
+      }
+    }
+  }
+
+  trait AppendTemp[T] {
+    self =>
+
+    def getByIndex(index: Int): AppendTemp[T] = {
+      if (self.index == index)
+        self
+      else
+        self.next.getByIndex(index)
+    }
+
+    def current: T
+    def index: Int
+
+    def next: AppendTemp[T]
+
+    def reverseList: List[T]
+    def toList: List[T]                                        = reverseList.reverse
+    def reverseArray(implicit classTag: ClassTag[T]): Array[T] = reverseList.to(Array)
+    def toArray(implicit classTag: ClassTag[T]): Array[T]      = toList.to(Array)
+  }
+
+  private class BuildAction[T](listLikeAppender: ListLikeAppender[T]) {
+    class AppendTempImpl(
+      override val current: T,
+      override val index: Int,
+      override val reverseList: List[T]
+    ) extends AppendTemp[T] {
+      self =>
+
+      override def next: AppendTemp[T] = {
+        val newCurrent: T = listLikeAppender.append(self.current)
+        new AppendTempImpl(
+          current = newCurrent,
+          index = self.index + 1,
+          reverseList = newCurrent :: self.reverseList
+        )
+      }
+
+    }
+
+    class AppendTempLazyImpl(
+      cutNumber: Int,
+      override val current: T,
+      override val index: Int,
+      override val reverseList: List[T]
+    ) extends AppendTempImpl(current = current, index = index, reverseList = reverseList) {
+      self =>
+
+      override lazy val next: AppendTemp[T] = {
+        val simpleNext: AppendTemp[T] = super.next
+
+        if (cutNumber > index) {
+          new AppendTempLazyImpl(
+            cutNumber = cutNumber,
+            current = simpleNext.current,
+            index = simpleNext.index,
+            reverseList = simpleNext.reverseList
+          )
+        } else {
+          simpleNext
+        }
+      }
+
+    }
+
+    class AppendTempLazyImplZero(cutNumber: Int)
+        extends AppendTempLazyImpl(
+          cutNumber = cutNumber,
+          current = listLikeAppender.zero,
+          index = 0,
+          reverseList = List(listLikeAppender.zero)
+        )
+  }
+
+}
+
 trait Valued[+T] {
   def value: T
 }
