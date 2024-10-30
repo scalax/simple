@@ -51,20 +51,22 @@ object TempAppender {
   }
 
   private class BuildAction[T](listLikeAppender: ListLikeAppender[T]) {
-    class AppendTempImpl(
+    abstract class AppendTempImpl(
       override val current: T,
-      override val index: Int,
-      override val reverseList: List[T]
+      override val index: Int
     ) extends AppendTemp[T] {
       self =>
+
+      override def reverseList: List[T]
 
       override def next: AppendTemp[T] = {
         val newCurrent: T = listLikeAppender.append(self.current)
         new AppendTempImpl(
           current = newCurrent,
-          index = self.index + 1,
-          reverseList = newCurrent :: self.reverseList
-        )
+          index = self.index + 1
+        ) {
+          override def reverseList: List[T] = newCurrent :: self.reverseList
+        }
       }
 
     }
@@ -74,7 +76,7 @@ object TempAppender {
       override val current: T,
       override val index: Int,
       override val reverseList: List[T]
-    ) extends AppendTempImpl(current = current, index = index, reverseList = reverseList) {
+    ) extends AppendTempImpl(current = current, index = index) {
       self =>
 
       override lazy val next: AppendTemp[T] = {
