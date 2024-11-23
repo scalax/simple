@@ -40,7 +40,7 @@ object Runner {
   val Zero1: ghdmzsk     = NumberZero
   val Zero2: ghdmzsk     = NumberZero
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     val num1: ghdmzsk = Num1Impl1
       .inputGHDMZSK(() =>
         Num1Impl1
