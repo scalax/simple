@@ -34,17 +34,4 @@ object 乘除1 {
     }
   }
 
-  /*val countAdd: ghdmzsk = new ghdmzsk {
-    override def inputGHDMZSK(a: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(b: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(c: () => ghdmzsk): ghdmzsk =
-          b().inputGHDMZSK(() => c().inputGHDMZSK(() => a().inputGHDMZSK(b)))
-      }
-    }
-  }
-
-  val countAddInstance: ghdmzsk = countAdd.inputGHDMZSK(() => countAddInstance)
-  val right被除数                  = countAddInstance.inputGHDMZSK(() => 产生后继的部分)
-  val right除数                   = countAddInstance.inputGHDMZSK(() => 不产生后继的部分)*/
-
 }
