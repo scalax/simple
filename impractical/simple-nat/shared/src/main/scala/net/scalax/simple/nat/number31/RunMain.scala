@@ -1,6 +1,6 @@
 package net.scalax.simple
 package nat
-package number30
+package number31
 
 import scala.annotation.tailrec
 import ghdmzsk._
@@ -74,7 +74,7 @@ object RunTest1 {
   def count(num: () => ghdmzsk, except1: BigDecimal, except2: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
     countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1 / except2, printlnSum = printlnSum, speed = speed)
 
-  def main1(arr: Array[String]): Unit = {
+  def main(arr: Array[String]): Unit = {
     println('3'.toString * 1000)
 
     val 分子1: Long = 123
@@ -88,7 +88,7 @@ object RunTest1 {
     val num1: ghdmzsk = build(分子 = 分子1, 分母 = 分母1)
     val num2: ghdmzsk = build(分子 = 分子2, 分母 = 分母2)
 
-    val result1: () => ghdmzsk = () => num1.inputGHDMZSK(() => 乘除1.right被除数).inputGHDMZSK(() => num2.inputGHDMZSK(() => 乘除1.right除数))
+    val result1: () => ghdmzsk = () => num1.inputGHDMZSK(() => 乘除1.产生后继的部分).inputGHDMZSK(() => num2.inputGHDMZSK(() => 乘除1.不产生后继的部分))
 
     count(() => num1, except1 = 分子1, except2 = 分母1, printlnSum = 18)
     count(() => num2, except1 = 分子2, except2 = 分母2, printlnSum = 18)
@@ -104,7 +104,7 @@ object RunTest1 {
 
     val num3: ghdmzsk = build(分子 = 分子3, 分母 = 分母3)
 
-    val result2: () => ghdmzsk = () => result1().inputGHDMZSK(() => 乘除1.right被除数).inputGHDMZSK(() => num3.inputGHDMZSK(() => 乘除1.right除数))
+    val result2: () => ghdmzsk = () => result1().inputGHDMZSK(() => 乘除1.产生后继的部分).inputGHDMZSK(() => num3.inputGHDMZSK(() => 乘除1.不产生后继的部分))
 
     count(result2, except1 = except3, except2 = except4, printlnSum = 18, speed = 16000000)
     println("== finished 2 ==")
@@ -114,11 +114,11 @@ object RunTest1 {
     val except6: BigDecimal = except3
 
     val result3: () => ghdmzsk = () =>
-      result2().inputGHDMZSK(() => 乘除1.right被除数).inputGHDMZSK(() => result1().inputGHDMZSK(() => 乘除1.right除数))
+      result2().inputGHDMZSK(() => 乘除1.产生后继的部分).inputGHDMZSK(() => result1().inputGHDMZSK(() => 乘除1.不产生后继的部分))
     count(result3, except1 = except5, except2 = except6, printlnSum = 18, speed = 30000000)
 
     val result4: () => ghdmzsk = () =>
-      result2().inputGHDMZSK(() => 乘除1.right除数).inputGHDMZSK(() => result1().inputGHDMZSK(() => 乘除1.right被除数))
+      result2().inputGHDMZSK(() => 乘除1.不产生后继的部分).inputGHDMZSK(() => result1().inputGHDMZSK(() => 乘除1.产生后继的部分))
     count(result4, except1 = except6, except2 = except5, printlnSum = 18, speed = 30000000)
     println("== finished 3 ==")
   }
