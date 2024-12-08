@@ -3,15 +3,16 @@ package codec
 
 import io.circe._
 import io.circe.syntax._
-import net.scalax.simple.codec.to_list_generic.{SimpleProduct, SimpleProduct2, ToListByTheSameTypeGeneric}
+import net.scalax.simple.codec.to_list_generic.{SimpleProduct2, ToListByTheSameTypeGeneric}
 import net.scalax.simple.codec.generic.SimpleFromProduct
+import net.scalax.simple.codec.utils.SimpleP
 
 object CirceGeneric {
   type Named[_] = String
 
   def encodeModelImpl[F[_[_]]](implicit
     g: F[Encoder],
-    g1: SimpleProduct.Appender[F],
+    g1: SimpleP.Appender[F],
     named: F[Named]
   ): Encoder[F[cats.Id]] = {
     val toList: ToListByTheSameTypeGeneric[F] = ToListByTheSameTypeGeneric[F].derived(g1)
@@ -26,14 +27,14 @@ object CirceGeneric {
         }
       )(zip1)
       val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](named, map1)
-      val list1 = toList.toListByTheSameType[(String, Json)](zip2)
+      val list1 = toList.toListByTheSameType[(String, Json), List[(String, Json)]](zero = List.empty, append = (tail, h) => h :: tail)(zip2)
       Json.fromJsonObject(JsonObject.fromIterable(list1))
     }
   }
 
   def decodeModelImpl[F[_[_]]](implicit
     g: F[Decoder],
-    g1: SimpleProduct.Appender[F],
+    g1: SimpleP.Appender[F],
     named: F[Named]
   ): Decoder[F[cats.Id]] = {
     val zipGeneric: ZipGeneric[F]          = ZipGeneric[F].derived(g1)

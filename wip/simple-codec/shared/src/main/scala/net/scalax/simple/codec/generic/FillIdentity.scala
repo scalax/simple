@@ -1,7 +1,6 @@
 package net.scalax.simple
 package codec
 
-import net.scalax.simple.codec.to_list_generic.SimpleProduct
 import utils.SimpleP
 
 trait FillIdentity[F[_[_]], I[_], Poly] {

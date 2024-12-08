@@ -4,37 +4,40 @@ package to_list_generic
 import utils.SimpleP
 
 trait ToListByTheSameTypeGeneric[F[_[_]]] {
-  def toListByTheSameType[TA]: F[({ type U1[_] = TA })#U1] => List[TA]
+  def toListByTheSameType[TA, SeqType](
+    zero: SeqType,
+    append: (SeqType, TA) => SeqType
+  ): F[({ type U1[_] = TA })#U1] => SeqType
 }
 
 object ToListByTheSameTypeGeneric {
 
   type IdImpl[T] = T
 
-  trait MonadAddImpl1[ProType, ModelType] {
-    def toList(model: ModelType): List[ProType] => List[ProType]
+  trait MonadAddImpl1[ProType, ModelType, SeqType] {
+    def toList(model: ModelType): SeqType => SeqType
   }
 
-  def monadImpl[Protype]: SimpleProduct1.AppendMonad[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] = {
-    val identityFunction: List[Protype] => List[Protype] = identity
+  def monadImpl[Protype, SeqType]: SimpleProduct1.AppendMonad[({ type U1[X] = MonadAddImpl1[Protype, X, SeqType] })#U1] = {
+    val identityFunction: SeqType => SeqType = identity
 
-    new SimpleProduct1.AppendMonad[({ type U1[X] = MonadAddImpl1[Protype, X] })#U1] {
+    new SimpleProduct1.AppendMonad[({ type U1[X] = MonadAddImpl1[Protype, X, SeqType] })#U1] {
       override def zip[U, X](
-        m1: MonadAddImpl1[Protype, U],
-        m2: MonadAddImpl1[Protype, X]
-      ): MonadAddImpl1[Protype, (U, X)] = new MonadAddImpl1[Protype, (U, X)] {
-        override def toList(model: (U, X)): List[Protype] => List[Protype] = {
+        m1: MonadAddImpl1[Protype, U, SeqType],
+        m2: MonadAddImpl1[Protype, X, SeqType]
+      ): MonadAddImpl1[Protype, (U, X), SeqType] = new MonadAddImpl1[Protype, (U, X), SeqType] {
+        override def toList(model: (U, X)): SeqType => SeqType = {
           val tolist1 = m1.toList(model._1)
           val tolist2 = m2.toList(model._2)
           l => tolist2(tolist1(l))
         }
       }
-      override def to[U, X](param: MonadAddImpl1[Protype, U])(m: U => X)(n: X => U): MonadAddImpl1[Protype, X] =
-        new MonadAddImpl1[Protype, X] {
-          override def toList(model: X): List[Protype] => List[Protype] = param.toList(n(model))
+      override def to[U, X](param: MonadAddImpl1[Protype, U, SeqType])(m: U => X)(n: X => U): MonadAddImpl1[Protype, X, SeqType] =
+        new MonadAddImpl1[Protype, X, SeqType] {
+          override def toList(model: X): SeqType => SeqType = param.toList(n(model))
         }
-      override val zero: MonadAddImpl1[Protype, Unit] = new MonadAddImpl1[Protype, Unit] {
-        override def toList(model: Unit): List[Protype] => List[Protype] = identityFunction
+      override val zero: MonadAddImpl1[Protype, Unit, SeqType] = new MonadAddImpl1[Protype, Unit, SeqType] {
+        override def toList(model: Unit): SeqType => SeqType = identityFunction
       }
     }
   }
@@ -45,18 +48,21 @@ object ToListByTheSameTypeGeneric {
     )
 
     def fromOther(o1: SimpleProduct1.Appender[F]): ToListByTheSameTypeGeneric[F] = new ToListByTheSameTypeGeneric[F] {
-      override def toListByTheSameType[TA]: F[({ type U1[_] = TA })#U1] => List[TA] = { input =>
-        val func = new SimpleProduct1.TypeGen[({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1] {
-          override def apply[T]: MonadAddImpl1[TA, TA] = new MonadAddImpl1[TA, TA] {
-            override def toList(model: TA): List[TA] => List[TA] = l => model :: l
+      override def toListByTheSameType[TA, SeqType](
+        zero: SeqType,
+        append: (SeqType, TA) => SeqType
+      ): F[({ type U1[_] = TA })#U1] => SeqType = { input =>
+        val func = new SimpleProduct1.TypeGen[({ type U1[NI] = MonadAddImpl1[TA, NI, SeqType] })#U1, ({ type U1[NI] = TA })#U1] {
+          override def apply[T]: MonadAddImpl1[TA, TA, SeqType] = new MonadAddImpl1[TA, TA, SeqType] {
+            override def toList(model: TA): SeqType => SeqType = l => append(l, model)
           }
         }
 
-        val u = o1.toHList1[({ type U1[NI] = MonadAddImpl1[TA, NI] })#U1, ({ type U1[NI] = TA })#U1](
-          monadImpl[TA]
+        val u = o1.toHList1[({ type U1[NI] = MonadAddImpl1[TA, NI, SeqType] })#U1, ({ type U1[NI] = TA })#U1](
+          monadImpl[TA, SeqType]
         )(func)
 
-        u.toList(input)(List.empty)
+        u.toList(input)(zero)
       }
     }
   }
