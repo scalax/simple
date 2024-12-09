@@ -18,9 +18,9 @@ object CirceText1 {
 
   implicit val deco2_1: AppenderFromSize[CatName]    = AppenderFromSize[CatName].derived(simpleGen1.generic)
   implicit val namedLabel: CompatLabelled[CatName]   = CompatLabelled[CatName].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[CatName]         = CompatLabelled.toModelSize(implicitly)
+  implicit val modelSize: ModelSize[CatName]         = implicitly[CompatLabelled[CatName]].toModelSize
   implicit val appender: SimpleP.Appender[CatName]   = implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)
-  implicit val modelLabelled: ModelLabelled[CatName] = CompatLabelled.toLabelled(implicitly, implicitly)
+  implicit val modelLabelled: ModelLabelled[CatName] = implicitly[CompatLabelled[CatName]].toLabelled(implicitly)
 
   implicit lazy val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
   implicit lazy val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)

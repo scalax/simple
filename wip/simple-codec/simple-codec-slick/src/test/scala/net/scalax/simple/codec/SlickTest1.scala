@@ -1,9 +1,9 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.DefaultModelImplement
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.to_list_generic.SimpleProduct
+import net.scalax.simple.codec.to_list_generic.AppenderFromSize
+import net.scalax.simple.codec.utils.SimpleP
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 import slick.lifted.ProvenShape
@@ -39,11 +39,13 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
   def simpleGen1 = SimpleFromProduct[F1Alias].derived
 
-  implicit def deco1_2: SimpleProduct.AppenderImpl[F1Alias] = SimpleProduct.Appender[F1Alias].derived(simpleGen1.generic)
+  implicit def deco1_2: AppenderFromSize[F1Alias]  = AppenderFromSize[F1Alias].derived(simpleGen1.generic)
+  implicit val namedLabel: CompatLabelled[F1Alias] = CompatLabelled[F1Alias].derived(simpleGen1.generic)
+  implicit val modelSize: ModelSize[F1Alias]       = implicitly[CompatLabelled[F1Alias]].toModelSize
+  implicit val appender: SimpleP.Appender[F1Alias] = implicitly[AppenderFromSize[F1Alias]].inputModelSizeF(implicitly)
+  implicit val userNamed: ModelLabelled[F1Alias]   = implicitly[CompatLabelled[F1Alias]].toLabelled(implicitly)
 
-  def userNamed: ModelLabelled[F1Alias] = CompatLabelled.toLabelled[F1Alias](deco1_2, deco1_2)
-
-  def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](deco1_2).build(slickProfile).userOptImpl
+  def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](appender).build(slickProfile).userOptImpl
 
   def userOpt: UserAbs[OptsFromCol, U] = {
     val impl                      = userOptImpl
@@ -52,7 +54,7 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   }
 
   def userRep(implicit tt12: TypedType[U[Int]]): slickProfile.Table[_] => UserAbs[Rep, U] =
-    SlickUtils[F1Alias](deco1_2).build(slickProfile).userRep(userNamed, userOpt, userTypedTypeGeneric)
+    SlickUtils[F1Alias](appender).build(slickProfile).userRep(userNamed, userOpt, userTypedTypeGeneric)
 
   class TableUserAbs(tag: Tag)(implicit tt: TypedType[U[Int]], s: ShapeF[U[Int]]) extends slickProfile.Table[UserAbs[Id, U]](tag, "users") {
     self =>
@@ -78,6 +80,8 @@ object Runner1 {
 
     val newModel: Model2[Id]   = new Model2[Id](p)
     val newOpt: Model2[Option] = new Model2[Option](p)
+    val modelInt: IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1] =
+      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.appender)
 
     import p.api._
 
@@ -87,6 +91,7 @@ object Runner1 {
 
     println(Query1.forInsert.result.statements)
     println(Query1.result.statements)
+    println(modelInt.model)
   }
 
 }

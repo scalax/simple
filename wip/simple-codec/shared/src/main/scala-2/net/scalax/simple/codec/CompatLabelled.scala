@@ -11,7 +11,26 @@ trait CompatLabelled[F[_[_]]] {
 object CompatLabelled {
   type NamedType = HList
 
-  def toLabelled[F[_[_]]](simpleProduct: SimpleP.Appender[F], compat: CompatLabelled[F]): ModelLabelled[F] = new ModelLabelled[F] {
+  implicit class CompatLabelledExtra1[F[_[_]]](val compat: CompatLabelled[F]) extends AnyVal {
+    def toLabelled(simpleProduct: SimpleP.Appender[F]): ModelLabelled[F] = new ModelLabelled[F] {
+      override def modelLabelled: F[({ type M1[_] = String })#M1] = {
+        val fromListGeneric = FromListByTheSameTypeGeneric[F].derived(simpleProduct)
+        val fromList = fromListGeneric.fromListByTheSameType[String, HList](
+          takeHead = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].head.name,
+          takeTail = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].tail
+        )
+        fromList(compat.modelLabelled)
+      }
+    }
+  }
+
+  implicit class CompatLabelledExtra2[F[_[_]]](val compat: CompatLabelled[F]) extends AnyVal {
+    def toModelSize: ModelSize[F] = new ModelSize[F] {
+      override def modelSize: Int = compat.modelLabelled.runtimeLength
+    }
+  }
+
+  /*def toLabelled[F[_[_]]](simpleProduct: SimpleP.Appender[F], compat: CompatLabelled[F]): ModelLabelled[F] = new ModelLabelled[F] {
     override def modelLabelled: F[({ type M1[_] = String })#M1] = {
       val fromListGeneric = FromListByTheSameTypeGeneric[F].derived(simpleProduct)
       val fromList = fromListGeneric.fromListByTheSameType[String, HList](
@@ -24,7 +43,7 @@ object CompatLabelled {
 
   def toModelSize[F[_[_]]](compat: CompatLabelled[F]): ModelSize[F] = new ModelSize[F] {
     override def modelSize: Int = compat.modelLabelled.runtimeLength
-  }
+  }*/
 
   trait Apply[F[_[_]]] {
     def derived(

@@ -68,7 +68,6 @@ object AppenderFromSize {
 
     private var appenderList: List[SimpleP.Appender[F1]]   = List.empty
     private var appenderArray: Array[SimpleP.Appender[F1]] = Array.empty
-
   }
 
   trait FuncInnerApply1[F[_[_]] <: Product] {

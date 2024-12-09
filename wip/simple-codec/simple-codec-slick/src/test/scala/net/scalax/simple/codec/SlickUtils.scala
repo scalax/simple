@@ -1,11 +1,11 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.to_list_generic.SimpleProduct
+import net.scalax.simple.codec.utils.SimpleP
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 
-class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: SimpleProduct.Appender[F]) {
+class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: SimpleP.Appender[F]) {
   import slickProfile.api._
 
   val commonAlias: SlickCompatAlias[slickProfile.type] = SlickCompatAlias.build(slickProfile)
@@ -51,9 +51,9 @@ class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: Simpl
 }
 
 object SlickUtils {
-  def apply[F[_[_]]](appender: SimpleProduct.Appender[F]): SlickUtilsApply[F] = new SlickUtilsApply[F](appender)
+  def apply[F[_[_]]](appender: SimpleP.Appender[F]): SlickUtilsApply[F] = new SlickUtilsApply[F](appender)
 
-  class SlickUtilsApply[F[_[_]]](appender: SimpleProduct.Appender[F]) {
+  class SlickUtilsApply[F[_[_]]](appender: SimpleP.Appender[F]) {
     def build[V <: JdbcProfile](slickProfile: V): SlickUtils[F, slickProfile.type] =
       new SlickUtils[F, slickProfile.type](slickProfile, appender)
   }
