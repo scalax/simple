@@ -1,19 +1,45 @@
 package net.scalax.simple
 package nat
-package number31
+package number32
 
 import scala.annotation.tailrec
 import ghdmzsk._
 
 object RunTest1 {
 
+  trait Num1 {
+    def pre1: ghdmzsk
+  }
+
+  trait Num2 {
+    def pre2: ghdmzsk
+  }
+
+  val leftZero: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(after: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(before: () => ghdmzsk): ghdmzsk = 乘除1.reverse.inputGHDMZSK(tail).inputGHDMZSK(after).inputGHDMZSK(before)
+      }
+    }
+  }
+  val leftZeroInstance: ghdmzsk = leftZero.inputGHDMZSK(() => leftZeroInstance)
+
+  val rithtZero: ghdmzsk = new ghdmzsk {
+    override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+      override def inputGHDMZSK(after: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(before: () => ghdmzsk): ghdmzsk = 乘除1.reverse.inputGHDMZSK(tail).inputGHDMZSK(after).inputGHDMZSK(before)
+      }
+    }
+  }
+  val rightZeroInstance: ghdmzsk = rithtZero.inputGHDMZSK(() => rightZeroInstance)
+
   def build(分子: Long, 分母: Long): ghdmzsk = {
     def buildImpl(isFenmu: Boolean, numLong: Long, zero: () => ghdmzsk): ghdmzsk = {
       if (numLong > 0) {
         if (isFenmu) {
-          乘除1.产生后继的部分.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
+          乘除1.keep.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
         } else {
-          乘除1.不产生后继的部分.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
+          乘除1.reverse.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
         }
       } else {
         zero()
@@ -74,10 +100,27 @@ object RunTest1 {
   def count(num: () => ghdmzsk, except1: BigDecimal, except2: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
     countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1 / except2, printlnSum = printlnSum, speed = speed)
 
-  def main1(arr: Array[String]): Unit = {
+  def main(arr: Array[String]): Unit = {
     println('3'.toString * 1000)
 
     val 分子1: Long = 123
+    val 分母1: Long = 4342
+    val 分子2: Long = 328
+    val 分母2: Long = 15
+
+    val except1: BigDecimal = BigDecimal(分子1) / BigDecimal(分母1)
+    val except2: BigDecimal = BigDecimal(分子2) / BigDecimal(分母2)
+
+    val num1: ghdmzsk = build(分子 = 分子1, 分母 = 分母1)
+    val num2: ghdmzsk = build(分子 = 分子2, 分母 = 分母2)
+
+    val result1: () => ghdmzsk = () =>
+      leftZeroInstance.inputGHDMZSK(() => num1).inputGHDMZSK(() => num2).inputGHDMZSK(() => rightZeroInstance)
+
+    // count(() => num1, except1 = 分子1, except2 = 分母1, printlnSum = 10)
+    count(result1, except1 = except1, except2 = except2, printlnSum = 10)
+
+    /*val 分子1: Long = 123
     val 分母1: Long = 4342
     val 分子2: Long = 328
     val 分母2: Long = 15
@@ -120,7 +163,7 @@ object RunTest1 {
     val result4: () => ghdmzsk = () =>
       result2().inputGHDMZSK(() => 乘除1.不产生后继的部分).inputGHDMZSK(() => result1().inputGHDMZSK(() => 乘除1.产生后继的部分))
     count(result4, except1 = except6, except2 = except5, printlnSum = 18, speed = 30000000)
-    println("== finished 3 ==")
+    println("== finished 3 ==")*/
   }
 
 }

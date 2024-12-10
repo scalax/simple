@@ -16,7 +16,7 @@ object 乘除1 {
 
   val 产生后继的部分: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(a: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num1 {
-      lazy val pre1: ghdmzsk = a()
+      override lazy val pre1: ghdmzsk = a()
 
       override def inputGHDMZSK(b: () => ghdmzsk): ghdmzsk = new ghdmzsk {
         override def inputGHDMZSK(c: () => ghdmzsk): ghdmzsk = b().inputGHDMZSK(() => a().inputGHDMZSK(b).inputGHDMZSK(c))
