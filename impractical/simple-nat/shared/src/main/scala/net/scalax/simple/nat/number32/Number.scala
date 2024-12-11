@@ -14,22 +14,30 @@ object 乘除1 {
     def pre2: ghdmzsk
   }
 
-  val keep: ghdmzsk = new ghdmzsk {
+  trait Num3
+  trait Num4
+  trait Num5
+
+  val toUp: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num1 {
       override lazy val pre1: ghdmzsk = tail()
 
-      override def inputGHDMZSK(after: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(before: () => ghdmzsk): ghdmzsk = before().inputGHDMZSK(() => tail().inputGHDMZSK(after))
+      override def inputGHDMZSK(down: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num3 {
+        override def inputGHDMZSK(up: () => ghdmzsk): ghdmzsk = up().inputGHDMZSK(() => tail().inputGHDMZSK(down))
       }
     }
   }
 
-  val reverse: ghdmzsk = new ghdmzsk {
+  val toDown: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num2 {
       override lazy val pre2: ghdmzsk = tail()
 
-      override def inputGHDMZSK(after: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(before: () => ghdmzsk): ghdmzsk = after().inputGHDMZSK(() => tail().inputGHDMZSK(before))
+      override def inputGHDMZSK(down: () => ghdmzsk): ghdmzsk = new ghdmzsk with Num4 {
+        override def inputGHDMZSK(up: () => ghdmzsk): ghdmzsk = down().inputGHDMZSK(() =>
+          new ghdmzsk with Num5 {
+            override def inputGHDMZSK(nextDown: () => ghdmzsk): ghdmzsk = tail().inputGHDMZSK(nextDown).inputGHDMZSK(up)
+          }
+        )
       }
     }
   }

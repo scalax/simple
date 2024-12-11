@@ -7,39 +7,44 @@ import ghdmzsk._
 
 object RunTest1 {
 
-  trait Num1 {
-    def pre1: ghdmzsk
+  case class AA(v1: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = v1().inputGHDMZSK(t)
   }
 
-  trait Num2 {
-    def pre2: ghdmzsk
+  case class BB(v2: () => ghdmzsk) extends ghdmzsk {
+    override def inputGHDMZSK(t: () => ghdmzsk): ghdmzsk = v2().inputGHDMZSK(t)
   }
 
   val leftZero: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(after: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(before: () => ghdmzsk): ghdmzsk = 乘除1.reverse.inputGHDMZSK(tail).inputGHDMZSK(after).inputGHDMZSK(before)
+      override def inputGHDMZSK(down: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(up: () => ghdmzsk): ghdmzsk =
+          AA(() => 乘除1.toDown.inputGHDMZSK(tail).inputGHDMZSK(down).inputGHDMZSK(up))
       }
     }
   }
   val leftZeroInstance: ghdmzsk = leftZero.inputGHDMZSK(() => leftZeroInstance)
+  // val leftZeroInstance2: ghdmzsk = leftZeroInstance.inputGHDMZSK(() => leftZeroInstance2)
+  // val leftZeroInstance3: ghdmzsk = leftZeroInstance2.inputGHDMZSK(() => leftZeroInstance3)
 
   val rithtZero: ghdmzsk = new ghdmzsk {
     override def inputGHDMZSK(tail: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-      override def inputGHDMZSK(after: () => ghdmzsk): ghdmzsk = new ghdmzsk {
-        override def inputGHDMZSK(before: () => ghdmzsk): ghdmzsk = 乘除1.reverse.inputGHDMZSK(tail).inputGHDMZSK(after).inputGHDMZSK(before)
+      override def inputGHDMZSK(down: () => ghdmzsk): ghdmzsk = new ghdmzsk {
+        override def inputGHDMZSK(up: () => ghdmzsk): ghdmzsk =
+          BB(() => 乘除1.toUp.inputGHDMZSK(tail).inputGHDMZSK(down).inputGHDMZSK(up))
       }
     }
   }
-  val rightZeroInstance: ghdmzsk = rithtZero.inputGHDMZSK(() => rightZeroInstance)
+  val rightZeroInstance: ghdmzsk  = rithtZero.inputGHDMZSK(() => rightZeroInstance)
+  val rightZeroInstance2: ghdmzsk = rightZeroInstance.inputGHDMZSK(() => rightZeroInstance2)
 
   def build(分子: Long, 分母: Long): ghdmzsk = {
     def buildImpl(isFenmu: Boolean, numLong: Long, zero: () => ghdmzsk): ghdmzsk = {
       if (numLong > 0) {
         if (isFenmu) {
-          乘除1.keep.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
+          乘除1.toUp.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
         } else {
-          乘除1.reverse.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
+          乘除1.toDown.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
         }
       } else {
         zero()
@@ -51,6 +56,25 @@ object RunTest1 {
 
     build1
   }
+
+  /*def buildNN(count: Long): ghdmzsk = {
+    def buildImpl(isFenmu: Boolean, numLong: Long, zero: () => ghdmzsk): ghdmzsk = {
+      if (numLong > 0) {
+        if (isFenmu) {
+          rithtZero.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
+        } else {
+          乘除1.toDown.inputGHDMZSK(() => buildImpl(isFenmu = isFenmu, numLong = numLong - 1, zero))
+        }
+      } else {
+        zero()
+      }
+    }
+
+    lazy val build1: ghdmzsk = buildImpl(isFenmu = false, numLong = 1, zero = () => build2)
+    lazy val build2: ghdmzsk = buildImpl(isFenmu = true, numLong = count - 1, zero = () => build1)
+
+    build1
+  }*/
 
   @tailrec
   def countImpl(
@@ -73,97 +97,83 @@ object RunTest1 {
 
     if (printlnSum > 0) {
       currentNum match {
-        case num1: 乘除1.Num1 =>
+        case AA(v1) =>
           countImpl(
-            () => num1.pre1,
+            v1,
             current分子 = current分子,
             current分母 = current分母 + 1,
             exceptResult = exceptResult,
             printlnSum = if (needPrintln) printlnSum - 1 else printlnSum,
             speed = speed
           )
-        case num2: 乘除1.Num2 =>
+        case BB(v2) =>
           countImpl(
-            () => num2.pre2,
+            v2,
             current分子 = current分子 + 1,
             current分母 = current分母,
             exceptResult = exceptResult,
             printlnSum = if (needPrintln) printlnSum - 1 else printlnSum,
             speed = speed
           )
+        case _: 乘除1.Num3 =>
+          println("num3")
+          ???
+        case _: 乘除1.Num4 =>
+          println("num4")
+          ???
+        case _: 乘除1.Num5 =>
+          println("num5")
+          ???
       }
     } else {
       println("== finished ==")
     }
   }
 
-  def count(num: () => ghdmzsk, except1: BigDecimal, except2: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
-    countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1 / except2, printlnSum = printlnSum, speed = speed)
+  def count(num: () => ghdmzsk, except: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
+    countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except, printlnSum = printlnSum, speed = speed)
 
   def main(arr: Array[String]): Unit = {
-    println('3'.toString * 1000)
 
-    val 分子1: Long = 123
-    val 分母1: Long = 4342
-    val 分子2: Long = 328
-    val 分母2: Long = 15
+    {
+      val 分子1: Long = 123
+      val 分母1: Long = 4342
+      val 分子2: Long = 328
+      val 分母2: Long = 15
 
-    val except1: BigDecimal = BigDecimal(分子1) / BigDecimal(分母1)
-    val except2: BigDecimal = BigDecimal(分子2) / BigDecimal(分母2)
+      val except1: BigDecimal = BigDecimal(分子1) / BigDecimal(分母1)
+      val except2: BigDecimal = BigDecimal(分子2) / BigDecimal(分母2)
 
-    val num1: ghdmzsk = build(分子 = 分子1, 分母 = 分母1)
-    val num2: ghdmzsk = build(分子 = 分子2, 分母 = 分母2)
+      val num1: ghdmzsk = build(分子 = 分子1, 分母 = 分母1)
+      val num2: ghdmzsk = build(分子 = 分子2, 分母 = 分母2)
 
-    val result1: () => ghdmzsk = () =>
-      leftZeroInstance.inputGHDMZSK(() => num1).inputGHDMZSK(() => num2).inputGHDMZSK(() => rightZeroInstance)
+      val result1: () => ghdmzsk = () =>
+        leftZeroInstance
+          .inputGHDMZSK(() => num1.inputGHDMZSK(() => num2.inputGHDMZSK(() => rightZeroInstance2)))
+          .inputGHDMZSK(() => leftZeroInstance)
 
-    // count(() => num1, except1 = 分子1, except2 = 分母1, printlnSum = 10)
-    count(result1, except1 = except1, except2 = except2, printlnSum = 10)
+      // count(() => num1, except1 = 分子1, except2 = 分母1, printlnSum = 10)
+      count(result1, except = except1 / except2, printlnSum = 10)
+    }
 
-    /*val 分子1: Long = 123
-    val 分母1: Long = 4342
-    val 分子2: Long = 328
-    val 分母2: Long = 15
+    {
+      val 分子1: Long = 9
+      val 分母1: Long = 2
 
-    val except1: BigDecimal = BigDecimal(分子1) / BigDecimal(分母1)
-    val except2: BigDecimal = BigDecimal(分子2) / BigDecimal(分母2)
+      val except1: BigDecimal = (BigDecimal(分子1) / BigDecimal(分母1)).pow(4)
 
-    val num1: ghdmzsk = build(分子 = 分子1, 分母 = 分母1)
-    val num2: ghdmzsk = build(分子 = 分子2, 分母 = 分母2)
+      val num1: ghdmzsk = build(分子 = 分子1, 分母 = 分母1)
 
-    val result1: () => ghdmzsk = () => num1.inputGHDMZSK(() => 乘除1.产生后继的部分).inputGHDMZSK(() => num2.inputGHDMZSK(() => 乘除1.不产生后继的部分))
+      val result1: () => ghdmzsk = () =>
+        leftZeroInstance
+          .inputGHDMZSK(() =>
+            num1.inputGHDMZSK(() => num1.inputGHDMZSK(() => num1.inputGHDMZSK(() => num1.inputGHDMZSK(() => rightZeroInstance2))))
+          )
+          .inputGHDMZSK(() => leftZeroInstance)
 
-    count(() => num1, except1 = 分子1, except2 = 分母1, printlnSum = 18)
-    count(() => num2, except1 = 分子2, except2 = 分母2, printlnSum = 18)
-    count(result1, except1 = except1, except2 = except2, printlnSum = 18)
-    println("== finished 1 ==")
+      count(result1, except = except1, printlnSum = 20)
+    }
 
-    // ===
-    val 分子3: Long = 32
-    val 分母3: Long = 982
-
-    val except3: BigDecimal = except1 / except2
-    val except4: BigDecimal = BigDecimal(分子3) / BigDecimal(分母3)
-
-    val num3: ghdmzsk = build(分子 = 分子3, 分母 = 分母3)
-
-    val result2: () => ghdmzsk = () => result1().inputGHDMZSK(() => 乘除1.产生后继的部分).inputGHDMZSK(() => num3.inputGHDMZSK(() => 乘除1.不产生后继的部分))
-
-    count(result2, except1 = except3, except2 = except4, printlnSum = 18, speed = 16000000)
-    println("== finished 2 ==")
-
-    // ===
-    val except5: BigDecimal = except3 / except4
-    val except6: BigDecimal = except3
-
-    val result3: () => ghdmzsk = () =>
-      result2().inputGHDMZSK(() => 乘除1.产生后继的部分).inputGHDMZSK(() => result1().inputGHDMZSK(() => 乘除1.不产生后继的部分))
-    count(result3, except1 = except5, except2 = except6, printlnSum = 18, speed = 30000000)
-
-    val result4: () => ghdmzsk = () =>
-      result2().inputGHDMZSK(() => 乘除1.不产生后继的部分).inputGHDMZSK(() => result1().inputGHDMZSK(() => 乘除1.产生后继的部分))
-    count(result4, except1 = except6, except2 = except5, printlnSum = 18, speed = 30000000)
-    println("== finished 3 ==")*/
   }
 
 }
