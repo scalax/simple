@@ -21,6 +21,38 @@ object SimpleProduct2 {
 
   object Appender {
 
+    /*trait Mon[M1X[_, _], M2X[_, _], F[_[_]]] {
+      def aa: Appender[F]
+
+      type M3X[T1, T2, T3] = M1X[M2X[T1, T2], T3]
+
+      def appendToList1[M1[_], M2[_]](monad: AppendMonad[M1X])(func: TypeGen[M1X, M1, M2]): M1X[F[M1], F[M2]] =
+        aa.toHList(monad)(func)
+      def appendToList2[M1[_], M2[_]](monad: AppendMonad[M2X])(func: TypeGen[M2X, M1, M2]): M2X[F[M1], F[M2]] =
+        aa.toHList(monad)(func)
+
+      trait AA extends AppendMonad[M3X] {
+        def bx: SimpleP.AppendMonad[M]
+        /*override def zip[A, B, C, S, T, U](ma: M[A, B, C], ms: M[S, T, U]): M[(A, S), (B, T), (C, U)]
+        override def to[A, B, C, S, T, U](
+          m1: M[A, B, C]
+        )(in1: A => S, in2: B => T, in3: C => U)(in4: S => A, in5: T => B, in6: U => C): M[S, T, U]
+        override def zero: M[Unit, Unit, Unit]*/
+
+        def zip[A, B, S, T](ma: NewM2[A, B], ms: NewM2[S, T]): NewM2[(A, S), (B, T)] = new NewM2[(A, S), (B, T)] {
+          override def to[T3]: M[(A, S), (B, T), T3] = 11
+        }
+        def to[A, B, S, T](m1: NewM2[A, B])(in1: A => S, in2: B => T)(in3: S => A, in4: T => B): NewM2[S, T]
+        def zero: NewM2[Unit, Unit]
+      }
+
+      /*trait AppenderImpl extends SimpleP.Appender[F] {
+        override def toHList[M4[_, _, _], M1[_], M2[_], M3[_]](monad: utils.SimpleP.AppendMonad[M4])(
+          func: utils.SimpleP.TypeGen[M4, M1, M2, M3]
+        ): M4[F[M1], F[M2], F[M3]]
+      }*/
+    }*/
+
     def apply[F[_[_]]]: ApplyImpl[F] = new ApplyImpl[F]
 
     class ApplyImpl[F[_[_]]] {
