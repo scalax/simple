@@ -24,6 +24,7 @@ object SimpleProduct3 {
       override type Tail      = ZeroColType
     }
 
+    // ===
     trait FType {
       type toF[T]
       type Next <: FType
@@ -39,9 +40,20 @@ object SimpleProduct3 {
       override type Next   = TailType
     }
 
-    trait HListLikeFType[HL <: ColType, FT <: FType] extends FType {
-      override type toF[T] = HL#toM[FT#toF]
-      override type Next   = HListLikeFType[HL, FT#Next]
+    // ===
+    trait InputType {
+      type toItem
+      type AndThen <: InputType
+    }
+
+    trait ItemInputType[T, FT <: FType] extends InputType {
+      override type toItem  = FT#toF[T]
+      override type AndThen = ItemInputType[T, FT#Next]
+    }
+
+    trait ColInputType[HL <: ColType, FT <: FType] extends InputType {
+      override type toItem  = HL#toM[FT#toF]
+      override type AndThen = ColInputType[HL, FT#Next]
     }
 
   }
