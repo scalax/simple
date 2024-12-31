@@ -120,8 +120,8 @@ object SimpleProduct3 {
 
     def positiveAppender[M1[_ <: InputType], C <: ColType, FT <: FType, T](
       appendMonad: AppendMonad[M1],
-      m: M1[ColInputType[C, FT]],
-      typeGen: TypeGen[M1, FT]
+      typeGen: TypeGen[M1, FT],
+      m: M1[ColInputType[C, FT]]
     ): M1[ColInputType[AppendColType[T, C], FT]] = {
       val x1: M1[ZipInputType[ItemInputType[T, FT], ColInputType[C, FT]]] = appendMonad.zip(typeGen[T], m)
       val mapper: GetSet[T, C, FT] = new GetSet[T, C, FT] {
