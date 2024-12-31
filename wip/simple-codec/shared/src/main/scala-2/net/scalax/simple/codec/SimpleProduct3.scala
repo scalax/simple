@@ -4,8 +4,11 @@ package to_list_generic
 import utils.SimpleP
 
 object SimpleProduct3 {
+  SimpleProduct3Self =>
 
   trait AppendContext[HListLike, ZeroType <: HListLike, AppendType[_, _ <: HListLike] <: HListLike] {
+    AppendContextSelf =>
+
     def zero: ZeroType
     def append[H, T <: HListLike](h: H, t: T): AppendType[H, T]
     def takeHead[H, T <: HListLike](a: AppendType[H, T]): H
@@ -63,6 +66,16 @@ object SimpleProduct3 {
       override type AndThen = ZipInputType[In1#AndThen, In2#AndThen]
     }
 
+    trait UnitInputType extends InputType {
+      override type toItem  = Unit
+      override type AndThen = UnitInputType
+    }
+
+    trait ZeroInputType extends InputType {
+      override type toItem  = ZeroType
+      override type AndThen = ZeroInputType
+    }
+
     // ===
     trait Mapper[InputA <: InputType, InputB <: InputType] {
       def map(ia: InputA#toItem): InputB#toItem
@@ -79,6 +92,44 @@ object SimpleProduct3 {
       override def nextMapper: GetSet[Item, HL, FT#Next] = new GetSet[Item, HL, FT#Next] {
         //
       }
+    }
+
+    trait ZeroUnitMapper extends Mapper[UnitInputType, ZeroInputType] {
+      ZeroUnitMapperSelf =>
+
+      override def map(ia: Unit): ZeroType        = AppendContextSelf.zero
+      override def reverseMap(ib: ZeroType): Unit = ()
+
+      override def nextMapper: ZeroUnitMapper = ZeroUnitMapperSelf
+    }
+
+    trait AppendMonad[M[_ <: InputType]] {
+      def zip[A <: InputType, B <: InputType](ma: M[A], ms: M[B]): M[ZipInputType[A, B]]
+      def to[A <: InputType, B <: InputType](m1: M[A])(in1: Mapper[A, B]): M[B]
+      def zero: M[UnitInputType]
+    }
+
+    trait TypeGen[M2[_ <: InputType], FT <: FType] {
+      def apply[T]: M2[ItemInputType[T, FT]]
+    }
+
+    def zeroAppender[M1[_ <: InputType]](appendMonad: AppendMonad[M1]): M1[ZeroInputType] = {
+      val z = new ZeroUnitMapper {
+        //
+      }
+      appendMonad.to(appendMonad.zero)(z)
+    }
+
+    def positiveAppender[M1[_ <: InputType], C <: ColType, FT <: FType, T](
+      appendMonad: AppendMonad[M1],
+      m: M1[ColInputType[C, FT]],
+      typeGen: TypeGen[M1, FT]
+    ): M1[ColInputType[AppendColType[T, C], FT]] = {
+      val x1: M1[ZipInputType[ItemInputType[T, FT], ColInputType[C, FT]]] = appendMonad.zip(typeGen[T], m)
+      val mapper: GetSet[T, C, FT] = new GetSet[T, C, FT] {
+        //
+      }
+      appendMonad.to[ZipInputType[ItemInputType[T, FT], ColInputType[C, FT]], ColInputType[AppendColType[T, C], FT]](x1)(mapper)
     }
 
   }
