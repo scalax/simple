@@ -28,21 +28,10 @@ object SimpleProduct3 {
     }
 
     // ===
-    trait ColInputType[HL <: ColType, FT <: NotHList.FType] extends NotHList.InputType {
-      override type toItem  = HL#toM[FT#toF]
-      override type AndThen = ColInputType[HL, FT#Next]
-    }
-
-    trait ZeroInputType extends NotHList.InputType {
-      override type toItem  = ZeroType
-      override type AndThen = ZeroInputType
-    }
-
-    // ===
     trait GetSet[Item, HL <: ColType, FT <: NotHList.FType]
         extends NotHList.Mapper[
-          NotHList.ZipInputType[NotHList.ItemInputType[Item, FT], ColInputType[HL, FT]],
-          ColInputType[AppendColType[Item, HL], FT]
+          NotHList.ZipInputType[NotHList.ItemInputType[Item, FT], NotHList.FGenericInputType[HL#toM, FT]],
+          NotHList.FGenericInputType[AppendColType[Item, HL]#toM, FT]
         ] {
       override def map(n: (FT#toF[Item], HL#toM[FT#toF])): AppendType[FT#toF[Item], HL#toM[FT#toF]]        = append(n._1, n._2)
       override def reverseMap(n: AppendType[FT#toF[Item], HL#toM[FT#toF]]): (FT#toF[Item], HL#toM[FT#toF]) = (takeHead(n), takeTail(n))
@@ -52,17 +41,22 @@ object SimpleProduct3 {
       }
     }
 
-    trait ZeroUnitMapper extends NotHList.Mapper[NotHList.UnitInputType, ZeroInputType] {
+    trait ZeroUnitMapper[FT <: NotHList.FType]
+        extends NotHList.Mapper[NotHList.UnitInputType, NotHList.FGenericInputType[ZeroColType#toM, FT]] {
       ZeroUnitMapperSelf =>
 
       override def map(ia: Unit): ZeroType        = AppendContextSelf.zero
       override def reverseMap(ib: ZeroType): Unit = ()
 
-      override def nextMapper: ZeroUnitMapper = ZeroUnitMapperSelf
+      override def nextMapper: ZeroUnitMapper[FT#Next] = new ZeroUnitMapper[FT#Next] {
+        //
+      }
     }
 
-    def zeroAppender[M1[_ <: NotHList.InputType]](appendMonad: NotHList.AppendMonad[M1]): M1[ZeroInputType] = {
-      val z = new ZeroUnitMapper {
+    def zeroAppender[M1[_ <: NotHList.InputType], FT <: NotHList.FType](
+      appendMonad: NotHList.AppendMonad[M1]
+    ): M1[NotHList.FGenericInputType[ZeroColType#toM, FT]] = {
+      val z = new ZeroUnitMapper[FT] {
         //
       }
       appendMonad.to(appendMonad.zero)(z)
@@ -71,14 +65,48 @@ object SimpleProduct3 {
     def positiveAppender[M1[_ <: NotHList.InputType], C <: ColType, FT <: NotHList.FType, T](
       appendMonad: NotHList.AppendMonad[M1],
       typeGen: NotHList.TypeGen[M1, FT],
-      m: M1[ColInputType[C, FT]]
-    ): M1[ColInputType[AppendColType[T, C], FT]] = {
-      val x1: M1[NotHList.ZipInputType[NotHList.ItemInputType[T, FT], ColInputType[C, FT]]] = appendMonad.zip(typeGen[T], m)
+      m: M1[NotHList.FGenericInputType[C#toM, FT]]
+    ): M1[NotHList.FGenericInputType[AppendColType[T, C]#toM, FT]] = {
+      val x1: M1[NotHList.ZipInputType[NotHList.ItemInputType[T, FT], NotHList.FGenericInputType[C#toM, FT]]] =
+        appendMonad.zip(typeGen[T], m)
       val mapper: GetSet[T, C, FT] = new GetSet[T, C, FT] {
         //
       }
       appendMonad
-        .to[NotHList.ZipInputType[NotHList.ItemInputType[T, FT], ColInputType[C, FT]], ColInputType[AppendColType[T, C], FT]](x1)(mapper)
+        .to[NotHList.ZipInputType[NotHList.ItemInputType[T, FT], NotHList.FGenericInputType[C#toM, FT]], NotHList.FGenericInputType[
+          AppendColType[T, C]#toM,
+          FT
+        ]](x1)(mapper)
+    }
+
+    // ===
+    trait HListLikeAppender[X <: ColType] extends NotHList.Appender[X#toM] {
+      override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
+        func: NotHList.TypeGen[M, FT]
+      ): M[NotHList.FGenericInputType[X#toM, FT]]
+
+      def tailHListLikeAppender: HListLikeAppender[X#Tail]
+    }
+
+    trait PositiveHListLikeAppender[A, X <: ColType] extends HListLikeAppender[AppendColType[A, X]] {
+      override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
+        func: NotHList.TypeGen[M, FT]
+      ): M[NotHList.FGenericInputType[AppendColType[A, X]#toM, FT]] = {
+        val tailModel: M[NotHList.FGenericInputType[X#toM, FT]] = tailHListLikeAppender.toHList(monad)(func)
+        positiveAppender[M, X, FT, A](monad, func, tailModel)
+      }
+
+      override def tailHListLikeAppender: HListLikeAppender[X]
+    }
+
+    object ZeroHListLikeAppender extends HListLikeAppender[ZeroColType] {
+      ZeroHListLikeAppenderSelf =>
+
+      override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
+        func: NotHList.TypeGen[M, FT]
+      ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = zeroAppender[M, FT](monad)
+
+      override def tailHListLikeAppender: ZeroHListLikeAppender.type = ZeroHListLikeAppenderSelf
     }
 
   }
