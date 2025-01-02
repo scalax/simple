@@ -188,6 +188,24 @@ object SimpleProduct3 {
     trait Appender[F[_[_]]] {
       def toHList[M[_ <: InputType], FT <: FType](monad: AppendMonad[M])(func: TypeGen[M, FT]): M[FGenericInputType[F, FT]]
     }
+
+    trait FromOtherAppender[F[_[_]], G[_[_]]] extends Appender[G] {
+      def fromModel[X[_]](f: F[X]): G[X]
+      def toModel[X[_]](g: G[X]): F[X]
+      def appenderF: Appender[F]
+
+      private class InnerMapperHelper[FT <: FType] extends Mapper[FGenericInputType[F, FT], FGenericInputType[G, FT]] {
+        override def map(ia: F[FT#toF]): G[FT#toF]          = fromModel(ia)
+        override def reverseMap(ib: G[FT#toF]): F[FT#toF]   = toModel(ib)
+        override def nextMapper: InnerMapperHelper[FT#Next] = new InnerMapperHelper[FT#Next]
+      }
+
+      override def toHList[M[_ <: InputType], FT <: FType](monad: AppendMonad[M])(func: TypeGen[M, FT]): M[FGenericInputType[G, FT]] = {
+        val mModel: M[FGenericInputType[F, FT]]                                 = appenderF.toHList[M, FT](monad)(func)
+        val mapperA: Mapper[FGenericInputType[F, FT], FGenericInputType[G, FT]] = new InnerMapperHelper
+        monad.to[FGenericInputType[F, FT], FGenericInputType[G, FT]](mModel)(mapperA)
+      }
+    }
   }
 
 }
