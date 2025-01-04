@@ -113,7 +113,7 @@ object ConvertM3 {
       }
 
     object Appender {
-      def to2[F[_[_]]](append: SimpleProduct3.NotHList.Appender[F]): SimpleP.Appender[F] = new SimpleP.Appender[F] {
+      def to3[F[_[_]]](append: SimpleProduct3.NotHList.Appender[F]): SimpleP.Appender[F] = new SimpleP.Appender[F] {
         override def toHList[M3[_, _, _], M1[_], M2[_], M4[_]](monad: SimpleP.AppendMonad[M3])(
           func: SimpleP.TypeGen[M3, M1, M2, M4]
         ): M3[F[M1], F[M2], F[M4]] = {

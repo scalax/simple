@@ -58,17 +58,28 @@ val `codec/file`  = `wip/file` / "simple-codec"
 val codec         = crossProject(JSPlatform, JVMPlatform) in `codec/file`
 lazy val codecJVM = codec.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
 lazy val codecJS  = codec.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
+codecJVM / scalaVersion       := scalaV.v213
+codecJVM / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+codecJS / scalaVersion        := scalaV.v213
+codecJS / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
 val `codec-codegen/file` = `codec/file` / "codegen"
 val `codec-codegen`      = project in `codec-codegen/file`
+`codec-codegen` / scalaVersion := scalaV.v3
 
 val `codec-slick/file` = `codec/file` / "simple-codec-slick"
 lazy val `codec-slick` = project in `codec-slick/file` dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
+`codec-slick` / scalaVersion       := scalaV.v213
+`codec-slick` / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
 val `codec-circe/file`    = `codec/file` / "simple-codec-circe"
 lazy val `codec-circe`    = crossProject(JSPlatform, JVMPlatform) in `codec-circe/file`
 lazy val `codec-circeJVM` = `codec-circe`.jvm dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
 lazy val `codec-circeJS`  = `codec-circe`.js dependsOn (codecJS, `test-commonJS`    % Test) aggregate codecJS
+`codec-circeJVM` / scalaVersion       := scalaV.v213
+`codec-circeJVM` / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`codec-circeJS` / scalaVersion        := scalaV.v213
+`codec-circeJS` / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
 val `nat/file`  = `impractical/file` / "simple-nat"
 val nat         = crossProject(JSPlatform, JVMPlatform) in `nat/file`

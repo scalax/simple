@@ -8,7 +8,7 @@ import net.scalax.simple.codec.to_list_generic.AppenderFromSize
 import net.scalax.simple.codec.generic.SimpleFromProduct
 import net.scalax.simple.codec.ModelSize
 import CirceGeneric2._
-import net.scalax.simple.codec.utils.SimpleP
+import net.scalax.simple.codec.to_list_generic.SimpleProduct3
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
@@ -16,11 +16,11 @@ object CirceText1 {
 
   val simpleGen1 = SimpleFromProduct[CatName].derived
 
-  implicit val deco2_1: AppenderFromSize[CatName]    = AppenderFromSize[CatName].derived(simpleGen1.generic)
-  implicit val namedLabel: CompatLabelled[CatName]   = CompatLabelled[CatName].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[CatName]         = implicitly[CompatLabelled[CatName]].toModelSize
-  implicit val appender: SimpleP.Appender[CatName]   = implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)
-  implicit val modelLabelled: ModelLabelled[CatName] = implicitly[CompatLabelled[CatName]].toLabelled(implicitly)
+  implicit val deco2_1: AppenderFromSize[CatName]                  = AppenderFromSize[CatName].derived(simpleGen1.generic)
+  implicit val namedLabel: CompatLabelled[CatName]                 = CompatLabelled[CatName].derived(simpleGen1.generic)
+  implicit val modelSize: ModelSize[CatName]                       = implicitly[CompatLabelled[CatName]].toModelSize
+  implicit val appender: SimpleProduct3.NotHList.Appender[CatName] = implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)
+  implicit val modelLabelled: ModelLabelled[CatName]               = implicitly[CompatLabelled[CatName]].toLabelled(implicitly)
 
   implicit lazy val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
   implicit lazy val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)

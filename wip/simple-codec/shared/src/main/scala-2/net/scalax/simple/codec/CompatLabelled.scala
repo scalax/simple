@@ -3,6 +3,7 @@ package net.scalax.simple.codec
 import net.scalax.simple.codec.generic.SimpleNamed
 import shapeless.HList
 import utils.SimpleP
+import net.scalax.simple.codec.to_list_generic.{ConvertM3, SimpleProduct3}
 
 trait CompatLabelled[F[_[_]]] {
   def modelLabelled: CompatLabelled.NamedType
@@ -12,9 +13,10 @@ object CompatLabelled {
   type NamedType = HList
 
   implicit class CompatLabelledExtra1[F[_[_]]](val compat: CompatLabelled[F]) extends AnyVal {
-    def toLabelled(simpleProduct: SimpleP.Appender[F]): ModelLabelled[F] = new ModelLabelled[F] {
+    def toLabelled(simpleProduct: SimpleProduct3.NotHList.Appender[F]): ModelLabelled[F] = new ModelLabelled[F] {
       override def modelLabelled: F[({ type M1[_] = String })#M1] = {
-        val fromListGeneric = FromListByTheSameTypeGeneric[F].derived(simpleProduct)
+        val sp3: SimpleP.Appender[F] = ConvertM3.AppendMonad.Appender.to3[F](simpleProduct)
+        val fromListGeneric          = FromListByTheSameTypeGeneric[F].derived(sp3)
         val fromList = fromListGeneric.fromListByTheSameType[String, HList](
           takeHead = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].head.name,
           takeTail = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].tail

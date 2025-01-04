@@ -9,8 +9,8 @@ import scala.collection.compat._
 trait AppenderFromSize[F[_[_]]] {
   self =>
 
-  def inputModelSize(modelSize: Int): SimpleP.Appender[F]
-  def inputModelSizeF(modelSize: ModelSize[F]): SimpleP.Appender[F] = self.inputModelSize(modelSize.modelSize)
+  def inputModelSize(modelSize: Int): SimpleProduct3.NotHList.Appender[F]
+  def inputModelSizeF(modelSize: ModelSize[F]): SimpleProduct3.NotHList.Appender[F] = self.inputModelSize(modelSize.modelSize)
 }
 
 object AppenderFromSize {
@@ -18,44 +18,39 @@ object AppenderFromSize {
 
   private def tran[F[_[_]]](h: SimpleFrom[F[({ type FX[_] = Any })#FX]] with SimpleTo[F[({ type FX[_] = Any })#FX]]): AppenderFromSize[F] =
     new AppenderFromSize[F] {
-      override def inputModelSize(i: Int): SimpleP.Appender[F] = new SimpleP.Appender[F] {
-        override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: SimpleP.AppendMonad[M1])(
-          func: SimpleP.TypeGen[M1, M2, M3, M4]
-        ): M1[F[M2], F[M3], F[M4]] =
-          monad.to[HList, HList, HList, F[M2], F[M3], F[M4]](
-            (GetAppender.get(i): SimpleP.Appender[GetAppender.F1]).toHList(monad)(func)
-          )(
-            (h.from _).asInstanceOf[HList => F[M2]],
-            (h.from _).asInstanceOf[HList => F[M3]],
-            (h.from _).asInstanceOf[HList => F[M4]]
-          )(
-            (h.to _).asInstanceOf[F[M2] => HList],
-            (h.to _).asInstanceOf[F[M3] => HList],
-            (h.to _).asInstanceOf[F[M4] => HList]
-          )
-
-      }
+      override def inputModelSize(i: Int): SimpleProduct3.NotHList.FromOtherAppender[GetAppender.F1, F] =
+        new SimpleProduct3.NotHList.FromOtherAppender[GetAppender.F1, F] {
+          override def fromModel[X[_]](f: GetAppender.F1[X]): F[X]                 = h.from(f).asInstanceOf[F[X]]
+          override def toModel[X[_]](g: F[X]): GetAppender.F1[X]                   = h.to(g.asInstanceOf[F[({ type FX[_] = Any })#FX]])
+          override def appenderF: SimpleProduct3.NotHList.Appender[GetAppender.F1] = GetAppender.get(i)
+        }
     }
 
-  val appender: HListUtils2[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] =
-    new HListUtils2[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] {
-      override def appendData[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
-      override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head     = dataList.head
-      override def takeTail[Head, Tail <: HList](dataList: Head :: Tail): Tail     = dataList.tail
-      override val takeZero: HNil                                                  = HNil
+  val appender: SimpleProduct3.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] =
+    new SimpleProduct3.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] {
+      override def append[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
+      override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head = dataList.head
+      override def takeTail[Head, Tail <: HList](dataList: Head :: Tail): Tail = dataList.tail
+      override val zero: HNil                                                  = HNil
     }
 
   object GetAppender {
     type F1[_[_]] = HList
 
-    def get(i: Int): SimpleP.Appender[F1] = {
+    def get(i: Int): SimpleProduct3.NotHList.Appender[F1] = {
       if (i >= appenderList.size) {
         this.synchronized {
           while (i >= appenderList.size) {
             if (appenderList.headOption.isDefined) {
-              appenderList = appender.append(appenderList.head).asInstanceOf[SimpleP.Appender[F1]] :: appenderList
+              val cutHead = appenderList.head.asInstanceOf[appender.HListLikeAppender[appender.ColType]]
+
+              val newItem = new appender.PositiveHListLikeAppender[Any, appender.ColType] {
+                override def tailHListLikeAppender: appender.HListLikeAppender[appender.ColType] = cutHead
+              }
+
+              appenderList = newItem.asInstanceOf[SimpleProduct3.NotHList.Appender[F1]] :: appenderList
             } else {
-              appenderList = List(appender.zero.asInstanceOf[SimpleP.Appender[F1]])
+              appenderList = List(appender.ZeroHListLikeAppender.asInstanceOf[SimpleProduct3.NotHList.Appender[F1]])
             }
           }
 
@@ -66,8 +61,8 @@ object AppenderFromSize {
       appenderArray(i)
     }
 
-    private var appenderList: List[SimpleP.Appender[F1]]   = List.empty
-    private var appenderArray: Array[SimpleP.Appender[F1]] = Array.empty
+    private var appenderList: List[SimpleProduct3.NotHList.Appender[F1]]   = List.empty
+    private var appenderArray: Array[SimpleProduct3.NotHList.Appender[F1]] = Array.empty
   }
 
   trait FuncInnerApply1[F[_[_]] <: Product] {

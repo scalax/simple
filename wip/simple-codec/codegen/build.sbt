@@ -1,5 +1,4 @@
-scalaVersion := scalaV.v3
-name         := "simple-codec-codegen"
+name := "simple-codec-codegen"
 
 libraryDependencies ++= libScalax.`commons-io`.value
 
