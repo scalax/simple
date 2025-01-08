@@ -40,9 +40,10 @@ object RunTest1 {
     current分母: Long,
     exceptResult: BigDecimal,
     printlnSum: Int,
-    speed: Long
+    speed: Long,
+    countTimes: Long
   ): Unit = {
-    val needPrintln: Boolean = ((current分子 + current分母) % speed == 0) || ((current分子 + current分母) % speed == 1)
+    val needPrintln: Boolean = countTimes % speed == 0
 
     val current: BigDecimal = BigDecimal(current分子) / BigDecimal(current分母)
 
@@ -61,7 +62,8 @@ object RunTest1 {
             current分母 = current分母,
             exceptResult = exceptResult,
             printlnSum = if (needPrintln) printlnSum - 1 else printlnSum,
-            speed = speed
+            speed = speed,
+            countTimes = countTimes + 1
           )
         case num2: 乘除1.Num2 =>
           countImpl(
@@ -70,7 +72,8 @@ object RunTest1 {
             current分母 = current分母 + 1,
             exceptResult = exceptResult,
             printlnSum = if (needPrintln) printlnSum - 1 else printlnSum,
-            speed = speed
+            speed = speed,
+            countTimes = countTimes + 1
           )
       }
     } else {
@@ -79,7 +82,7 @@ object RunTest1 {
   }
 
   def count(num: () => ghdmzsk, except1: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
-    countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1, printlnSum = printlnSum, speed = speed)
+    countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1, printlnSum = printlnSum, speed = speed, countTimes = 0)
 
   def main(arr: Array[String]): Unit = {
     println('3'.toString * 1000)
