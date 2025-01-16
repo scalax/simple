@@ -11,7 +11,7 @@ object RunTest1 {
     self =>
     def 真实分子: Long      = 分子 + 分母
     def 除以(f: 分数): 分数   = 分数(分子 = self.真实分子 * f.分母, 分母 = self.分母 * f.真实分子)
-    def 实际值: BigDecimal = BigDecimal(真实分子) / BigDecimal(分母)
+    def 实际值: BigDecimal = BigDecimal(分子) / BigDecimal(分母)
   }
 
   def build(分子: Long, 分母: Long): ghdmzsk = {
@@ -68,7 +68,7 @@ object RunTest1 {
         case num2: 乘除1.Num2 =>
           countImpl(
             () => num2.pre2,
-            current分子 = current分子 + 1,
+            current分子 = current分子,
             current分母 = current分母 + 1,
             exceptResult = exceptResult,
             printlnSum = if (needPrintln) printlnSum - 1 else printlnSum,

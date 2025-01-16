@@ -1,18 +1,16 @@
 package net.scalax.simple
 package nat
-package number35
+package number36
 
 import scala.annotation.tailrec
 import ghdmzsk._
 
 object RunTest1 {
 
-  class 分数(val 实际值: BigDecimal) {
+  case class 分数(分子: Long, 分母: Long) {
     self =>
-    def 除以(f: 分数): 分数 = 分数(实际值 / f.实际值)
-  }
-  object 分数 {
-    def apply(t: BigDecimal): 分数 = new 分数(t + 1)
+    def 除以(f: 分数): 分数   = 分数(分子 = (self.分子 + self.分母 * 2) * (f.分母 * 2), 分母 = (self.分母 * 2) * (f.分子 + f.分母 * 2))
+    def 实际值: BigDecimal = BigDecimal(分子) / BigDecimal(分母)
   }
 
   def build(分子: Long, 分母: Long): ghdmzsk = {
@@ -69,7 +67,7 @@ object RunTest1 {
         case num2: 乘除1.Num2 =>
           countImpl(
             () => num2.pre2,
-            current分子 = current分子 + 1,
+            current分子 = current分子,
             current分母 = current分母 + 1,
             exceptResult = exceptResult,
             printlnSum = if (needPrintln) printlnSum - 1 else printlnSum,
@@ -85,16 +83,16 @@ object RunTest1 {
   def count(num: () => ghdmzsk, except1: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
     countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1, printlnSum = printlnSum, speed = speed, countTimes = 0)
 
-  def main1(arr: Array[String]): Unit = {
-    println('4'.toString * 1000)
+  def main(arr: Array[String]): Unit = {
+    println('5'.toString * 1000)
 
     val 分子1: Long = 123
     val 分母1: Long = 4342
     val 分子2: Long = 328
     val 分母2: Long = 15
 
-    val except1: 分数 = 分数(BigDecimal(分子1) / BigDecimal(分母1))
-    val except2: 分数 = 分数(BigDecimal(分子2) / BigDecimal(分母2))
+    val except1: 分数 = 分数(分子1, 分母1)
+    val except2: 分数 = 分数(分子2, 分母2)
 
     val num1: ghdmzsk = build(分子 = 分子1, 分母 = 分母1)
     val num2: ghdmzsk = build(分子 = 分子2, 分母 = 分母2)
@@ -111,7 +109,7 @@ object RunTest1 {
     val 分母3: Long = 982
 
     val except3: 分数   = except1.除以(except2)
-    val except4: 分数   = 分数(BigDecimal(分子3) / BigDecimal(分母3))
+    val except4: 分数   = 分数(分子3, 分母3)
     val num3: ghdmzsk = build(分子 = 分子3, 分母 = 分母3)
 
     val result2: () => ghdmzsk = () => result1().inputGHDMZSK(() => 乘除1.n1).inputGHDMZSK(() => num3.inputGHDMZSK(() => 乘除1.n2))
