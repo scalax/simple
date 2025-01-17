@@ -1,16 +1,15 @@
 package net.scalax.simple.codec
 package to_list_generic
 
-object SimpleProduct3 {
+class SimpleProduct3[AppendFunc[_, _]] {
   SimpleProduct3Self =>
 
   trait AppendContext[HListLike, ZeroType <: HListLike, AppendType[_, _ <: HListLike] <: HListLike] {
     AppendContextSelf =>
 
     def zero: ZeroType
-    def append[H, T <: HListLike](h: H, t: T): AppendType[H, T]
-    def takeHead[H, T <: HListLike](a: AppendType[H, T]): H
-    def takeTail[H, T <: HListLike](a: AppendType[H, T]): T
+    def append[H, T <: HListLike](h: AppendFunc[H, T]): AppendType[H, T]
+    def unappend[H, T <: HListLike](a: AppendType[H, T]): AppendFunc[H, T]
 
     trait ColType {
       type toM[M[_]] <: HListLike
@@ -33,8 +32,8 @@ object SimpleProduct3 {
           NotHList.ZipInputType[NotHList.ItemInputType[Item, FT], NotHList.FGenericInputType[HL#toM, FT]],
           NotHList.FGenericInputType[AppendColType[Item, HL]#toM, FT]
         ] {
-      override def map(n: (FT#toF[Item], HL#toM[FT#toF])): AppendType[FT#toF[Item], HL#toM[FT#toF]]        = append(n._1, n._2)
-      override def reverseMap(n: AppendType[FT#toF[Item], HL#toM[FT#toF]]): (FT#toF[Item], HL#toM[FT#toF]) = (takeHead(n), takeTail(n))
+      override def map(n: AppendFunc[FT#toF[Item], HL#toM[FT#toF]]): AppendType[FT#toF[Item], HL#toM[FT#toF]]        = append(n)
+      override def reverseMap(n: AppendType[FT#toF[Item], HL#toM[FT#toF]]): AppendFunc[FT#toF[Item], HL#toM[FT#toF]] = unappend(n)
 
       override def nextMapper: GetSet[Item, HL, FT#Next] = new GetSet[Item, HL, FT#Next] {
         //
@@ -147,7 +146,7 @@ object SimpleProduct3 {
     }
 
     trait ZipInputType[In1 <: InputType, In2 <: InputType] extends InputType {
-      override type toItem  = (In1#toItem, In2#toItem)
+      override type toItem  = AppendFunc[In1#toItem, In2#toItem]
       override type AndThen = ZipInputType[In1#AndThen, In2#AndThen]
     }
 
@@ -209,3 +208,5 @@ object SimpleProduct3 {
   }
 
 }
+
+object SimpleProduct3 extends SimpleProduct3[Tuple2]

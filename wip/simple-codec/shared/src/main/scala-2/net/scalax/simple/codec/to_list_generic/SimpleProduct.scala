@@ -28,10 +28,9 @@ object AppenderFromSize {
 
   val appender: SimpleProduct3.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] =
     new SimpleProduct3.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] {
-      override def append[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
-      override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head = dataList.head
-      override def takeTail[Head, Tail <: HList](dataList: Head :: Tail): Tail = dataList.tail
-      override val zero: HNil                                                  = HNil
+      override def append[Head, Tail <: HList](h: (Head, Tail)): Head :: Tail          = h._1 :: h._2
+      override def unappend[Head, Tail <: HList](dataList: Head :: Tail): (Head, Tail) = (dataList.head, dataList.tail)
+      override val zero: HNil                                                          = HNil
     }
 
   object GetAppender {
