@@ -9,8 +9,9 @@ import scala.collection.compat._
 trait AppenderFromSize[F[_[_]]] {
   self =>
 
-  def inputModelSize(modelSize: Int): SimpleProduct3.NotHList.Appender[F]
-  def inputModelSizeF(modelSize: ModelSize[F]): SimpleProduct3.NotHList.Appender[F] = self.inputModelSize(modelSize.modelSize)
+  def inputModelSize(modelSize: Int)(codingEnv: CodingEnv): SimpleProduct3.NotHList.Appender[F]
+  def inputModelSizeF(modelSize: ModelSize[F])(codingEnv: CodingEnv): SimpleProduct3.NotHList.Appender[F] =
+    self.inputModelSize(modelSize.modelSize)(codingEnv)
 }
 
 object AppenderFromSize {
@@ -18,11 +19,11 @@ object AppenderFromSize {
 
   private def tran[F[_[_]]](h: SimpleFrom[F[({ type FX[_] = Any })#FX]] with SimpleTo[F[({ type FX[_] = Any })#FX]]): AppenderFromSize[F] =
     new AppenderFromSize[F] {
-      override def inputModelSize(i: Int): SimpleProduct3.NotHList.FromOtherAppender[GetAppender.F1, F] =
+      override def inputModelSize(i: Int)(codingEnv: CodingEnv): SimpleProduct3.NotHList.FromOtherAppender[GetAppender.F1, F] =
         new SimpleProduct3.NotHList.FromOtherAppender[GetAppender.F1, F] {
           override def fromModel[X[_]](f: GetAppender.F1[X]): F[X]                 = h.from(f).asInstanceOf[F[X]]
           override def toModel[X[_]](g: F[X]): GetAppender.F1[X]                   = h.to(g.asInstanceOf[F[({ type FX[_] = Any })#FX]])
-          override def appenderF: SimpleProduct3.NotHList.Appender[GetAppender.F1] = GetAppender.get(i)
+          override def appenderF: SimpleProduct3.NotHList.Appender[GetAppender.F1] = GetAppender.get(i)(codingEnv)
         }
     }
 
@@ -36,7 +37,7 @@ object AppenderFromSize {
   object GetAppender {
     type F1[_[_]] = HList
 
-    def get(i: Int): SimpleProduct3.NotHList.Appender[F1] = {
+    def get(i: Int)(codingEnv: CodingEnv): SimpleProduct3.NotHList.Appender[F1] = {
       if (i >= appenderList.size) {
         this.synchronized {
           while (i >= appenderList.size) {
@@ -49,7 +50,7 @@ object AppenderFromSize {
 
               appenderList = newItem.asInstanceOf[SimpleProduct3.NotHList.Appender[F1]] :: appenderList
             } else {
-              appenderList = List(appender.ZeroHListLikeAppender.asInstanceOf[SimpleProduct3.NotHList.Appender[F1]])
+              appenderList = List(appender.ZeroHListLikeAppender(codingEnv).asInstanceOf[SimpleProduct3.NotHList.Appender[F1]])
             }
           }
 

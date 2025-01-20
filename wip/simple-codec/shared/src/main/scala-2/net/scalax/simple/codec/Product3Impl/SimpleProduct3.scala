@@ -52,13 +52,21 @@ class SimpleProduct3[AppendFunc[_, _]] {
       }
     }
 
+    private def zeroUnitMapperDevImpl[FT <: NotHList.FType]: ZeroUnitMapper[FT] = new ZeroUnitMapper[FT] {
+      //
+    }
+    private val zeroUnitMapperProductImplImpl: ZeroUnitMapper[NotHList.FType] = new ZeroUnitMapper[NotHList.FType] {
+      override lazy val nextMapper: ZeroUnitMapper[NotHList.FType#Next] =
+        zeroUnitMapperProductImplImpl.asInstanceOf[ZeroUnitMapper[NotHList.FType#Next]]
+    }
+    private def zeroUnitMapperProductImpl[FT <: NotHList.FType]: ZeroUnitMapper[FT] =
+      zeroUnitMapperProductImplImpl.asInstanceOf[ZeroUnitMapper[FT]]
+
     def zeroAppender[M1[_ <: NotHList.InputType], FT <: NotHList.FType](
       appendMonad: NotHList.AppendMonad[M1]
-    ): M1[NotHList.FGenericInputType[ZeroColType#toM, FT]] = {
-      val z = new ZeroUnitMapper[FT] {
-        //
-      }
-      appendMonad.to(appendMonad.zero)(z)
+    )(codingEnv: CodingEnv): M1[NotHList.FGenericInputType[ZeroColType#toM, FT]] = {
+      val zeroUnitMapper: ZeroUnitMapper[FT] = codingEnv.fold(dev = zeroUnitMapperDevImpl[FT], product = zeroUnitMapperProductImpl[FT])
+      appendMonad.to(appendMonad.zero)(zeroUnitMapper)
     }
 
     def positiveAppender[M1[_ <: NotHList.InputType], C <: ColType, FT <: NotHList.FType, T](
@@ -98,14 +106,35 @@ class SimpleProduct3[AppendFunc[_, _]] {
       override def tailHListLikeAppender: HListLikeAppender[X]
     }
 
-    object ZeroHListLikeAppender extends HListLikeAppender[ZeroColType] {
-      ZeroHListLikeAppenderSelf =>
-
+    trait ZeroHListLikeAppender extends HListLikeAppender[ZeroColType] {
       override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
         func: NotHList.TypeGen[M, FT]
-      ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = zeroAppender[M, FT](monad)
+      ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]]
 
-      override def tailHListLikeAppender: ZeroHListLikeAppender.type = ZeroHListLikeAppenderSelf
+      override def tailHListLikeAppender: ZeroHListLikeAppender
+    }
+
+    object ZeroHListLikeAppender {
+      def apply(codingEnv: CodingEnv): ZeroHListLikeAppender = codingEnv.fold(
+        dev = {
+          new ZeroHListLikeAppender {
+            ZeroHListLikeAppenderSelf =>
+            override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
+              func: NotHList.TypeGen[M, FT]
+            ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = zeroAppender(monad)(codingEnv)
+            override def tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
+          }
+        },
+        product = {
+          new ZeroHListLikeAppender {
+            ZeroHListLikeAppenderSelf =>
+            override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
+              func: NotHList.TypeGen[M, FT]
+            ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = zeroAppender(monad)(codingEnv)
+            override lazy val tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
+          }
+        }
+      )
     }
 
   }
@@ -165,9 +194,9 @@ class SimpleProduct3[AppendFunc[_, _]] {
 
     object Mapper {
       val unitInputType: Mapper[UnitInputType, UnitInputType] = new Mapper[UnitInputType, UnitInputType] {
-        override def map(ia: Unit): Unit                              = ia
-        override def reverseMap(ib: Unit): Unit                       = ib
-        override def nextMapper: Mapper[UnitInputType, UnitInputType] = unitInputType
+        override def map(ia: Unit): Unit                                   = ia
+        override def reverseMap(ib: Unit): Unit                            = ib
+        override lazy val nextMapper: Mapper[UnitInputType, UnitInputType] = unitInputType
       }
     }
 
