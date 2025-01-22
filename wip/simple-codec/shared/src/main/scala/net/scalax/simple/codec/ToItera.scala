@@ -4,7 +4,7 @@ import utils.SimpleP
 import net.scalax.simple.codec.to_list_generic.{ConvertM3, SimpleProduct3}
 
 trait ToItera[F[_[_]]] {
-  def to[T](codingEnv: CodingEnv): SimpleProduct3.NotHList.Appender[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1]
+  def to[T]: SimpleProduct3.NotHList.Appender[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1]
 }
 
 object ToItera {
@@ -67,8 +67,8 @@ object ToItera {
   class ApplyImpl[F[_[_]]] {
 
     def derived(implicit basedInstalled: SimpleProduct3.NotHList.Appender[F]): ToItera[F] = new ToItera[F] {
-      @inline def to[T](codingEnv: CodingEnv): SimpleProduct3.NotHList.Appender[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
-        codingEnv.fold(dev = derivedDevImpl[T, F](basedInstalled), product = derivedProductImpl[T, F](basedInstalled))
+      @inline def to[T]: SimpleProduct3.NotHList.Appender[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+        derivedProductImpl[T, F](basedInstalled)
     }
 
   }

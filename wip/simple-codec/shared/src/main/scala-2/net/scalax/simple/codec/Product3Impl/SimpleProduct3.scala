@@ -42,7 +42,6 @@ class SimpleProduct3[AppendFunc[_, _]] {
 
     trait ZeroUnitMapper[FT <: NotHList.FType]
         extends NotHList.Mapper[NotHList.UnitInputType, NotHList.FGenericInputType[ZeroColType#toM, FT]] {
-      ZeroUnitMapperSelf =>
 
       override def map(ia: Unit): ZeroType        = AppendContextSelf.zero
       override def reverseMap(ib: ZeroType): Unit = ()
@@ -52,21 +51,21 @@ class SimpleProduct3[AppendFunc[_, _]] {
       }
     }
 
-    private def zeroUnitMapperDevImpl[FT <: NotHList.FType]: ZeroUnitMapper[FT] = new ZeroUnitMapper[FT] {
-      //
-    }
-    private val zeroUnitMapperProductImplImpl: ZeroUnitMapper[NotHList.FType] = new ZeroUnitMapper[NotHList.FType] {
-      override lazy val nextMapper: ZeroUnitMapper[NotHList.FType#Next] =
-        zeroUnitMapperProductImplImpl.asInstanceOf[ZeroUnitMapper[NotHList.FType#Next]]
-    }
-    private def zeroUnitMapperProductImpl[FT <: NotHList.FType]: ZeroUnitMapper[FT] =
-      zeroUnitMapperProductImplImpl.asInstanceOf[ZeroUnitMapper[FT]]
-
-    def zeroAppender[M1[_ <: NotHList.InputType], FT <: NotHList.FType](
-      appendMonad: NotHList.AppendMonad[M1]
-    )(codingEnv: CodingEnv): M1[NotHList.FGenericInputType[ZeroColType#toM, FT]] = {
-      val zeroUnitMapper: ZeroUnitMapper[FT] = codingEnv.fold(dev = zeroUnitMapperDevImpl[FT], product = zeroUnitMapperProductImpl[FT])
-      appendMonad.to(appendMonad.zero)(zeroUnitMapper)
+    object ZeroUnitMapper {
+      @inline private val zeroUnitMapperProductImplImpl: ZeroUnitMapper[NotHList.FType] = new ZeroUnitMapper[NotHList.FType] {
+        thisSelf =>
+        @inline override lazy val nextMapper: ZeroUnitMapper[NotHList.FType#Next] =
+          thisSelf.asInstanceOf[ZeroUnitMapper[NotHList.FType#Next]]
+      }
+      zeroUnitMapperProductImplImpl.nextMapper
+      // ===
+      trait ToZero {
+        @inline def to[FT <: NotHList.FType]: ZeroUnitMapper[FT]
+      }
+      // ===
+      val zeroAppender: ToZero = new ToZero {
+        @inline override def to[FT <: NotHList.FType]: ZeroUnitMapper[FT] = zeroUnitMapperProductImplImpl.asInstanceOf[ZeroUnitMapper[FT]]
+      }
     }
 
     def positiveAppender[M1[_ <: NotHList.InputType], C <: ColType, FT <: NotHList.FType, T](
@@ -115,26 +114,15 @@ class SimpleProduct3[AppendFunc[_, _]] {
     }
 
     object ZeroHListLikeAppender {
-      def apply(codingEnv: CodingEnv): ZeroHListLikeAppender = codingEnv.fold(
-        dev = {
-          new ZeroHListLikeAppender {
-            ZeroHListLikeAppenderSelf =>
-            override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
-              func: NotHList.TypeGen[M, FT]
-            ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = zeroAppender(monad)(codingEnv)
-            override def tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
-          }
-        },
-        product = {
-          new ZeroHListLikeAppender {
-            ZeroHListLikeAppenderSelf =>
-            override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
-              func: NotHList.TypeGen[M, FT]
-            ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = zeroAppender(monad)(codingEnv)
-            override lazy val tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
-          }
-        }
-      )
+      val value: ZeroHListLikeAppender = new ZeroHListLikeAppender {
+        ZeroHListLikeAppenderSelf =>
+        override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
+          func: NotHList.TypeGen[M, FT]
+        ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = monad.to(monad.zero)(ZeroUnitMapper.zeroAppender.to[FT])
+
+        override lazy val tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
+      }
+      value.tailHListLikeAppender
     }
 
   }

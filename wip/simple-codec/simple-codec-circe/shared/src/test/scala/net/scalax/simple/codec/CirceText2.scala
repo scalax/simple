@@ -15,12 +15,11 @@ object CirceText2 {
 
   val simpleGen1 = SimpleFromProduct[CatName].derived
 
-  implicit val deco2_1: AppenderFromSize[CatName]  = AppenderFromSize[CatName].derived(simpleGen1.generic)
-  implicit val namedLabel: CompatLabelled[CatName] = CompatLabelled[CatName].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[CatName]       = implicitly[CompatLabelled[CatName]].toModelSize
-  implicit val appender: SimpleProduct3.NotHList.Appender[CatName] =
-    implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)(implicitly)
-  implicit val modelLabelled_catName: ModelLabelled[CatName] = implicitly[CompatLabelled[CatName]].toLabelled(implicitly)
+  implicit val deco2_1: AppenderFromSize[CatName]                  = AppenderFromSize[CatName].derived(simpleGen1.generic)
+  implicit val namedLabel: CompatLabelled[CatName]                 = CompatLabelled[CatName].derived(simpleGen1.generic)
+  implicit val modelSize: ModelSize[CatName]                       = implicitly[CompatLabelled[CatName]].toModelSize
+  implicit val appender: SimpleProduct3.NotHList.Appender[CatName] = implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)
+  implicit val modelLabelled_catName: ModelLabelled[CatName]       = implicitly[CompatLabelled[CatName]].toLabelled(implicitly)
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
 
@@ -43,7 +42,7 @@ object CirceText2 {
   implicit val namedModel_catName2: ModelLabelled[FAlias] = new ModelLabelled[FAlias] {
     override def modelLabelled: CatName[Named] = implicitly[ModelLabelled[CatName]].modelLabelled
   }
-  implicit lazy val basedInstalled2: SimpleProduct3.NotHList.Appender[FAlias] = ToItera[CatName].derived.to[String](implicitly)
+  implicit lazy val basedInstalled2: SimpleProduct3.NotHList.Appender[FAlias] = ToItera[CatName].derived.to[String]
 
   implicit lazy val caseClassNameEncoder: Encoder[CatName[Named]] = encodeModel[FAlias]
   implicit lazy val caseClassNameDecoder: Decoder[CatName[Named]] = decodeModel[FAlias]
