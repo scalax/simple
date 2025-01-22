@@ -1,7 +1,6 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.SimpleProduct2
-
+import net.scalax.simple.codec.to_list_generic.{ConvertM2, SimpleProduct2, SimpleProduct3}
 import utils.SimpleP
 
 trait MapGenerc[F[_[_]]] {
@@ -15,7 +14,7 @@ object MapGenerc {
   }
 
   class ApplyImpl[F[_[_]]] {
-    def derived(to: SimpleP.Appender[F]): MapGenerc[F] = fromInstance(SimpleProduct2.Appender[F].derived(to))
+    def derived(to: SimpleProduct3.NotHList.Appender[F]): MapGenerc[F] = fromInstance(ConvertM2.AppendMonad.Appender.to2[F](to))
 
     def fromInstance(generic3: SimpleProduct2.Appender[F]): MapGenerc[F] = new MapGenerc[F] {
       override def map[S[_], T[_]](input: MapFunction[S, T]): F[S] => F[T] = {

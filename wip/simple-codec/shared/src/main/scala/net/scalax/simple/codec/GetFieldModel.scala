@@ -1,5 +1,6 @@
 package net.scalax.simple.codec
 
+import net.scalax.simple.codec.to_list_generic.SimpleProduct3
 import utils.SimpleP
 
 trait GetFieldModel[F[_[_]]] {
@@ -11,7 +12,7 @@ object GetFieldModel {
   class DerivedApply[F[_[_]] <: Product] {
 
     def derived(
-      p: SimpleP.Appender[F],
+      p: SimpleProduct3.NotHList.Appender[F],
       indexModel: IndexModel[F]
     ): GetFieldModel[F] = {
       val mapGeneric = MapGenerc[F].derived(p)

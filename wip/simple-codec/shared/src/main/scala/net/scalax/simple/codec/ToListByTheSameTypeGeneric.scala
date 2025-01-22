@@ -43,8 +43,8 @@ object ToListByTheSameTypeGeneric {
   }
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: SimpleP.Appender[F]): ToListByTheSameTypeGeneric[F] = fromOther(
-      SimpleProduct1.Appender[F].derived(basedInstalled)
+    def derived(basedInstalled: SimpleProduct3.NotHList.Appender[F]): ToListByTheSameTypeGeneric[F] = fromOther(
+      ConvertM1.Appender.to1[F](basedInstalled)
     )
 
     def fromOther(o1: SimpleProduct1.Appender[F]): ToListByTheSameTypeGeneric[F] = new ToListByTheSameTypeGeneric[F] {

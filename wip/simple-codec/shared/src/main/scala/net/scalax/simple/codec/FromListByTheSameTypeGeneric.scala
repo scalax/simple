@@ -1,8 +1,6 @@
 package net.scalax.simple.codec
 
-import utils.SimpleP
-
-import net.scalax.simple.codec.to_list_generic.SimpleProduct1
+import net.scalax.simple.codec.to_list_generic.{ConvertM1, SimpleProduct1, SimpleProduct3}
 
 trait FromListByTheSameTypeGeneric[F[_[_]]] {
   def fromListByTheSameType[TA, SeqType](
@@ -43,8 +41,8 @@ object FromListByTheSameTypeGeneric {
     }
 
   class ToListGenericApply[F[_[_]]] {
-    def derived(basedInstalled: SimpleP.Appender[F]): FromListByTheSameTypeGeneric[F] = fromInstance(
-      SimpleProduct1.Appender[F].derived(basedInstalled)
+    def derived(basedInstalled: SimpleProduct3.NotHList.Appender[F]): FromListByTheSameTypeGeneric[F] = fromInstance(
+      ConvertM1.Appender.to1[F](basedInstalled)
     )
 
     def fromInstance(o1: SimpleProduct1.Appender[F]): FromListByTheSameTypeGeneric[F] = new FromListByTheSameTypeGeneric[F] {
