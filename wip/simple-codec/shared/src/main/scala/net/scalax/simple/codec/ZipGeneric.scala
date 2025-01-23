@@ -9,7 +9,7 @@ trait ZipGeneric[F[_[_]]] {
 
 object ZipGeneric {
 
-  class ToListGenericApply[F[_[_]]] {
+  class Builder[F[_[_]]] {
     def derived(o1: SimpleP.Appender[F]): ZipGeneric[F] = new ZipGeneric[F] {
       override def zip[S[_], T[_]](input1: F[S], input2: F[T]): F[({ type X1[U1] = (S[U1], T[U1]) })#X1] = {
         type MA[A, B, C] = (A, B) => C
@@ -31,6 +31,6 @@ object ZipGeneric {
     }
   }
 
-  def apply[F[_[_]]] = new ToListGenericApply[F]
+  def apply[F[_[_]]]: Builder[F] = new Builder[F]
 
 }

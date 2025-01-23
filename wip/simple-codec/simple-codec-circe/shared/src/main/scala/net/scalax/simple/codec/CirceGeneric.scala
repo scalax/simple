@@ -3,7 +3,15 @@ package codec
 
 import io.circe._
 import io.circe.syntax._
-import net.scalax.simple.codec.to_list_generic.{ConvertM2, ConvertM3, SimpleProduct2, SimpleProduct3, ToListByTheSameTypeGeneric}
+import net.scalax.simple.codec.to_list_generic.{
+  ConvertM1,
+  ConvertM2,
+  ConvertM3,
+  SimpleProduct1,
+  SimpleProduct2,
+  SimpleProduct3,
+  ToListByTheSameTypeGeneric
+}
 import net.scalax.simple.codec.utils.SimpleP
 
 object CirceGeneric {
@@ -15,9 +23,11 @@ object CirceGeneric {
     named: F[Named]
   ): Encoder[F[cats.Id]] = {
     val sp3: SimpleP.Appender[F]              = ConvertM3.AppendMonad.Appender.to3[F](g1)
-    val toList: ToListByTheSameTypeGeneric[F] = ToListByTheSameTypeGeneric[F].derived(g1)
+    val sp1: SimpleProduct1.Appender[F]       = ConvertM1.Appender.to1[F](g1)
+    val sp2: SimpleProduct2.Appender[F]       = ConvertM2.AppendMonad.Appender.to2[F](g1)
+    val toList: ToListByTheSameTypeGeneric[F] = ToListByTheSameTypeGeneric[F].derived(sp1)
     val zipGeneric: ZipGeneric[F]             = ZipGeneric[F].derived(sp3)
-    val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(g1)
+    val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(sp2)
 
     Encoder.instance[F[cats.Id]] { m =>
       val zip1 = zipGeneric.zip(m, g)
@@ -38,8 +48,9 @@ object CirceGeneric {
     named: F[Named]
   ): Decoder[F[cats.Id]] = {
     val sp3: SimpleP.Appender[F]           = ConvertM3.AppendMonad.Appender.to3[F](g1)
+    val sp2: SimpleProduct2.Appender[F]    = ConvertM2.AppendMonad.Appender.to2[F](g1)
     val zipGeneric: ZipGeneric[F]          = ZipGeneric[F].derived(sp3)
-    val mapGenerc: MapGenerc[F]            = MapGenerc[F].derived(g1)
+    val mapGenerc: MapGenerc[F]            = MapGenerc[F].derived(sp2)
     val decode: SimpleProduct2.Appender[F] = ConvertM2.AppendMonad.Appender.to2[F](g1)
 
     val zip1 = zipGeneric.zip[Named, Decoder](named, g)

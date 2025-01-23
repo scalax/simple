@@ -1,11 +1,9 @@
 package net.scalax.simple
 package codec
 
-import net.scalax.simple.codec.to_list_generic.SimpleProduct3
-
 trait FillIdentity[F[_[_]], I[_], Poly] {
   def modelImplement: F[FillIdentity.WithPoly[I, Poly]#Type]
-  def model(simpeProduct: SimpleProduct3.NotHList.Appender[F]): F[I] = FillIdentity.toModel(simpeProduct)(modelImplement)
+  def model(mapGenerc: MapGenerc[F]): F[I] = FillIdentity.toModel(mapGenerc)(modelImplement)
 }
 
 object FillIdentity {
@@ -15,9 +13,7 @@ object FillIdentity {
     type Type[T] = ModelImplement[P, I[T]]
   }
 
-  def toModel[F[_[_]], I[_], Poly](simpeProduct: SimpleProduct3.NotHList.Appender[F]): F[WithPoly[I, Poly]#Type] => F[I] = { instance =>
-    val mapGenerc: MapGenerc[F] = MapGenerc[F].derived(simpeProduct)
-
+  def toModel[F[_[_]], I[_], Poly](mapGenerc: MapGenerc[F]): F[WithPoly[I, Poly]#Type] => F[I] = { instance =>
     val mapper = mapGenerc.map[WithPoly[I, Poly]#Type, I](new MapGenerc.MapFunction[WithPoly[I, Poly]#Type, I] {
       override def map[X1]: ModelImplement[Poly, I[X1]] => I[X1] = m => m.value
     })
@@ -25,9 +21,7 @@ object FillIdentity {
     mapper(instance)
   }
 
-  def fromModel[F[_[_]], I[_], Poly](simpeProduct: SimpleProduct3.NotHList.Appender[F]): F[I] => F[WithPoly[I, Poly]#Type] = { instance =>
-    val mapGenerc: MapGenerc[F] = MapGenerc[F].derived(simpeProduct)
-
+  def fromModel[F[_[_]], I[_], Poly](mapGenerc: MapGenerc[F]): F[I] => F[WithPoly[I, Poly]#Type] = { instance =>
     val mapper = mapGenerc.map[I, WithPoly[I, Poly]#Type](new MapGenerc.MapFunction[I, WithPoly[I, Poly]#Type] {
       override def map[X1]: I[X1] => ModelImplement[Poly, I[X1]] = m => new ModelImplement[Poly, I[X1]](m)
     })
