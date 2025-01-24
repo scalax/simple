@@ -2,8 +2,7 @@ package net.scalax.simple.codec
 package aa
 
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.to_list_generic.AppenderFromSize
-import net.scalax.simple.codec.utils.SimpleP
+import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, SimpleProduct3}
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 import slick.lifted.ProvenShape
@@ -39,11 +38,11 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
   def simpleGen1 = SimpleFromProduct[F1Alias].derived
 
-  implicit def deco1_2: AppenderFromSize[F1Alias]  = AppenderFromSize[F1Alias].derived(simpleGen1.generic)
-  implicit val namedLabel: CompatLabelled[F1Alias] = CompatLabelled[F1Alias].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[F1Alias]       = implicitly[CompatLabelled[F1Alias]].toModelSize
-  implicit val appender: SimpleP.Appender[F1Alias] = implicitly[AppenderFromSize[F1Alias]].inputModelSizeF(implicitly)
-  implicit val userNamed: ModelLabelled[F1Alias]   = implicitly[CompatLabelled[F1Alias]].toLabelled(implicitly)
+  implicit def deco1_2: AppenderFromSize[F1Alias]                  = AppenderFromSize[F1Alias].derived(simpleGen1.generic)
+  implicit val namedLabel: CompatLabelled[F1Alias]                 = CompatLabelled[F1Alias].derived(simpleGen1.generic)
+  implicit val modelSize: ModelSize[F1Alias]                       = implicitly[CompatLabelled[F1Alias]].toModelSize
+  implicit val appender: SimpleProduct3.NotHList.Appender[F1Alias] = implicitly[AppenderFromSize[F1Alias]].inputModelSizeF(implicitly)
+  implicit val userNamed: ModelLabelled[F1Alias]                   = implicitly[CompatLabelled[F1Alias]].toLabelled(implicitly)
 
   def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](appender).build(slickProfile).userOptImpl
 
