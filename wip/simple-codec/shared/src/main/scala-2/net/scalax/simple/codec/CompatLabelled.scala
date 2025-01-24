@@ -2,7 +2,7 @@ package net.scalax.simple.codec
 
 import net.scalax.simple.codec.generic.SimpleNamed
 import shapeless.HList
-import net.scalax.simple.codec.to_list_generic.SimpleProduct3
+import net.scalax.simple.codec.to_list_generic.SimpleProduct1
 
 trait CompatLabelled[F[_[_]]] {
   def modelLabelled: CompatLabelled.NamedType
@@ -11,34 +11,25 @@ trait CompatLabelled[F[_[_]]] {
 object CompatLabelled {
   type NamedType = HList
 
-  implicit class CompatLabelledExtra1[F[_[_]]](val compat: CompatLabelled[F]) extends AnyVal {
-    def toLabelled(simpleProduct: SimpleProduct3.NotHList.Appender[F]): ModelLabelled[F] = new ModelLabelled[F] {
-      override def modelLabelled: F[({ type M1[_] = String })#M1] = {
-        val fromListGeneric = FromListByTheSameTypeGeneric[F].derived(simpleProduct)
-        val fromList = fromListGeneric.fromListByTheSameType[String, HList](
-          takeHead = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].head.name,
-          takeTail = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].tail
-        )
-        fromList(compat.modelLabelled)
-      }
-    }
+  def toLabelled[F[_[_]]](
+    simpleProduct: SimpleProduct1.Appender[F],
+    compatModel: CompatLabelled[F]
+  ): F[({ type M1[_] = String })#M1] = {
+    val fromListGeneric = FromListByTheSameTypeGeneric[F].derived(simpleProduct)
+    val fromList = fromListGeneric.fromListByTheSameType[String, CompatLabelled.NamedType](
+      takeHead = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].head.name,
+      takeTail = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].tail
+    )
+    fromList(compatModel.modelLabelled)
   }
 
-  implicit class CompatLabelledExtra2[F[_[_]]](val compat: CompatLabelled[F]) extends AnyVal {
-    def toModelSize: ModelSize[F] = new ModelSize[F] {
-      override def modelSize: Int = compat.modelLabelled.runtimeLength
-    }
-  }
+  def toLobelledSize[F[_[_]]](compat: CompatLabelled[F]): Int = compat.modelLabelled.runtimeLength
 
-  trait Apply[F[_[_]]] {
-    def derived(
-      simpleNamed: SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]]
-    ): CompatLabelled[F] = new CompatLabelled[F] {
+  class Builder[F[_[_]]] {
+    def derived(simpleNamed: SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]]): CompatLabelled[F] = new CompatLabelled[F] {
       override val modelLabelled: CompatLabelled.NamedType = simpleNamed.labelled
     }
   }
 
-  def apply[F[_[_]]]: Apply[F] = new Apply[F] {
-    //
-  }
+  def apply[F[_[_]]]: Builder[F] = new Builder[F]
 }

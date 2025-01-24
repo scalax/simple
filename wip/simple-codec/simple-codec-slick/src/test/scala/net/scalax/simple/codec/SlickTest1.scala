@@ -2,7 +2,7 @@ package net.scalax.simple.codec
 package aa
 
 import net.scalax.simple.codec.generic.SimpleFromProduct
-import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, SimpleProduct3}
+import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, ConvertM1, SimpleProduct1, SimpleProduct3}
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 import slick.lifted.ProvenShape
@@ -40,9 +40,10 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
   implicit def deco1_2: AppenderFromSize[F1Alias]                  = AppenderFromSize[F1Alias].derived(simpleGen1.generic)
   implicit val namedLabel: CompatLabelled[F1Alias]                 = CompatLabelled[F1Alias].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[F1Alias]                       = implicitly[CompatLabelled[F1Alias]].toModelSize
+  implicit val modelSize: ModelSize[F1Alias]                       = ModelSize[F1Alias].derived(implicitly)
   implicit val appender: SimpleProduct3.NotHList.Appender[F1Alias] = implicitly[AppenderFromSize[F1Alias]].inputModelSizeF(implicitly)
-  implicit val userNamed: ModelLabelled[F1Alias]                   = implicitly[CompatLabelled[F1Alias]].toLabelled(implicitly)
+  implicit val appender1: SimpleProduct1.Appender[F1Alias]         = ConvertM1.Appender.to1[F1Alias](implicitly)
+  implicit val userNamed: ModelLabelled[F1Alias]                   = ModelLabelled[F1Alias].derived(implicitly, implicitly)
 
   def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](appender).build(slickProfile).userOptImpl
 
@@ -80,7 +81,7 @@ object Runner1 {
     val newModel: Model2[Id]   = new Model2[Id](p)
     val newOpt: Model2[Option] = new Model2[Option](p)
     val modelInt: IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1] =
-      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.appender)
+      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.appender1)
 
     import p.api._
 
