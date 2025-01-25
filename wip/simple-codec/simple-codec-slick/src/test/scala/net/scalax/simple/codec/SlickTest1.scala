@@ -38,12 +38,12 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
   def simpleGen1 = SimpleFromProduct[F1Alias].derived
 
-  implicit def deco1_2: AppenderFromSize[F1Alias]                  = AppenderFromSize[F1Alias].derived(simpleGen1.generic)
-  implicit val namedLabel: CompatLabelled[F1Alias]                 = CompatLabelled[F1Alias].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[F1Alias]                       = ModelSize[F1Alias].derived(implicitly)
-  implicit val appender: SimpleProductX.NotHList.Appender[F1Alias] = implicitly[AppenderFromSize[F1Alias]].inputModelSizeF(implicitly)
-  implicit val appender1: SimpleProduct1.Appender[F1Alias]         = SimpleProduct1[F1Alias].derived(implicitly)
-  implicit val userNamed: ModelLabelled[F1Alias]                   = ModelLabelled[F1Alias].derived(implicitly, implicitly)
+  implicit def deco1_2: AppenderFromSize[F1Alias]          = AppenderFromSize[F1Alias].derived(simpleGen1.generic)
+  implicit val namedLabel: CompatLabelled[F1Alias]         = CompatLabelled[F1Alias].derived(simpleGen1.generic)
+  implicit val modelSize: ModelSize[F1Alias]               = ModelSize[F1Alias].derived(implicitly)
+  implicit val appender: SimpleProductX[F1Alias]           = SimpleProductX[F1Alias].derived(implicitly, implicitly)
+  implicit val appender1: SimpleProduct1.Appender[F1Alias] = SimpleProduct1[F1Alias].derived(implicitly)
+  implicit val userNamed: ModelLabelled[F1Alias]           = ModelLabelled[F1Alias].derived(implicitly, implicitly)
 
   def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](appender).build(slickProfile).userOptImpl
 

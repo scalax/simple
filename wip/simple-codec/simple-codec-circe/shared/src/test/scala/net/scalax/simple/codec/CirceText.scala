@@ -15,18 +15,18 @@ object CirceText1 {
 
   val simpleGen1 = SimpleFromProduct[CatName].derived
 
-  implicit val deco2_1: AppenderFromSize[CatName]                  = AppenderFromSize[CatName].derived(simpleGen1.generic)
-  implicit val namedLabel: CompatLabelled[CatName]                 = CompatLabelled[CatName].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[CatName]                       = ModelSize[CatName].derived(implicitly)
-  implicit val appender: SimpleProductX.NotHList.Appender[CatName] = implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)
-  implicit val appender1: SimpleProduct1.Appender[CatName]         = SimpleProduct1[CatName].derived(implicitly)
-  implicit val modelLabelled: ModelLabelled[CatName]               = ModelLabelled[CatName].derived(implicitly, implicitly)
+  implicit val deco2_1: AppenderFromSize[CatName]          = AppenderFromSize[CatName].derived(simpleGen1.generic)
+  implicit val namedLabel: CompatLabelled[CatName]         = CompatLabelled[CatName].derived(simpleGen1.generic)
+  implicit val modelSize: ModelSize[CatName]               = ModelSize[CatName].derived(implicitly)
+  implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly)
+  implicit val appender1: SimpleProduct1.Appender[CatName] = SimpleProduct1[CatName].derived(implicitly)
+  implicit val modelLabelled: ModelLabelled[CatName]       = ModelLabelled[CatName].derived(implicitly, implicitly)
 
-  implicit lazy val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
-  implicit lazy val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)
+  implicit val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
+  implicit val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)
 
-  implicit lazy val caseClassEncoder: Encoder[CatName[cats.Id]] = encodeModel
-  implicit lazy val caseClassDecoder: Decoder[CatName[cats.Id]] = decodeModel
+  implicit val caseClassEncoder: Encoder[CatName[cats.Id]] = encodeModel
+  implicit val caseClassDecoder: Decoder[CatName[cats.Id]] = decodeModel
 
   val modelInstance: CatName[cats.Id] = CatName[cats.Id](
     name = 8594,

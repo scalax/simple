@@ -8,7 +8,7 @@ import net.scalax.simple.codec.to_list_generic.{SimpleProduct1, SimpleProduct2, 
 object CirceGeneric {
   type Named[_] = String
 
-  def encodeModelImpl[F[_[_]]](implicit g: F[Encoder], g1: SimpleProductX.NotHList.Appender[F], named: F[Named]): Encoder[F[cats.Id]] = {
+  def encodeModelImpl[F[_[_]]](implicit g: F[Encoder], g1: SimpleProductX[F], named: F[Named]): Encoder[F[cats.Id]] = {
     val sp1: SimpleProduct1.Appender[F]       = SimpleProduct1[F].derived(g1)
     val sp2: SimpleProduct2.Appender[F]       = SimpleProduct2[F].derived(g1)
     val sp3: SimpleProduct3.Appender[F]       = SimpleProduct3[F].derived(g1)
@@ -31,7 +31,7 @@ object CirceGeneric {
 
   def decodeModelImpl[F[_[_]]](implicit
     g: F[Decoder],
-    g1: SimpleProductX.NotHList.Appender[F],
+    g1: SimpleProductX[F],
     named: F[Named]
   ): Decoder[F[cats.Id]] = {
     val sp2: SimpleProduct2.Appender[F] = SimpleProduct2[F].derived(g1)
