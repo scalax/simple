@@ -48,7 +48,7 @@ object CirceText2 {
 
   implicit val caseClassNameEncoder: Encoder[CatName[Named]] = encodeModel[FAlias]
   implicit val caseClassNameDecoder: Decoder[CatName[Named]] = decodeModel[FAlias]
-  val namedMode: CatName[Named]                              = implicitly[ModelLabelled[FAlias]].modelLabelled
+  val namedMode: CatName[Named]                              = ModelLabelled[FAlias].implicitly.modelLabelled
 
   final def main(args: Array[String]): Unit = {
     println(namedMode.asJson.spaces2)

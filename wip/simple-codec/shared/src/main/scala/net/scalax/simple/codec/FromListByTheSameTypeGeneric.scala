@@ -19,7 +19,7 @@ object FromListByTheSameTypeGeneric {
       override def apply[U]: SeqType => (SeqType, T) = l => (takeTail(l), takeHead(l))
     }
 
-  private def monadAdd[ItType, SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = SeqType => (SeqType, U) })#T1] =
+  private def monadAdd[SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = SeqType => (SeqType, U) })#T1] =
     new SimpleProduct1.AppendMonad[({ type T1[U] = SeqType => (SeqType, U) })#T1] {
       override def zip[A, B](
         ma: SeqType => (SeqType, A),
@@ -46,7 +46,7 @@ object FromListByTheSameTypeGeneric {
         takeHead: SeqType => TA,
         takeTail: SeqType => SeqType
       ): SeqType => F[({ type U1[_] = TA })#U1] = { u1 =>
-        val u = o1.toHList1[({ type ModelF[M] = SeqType => (SeqType, M) })#ModelF, ({ type T1[_] = TA })#T1](monadAdd[TA, SeqType])(
+        val u = o1.toHList1[({ type ModelF[M] = SeqType => (SeqType, M) })#ModelF, ({ type T1[_] = TA })#T1](monadAdd[SeqType])(
           toNamed[TA, SeqType](takeHead, takeTail)
         )
         u(u1)._2

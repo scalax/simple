@@ -11,7 +11,9 @@ object ModelLabelled {
     def derived(simpleNamed: CompatLabelled[F], simpleProduct1: SimpleProduct1.Appender[F]): ModelLabelled[F] = new ModelLabelled[F] {
       override def modelLabelled: F[({ type M1[_] = String })#M1] = CompatLabelled[F].toLabelled(simpleProduct1, simpleNamed)
     }
+
+    @inline def implicitly(implicit modelSize: ModelLabelled[F]): ModelLabelled[F] = modelSize
   }
 
-  def apply[F[_[_]]]: Builder[F] = new Builder[F]
+  @inline def apply[F[_[_]]]: Builder[F] = new Builder[F]
 }

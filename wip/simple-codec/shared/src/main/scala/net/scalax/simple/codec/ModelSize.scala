@@ -9,7 +9,9 @@ object ModelSize {
     def derived(simpleNamed: CompatLabelled[F]): ModelSize[F] = new ModelSize[F] {
       override val modelSize: Int = CompatLabelled[F].toLobelledSize(simpleNamed)
     }
+
+    @inline def implicitly(implicit modelSize: ModelSize[F]): ModelSize[F] = modelSize
   }
 
-  def apply[F[_[_]]]: Builder[F] = new Builder[F]
+  @inline def apply[F[_[_]]]: Builder[F] = new Builder[F]
 }
