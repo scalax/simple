@@ -1,6 +1,6 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.{ConvertM1, ConvertM3, SimpleProduct1, SimpleProduct3}
+import net.scalax.simple.codec.to_list_generic.SimpleProduct1
 
 trait SimpleFill[F[_[_]]] {
   def fill[S[_]](t: SimpleFill.FillI[S]): F[S]

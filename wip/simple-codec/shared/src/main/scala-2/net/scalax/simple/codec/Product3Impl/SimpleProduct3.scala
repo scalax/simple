@@ -1,7 +1,7 @@
 package net.scalax.simple.codec
 package to_list_generic
 
-class SimpleProduct3[AppendFunc[_, _]] {
+class SimpleProductX[AppendFunc[_, _]] {
   SimpleProduct3Self =>
 
   trait AppendContext[HListLike, ZeroType <: HListLike, AppendType[_, _ <: HListLike] <: HListLike] {
@@ -226,4 +226,4 @@ class SimpleProduct3[AppendFunc[_, _]] {
 
 }
 
-object SimpleProduct3 extends SimpleProduct3[Tuple2]
+object SimpleProductX extends SimpleProductX[Tuple2]

@@ -17,4 +17,10 @@ object SimpleProduct2 {
     def toHList[M3[_, _], M1[_], M2[_]](monad: AppendMonad[M3])(func: TypeGen[M3, M1, M2]): M3[F[M1], F[M2]]
   }
 
+  class Builder[F[_[_]]] {
+    def derived(t: SimpleProductX.NotHList.Appender[F]): Appender[F] = ConvertM2Impl.AppendMonad.Appender.to2[F](t)
+  }
+
+  def apply[F[_[_]]]: Builder[F] = new Builder[F]
+
 }

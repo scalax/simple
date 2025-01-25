@@ -9,7 +9,7 @@ trait ModelLabelled[F[_[_]]] {
 object ModelLabelled {
   class Builder[F[_[_]]] {
     def derived(simpleNamed: CompatLabelled[F], simpleProduct1: SimpleProduct1.Appender[F]): ModelLabelled[F] = new ModelLabelled[F] {
-      override def modelLabelled: F[({ type M1[_] = String })#M1] = CompatLabelled.toLabelled[F](simpleProduct1, simpleNamed)
+      override def modelLabelled: F[({ type M1[_] = String })#M1] = CompatLabelled[F].toLabelled(simpleProduct1, simpleNamed)
     }
   }
 

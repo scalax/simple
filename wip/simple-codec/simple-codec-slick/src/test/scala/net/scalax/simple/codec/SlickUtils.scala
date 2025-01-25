@@ -1,18 +1,17 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.to_list_generic.{ConvertM1, ConvertM2, ConvertM3, SimpleProduct1, SimpleProduct2, SimpleProduct3}
-import net.scalax.simple.codec.utils.SimpleP
+import net.scalax.simple.codec.to_list_generic.{SimpleProduct1, SimpleProduct2, SimpleProduct3, SimpleProductX}
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 
-class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: SimpleProduct3.NotHList.Appender[F]) {
+class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: SimpleProductX.NotHList.Appender[F]) {
   import slickProfile.api._
 
   val commonAlias: SlickCompatAlias[slickProfile.type] = SlickCompatAlias.build(slickProfile)
-  val appender1: SimpleProduct1.Appender[F]            = ConvertM1.Appender.to1[F](appender)
-  val appender3: SimpleP.Appender[F]                   = ConvertM3.AppendMonad.Appender.to3[F](appender)
-  val appender2: SimpleProduct2.Appender[F]            = ConvertM2.AppendMonad.Appender.to2[F](appender)
+  val appender1: SimpleProduct1.Appender[F]            = SimpleProduct1[F].derived(appender)
+  val appender2: SimpleProduct2.Appender[F]            = SimpleProduct2[F].derived(appender)
+  val appender3: SimpleProduct3.Appender[F]            = SimpleProduct3[F].derived(appender)
 
   def colN[T](
     name: String,
@@ -55,9 +54,9 @@ class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: Simpl
 }
 
 object SlickUtils {
-  def apply[F[_[_]]](appender: SimpleProduct3.NotHList.Appender[F]): SlickUtilsApply[F] = new SlickUtilsApply[F](appender)
+  def apply[F[_[_]]](appender: SimpleProductX.NotHList.Appender[F]): SlickUtilsApply[F] = new SlickUtilsApply[F](appender)
 
-  class SlickUtilsApply[F[_[_]]](appender: SimpleProduct3.NotHList.Appender[F]) {
+  class SlickUtilsApply[F[_[_]]](appender: SimpleProductX.NotHList.Appender[F]) {
     def build[V <: JdbcProfile](slickProfile: V): SlickUtils[F, slickProfile.type] =
       new SlickUtils[F, slickProfile.type](slickProfile, appender)
   }

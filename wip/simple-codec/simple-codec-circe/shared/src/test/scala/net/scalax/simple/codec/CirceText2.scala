@@ -2,7 +2,7 @@ package net.scalax.simple.codec
 
 import io.circe._
 import io.circe.syntax._
-import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, ConvertM1, SimpleProduct1, SimpleProduct3}
+import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, SimpleProduct1, SimpleProductX}
 import net.scalax.simple.codec.generic.SimpleFromProduct
 import CirceGeneric2._
 
@@ -16,9 +16,10 @@ object CirceText2 {
 
   implicit val deco2_1: AppenderFromSize[CatName]                  = AppenderFromSize[CatName].derived(simpleGen1.generic)
   implicit val namedLabel: CompatLabelled[CatName]                 = CompatLabelled[CatName].derived(simpleGen1.generic)
-  implicit val modelSize: ModelSize[CatName]                       = implicitly[CompatLabelled[CatName]].toModelSize
-  implicit val appender: SimpleProduct3.NotHList.Appender[CatName] = implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)
-  implicit val modelLabelled_catName: ModelLabelled[CatName]       = implicitly[CompatLabelled[CatName]].toLabelled(implicitly)
+  implicit val modelSize: ModelSize[CatName]                       = ModelSize[CatName].derived(implicitly)
+  implicit val appender: SimpleProductX.NotHList.Appender[CatName] = implicitly[AppenderFromSize[CatName]].inputModelSizeF(implicitly)
+  implicit val appender1: SimpleProduct1.Appender[CatName]         = SimpleProduct1[CatName].derived(implicitly)
+  implicit val modelLabelled_catName: ModelLabelled[CatName]       = ModelLabelled[CatName].derived(implicitly, implicitly)
 
   type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
 
@@ -41,13 +42,13 @@ object CirceText2 {
   implicit val namedModel_catName2: ModelLabelled[FAlias] = new ModelLabelled[FAlias] {
     override def modelLabelled: CatName[Named] = implicitly[ModelLabelled[CatName]].modelLabelled
   }
-  implicit lazy val basedInstalled2: SimpleProduct3.NotHList.Appender[FAlias] = ToItera[CatName].derived.to[String]
+  implicit lazy val basedInstalled2: SimpleProductX.NotHList.Appender[FAlias] = ToItera[CatName].derived.to[String]
 
-  implicit lazy val caseClassNameEncoder: Encoder[CatName[Named]] = encodeModel[FAlias]
-  implicit lazy val caseClassNameDecoder: Decoder[CatName[Named]] = decodeModel[FAlias]
-  implicit val appender2M1: SimpleProduct1.Appender[FAlias]       = ConvertM1.Appender.to1[FAlias](implicitly)
+  implicit val appender2M1: SimpleProduct1.Appender[FAlias] = SimpleProduct1[FAlias].derived(implicitly)
 
-  val namedMode: CatName[Named] = namedModel_catName2.modelLabelled
+  implicit val caseClassNameEncoder: Encoder[CatName[Named]] = encodeModel[FAlias]
+  implicit val caseClassNameDecoder: Decoder[CatName[Named]] = decodeModel[FAlias]
+  val namedMode: CatName[Named]                              = implicitly[ModelLabelled[FAlias]].modelLabelled
 
   final def main(args: Array[String]): Unit = {
     println(namedMode.asJson.spaces2)

@@ -7,7 +7,7 @@ trait ModelSize[F[_[_]]] {
 object ModelSize {
   class Builder[F[_[_]]] {
     def derived(simpleNamed: CompatLabelled[F]): ModelSize[F] = new ModelSize[F] {
-      override def modelSize: Int = CompatLabelled.toLobelledSize[F](simpleNamed)
+      override val modelSize: Int = CompatLabelled[F].toLobelledSize(simpleNamed)
     }
   }
 
