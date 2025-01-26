@@ -44,7 +44,7 @@ class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: Simpl
 
     val mapResult = mapGeneric.map[({ type F1[T] = ((String, OptsFromCol[T]), TypedType[T]) })#F1, Rep](
       new MapGenerc.MapFunction[({ type F1[T] = ((String, OptsFromCol[T]), TypedType[T]) })#F1, Rep] {
-        override def map[X1]: (((String, OptsFromCol[X1]), TypedType[X1])) => Rep[X1] = t => colN(t._1._1, t._1._2, t._2)(tb)
+        override def map[X1](t: ((String, OptsFromCol[X1]), TypedType[X1])): Rep[X1] = colN(t._1._1, t._1._2, t._2)(tb)
       }
     )
 

@@ -20,7 +20,9 @@ object CirceText1 {
   implicit val modelSize: ModelSize[CatName]               = ModelSize[CatName].derived(implicitly)
   implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly)
   implicit val appender1: SimpleProduct1.Appender[CatName] = SimpleProduct1[CatName].derived(implicitly)
-  implicit val modelLabelled: ModelLabelled[CatName]       = ModelLabelled[CatName].derived(implicitly, implicitly)
+  implicit val fromListByTheSameTypeGeneric: FromListByTheSameTypeGeneric[CatName] =
+    FromListByTheSameTypeGeneric[CatName].derived(implicitly)
+  implicit val modelLabelled: ModelLabelled[CatName] = ModelLabelled[CatName].derived(implicitly, implicitly)
 
   implicit val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
   implicit val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)

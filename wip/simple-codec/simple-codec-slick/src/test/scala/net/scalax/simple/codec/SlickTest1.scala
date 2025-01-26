@@ -43,7 +43,9 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   implicit val modelSize: ModelSize[F1Alias]               = ModelSize[F1Alias].derived(implicitly)
   implicit val appender: SimpleProductX[F1Alias]           = SimpleProductX[F1Alias].derived(implicitly, implicitly)
   implicit val appender1: SimpleProduct1.Appender[F1Alias] = SimpleProduct1[F1Alias].derived(implicitly)
-  implicit val userNamed: ModelLabelled[F1Alias]           = ModelLabelled[F1Alias].derived(implicitly, implicitly)
+  implicit val fromListByTheSameTypeGeneric: FromListByTheSameTypeGeneric[F1Alias] =
+    FromListByTheSameTypeGeneric[F1Alias].derived(implicitly)
+  implicit val userNamed: ModelLabelled[F1Alias] = ModelLabelled[F1Alias].derived(implicitly, implicitly)
 
   def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](appender).build(slickProfile).userOptImpl
 
@@ -81,7 +83,7 @@ object Runner1 {
     val newModel: Model2[Id]   = new Model2[Id](p)
     val newOpt: Model2[Option] = new Model2[Option](p)
     val modelInt: IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1] =
-      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.appender1)
+      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.fromListByTheSameTypeGeneric)
 
     import p.api._
 
