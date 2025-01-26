@@ -5,7 +5,7 @@ import shapeless.HList
 import net.scalax.simple.codec.to_list_generic.SimpleProduct1
 
 trait CompatLabelled[F[_[_]]] {
-  def modelLabelled: CompatLabelled.NamedType
+  def compatLabelled: CompatLabelled.NamedType
 }
 
 object CompatLabelled {
@@ -13,7 +13,7 @@ object CompatLabelled {
 
   class Builder[F[_[_]]] {
     def derived(simpleNamed: SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]]): CompatLabelled[F] = new CompatLabelled[F] {
-      override val modelLabelled: CompatLabelled.NamedType = simpleNamed.labelled
+      override val compatLabelled: CompatLabelled.NamedType = simpleNamed.labelled
     }
 
     def toLabelled(
@@ -25,10 +25,10 @@ object CompatLabelled {
         takeHead = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].head.name,
         takeTail = h => h.asInstanceOf[shapeless.::[Symbol, shapeless.HList]].tail
       )
-      fromList(compatModel.modelLabelled)
+      fromList(compatModel.compatLabelled)
     }
 
-    def toLobelledSize(compat: CompatLabelled[F]): Int = compat.modelLabelled.runtimeLength
+    def toLobelledSize(compat: CompatLabelled[F]): Int = compat.compatLabelled.runtimeLength
   }
 
   def apply[F[_[_]]]: Builder[F] = new Builder[F]
