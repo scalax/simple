@@ -14,7 +14,7 @@ object GetFieldModel {
     ): GetFieldModel[F] = new GetFieldModel[F] {
       override def getFieldModel[I[_]]: F[({ type XI[t] = F[I] => I[t] })#XI] = {
         val mapper = new MapGenerc.MapFunction[({ type U1[_] = Int })#U1, ({ type XI[t] = F[I] => I[t] })#XI] {
-          def map[X1]: Int => F[I] => I[X1] = n => model => model.productElement(n).asInstanceOf[I[X1]]
+          def map[X1](n: Int): F[I] => I[X1] = model => model.productElement(n).asInstanceOf[I[X1]]
         }
 
         p.map[({ type U1[_] = Int })#U1, ({ type XI[t] = F[I] => I[t] })#XI](mapper)(indexModel.model)

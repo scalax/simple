@@ -9,8 +9,11 @@ trait MapGenerc[F[_[_]]] {
 object MapGenerc {
 
   trait MapFunction[S[_], T[_]] {
-    def map[X1]: S[X1] => T[X1]
+    def map[X1](in: S[X1]): T[X1]
   }
+
+  @inline private val anyToAnyImplImpl: Any => Any = identity[Any]
+  @inline private def anyToAnyImpl[T]: T => T      = anyToAnyImplImpl.asInstanceOf[T => T]
 
   class Builder[F[_[_]]] {
     def derived(generic3: SimpleProduct2.Appender[F]): MapGenerc[F] = new MapGenerc[F] {
@@ -19,7 +22,7 @@ object MapGenerc {
         val m: SimpleProduct2.AppendMonad[MA] = new SimpleProduct2.AppendMonad[MA] {
           override def zip[A, B, S, T](ma: A => B, ms: S => T): ((A, S)) => (B, T)                            = a => (ma(a._1), ms(a._2))
           override def to[A, B, S, T](m1: A => B)(in1: A => S, in2: B => T)(in3: S => A, in4: T => B): S => T = s => in2(m1(in3(s)))
-          override val zero: Unit => Unit                                                                     = identity
+          override val zero: Unit => Unit                                                                     = anyToAnyImpl[Unit]
         }
         val funcImpl: SimpleProduct2.TypeGen[MA, S, T] = new SimpleProduct2.TypeGen[MA, S, T] {
           override def apply[X1]: S[X1] => T[X1] = sx => input.map(sx)

@@ -15,31 +15,24 @@ object FillIdentity {
 
   def toModel[F[_[_]], I[_], Poly](mapGenerc: MapGenerc[F]): F[WithPoly[I, Poly]#Type] => F[I] = { instance =>
     val mapper = mapGenerc.map[WithPoly[I, Poly]#Type, I](new MapGenerc.MapFunction[WithPoly[I, Poly]#Type, I] {
-      override def map[X1]: ModelImplement[Poly, I[X1]] => I[X1] = m => m.value
+      override def map[X1](m: ModelImplement[Poly, I[X1]]): I[X1] = m.value
     })
-
     mapper(instance)
   }
 
   def fromModel[F[_[_]], I[_], Poly](mapGenerc: MapGenerc[F]): F[I] => F[WithPoly[I, Poly]#Type] = { instance =>
     val mapper = mapGenerc.map[I, WithPoly[I, Poly]#Type](new MapGenerc.MapFunction[I, WithPoly[I, Poly]#Type] {
-      override def map[X1]: I[X1] => ModelImplement[Poly, I[X1]] = m => new ModelImplement[Poly, I[X1]](m)
+      override def map[X1](m: I[X1]): ModelImplement[Poly, I[X1]] = new ModelImplement[Poly, I[X1]](m)
     })
-
     mapper(instance)
   }
 
   // ===
-
-  trait FillIdentityGeneric[H1] {
-    def generic(implicit
-      h: utils.impl.FillerId[H1]
-    ): utils.impl.FillerId[H1] = h
+  class FillIdentityGeneric[H1] {
+    def generic(implicit h: utils.impl.FillerId[H1]): utils.impl.FillerId[H1] = h
   }
   object FillIdentityGeneric {
-    def apply[H1]: FillIdentityGeneric[H1] = new FillIdentityGeneric[H1] {
-      //
-    }
+    def apply[H1]: FillIdentityGeneric[H1] = new FillIdentityGeneric[H1]
   }
 
   /*class DerivedApply[F[_[_]], I[_], Poly] {

@@ -2,29 +2,23 @@ package net.scalax.simple.codec
 package to_list_generic
 
 import shapeless._
-import utils._
-
 import scala.collection.compat._
 
 trait AppenderFromSize[F[_[_]]] {
-  self =>
-  def inputModelSize(modelSize: Int): SimpleProductX[F]
-  def inputModelSizeF(modelSize: ModelSize[F]): SimpleProductX[F] = self.inputModelSize(modelSize.modelSize)
+  def to[X[_]](model: F[X]): Any
+  def from[X[_]](collection: Any): F[X]
 }
 
 object AppenderFromSize {
-  self =>
 
-  private def tran[F[_[_]]](h: SimpleFrom[F[({ type FX[_] = Any })#FX]] with SimpleTo[F[({ type FX[_] = Any })#FX]]): AppenderFromSize[F] =
-    new AppenderFromSize[F] {
-      override def inputModelSize(i: Int): SimpleProductX[F] = new SimpleProductX[F] {
-        override val model: SimpleProductXImpl.NotHList.Appender[F] = new SimpleProductXImpl.NotHList.FromOtherAppender[GetAppender.F1, F] {
-          override def fromModel[X[_]](f: GetAppender.F1[X]): F[X]                     = h.from(f).asInstanceOf[F[X]]
-          override def toModel[X[_]](g: F[X]): GetAppender.F1[X]                       = h.to(g.asInstanceOf[F[({ type FX[_] = Any })#FX]])
-          override def appenderF: SimpleProductXImpl.NotHList.Appender[GetAppender.F1] = GetAppender.get(i)
-        }
-      }
+  def tran[F[_[_]]](h: AppenderFromSize[F], modelSize: ModelSize[F]): SimpleProductX[F] = new SimpleProductX[F] {
+    override val model: SimpleProductXImpl.NotHList.Appender[F] = new SimpleProductXImpl.NotHList.FromOtherAppender[GetAppender.F1, F] {
+      override def fromModel[X[_]](f: GetAppender.F1[X]): F[X] = h.from(f).asInstanceOf[F[X]]
+      override def toModel[X[_]](g: F[X]): GetAppender.F1[X] =
+        h.to(g.asInstanceOf[F[({ type FX[_] = Any })#FX]]).asInstanceOf[GetAppender.F1[X]]
+      override def appenderF: SimpleProductXImpl.NotHList.Appender[GetAppender.F1] = GetAppender.get(modelSize.modelSize)
     }
+  }
 
   val appender: SimpleProductXImpl.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] =
     new SimpleProductXImpl.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] {
@@ -66,7 +60,10 @@ object AppenderFromSize {
   class Builder[F[_[_]]] {
     def derived(
       simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF]] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF]]
-    ): AppenderFromSize[F] = self.tran(simpleTo)
+    ): AppenderFromSize[F] = new AppenderFromSize[F] {
+      override def to[X[_]](model: F[X]): Any        = simpleTo.to(model.asInstanceOf[F[({ type AnyF[_] = Any })#AnyF]])
+      override def from[X[_]](collection: Any): F[X] = simpleTo.from(collection.asInstanceOf[HList]).asInstanceOf[F[X]]
+    }
   }
 
   def apply[F[_[_]]]: Builder[F] = new Builder[F]

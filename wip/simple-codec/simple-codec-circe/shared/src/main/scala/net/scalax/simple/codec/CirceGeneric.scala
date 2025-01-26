@@ -18,22 +18,18 @@ object CirceGeneric {
 
     Encoder.instance[F[cats.Id]] { m =>
       val zip1 = zipGeneric.zip(m, g)
-      val map1 = mapGenerc.map[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[T1] = Json })#U1](
-        new MapGenerc.MapFunction[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[T1] = Json })#U1] {
-          override def map[X1]: ((X1, Encoder[X1])) => Json = s => s._2(s._1)
+      val map1 = mapGenerc.map[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[_] = Json })#U1](
+        new MapGenerc.MapFunction[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[_] = Json })#U1] {
+          override def map[X1](s: (X1, Encoder[X1])): Json = s._2(s._1)
         }
       )(zip1)
-      val zip2  = zipGeneric.zip[({ type U1[T1] = String })#U1, ({ type U1[T1] = Json })#U1](named, map1)
+      val zip2  = zipGeneric.zip[({ type U1[_] = String })#U1, ({ type U1[_] = Json })#U1](named, map1)
       val list1 = toList.toListByTheSameType[(String, Json), List[(String, Json)]](zero = List.empty, append = (tail, h) => h :: tail)(zip2)
       Json.fromJsonObject(JsonObject.fromIterable(list1))
     }
   }
 
-  def decodeModelImpl[F[_[_]]](implicit
-    g: F[Decoder],
-    g1: SimpleProductX[F],
-    named: F[Named]
-  ): Decoder[F[cats.Id]] = {
+  def decodeModelImpl[F[_[_]]](implicit g: F[Decoder], g1: SimpleProductX[F], named: F[Named]): Decoder[F[cats.Id]] = {
     val sp2: SimpleProduct2.Appender[F] = SimpleProduct2[F].derived(g1)
     val sp3: SimpleProduct3.Appender[F] = SimpleProduct3[F].derived(g1)
     val zipGeneric: ZipGeneric[F]       = ZipGeneric[F].derived(sp3)
@@ -42,8 +38,8 @@ object CirceGeneric {
     val zip1 = zipGeneric.zip[Named, Decoder](named, g)
     val map1 = mapGenerc.map[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1](
       new MapGenerc.MapFunction[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
-        override def map[X1]: ((String, Decoder[X1])) => HCursor => Decoder.Result[X1] =
-          (nameDecoder: (String, Decoder[X1])) => (hcursor: HCursor) => hcursor.downField(nameDecoder._1).as(nameDecoder._2)
+        override def map[X1](nameDecoder: (String, Decoder[X1])): HCursor => Decoder.Result[X1] =
+          hcursor => hcursor.downField(nameDecoder._1).as(nameDecoder._2)
       }
     )(zip1)
 
