@@ -123,13 +123,13 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     }
 
     object ZeroHListLikeAppender {
-      val value: ZeroHListLikeAppender = new ZeroHListLikeAppender {
+      @inline val value: ZeroHListLikeAppender = new ZeroHListLikeAppender {
         ZeroHListLikeAppenderSelf =>
         override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
           func: NotHList.TypeGen[M, FT]
         ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = monad.to(monad.zero)(ZeroUnitMapper.zeroAppender[FT])
 
-        override lazy val tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
+        @inline override lazy val tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
       }
 
       locally {

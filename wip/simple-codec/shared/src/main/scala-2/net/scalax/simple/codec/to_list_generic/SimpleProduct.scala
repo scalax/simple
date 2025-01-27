@@ -58,11 +58,9 @@ object AppenderFromSize {
   }
 
   class Builder[F[_[_]]] {
-    def derived(
-      simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF]] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF]]
-    ): AppenderFromSize[F] = new AppenderFromSize[F] {
+    def derived(simpleTo: Generic.Aux[F[({ type AnyF[_] = Any })#AnyF], _ <: HList]): AppenderFromSize[F] = new AppenderFromSize[F] {
       override def to[X[_]](model: F[X]): Any        = simpleTo.to(model.asInstanceOf[F[({ type AnyF[_] = Any })#AnyF]])
-      override def from[X[_]](collection: Any): F[X] = simpleTo.from(collection.asInstanceOf[HList]).asInstanceOf[F[X]]
+      override def from[X[_]](collection: Any): F[X] = simpleTo.from(collection.asInstanceOf[simpleTo.Repr]).asInstanceOf[F[X]]
     }
   }
 

@@ -1,7 +1,7 @@
 package net.scalax.simple.codec
 
 import net.scalax.simple.codec.generic.SimpleNamed
-import shapeless.HList
+import shapeless.{DefaultSymbolicLabelling, HList}
 import net.scalax.simple.codec.to_list_generic.SimpleProduct1
 
 trait CompatLabelled[F[_[_]]] {
@@ -12,9 +12,10 @@ object CompatLabelled {
   type NamedType = HList
 
   class Builder[F[_[_]]] {
-    def derived(simpleNamed: SimpleNamed[F[({ type AnyF[_] = Any })#AnyF]]): CompatLabelled[F] = new CompatLabelled[F] {
-      override val compatLabelled: CompatLabelled.NamedType = simpleNamed.labelled
-    }
+    def derived(simpleNamed: DefaultSymbolicLabelling.Aux[F[({ type AnyF[_] = Any })#AnyF], _ <: HList]): CompatLabelled[F] =
+      new CompatLabelled[F] {
+        override val compatLabelled: CompatLabelled.NamedType = simpleNamed.apply()
+      }
 
     def toLabelled(fromListGeneric: FromListByTheSameTypeGeneric[F], compatModel: CompatLabelled[F]): F[({ type M1[_] = String })#M1] = {
       val fromList = fromListGeneric.fromListByTheSameType[String, CompatLabelled.NamedType](

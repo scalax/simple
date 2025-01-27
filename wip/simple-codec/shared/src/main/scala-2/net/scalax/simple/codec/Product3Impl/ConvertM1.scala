@@ -12,8 +12,6 @@ object ConvertM1Impl {
     override type AndThen = SimpleProductXImpl.NotHList.UnitInputType
   }
 
-  type M1InputType[M1[_], T <: SimpleProductXImpl.NotHList.InputType] = M1[T#toItem]
-
   object TypeGen {
     def from1[M2[_], M1[_]](
       typeGen: SimpleProduct1.TypeGen[M2, M1]
@@ -21,12 +19,6 @@ object ConvertM1Impl {
       new SimpleProductXImpl.NotHList.TypeGen[({ type TA[U <: SimpleProductXImpl.NotHList.InputType] = M2[U#toItem] })#TA, M1FType[M1]] {
         override def apply[T]: M2[M1[T]] = typeGen[T]
       }
-
-    def to1[M2[_], M1[_]](
-      typeGen: SimpleProductXImpl.NotHList.TypeGen[({ type TA[U <: SimpleProductXImpl.NotHList.InputType] = M2[U#toItem] })#TA, M1FType[M1]]
-    ): SimpleProduct1.TypeGen[M2, M1] = new SimpleProduct1.TypeGen[M2, M1] {
-      override def apply[T]: M2[M1[T]] = typeGen[T]
-    }
   }
 
   object AppendMonad {
@@ -45,22 +37,6 @@ object ConvertM1Impl {
         ): M2[B#toItem] =
           append.to[A#toItem, B#toItem](m1)(in1 = in1.map)(out1 = in1.reverseMap)
 
-        override def zero: M2[Unit] = append.zero
-      }
-
-    def to1[M2[_]](
-      append: SimpleProductXImpl.NotHList.AppendMonad[({ type TA[U <: SimpleProductXImpl.NotHList.InputType] = M2[U#toItem] })#TA]
-    ): SimpleProduct1.AppendMonad[M2] =
-      new SimpleProduct1.AppendMonad[M2] {
-        override def zip[A, S](ma: M2[A], ms: M2[S]): M2[(A, S)] = append.zip[InputType1[A], InputType1[S]](ma, ms)
-        override def to[A, S](m1: M2[A])(in1: A => S)(in3: S => A): M2[S] =
-          append.to[InputType1[A], InputType1[S]](m1)(new SimpleProductXImpl.NotHList.Mapper[InputType1[A], InputType1[S]] {
-            override def map(ia: A): S        = in1(ia)
-            override def reverseMap(ib: S): A = in3(ib)
-            override def nextMapper
-              : SimpleProductXImpl.NotHList.Mapper[SimpleProductXImpl.NotHList.UnitInputType, SimpleProductXImpl.NotHList.UnitInputType] =
-              SimpleProductXImpl.NotHList.Mapper.unitInputType
-          })
         override def zero: M2[Unit] = append.zero
       }
 

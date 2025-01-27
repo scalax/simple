@@ -3,7 +3,14 @@ package codec
 
 import io.circe._
 import io.circe.syntax._
-import net.scalax.simple.codec.to_list_generic.{SimpleProduct1, SimpleProduct2, SimpleProduct3, SimpleProductX, ToListByTheSameTypeGeneric}
+import net.scalax.simple.codec.to_list_generic.{
+  SimpleProduct1,
+  SimpleProduct2,
+  SimpleProduct3,
+  SimpleProduct4,
+  SimpleProductX,
+  ToListByTheSameTypeGeneric
+}
 
 object CirceGeneric {
   type Named[_] = String
@@ -12,19 +19,20 @@ object CirceGeneric {
     val sp1: SimpleProduct1.Appender[F]       = SimpleProduct1[F].derived(g1)
     val sp2: SimpleProduct2.Appender[F]       = SimpleProduct2[F].derived(g1)
     val sp3: SimpleProduct3.Appender[F]       = SimpleProduct3[F].derived(g1)
+    val sp4: SimpleProduct4.Appender[F]       = SimpleProduct4[F].derived(g1)
     val toList: ToListByTheSameTypeGeneric[F] = ToListByTheSameTypeGeneric[F].derived(sp1)
     val zipGeneric: ZipGeneric[F]             = ZipGeneric[F].derived(sp3)
+    val zip3Generic: Zip3Generic[F]           = Zip3Generic[F].derived(sp4)
     val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(sp2)
 
     Encoder.instance[F[cats.Id]] { m =>
-      val zip1 = zipGeneric.zip(m, g)
-      val map1 = mapGenerc.map[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[_] = Json })#U1](
-        new MapGenerc.MapFunction[({ type U1[T1] = (T1, Encoder[T1]) })#U1, ({ type U1[_] = Json })#U1] {
-          override def map[X1](s: (X1, Encoder[X1])): Json = s._2(s._1)
+      val zip1 = zip3Generic.zip(named, g, m)
+      val map1 = mapGenerc.map[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1](
+        new MapGenerc.MapFunction[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1] {
+          override def map[X1](s: (String, Encoder[X1], X1)): (String, Json) = (s._1, s._2(s._3))
         }
       )(zip1)
-      val zip2  = zipGeneric.zip[({ type U1[_] = String })#U1, ({ type U1[_] = Json })#U1](named, map1)
-      val list1 = toList.toListByTheSameType[(String, Json), List[(String, Json)]](zero = List.empty, append = (tail, h) => h :: tail)(zip2)
+      val list1 = toList.toListByTheSameType[(String, Json), List[(String, Json)]](zero = List.empty, append = (tail, h) => h :: tail)(map1)
       Json.fromJsonObject(JsonObject.fromIterable(list1))
     }
   }

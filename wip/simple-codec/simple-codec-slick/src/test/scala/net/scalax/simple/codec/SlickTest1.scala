@@ -36,10 +36,10 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   def userTypedTypeGeneric(implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
     UserAbs[TypedType, U](implicitly, implicitly, implicitly)
 
-  def simpleGen1 = SimpleFromProduct[F1Alias].derived
+  val simpleGen1 = SimpleFromProduct[F1Alias].derived
 
-  implicit def deco1_2: AppenderFromSize[F1Alias]          = AppenderFromSize[F1Alias].derived(simpleGen1.generic)
-  implicit val namedLabel: CompatLabelled[F1Alias]         = CompatLabelled[F1Alias].derived(simpleGen1.generic)
+  implicit val deco1_2: AppenderFromSize[F1Alias]          = AppenderFromSize[F1Alias].derived(implicitly)
+  implicit val namedLabel: CompatLabelled[F1Alias]         = CompatLabelled[F1Alias].derived(implicitly)
   implicit val modelSize: ModelSize[F1Alias]               = ModelSize[F1Alias].derived(implicitly)
   implicit val appender: SimpleProductX[F1Alias]           = SimpleProductX[F1Alias].derived(implicitly, implicitly)
   implicit val appender1: SimpleProduct1.Appender[F1Alias] = SimpleProduct1[F1Alias].derived(implicitly)
