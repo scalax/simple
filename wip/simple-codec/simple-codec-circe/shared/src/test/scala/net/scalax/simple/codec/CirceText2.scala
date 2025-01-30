@@ -3,7 +3,6 @@ package net.scalax.simple.codec
 import io.circe._
 import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, SimpleProduct1, SimpleProductX}
-import net.scalax.simple.codec.generic.SimpleFromProduct
 import CirceGeneric2._
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
@@ -12,12 +11,9 @@ object CirceText2 {
 
   type Named[_] = String
 
-  val simpleGen1 = SimpleFromProduct[CatName].derived
-
-  implicit val deco2_1: AppenderFromSize[CatName]          = AppenderFromSize[CatName].derived(implicitly)
-  implicit val namedLabel: CompatLabelled[CatName]         = CompatLabelled[CatName].derived(implicitly)
+  implicit val deco2_1: AppenderFromSize[CatName]          = AppenderFromSize[CatName].derived
   implicit val modelSize: ModelSize[CatName]               = ModelSize[CatName].derived(implicitly)
-  implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly)
+  implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly, implicitly)
   implicit val appender1: SimpleProduct1.Appender[CatName] = SimpleProduct1[CatName].derived(implicitly)
   implicit val fromListByTheSameTypeGeneric: FromListByTheSameTypeGeneric[CatName] =
     FromListByTheSameTypeGeneric[CatName].derived(implicitly)
@@ -42,7 +38,7 @@ object CirceText2 {
   }
 
   implicit val namedModel_catName2: ModelLabelled[FAlias] = new ModelLabelled[FAlias] {
-    override def modelLabelled: CatName[Named] = implicitly[ModelLabelled[CatName]].modelLabelled
+    override val modelLabelled: CatName[Named] = ModelLabelled[CatName].implicitly.modelLabelled
   }
   implicit val basedInstalled2: SimpleProductX[FAlias] = ToItera[CatName].derived.to[String](implicitly)
 

@@ -15,18 +15,16 @@ import net.scalax.simple.codec.to_list_generic.{
 object CirceGeneric {
   type Named[_] = String
 
-  def encodeModelImpl[F[_[_]]](implicit g: F[Encoder], g1: SimpleProductX[F], named: F[Named]): Encoder[F[cats.Id]] = {
+  def encodeModelImpl[F[_[_]]](implicit g: F[Encoder], g1: SimpleProductX[F], compatLabelled: ModelLabelled[F]): Encoder[F[cats.Id]] = {
     val sp1: SimpleProduct1.Appender[F]       = SimpleProduct1[F].derived(g1)
     val sp2: SimpleProduct2.Appender[F]       = SimpleProduct2[F].derived(g1)
-    val sp3: SimpleProduct3.Appender[F]       = SimpleProduct3[F].derived(g1)
     val sp4: SimpleProduct4.Appender[F]       = SimpleProduct4[F].derived(g1)
     val toList: ToListByTheSameTypeGeneric[F] = ToListByTheSameTypeGeneric[F].derived(sp1)
-    val zipGeneric: ZipGeneric[F]             = ZipGeneric[F].derived(sp3)
     val zip3Generic: Zip3Generic[F]           = Zip3Generic[F].derived(sp4)
     val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(sp2)
 
     Encoder.instance[F[cats.Id]] { m =>
-      val zip1 = zip3Generic.zip(named, g, m)
+      val zip1 = zip3Generic.zip(compatLabelled.modelLabelled, g, m)
       val map1 = mapGenerc.map[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1](
         new MapGenerc.MapFunction[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1] {
           override def map[X1](s: (String, Encoder[X1], X1)): (String, Json) = (s._1, s._2(s._3))
@@ -37,13 +35,14 @@ object CirceGeneric {
     }
   }
 
-  def decodeModelImpl[F[_[_]]](implicit g: F[Decoder], g1: SimpleProductX[F], named: F[Named]): Decoder[F[cats.Id]] = {
+  def decodeModelImpl[F[_[_]]](implicit g: F[Decoder], g1: SimpleProductX[F], compatLabelled: ModelLabelled[F]): Decoder[F[cats.Id]] = {
+    val sp1: SimpleProduct1.Appender[F] = SimpleProduct1[F].derived(g1)
     val sp2: SimpleProduct2.Appender[F] = SimpleProduct2[F].derived(g1)
     val sp3: SimpleProduct3.Appender[F] = SimpleProduct3[F].derived(g1)
     val zipGeneric: ZipGeneric[F]       = ZipGeneric[F].derived(sp3)
     val mapGenerc: MapGenerc[F]         = MapGenerc[F].derived(sp2)
 
-    val zip1 = zipGeneric.zip[Named, Decoder](named, g)
+    val zip1 = zipGeneric.zip[Named, Decoder](compatLabelled.modelLabelled, g)
     val map1 = mapGenerc.map[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1](
       new MapGenerc.MapFunction[({ type U1[T1] = (String, Decoder[T1]) })#U1, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1] {
         override def map[X1](nameDecoder: (String, Decoder[X1])): HCursor => Decoder.Result[X1] =

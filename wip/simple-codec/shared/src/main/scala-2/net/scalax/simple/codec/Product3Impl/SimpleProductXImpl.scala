@@ -42,7 +42,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     object GetSet {
       @inline private val getsetModel: GetSet[Any, ColType, NotHList.FType] = new GetSet[Any, ColType, NotHList.FType] {
         GetSetImplSelf =>
-        override lazy val nextMapper: GetSet[Any, ColType, NotHList.FType#Next] =
+        @inline override lazy val nextMapper: GetSet[Any, ColType, NotHList.FType#Next] =
           GetSetImplSelf.asInstanceOf[GetSet[Any, ColType, NotHList.FType#Next]]
       }
 

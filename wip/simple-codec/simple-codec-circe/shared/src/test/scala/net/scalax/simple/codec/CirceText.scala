@@ -5,7 +5,6 @@ package aa
 import io.circe._
 import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, SimpleProduct1, SimpleProductX}
-import net.scalax.simple.codec.generic.SimpleFromProduct
 import net.scalax.simple.codec.ModelSize
 import CirceGeneric2._
 
@@ -13,16 +12,13 @@ case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[
 
 object CirceText1 {
 
-  val simpleGen1 = SimpleFromProduct[CatName].derived
-
-  implicit val deco2_1: AppenderFromSize[CatName]          = AppenderFromSize[CatName].derived(implicitly)
-  implicit val namedLabel: CompatLabelled[CatName]         = CompatLabelled[CatName].derived(implicitly)
+  implicit val deco2_1: AppenderFromSize[CatName]          = AppenderFromSize[CatName].derived
   implicit val modelSize: ModelSize[CatName]               = ModelSize[CatName].derived(implicitly)
-  implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly)
+  implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly, implicitly)
   implicit val appender1: SimpleProduct1.Appender[CatName] = SimpleProduct1[CatName].derived(implicitly)
   implicit val fromListByTheSameTypeGeneric: FromListByTheSameTypeGeneric[CatName] =
     FromListByTheSameTypeGeneric[CatName].derived(implicitly)
-  implicit val modelLabelled: ModelLabelled[CatName] = ModelLabelled[CatName].derived(implicitly, implicitly)
+  implicit val modelLabelled_catName: ModelLabelled[CatName] = ModelLabelled[CatName].derived(implicitly, implicitly)
 
   implicit val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
   implicit val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)
