@@ -9,8 +9,6 @@ case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[
 
 object CirceText2 {
 
-  type Named[_] = String
-
   implicit val deco2_1: AppenderFromSize[CatName]          = AppenderFromSize[CatName].derived
   implicit val modelSize: ModelSize[CatName]               = ModelSize[CatName].derived(implicitly)
   implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly, implicitly)
@@ -37,20 +35,18 @@ object CirceText2 {
     })
   }
 
-  implicit val namedModel_catName2: ModelLabelled[FAlias] = new ModelLabelled[FAlias] {
-    override val modelLabelled: CatName[Named] = ModelLabelled[CatName].implicitly.modelLabelled
-  }
-  implicit val basedInstalled2: SimpleProductX[FAlias] = ToItera[CatName].derived.to[String](implicitly)
+  implicit val namedModel_catName2: ModelLabelled[FAlias] = ModelLabelled[FAlias].instance(ModelLabelled[CatName].implicitly.modelLabelled)
+  implicit val basedInstalled2: SimpleProductX[FAlias]    = ToItera[CatName].derived.to[String](implicitly)
 
   implicit val appender2M1: SimpleProduct1.Appender[FAlias] = SimpleProduct1[FAlias].derived(implicitly)
 
-  implicit val caseClassNameEncoder: Encoder[CatName[Named]] = encodeModel[FAlias]
-  implicit val caseClassNameDecoder: Decoder[CatName[Named]] = decodeModel[FAlias]
-  val namedMode: CatName[Named]                              = ModelLabelled[FAlias].implicitly.modelLabelled
+  implicit val caseClassNameEncoder: Encoder[FAlias[cats.Id]] = encodeModel[FAlias]
+  implicit val caseClassNameDecoder: Decoder[FAlias[cats.Id]] = decodeModel[FAlias]
+  val namedMode: FAlias[cats.Id]                              = ModelLabelled[FAlias].implicitly.modelLabelled
 
   final def main(args: Array[String]): Unit = {
     println(namedMode.asJson.spaces2)
-    println(parser.parse(namedMode.asJson.spaces2).right.flatMap(_.as[CatName[Named]]))
+    println(parser.parse(namedMode.asJson.spaces2).right.flatMap(_.as[FAlias[cats.Id]]))
   }
 
   /** { "name" : 8594, "str" : "sdfwerwfweher迷雾日哦", "uClass" : null, "name11" : "xxiwerwjkl", "namexu" : "jerokwjoe收代理费加沃尔" }
