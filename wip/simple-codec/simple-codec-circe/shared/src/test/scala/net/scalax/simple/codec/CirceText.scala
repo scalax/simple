@@ -4,7 +4,7 @@ package aa
 
 import io.circe._
 import io.circe.syntax._
-import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, SimpleProduct1, SimpleProductX}
+import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, FillIdentity, SimpleProduct1, SimpleProductX}
 import net.scalax.simple.codec.ModelSize
 import CirceGeneric2._
 
@@ -20,8 +20,8 @@ object CirceText1 {
     FromListByTheSameTypeGeneric[CatName].derived(implicitly)
   implicit val modelLabelled_catName: ModelLabelled[CatName] = ModelLabelled[CatName].derived(implicitly, implicitly)
 
-  implicit val modelEncoder: CatName[Encoder] = CatName[Encoder](implicitly, implicitly, implicitly, implicitly, implicitly)
-  implicit val modelDecoder: CatName[Decoder] = CatName[Decoder](implicitly, implicitly, implicitly, implicitly, implicitly)
+  implicit val modelEncoder: CatName[Encoder] = FillIdentity[CatName[Encoder]].derived
+  implicit val modelDecoder: CatName[Decoder] = FillIdentity[CatName[Decoder]].derived
 
   implicit val caseClassEncoder: Encoder[CatName[cats.Id]] = encodeModel
   implicit val caseClassDecoder: Decoder[CatName[cats.Id]] = decodeModel

@@ -1,7 +1,7 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, SimpleProduct1, SimpleProductX}
+import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, FillIdentity, SimpleProduct1, SimpleProductX}
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 import slick.lifted.ProvenShape
@@ -32,8 +32,7 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
   type OptsFromCol[T]  = Seq[commonAlias.SqlColumnOptions => ColumnOption[T]]
 
-  def userTypedTypeGeneric(implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] =
-    UserAbs[TypedType, U](implicitly, implicitly, implicitly)
+  def userTypedTypeGeneric(implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = FillIdentity[UserAbs[TypedType, U]].derived
 
   implicit val deco1_2: AppenderFromSize[F1Alias]          = AppenderFromSize[F1Alias].derived
   implicit val modelSize: ModelSize[F1Alias]               = ModelSize[F1Alias].derived(implicitly)
