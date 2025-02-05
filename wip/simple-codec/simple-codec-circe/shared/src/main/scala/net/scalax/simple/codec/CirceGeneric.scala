@@ -2,21 +2,19 @@ package net.scalax.simple
 package codec
 
 import io.circe._
-import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{
   ModelLink,
   SimpleProduct1,
   SimpleProduct2,
   SimpleProduct3,
   SimpleProduct4,
-  SimpleProductX,
   ToListByTheSameTypeGeneric
 }
 
 object CirceGeneric {
   type Named[_] = String
 
-  def encodeModelImpl[F[_[_]]](implicit g: F[Encoder], g1: ModelLink[F, F[cats.Id]]): Encoder[F[cats.Id]] = {
+  def encodeModelImpl[F[_[_]], Model](g1: ModelLink[F, Model], g: F[Encoder]): Encoder[Model] = {
     val sp1: SimpleProduct1.Appender[F]       = g1.simpleProduct1
     val sp2: SimpleProduct2.Appender[F]       = SimpleProduct2[F].derived(g1.basedInstalled)
     val sp4: SimpleProduct4.Appender[F]       = SimpleProduct4[F].derived(g1.basedInstalled)
@@ -24,8 +22,10 @@ object CirceGeneric {
     val zip3Generic: Zip3Generic[F]           = Zip3Generic[F].derived(sp4)
     val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(sp2)
 
-    Encoder.instance[F[cats.Id]] { m =>
-      val zip1 = zip3Generic.zip(g1.labelled.modelLabelled, g, m)
+    Encoder.instance[Model] { m =>
+      val FId: F[cats.Id] = g1.toIdentity(m)
+
+      val zip1 = zip3Generic.zip(g1.labelled.modelLabelled, g, FId)
       val map1 = mapGenerc.map[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1](
         new MapGenerc.MapFunction[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1] {
           override def map[X1](s: (String, Encoder[X1], X1)): (String, Json) = (s._1, s._2(s._3))
@@ -36,8 +36,8 @@ object CirceGeneric {
     }
   }
 
-  def decodeModelImpl[F[_[_]]](implicit g: F[Decoder], g1: ModelLink[F, F[cats.Id]]): Decoder[F[cats.Id]] = {
-    val sp1: SimpleProduct1.Appender[F] = g1.simpleProduct1
+  def decodeModelImpl[F[_[_]], Model](g1: ModelLink[F, Model], g: F[Decoder]): Decoder[Model] = {
+
     val sp2: SimpleProduct2.Appender[F] = SimpleProduct2[F].derived(g1.basedInstalled)
     val sp3: SimpleProduct3.Appender[F] = SimpleProduct3[F].derived(g1.basedInstalled)
     val zipGeneric: ZipGeneric[F]       = ZipGeneric[F].derived(sp3)
@@ -72,7 +72,8 @@ object CirceGeneric {
       sp2.toHList[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id](monadAdd)(toDecoder(hCursor))
     }
 
-    Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
+    val decoder1 = Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
+    for (m <- decoder1) yield g1.fromIdentity(m)
   }
 
 }
