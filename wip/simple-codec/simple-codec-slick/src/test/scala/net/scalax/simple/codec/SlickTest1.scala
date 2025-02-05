@@ -1,7 +1,7 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, FillIdentity, SimpleProduct1, SimpleProductX}
+import net.scalax.simple.codec.to_list_generic.{FillIdentity, ModelLink, ModelLinkCommonF}
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 import slick.lifted.ProvenShape
@@ -34,13 +34,7 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
 
   def userTypedTypeGeneric(implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = FillIdentity[UserAbs[TypedType, U]].derived
 
-  implicit val deco1_2: AppenderFromSize[F1Alias]          = AppenderFromSize[F1Alias].derived
-  implicit val modelSize: ModelSize[F1Alias]               = ModelSize[F1Alias].derived(implicitly)
-  implicit val appender: SimpleProductX[F1Alias]           = SimpleProductX[F1Alias].derived(implicitly, implicitly, implicitly)
-  implicit val appender1: SimpleProduct1.Appender[F1Alias] = SimpleProduct1[F1Alias].derived(implicitly)
-  implicit val fromListByTheSameTypeGeneric: FromListByTheSameTypeGeneric[F1Alias] =
-    FromListByTheSameTypeGeneric[F1Alias].derived(implicitly)
-  implicit val userNamed: ModelLabelled[F1Alias] = ModelLabelled[F1Alias].derived(implicitly, implicitly)
+  implicit val appender: ModelLink[F1Alias, F1Alias[({ type U1[T] = T })#U1]] = ModelLinkCommonF[F1Alias].derived
 
   def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](appender).build(slickProfile).userOptImpl
 
@@ -51,7 +45,7 @@ class Model2[U[_]](val slickProfile: JdbcProfile) {
   }
 
   def userRep(implicit tt12: TypedType[U[Int]]): slickProfile.Table[_] => UserAbs[Rep, U] =
-    SlickUtils[F1Alias](appender).build(slickProfile).userRep(userNamed, userOpt, userTypedTypeGeneric)
+    SlickUtils[F1Alias](appender).build(slickProfile).userRep(appender.labelled, userOpt, userTypedTypeGeneric)
 
   class TableUserAbs(tag: Tag)(implicit tt: TypedType[U[Int]], s: ShapeF[U[Int]]) extends slickProfile.Table[UserAbs[Id, U]](tag, "users") {
     self =>
@@ -78,7 +72,7 @@ object Runner1 {
     val newModel: Model2[Id]   = new Model2[Id](p)
     val newOpt: Model2[Option] = new Model2[Option](p)
     val modelInt: IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1] =
-      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.fromListByTheSameTypeGeneric)
+      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.appender.fromListByTheSameTypeGeneric)
 
     import p.api._
 

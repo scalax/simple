@@ -7,10 +7,9 @@ trait CompatLabelled[F[_[_]]] {
 object CompatLabelled {
 
   class Builder[F[_[_]]] {
-    /*def derived(simpleNamed: DefaultSymbolicLabelling.Aux[F[({ type AnyF[_] = Any })#AnyF], _ <: HList]): CompatLabelled[F] =
-      new CompatLabelled[F] {
-        override val compatLabelled: Any = simpleNamed.apply()
-      }*/
+    def instance(t: Any): CompatLabelled[F] = new CompatLabelled[F] {
+      override val compatLabelled: Any = t
+    }
 
     def toLabelled(fromListGeneric: FromListByTheSameTypeGeneric[F], compatModel: CompatLabelled[F]): F[({ type M1[_] = String })#M1] = {
       val fromList = fromListGeneric.fromListByTheSameType[String, Any](

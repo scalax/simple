@@ -1,18 +1,18 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.to_list_generic.{SimpleProduct1, SimpleProduct2, SimpleProduct3, SimpleProduct4, SimpleProductX}
+import net.scalax.simple.codec.to_list_generic.{ModelLink, SimpleProduct1, SimpleProduct2, SimpleProduct3, SimpleProduct4, SimpleProductX}
 import slick.ast.{ColumnOption, TypedType}
 import slick.jdbc.JdbcProfile
 
-class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: SimpleProductX[F]) {
+class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: ModelLink[F, F[({ type U1[T] = T })#U1]]) {
   import slickProfile.api._
 
   val commonAlias: SlickCompatAlias[slickProfile.type] = SlickCompatAlias.build(slickProfile)
-  val appender1: SimpleProduct1.Appender[F]            = SimpleProduct1[F].derived(appender)
-  val appender2: SimpleProduct2.Appender[F]            = SimpleProduct2[F].derived(appender)
-  val appender3: SimpleProduct3.Appender[F]            = SimpleProduct3[F].derived(appender)
-  val appender4: SimpleProduct4.Appender[F]            = SimpleProduct4[F].derived(appender)
+  val appender1: SimpleProduct1.Appender[F]            = appender.simpleProduct1
+  val appender2: SimpleProduct2.Appender[F]            = SimpleProduct2[F].derived(appender.basedInstalled)
+  val appender3: SimpleProduct3.Appender[F]            = SimpleProduct3[F].derived(appender.basedInstalled)
+  val appender4: SimpleProduct4.Appender[F]            = SimpleProduct4[F].derived(appender.basedInstalled)
   val zip3Generic: Zip3Generic[F]                      = Zip3Generic[F].derived(appender4)
   val mapGeneric: MapGenerc[F]                         = MapGenerc[F].derived(appender2)
 
@@ -49,9 +49,9 @@ class SlickUtils[F[_[_]], V <: JdbcProfile](val slickProfile: V, appender: Simpl
 }
 
 object SlickUtils {
-  def apply[F[_[_]]](appender: SimpleProductX[F]): SlickUtilsApply[F] = new SlickUtilsApply[F](appender)
+  def apply[F[_[_]]](appender: ModelLink[F, F[({ type U1[T] = T })#U1]]): SlickUtilsApply[F] = new SlickUtilsApply[F](appender)
 
-  class SlickUtilsApply[F[_[_]]](appender: SimpleProductX[F]) {
+  class SlickUtilsApply[F[_[_]]](appender: ModelLink[F, F[({ type U1[T] = T })#U1]]) {
     def build[V <: JdbcProfile](slickProfile: V): SlickUtils[F, slickProfile.type] =
       new SlickUtils[F, slickProfile.type](slickProfile, appender)
   }

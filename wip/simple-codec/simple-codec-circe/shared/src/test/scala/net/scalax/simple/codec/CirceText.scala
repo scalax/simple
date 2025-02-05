@@ -4,21 +4,14 @@ package aa
 
 import io.circe._
 import io.circe.syntax._
-import net.scalax.simple.codec.to_list_generic.{AppenderFromSize, FillIdentity, SimpleProduct1, SimpleProductX}
-import net.scalax.simple.codec.ModelSize
+import net.scalax.simple.codec.to_list_generic.{FillIdentity, ModelLink, ModelLinkCommonF}
 import CirceGeneric2._
 
 case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
 
 object CirceText1 {
 
-  implicit val deco2_1: AppenderFromSize[CatName]          = AppenderFromSize[CatName].derived
-  implicit val modelSize: ModelSize[CatName]               = ModelSize[CatName].derived(implicitly)
-  implicit val appender: SimpleProductX[CatName]           = SimpleProductX[CatName].derived(implicitly, implicitly, implicitly)
-  implicit val appender1: SimpleProduct1.Appender[CatName] = SimpleProduct1[CatName].derived(implicitly)
-  implicit val fromListByTheSameTypeGeneric: FromListByTheSameTypeGeneric[CatName] =
-    FromListByTheSameTypeGeneric[CatName].derived(implicitly)
-  implicit val modelLabelled_catName: ModelLabelled[CatName] = ModelLabelled[CatName].derived(implicitly, implicitly)
+  implicit val deco2_1: ModelLink[CatName, CatName[cats.Id]] = ModelLinkCommonF[CatName].derived
 
   implicit val modelEncoder: CatName[Encoder] = FillIdentity[CatName[Encoder]].derived
   implicit val modelDecoder: CatName[Decoder] = FillIdentity[CatName[Decoder]].derived

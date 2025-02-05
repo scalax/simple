@@ -3,12 +3,6 @@ package to_list_generic
 
 import shapeless._
 
-trait AppenderFromSize[F[_[_]]] extends GenericAuxFrom[F] with GenericAuxTo[F] with CompatLabelled[F] {
-  override def toModel[X[_]](model: F[X]): Any
-  override def fromModel[X[_]](collection: Any): F[X]
-  override def compatLabelled: Any
-}
-
 object AppenderFromSize {
 
   def tran[F[_[_]]](from: GenericAuxFrom[F], to: GenericAuxTo[F], modelSize: ModelSize[F]): SimpleProductX[F] = new SimpleProductX[F] {
@@ -29,6 +23,7 @@ object AppenderFromSize {
 
   object GetAppender {
     type F1[_[_]] = HList
+
     def get(i: Int): SimpleProductXImpl.NotHList.Appender[F1] = {
       if (i >= appenderList.size) {
         this.synchronized {
@@ -56,18 +51,5 @@ object AppenderFromSize {
     private var appenderList: List[SimpleProductXImpl.NotHList.Appender[F1]]   = List.empty
     private var appenderArray: Array[SimpleProductXImpl.NotHList.Appender[F1]] = Array.empty
   }
-
-  class Builder[F[_[_]]] {
-    def derived(implicit
-      simpleTo: Generic.Aux[F[({ type AnyF[_] = Any })#AnyF], _ <: HList],
-      labelled: DefaultSymbolicLabelling.Aux[F[({ type AnyF[_] = Any })#AnyF], _ <: HList]
-    ): AppenderFromSize[F] = new AppenderFromSize[F] {
-      override def toModel[X[_]](model: F[X]): Any        = simpleTo.to(model.asInstanceOf[F[({ type AnyF[_] = Any })#AnyF]])
-      override def fromModel[X[_]](collection: Any): F[X] = simpleTo.from(collection.asInstanceOf[simpleTo.Repr]).asInstanceOf[F[X]]
-      override val compatLabelled: Any                    = labelled.apply()
-    }
-  }
-
-  def apply[F[_[_]]]: Builder[F] = new Builder[F]
 
 }
