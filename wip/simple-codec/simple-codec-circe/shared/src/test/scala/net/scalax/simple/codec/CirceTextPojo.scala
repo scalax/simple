@@ -5,7 +5,7 @@ import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{ModelLink, ModelLinkPojo, PojoInstance}
 import CirceGeneric2._
 
-case class CatNameTest3(name3: Int, str3: Option[String], uClass3: Option[Long], name113: String, namexu3: String)
+case class CatNameTest3(id3: Int, str3: Option[String], uClass3: Option[Long], name113: String, namexu3: String)
 
 object CirceText3 {
 
@@ -18,7 +18,7 @@ object CirceText3 {
   implicit val caseClassDecoder: Decoder[CatNameTest3] = decodePojo
 
   val modelInstance: CatNameTest3 = CatNameTest3(
-    name3 = 8594,
+    id3 = 8594,
     str3 = Option("aaTest3"),
     uClass3 = Option.empty,
     name113 = "xxiwerwjkl",

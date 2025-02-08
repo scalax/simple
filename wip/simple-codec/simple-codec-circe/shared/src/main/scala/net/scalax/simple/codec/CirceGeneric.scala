@@ -13,6 +13,7 @@ import net.scalax.simple.codec.to_list_generic.{
 
 object CirceGeneric {
   type Named[_] = String
+  private val identityFunc: List[(String, Json)] => List[(String, Json)] = identity[List[(String, Json)]]
 
   def encodeModelImpl[F[_[_]], Model](g1: ModelLink[F, Model], g: F[Encoder]): Encoder[Model] = {
     val sp1: SimpleProduct1.Appender[F]       = g1.simpleProduct1
@@ -31,8 +32,12 @@ object CirceGeneric {
           override def map[X1](s: (String, Encoder[X1], X1)): (String, Json) = (s._1, s._2(s._3))
         }
       )(zip1)
-      val list1 = toList.toListByTheSameType[(String, Json), List[(String, Json)]](zero = List.empty, append = (tail, h) => h :: tail)(map1)
-      Json.fromJsonObject(JsonObject.fromIterable(list1))
+      val list1Func: List[(String, Json)] => List[(String, Json)] =
+        toList.toListByTheSameType[(String, Json), List[(String, Json)] => List[(String, Json)]](
+          zero = identityFunc,
+          append = (tail, h) => (old => tail(h :: old)): List[(String, Json)] => List[(String, Json)]
+        )(map1)
+      Json.fromJsonObject(JsonObject.fromIterable(list1Func(List.empty)))
     }
   }
 

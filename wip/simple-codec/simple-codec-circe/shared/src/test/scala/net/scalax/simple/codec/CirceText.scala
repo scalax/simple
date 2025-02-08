@@ -7,7 +7,7 @@ import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{FillIdentity, ModelLink, ModelLinkCommonF}
 import CirceGeneric2._
 
-case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
+case class CatName[F[_]](id2: F[Int], str2: F[Option[String]], uClass2: F[Option[Long]], name2: F[String], namexu: F[String])
 
 object CirceText1 {
 
@@ -20,10 +20,10 @@ object CirceText1 {
   implicit val caseClassDecoder: Decoder[CatName[cats.Id]] = decodeModel
 
   val modelInstance: CatName[cats.Id] = CatName[cats.Id](
-    name = 8594,
-    str = Option("sdfwerwfweher迷雾日哦"),
-    uClass = Option.empty,
-    name11 = "xxiwerwjkl",
+    id2 = 8594,
+    str2 = Option("sdfwerwfweher迷雾日哦"),
+    uClass2 = Option.empty,
+    name2 = "xxiwerwjkl",
     namexu = "jerokwjoe收代理费加沃尔"
   )
 
