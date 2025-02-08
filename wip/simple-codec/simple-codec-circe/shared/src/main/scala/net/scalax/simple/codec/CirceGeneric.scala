@@ -37,7 +37,6 @@ object CirceGeneric {
   }
 
   def decodeModelImpl[F[_[_]], Model](g1: ModelLink[F, Model], g: F[Decoder]): Decoder[Model] = {
-
     val sp2: SimpleProduct2.Appender[F] = SimpleProduct2[F].derived(g1.basedInstalled)
     val sp3: SimpleProduct3.Appender[F] = SimpleProduct3[F].derived(g1.basedInstalled)
     val zipGeneric: ZipGeneric[F]       = ZipGeneric[F].derived(sp3)
