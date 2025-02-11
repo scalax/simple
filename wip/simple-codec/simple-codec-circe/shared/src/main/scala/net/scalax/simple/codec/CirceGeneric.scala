@@ -3,7 +3,7 @@ package codec
 
 import io.circe._
 import net.scalax.simple.codec.to_list_generic.{
-  ModelLink,
+  BasedInstalled,
   SimpleProduct1,
   SimpleProduct2,
   SimpleProduct3,
@@ -11,11 +11,30 @@ import net.scalax.simple.codec.to_list_generic.{
   ToListByTheSameTypeGeneric
 }
 
+trait FoldF[N[_], ColType] {
+  def foldF[T](n: N[T], colType: ColType): ColType
+}
+
+trait EncoderAbstraction[F[_[_]]] {
+  def to[N[_], ColType](m: F[N], n: FoldF[N, ColType], zero: ColType): ColType
+}
+
+class EncoderAbstractionImpl1[F[_[_]]](val toListByTheSameTypeGeneric: ToListByTheSameTypeGeneric[F], val mapGenerc: MapGenerc[F])
+    extends EncoderAbstraction[F] {
+  override def to[N[_], ColType](m: F[N], n: FoldF[N, ColType], zero: ColType): ColType = {
+    val fn1: F[({ type X1[_] = ColType => ColType })#X1] =
+      mapGenerc.map[N, ({ type X1[_] = ColType => ColType })#X1](new MapGenerc.MapFunction[N, ({ type X1[_] = ColType => ColType })#X1] {
+        override def map[T](input: N[T]): ColType => ColType = (col: ColType) => n.foldF[T](input, col)
+      })(m)
+
+    toListByTheSameTypeGeneric.toListByTheSameType[ColType => ColType, ColType](zero, (a: ColType, t: ColType => ColType) => t(a))(fn1)
+  }
+}
+
 object CirceGeneric {
   type Named[_] = String
-  private val identityFunc: List[(String, Json)] => List[(String, Json)] = identity[List[(String, Json)]]
 
-  def encodeModelImpl[F[_[_]], Model](g1: ModelLink[F, Model], g: F[Encoder]): Encoder[Model] = {
+  def encodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Encoder]): Encoder[F[cats.Id]] = {
     val sp1: SimpleProduct1.Appender[F]       = g1.simpleProduct1
     val sp2: SimpleProduct2.Appender[F]       = SimpleProduct2[F].derived(g1.basedInstalled)
     val sp4: SimpleProduct4.Appender[F]       = SimpleProduct4[F].derived(g1.basedInstalled)
@@ -23,25 +42,32 @@ object CirceGeneric {
     val zip3Generic: Zip3Generic[F]           = Zip3Generic[F].derived(sp4)
     val mapGenerc: MapGenerc[F]               = MapGenerc[F].derived(sp2)
 
-    Encoder.instance[Model] { m =>
-      val FId: F[cats.Id] = g1.toIdentity(m)
+    val appenderEncoder: EncoderAbstraction[F] = new EncoderAbstractionImpl1(toList, mapGenerc)
+    type NamedAndEnc[T] = (String, Encoder[T], T)
 
-      val zip1 = zip3Generic.zip(g1.labelled.modelLabelled, g, FId)
-      val map1 = mapGenerc.map[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1](
-        new MapGenerc.MapFunction[({ type U1[T1] = (String, Encoder[T1], T1) })#U1, ({ type U1[_] = (String, Json) })#U1] {
-          override def map[X1](s: (String, Encoder[X1], X1)): (String, Json) = (s._1, s._2(s._3))
-        }
-      )(zip1)
-      val list1Func: List[(String, Json)] => List[(String, Json)] =
-        toList.toListByTheSameType[(String, Json), List[(String, Json)] => List[(String, Json)]](
-          zero = identityFunc,
-          append = (tail, h) => (old => tail(h :: old)): List[(String, Json)] => List[(String, Json)]
-        )(map1)
-      Json.fromJsonObject(JsonObject.fromIterable(list1Func(List.empty)))
+    Encoder.instance[F[cats.Id]] { m =>
+      val zip1 = zip3Generic.zip(g1.labelled.modelLabelled, g, m)
+
+      val listInstance: List[(String, Json)] => List[(String, Json)] =
+        appenderEncoder.to[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](
+          zip1,
+          new FoldF[NamedAndEnc, List[(String, Json)] => List[(String, Json)]] {
+            override def foldF[X1](
+              in: (String, Encoder[X1], X1),
+              l: List[(String, Json)] => List[(String, Json)]
+            ): List[(String, Json)] => List[(String, Json)] = { u: List[(String, Json)] =>
+              val jsonInstance: Json = in._2(in._3)
+              l((in._1, jsonInstance) :: u)
+            }
+          },
+          zero = identity[List[(String, Json)]]
+        )
+
+      Json.fromJsonObject(JsonObject.fromIterable(listInstance(List.empty)))
     }
   }
 
-  def decodeModelImpl[F[_[_]], Model](g1: ModelLink[F, Model], g: F[Decoder]): Decoder[Model] = {
+  def decodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Decoder]): Decoder[F[cats.Id]] = {
     val sp2: SimpleProduct2.Appender[F] = SimpleProduct2[F].derived(g1.basedInstalled)
     val sp3: SimpleProduct3.Appender[F] = SimpleProduct3[F].derived(g1.basedInstalled)
     val zipGeneric: ZipGeneric[F]       = ZipGeneric[F].derived(sp3)
@@ -76,8 +102,7 @@ object CirceGeneric {
       sp2.toHList[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id](monadAdd)(toDecoder(hCursor))
     }
 
-    val decoder1 = Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
-    for (m <- decoder1) yield g1.fromIdentity(m)
+    Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
   }
 
 }
