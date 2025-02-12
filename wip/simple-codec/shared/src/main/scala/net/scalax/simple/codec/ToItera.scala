@@ -1,32 +1,50 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.SimpleProduct
+import net.scalax.simple.codec.to_list_generic.{BasedInstalled, ModelLink, ModelLinkCommonF, SimpleProductX}
 
 trait ToItera[F[_[_]]] {
-  def to[T]: SimpleProduct.Appender[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1]
+  toIteraSelf =>
+
+  def to[T](simpleProductX: SimpleProductX[F]): SimpleProductX[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1]
+  def toBasedInstalled[T](oldInstanlled: BasedInstalled[F]): BasedInstalled[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+    new BasedInstalled[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] {
+      override def basedInstalled: SimpleProductX[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+        toIteraSelf.to[T](oldInstanlled.basedInstalled)
+      override def labelled: ModelLabelled[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+        ModelLabelled[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1].instance(oldInstanlled.labelled.modelLabelled)
+      override def size: ModelSize[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+        ModelSize[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1].instance(oldInstanlled.size.modelSize)
+    }
+
+  def toModelLink[T](
+    oldInstanlled: ModelLink[F, F[({ type X1[U] = U })#X1]]
+  ): ModelLink[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1, F[({ type X1[_] = T })#X1]] =
+    new ModelLink[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1, F[({ type X1[_] = T })#X1]] {
+      override def basedInstalled: SimpleProductX[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+        toIteraSelf.to[T](oldInstanlled.basedInstalled)
+      override def labelled: ModelLabelled[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+        ModelLabelled[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1].instance(oldInstanlled.labelled.modelLabelled)
+      override def size: ModelSize[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
+        ModelSize[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1].instance(oldInstanlled.size.modelSize)
+
+      override def toIdentity(t: F[({ type X1[_] = T })#X1]): F[({ type X1[_] = T })#X1]   = t
+      override def fromIdentity(t: F[({ type X1[_] = T })#X1]): F[({ type X1[_] = T })#X1] = t
+    }
 }
 
 object ToItera {
-
-  class ApplyImpl[F[_[_]]] {
-
-    def derived(implicit basedInstalled: SimpleProduct.Appender[F]): ToItera[F] = new ToItera[F] {
-      override def to[T]: SimpleProduct.Appender[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] =
-        new SimpleProduct.Appender[({ type F1[TX[_]] = F[({ type T1[_] = TX[T] })#T1] })#F1] {
-          override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: SimpleProduct.AppendMonad[M1])(
-            func: SimpleProduct.TypeGen[M1, M2, M3, M4]
-          ): M1[F[({ type T1[_] = M2[T] })#T1], F[({ type T1[_] = M3[T] })#T1], F[({ type T1[_] = M4[T] })#T1]] = {
-            type M2X[_] = M2[T]
-            type M3X[_] = M3[T]
-            type M4X[_] = M4[T]
-            basedInstalled.toHList[M1, M2X, M3X, M4X](monad)(new SimpleProduct.TypeGen[M1, M2X, M3X, M4X] {
-              override def apply[U]: M1[M2[T], M3[T], M4[T]] = func[T]
-            })
-          }
-        }
-    }
-
+  @inline private val toIteraImplImpl: ToItera[({ type F1[_[_]] = Any })#F1] = new ToItera[({ type F1[_[_]] = Any })#F1] {
+    @inline def to[T](simpleProductX: SimpleProductX[({ type F1[_[_]] = Any })#F1]): SimpleProductX[({ type F1[_[_]] = Any })#F1] =
+      simpleProductX
   }
+  @inline private def toIteraImpl[F[_[_]]]: ToItera[F] = toIteraImplImpl.asInstanceOf[ToItera[F]]
 
-  def apply[F[_[_]]]: ApplyImpl[F] = new ApplyImpl[F]
+  @inline private val builderImplImpl                = new Builder[({ type F1[_[_]] = Any })#F1]
+  @inline private def applyImpl[F[_[_]]]: Builder[F] = builderImplImpl.asInstanceOf[Builder[F]]
+
+  // ===
+  class Builder[F[_[_]]] {
+    @inline def derived: ToItera[F] = toIteraImpl[F]
+  }
+  @inline def apply[F[_[_]]]: Builder[F] = applyImpl[F]
 }

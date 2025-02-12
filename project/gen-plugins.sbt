@@ -8,12 +8,17 @@ import scala.io.Source
 
 def genPluginString(str: String, pluginName: String): String = {
   val settingStr =
-    str replaceAllLiterally ("""// start setting""", "addSetting {") replaceAllLiterally ("""// end setting""", "}") replaceAllLiterally ("""// scala code""", "") replaceAllLiterally ("""// start autoImport""", "object autoImport {") replaceAllLiterally ("""// end autoImport""",
-    """
+    str replaceAllLiterally ("""// start setting""", "addSetting {") replaceAllLiterally ("""// end setting""", "}") replaceAllLiterally (
+      """// scala code""",
+      ""
+    ) replaceAllLiterally ("""// start autoImport""", "object autoImport {") replaceAllLiterally (
+      """// end autoImport""",
+      """
           |}
           |
           |import autoImport._
-          |""".stripMargin)
+          |""".stripMargin
+    )
 
   s"""
        |object `$pluginName` extends _root_.sbt.AutoPlugin {

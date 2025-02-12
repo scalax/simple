@@ -2,95 +2,54 @@ package net.scalax.simple.codec
 package to_list_generic
 
 import shapeless._
-import utils._
-import scala.collection.compat._
 
-object SimpleProduct {
+object AppenderFromSize {
 
-  trait AppendMonad[M[_, _, _]] {
-    def zip[A, B, C, S, T, U](ma: M[A, B, C], ms: M[S, T, U]): M[(A, S), (B, T), (C, U)]
-    def to[A, B, C, S, T, U](m1: M[A, B, C])(in1: A => S, in2: B => T, in3: C => U)(in4: S => A, in5: T => B, in6: U => C): M[S, T, U]
-    def zero: M[Unit, Unit, Unit]
+  def tran[F[_[_]]](from: GenericAuxFrom[F], to: GenericAuxTo[F], modelSize: ModelSize[F]): SimpleProductX[F] = new SimpleProductX[F] {
+    override val model: SimpleProductXImpl.NotHList.Appender[F] = new SimpleProductXImpl.NotHList.FromOtherAppender[GetAppender.F1, F] {
+      override def fromModel[X[_]](f: GetAppender.F1[X]): F[X] = from.fromModel(f).asInstanceOf[F[X]]
+      override def toModel[X[_]](g: F[X]): GetAppender.F1[X] =
+        to.toModel(g.asInstanceOf[F[({ type FX[_] = Any })#FX]]).asInstanceOf[GetAppender.F1[X]]
+      override def appenderF: SimpleProductXImpl.NotHList.Appender[GetAppender.F1] = GetAppender.get(modelSize.modelSize)
+    }
   }
 
-  trait TypeGen[M1[_, _, _], M2[_], M3[_], M4[_]] {
-    def apply[T]: M1[M2[T], M3[T], M4[T]]
-  }
-
-  trait Appender[F[_[_]]] {
-    def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(func: TypeGen[M1, M2, M3, M4]): M1[F[M2], F[M3], F[M4]]
-  }
-
-  object Appender {
-
-    trait HighTran[F[_[_]], G[_[_]]] {
-      def io[In[_]]: SimpleFrom[F[In], G[In]] with SimpleTo[F[In], G[In]]
+  val appender: SimpleProductXImpl.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] =
+    new SimpleProductXImpl.AppendContext[HList, HNil, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad] {
+      override def append[Head, Tail <: HList](h: (Head, Tail)): Head :: Tail          = h._1 :: h._2
+      override def unappend[Head, Tail <: HList](dataList: Head :: Tail): (Head, Tail) = (dataList.head, dataList.tail)
+      override val zero: HNil                                                          = HNil
     }
 
-    object HighTran {
-      def tran[F[_[_]], G[_[_]]](h: HighTran[F, G]): Appender[G] => Appender[F] = appenderF =>
-        new Appender[F] {
-          override def toHList[M1[_, _, _], M2[_], M3[_], M4[_]](monad: AppendMonad[M1])(
-            func: TypeGen[M1, M2, M3, M4]
-          ): M1[F[M2], F[M3], F[M4]] =
-            monad.to[G[M2], G[M3], G[M4], F[M2], F[M3], F[M4]](appenderF.toHList(monad)(func))(h.io[M2].from, h.io[M3].from, h.io[M4].from)(
-              h.io[M2].to,
-              h.io[M3].to,
-              h.io[M4].to
-            )
-        }
-    }
+  object GetAppender {
+    type F1[_[_]] = HList
 
-    val appender: HListUtils2[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] =
-      new HListUtils2[HList, ({ type Ad[Head, TU <: HList] = Head :: TU })#Ad, HNil] {
-        override def appendData[Head, Tail <: HList](h: Head, t: Tail): Head :: Tail = h :: t
-        override def takeHead[Head, Tail <: HList](dataList: Head :: Tail): Head     = dataList.head
-        override def takeTail[Head, Tail <: HList](dataList: Head :: Tail): Tail     = dataList.tail
-        override val takeZero: HNil                                                  = HNil
-      }
+    def get(i: Int): SimpleProductXImpl.NotHList.Appender[F1] = {
+      if (i >= appenderList.size) {
+        this.synchronized {
+          while (i >= appenderList.size) {
+            if (appenderList.headOption.isDefined) {
+              val cutHead = appenderList.head.asInstanceOf[appender.HListLikeAppender[appender.ColType]]
 
-    object GetAppender {
-      type F1[_[_]] <: HList
-
-      def get(i: Int): Appender[F1] = {
-        if (i >= appenderList.size) {
-          this.synchronized {
-            while (i >= appenderList.size) {
-              if (appenderList.headOption.isDefined) {
-                appenderList = appender.append(appenderList.head).asInstanceOf[Appender[F1]] :: appenderList
-              } else {
-                appenderList = List(appender.zero.asInstanceOf[Appender[F1]])
+              val newItem = new appender.PositiveHListLikeAppender[Any, appender.ColType] {
+                override def tailHListLikeAppender: appender.HListLikeAppender[appender.ColType] = cutHead
               }
+
+              appenderList = newItem.asInstanceOf[SimpleProductXImpl.NotHList.Appender[F1]] :: appenderList
+            } else {
+              appenderList = List(appender.ZeroHListLikeAppender.value.asInstanceOf[SimpleProductXImpl.NotHList.Appender[F1]])
             }
-
-            appenderArray = appenderList.reverse.to(Array)
           }
+
+          appenderArray = appenderList.reverse.to(Array)
         }
-
-        appenderArray(i)
       }
 
-      private var appenderList: List[Appender[F1]]   = List.empty
-      private var appenderArray: Array[Appender[F1]] = Array.empty
-
+      appenderArray(i)
     }
 
-    trait FuncInnerApply1[F[_[_]]] {
-      def derived[HList](
-        simpleTo: SimpleTo[F[({ type AnyF[_] = Any })#AnyF], HList] with SimpleFrom[F[({ type AnyF[_] = Any })#AnyF], HList]
-      )(implicit labelled: ModelSize[F]): Appender[F] = {
-        type H1[_[_]] = HList
-
-        Appender.HighTran.tran(new HighTran[F, H1] {
-          override def io[In[_]]: SimpleFrom[F[In], HList] with SimpleTo[F[In], HList] = simpleTo.asInstanceOf[SimpleFrom[F[In], HList]
-            with SimpleTo[F[In], HList]]
-        })(GetAppender.get(labelled.modelSize).asInstanceOf[Appender[H1]])
-      }
-    }
-
-    def apply[F[_[_]]]: FuncInnerApply1[F] = new FuncInnerApply1[F] {
-      //
-    }
+    private var appenderList: List[SimpleProductXImpl.NotHList.Appender[F1]]   = List.empty
+    private var appenderArray: Array[SimpleProductXImpl.NotHList.Appender[F1]] = Array.empty
   }
 
 }

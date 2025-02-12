@@ -16,7 +16,7 @@ object TestCase1 extends ZIOSpecDefault {
   case class TempForData(typeName: String, value: Option[Int])
   def inputAdtData[T: Adt.CoProducts3[*, None.type, Some[Int], Option[Int]]](t: T): TempForData = {
     val applyM = Adt.CoProduct3[None.type, Some[Int], Option[Int]](t)
-    applyM.fold(n => TempForData("None", n), n => TempForData("Some", Some(n.get + 1)), n => TempForData("Option", n.map(_ + 2)))
+    applyM.fold(n => TempForData("None", n))(n => TempForData("Some", Some(n.get + 1)))(n => TempForData("Option", n.map(_ + 2)))
   }
 
   override def spec: Spec[TestEnvironment with Scope, Any] = suite("Test case created by djx314-1")(

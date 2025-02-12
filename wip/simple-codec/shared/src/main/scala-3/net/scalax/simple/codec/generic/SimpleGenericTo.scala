@@ -2,13 +2,12 @@ package net.scalax.simple.codec
 
 import scala.deriving.Mirror
 
-trait SimpleTo[-Model, +HList] {
-  def to(model: Model): HList
+trait SimpleTo[-Model] {
+  def to(model: Model): Tuple
 }
 
 trait SimpleToGeneric[Model <: Product] {
-  def generic(using g: Mirror.ProductOf[Model]): SimpleTo[Model, g.MirroredElemTypes] = h => Tuple.fromProductTyped(h)
-  def law[ModelImpl >: Model <: Model]: SimpleToGeneric[ModelImpl]                    = SimpleToGeneric[ModelImpl]
+  def generic(using g: Mirror.ProductOf[Model]): SimpleTo[Model] = h => Tuple.fromProductTyped(h)
 }
 
 object SimpleToGeneric {

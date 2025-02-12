@@ -24,6 +24,46 @@ object ScalaInnerCodegenExec:
         )
     )
 
+    locally {
+      val filePath = writePath.resolve("ProductTypeCodegen.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent: String = net.scalax.simple.adt.codegen.ProductTypeCodegen(22).text
+        writer.println(linerContent)
+      }
+    }
+
+    locally {
+      val filePath = writePath.resolve("ProductTypeAppender.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent: String = net.scalax.simple.adt.codegen.text.ProductTypeAppenderCodegen(22).text
+        writer.println(linerContent)
+      }
+    }
+
+    locally {
+      val filePath = writePath.resolve("ProductTypeAppenderGen.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent: String = net.scalax.simple.adt.codegen.text.ProductTypeAppenderImplCodegen(22).text
+        writer.println(linerContent)
+      }
+    }
+
+    locally {
+      val filePath = writePath.resolve("Folder22TypeParam.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent: String = net.scalax.simple.adt.codegen.FunctionTypeCodegen(22).text
+        writer.println(linerContent)
+      }
+    }
+
+    locally {
+      val filePath = writePath.resolve("ProductType22Support.scala")
+      Using.resource(new PrintWriter(filePath.toFile, StandardCharsets.UTF_8.name())) { writer =>
+        val linerContent: String = net.scalax.simple.adt.codegen.text.TranAbsCodegen(22).text
+        writer.println(linerContent)
+      }
+    }
+
   end main
 
 end ScalaInnerCodegenExec
