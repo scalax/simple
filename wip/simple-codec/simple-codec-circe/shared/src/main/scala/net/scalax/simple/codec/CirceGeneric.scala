@@ -15,9 +15,7 @@ object CirceGeneric {
 
     type NamedAndEnc[T] = (String, Encoder[T], T)
 
-    Encoder.instance[F[cats.Id]] { m =>
-      val zip1 = zip3Generic.zip(g1.labelled.modelLabelled, g, m)
-
+    def encodeInstance1(m: F[NamedAndEnc]): Json = {
       val listInstance: List[(String, Json)] => List[(String, Json)] =
         foldFGenerc.fold[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](
           new FoldFGenerc.FoldF[NamedAndEnc, List[(String, Json)] => List[(String, Json)]] {
@@ -29,12 +27,14 @@ object CirceGeneric {
               l((in._1, jsonInstance) :: u)
             }
           },
-          zip1,
+          m,
           zero = identity[List[(String, Json)]]
         )
 
       Json.fromJsonObject(JsonObject.fromIterable(listInstance(List.empty)))
     }
+
+    Encoder.instance[F[cats.Id]](t => encodeInstance1(zip3Generic.zip(g1.labelled.modelLabelled, g, t)))
   }
 
   def decodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Decoder]): Decoder[F[cats.Id]] = {
