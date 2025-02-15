@@ -2,6 +2,7 @@ package net.scalax.simple
 package codec
 
 import io.circe._
+import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{BasedInstalled, FoldFGenerc, SimpleProduct1, SimpleProduct2, SimpleProduct3, SimpleProduct4}
 
 object CirceGeneric {
@@ -15,26 +16,27 @@ object CirceGeneric {
 
     type NamedAndEnc[T] = (String, Encoder[T], T)
 
-    def encodeInstance1(m: F[NamedAndEnc]): Json = {
-      val listInstance: List[(String, Json)] => List[(String, Json)] =
-        foldFGenerc.fold[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](
-          new FoldFGenerc.FoldF[NamedAndEnc, List[(String, Json)] => List[(String, Json)]] {
-            override def fold[X1](
-              in: (String, Encoder[X1], X1),
-              l: List[(String, Json)] => List[(String, Json)]
-            ): List[(String, Json)] => List[(String, Json)] = { u: List[(String, Json)] =>
-              val jsonInstance: Json = in._2(in._3)
-              l((in._1, jsonInstance) :: u)
-            }
-          },
-          m,
-          zero = identity[List[(String, Json)]]
-        )
+    def folder: FoldFGenerc.FoldF[NamedAndEnc, List[(String, Json)] => List[(String, Json)]] =
+      new FoldFGenerc.FoldF[NamedAndEnc, List[(String, Json)] => List[(String, Json)]] {
+        override def fold[X1](
+          in: (String, Encoder[X1], X1),
+          l: List[(String, Json)] => List[(String, Json)]
+        ): List[(String, Json)] => List[(String, Json)] = { u: List[(String, Json)] =>
+          val jsonInstance: Json = in._2(in._3)
+          l((in._1, jsonInstance) :: u)
+        }
+      }
 
-      Json.fromJsonObject(JsonObject.fromIterable(listInstance(List.empty)))
-    }
+    implicit def implicitInstance1: Encoder[List[(String, Json)] => List[(String, Json)]] =
+      Encoder.instance(m => Json.fromJsonObject(JsonObject.fromIterable(m(List.empty))))
 
-    Encoder.instance[F[cats.Id]](t => encodeInstance1(zip3Generic.zip(g1.labelled.modelLabelled, g, t)))
+    implicit def implicitInstance2: Encoder[F[NamedAndEnc]] = Encoder.instance(m =>
+      foldFGenerc.fold[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](folder, m, zero = identity[List[(String, Json)]]).asJson
+    )
+
+    def zipInstance1(m: F[cats.Id]): F[NamedAndEnc] = zip3Generic.zip(g1.labelled.modelLabelled, g, m)
+
+    Encoder.instance[F[cats.Id]]((x: F[cats.Id]) => zipInstance1(x).asJson)
   }
 
   def decodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Decoder]): Decoder[F[cats.Id]] = {
