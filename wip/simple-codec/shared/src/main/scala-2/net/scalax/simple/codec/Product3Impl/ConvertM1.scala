@@ -37,7 +37,7 @@ object ConvertM1Impl {
         ): M2[B#toItem] =
           append.to[A#toItem, B#toItem](m1)(in1 = in1.map)(out1 = in1.reverseMap)
 
-        override def zero: M2[Unit] = append.zero
+        override def zero: M2[SimpleZero] = append.zero
       }
 
   }

@@ -8,7 +8,7 @@ object SimpleProduct4 {
     def to[A, B, C, D, S, T, U, V](
       m1: M[A, B, C, D]
     )(in1: A => S, in2: B => T, in3: C => U, in4: D => V)(in5: S => A, in6: T => B, in7: U => C, in8: V => D): M[S, T, U, V]
-    def zero: M[Unit, Unit, Unit, Unit]
+    def zero: M[SimpleZero, SimpleZero, SimpleZero, SimpleZero]
   }
 
   trait TypeGen[M1[_, _, _, _], M2[_], M3[_], M4[_], M5[_]] {

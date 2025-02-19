@@ -32,7 +32,7 @@ object FromListByTheSameTypeGeneric {
         (temp._1, in1(temp._2))
       }
 
-      override val zero: SeqType => (SeqType, Unit) = l => (l, ())
+      override val zero: SeqType => (SeqType, SimpleZero) = l => (l, SimpleZero.value)
     }
 
   class Builder[F[_[_]]] {

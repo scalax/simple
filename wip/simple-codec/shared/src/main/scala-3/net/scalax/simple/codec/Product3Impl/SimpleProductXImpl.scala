@@ -68,7 +68,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       type tail2 = NotHList.InputType.TakeTail[type2]
 
       override def map(ia: head1)        = AppendContextSelf.zero.asInstanceOf
-      override def reverseMap(ib: head2) = ().asInstanceOf
+      override def reverseMap(ib: head2) = SimpleZero.value.asInstanceOf
     }
 
     object ZeroUnitMapper {

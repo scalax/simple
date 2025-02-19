@@ -6,7 +6,7 @@ object SimpleProduct2 {
   trait AppendMonad[M[_, _]] {
     def zip[A, B, S, T](ma: M[A, B], ms: M[S, T]): M[(A, S), (B, T)]
     def to[A, B, S, T](m1: M[A, B])(in1: A => S, in2: B => T)(in3: S => A, in4: T => B): M[S, T]
-    def zero: M[Unit, Unit]
+    def zero: M[SimpleZero, SimpleZero]
   }
 
   trait TypeGen[M2[_, _], M1[_], M3[_]] {

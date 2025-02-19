@@ -17,7 +17,7 @@ object SimpleFill {
         basedInstalled.toHList1[({ type Id[T] = T })#Id, S](new SimpleProduct1.AppendMonad[({ type Id[T] = T })#Id] {
           override def zip[A, B](ma: A, ms: B): (A, B)               = (ma, ms)
           override def to[A, B](m1: A)(in1: A => B)(out1: B => A): B = in1(m1)
-          override val zero: Unit                                    = ()
+          override val zero: SimpleZero                              = SimpleZero.value
         })(new SimpleProduct1.TypeGen[({ type Id[T] = T })#Id, S] {
           override def apply[T]: S[T] = t.fill[T]
         })

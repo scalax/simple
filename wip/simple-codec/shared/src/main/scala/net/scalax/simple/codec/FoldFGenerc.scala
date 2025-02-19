@@ -25,7 +25,7 @@ object FoldFGenerc {
 
       override def to[A, B](m1: (A, SeqType) => SeqType)(in1: A => B)(out1: B => A): (B, SeqType) => SeqType = (b, col) => m1(out1(b), col)
 
-      override val zero: (Unit, SeqType) => SeqType = (_, a) => a
+      override val zero: (SimpleZero, SeqType) => SeqType = (_, a) => a
     }
 
   class Builder[F[_[_]]] {

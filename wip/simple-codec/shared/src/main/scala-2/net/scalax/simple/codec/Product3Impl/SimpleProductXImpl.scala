@@ -54,8 +54,8 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     trait ZeroUnitMapper[FT <: NotHList.FType]
         extends NotHList.Mapper[NotHList.UnitInputType, NotHList.FGenericInputType[ZeroColType#toM, FT]] {
 
-      override def map(ia: Unit): ZeroType        = AppendContextSelf.zero
-      override def reverseMap(ib: ZeroType): Unit = ()
+      override def map(ia: SimpleZero): ZeroType        = AppendContextSelf.zero
+      override def reverseMap(ib: ZeroType): SimpleZero = SimpleZero.value
 
       override def nextMapper: ZeroUnitMapper[FT#Next]
     }
@@ -166,7 +166,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     }
 
     trait UnitInputType extends InputType {
-      override type toItem  = Unit
+      override type toItem  = SimpleZero
       override type AndThen = UnitInputType
     }
 

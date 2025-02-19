@@ -18,7 +18,7 @@ object ZipGeneric {
           override def to[A, B, C, S, T, U](
             m1: (A, B) => C
           )(in1: A => S, in2: B => T, in3: C => U)(in4: S => A, in5: T => B, in6: U => C): (S, T) => U = (s, t) => in3(m1(in4(s), in5(t)))
-          override def zero: (Unit, Unit) => Unit = (a, _) => a
+          override def zero: (SimpleZero, SimpleZero) => SimpleZero = (a, _) => a
         }
 
         o1.toHList[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1](func)(

@@ -34,7 +34,7 @@ object CirceGeneric {
       foldFGenerc.fold[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](folder, m, zero = identity[List[(String, Json)]]).asJson
     )
 
-    def zipInstance1(m: F[cats.Id]): F[NamedAndEnc] = zip3Generic.zip(g1.labelled.modelLabelled, g, m)
+    def zipInstance1(m: F[cats.Id]): F[NamedAndEnc] = zip3Generic.zip[Named, Encoder, cats.Id](g1.labelled.modelLabelled, g, m)
 
     Encoder.instance[F[cats.Id]]((x: F[cats.Id]) => zipInstance1(x).asJson)
   }
@@ -63,7 +63,7 @@ object CirceGeneric {
 
       override def to[A, B, S, T](m1: A => Decoder.Result[B])(in1: A => S, in2: B => T)(in3: S => A, in4: T => B): S => Decoder.Result[T] =
         s => m1(in3(s)).right.map(in2)
-      override def zero: Unit => Decoder.Result[Unit] = s => Right(s)
+      override def zero: SimpleZero => Decoder.Result[SimpleZero] = s => Right(s)
     }
 
     def toDecoder(hCursor: HCursor): SimpleProduct2.TypeGen[Func, ({ type U1[T1] = HCursor => Decoder.Result[T1] })#U1, cats.Id] =

@@ -2,6 +2,7 @@ package net.scalax.simple.codec
 package to_list_generic
 
 import shapeless._
+import scala.collection.compat._
 
 object AppenderFromSize {
 

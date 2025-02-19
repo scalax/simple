@@ -49,7 +49,7 @@ object ConvertM2Impl {
           in4 = in1.nextMapper.reverseMap
         )
 
-      override def zero: M2[Unit, Unit] = append.zero
+      override def zero: M2[SimpleZero, SimpleZero] = append.zero
     }
   }
 
