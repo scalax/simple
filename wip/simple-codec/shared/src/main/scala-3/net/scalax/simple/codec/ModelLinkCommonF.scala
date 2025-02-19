@@ -15,8 +15,7 @@ trait ModelLinkCommonF[F[_[_]]] extends ModelLink[F, F[({ type U1[X] = X })#U1]]
       override def toModel[X[_]](model: F[X]): Any = modelLinkCommonFSelf.FToInstance(model)
     }
 
-    // AppenderFromSize.tran[F](fromFunc, toFunc, modelLinkCommonFSelf.size)
-    ???
+    AppenderFromSize.tran[F](fromFunc, toFunc, modelLinkCommonFSelf.size)
   }
 
   override def labelled: ModelLabelled[F] =
@@ -33,22 +32,20 @@ trait ModelLinkCommonF[F[_[_]]] extends ModelLink[F, F[({ type U1[X] = X })#U1]]
 }
 
 object ModelLinkCommonF {
+  import scala.deriving.Mirror
 
-  class Builder[F[_[_]]] {
-    /*def derived(implicit
-      compatNamed: DefaultSymbolicLabelling.Aux[F[({ type U1[X] = X })#U1], _ <: shapeless.HList],
-      g: shapeless.Generic.Aux[F[({ type U1[_] = Any })#U1], _ <: shapeless.HList]
-    ): ModelLinkCommonF[F] = {
-      val namedModel = compatNamed.apply()
+  class Builder[F[_[_]] <: Product] {
+    inline def derived(using g: Mirror.ProductOf[F[({ type U1[_] = Any })#U1]]): ModelLinkCommonF[F] = {
+      val namedModel = scala.compiletime.constValueTuple[g.MirroredElemLabels]
 
       new ModelLinkCommonF[F] {
         override val compatNamed: Any                  = namedModel
-        override def FToInstance[T[_]](x: F[T]): Any   = g.to(x.asInstanceOf[F[({ type U1[_] = Any })#U1]])
-        override def FFromInstance[T[_]](x: Any): F[T] = g.from(x.asInstanceOf[g.Repr]).asInstanceOf[F[T]]
+        override def FToInstance[T[_]](x: F[T]): Any   = Tuple.fromProduct(x.asInstanceOf)
+        override def FFromInstance[T[_]](x: Any): F[T] = g.fromTuple(x.asInstanceOf[g.MirroredElemTypes]).asInstanceOf[F[T]]
       }
-    }*/
+    }
   }
 
-  def apply[F[_[_]]]: Builder[F] = new Builder[F]
+  def apply[F[_[_]] <: Product]: Builder[F] = new Builder[F]
 
 }

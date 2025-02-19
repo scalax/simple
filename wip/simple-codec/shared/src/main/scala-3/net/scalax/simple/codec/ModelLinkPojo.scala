@@ -18,8 +18,7 @@ trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, M
         override def toModel[X[_]](model: PojoInstance[X, Model]): Any = model.instance
       }
 
-    // AppenderFromSize.tran[({ type F[X[_]] = PojoInstance[X, Model] })#F](fromFunc, toFunc, modelLinkCommonFSelf.size)
-    ???
+    AppenderFromSize.tran[({ type F[X[_]] = PojoInstance[X, Model] })#F](fromFunc, toFunc, modelLinkCommonFSelf.size)
   }
 
   override def labelled: ModelLabelled[({ type F[X[_]] = PojoInstance[X, Model] })#F] =
@@ -40,22 +39,20 @@ trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, M
 }
 
 object ModelLinkPojo {
+  import scala.deriving.Mirror
 
-  class Builder[Model] {
-    /*def derived(implicit
-      compatNamed: DefaultSymbolicLabelling.Aux[Model, _ <: shapeless.HList],
-      g: shapeless.Generic.Aux[Model, _ <: shapeless.HList]
-    ): ModelLinkPojo[Model] = {
-      val namedModel = compatNamed.apply()
+  class Builder[Model <: Product] {
+    inline def derived(using g: Mirror.ProductOf[Model]): ModelLinkPojo[Model] = {
+      val namedModel = scala.compiletime.constValueTuple[g.MirroredElemLabels]
 
       new ModelLinkPojo[Model] {
         override val compatNamed: Any           = namedModel
-        override def genericFrom(x: Any): Model = g.from(x.asInstanceOf[g.Repr])
-        override def genericTo(x: Model): Any   = g.to(x)
+        override def genericTo(x: Model): Any   = Tuple.fromProduct(x.asInstanceOf)
+        override def genericFrom(x: Any): Model = g.fromTuple(x.asInstanceOf[g.MirroredElemTypes]).asInstanceOf[Model]
       }
-    }*/
+    }
   }
 
-  def apply[Model]: Builder[Model] = new Builder[Model]
+  def apply[Model <: Product]: Builder[Model] = new Builder[Model]
 
 }

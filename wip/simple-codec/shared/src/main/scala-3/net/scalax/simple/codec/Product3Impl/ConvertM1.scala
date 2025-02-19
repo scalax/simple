@@ -27,16 +27,14 @@ object ConvertM1Impl {
         override def zip[A <: NotHList.InputType, B <: NotHList.InputType](
           ma: M2[InputType.TakeHead[A]],
           ms: M2[InputType.TakeHead[B]]
-        ): M2[InputType.TakeHead[NotHList.ZipInputType[A, B]]] = {
-          ??? // append.zip(ma, ms)
-        }
+        ): M2[InputType.TakeHead[NotHList.ZipInputType[A, B]]] = append.zip(ma, ms).asInstanceOf
 
         override def to[A <: NotHList.InputType, B <: NotHList.InputType](m1: M2[InputType.TakeHead[A]])(
           in1: NotHList.Mapper[A, B]
         ): M2[InputType.TakeHead[B]] =
           append.to[InputType.TakeHead[A], InputType.TakeHead[B]](m1)(in1 = in1.map)(out1 = in1.reverseMap)
 
-        override def zero: M2[InputType.TakeHead[NotHList.ZeroInputType]] = ??? // append.zero
+        override def zero: M2[InputType.TakeHead[NotHList.ZeroInputType]] = append.zero.asInstanceOf
       }
 
   }

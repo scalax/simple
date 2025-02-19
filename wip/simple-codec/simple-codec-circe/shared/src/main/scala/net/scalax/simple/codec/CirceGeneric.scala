@@ -21,7 +21,7 @@ object CirceGeneric {
         override def fold[X1](
           in: (String, Encoder[X1], X1),
           l: List[(String, Json)] => List[(String, Json)]
-        ): List[(String, Json)] => List[(String, Json)] = { u: List[(String, Json)] =>
+        ): List[(String, Json)] => List[(String, Json)] = { (u: List[(String, Json)]) =>
           val jsonInstance: Json = in._2(in._3)
           l((in._1, jsonInstance) :: u)
         }

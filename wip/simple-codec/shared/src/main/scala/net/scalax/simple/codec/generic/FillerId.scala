@@ -3,8 +3,8 @@ package codec
 package utils
 package impl
 
-trait FillerId[H] {
+/*trait FillerId[H] {
   def value: H
 }
 
-object FillerId extends FillerIdPolyCompat
+object FillerId extends FillerIdPolyCompat*/

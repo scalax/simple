@@ -6,24 +6,24 @@ trait PojoInstance[U[_], Model] {
 }
 
 object PojoInstance {
-
-  /*implicit def hlistAppendFetch[U[_], T, Tail <: shapeless.HList](implicit
-    h: U[T],
-    tailInstance: PojoInstance[U, Tail]
-  ): PojoInstance[U, T :: Tail] = new PojoInstance[U, T :: Tail] {
-    override val instance: Any = h :: tailInstance.instance.asInstanceOf[shapeless.HList]
-  }
-  implicit def hlistZeroFetch[U[_]]: PojoInstance[U, shapeless.HNil] = new PojoInstance[U, shapeless.HNil] {
-    override val instance: Any = shapeless.HNil
-  }*/
+  import scala.deriving.Mirror
+  import shapeless3.deriving.*
 
   class Builder[U[_], Model] {
     def instance(n: Any): PojoInstance[U, Model] = new PojoInstance[U, Model] {
       override val instance: Any = n
     }
 
-    /*def fill[H <: shapeless.HList](implicit x: shapeless.Generic.Aux[Model, H], n: PojoInstance[U, H]): PojoInstance[U, Model] =
-      n.asInstanceOf[PojoInstance[U, Model]]*/
+    inline def fill(using
+      g: Mirror.ProductOf[Model],
+      inst: K0.ProductInstances[FillIdentity, Tuple.Map[g.MirroredElemTypes, U]]
+    ): PojoInstance[U, Model] = {
+      val fillIdentity: FillIdentity[Tuple.Map[g.MirroredElemTypes, U]] = FillIdentity.monoidGen[Tuple.Map[g.MirroredElemTypes, U]]
+
+      new PojoInstance[U, Model] {
+        override val instance: Any = fillIdentity.value
+      }
+    }
   }
 
   private val builderImplImpl: Builder[({ type X[_] = Any })#X, Any] = new Builder[({ type X[_] = Any })#X, Any]

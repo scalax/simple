@@ -32,7 +32,7 @@ object AppenderFromSize {
               val cutHead = appenderList.head.asInstanceOf[appender.HListLikeAppender[appender.ColType]]
 
               val newItem = new appender.PositiveHListLikeAppender[Any, appender.ColType] {
-                override def tailHListLikeAppender: appender.HListLikeAppender[appender.ColType] = cutHead
+                override val tailHListLikeAppender: appender.HListLikeAppender[appender.ColType] = cutHead
               }
 
               appenderList = newItem.asInstanceOf[SimpleProductXImpl.NotHList.Appender[F1]] :: appenderList
