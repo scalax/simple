@@ -2,15 +2,15 @@ package net.scalax.simple.codec
 
 import io.circe._
 import io.circe.syntax._
-import net.scalax.simple.codec.to_list_generic.{ModelLink, ModelLinkPojo, PojoInstance}
+import net.scalax.simple.codec.to_list_generic.{ModelLinkPojo, PojoInstance}
 
 case class CatNameTest3(id3: Int, str3: Option[String], uClass3: Option[Long], name113: String, namexu3: String)
 
 object CatNameTest3 {
-  implicit val deco2_1: ModelLink[({ type F[X[_]] = PojoInstance[X, CatNameTest3] })#F, CatNameTest3] = ModelLinkPojo[CatNameTest3].derived
+  implicit val deco2_1: ModelLinkPojo[CatNameTest3] = ModelLinkPojo.derived
 
-  implicit val modelEncoder: PojoInstance[Encoder, CatNameTest3] = PojoInstance[Encoder, CatNameTest3].fill
-  implicit val modelDecoder: PojoInstance[Decoder, CatNameTest3] = PojoInstance[Decoder, CatNameTest3].fill
+  implicit val modelEncoder: PojoInstance[Encoder, CatNameTest3] = PojoInstance.derived
+  implicit val modelDecoder: PojoInstance[Decoder, CatNameTest3] = PojoInstance.derived
 }
 
 object CirceText3 {

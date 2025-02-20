@@ -9,26 +9,19 @@ object PojoInstance {
   import scala.deriving.Mirror
   import shapeless3.deriving.*
 
-  class Builder[U[_], Model] {
-    def instance(n: Any): PojoInstance[U, Model] = new PojoInstance[U, Model] {
-      override val instance: Any = n
-    }
-
-    inline def fill(using
-      g: Mirror.ProductOf[Model],
-      inst: K0.ProductInstances[FillIdentity, Tuple.Map[g.MirroredElemTypes, U]]
-    ): PojoInstance[U, Model] = {
-      val fillIdentity: FillIdentity[Tuple.Map[g.MirroredElemTypes, U]] = FillIdentity.monoidGen[Tuple.Map[g.MirroredElemTypes, U]]
-
-      new PojoInstance[U, Model] {
-        override val instance: Any = fillIdentity.value
-      }
-    }
+  def instance[U[_], Model](n: Any): PojoInstance[U, Model] = new PojoInstance[U, Model] {
+    override val instance: Any = n
   }
 
-  private val builderImplImpl: Builder[({ type X[_] = Any })#X, Any] = new Builder[({ type X[_] = Any })#X, Any]
-  private def builderImpl[U[_], Model]: Builder[U, Model]            = builderImplImpl.asInstanceOf[Builder[U, Model]]
+  inline def derived[U[_], Model](using
+    g: Mirror.ProductOf[Model],
+    inst: K0.ProductInstances[FillIdentity, Tuple.Map[g.MirroredElemTypes, U]]
+  ): PojoInstance[U, Model] = {
+    val fillIdentity: FillIdentity[Tuple.Map[g.MirroredElemTypes, U]] = FillIdentity.monoidGen[Tuple.Map[g.MirroredElemTypes, U]]
 
-  def apply[U[_], Model]: Builder[U, Model] = builderImpl[U, Model]
+    new PojoInstance[U, Model] {
+      override val instance: Any = fillIdentity.value
+    }
+  }
 
 }

@@ -7,13 +7,13 @@ trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, M
   modelLinkCommonFSelf =>
 
   override def toIdentity(t: Model): PojoInstance[({ type U1[X] = X })#U1, Model] =
-    PojoInstance[({ type U1[X] = X })#U1, Model].instance(genericTo(t))
+    PojoInstance.instance[({ type U1[X] = X })#U1, Model](genericTo(t))
   override def fromIdentity(t: PojoInstance[({ type U1[X] = X })#U1, Model]): Model = genericFrom(t.instance)
 
   override def basedInstalled: SimpleProductX[({ type F[X[_]] = PojoInstance[X, Model] })#F] = {
     val fromFunc: GenericAuxFrom[({ type F[X[_]] = PojoInstance[X, Model] })#F] =
       new GenericAuxFrom[({ type F[X[_]] = PojoInstance[X, Model] })#F] {
-        override def fromModel[X[_]](collection: Any): PojoInstance[X, Model] = PojoInstance[X, Model].instance(collection)
+        override def fromModel[X[_]](collection: Any): PojoInstance[X, Model] = PojoInstance.instance[X, Model](collection)
       }
     val toFunc: GenericAuxTo[({ type F[X[_]] = PojoInstance[X, Model] })#F] =
       new GenericAuxTo[({ type F[X[_]] = PojoInstance[X, Model] })#F] {
@@ -42,21 +42,17 @@ trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, M
 
 object ModelLinkPojo {
 
-  class Builder[Model] {
-    def derived(implicit
-      g: shapeless.Generic.Aux[Model, _ <: shapeless.HList],
-      compatNamed: DefaultSymbolicLabelling.Aux[Model, _ <: shapeless.HList]
-    ): ModelLinkPojo[Model] = {
-      val namedModel = compatNamed.apply()
+  def derived[Model](implicit
+    g: shapeless.Generic.Aux[Model, _ <: shapeless.HList],
+    c: DefaultSymbolicLabelling.Aux[Model, _ <: shapeless.HList]
+  ): ModelLinkPojo[Model] = {
+    val namedModel = c.apply()
 
-      new ModelLinkPojo[Model] {
-        override val compatNamed: Any           = namedModel
-        override def genericFrom(x: Any): Model = g.from(x.asInstanceOf[g.Repr])
-        override def genericTo(x: Model): Any   = g.to(x)
-      }
+    new ModelLinkPojo[Model] {
+      override val compatNamed: Any           = namedModel
+      override def genericFrom(x: Any): Model = g.from(x.asInstanceOf[g.Repr])
+      override def genericTo(x: Model): Any   = g.to(x)
     }
   }
-
-  def apply[Model]: Builder[Model] = new Builder[Model]
 
 }
