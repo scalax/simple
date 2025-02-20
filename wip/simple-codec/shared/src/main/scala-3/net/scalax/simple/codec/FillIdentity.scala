@@ -17,8 +17,8 @@ object FillIdentity:
   }
 
   final class Builder[T] {
-    inline def derived[A](using generic: K0.ProductGeneric[A]): A = {
-      val fillIdentity: FillIdentity[A] = monoidGen[A]
+    inline def derived(using generic: K0.ProductGeneric[T]): T = {
+      val fillIdentity: FillIdentity[T] = monoidGen[T]
       fillIdentity.value
     }
   }
