@@ -30,9 +30,10 @@ object CirceGeneric {
     implicit def implicitInstance1: Encoder[List[(String, Json)] => List[(String, Json)]] =
       Encoder.instance(m => Json.fromJsonObject(JsonObject.fromIterable(m(List.empty))))
 
-    implicit def implicitInstance2: Encoder[F[NamedAndEnc]] = Encoder.instance(m =>
-      foldFGenerc.fold[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](folder, m, zero = identity[List[(String, Json)]]).asJson
-    )
+    implicit def implicitInstance2: Encoder[F[NamedAndEnc]] =
+      Encoder[List[(String, Json)] => List[(String, Json)]].contramap((m: F[NamedAndEnc]) =>
+        foldFGenerc.fold[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](folder, m, zero = identity[List[(String, Json)]])
+      )
 
     def zipInstance1(m: F[cats.Id]): F[NamedAndEnc] = zip3Generic.zip[Named, Encoder, cats.Id](g1.labelled.modelLabelled, g, m)
 

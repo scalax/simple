@@ -44,8 +44,8 @@ object ModelLinkPojo {
 
   class Builder[Model] {
     def derived(implicit
-      compatNamed: DefaultSymbolicLabelling.Aux[Model, _ <: shapeless.HList],
-      g: shapeless.Generic.Aux[Model, _ <: shapeless.HList]
+      g: shapeless.Generic.Aux[Model, _ <: shapeless.HList],
+      compatNamed: DefaultSymbolicLabelling.Aux[Model, _ <: shapeless.HList]
     ): ModelLinkPojo[Model] = {
       val namedModel = compatNamed.apply()
 

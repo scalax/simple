@@ -1,9 +1,9 @@
 package net.scalax.simple.codec
 package to_list_generic
 
-trait ModelLink[F[_[_]], Model] extends BasedInstalled[F] {
-  def toIdentity(t: Model): F[({ type U1[X] = X })#U1]
-  def fromIdentity(t: F[({ type U1[X] = X })#U1]): Model
+trait ModelLink[F[_[_]], Model] extends BasedInstalled[F] with ModelGetSet[F, Model] {
+  override def toIdentity(t: Model): F[({ type U1[X] = X })#U1]
+  override def fromIdentity(t: F[({ type U1[X] = X })#U1]): Model
 
   override def basedInstalled: SimpleProductX[F]
   override def labelled: ModelLabelled[F]
