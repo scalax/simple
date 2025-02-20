@@ -37,7 +37,7 @@ object CirceGeneric {
 
     def zipInstance1(m: F[cats.Id]): F[NamedAndEnc] = zip3Generic.zip[Named, Encoder, cats.Id](g1.labelled.modelLabelled, g, m)
 
-    Encoder.instance[F[cats.Id]]((x: F[cats.Id]) => zipInstance1(x).asJson)
+    Encoder[F[NamedAndEnc]].contramap[F[cats.Id]]((x: F[cats.Id]) => zipInstance1(x))
   }
 
   def decodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Decoder]): Decoder[F[cats.Id]] = {

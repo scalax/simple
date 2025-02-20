@@ -1,46 +1,47 @@
 package net.scalax.simple
 package codec
 
-import io.circe._
-import io.circe.syntax._
+import play.api.libs.json._
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
 import net.scalax.simple.codec.to_list_generic.{BasedInstalled, FoldFGenerc, SimpleProduct1, SimpleProduct2, SimpleProduct3, SimpleProduct4}
 
 object PlayJsonGeneric2 {
   type Named[_] = String
 
-  def encodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Encoder]): Encoder[F[cats.Id]] = {
+  def writesModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Writes]): Writes[F[cats.Id]] = {
     val sp1: SimpleProduct1.Appender[F] = g1.simpleProduct1
     val sp4: SimpleProduct4.Appender[F] = SimpleProduct4[F].derived(g1.basedInstalled)
     val zip3Generic: Zip3Generic[F]     = Zip3Generic[F].derived(sp4)
     val foldFGenerc: FoldFGenerc[F]     = FoldFGenerc[F].derived(sp1)
 
-    type NamedAndEnc[T] = (String, Encoder[T], T)
+    type NamedAndEnc[T] = (String, Writes[T], T)
 
-    def folder: FoldFGenerc.FoldF[NamedAndEnc, List[(String, Json)] => List[(String, Json)]] =
-      new FoldFGenerc.FoldF[NamedAndEnc, List[(String, Json)] => List[(String, Json)]] {
+    def folder: FoldFGenerc.FoldF[NamedAndEnc, List[(String, JsValue)] => List[(String, JsValue)]] =
+      new FoldFGenerc.FoldF[NamedAndEnc, List[(String, JsValue)] => List[(String, JsValue)]] {
         override def fold[X1](
-          in: (String, Encoder[X1], X1),
-          l: List[(String, Json)] => List[(String, Json)]
-        ): List[(String, Json)] => List[(String, Json)] = { (u: List[(String, Json)]) =>
-          val jsonInstance: Json = in._2(in._3)
+          in: (String, Writes[X1], X1),
+          l: List[(String, JsValue)] => List[(String, JsValue)]
+        ): List[(String, JsValue)] => List[(String, JsValue)] = { (u: List[(String, JsValue)]) =>
+          val jsonInstance: JsValue = in._2.writes(in._3)
           l((in._1, jsonInstance) :: u)
         }
       }
 
-    implicit def implicitInstance1: Encoder[List[(String, Json)] => List[(String, Json)]] =
-      Encoder.instance(m => Json.fromJsonObject(JsonObject.fromIterable(m(List.empty))))
+    implicit def implicitInstance1: Writes[List[(String, JsValue)] => List[(String, JsValue)]] = Writes(m => JsObject(m(List.empty)))
 
-    implicit def implicitInstance2: Encoder[F[NamedAndEnc]] =
-      Encoder[List[(String, Json)] => List[(String, Json)]].contramap((m: F[NamedAndEnc]) =>
-        foldFGenerc.fold[NamedAndEnc, List[(String, Json)] => List[(String, Json)]](folder, m, zero = identity[List[(String, Json)]])
+    implicit def implicitInstance2: Writes[F[NamedAndEnc]] =
+      implicitly[Writes[List[(String, JsValue)] => List[(String, JsValue)]]].contramap[F[NamedAndEnc]]((m: F[NamedAndEnc]) =>
+        foldFGenerc
+          .fold[NamedAndEnc, List[(String, JsValue)] => List[(String, JsValue)]](folder, m, zero = identity[List[(String, JsValue)]])
       )
 
-    def zipInstance1(m: F[cats.Id]): F[NamedAndEnc] = zip3Generic.zip[Named, Encoder, cats.Id](g1.labelled.modelLabelled, g, m)
+    def zipInstance1(m: F[cats.Id]): F[NamedAndEnc] = zip3Generic.zip[Named, Writes, cats.Id](g1.labelled.modelLabelled, g, m)
 
-    Encoder.instance[F[cats.Id]]((x: F[cats.Id]) => zipInstance1(x).asJson)
+    implicitly[Writes[F[NamedAndEnc]]].contramap[F[cats.Id]]((x: F[cats.Id]) => zipInstance1(x))
   }
 
-  def decodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Decoder]): Decoder[F[cats.Id]] = {
+  /*def decodeModelImpl[F[_[_]]](g1: BasedInstalled[F], g: F[Decoder]): Decoder[F[cats.Id]] = {
     val sp2: SimpleProduct2.Appender[F] = SimpleProduct2[F].derived(g1.basedInstalled)
     val sp3: SimpleProduct3.Appender[F] = SimpleProduct3[F].derived(g1.basedInstalled)
     val zipGeneric: ZipGeneric[F]       = ZipGeneric[F].derived(sp3)
@@ -76,6 +77,6 @@ object PlayJsonGeneric2 {
     }
 
     Decoder.instance[F[cats.Id]](hCursor => contextWith(hCursor)(map1))
-  }
+  }*/
 
 }

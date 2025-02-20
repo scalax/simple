@@ -7,8 +7,8 @@ import net.scalax.simple.codec.to_list_generic.{ModelLinkPojo, PojoInstance}
 case class S3CatName(id4: Int, str4: Option[String], uClass4: Option[Long], name114: String, namexu4: String) derives ModelLinkPojo
 
 object S3CatName {
-  implicit val modelEncoder: PojoInstance[Encoder, S3CatName] = PojoInstance.derived
-  implicit val modelDecoder: PojoInstance[Decoder, S3CatName] = PojoInstance.derived
+  given PojoInstance[Encoder, S3CatName] = PojoInstance.derived
+  given PojoInstance[Decoder, S3CatName] = PojoInstance.derived
 }
 
 object S3CirceTest1 {
