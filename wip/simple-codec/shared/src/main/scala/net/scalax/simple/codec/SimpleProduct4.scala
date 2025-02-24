@@ -16,7 +16,8 @@ object SimpleProduct4 {
   }
 
   trait Appender[F[_[_]]] {
-    def toHList[M1[_, _, _, _], M2[_], M3[_], M4[_], M5[_]](monad: AppendMonad[M1])(
+    def toHList[M1[_, _, _, _], M2[_], M3[_], M4[_], M5[_]](
+      monad: AppendMonad[M1],
       func: TypeGen[M1, M2, M3, M4, M5]
     ): M1[F[M2], F[M3], F[M4], F[M5]]
   }

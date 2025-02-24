@@ -39,7 +39,7 @@ object CirceText2 {
 
   final def main(args: Array[String]): Unit = {
     println(namedMode.asJson.spaces2)
-    println(parser.parse(namedMode.asJson.spaces2).right.flatMap(_.as[FAlias[cats.Id]]))
+    println(parser.parse(namedMode.asJson.spaces2).flatMap(_.as[FAlias[cats.Id]]))
   }
 
 }

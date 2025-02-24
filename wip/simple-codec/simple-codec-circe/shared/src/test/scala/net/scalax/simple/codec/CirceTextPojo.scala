@@ -37,7 +37,7 @@ object CatNameTest3TestCase {
 
   final def main(args: Array[String]): Unit = {
     println(modelInstance.asJson.spaces2)
-    println(parser.parse(modelInstance.asJson.spaces2).right.flatMap(_.as[CatNameTest3]))
+    println(parser.parse(modelInstance.asJson.spaces2).flatMap(_.as[CatNameTest3]))
   }
 
 }

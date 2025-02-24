@@ -21,11 +21,12 @@ object ZipGeneric {
           override def zero: (SimpleZero, SimpleZero) => SimpleZero = (a, _) => a
         }
 
-        o1.toHList[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1](func)(
+        val typeGen: SimpleProduct3.TypeGen[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1] =
           new SimpleProduct3.TypeGen[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1] {
             override def apply[X1]: (S[X1], T[X1]) => (S[X1], T[X1]) = (s, t) => (s, t)
           }
-        )(input1, input2)
+
+        o1.toHList[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1](func, typeGen)(input1, input2)
       }
     }
   }

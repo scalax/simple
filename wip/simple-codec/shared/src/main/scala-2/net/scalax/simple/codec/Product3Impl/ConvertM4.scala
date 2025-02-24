@@ -93,8 +93,9 @@ object ConvertM4Impl {
   object Appender {
     def to3[F[_[_]]](append: SimpleProductXImpl.NotHList.Appender[F]): SimpleProduct4.Appender[F] = new SimpleProduct4.Appender[F] {
       override def toHList[M3[_, _, _, _], M1[_], M2[_], M4[_], M5[_]](
-        monad: SimpleProduct4.AppendMonad[M3]
-      )(func: SimpleProduct4.TypeGen[M3, M1, M2, M4, M5]): M3[F[M1], F[M2], F[M4], F[M5]] = {
+        monad: SimpleProduct4.AppendMonad[M3],
+        func: SimpleProduct4.TypeGen[M3, M1, M2, M4, M5]
+      ): M3[F[M1], F[M2], F[M4], F[M5]] = {
         val appendMonad: SimpleProductXImpl.NotHList.AppendMonad[
           ({
             type TA[U <: SimpleProductXImpl.NotHList.InputType] =

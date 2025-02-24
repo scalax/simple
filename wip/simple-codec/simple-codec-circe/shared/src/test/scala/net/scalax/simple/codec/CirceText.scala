@@ -29,7 +29,7 @@ object CirceText1 {
 
   final def main(args: Array[String]): Unit = {
     println(modelInstance.asJson.spaces2)
-    println(parser.parse(modelInstance.asJson.spaces2).right.flatMap(_.as[CatName[cats.Id]]))
+    println(parser.parse(modelInstance.asJson.spaces2).flatMap(_.as[CatName[cats.Id]]))
   }
 
 }
