@@ -22,8 +22,10 @@ trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, M
   }
 
   override def labelled: ModelLabelled[({ type F[X[_]] = PojoInstance[X, Model] })#F] =
-    ModelLabelled[({ type F[X[_]] = PojoInstance[X, Model] })#F]
-      .derived(modelLinkCommonFSelf.compatLabelled, modelLinkCommonFSelf.fromListByTheSameTypeGeneric)
+    ModelLabelled[({ type F[X[_]] = PojoInstance[X, Model] })#F].instance(
+      PojoInstance.instance[({ type Str[_] = String })#Str, Model](modelLinkCommonFSelf.compatLabelled.compatLabelled)
+    )
+
   override def size: ModelSize[({ type F[X[_]] = PojoInstance[X, Model] })#F] =
     ModelSize[({ type F[X[_]] = PojoInstance[X, Model] })#F].derived(modelLinkCommonFSelf.compatLabelled)
 

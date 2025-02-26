@@ -40,6 +40,31 @@ object ConvertM1Impl {
         override def zero: M2[SimpleZero] = append.zero
       }
 
+    def from2[M2[_]](
+      append: SimpleProductF1.AppendMonad[M2]
+    ): SimpleProductXImpl2.NotHList.AppendMonad[({ type TA[U <: SimpleProductXImpl2.NotHList.InputType] = M2[U#toItem] })#TA] =
+      new SimpleProductXImpl2.NotHList.AppendMonad[({ type TA[U <: SimpleProductXImpl2.NotHList.InputType] = M2[U#toItem] })#TA] {
+        override def zip[
+          A <: SimpleProductXImpl2.NotHList.InputType,
+          B <: SimpleProductXImpl2.NotHList.InputType,
+          C <: SimpleProductXImpl2.NotHList.InputType
+        ](
+          fromtTo: SimpleProductXImpl2.NotHList.ConvertF[A, B, C],
+          ma: M2[A#toItem],
+          mb: M2[B#toItem]
+        ): M2[C#toItem] = append.zip(
+          new SimpleProductF1.ConvertF1[A#toItem, B#toItem, C#toItem] {
+            override def from1(a: A#toItem, b: B#toItem): C#toItem = fromtTo.from(a, b)
+            override def takeHead1(modelC: C#toItem): A#toItem     = fromtTo.takeHead(modelC)
+            override def takeHead2(modelC: C#toItem): B#toItem     = fromtTo.takeTail(modelC)
+          },
+          ma,
+          mb
+        )
+
+        override def zero[N <: SimpleProductXImpl2.NotHList.InputType]: M2[N#toItem] = append.zero[N#toItem]
+      }
+
   }
 
   object Appender {
