@@ -1,5 +1,6 @@
 package net.scalax.simple.codec
 
+import shapeless.HNil
 import to_list_generic.SimpleProduct4
 
 trait Zip3Generic[F[_[_]]] {
@@ -13,13 +14,14 @@ object Zip3Generic {
       override def zip[S[_], T[_], U[_]](input1: F[S], input2: F[T], input3: F[U]): F[({ type X1[U1] = (S[U1], T[U1], U[U1]) })#X1] = {
         type MA[A, B, C, D] = (A, B, C) => D
         val func = new SimpleProduct4.AppendMonad[MA] {
-          override def zip[A, B, C, D, S, T, U, V](ma: (A, B, C) => D, ms: (S, T, U) => V): ((A, S), (B, T), (C, U)) => (D, V) =
-            (as, bt, ct) => (ma(as._1, bt._1, ct._1), ms(as._2, bt._2, ct._2))
-          override def to[A, B, C, D, S, T, U, V](
-            m1: (A, B, C) => D
-          )(in1: A => S, in2: B => T, in3: C => U, in4: D => V)(in5: S => A, in6: T => B, in7: U => C, in8: V => D): (S, T, U) => V =
-            (s, t, u) => in4(m1(in5(s), in6(t), in7(u)))
-          override def zero: (SimpleZero, SimpleZero, SimpleZero) => SimpleZero = (a, _, _) => a
+          override def zip[A1, B1, C1, A2, B2, C2, A3, B3, C3, A4, B4, C4](
+            c: SimpleProduct4.ConvertF4[A1, B1, C1, A2, B2, C2, A3, B3, C3, A4, B4, C4],
+            ma: (A1, A2, A3) => A4,
+            mb: (B1, B2, B3) => B4
+          ): (C1, C2, C3) => C4 = (c1, c2, c3) =>
+            c.from4(ma(c.takeHead1(c1), c.takeHead2(c2), c.takeHead3(c3)), mb(c.takeTail1(c1), c.takeTail2(c2), c.takeTail3(c3)))
+
+          override def zero[N1, N2, N3, N4](n1: N1, n2: N2, n3: N3, n4: N4): (N1, N2, N3) => N4 = (_, _, _) => n4
         }
 
         val typeGen: SimpleProduct4.TypeGen[MA, S, T, U, ({ type X1[NN] = (S[NN], T[NN], U[NN]) })#X1] =
@@ -27,7 +29,7 @@ object Zip3Generic {
             override def apply[X1]: (S[X1], T[X1], U[X1]) => (S[X1], T[X1], U[X1]) = (s, t, u) => (s, t, u)
           }
 
-        o1.toHList[MA, S, T, U, ({ type X1[NN] = (S[NN], T[NN], U[NN]) })#X1](func, typeGen)(input1, input2, input3)
+        o1.toHList1[MA, S, T, U, ({ type X1[NN] = (S[NN], T[NN], U[NN]) })#X1](func)(typeGen)(input1, input2, input3)
       }
     }
   }

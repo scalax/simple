@@ -1,5 +1,6 @@
 package net.scalax.simple.codec
 
+import shapeless.HNil
 import to_list_generic.SimpleProduct3
 
 trait ZipGeneric[F[_[_]]] {
@@ -13,12 +14,12 @@ object ZipGeneric {
       override def zip[S[_], T[_]](input1: F[S], input2: F[T]): F[({ type X1[U1] = (S[U1], T[U1]) })#X1] = {
         type MA[A, B, C] = (A, B) => C
         val func = new SimpleProduct3.AppendMonad[MA] {
-          override def zip[A, B, C, S, T, U](ma: (A, B) => C, ms: (S, T) => U): ((A, S), (B, T)) => (C, U) = (as, bt) =>
-            (ma(as._1, bt._1), ms(as._2, bt._2))
-          override def to[A, B, C, S, T, U](
-            m1: (A, B) => C
-          )(in1: A => S, in2: B => T, in3: C => U)(in4: S => A, in5: T => B, in6: U => C): (S, T) => U = (s, t) => in3(m1(in4(s), in5(t)))
-          override def zero: (SimpleZero, SimpleZero) => SimpleZero = (a, _) => a
+          override def zip[A1, B1, C1, A2, B2, C2, A3, B3, C3](
+            c: SimpleProduct3.ConvertF3[A1, B1, C1, A2, B2, C2, A3, B3, C3],
+            ma: (A1, A2) => A3,
+            mb: (B1, B2) => B3
+          ): (C1, C2) => C3 = (c1, c2) => c.from3(ma(c.takeHead1(c1), c.takeHead2(c2)), mb(c.takeTail1(c1), c.takeTail2(c2)))
+          override def zero[N1, N2, N3](n1: N1, n2: N2, n3: N3): (N1, N2) => N3 = (_, _) => n3
         }
 
         val typeGen: SimpleProduct3.TypeGen[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1] =
@@ -26,7 +27,7 @@ object ZipGeneric {
             override def apply[X1]: (S[X1], T[X1]) => (S[X1], T[X1]) = (s, t) => (s, t)
           }
 
-        o1.toHList[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1](func, typeGen)(input1, input2)
+        o1.toHList1[MA, S, T, ({ type X1[NN] = (S[NN], T[NN]) })#X1](func)(typeGen)(input1, input2)
       }
     }
   }

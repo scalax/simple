@@ -1,3 +1,4 @@
+/*
 package net.scalax.simple.codec
 package to_list_generic
 
@@ -240,3 +241,4 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
 }
 
 object SimpleProductXImpl extends SimpleProductXImpl[Tuple2]
+ */

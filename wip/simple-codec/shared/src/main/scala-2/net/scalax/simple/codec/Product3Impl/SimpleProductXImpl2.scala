@@ -1,6 +1,8 @@
 package net.scalax.simple.codec
 package to_list_generic
 
+import java.security.DrbgParameters.NextBytes
+
 class SimpleProductXImpl2 {
   SimpleProduct3Self =>
 
@@ -73,25 +75,69 @@ class SimpleProductXImpl2 {
       override def tailHListLikeAppender: HListLikeAppender[X]
     }
 
+    trait LastMapHListLikeAppender[U[_[_]], A, X <: ColType] extends NotHList.Appender[U] {
+      override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
+        func: NotHList.TypeGen[M, FT]
+      ): M[NotHList.FGenericInputType[U, FT]] = {
+        val tailModel: M[NotHList.FGenericInputType[X#toM, FT]] = tailHListLikeAppender.toHList(monad)(func)
+
+        class AB[FT111 <: NotHList.FType]
+            extends NotHList.ConvertF[
+              NotHList.ItemInputType[A, FT111],
+              NotHList.FGenericInputType[X#toM, FT111],
+              NotHList.FGenericInputType[U, FT111]
+            ] {
+          override def from(a: FT111#toF[A], b: X#toM[FT111#toF]): U[FT111#toF] = append1In(a, b)
+          override def takeHead(c: U[FT111#toF]): FT111#toF[A]                  = takeHead1In(c)
+          override def takeTail(c: U[FT111#toF]): X#toM[FT111#toF]              = takeTail1In(c)
+          override def next: AB[FT111#Next]                                     = new AB[FT111#Next]
+        }
+
+        val abInstance: AB[FT] = new AB[FT] {
+          SelfABInstance =>
+          override def next: AB[FT#Next] = SelfABInstance.asInstanceOf[AB[FT#Next]]
+        }
+
+        monad.zip(abInstance, func[A], tailModel)
+      }
+
+      def append1In[M[_]](a1: M[A], a2: X#toM[M]): U[M]
+      def takeHead1In[M[_]](a1: U[M]): M[A]
+      def takeTail1In[M[_]](a1: U[M]): X#toM[M]
+
+      def tailHListLikeAppender: HListLikeAppender[X]
+    }
+
     trait ZeroHListLikeAppender extends HListLikeAppender[ZeroColType] {
       SelfZeroHListLikeAppender =>
 
       override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
         func: NotHList.TypeGen[M, FT]
-      ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] = monad.zero[NotHList.FGenericInputType[ZeroColType#toM, FT]]
+      ): M[NotHList.FGenericInputType[ZeroColType#toM, FT]] =
+        monad.zero[NotHList.FGenericInputType[ZeroColType#toM, FT]](ZeroHListLikeAppender.instanceA[FT])
 
       override def tailHListLikeAppender: ZeroHListLikeAppender = SelfZeroHListLikeAppender
     }
 
     object ZeroHListLikeAppender {
       @inline val value: ZeroHListLikeAppender = new ZeroHListLikeAppender {
-        ZeroHListLikeAppenderSelf =>
-        @inline override lazy val tailHListLikeAppender: ZeroHListLikeAppender = ZeroHListLikeAppenderSelf
+        @inline override lazy val tailHListLikeAppender: ZeroHListLikeAppender = super.tailHListLikeAppender
       }
 
       locally {
         value.tailHListLikeAppender
       }
+
+      private class NInU[FUU <: NotHList.FType] extends NotHList.InputInstance[NotHList.FGenericInputType[ZeroColType#toM, FUU]] {
+        override val item: ZeroType          = AppendContextSelf.zero
+        override def andThen: NInU[FUU#Next] = new NInU[FUU#Next]
+      }
+
+      private val anyInstance: NInU[NotHList.FType] = new NInU[NotHList.FType] {
+        SelfNInU =>
+        override lazy val andThen: NInU[NotHList.FType#Next] = SelfNInU.asInstanceOf[NInU[NotHList.FType#Next]]
+      }
+      private def instanceA[FUU <: NotHList.FType]: NInU[FUU] = anyInstance.asInstanceOf[NInU[FUU]]
     }
 
   }
@@ -131,6 +177,11 @@ class SimpleProductXImpl2 {
       override type AndThen = FGenericInputType[F, FT#Next]
     }
 
+    trait InputInstance[I <: InputType] {
+      def item: I#toItem
+      def andThen: InputInstance[I#AndThen]
+    }
+
     // ===
     trait ConvertF[A1 <: InputType, B1 <: InputType, C1 <: InputType] {
       SelfConvertF =>
@@ -145,7 +196,7 @@ class SimpleProductXImpl2 {
     // ===
     trait AppendMonad[M[_ <: InputType]] {
       def zip[A <: InputType, B <: InputType, C <: InputType](convertF: ConvertF[A, B, C], ma: M[A], mb: M[B]): M[C]
-      def zero[N <: InputType]: M[N]
+      def zero[N <: InputType](i: InputInstance[N]): M[N]
     }
 
     // ===
@@ -158,24 +209,6 @@ class SimpleProductXImpl2 {
       def toHList[M[_ <: InputType], FT <: FType](monad: AppendMonad[M])(func: TypeGen[M, FT]): M[FGenericInputType[F, FT]]
     }
 
-    /*trait FromOtherAppender[F[_[_]], G[_[_]]] extends Appender[G] {
-      def fromModel[X[_]](f: F[X]): G[X]
-      def toModel[X[_]](g: G[X]): F[X]
-      def appenderF: Appender[F]
-
-      private class InnerMapperHelper[FT <: FType] extends Mapper[FGenericInputType[F, FT], FGenericInputType[G, FT]] {
-        SelfInnerMapperHelper =>
-        override def map(ia: F[FT#toF]): G[FT#toF]          = fromModel(ia)
-        override def reverseMap(ib: G[FT#toF]): F[FT#toF]   = toModel(ib)
-        override def nextMapper: InnerMapperHelper[FT#Next] = SelfInnerMapperHelper.asInstanceOf[InnerMapperHelper[FT#Next]]
-      }
-
-      override def toHList[M[_ <: InputType], FT <: FType](monad: AppendMonad[M])(func: TypeGen[M, FT]): M[FGenericInputType[G, FT]] = {
-        val mModel: M[FGenericInputType[F, FT]]                                 = appenderF.toHList[M, FT](monad)(func)
-        val mapperA: Mapper[FGenericInputType[F, FT], FGenericInputType[G, FT]] = new InnerMapperHelper
-        monad.to[FGenericInputType[F, FT], FGenericInputType[G, FT]](mModel)(mapperA)
-      }
-    }*/
   }
 
 }

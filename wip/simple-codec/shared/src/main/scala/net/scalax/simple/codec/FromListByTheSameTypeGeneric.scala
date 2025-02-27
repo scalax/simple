@@ -21,18 +21,17 @@ object FromListByTheSameTypeGeneric {
 
   private def monadAdd[SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = SeqType => (SeqType, U) })#T1] =
     new SimpleProduct1.AppendMonad[({ type T1[U] = SeqType => (SeqType, U) })#T1] {
-      override def zip[A, B](ma: SeqType => (SeqType, A), ms: SeqType => (SeqType, B)): SeqType => (SeqType, (A, B)) = { l =>
+      override def zip[A1, B1, C1](
+        c: SimpleProduct1.ConvertF1[A1, B1, C1],
+        ma: SeqType => (SeqType, A1),
+        mb: SeqType => (SeqType, B1)
+      ): SeqType => (SeqType, C1) = { l =>
         val rb = ma(l)
-        val ra = ms(rb._1)
-        (ra._1, (rb._2, ra._2))
+        val ra = mb(rb._1)
+        (ra._1, c.from1(rb._2, ra._2))
       }
 
-      override def to[A, B](m1: SeqType => (SeqType, A))(in1: A => B)(out1: B => A): SeqType => (SeqType, B) = { l =>
-        val temp = m1(l)
-        (temp._1, in1(temp._2))
-      }
-
-      override val zero: SeqType => (SeqType, SimpleZero) = l => (l, SimpleZero.value)
+      override def zero[N1](n1: N1): SeqType => (SeqType, N1) = l => (l, n1)
     }
 
   class Builder[F[_[_]]] {

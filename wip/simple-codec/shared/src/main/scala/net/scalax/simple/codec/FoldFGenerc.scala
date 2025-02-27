@@ -19,26 +19,30 @@ object FoldFGenerc {
 
   private def monadAddLeft[SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] =
     new SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] {
-      override def zip[A, B](ma: (A, SeqType) => SeqType, ms: (B, SeqType) => SeqType): ((A, B), SeqType) => SeqType = { (ab, l) =>
-        val rb = ms(ab._2, l)
-        ma(ab._1, rb)
+      override def zip[A1, B1, C1](
+        c: SimpleProduct1.ConvertF1[A1, B1, C1],
+        ma: (A1, SeqType) => SeqType,
+        mb: (B1, SeqType) => SeqType
+      ): (C1, SeqType) => SeqType = { (ab, l) =>
+        val rb = mb(c.takeTail1(ab), l)
+        ma(c.takeHead1(ab), rb)
       }
 
-      override def to[A, B](m1: (A, SeqType) => SeqType)(in1: A => B)(out1: B => A): (B, SeqType) => SeqType = (b, col) => m1(out1(b), col)
-
-      override val zero: (SimpleZero, SeqType) => SeqType = (_, a) => a
+      override def zero[N1](n1: N1): (N1, SeqType) => SeqType = (_, a) => a
     }
 
   private def monadAddRight[SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] =
     new SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] {
-      override def zip[A, B](ma: (A, SeqType) => SeqType, ms: (B, SeqType) => SeqType): ((A, B), SeqType) => SeqType = { (ab, l) =>
-        val rb = ma(ab._1, l)
-        ms(ab._2, rb)
+      override def zip[A1, B1, C1](
+        c: SimpleProduct1.ConvertF1[A1, B1, C1],
+        ma: (A1, SeqType) => SeqType,
+        mb: (B1, SeqType) => SeqType
+      ): (C1, SeqType) => SeqType = { (ab, l) =>
+        val rb = ma(c.takeHead1(ab), l)
+        mb(c.takeTail1(ab), rb)
       }
 
-      override def to[A, B](m1: (A, SeqType) => SeqType)(in1: A => B)(out1: B => A): (B, SeqType) => SeqType = (b, col) => m1(out1(b), col)
-
-      override val zero: (SimpleZero, SeqType) => SeqType = (_, a) => a
+      override def zero[N1](n1: N1): (N1, SeqType) => SeqType = (_, a) => a
     }
 
   class Builder[F[_[_]]] {
