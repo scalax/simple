@@ -29,31 +29,30 @@ class SimpleProductXImpl2 {
       override type Tail      = ZeroColType
     }
 
+    class InSetImpl1[X1, FT1X <: NotHList.FType, CT1X <: ColType]
+        extends NotHList.ConvertF[
+          NotHList.ItemInputType[X1, FT1X],
+          NotHList.FGenericInputType[CT1X#toM, FT1X],
+          NotHList.FGenericInputType[AppendColType[X1, CT1X]#toM, FT1X]
+        ] {
+      override def from(a: FT1X#toF[X1], b: CT1X#toM[FT1X#toF]): AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]] = append(a, b)
+      override def takeHead(c: AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]]): FT1X#toF[X1]                    = unappendHead(c)
+      override def takeTail(c: AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]]): CT1X#toM[FT1X#toF]              = unappendTail(c)
+      override def next: InSetImpl1[X1, FT1X#Next, CT1X] = new InSetImpl1[X1, FT1X#Next, CT1X]
+    }
+
+    object InSetImpl2 extends InSetImpl1[Any, NotHList.FType, ColType] {
+      override lazy val next: InSetImpl1[Any, NotHList.FType#Next, ColType] = super.next
+    }
+    InSetImpl2.next
+    def InSetTo1[X1, FT1X <: NotHList.FType, CT1X <: ColType]: InSetImpl1[X1, FT1X, CT1X] =
+      InSetImpl2.asInstanceOf[InSetImpl1[X1, FT1X, CT1X]]
+
     @inline def positiveAppender[M1[_ <: NotHList.InputType], C <: ColType, FT <: NotHList.FType, T](
       appendMonad: NotHList.AppendMonad[M1],
       typeGen: NotHList.TypeGen[M1, FT],
       m: M1[NotHList.FGenericInputType[C#toM, FT]]
-    ): M1[NotHList.FGenericInputType[AppendColType[T, C]#toM, FT]] = {
-      def inSet1[X1, FT1X <: NotHList.FType, CT1X <: ColType]
-        : NotHList.ConvertF[NotHList.ItemInputType[X1, FT1X], NotHList.FGenericInputType[CT1X#toM, FT1X], NotHList.FGenericInputType[
-          AppendColType[X1, CT1X]#toM,
-          FT1X
-        ]] = new NotHList.ConvertF[
-        NotHList.ItemInputType[X1, FT1X],
-        NotHList.FGenericInputType[CT1X#toM, FT1X],
-        NotHList.FGenericInputType[AppendColType[X1, CT1X]#toM, FT1X]
-      ] {
-        override def from(a: FT1X#toF[X1], b: CT1X#toM[FT1X#toF]): AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]] = append(a, b)
-        override def takeHead(c: AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]]): FT1X#toF[X1]                    = unappendHead(c)
-        override def takeTail(c: AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]]): CT1X#toM[FT1X#toF]              = unappendTail(c)
-        override def next: NotHList.ConvertF[NotHList.ItemInputType[X1, FT1X#Next], NotHList.FGenericInputType[
-          CT1X#toM,
-          FT1X#Next
-        ], NotHList.FGenericInputType[AppendColType[X1, CT1X]#toM, FT1X#Next]] = inSet1[X1, FT1X#Next, CT1X]
-      }
-
-      appendMonad.zip(inSet1[T, FT, C], typeGen[T], m)
-    }
+    ): M1[NotHList.FGenericInputType[AppendColType[T, C]#toM, FT]] = appendMonad.zip(InSetTo1[T, FT, C], typeGen[T], m)
 
     // ===
     trait HListLikeAppender[X <: ColType] extends NotHList.Appender[X#toM] {
@@ -165,11 +164,6 @@ class SimpleProductXImpl2 {
     trait ItemInputType[T, FT <: FType] extends InputType {
       override type toItem  = FT#toF[T]
       override type AndThen = ItemInputType[T, FT#Next]
-    }
-
-    trait ZipInputType[In1 <: InputType, In2 <: InputType] extends InputType {
-      override type toItem  = (In1#toItem, In2#toItem)
-      override type AndThen = ZipInputType[In1#AndThen, In2#AndThen]
     }
 
     trait FGenericInputType[F[_[_]], FT <: FType] extends InputType {

@@ -1,6 +1,5 @@
 package net.scalax.simple.codec
 
-import shapeless.HNil
 import to_list_generic.SimpleProduct4
 
 trait Zip3Generic[F[_[_]]] {

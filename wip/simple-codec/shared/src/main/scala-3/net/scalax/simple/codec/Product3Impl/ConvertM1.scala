@@ -1,13 +1,12 @@
 package net.scalax.simple.codec
 package to_list_generic
 
-import SimpleProductXImpl.NotHList
+import SimpleProductXImpl2.NotHList
 import NotHList.InputType
 
 object ConvertM1Impl {
-  type M1FType[M1[_]] = NotHList.PositiveFType[M1, NotHList.ZeroFType]
 
-  type InputType1[T1] = NotHList.PositiveInputType[T1, NotHList.ZeroInputType]
+  type M1FType[M1[_]] = NotHList.PositiveFType[M1, NotHList.ZeroFType]
 
   object TypeGen {
     def from1[M2[_], M1[_]](
@@ -19,24 +18,28 @@ object ConvertM1Impl {
   }
 
   object AppendMonad {
-
     def from1[M2[_]](
       append: SimpleProduct1.AppendMonad[M2]
     ): NotHList.AppendMonad[({ type TA[U <: NotHList.InputType] = M2[InputType.TakeHead[U]] })#TA] =
       new NotHList.AppendMonad[({ type TA[U <: NotHList.InputType] = M2[InputType.TakeHead[U]] })#TA] {
-        override def zip[A <: NotHList.InputType, B <: NotHList.InputType](
+        override def zip[A <: NotHList.InputType, B <: NotHList.InputType, C <: NotHList.InputType](
+          fromTo: NotHList.ConvertF[A, B, C],
           ma: M2[InputType.TakeHead[A]],
-          ms: M2[InputType.TakeHead[B]]
-        ): M2[InputType.TakeHead[NotHList.ZipInputType[A, B]]] = append.zip(ma, ms).asInstanceOf
+          mb: M2[InputType.TakeHead[B]]
+        ): M2[InputType.TakeHead[C]] = {
+          val c1: SimpleProduct1.ConvertF1[InputType.TakeHead[A], InputType.TakeHead[B], InputType.TakeHead[C]] =
+            new SimpleProduct1.ConvertF1[InputType.TakeHead[A], InputType.TakeHead[B], InputType.TakeHead[C]] {
+              override def from1(a: InputType.TakeHead[A], b: InputType.TakeHead[B]): InputType.TakeHead[C] = fromTo.from(a, b)
+              override def takeHead1(modelC: InputType.TakeHead[C]): InputType.TakeHead[A]                  = fromTo.takeHead(modelC)
+              override def takeTail1(modelC: InputType.TakeHead[C]): InputType.TakeHead[B]                  = fromTo.takeTail(modelC)
+            }
 
-        override def to[A <: NotHList.InputType, B <: NotHList.InputType](m1: M2[InputType.TakeHead[A]])(
-          in1: NotHList.Mapper[A, B]
-        ): M2[InputType.TakeHead[B]] =
-          append.to[InputType.TakeHead[A], InputType.TakeHead[B]](m1)(in1 = in1.map)(out1 = in1.reverseMap)
+          append.zip(c1, ma, mb)
+        }
 
-        override def zero: M2[InputType.TakeHead[NotHList.ZeroInputType]] = append.zero.asInstanceOf
+        override def zero[N1 <: NotHList.InputType](n: NotHList.InputInstance[N1]): M2[InputType.TakeHead[N1]] =
+          append.zero[InputType.TakeHead[N1]](n.item)
       }
-
   }
 
   object Appender {
@@ -56,4 +59,5 @@ object ConvertM1Impl {
       }
     }
   }
+
 }

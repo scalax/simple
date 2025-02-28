@@ -1,15 +1,16 @@
 package net.scalax.simple.codec
 package to_list_generic
 
-class SimpleProductXImpl[AppendFunc[_, _]] {
+class SimpleProductXImpl2 {
   SimpleProduct3Self =>
 
   trait AppendContext[HListLike, ZeroType <: HListLike, AppendType[_, _ <: HListLike] <: HListLike] {
     AppendContextSelf =>
 
     def zero: ZeroType
-    def append[H, T <: HListLike](h: AppendFunc[H, T]): AppendType[H, T]
-    def unappend[H, T <: HListLike](a: AppendType[H, T]): AppendFunc[H, T]
+    def append[H, T <: HListLike](h: H, t: T): AppendType[H, T]
+    def unappendHead[H, T <: HListLike](a: AppendType[H, T]): H
+    def unappendTail[H, T <: HListLike](a: AppendType[H, T]): T
 
     trait ColType
     trait AppendColType[T, TailType <: ColType] extends ColType
@@ -28,7 +29,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     }
 
     // ===
-    trait GetSet[Item, HL <: ColType, FT <: NotHList.FType]
+    /*trait GetSet[Item, HL <: ColType, FT <: NotHList.FType]
         extends NotHList.Mapper[
           NotHList.ZipInputType[NotHList.ItemInputType[Item, FT], NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, HL], FT]],
           NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, AppendColType[Item, HL]], FT]
@@ -42,9 +43,9 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
 
       override def map(n: head1): head2        = append(n.asInstanceOf).asInstanceOf
       override def reverseMap(n: head2): head1 = unappend(n.asInstanceOf).asInstanceOf
-    }
+    }*/
 
-    object GetSet {
+    /*object GetSet {
       @inline private val getsetModel: GetSet[Any, ColType, NotHList.FType] = new GetSet[Any, ColType, NotHList.FType] {
         GetSetImplSelf =>
         @inline override lazy val nextMapper = GetSetImplSelf.asInstanceOf
@@ -56,9 +57,9 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
 
       @inline def value[Item, HL <: ColType, FT <: NotHList.FType]: GetSet[Item, HL, FT] =
         getsetModel.asInstanceOf[GetSet[Item, HL, FT]]
-    }
+    }*/
 
-    trait ZeroUnitMapper[FT <: NotHList.FType]
+    /*trait ZeroUnitMapper[FT <: NotHList.FType]
         extends NotHList.Mapper[NotHList.ZeroInputType, NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, ZeroColType], FT]] {
       type type1 = NotHList.ZeroInputType
       type type2 = NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, ZeroColType], FT]
@@ -69,9 +70,9 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
 
       override def map(ia: head1)        = AppendContextSelf.zero.asInstanceOf
       override def reverseMap(ib: head2) = SimpleZero.value.asInstanceOf
-    }
+    }*/
 
-    object ZeroUnitMapper {
+    /*object ZeroUnitMapper {
       @inline private val zeroUnitMapperProductImplImpl: ZeroUnitMapper[NotHList.FType] = new ZeroUnitMapper[NotHList.FType] {
         thisSelf =>
         @inline override lazy val nextMapper = thisSelf.asInstanceOf
@@ -82,9 +83,23 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       }
 
       @inline def zeroAppender[FT <: NotHList.FType]: ZeroUnitMapper[FT] = zeroUnitMapperProductImplImpl.asInstanceOf
-    }
+    }*/
 
-    def positiveAppender[M1[_ <: NotHList.InputType], C <: ColType, FT <: NotHList.FType, T](
+    // =============================================================================
+
+    /*class InSetImpl1[X1, FT1X <: NotHList.FType, CT1X <: ColType]
+        extends NotHList.ConvertF[
+          NotHList.ItemInputType[X1, FT1X],
+          NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, CT1X], FT1X],
+          NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, AppendColType[X1, CT1X]], FT1X]
+        ] {
+      override def from(a: FT1X#toF[X1], b: CT1X#toM[FT1X#toF]): AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]] = append(a, b)
+      override def takeHead(c: AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]]): FT1X#toF[X1]                    = unappendHead(c)
+      override def takeTail(c: AppendType[FT1X#toF[X1], CT1X#toM[FT1X#toF]]): CT1X#toM[FT1X#toF]              = unappendTail(c)
+      override def next: InSetImpl1[X1, FT1X#Next, CT1X] = new InSetImpl1[X1, FT1X#Next, CT1X]
+    }*/
+
+    /*def positiveAppender[M1[_ <: NotHList.InputType], C <: ColType, FT <: NotHList.FType, T](
       appendMonad: NotHList.AppendMonad[M1],
       typeGen: NotHList.TypeGen[M1, FT],
       m: M1[NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, C], FT]]
@@ -92,19 +107,19 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       val x1: M1[NotHList.ZipInputType[NotHList.ItemInputType[T, FT], NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, C], FT]]] =
         appendMonad.zip(typeGen[T], m)
 
-      val mapper: GetSet[T, C, FT] = GetSet.value[T, C, FT]
-
-      appendMonad.to[
+      /*appendMonad.to[
         NotHList.ZipInputType[
           NotHList.ItemInputType[T, FT],
           NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, C], FT]
         ],
         NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, AppendColType[T, C]], FT]
-      ](x1)(mapper)
-    }
+      ](x1)(mapper)*/
+
+      ???
+    }*/
 
     // ===
-    trait HListLikeAppender[X <: ColType] extends NotHList.Appender[[x[_]] =>> ColType.toM[x, X]] {
+    /*trait HListLikeAppender[X <: ColType] extends NotHList.Appender[[x[_]] =>> ColType.toM[x, X]] {
       override def toHList[M[_ <: NotHList.InputType], FT <: NotHList.FType](monad: NotHList.AppendMonad[M])(
         func: NotHList.TypeGen[M, FT]
       ): M[NotHList.FGenericInputType[[x[_]] =>> ColType.toM[x, X], FT]]
@@ -145,7 +160,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       locally {
         value.tailHListLikeAppender
       }
-    }
+    }*/
 
   }
 
@@ -175,11 +190,11 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       case ZeroFType           => ZeroInputType
     }
 
-    type ZipInputType[In1 <: InputType, In2 <: InputType] <: InputType = (In1, In2) match {
+    /*type ZipInputType[In1 <: InputType, In2 <: InputType] <: InputType = (In1, In2) match {
       case (PositiveInputType[item1, tail1], PositiveInputType[item2, tail2]) =>
         PositiveInputType[AppendFunc[item1, item2], ZipInputType[tail1, tail2]]
       case (ZeroInputType, ZeroInputType) => ZeroInputType
-    }
+    }*/
 
     type FGenericInputType[F[_[_]], FT <: FType] <: InputType = FT match {
       case PositiveFType[u, tail] => PositiveInputType[F[u], FGenericInputType[F, tail]]
@@ -187,7 +202,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     }
 
     // ===
-    trait Mapper[InputA <: InputType, InputB <: InputType] {
+    /*trait Mapper[InputA <: InputType, InputB <: InputType] {
       def map(ia: InputType.TakeHead[InputA]): InputType.TakeHead[InputB]
       def reverseMap(ib: InputType.TakeHead[InputB]): InputType.TakeHead[InputA]
 
@@ -206,13 +221,27 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       locally {
         unitInputType.nextMapper
       }*/
+    }*/
+
+    trait ConvertF[A1 <: InputType, B1 <: InputType, C1 <: InputType] {
+      SelfConvertF =>
+
+      def from(a: InputType.TakeHead[A1], b: InputType.TakeHead[B1]): InputType.TakeHead[C1]
+      def takeHead(c: InputType.TakeHead[C1]): InputType.TakeHead[A1]
+      def takeTail(c: InputType.TakeHead[C1]): InputType.TakeHead[B1]
+
+      def next: ConvertF[InputType.TakeTail[A1], InputType.TakeTail[B1], InputType.TakeTail[C1]]
+    }
+
+    trait InputInstance[I <: InputType] {
+      def item: InputType.TakeHead[I]
+      def andThen: InputInstance[InputType.TakeTail[I]]
     }
 
     // ===
     trait AppendMonad[M[_ <: InputType]] {
-      def zip[A <: InputType, B <: InputType](ma: M[A], ms: M[B]): M[ZipInputType[A, B]]
-      def to[A <: InputType, B <: InputType](m1: M[A])(in1: Mapper[A, B]): M[B]
-      def zero: M[ZeroInputType]
+      def zip[A <: InputType, B <: InputType, C <: InputType](convert: ConvertF[A, B, C], ma: M[A], mb: M[B]): M[C]
+      def zero[N <: InputType](t: InputInstance[N]): M[N]
     }
 
     // ===
@@ -225,7 +254,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       def toHList[M[_ <: InputType], FT <: FType](monad: AppendMonad[M])(func: TypeGen[M, FT]): M[FGenericInputType[F, FT]]
     }
 
-    trait FromOtherAppender[F[_[_]], G[_[_]]] extends Appender[G] {
+    /*trait FromOtherAppender[F[_[_]], G[_[_]]] extends Appender[G] {
       def fromModel[X[_]](f: F[X]): G[X]
       def toModel[X[_]](g: G[X]): F[X]
       def appenderF: Appender[F]
@@ -253,9 +282,9 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
         val mapperA: Mapper[FGenericInputType[F, FT], FGenericInputType[G, FT]] = value1.asInstanceOf
         monad.to[FGenericInputType[F, FT], FGenericInputType[G, FT]](mModel)(mapperA)
       }
-    }
+    }*/
   }
 
 }
 
-object SimpleProductXImpl extends SimpleProductXImpl[Tuple2]
+object SimpleProductXImpl2 extends SimpleProductXImpl2
