@@ -2,7 +2,8 @@ package net.scalax.simple.codec
 package to_list_generic
 
 trait FoldFGenerc[F[_[_]]] {
-  def fold[N[_], SeqType](folder: FoldFGenerc.FoldF[N, SeqType], model: F[N], zero: SeqType): SeqType
+  def foldLeft[N[_], SeqType](folder: FoldFGenerc.FoldF[N, SeqType], model: F[N], zero: SeqType): SeqType
+  def foldRight[N[_], SeqType](folder: FoldFGenerc.FoldF[N, SeqType], model: F[N], zero: SeqType): SeqType
 }
 
 object FoldFGenerc {
@@ -16,27 +17,53 @@ object FoldFGenerc {
       override def apply[T]: (N[T], SeqType) => SeqType = (n, seq) => folderF.fold[T](n, seq)
     }
 
-  private def monadAdd[SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] =
+  private def monadAddLeft[SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] =
     new SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] {
-      override def zip[A, B](ma: (A, SeqType) => SeqType, ms: (B, SeqType) => SeqType): ((A, B), SeqType) => SeqType = { (ab, l) =>
-        val rb = ma(ab._1, l)
-        ms(ab._2, rb)
+      override def zip[A1, B1, C1](
+        c: SimpleProduct1.ConvertF1[A1, B1, C1],
+        ma: (A1, SeqType) => SeqType,
+        mb: (B1, SeqType) => SeqType
+      ): (C1, SeqType) => SeqType = { (ab, l) =>
+        val rb = mb(c.takeTail1(ab), l)
+        ma(c.takeHead1(ab), rb)
       }
 
-      override def to[A, B](m1: (A, SeqType) => SeqType)(in1: A => B)(out1: B => A): (B, SeqType) => SeqType = (b, col) => m1(out1(b), col)
+      override def zero[N1](n1: N1): (N1, SeqType) => SeqType = (_, a) => a
+    }
 
-      override val zero: (Unit, SeqType) => SeqType = (_, a) => a
+  private def monadAddRight[SeqType]: SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] =
+    new SimpleProduct1.AppendMonad[({ type T1[U] = (U, SeqType) => SeqType })#T1] {
+      override def zip[A1, B1, C1](
+        c: SimpleProduct1.ConvertF1[A1, B1, C1],
+        ma: (A1, SeqType) => SeqType,
+        mb: (B1, SeqType) => SeqType
+      ): (C1, SeqType) => SeqType = { (ab, l) =>
+        val rb = ma(c.takeHead1(ab), l)
+        mb(c.takeTail1(ab), rb)
+      }
+
+      override def zero[N1](n1: N1): (N1, SeqType) => SeqType = (_, a) => a
     }
 
   class Builder[F[_[_]]] {
     def derived(o1: SimpleProduct1.Appender[F]): FoldFGenerc[F] = new FoldFGenerc[F] {
-      override def fold[N[_], SeqType](
+      override def foldLeft[N[_], SeqType](
         folderF: FoldFGenerc.FoldF[N, SeqType],
         model: F[N],
         zero: SeqType
       ): SeqType = {
         val u: (F[N], SeqType) => SeqType =
-          o1.toHList1[({ type T1[U] = (U, SeqType) => SeqType })#T1, N](monadAdd[SeqType])(toNamed[N, SeqType](folderF))
+          o1.toHList1[({ type T1[U] = (U, SeqType) => SeqType })#T1, N](monadAddLeft[SeqType])(toNamed[N, SeqType](folderF))
+        u(model, zero)
+      }
+
+      override def foldRight[N[_], SeqType](
+        folderF: FoldFGenerc.FoldF[N, SeqType],
+        model: F[N],
+        zero: SeqType
+      ): SeqType = {
+        val u: (F[N], SeqType) => SeqType =
+          o1.toHList1[({ type T1[U] = (U, SeqType) => SeqType })#T1, N](monadAddRight[SeqType])(toNamed[N, SeqType](folderF))
         u(model, zero)
       }
     }

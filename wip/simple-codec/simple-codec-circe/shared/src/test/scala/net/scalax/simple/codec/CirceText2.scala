@@ -5,15 +5,15 @@ import io.circe.syntax._
 import net.scalax.simple.codec.to_list_generic.{BasedInstalled, ModelLink, ModelLinkCommonF}
 import CirceGeneric2._
 
-case class CatName[F[_]](name: F[Int], str: F[Option[String]], uClass: F[Option[Long]], name11: F[String], namexu: F[String])
+case class CatName[F[_]](id2: F[Int], str2: F[Option[String]], uClass2: F[Option[Long]], name112: F[String], namexu2: F[String])
 
-object CirceText2 {
+object CatName {
+  type FAlias[UX[_]] = CatName[({ type U1[_] = UX[String] })#U1]
+  implicit val deco2_1: ModelLink[CatName, CatName[cats.Id]]           = ModelLinkCommonF[CatName].derived
+  implicit val namedModel_catName2: ModelLink[FAlias, FAlias[cats.Id]] = ToItera[CatName].derived.toModelLink[String](implicitly)
 
-  implicit val deco2_1: ModelLink[CatName, CatName[cats.Id]] = ModelLinkCommonF[CatName].derived
-
-  type FAlias[UX[_]] = CatName[({ type U1[T] = UX[String] })#U1]
-
-  implicit def li1222Encoder(implicit v: BasedInstalled[FAlias]): FAlias[Encoder] = {
+  implicit val li1222Encoder: FAlias[Encoder] = {
+    val v: BasedInstalled[FAlias]       = implicitly
     val simpleFillE: SimpleFill[FAlias] = SimpleFill[FAlias].derived(v.simpleProduct1)
 
     simpleFillE.fill[({ type E[T] = Encoder[String] })#E](new SimpleFill.FillI[({ type E[T] = Encoder[String] })#E] {
@@ -21,29 +21,25 @@ object CirceText2 {
     })
   }
 
-  implicit def li1222Decoder(implicit v: BasedInstalled[FAlias]): FAlias[Decoder] = {
+  implicit val li1222Decoder: FAlias[Decoder] = {
+    val v: BasedInstalled[FAlias]       = implicitly
     val simpleFillE: SimpleFill[FAlias] = SimpleFill[FAlias].derived(v.simpleProduct1)
 
     simpleFillE.fill[({ type E[T] = Decoder[String] })#E](new SimpleFill.FillI[({ type E[T] = Decoder[String] })#E] {
       override def fill[T]: Decoder[String] = Decoder[String]
     })
   }
+}
 
-  implicit val namedModel_catName2: ModelLink[FAlias, FAlias[cats.Id]] = ToItera[CatName].derived.toModelLink[String](implicitly)
+object CirceText2 {
 
-  implicit val caseClassNameEncoder: Encoder[FAlias[cats.Id]] = encodeModel[FAlias]
-  implicit val caseClassNameDecoder: Decoder[FAlias[cats.Id]] = decodeModel[FAlias]
-  val namedMode: FAlias[cats.Id]                              = ModelLink[FAlias, FAlias[cats.Id]].implicitly.labelled.modelLabelled
+  type FAlias[UX[_]] = CatName[({ type U1[_] = UX[String] })#U1]
+
+  val namedMode: FAlias[cats.Id] = ModelLink[FAlias, FAlias[cats.Id]].implicitly.labelled.modelLabelled
 
   final def main(args: Array[String]): Unit = {
     println(namedMode.asJson.spaces2)
-    println(parser.parse(namedMode.asJson.spaces2).right.flatMap(_.as[FAlias[cats.Id]]))
+    println(parser.parse(namedMode.asJson.spaces2).flatMap(_.as[FAlias[cats.Id]]))
   }
-
-  /** { "name" : 8594, "str" : "sdfwerwfweher迷雾日哦", "uClass" : null, "name11" : "xxiwerwjkl", "namexu" : "jerokwjoe收代理费加沃尔" }
-    */
-
-  /** { "name" : "name", "str" : "str", "uClass" : "uClass", "name11" : "name11", "namexu" : "namexu" }
-    */
 
 }

@@ -1,8 +1,6 @@
 package net.scalax.simple.codec
 package to_list_generic
 
-import shapeless.DefaultSymbolicLabelling
-
 trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, Model] })#F, Model] {
   modelLinkCommonFSelf =>
 
@@ -24,8 +22,10 @@ trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, M
   }
 
   override def labelled: ModelLabelled[({ type F[X[_]] = PojoInstance[X, Model] })#F] =
-    ModelLabelled[({ type F[X[_]] = PojoInstance[X, Model] })#F]
-      .derived(modelLinkCommonFSelf.compatLabelled, modelLinkCommonFSelf.fromListByTheSameTypeGeneric)
+    ModelLabelled[({ type F[X[_]] = PojoInstance[X, Model] })#F].instance(
+      PojoInstance.instance[({ type Str[_] = String })#Str, Model](modelLinkCommonFSelf.compatLabelled.compatLabelled)
+    )
+
   override def size: ModelSize[({ type F[X[_]] = PojoInstance[X, Model] })#F] =
     ModelSize[({ type F[X[_]] = PojoInstance[X, Model] })#F].derived(modelLinkCommonFSelf.compatLabelled)
 
@@ -41,17 +41,15 @@ trait ModelLinkPojo[Model] extends ModelLink[({ type F[X[_]] = PojoInstance[X, M
 }
 
 object ModelLinkPojo {
+  import scala.deriving.Mirror
 
-  def derived[Model](implicit
-    g: shapeless.Generic.Aux[Model, _ <: shapeless.HList],
-    c: DefaultSymbolicLabelling.Aux[Model, _ <: shapeless.HList]
-  ): ModelLinkPojo[Model] = {
-    val namedModel = c.apply()
+  inline def derived[Model <: Product](using g: Mirror.ProductOf[Model]): ModelLinkPojo[Model] = {
+    val namedModel = scala.compiletime.constValueTuple[g.MirroredElemLabels]
 
     new ModelLinkPojo[Model] {
       override val compatNamed: Any           = namedModel
-      override def genericFrom(x: Any): Model = g.from(x.asInstanceOf[g.Repr])
-      override def genericTo(x: Model): Any   = g.to(x)
+      override def genericTo(x: Model): Any   = Tuple.fromProduct(x.asInstanceOf)
+      override def genericFrom(x: Any): Model = g.fromTuple(x.asInstanceOf[g.MirroredElemTypes]).asInstanceOf[Model]
     }
   }
 

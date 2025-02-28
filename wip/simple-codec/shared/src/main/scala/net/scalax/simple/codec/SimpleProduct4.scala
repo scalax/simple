@@ -3,12 +3,31 @@ package to_list_generic
 
 object SimpleProduct4 {
 
+  trait ConvertF4[A1, B1, C1, A2, B2, C2, A3, B3, C3, A4, B4, C4] {
+    def from1(a: A1, b: B1): C1
+    def takeHead1(c: C1): A1
+    def takeTail1(c: C1): B1
+
+    def from2(a: A2, b: B2): C2
+    def takeHead2(c: C2): A2
+    def takeTail2(c: C2): B2
+
+    def from3(a: A3, b: B3): C3
+    def takeHead3(c: C3): A3
+    def takeTail3(c: C3): B3
+
+    def from4(a: A4, b: B4): C4
+    def takeHead4(c: C4): A4
+    def takeTail4(c: C4): B4
+  }
+
   trait AppendMonad[M[_, _, _, _]] {
-    def zip[A, B, C, D, S, T, U, V](ma: M[A, B, C, D], ms: M[S, T, U, V]): M[(A, S), (B, T), (C, U), (D, V)]
-    def to[A, B, C, D, S, T, U, V](
-      m1: M[A, B, C, D]
-    )(in1: A => S, in2: B => T, in3: C => U, in4: D => V)(in5: S => A, in6: T => B, in7: U => C, in8: V => D): M[S, T, U, V]
-    def zero: M[Unit, Unit, Unit, Unit]
+    def zip[A1, B1, C1, A2, B2, C2, A3, B3, C3, A4, B4, C4](
+      c: ConvertF4[A1, B1, C1, A2, B2, C2, A3, B3, C3, A4, B4, C4],
+      ma: M[A1, A2, A3, A4],
+      mb: M[B1, B2, B3, B4]
+    ): M[C1, C2, C3, C4]
+    def zero[N1, N2, N3, N4](n1: N1, n2: N2, n3: N3, n4: N4): M[N1, N2, N3, N4]
   }
 
   trait TypeGen[M1[_, _, _, _], M2[_], M3[_], M4[_], M5[_]] {
@@ -16,13 +35,13 @@ object SimpleProduct4 {
   }
 
   trait Appender[F[_[_]]] {
-    def toHList[M1[_, _, _, _], M2[_], M3[_], M4[_], M5[_]](monad: AppendMonad[M1])(
+    def toHList1[M1[_, _, _, _], M2[_], M3[_], M4[_], M5[_]](monad: AppendMonad[M1])(
       func: TypeGen[M1, M2, M3, M4, M5]
     ): M1[F[M2], F[M3], F[M4], F[M5]]
   }
 
   class Builder[F[_[_]]] {
-    def derived(t: SimpleProductX[F]): Appender[F] = ConvertM4Impl.Appender.to3[F](t.model)
+    def derived(t: SimpleProductX[F]): Appender[F] = ConvertM4Impl.Appender.to4[F](t.model)
   }
 
   def apply[F[_[_]]]: Builder[F] = new Builder[F]

@@ -1,6 +1,6 @@
 package net.scalax.simple.codec
 
-import net.scalax.simple.codec.to_list_generic.{BasedInstalled, ModelLink, ModelLinkCommonF, SimpleProductX}
+import net.scalax.simple.codec.to_list_generic.{BasedInstalled, ModelLink, SimpleProductX}
 
 trait ToItera[F[_[_]]] {
   toIteraSelf =>

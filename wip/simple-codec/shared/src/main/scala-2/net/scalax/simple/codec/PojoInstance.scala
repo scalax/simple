@@ -19,18 +19,13 @@ object PojoInstance {
     override val instance: Any = shapeless.HNil
   }
 
-  class Builder[U[_], Model] {
-    def instance(n: Any): PojoInstance[U, Model] = new PojoInstance[U, Model] {
-      override val instance: Any = n
-    }
-
-    def fill[H <: shapeless.HList](implicit x: shapeless.Generic.Aux[Model, H], n: PojoInstance[U, H]): PojoInstance[U, Model] =
-      n.asInstanceOf[PojoInstance[U, Model]]
+  def instance[E[_], Model](n: Any): PojoInstance[E, Model] = new PojoInstance[E, Model] {
+    override val instance: Any = n
   }
 
-  private val builderImplImpl: Builder[({ type X[_] = Any })#X, Any] = new Builder[({ type X[_] = Any })#X, Any]
-  private def builderImpl[U[_], Model]: Builder[U, Model]            = builderImplImpl.asInstanceOf[Builder[U, Model]]
-
-  def apply[U[_], Model]: Builder[U, Model] = builderImpl[U, Model]
+  def derived[Model, E[_], H <: shapeless.HList](implicit
+    x: shapeless.Generic.Aux[Model, H],
+    n: PojoInstance[E, H]
+  ): PojoInstance[E, Model] = n.asInstanceOf[PojoInstance[E, Model]]
 
 }

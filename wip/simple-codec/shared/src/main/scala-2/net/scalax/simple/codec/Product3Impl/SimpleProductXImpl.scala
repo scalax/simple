@@ -1,3 +1,4 @@
+/*
 package net.scalax.simple.codec
 package to_list_generic
 
@@ -35,9 +36,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       override def map(n: AppendFunc[FT#toF[Item], HL#toM[FT#toF]]): AppendType[FT#toF[Item], HL#toM[FT#toF]]        = append(n)
       override def reverseMap(n: AppendType[FT#toF[Item], HL#toM[FT#toF]]): AppendFunc[FT#toF[Item], HL#toM[FT#toF]] = unappend(n)
 
-      override def nextMapper: GetSet[Item, HL, FT#Next] = new GetSet[Item, HL, FT#Next] {
-        //
-      }
+      override def nextMapper: GetSet[Item, HL, FT#Next]
     }
     object GetSet {
       @inline private val getsetModel: GetSet[Any, ColType, NotHList.FType] = new GetSet[Any, ColType, NotHList.FType] {
@@ -56,12 +55,10 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     trait ZeroUnitMapper[FT <: NotHList.FType]
         extends NotHList.Mapper[NotHList.UnitInputType, NotHList.FGenericInputType[ZeroColType#toM, FT]] {
 
-      override def map(ia: Unit): ZeroType        = AppendContextSelf.zero
-      override def reverseMap(ib: ZeroType): Unit = ()
+      override def map(ia: SimpleZero): ZeroType        = AppendContextSelf.zero
+      override def reverseMap(ib: ZeroType): SimpleZero = SimpleZero.value
 
-      override def nextMapper: ZeroUnitMapper[FT#Next] = new ZeroUnitMapper[FT#Next] {
-        //
-      }
+      override def nextMapper: ZeroUnitMapper[FT#Next]
     }
 
     object ZeroUnitMapper {
@@ -170,7 +167,7 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     }
 
     trait UnitInputType extends InputType {
-      override type toItem  = Unit
+      override type toItem  = SimpleZero
       override type AndThen = UnitInputType
     }
 
@@ -193,11 +190,15 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
     }
 
     object Mapper {
-      val unitInputType: Mapper[UnitInputType, UnitInputType] = new Mapper[UnitInputType, UnitInputType] {
+      /*val unitInputType: Mapper[UnitInputType, UnitInputType] = new Mapper[UnitInputType, UnitInputType] {
         override def map(ia: Unit): Unit                                   = ia
         override def reverseMap(ib: Unit): Unit                            = ib
         override lazy val nextMapper: Mapper[UnitInputType, UnitInputType] = unitInputType
       }
+
+      locally {
+        unitInputType.nextMapper
+      }*/
     }
 
     // ===
@@ -223,9 +224,10 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
       def appenderF: Appender[F]
 
       private class InnerMapperHelper[FT <: FType] extends Mapper[FGenericInputType[F, FT], FGenericInputType[G, FT]] {
+        SelfInnerMapperHelper =>
         override def map(ia: F[FT#toF]): G[FT#toF]          = fromModel(ia)
         override def reverseMap(ib: G[FT#toF]): F[FT#toF]   = toModel(ib)
-        override def nextMapper: InnerMapperHelper[FT#Next] = new InnerMapperHelper[FT#Next]
+        override def nextMapper: InnerMapperHelper[FT#Next] = SelfInnerMapperHelper.asInstanceOf[InnerMapperHelper[FT#Next]]
       }
 
       override def toHList[M[_ <: InputType], FT <: FType](monad: AppendMonad[M])(func: TypeGen[M, FT]): M[FGenericInputType[G, FT]] = {
@@ -239,3 +241,4 @@ class SimpleProductXImpl[AppendFunc[_, _]] {
 }
 
 object SimpleProductXImpl extends SimpleProductXImpl[Tuple2]
+ */

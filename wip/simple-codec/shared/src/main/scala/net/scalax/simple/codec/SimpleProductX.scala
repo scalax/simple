@@ -2,7 +2,7 @@ package net.scalax.simple.codec
 package to_list_generic
 
 trait SimpleProductX[F[_[_]]] {
-  def model: SimpleProductXImpl.NotHList.Appender[F]
+  def model: SimpleProductXImpl2.NotHList.Appender[F]
 }
 
 object SimpleProductX {
