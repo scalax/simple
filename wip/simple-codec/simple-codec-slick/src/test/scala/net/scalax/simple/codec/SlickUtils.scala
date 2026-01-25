@@ -1,62 +1,112 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.to_list_generic.{BasedInstalled, ModelLink, SimpleProduct1, SimpleProduct2, SimpleProduct3, SimpleProduct4}
-import slick.ast.{ColumnOption, TypedType}
+import net.scalax.simple.codec.to_list_generic.{BasedInstalledLabelled, BasedInstalledSimpleProduct, PojoInstance}
+import slick.ast.TypedType
 import slick.jdbc.JdbcProfile
 
-class SlickUtils[F[_[_]], V <: JdbcProfile](
-  val slickProfile: V,
-  appenderIn: ModelGetSet[F, F[({ type U1[T] = T })#U1]],
-  basedInstalled: BasedInstalled[F]
-) {
+trait SlickUtils[V <: JdbcProfile] {
+  val slickProfile: V
+
   import slickProfile.api._
 
-  val commonAlias: SlickCompatAlias[slickProfile.type] = SlickCompatAlias.build(slickProfile)
-  val appender1: SimpleProduct1.Appender[F]            = basedInstalled.simpleProduct1
-  val appender2: SimpleProduct2.Appender[F]            = SimpleProduct2[F].derived(basedInstalled.basedInstalled)
-  val appender3: SimpleProduct3.Appender[F]            = SimpleProduct3[F].derived(basedInstalled.basedInstalled)
-  val appender4: SimpleProduct4.Appender[F]            = SimpleProduct4[F].derived(basedInstalled.basedInstalled)
-  val zip3Generic: Zip3Generic[F]                      = Zip3Generic[F].derived(appender4)
-  val mapGeneric: MapGenerc[F]                         = MapGenerc[F].derived(appender2)
+  abstract class CommonTable[F[_[_]], Model](_tableTag: Tag, _schemaName: Option[String], _tableName: String)(implicit
+    typedType: F[TypedType],
+    userShapeGeneric: F[({ type ShapeF[T] = Shape[_ <: FlatShapeLevel, Rep[T], T, Rep[T]] })#ShapeF],
+    classTag: scala.reflect.ClassTag[Model],
+    modelGet: ModelGet[F, Model],
+    modelSet: ModelSet[F, Model],
+    basedInstalled: BasedInstalledSimpleProduct[F],
+    basedInstalledlabelled: BasedInstalledLabelled[F]
+  ) extends Table[Model](_tableTag = _tableTag, _schemaName = _schemaName, _tableName = _tableName) {
+    CommonTableSelf =>
 
-  def colN[T](name: String, func: OptsFromCol[T], tt: TypedType[T]): Table[_] => Rep[T] = { tb =>
-    val colsFunc = for (n <- func) yield n(tb.O)
-    tb.column(name, colsFunc: _*)(tt)
-  }
+    def this(_tableTag: Tag, _tableName: String)(implicit
+      typedType: F[TypedType],
+      userShapeGeneric: F[({ type ShapeF[T] = Shape[_ <: FlatShapeLevel, Rep[T], T, Rep[T]] })#ShapeF],
+      classTag: scala.reflect.ClassTag[Model],
+      modelGet: ModelGet[F, Model],
+      modelSet: ModelSet[F, Model],
+      basedInstalled: BasedInstalledSimpleProduct[F],
+      basedInstalledlabelled: BasedInstalledLabelled[F]
+    ) = this(_tableTag = _tableTag, _schemaName = None, _tableName = _tableName)
 
-  type OptsFromCol[T] = Seq[commonAlias.SqlColumnOptions => ColumnOption[T]]
+    type Columns = F[Rep]
+    type ColOpt  = F[ColumnOpt]
 
-  def userOptImpl: F[OptsFromCol] = SimpleFill[F]
-    .derived(appender1)
-    .fill[OptsFromCol](new SimpleFill.FillI[OptsFromCol] {
-      override def fill[T]: Seq[commonAlias.SqlColumnOptions => ColumnOption[T]] = Seq.empty
-    })
+    private def colOpt: F[ColumnOpt] = SimpleFill[F]
+      .derived(basedInstalled.basedInstalled.simpleProduct1)
+      .fill[ColumnOpt](new SimpleFill.FillI[ColumnOpt] {
+        override def fill[T]: ColumnOpt[T] = ColumnOpt.default[T]
+      })
 
-  def userRep(labelled: ModelLabelled[F], opt: F[OptsFromCol], typedType: F[TypedType]): slickProfile.Table[_] => F[Rep] = { tb =>
-    val l1 = labelled.modelLabelled
-    val l2 = opt
-    val l3 = typedType
+    def columnOption: ColOpt => ColOpt
 
-    val zipResult1 = zip3Generic.zip[({ type M1[_] = String })#M1, OptsFromCol, TypedType](l1, l2, l3)
-
-    val mapFunction: MapGenerc.MapFunction[({ type F1[T] = (String, OptsFromCol[T], TypedType[T]) })#F1, Rep] =
-      new MapGenerc.MapFunction[({ type F1[T] = (String, OptsFromCol[T], TypedType[T]) })#F1, Rep] {
-        override def map[X1](t: (String, OptsFromCol[X1], TypedType[X1])): Rep[X1] = colN(t._1, t._2, t._3)(tb)
+    private val utilsWrap: UtilsWrap[F, Model, slickProfile.type] =
+      new UtilsWrap[F, Model, slickProfile.type](slickProfile, basedInstalled, basedInstalledlabelled) {
+        override val tb: Table[Model] = CommonTableSelf
       }
 
-    val mapResult = mapGeneric.map[({ type F1[T] = (String, OptsFromCol[T], TypedType[T]) })#F1, Rep](mapFunction)
+    val repModel: Columns = utilsWrap.userRep(basedInstalled, columnOption(colOpt), typedType)
 
-    mapResult(zipResult1)
+    override def * : slick.lifted.ProvenShape[Model] = utilsWrap.mapShape(userShapeGeneric, repModel, classTag, modelGet, modelSet)
   }
 
-}
+  abstract class CommonTableF[F[_[_]]](_tableTag: Tag, _schemaName: Option[String], _tableName: String)(implicit
+    typedType: F[TypedType],
+    userShapeGeneric: F[({ type ShapeF[T] = Shape[_ <: FlatShapeLevel, Rep[T], T, Rep[T]] })#ShapeF],
+    classTag: scala.reflect.ClassTag[F[({ type IDF[XU] = XU })#IDF]],
+    basedInstalled: BasedInstalledSimpleProduct[F],
+    basedInstalledlabelled: BasedInstalledLabelled[F]
+  ) extends CommonTable[F, F[({ type IDF[XU] = XU })#IDF]](_tableTag = _tableTag, _schemaName = _schemaName, _tableName = _tableName)(
+        typedType = typedType,
+        userShapeGeneric = userShapeGeneric,
+        classTag = classTag,
+        basedInstalled = basedInstalled,
+        basedInstalledlabelled = basedInstalledlabelled,
+        modelGet = identity[F[({ type IDF[XU] = XU })#IDF]],
+        modelSet = identity[F[({ type IDF[XU] = XU })#IDF]]
+      ) {
+    CommonTableSelf =>
 
-object SlickUtils {
-  def apply[F[_[_]]](appender: ModelLink[F, F[({ type U1[T] = T })#U1]]): SlickUtilsApply[F] = new SlickUtilsApply[F](appender, appender)
+    def this(_tableTag: Tag, _tableName: String)(implicit
+      typedType: F[TypedType],
+      userShapeGeneric: F[({ type ShapeF[T] = Shape[_ <: FlatShapeLevel, Rep[T], T, Rep[T]] })#ShapeF],
+      classTag: scala.reflect.ClassTag[F[({ type IDF[XU] = XU })#IDF]],
+      basedInstalled: BasedInstalledSimpleProduct[F],
+      basedInstalledlabelled: BasedInstalledLabelled[F]
+    ) = this(_tableTag = _tableTag, _schemaName = None, _tableName = _tableName)
 
-  class SlickUtilsApply[F[_[_]]](appender: ModelGetSet[F, F[({ type U1[T] = T })#U1]], basedInstalled: BasedInstalled[F]) {
-    def build[V <: JdbcProfile](slickProfile: V): SlickUtils[F, slickProfile.type] =
-      new SlickUtils[F, slickProfile.type](slickProfile, appender, basedInstalled)
   }
+
+  abstract class CommonTablePojo[Model](_tableTag: Tag, _schemaName: Option[String], _tableName: String)(implicit
+    typedType: PojoInstance[TypedType, Model],
+    userShapeGeneric: PojoInstance[({ type ShapeF[T] = Shape[_ <: FlatShapeLevel, Rep[T], T, Rep[T]] })#ShapeF, Model],
+    classTag: scala.reflect.ClassTag[Model],
+    modelGet: ModelGet[({ type PojoF[XU[_]] = PojoInstance[XU, Model] })#PojoF, Model],
+    modelSet: ModelSet[({ type PojoF[XU[_]] = PojoInstance[XU, Model] })#PojoF, Model],
+    basedInstalled: BasedInstalledSimpleProduct[({ type TypeF[UX[_]] = PojoInstance[UX, Model] })#TypeF],
+    basedInstalledlabelled: BasedInstalledLabelled[({ type TypeF[UX[_]] = PojoInstance[UX, Model] })#TypeF]
+  ) extends CommonTable[({ type PojoF[XU[_]] = PojoInstance[XU, Model] })#PojoF, Model](
+        _tableTag = _tableTag,
+        _schemaName = _schemaName,
+        _tableName = _tableName
+      )
+      with PojoInstance[Rep, Model] {
+    CommonTableSelf =>
+
+    def this(_tableTag: Tag, _tableName: String)(implicit
+      typedType: PojoInstance[TypedType, Model],
+      userShapeGeneric: PojoInstance[({ type ShapeF[T] = Shape[_ <: FlatShapeLevel, Rep[T], T, Rep[T]] })#ShapeF, Model],
+      classTag: scala.reflect.ClassTag[Model],
+      modelGet: ModelGet[({ type PojoF[XU[_]] = PojoInstance[XU, Model] })#PojoF, Model],
+      modelSet: ModelSet[({ type PojoF[XU[_]] = PojoInstance[XU, Model] })#PojoF, Model],
+      basedInstalled: BasedInstalledSimpleProduct[({ type TypeF[UX[_]] = PojoInstance[UX, Model] })#TypeF],
+      basedInstalledlabelled: BasedInstalledLabelled[({ type TypeF[UX[_]] = PojoInstance[UX, Model] })#TypeF]
+    ) = this(_tableTag = _tableTag, _schemaName = None, _tableName = _tableName)
+
+    override def instance: Any = CommonTableSelf.repModel.instance
+
+  }
+
 }

@@ -1,13 +1,8 @@
-scalaVersion := scalaV.v3
-name         := "simple-nat"
-
-enableZIOTest := true
+name := "simple-nat"
 
 run / fork := true
 run / javaOptions += "-Xss5M"
 reStart / javaOptions += "-Xss5M"
-
-crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
 val taskAA = inputKey[Unit]("bb")
 
@@ -22,3 +17,6 @@ libraryDependencies ++= libScalax.`simple-adt`.value
 libraryDependencies ++= libScalax.`spire`.value
 libraryDependencies ++= libScalax.`breeze`.value
 libraryDependencies ++= libScalax.`commons-math3`.value
+
+enableZIOTest := true
+useKindProjector

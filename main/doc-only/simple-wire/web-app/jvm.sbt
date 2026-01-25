@@ -1,9 +1,6 @@
-scalaVersion := scalaV.v213
-name         := "simple-wire-web-app"
+name := "simple-wire-web-app"
 
-crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
-
-libraryDependencies ++= libScalax.`http4s-Release`.value
+libraryDependencies ++= libScalax.`http4s-Release-dsl`.value
 libraryDependencies ++= libScalax.`http4s-Release-ember-server`.value
 libraryDependencies ++= libScalax.`http4s-twirl`.value
 libraryDependencies ++= libScalax.`cats-effect`.value

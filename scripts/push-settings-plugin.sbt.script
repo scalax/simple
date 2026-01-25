@@ -13,10 +13,6 @@ xerial.sbt.Sonatype.autoImport.sonatypeProfileName := "net.scalax"
 // end setting
 
 // start setting
-xerial.sbt.Sonatype.autoImport.sonatypeBundleDirectory := baseDirectory.value / target.value.getName / "sonatype-staging" / version.value
-// end setting
-
-// start setting
 organizationHomepage := Some(url("https://github.com/scala-workers"))
 // end setting
 
@@ -52,7 +48,7 @@ description := "Simple, and scalable. Use it to subvert the author's imagination
 // end setting
 
 // start setting
-licenses := List("MIT License" -> new URL("https://github.com/scalax/simple/blob/main/LICENSE"))
+licenses := List("MIT License" -> url("https://github.com/scalax/simple/blob/main/LICENSE"))
 // end setting
 
 // start setting
@@ -62,24 +58,6 @@ homepage := Some(url("https://github.com/scalax/simple"))
 // start setting
 pomIncludeRepository := { _ => false }
 // end setting
-
-// start setting
-{
-    publishTo := {
-        val nexus = "https://s01.oss.sonatype.org/"
-        if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
-        else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-    }
-}
-// end setting
-
-// start setting
-{
-    import xerial.sbt.Sonatype.autoImport._
-    sonatypeCredentialHost := "s01.oss.sonatype.org"
-}
-// end setting
-
 
 // start setting
 publishMavenStyle := true

@@ -63,7 +63,7 @@ Compile / unmanagedSourceDirectories := {
   val base  = (Compile / unmanagedSourceDirectories).value
   val sv    = scalaVersion.value
   val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
-  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv, djxIsScalaJs.value.getOrElse(false))) yield f2
+  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv)) yield f2
   val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
   all.to(Seq)
 }
@@ -80,7 +80,7 @@ Test / unmanagedSourceDirectories ++= {
   val base  = (Test / unmanagedSourceDirectories).value
   val sv    = scalaVersion.value
   val files = for (n1 <- t1; n2 <- t2(n1)) yield n2
-  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv, djxIsScalaJs.value.getOrElse(false))) yield f2
+  val toAdd = for (f1 <- files; f2 <- genDirectory(f1, sv)) yield f2
   val all   = base.map(_.getCanonicalFile).to(Set) ++ toAdd.map(_.getCanonicalFile).to(Set)
   all.to(Seq)
 }
@@ -88,18 +88,6 @@ Test / unmanagedSourceDirectories ++= {
 
 // start setting
 scalacOptions ++= Seq("-feature", "-deprecation", "-encoding", "UTF-8")
-// end setting
-
-// start setting
-scalacOptions ++= {
-  CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, scalaMajor)) =>
-      val opt1 = if (scalaMajor < 13L) Seq("-language:higherKinds") else Seq.empty
-      opt1 ++: Seq("-Ywarn-dead-code")
-    case Some((3, scalaMajor)) => Seq("-Ykind-projector")
-    case _                     => Seq.empty
-  }
-}
 // end setting
 
 // start setting

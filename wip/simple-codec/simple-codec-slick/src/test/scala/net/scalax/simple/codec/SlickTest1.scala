@@ -1,64 +1,44 @@
 package net.scalax.simple.codec
 package aa
 
-import net.scalax.simple.codec.to_list_generic.{FillIdentity, ModelLink, ModelLinkCommonF}
-import slick.ast.{ColumnOption, TypedType}
+import net.scalax.simple.codec.to_list_generic.{FillIdentity, ModelLink}
+import slick.ast.TypedType
 import slick.jdbc.JdbcProfile
-import slick.lifted.ProvenShape
-import net.scalax.slickless.compat._
+import slick.lifted.{FlatShapeLevel, Rep, Shape}
 
-case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String])
+case class UserAbs[F[_], U[_]](id: F[U[Int]], first: F[String], last: F[String], age: F[Long])
 
-class Model2[U[_]](val slickProfile: JdbcProfile) {
-  type F1Alias[E1[_]] = UserAbs[E1, U]
-
-  import slickProfile.api._
-
-  val commonAlias = SlickCompatAlias.build(slickProfile)
-
-  def addElem[T](seq: Seq[T], t: T*): Seq[T] = t ++: seq
-  def colN[T](
-    name: String,
-    func: OptsFromCol[T],
-    tt: TypedType[T]
-  ): Table[_] => Rep[T] = { tb =>
-    val colsFunc = for (n <- func) yield n(tb.O)
-    tb.column(name, colsFunc: _*)(tt)
+object UserAbs {
+  class SCtx[U[_]] {
+    type FModel[X[_]] = UserAbs[X, U]
   }
 
-  type Id[T]           = T
-  type StrAny[T]       = String
-  type ShapeF[T]       = Shape[_ <: FlatShapeLevel, Rep[T], T, _]
-  type RepFromTable[T] = slickProfile.Table[_] => Rep[T]
-  type OptsFromCol[T]  = Seq[commonAlias.SqlColumnOptions => ColumnOption[T]]
+  type ShapeF[T] = Shape[_ <: FlatShapeLevel, Rep[T], T, Rep[T]]
 
-  def userTypedTypeGeneric(implicit tt12: TypedType[U[Int]]): UserAbs[TypedType, U] = FillIdentity[UserAbs[TypedType, U]].derived
+  implicit def appender[U[_]]: ModelLink.F[SCtx[U]#FModel] = ModelLink.F[SCtx[U]#FModel].derived
 
-  implicit val appender: ModelLink[F1Alias, F1Alias[({ type U1[T] = T })#U1]] = ModelLinkCommonF[F1Alias].derived
+  abstract class UserAbsTable[V <: JdbcProfile] extends SlickUtils[V] {
+    override val slickProfile: V
 
-  def userOptImpl: UserAbs[OptsFromCol, U] = SlickUtils[F1Alias](appender).build(slickProfile).userOptImpl
+    import slickProfile.api._
 
-  def userOpt: UserAbs[OptsFromCol, U] = {
-    val impl                      = userOptImpl
-    val list: OptsFromCol[U[Int]] = addElem(impl.id, _.AutoInc, _.PrimaryKey)
-    impl.copy[OptsFromCol, U](id = list)
-  }
+    implicit def userTypedTypeGeneric[U[_]](implicit typedType: TypedType[U[Int]]): UserAbs[TypedType, U] =
+      FillIdentity.F[TypedType, SCtx[U]#FModel].derived
+    implicit def userShapeGeneric[U[_]](implicit tt12: ShapeF[U[Int]]): UserAbs[ShapeF, U] = FillIdentity.F[ShapeF, SCtx[U]#FModel].derived
 
-  def userRep(implicit tt12: TypedType[U[Int]]): slickProfile.Table[_] => UserAbs[Rep, U] =
-    SlickUtils[F1Alias](appender).build(slickProfile).userRep(appender.labelled, userOpt, userTypedTypeGeneric)
+    class CommonT[U[_]](tag: Tag)(implicit typedType: TypedType[U[Int]], tt12: ShapeF[U[Int]])
+        extends CommonTableF[SCtx[U]#FModel](tag, "user") {
+      override def columnOption: ColOpt => ColOpt =
+        _.copy[ColumnOpt, U](id = _.column(O.AutoInc, O.PrimaryKey), first = _.column("first_name"), last = _.column("last_name"))
+    }
 
-  class TableUserAbs(tag: Tag)(implicit tt: TypedType[U[Int]], s: ShapeF[U[Int]]) extends slickProfile.Table[UserAbs[Id, U]](tag, "users") {
-    self =>
-    private val repModel: slickProfile.Table[_] => UserAbs[Rep, U] = userRep
-    private def __tableInnserRep: UserAbs[Rep, U]                  = repModel(self)
+    object CommonT {
+      import scala.language.implicitConversions
+      implicit def TableUserAbsTableImpl[U[_]](tb: CommonT[U]): CommonT[U]#Columns = tb.repModel
+    }
 
-    override def * : ProvenShape[UserAbs[Id, U]] =
-      (__tableInnserRep.id, __tableInnserRep.first, __tableInnserRep.last) <> ((UserAbs.apply[Id, U] _).tupled, UserAbs.unapply[Id, U] _)
-  }
-
-  object TableUserAbs {
-    import scala.language.implicitConversions
-    implicit def TableUserAbsTableImpl(tb: TableUserAbs): UserAbs[Rep, U] = tb.__tableInnserRep
+    def CommonTq[U[_]](implicit typedType: TypedType[U[Int]], tt12: ShapeF[U[Int]]): TableQuery[CommonT[U]] =
+      TableQuery(cons => new CommonT(cons))
   }
 
 }
@@ -69,20 +49,37 @@ object Runner1 {
   def main(arr: Array[String]): Unit = {
     val p = slick.jdbc.MySQLProfile
 
-    val newModel: Model2[Id]   = new Model2[Id](p)
-    val newOpt: Model2[Option] = new Model2[Option](p)
-    val modelInt: IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1] =
-      IndexModel[({ type F1[U[_]] = UserAbs[U, Id] })#F1].derived(newModel.appender.fromListByTheSameTypeGeneric)
-
     import p.api._
 
-    object Query1 extends TableQuery(cons => new newOpt.TableUserAbs(cons)) {
-      object forInsert extends TableQuery(cons => new newModel.TableUserAbs(cons))
+    object newTB extends UserAbs.UserAbsTable[slick.jdbc.H2Profile] {
+      override val slickProfile = slick.jdbc.H2Profile
     }
 
-    println(Query1.forInsert.result.statements)
-    println(Query1.result.statements)
-    println(modelInt.model)
+    val db: Database = Database.forURL(url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", user = "sa", password = "", driver = "org.h2.Driver")
+    val sql1         = newTB.CommonTq[Id].schema.create
+    val sql2         = newTB.CommonTq[Option] += UserAbs[Id, Option](id = None, first = "first_name1", last = "last_name1", age = 5201314)
+    val sql3         = newTB.CommonTq[Option] += UserAbs[Id, Option](id = None, first = "first_name2", last = "last_name2", age = 114514)
+    val sql4         = newTB.CommonTq[Option] += UserAbs[Id, Option](id = None, first = "first_name3", last = "last_name3", age = 314159)
+
+    val action1 = DBIO.seq(sql1, sql2, sql3, sql4)
+    val action2 = newTB.CommonTq[Id].result
+    val action3 = newTB.CommonTq[Id].filter(_.last endsWith "3").filter(_.first endsWith "3").result
+
+    import scala.concurrent.ExecutionContext.Implicits.global
+
+    val futureAction = for {
+      _     <- action1
+      list1 <- action2
+      list2 <- action3
+    } yield {
+      println(list1)
+      println(list2)
+    }
+
+    scala.concurrent.Await.result(db.run(futureAction), scala.concurrent.duration.Duration.Inf)
+
+    println(newTB.CommonTq[Id].result.statements)
+    println(newTB.CommonTq[Option].result.statements)
   }
 
 }

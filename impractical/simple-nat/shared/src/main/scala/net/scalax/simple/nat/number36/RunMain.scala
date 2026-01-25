@@ -83,7 +83,7 @@ object RunTest1 {
   def count(num: () => ghdmzsk, except1: BigDecimal, printlnSum: Int, speed: Long = 8000000): Unit =
     countImpl(num = num, current分子 = 1, current分母 = 1, exceptResult = except1, printlnSum = printlnSum, speed = speed, countTimes = 0)
 
-  def main(arr: Array[String]): Unit = {
+  def main1(arr: Array[String]): Unit = {
     println('5'.toString * 1000)
 
     val 分子1: Long = 123

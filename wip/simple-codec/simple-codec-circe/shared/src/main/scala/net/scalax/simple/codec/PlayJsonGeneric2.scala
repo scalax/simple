@@ -4,26 +4,33 @@ package codec
 import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
-import net.scalax.simple.codec.to_list_generic.SimpleProduct3
+import net.scalax.simple.adt.nat.support.{ABCFunc, SimpleProduct3, SimpleProductContextX}
+import net.scalax.simple.codec.utils.ByNameImplicit
 
 object PlayJsonGeneric2 {
   type Named[_] = String
 
-  def writesModelImpl[F[_[_]]](model: F[cats.Id], simpleProduct3: SimpleProduct3.Appender[F], named: F[Named], g: F[Writes]): JsValue = {
+  trait EncodeJson[Name, Enc, Id] {
+    def toJson(n: Name, enc: Enc, id: Id, l: List[(String, JsValue)]): List[(String, JsValue)]
+  }
 
-    trait EncodeJson[Name, Enc, Id] {
-      def toJson(n: Name, enc: Enc, id: Id, l: List[(String, JsValue)]): List[(String, JsValue)]
-    }
-
-    val appender: SimpleProduct3.AppendMonad[EncodeJson] = new SimpleProduct3.AppendMonad[EncodeJson] {
-      override def zip[A1, B1, C1, A2, B2, C2, A3, B3, C3](
-        c: SimpleProduct3.ConvertF3[A1, B1, C1, A2, B2, C2, A3, B3, C3],
+  def writesModelImpl[F[_[_]]](
+    simpleProduct3: SimpleProduct3.ProductAdapter[F],
+    named: F[Named],
+    g: () => F[Writes]
+  ): F[cats.Id] => JsValue = (model: F[cats.Id]) => {
+    val appender: SimpleProduct3.SimpleAppender[EncodeJson] = new SimpleProduct3.SimpleAppender[EncodeJson] {
+      override def append[A1, A2, A3, B1, B2, B3, C1, C2, C3](
+        cxF1: ABCFunc[A1, B1, C1],
+        cxF2: ABCFunc[A2, B2, C2],
+        cxF3: ABCFunc[A3, B3, C3]
+      )(
         ma: EncodeJson[A1, A2, A3],
         mb: EncodeJson[B1, B2, B3]
       ): EncodeJson[C1, C2, C3] = new EncodeJson[C1, C2, C3] {
         override def toJson(n: C1, enc: C2, id: C3, l: List[(String, JsValue)]): List[(String, JsValue)] = {
-          val list1 = mb.toJson(c.takeTail1(n), c.takeTail2(enc), c.takeTail3(id), l)
-          ma.toJson(c.takeHead1(n), c.takeHead2(enc), c.takeHead3(id), list1)
+          val list1 = mb.toJson(cxF1.takeTail(n), cxF2.takeTail(enc), cxF3.takeTail(id), l)
+          ma.toJson(cxF1.takeHead(n), cxF2.takeHead(enc), cxF3.takeHead(id), list1)
         }
       }
 
@@ -34,16 +41,16 @@ object PlayJsonGeneric2 {
 
     val typeGen: SimpleProduct3.TypeGen[EncodeJson, Named, Writes, cats.Id] =
       new SimpleProduct3.TypeGen[EncodeJson, Named, Writes, cats.Id] {
-        override def apply[T]: EncodeJson[String, Writes[T], T] = new EncodeJson[String, Writes[T], T] {
+        override def gen[T]: EncodeJson[String, Writes[T], T] = new EncodeJson[String, Writes[T], T] {
           override def toJson(n: String, enc: Writes[T], id: T, l: List[(String, JsValue)]): List[(String, JsValue)] =
             (n, enc.writes(id)) :: l
         }
       }
 
-    val modeToJson: EncodeJson[F[Named], F[Writes], F[cats.Id]] =
-      simpleProduct3.toHList1[EncodeJson, Named, Writes, cats.Id](appender)(typeGen)
+    val encodeFunc: EncodeJson[F[Named], F[Writes], F[cats.Id]] =
+      simpleProduct3.append[EncodeJson, Named, Writes, cats.Id](typeGen, appender)
 
-    val list: List[(String, JsValue)] = modeToJson.toJson(named, g, model, List.empty)
+    val list: List[(String, JsValue)] = encodeFunc.toJson(named, g(), model, List.empty)
     JsObject(list)
   }
 

@@ -3,6 +3,8 @@ package number25_grim_dawn_20240204_01
 
 object RunTest1 {
 
+  import GlobalContext._
+
   def main1(arr: Array[String]): Unit = locally {
 
     val resultPre = utils.count(
@@ -19,13 +21,13 @@ object RunTest1 {
     println("=== 附魔方案 Printing... ===")
     println(' '.toString)
 
-    for
+    for {
       eachR1 <- result.zipWithIndex
       ((kangxing, fumo), index) = eachR1
-    yield {
+    } yield {
       println(s"===第${index + 1}条，共${result.size}条===")
 
-      println(s"标的附魔：${(for x <- fumo yield x._1).mkString(','.toString)}")
+      println(s"标的附魔：${(for (x <- fumo) yield x._1).mkString(','.toString)}")
 
       println(s"附魔后的效果：$kangxing")
     }

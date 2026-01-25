@@ -1,9 +1,3 @@
-val `simple-adt-bridage-support-version` = "0.0.2-temp-v12"
-val `simple-adt-version`                 = "0.0.2-M21"
-
-scalaVersion := scalaV.v213
-name         := "simple"
-
 val `root/file`        = file(".").getCanonicalFile
 val `main/file`        = `root/file` / "main"
 val `impractical/file` = `root/file` / "impractical"
@@ -13,92 +7,155 @@ val `modules/file`  = `main/file` / "modules"
 val `test/file`     = `main/file` / "test"
 val `doc-only/file` = `main/file` / "doc-only"
 
-val `ghdmzsk/file`                        = `modules/file` / "simple-ghdmzsk"
-val ghdmzsk: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `ghdmzsk/file`
-val ghdmzskJVM: Project                   = ghdmzsk.jvm
-val ghdmzskJS: Project                    = ghdmzsk.js
-ghdmzskJVM / version := `simple-adt-version`
-ghdmzskJS / version  := `simple-adt-version`
+val `ghdmzsk/file`                             = `modules/file` / "simple-ghdmzsk"
+lazy val ghdmzsk: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `ghdmzsk/file`
 
-val `adt/file`                        = `modules/file` / "simple-adt"
-val adt: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `adt/file`
-lazy val adtJVM: Project              = adt.jvm dependsOn (`adt-implementionJVM`, `test-commonJVM` % Test) aggregate `adt-implementionJVM`
-lazy val adtJS: Project               = adt.js dependsOn (`adt-implementionJS`, `test-commonJS`    % Test) aggregate `adt-implementionJS`
-adtJVM / version := `simple-adt-version`
-adtJS / version  := `simple-adt-version`
+val `adt/file` = `modules/file` / "simple-adt"
 
-val `adt-bridge-support/file`                          = `adt/file` / "bridge-support"
-val `adt-bridge-support`: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `adt-bridge-support/file`
-lazy val `adt-bridge-supportJVM`: Project = `adt-bridge-support`.jvm dependsOn (`adt-implementionJVM` % Compile, `test-commonJVM` % Test)
-lazy val `adt-bridge-supportJS`: Project  = `adt-bridge-support`.js dependsOn (`adt-implementionJS`   % Compile, `test-commonJS`  % Test)
-`adt-bridge-supportJVM` / version := `simple-adt-bridage-support-version`
-`adt-bridge-supportJS` / version  := `simple-adt-bridage-support-version`
+val `nat-support/file` = `adt/file` / "nat-support"
+lazy val `nat-support`: sbtcrossproject.CrossProject =
+  crossProject(JSPlatform, JVMPlatform) in `nat-support/file` dependsOn (`test-common` % Test)
+
+val `adt-main/file` = `adt/file` / "adt-main"
+lazy val `adt-main`: sbtcrossproject.CrossProject =
+  crossProject(JSPlatform, JVMPlatform) in `adt-main/file` dependsOn (`test-common` % Test)
 
 val `adt-codegen/file` = `adt/file` / "codegen"
 val `adt-codegen`      = project in `adt-codegen/file`
 
-val `adt-implemention/file`    = `adt/file` / "implemention"
-val `adt-implemention`         = crossProject(JSPlatform, JVMPlatform) in `adt-implemention/file`
-lazy val `adt-implementionJVM` = `adt-implemention`.jvm dependsOn (`ghdmzskJVM`, `test-commonJVM` % Test) aggregate `ghdmzskJVM`
-lazy val `adt-implementionJS`  = `adt-implemention`.js dependsOn (`ghdmzskJS`, `test-commonJS`    % Test) aggregate `ghdmzskJS`
-`adt-implementionJVM` / version := `simple-adt-version`
-`adt-implementionJS` / version  := `simple-adt-version`
-
-val `list/file`  = `wip/file` / "simple-list"
-val list         = crossProject(JSPlatform, JVMPlatform) in `list/file`
-lazy val listJVM = list.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
-lazy val listJS  = list.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
+val `list/file` = `wip/file` / "simple-list"
+lazy val list   = crossProject(JSPlatform, JVMPlatform) in `list/file` dependsOn (ghdmzsk, `test-common` % Test) aggregate ghdmzsk
 
 val `wire/file` = `doc-only/file` / "simple-wire"
 
 val `wire-web-app/file` = `wire/file` / "web-app"
 lazy val `wire-web-app` = project in `wire-web-app/file`
 
-val `codec/file`  = `wip/file` / "simple-codec"
-val codec         = crossProject(JSPlatform, JVMPlatform) in `codec/file`
-lazy val codecJVM = codec.jvm dependsOn (ghdmzskJVM, `test-commonJVM` % Test) aggregate ghdmzskJVM
-lazy val codecJS  = codec.js dependsOn (ghdmzskJS, `test-commonJS`    % Test) aggregate ghdmzskJS
-codecJVM / scalaVersion       := scalaV.v213
-codecJVM / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
-codecJS / scalaVersion        := scalaV.v213
-codecJS / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
-
-val `codec-codegen/file` = `codec/file` / "codegen"
-val `codec-codegen`      = project in `codec-codegen/file`
-`codec-codegen` / scalaVersion := scalaV.v3
+val `codec/file` = `wip/file` / "simple-codec"
+lazy val codec =
+  crossProject(JSPlatform, JVMPlatform) in `codec/file` dependsOn (ghdmzsk, `nat-support`, `test-common` % Test) aggregate ghdmzsk
 
 val `codec-slick/file` = `codec/file` / "simple-codec-slick"
-lazy val `codec-slick` = project in `codec-slick/file` dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
+lazy val `codec-slick` = project in `codec-slick/file` dependsOn (codec.jvm, `test-common`.jvm % Test) aggregate codec.jvm
+
+val `codec-circe/file` = `codec/file` / "simple-codec-circe"
+lazy val `codec-circe` = crossProject(JSPlatform, JVMPlatform) in `codec-circe/file` dependsOn (codec, `test-common` % Test) aggregate codec
+
+val `nat/file` = `impractical/file` / "simple-nat"
+lazy val nat   = crossProject(JSPlatform, JVMPlatform) in `nat/file` dependsOn ghdmzsk aggregate ghdmzsk
+
+val `append-support/file` = `modules/file` / "simple-append-support" / "append-main"
+lazy val `append-support` = crossProject(JSPlatform, JVMPlatform) in `append-support/file` dependsOn (`test-common` % Test)
+
+val `append-codegen/file` = `modules/file` / "simple-append-support" / "codegen"
+lazy val `append-codegen` = project in `append-codegen/file`
+
+val `test-common/file`                               = `test/file` / "test-common"
+lazy val `test-common`: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
+
+`adt-codegen` / rootCodegenPath := (`adt-main`.jvm / baseDirectory).value / ".." / ".." / "shared" / "src" / "codegen"
+
+addCommandAlias("adtCodegen", s"; ++${scalaV.v3}; adt-codegen/codegenImpl;")
+addCommandAlias("cleanSimpleAdt", "; clean; nat-supportJVM/clean; nat-supportJS/clean; adt-mainJVM/clean; adt-mainJS/clean;")
+addCommandAlias("testSimpleAdt", "; +adt-mainJVM/test; +adt-mainJS/test;")
+addCommandAlias("releaseSimpleAdtWithOutTest", "; all clean; +adt-mainJVM/compile; +adt-mainJS/compile; +adt-mainJVM/doc; +adt-mainJS/doc; +adt-mainJVM/publishSigned; +adt-mainJS/publishSigned; sonaBundle;")
+addCommandAlias("releaseCodecLocal", "; +codecJVM/publishLocal ; +codecJS/publishLocal ;")
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
+// Configure
+val `simple-adt-version` = "0.0.2-M26"
+
+// ===
+scalaVersion := scalaV.v213
+name         := "simple"
+
+// ===
+ghdmzsk.jvm / version            := `simple-adt-version`
+ghdmzsk.js / version             := `simple-adt-version`
+ghdmzsk.jvm / scalaVersion       := scalaV.v213
+ghdmzsk.js / scalaVersion        := scalaV.v213
+ghdmzsk.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+ghdmzsk.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+ghdmzsk.jvm / publishTo          := localStaging.value
+ghdmzsk.js / publishTo           := localStaging.value
+
+// ===
+`nat-support`.jvm / version            := `simple-adt-version`
+`nat-support`.js / version             := `simple-adt-version`
+`nat-support`.jvm / scalaVersion       := scalaV.v213
+`nat-support`.js / scalaVersion        := scalaV.v213
+`nat-support`.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`nat-support`.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`nat-support`.jvm / publishTo          := localStaging.value
+`nat-support`.js / publishTo           := localStaging.value
+
+// ===
+`adt-main`.jvm / version            := `simple-adt-version`
+`adt-main`.js / version             := `simple-adt-version`
+`adt-main`.jvm / scalaVersion       := scalaV.v213
+`adt-main`.js / scalaVersion        := scalaV.v213
+`adt-main`.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`adt-main`.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`adt-main`.jvm / publishTo          := localStaging.value
+`adt-main`.js / publishTo           := localStaging.value
+
+// ===
+`adt-codegen` / scalaVersion := scalaV.v3
+
+// ===
+list.jvm / scalaVersion := scalaV.v213
+list.js / scalaVersion  := scalaV.v213
+
+// ===
+`wire-web-app` / scalaVersion       := scalaV.v213
+`wire-web-app` / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+
+// ===
+codec.jvm / scalaVersion       := scalaV.v213
+codec.js / scalaVersion        := scalaV.v213
+codec.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+codec.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+
+// ===
 `codec-slick` / scalaVersion       := scalaV.v213
 `codec-slick` / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
-val `codec-circe/file`    = `codec/file` / "simple-codec-circe"
-lazy val `codec-circe`    = crossProject(JSPlatform, JVMPlatform) in `codec-circe/file`
-lazy val `codec-circeJVM` = `codec-circe`.jvm dependsOn (codecJVM, `test-commonJVM` % Test) aggregate codecJVM
-lazy val `codec-circeJS`  = `codec-circe`.js dependsOn (codecJS, `test-commonJS`    % Test) aggregate codecJS
-`codec-circeJVM` / scalaVersion       := scalaV.v213
-`codec-circeJVM` / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
-`codec-circeJS` / scalaVersion        := scalaV.v213
-`codec-circeJS` / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+// ===
+`codec-circe`.jvm / scalaVersion       := scalaV.v213
+`codec-circe`.js / scalaVersion        := scalaV.v213
+`codec-circe`.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`codec-circe`.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
-val `nat/file`  = `impractical/file` / "simple-nat"
-val nat         = crossProject(JSPlatform, JVMPlatform) in `nat/file`
-lazy val natJVM = nat.jvm
-lazy val natJS  = nat.js
+// ===
+nat.jvm / scalaVersion       := scalaV.v3
+nat.js / scalaVersion        := scalaV.v3
+nat.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+nat.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
 
-val `test-common/file`                          = `test/file` / "test-common"
-val `test-common`: sbtcrossproject.CrossProject = crossProject(JSPlatform, JVMPlatform) in `test-common/file`
-lazy val `test-commonJVM`: Project              = `test-common`.jvm
-lazy val `test-commonJS`: Project               = `test-common`.js
+// ===
+`append-support`.jvm / version            := "0.0.1-M3"
+`append-support`.js / version             := "0.0.1-M3"
+`append-support`.jvm / scalaVersion       := scalaV.v213
+`append-support`.js / scalaVersion        := scalaV.v213
+`append-support`.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`append-support`.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`append-support`.jvm / publishTo          := localStaging.value
+`append-support`.js / publishTo           := localStaging.value
 
-`adt-codegen` / rootCodegenPath   := (adtJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
-`codec-codegen` / rootCodegenPath := (codecJVM / baseDirectory).value / ".." / "shared" / "src" / "codegen"
+// ===
+addCommandAlias("appendPublish", "; +append-supportJVM/publishSigned; +append-supportJS/publishSigned; sonaBundle;")
 
-addCommandAlias("adtCodegen", s"; ++${scalaV.v3}; adt-codegen/preCodegenImpl; adt-codegen/codegenImpl")
-addCommandAlias("releaseSimple", "; +adtJVM/test; +adtJS/test; +adtJVM/publishSigned; +adtJS/publishSigned;")
-addCommandAlias("releaseCodecLocal", "; +codecJVM/publishLocal ; +codecJS/publishLocal ;")
+// ===
+`append-codegen` / scalaVersion := scalaV.v3
+val codegenFile: File =
+  `append-support/file` / "shared" / "src" / "codegen" / "scala" / "net" / "scalax" / "simple" / "append" / "support"
+addCommandAlias("appendCodegen", s"+append-codegen/run ${codegenFile.toURI.toASCIIString}")
 
-addCommandAlias("releaseBridgeLocal", "; +adt-bridge-supportJVM/publishLocal ; +adt-bridge-supportJS/publishLocal ;")
-addCommandAlias("releaseBridge", "; +adt-bridge-supportJVM/publishSigned ; +adt-bridge-supportJS/publishSigned ;")
-
-Global / onChangedBuildSource := ReloadOnSourceChanges
+// ===
+`test-common`.jvm / version            := `simple-adt-version`
+`test-common`.js / version             := `simple-adt-version`
+`test-common`.jvm / scalaVersion       := scalaV.v213
+`test-common`.js / scalaVersion        := scalaV.v213
+`test-common`.jvm / crossScalaVersions := Seq(scalaV.v212, scalaV.v213, scalaV.v3)
+`test-common`.js / crossScalaVersions  := Seq(scalaV.v212, scalaV.v213, scalaV.v3)

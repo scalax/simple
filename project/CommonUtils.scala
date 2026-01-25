@@ -5,7 +5,7 @@ import sbt.Keys._
 
 object CommonUtils {
 
-  def genDirectory(sourceFile: File, parVersion: String, isScalaJs: Boolean): Seq[File] = {
+  def genDirectory(sourceFile: File, parVersion: String): Seq[File] = {
     val crossV = CrossVersion.partialVersion(parVersion)
     val is2    = crossV.map(_._1 == 2L).getOrElse(false)
     val is211  = crossV.map(_._2 == 11L).getOrElse(false) && is2
@@ -24,9 +24,8 @@ object CommonUtils {
     val dir9  = Some(sourceFile / "scala-2.11-2.12-2.13").filter(_ => is211 || is212 || is213)
     val dir10 = Some(sourceFile / "scala-2.12-2.13-3").filter(_ => is212 || is213 || is3)
     val dir11 = Some(sourceFile / "scala-3").filter(_ => is3)
-    val dir12 = Some(sourceFile / "scala-no-js").filterNot(_ => is211 && isScalaJs)
 
-    dir1 +: Seq(dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10, dir11, dir12).collect { case Some(s) => s }
+    dir1 +: Seq(dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10, dir11).collect { case Some(s) => s }
   }
 
 }

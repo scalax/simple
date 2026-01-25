@@ -1,5 +1,4 @@
-scalaVersion := scalaV.v213
-name         := "simple-list"
+name := "simple-list"
 
 enableZIOTest := true
 
